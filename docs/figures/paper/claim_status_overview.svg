@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="252.283465pt" height="198.425197pt" viewBox="0 0 252.283465 198.425197" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <title>Claim ledger is mostly gated or blocked</title>
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title>Claim ledger is mostly gated or blocked</dc:title>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>ccb_plotting</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 198.425197 
+L 252.283465 198.425197 
+L 252.283465 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 58.00524 172.42441 
+L 249.283225 172.42441 
+L 249.283225 13.699068 
+L 58.00524 13.699068 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <path d="M 58.00524 172.42441 
+L 58.00524 13.699068 
+" clip-path="url(#pb69c982522)" style="fill: none; stroke: #d8d8d8; stroke-opacity: 0.7; stroke-width: 0.45; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_2">
+      <defs>
+       <path id="mf00183c285" d="M 0 0 
+L 0 2.5 
+" style="stroke: #262626; stroke-width: 0.5"/>
+      </defs>
+      <g>
+       <use xlink:href="#mf00183c285" x="58.00524" y="172.42441" style="fill: #262626; stroke: #262626; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <text style="font-size: 6px; font-family: 'DejaVu Sans', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #262626" x="58.00524" y="182.983004" transform="rotate(-0 58.00524 182.983004)">0</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_3">
+      <path d="M 85.929033 172.42441 
+L 85.929033 13.699068 
+" clip-path="url(#pb69c982522)" style="fill: none; stroke: #d8d8d8; stroke-opacity: 0.7; stroke-width: 0.45; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#mf00183c285" x="85.929033" y="172.42441" style="fill: #262626; stroke: #262626; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <text style="font-size: 6px; font-family: 'DejaVu Sans', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #262626" x="85.929033" y="182.983004" transform="rotate(-0 85.929033 182.983004)">2</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_5">
+      <path d="M 113.852827 172.42441 
+L 113.852827 13.699068 
+" clip-path="url(#pb69c982522)" style="fill: none; stroke: #d8d8d8; stroke-opacity: 0.7; stroke-width: 0.45; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_6">
+      <g>
+       <use xlink:href="#mf00183c285" x="113.852827" y="172.42441" style="fill: #262626; stroke: #262626; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <text style="font-size: 6px; font-family: 'DejaVu Sans', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #262626" x="113.852827" y="182.983004" transform="rotate(-0 113.852827 182.983004)">4</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_7">
+      <path d="M 141.77662 172.42441 
+L 141.77662 13.699068 
+" clip-path="url(#pb69c982522)" style="fill: none; stroke: #d8d8d8; stroke-opacity: 0.7; stroke-width: 0.45; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_8">
+      <g>
+       <use xlink:href="#mf00183c285" x="141.77662" y="172.42441" style="fill: #262626; stroke: #262626; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <text style="font-size: 6px; font-family: 'DejaVu Sans', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #262626" x="141.77662" y="182.983004" transform="rotate(-0 141.77662 182.983004)">6</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_9">
+      <path d="M 169.700413 172.42441 
+L 169.700413 13.699068 
+" clip-path="url(#pb69c982522)" style="fill: none; stroke: #d8d8d8; stroke-opacity: 0.7; stroke-width: 0.45; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_10">
+      <g>
+       <use xlink:href="#mf00183c285" x="169.700413" y="172.42441" style="fill: #262626; stroke: #262626; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <text style="font-size: 6px; font-family: 'DejaVu Sans', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #262626" x="169.700413" y="182.983004" transform="rotate(-0 169.700413 182.983004)">8</text>
+     </g>
+    </g>
+    <g id="xtick_6">
+     <g id="line2d_11">
+      <path d="M 197.624207 172.42441 
+L 197.624207 13.699068 
+" clip-path="url(#pb69c982522)" style="fill: none; stroke: #d8d8d8; stroke-opacity: 0.7; stroke-width: 0.45; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_12">
+      <g>
+       <use xlink:href="#mf00183c285" x="197.624207" y="172.42441" style="fill: #262626; stroke: #262626; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_6">
+      <text style="font-size: 6px; font-family: 'DejaVu Sans', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #262626" x="197.624207" y="182.983004" transform="rotate(-0 197.624207 182.983004)">10</text>
+     </g>
+    </g>
+    <g id="xtick_7">
+     <g id="line2d_13">
+      <path d="M 225.548 172.42441 
+L 225.548 13.699068 
+" clip-path="url(#pb69c982522)" style="fill: none; stroke: #d8d8d8; stroke-opacity: 0.7; stroke-width: 0.45; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_14">
+      <g>
+       <use xlink:href="#mf00183c285" x="225.548" y="172.42441" style="fill: #262626; stroke: #262626; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_7">
+      <text style="font-size: 6px; font-family: 'DejaVu Sans', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #262626" x="225.548" y="182.983004" transform="rotate(-0 225.548 182.983004)">12</text>
+     </g>
+    </g>
+    <g id="text_8">
+     <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #262626" x="153.644232" y="193.743316" transform="rotate(-0 153.644232 193.743316)">Claims in canonical ledger</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_15">
+      <defs>
+       <path id="m5b9cb7b1d8" d="M 0 0 
+L -2.5 0 
+" style="stroke: #262626; stroke-width: 0.5"/>
+      </defs>
+      <g>
+       <use xlink:href="#m5b9cb7b1d8" x="58.00524" y="26.103147" style="fill: #262626; stroke: #262626; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_9">
+      <text style="font-size: 6px; font-family: 'DejaVu Sans', 'Arial', 'Liberation Sans', sans-serif; text-anchor: end; fill: #262626" x="52.00524" y="28.382444" transform="rotate(-0 52.00524 28.382444)">VALIDATED</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_16">
+      <g>
+       <use xlink:href="#m5b9cb7b1d8" x="58.00524" y="42.842795" style="fill: #262626; stroke: #262626; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_10">
+      <text style="font-size: 6px; font-family: 'DejaVu Sans', 'Arial', 'Liberation Sans', sans-serif; text-anchor: end; fill: #262626" x="52.00524" y="45.122092" transform="rotate(-0 52.00524 45.122092)">DATA ONLY</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_17">
+      <g>
+       <use xlink:href="#m5b9cb7b1d8" x="58.00524" y="59.582443" style="fill: #262626; stroke: #262626; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_11">
+      <text style="font-size: 6px; font-family: 'DejaVu Sans', 'Arial', 'Liberation Sans', sans-serif; text-anchor: end; fill: #262626" x="52.00524" y="61.86174" transform="rotate(-0 52.00524 61.86174)">TRUTH MC ONLY</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_18">
+      <g>
+       <use xlink:href="#m5b9cb7b1d8" x="58.00524" y="76.322091" style="fill: #262626; stroke: #262626; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_12">
+      <text style="font-size: 6px; font-family: 'DejaVu Sans', 'Arial', 'Liberation Sans', sans-serif; text-anchor: end; fill: #262626" x="52.00524" y="78.601388" transform="rotate(-0 52.00524 78.601388)">GATED</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_19">
+      <g>
+       <use xlink:href="#m5b9cb7b1d8" x="58.00524" y="93.061739" style="fill: #262626; stroke: #262626; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_13">
+      <text style="font-size: 6px; font-family: 'DejaVu Sans', 'Arial', 'Liberation Sans', sans-serif; text-anchor: end; fill: #262626" x="52.00524" y="95.341036" transform="rotate(-0 52.00524 95.341036)">REVIEW</text>
+     </g>
+    </g>
+    <g id="ytick_6">
+     <g id="line2d_20">
+      <g>
+       <use xlink:href="#m5b9cb7b1d8" x="58.00524" y="109.801387" style="fill: #262626; stroke: #262626; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_14">
+      <text style="font-size: 6px; font-family: 'DejaVu Sans', 'Arial', 'Liberation Sans', sans-serif; text-anchor: end; fill: #262626" x="52.00524" y="112.080684" transform="rotate(-0 52.00524 112.080684)">TENSION</text>
+     </g>
+    </g>
+    <g id="ytick_7">
+     <g id="line2d_21">
+      <g>
+       <use xlink:href="#m5b9cb7b1d8" x="58.00524" y="126.541035" style="fill: #262626; stroke: #262626; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_15">
+      <text style="font-size: 6px; font-family: 'DejaVu Sans', 'Arial', 'Liberation Sans', sans-serif; text-anchor: end; fill: #262626" x="52.00524" y="128.820332" transform="rotate(-0 52.00524 128.820332)">FLAWED</text>
+     </g>
+    </g>
+    <g id="ytick_8">
+     <g id="line2d_22">
+      <g>
+       <use xlink:href="#m5b9cb7b1d8" x="58.00524" y="143.280683" style="fill: #262626; stroke: #262626; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_16">
+      <text style="font-size: 6px; font-family: 'DejaVu Sans', 'Arial', 'Liberation Sans', sans-serif; text-anchor: end; fill: #262626" x="52.00524" y="145.55998" transform="rotate(-0 52.00524 145.55998)">BLOCKED</text>
+     </g>
+    </g>
+    <g id="ytick_9">
+     <g id="line2d_23">
+      <g>
+       <use xlink:href="#m5b9cb7b1d8" x="58.00524" y="160.020331" style="fill: #262626; stroke: #262626; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_17">
+      <text style="font-size: 6px; font-family: 'DejaVu Sans', 'Arial', 'Liberation Sans', sans-serif; text-anchor: end; fill: #262626" x="52.00524" y="162.299628" transform="rotate(-0 52.00524 162.299628)">SUPERSEDED</text>
+     </g>
+    </g>
+   </g>
+   <g id="patch_3">
+    <path d="M 58.00524 20.913856 
+L 71.967137 20.913856 
+L 71.967137 31.292438 
+L 58.00524 31.292438 
+z
+" clip-path="url(#pb69c982522)" style="fill: #009e73"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 58.00524 37.653504 
+L 71.967137 37.653504 
+L 71.967137 48.032086 
+L 58.00524 48.032086 
+z
+" clip-path="url(#pb69c982522)" style="fill: #0072b2"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 58.00524 54.393152 
+L 99.89093 54.393152 
+L 99.89093 64.771734 
+L 58.00524 64.771734 
+z
+" clip-path="url(#pb69c982522)" style="fill: #56b4e9"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 58.00524 71.1328 
+L 225.548 71.1328 
+L 225.548 81.511382 
+L 58.00524 81.511382 
+z
+" clip-path="url(#pb69c982522)" style="fill: #e69f00"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 58.00524 87.872448 
+L 71.967137 87.872448 
+L 71.967137 98.25103 
+L 58.00524 98.25103 
+z
+" clip-path="url(#pb69c982522)" style="fill: #6b6b6b"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 58.00524 104.612096 
+L 71.967137 104.612096 
+L 71.967137 114.990678 
+L 58.00524 114.990678 
+z
+" clip-path="url(#pb69c982522)" style="fill: #d55e00"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 58.00524 121.351744 
+L 71.967137 121.351744 
+L 71.967137 131.730326 
+L 58.00524 131.730326 
+z
+" clip-path="url(#pb69c982522)" style="fill: #cc79a7"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 58.00524 138.091392 
+L 127.814723 138.091392 
+L 127.814723 148.469974 
+L 58.00524 148.469974 
+z
+" clip-path="url(#pb69c982522)" style="fill: #9a9a9a"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 58.00524 154.83104 
+L 71.967137 154.83104 
+L 71.967137 165.209622 
+L 58.00524 165.209622 
+z
+" clip-path="url(#pb69c982522)" style="fill: #c8c8c8"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 58.00524 172.42441 
+L 58.00524 13.699068 
+" style="fill: none; stroke: #262626; stroke-width: 0.6; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 58.00524 172.42441 
+L 249.283225 172.42441 
+" style="fill: none; stroke: #262626; stroke-width: 0.6; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 5.8px; font-family: 'DejaVu Sans', 'Arial', 'Liberation Sans', sans-serif; text-anchor: start" x="74.480278" y="27.609788" transform="rotate(-0 74.480278 27.609788)">1</text>
+   </g>
+   <g id="text_19">
+    <text style="font-size: 5.8px; font-family: 'DejaVu Sans', 'Arial', 'Liberation Sans', sans-serif; text-anchor: start" x="74.480278" y="44.349436" transform="rotate(-0 74.480278 44.349436)">1</text>
+   </g>
+   <g id="text_20">
+    <text style="font-size: 5.8px; font-family: 'DejaVu Sans', 'Arial', 'Liberation Sans', sans-serif; text-anchor: start" x="102.404071" y="61.089084" transform="rotate(-0 102.404071 61.089084)">3</text>
+   </g>
+   <g id="text_21">
+    <text style="font-size: 5.8px; font-family: 'DejaVu Sans', 'Arial', 'Liberation Sans', sans-serif; text-anchor: start" x="228.061142" y="77.828732" transform="rotate(-0 228.061142 77.828732)">12</text>
+   </g>
+   <g id="text_22">
+    <text style="font-size: 5.8px; font-family: 'DejaVu Sans', 'Arial', 'Liberation Sans', sans-serif; text-anchor: start" x="74.480278" y="94.56838" transform="rotate(-0 74.480278 94.56838)">1</text>
+   </g>
+   <g id="text_23">
+    <text style="font-size: 5.8px; font-family: 'DejaVu Sans', 'Arial', 'Liberation Sans', sans-serif; text-anchor: start" x="74.480278" y="111.308028" transform="rotate(-0 74.480278 111.308028)">1</text>
+   </g>
+   <g id="text_24">
+    <text style="font-size: 5.8px; font-family: 'DejaVu Sans', 'Arial', 'Liberation Sans', sans-serif; text-anchor: start" x="74.480278" y="128.047676" transform="rotate(-0 74.480278 128.047676)">1</text>
+   </g>
+   <g id="text_25">
+    <text style="font-size: 5.8px; font-family: 'DejaVu Sans', 'Arial', 'Liberation Sans', sans-serif; text-anchor: start" x="130.327865" y="144.787324" transform="rotate(-0 130.327865 144.787324)">5</text>
+   </g>
+   <g id="text_26">
+    <text style="font-size: 5.8px; font-family: 'DejaVu Sans', 'Arial', 'Liberation Sans', sans-serif; text-anchor: start" x="74.480278" y="161.526971" transform="rotate(-0 74.480278 161.526971)">1</text>
+   </g>
+   <g id="text_27">
+    <text style="font-size: 7.5px; font-family: 'DejaVu Sans', 'Arial', 'Liberation Sans', sans-serif; text-anchor: start" x="58.00524" y="8.699068" transform="rotate(-0 58.00524 8.699068)">Claim ledger is mostly gated or blocked</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pb69c982522">
+   <rect x="58.00524" y="13.699068" width="191.277985" height="158.725342"/>
+  </clipPath>
+ </defs>
+</svg>

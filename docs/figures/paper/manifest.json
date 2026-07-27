@@ -1,0 +1,1055 @@
+{
+  "evidence_policy": "NO_HAND_ENTERED_HEADLINES_FAIL_CLOSED_SOURCE_TABLE_PER_FIGURE",
+  "figure_count": 11,
+  "figures": [
+    {
+      "caption": "Exact S00 reproduction. Sample I is dominated by B2; Sample II reaches deeper staves more often. Counts are deterministic for the fixed raw inputs and selection.",
+      "column": "single",
+      "environment": {
+        "matplotlib": "3.11.1",
+        "python": "3.11.5"
+      },
+      "evidence_class": "DATA_MEASUREMENT",
+      "figure_id": "FIG-WIKI-001",
+      "file_checks": [
+        {
+          "details": {
+            "actual_mm": [
+              88.99999999998973,
+              49.000000000008605
+            ],
+            "embedded_fonts": {
+              "/F1": true
+            },
+            "expected_mm": [
+              89.0,
+              49.0
+            ],
+            "timestamp_metadata": false
+          },
+          "ok": true,
+          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/selected_pulse_inventory.pdf"
+        },
+        {
+          "details": {
+            "actual_mm": [
+              89.00000015277777,
+              49.00000007222222
+            ],
+            "editable_text": true,
+            "expected_mm": [
+              89.0,
+              49.0
+            ],
+            "timestamp_metadata": false
+          },
+          "ok": true,
+          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/selected_pulse_inventory.svg"
+        },
+        {
+          "details": {
+            "actual_px": [
+              2102,
+              1157
+            ],
+            "dpi_ok": true,
+            "embedded_dpi": [
+              599.9988,
+              599.9988
+            ],
+            "expected_px": [
+              2102,
+              1157
+            ]
+          },
+          "ok": true,
+          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/selected_pulse_inventory.png"
+        }
+      ],
+      "height_mm": 49.0,
+      "outputs": {
+        "pdf": {
+          "bytes": 11674,
+          "path": "docs/figures/paper/selected_pulse_inventory.pdf",
+          "sha256": "e3572b9ab0beb5ce7674c54a608ec5f2e40953beb04e01aecfffed876b449eb6"
+        },
+        "png": {
+          "bytes": 73080,
+          "path": "docs/figures/paper/selected_pulse_inventory.png",
+          "sha256": "cae2e4d48c328661cfe67e89bd702d6dab718ce3f99428a1cc0284ce660adba6"
+        },
+        "svg": {
+          "bytes": 13511,
+          "path": "docs/figures/paper/selected_pulse_inventory.svg",
+          "sha256": "2ce3f728bc4f309fbd664b2393aaaa278cbd7b1282eedfa6543421f6ed41e274"
+        }
+      },
+      "plotted_data_sha256": "3d2b105e1a5c53428096675af49c329f0f8dfa52ff4d39aad94c9322efa66b36",
+      "qa_issues": [],
+      "question": "How are the exact S00 analysis pulses distributed across samples and staves?",
+      "source_paths": [
+        "reports/S00_data_integrity_pipeline_reproduction/count_match_table.csv"
+      ],
+      "source_table": "docs/figures/paper/source_tables/selected_pulse_inventory_source.csv",
+      "source_table_sha256": "3d2b105e1a5c53428096675af49c329f0f8dfa52ff4d39aad94c9322efa66b36",
+      "status": "VALIDATED",
+      "stem": "selected_pulse_inventory",
+      "title": "Selected-pulse inventory",
+      "width_mm": 89.0
+    },
+    {
+      "caption": "Status counts from the canonical 26-row claim ledger. Only one row is VALIDATED; visual polish must not promote gated, blocked, flawed or superseded evidence.",
+      "column": "single",
+      "environment": {
+        "matplotlib": "3.11.1",
+        "python": "3.11.5"
+      },
+      "evidence_class": "GOVERNANCE_LEDGER",
+      "figure_id": "FIG-WIKI-002",
+      "file_checks": [
+        {
+          "details": {
+            "actual_mm": [
+              88.99999999998973,
+              70.00000000000222
+            ],
+            "embedded_fonts": {
+              "/F1": true
+            },
+            "expected_mm": [
+              89.0,
+              70.0
+            ],
+            "timestamp_metadata": false
+          },
+          "ok": true,
+          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/claim_status_overview.pdf"
+        },
+        {
+          "details": {
+            "actual_mm": [
+              89.00000015277777,
+              70.00000005277778
+            ],
+            "editable_text": true,
+            "expected_mm": [
+              89.0,
+              70.0
+            ],
+            "timestamp_metadata": false
+          },
+          "ok": true,
+          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/claim_status_overview.svg"
+        },
+        {
+          "details": {
+            "actual_px": [
+              2102,
+              1653
+            ],
+            "dpi_ok": true,
+            "embedded_dpi": [
+              599.9988,
+              599.9988
+            ],
+            "expected_px": [
+              2102,
+              1654
+            ]
+          },
+          "ok": true,
+          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/claim_status_overview.png"
+        }
+      ],
+      "height_mm": 70.0,
+      "outputs": {
+        "pdf": {
+          "bytes": 14567,
+          "path": "docs/figures/paper/claim_status_overview.pdf",
+          "sha256": "597bcb15842b28beb607b90d5ca487b5dc700b26eb6fe59ba07cc18537d9c9bf"
+        },
+        "png": {
+          "bytes": 107294,
+          "path": "docs/figures/paper/claim_status_overview.png",
+          "sha256": "9e10fb98041bb4e64796cfd7d483fc87839181e9926c5bac6b2c056c375cf64b"
+        },
+        "svg": {
+          "bytes": 15544,
+          "path": "docs/figures/paper/claim_status_overview.svg",
+          "sha256": "037e5d2805ba20798c760063f02707e206823ce41ce601a284edc5822d706f6c"
+        }
+      },
+      "plotted_data_sha256": "bf32f83e7d694394845deb25cce53d893c5d146f254d3dacd9fc795620c31d33",
+      "qa_issues": [],
+      "question": "What fraction of the project claim surface is currently publication-authorized?",
+      "source_paths": [
+        "docs/claim_ledger.csv"
+      ],
+      "source_table": "docs/figures/paper/source_tables/claim_status_overview_source.csv",
+      "source_table_sha256": "bf32f83e7d694394845deb25cce53d893c5d146f254d3dacd9fc795620c31d33",
+      "status": "REVIEW",
+      "stem": "claim_status_overview",
+      "title": "Claim ledger is mostly gated or blocked",
+      "width_mm": 89.0
+    },
+    {
+      "caption": "Krakow MC method closure. The combined four-sensor estimator reaches \u03c368 = 0.089 ns; this is not a detector timing measurement on beam data.",
+      "column": "single",
+      "environment": {
+        "matplotlib": "3.11.1",
+        "python": "3.11.5"
+      },
+      "evidence_class": "MC_METHOD_CLOSURE",
+      "figure_id": "FIG-WIKI-003",
+      "file_checks": [
+        {
+          "details": {
+            "actual_mm": [
+              88.99999999998973,
+              52.999999999985555
+            ],
+            "embedded_fonts": {
+              "/F1": true
+            },
+            "expected_mm": [
+              89.0,
+              53.0
+            ],
+            "timestamp_metadata": false
+          },
+          "ok": true,
+          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/timing_mc_method_closure.pdf"
+        },
+        {
+          "details": {
+            "actual_mm": [
+              89.00000015277777,
+              52.99999983333333
+            ],
+            "editable_text": true,
+            "expected_mm": [
+              89.0,
+              53.0
+            ],
+            "timestamp_metadata": false
+          },
+          "ok": true,
+          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/timing_mc_method_closure.svg"
+        },
+        {
+          "details": {
+            "actual_px": [
+              2102,
+              1251
+            ],
+            "dpi_ok": true,
+            "embedded_dpi": [
+              599.9988,
+              599.9988
+            ],
+            "expected_px": [
+              2102,
+              1252
+            ]
+          },
+          "ok": true,
+          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/timing_mc_method_closure.png"
+        }
+      ],
+      "height_mm": 53.0,
+      "outputs": {
+        "pdf": {
+          "bytes": 12989,
+          "path": "docs/figures/paper/timing_mc_method_closure.pdf",
+          "sha256": "9e20ffb90c884f5c173516455ecd6873ad8b7268fc18035598b1e7a894050a67"
+        },
+        "png": {
+          "bytes": 89464,
+          "path": "docs/figures/paper/timing_mc_method_closure.png",
+          "sha256": "5719ce0ecbd829669bf309b538b001de78947806d4223f5d53e372289abcc78c"
+        },
+        "svg": {
+          "bytes": 15386,
+          "path": "docs/figures/paper/timing_mc_method_closure.svg",
+          "sha256": "eb03c52434151416dfaf7134e45a4d5f437318c3bc3d6ebc13aba3bffd70e08a"
+        }
+      },
+      "plotted_data_sha256": "9837ea9481e7f4595328fc4a8358505346ce0a6ea56ee26521cc8e96f84ca06e",
+      "qa_issues": [],
+      "question": "How much does the four-sensor estimator improve the MC residual width?",
+      "source_paths": [
+        "reports/studies/clusterB/metrics.json"
+      ],
+      "source_table": "docs/figures/paper/source_tables/timing_mc_method_closure_source.csv",
+      "source_table_sha256": "9837ea9481e7f4595328fc4a8358505346ce0a6ea56ee26521cc8e96f84ca06e",
+      "status": "MC_METHOD_CLOSURE",
+      "stem": "timing_mc_method_closure",
+      "title": "Timing estimator closure on MC",
+      "width_mm": 89.0
+    },
+    {
+      "caption": "Five contiguous event-block folds from the realistic \u0394E\u2013E MC chain. Fold ordering is categorical, so points are deliberately not connected. Transfer to beam data remains unvalidated.",
+      "column": "single",
+      "environment": {
+        "matplotlib": "3.11.1",
+        "python": "3.11.5"
+      },
+      "evidence_class": "SIMULATION_RESULT",
+      "figure_id": "FIG-WIKI-004",
+      "file_checks": [
+        {
+          "details": {
+            "actual_mm": [
+              88.99999999998973,
+              51.000000000014715
+            ],
+            "embedded_fonts": {
+              "/F1": true
+            },
+            "expected_mm": [
+              89.0,
+              51.0
+            ],
+            "timestamp_metadata": false
+          },
+          "ok": true,
+          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/pid_mc_validation.pdf"
+        },
+        {
+          "details": {
+            "actual_mm": [
+              89.00000015277777,
+              50.99999995277778
+            ],
+            "editable_text": true,
+            "expected_mm": [
+              89.0,
+              51.0
+            ],
+            "timestamp_metadata": false
+          },
+          "ok": true,
+          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/pid_mc_validation.svg"
+        },
+        {
+          "details": {
+            "actual_px": [
+              2102,
+              1204
+            ],
+            "dpi_ok": true,
+            "embedded_dpi": [
+              599.9988,
+              599.9988
+            ],
+            "expected_px": [
+              2102,
+              1205
+            ]
+          },
+          "ok": true,
+          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/pid_mc_validation.png"
+        }
+      ],
+      "height_mm": 51.0,
+      "outputs": {
+        "pdf": {
+          "bytes": 13431,
+          "path": "docs/figures/paper/pid_mc_validation.pdf",
+          "sha256": "fd1b7fe3413b51bc114b6bb8d96ebf2f5465a0bfa926788f8c50715051854136"
+        },
+        "png": {
+          "bytes": 86099,
+          "path": "docs/figures/paper/pid_mc_validation.png",
+          "sha256": "87e0f1f68f98bef6b6cb7939467d396bf5631d65c2019c25a7caa3881d3838d6"
+        },
+        "svg": {
+          "bytes": 11115,
+          "path": "docs/figures/paper/pid_mc_validation.svg",
+          "sha256": "2675c5ef0fb04af102bdbe8b8df949665ece96d70de03317e39891a805eea71b"
+        }
+      },
+      "plotted_data_sha256": "623251cd82feb1567238067ea1ae5fe528dea8f797eb2c7e561c00004b69d842",
+      "qa_issues": [],
+      "question": "Is the realistic-chain proton/deuteron AUC stable across grouped folds?",
+      "source_paths": [
+        "reports/studies/clusterA/counts.json"
+      ],
+      "source_table": "docs/figures/paper/source_tables/pid_mc_validation_source.csv",
+      "source_table_sha256": "623251cd82feb1567238067ea1ae5fe528dea8f797eb2c7e561c00004b69d842",
+      "status": "SIMULATION_RESULT",
+      "stem": "pid_mc_validation",
+      "title": "Grouped-fold PID stability on MC",
+      "width_mm": 89.0
+    },
+    {
+      "caption": "MC fits recover 119.168 ADC/MeV for both species near the configured 120 ADC/MeV. The separate MV0 proxy is 92 ADC/MeV with a 28 ADC/MeV heuristic systematic envelope, not a confidence interval, and remains gated.",
+      "column": "single",
+      "environment": {
+        "matplotlib": "3.11.1",
+        "python": "3.11.5"
+      },
+      "evidence_class": "MC_CLOSURE_PLUS_GATED_DATA_MC_PROXY",
+      "figure_id": "FIG-WIKI-005",
+      "file_checks": [
+        {
+          "details": {
+            "actual_mm": [
+              88.99999999998973,
+              50.00000000001166
+            ],
+            "embedded_fonts": {
+              "/F1": true
+            },
+            "expected_mm": [
+              89.0,
+              50.0
+            ],
+            "timestamp_metadata": false
+          },
+          "ok": true,
+          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/adc_mc_calibration.pdf"
+        },
+        {
+          "details": {
+            "actual_mm": [
+              89.00000015277777,
+              49.9999998361111
+            ],
+            "editable_text": true,
+            "expected_mm": [
+              89.0,
+              50.0
+            ],
+            "timestamp_metadata": false
+          },
+          "ok": true,
+          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/adc_mc_calibration.svg"
+        },
+        {
+          "details": {
+            "actual_px": [
+              2102,
+              1181
+            ],
+            "dpi_ok": true,
+            "embedded_dpi": [
+              599.9988,
+              599.9988
+            ],
+            "expected_px": [
+              2102,
+              1181
+            ]
+          },
+          "ok": true,
+          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/adc_mc_calibration.png"
+        }
+      ],
+      "height_mm": 50.0,
+      "outputs": {
+        "pdf": {
+          "bytes": 12708,
+          "path": "docs/figures/paper/adc_mc_calibration.pdf",
+          "sha256": "0b57f3d0c078d534ac4921afd72aae920e00b0524a7b61045d33f1df00c0ed1e"
+        },
+        "png": {
+          "bytes": 87843,
+          "path": "docs/figures/paper/adc_mc_calibration.png",
+          "sha256": "14d81f4aa58106b6bb6dfdf090f1f2fbd55c851c58644f3719371df3744b1e49"
+        },
+        "svg": {
+          "bytes": 11646,
+          "path": "docs/figures/paper/adc_mc_calibration.svg",
+          "sha256": "f1d6b06a37a3af9db284b57a5b2dee0000c0c4fc12700ae741097c50cf606976"
+        }
+      },
+      "plotted_data_sha256": "a06f751b0feb624ce099f907603a34fde1f11c7dc2f8f89440ce5d76f672cddf",
+      "qa_issues": [],
+      "question": "How does MC digitizer closure compare with the gated MV0 data/MC proxy?",
+      "source_paths": [
+        "reports/studies/clusterC/metrics.json",
+        "docs/claim_ledger.csv"
+      ],
+      "source_table": "docs/figures/paper/source_tables/adc_mc_calibration_source.csv",
+      "source_table_sha256": "a06f751b0feb624ce099f907603a34fde1f11c7dc2f8f89440ce5d76f672cddf",
+      "status": "GATED",
+      "stem": "adc_mc_calibration",
+      "title": "Gain closure and gated data/MC proxy",
+      "width_mm": 89.0
+    },
+    {
+      "caption": "The per-track dE/dx fit gives kB = 0.0156 cm/MeV, above both the total-deposit proxy and the digitizer default. The spread is model dependence, not a confidence interval.",
+      "column": "single",
+      "environment": {
+        "matplotlib": "3.11.1",
+        "python": "3.11.5"
+      },
+      "evidence_class": "SIMULATION_RESULT",
+      "figure_id": "FIG-WIKI-006",
+      "file_checks": [
+        {
+          "details": {
+            "actual_mm": [
+              88.99999999998973,
+              48.000000000005556
+            ],
+            "embedded_fonts": {
+              "/F1": true
+            },
+            "expected_mm": [
+              89.0,
+              48.0
+            ],
+            "timestamp_metadata": false
+          },
+          "ok": true,
+          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/birks_mc_comparison.pdf"
+        },
+        {
+          "details": {
+            "actual_mm": [
+              89.00000015277777,
+              47.99999995555555
+            ],
+            "editable_text": true,
+            "expected_mm": [
+              89.0,
+              48.0
+            ],
+            "timestamp_metadata": false
+          },
+          "ok": true,
+          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/birks_mc_comparison.svg"
+        },
+        {
+          "details": {
+            "actual_px": [
+              2102,
+              1133
+            ],
+            "dpi_ok": true,
+            "embedded_dpi": [
+              599.9988,
+              599.9988
+            ],
+            "expected_px": [
+              2102,
+              1134
+            ]
+          },
+          "ok": true,
+          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/birks_mc_comparison.png"
+        }
+      ],
+      "height_mm": 48.0,
+      "outputs": {
+        "pdf": {
+          "bytes": 13933,
+          "path": "docs/figures/paper/birks_mc_comparison.pdf",
+          "sha256": "561beca055a64a52ccaa8a77fb12599d0ce30fe79a4eed1a79b48794bea57ed2"
+        },
+        "png": {
+          "bytes": 87630,
+          "path": "docs/figures/paper/birks_mc_comparison.png",
+          "sha256": "34c1a62a69a3219a88cbe06bb9f02314a2b77c7635a2fcc7061565196ee2e14d"
+        },
+        "svg": {
+          "bytes": 15216,
+          "path": "docs/figures/paper/birks_mc_comparison.svg",
+          "sha256": "ced67fb5ba0500c5a5273d2904220f4dbf920b0a9260106955e0840bbb424793"
+        }
+      },
+      "plotted_data_sha256": "d3ed09e387d95bb90d58406cc43baff73f14d6da58ba4895b5bc1ac48eeeaf22",
+      "qa_issues": [],
+      "question": "How strongly does the inferred Birks coefficient depend on the fitting observable?",
+      "source_paths": [
+        "reports/studies/clusterC/metrics.json"
+      ],
+      "source_table": "docs/figures/paper/source_tables/birks_mc_comparison_source.csv",
+      "source_table_sha256": "d3ed09e387d95bb90d58406cc43baff73f14d6da58ba4895b5bc1ac48eeeaf22",
+      "status": "SIMULATION_RESULT",
+      "stem": "birks_mc_comparison",
+      "title": "Birks-model dependence on MC",
+      "width_mm": 89.0
+    },
+    {
+      "caption": "Poisson overlap for the 180 ns acquisition window. The stored nearest scan points are 0.289 MHz (5.06%, not exactly 5%) and 0.605 MHz (10.31%, not exactly 10%). These are simulation-domain criteria; canonical detector Rmax remains blocked.",
+      "column": "single",
+      "environment": {
+        "matplotlib": "3.11.1",
+        "python": "3.11.5"
+      },
+      "evidence_class": "SIMULATION_RESULT",
+      "figure_id": "FIG-WIKI-007",
+      "file_checks": [
+        {
+          "details": {
+            "actual_mm": [
+              88.99999999998973,
+              53.99999999998861
+            ],
+            "embedded_fonts": {
+              "/F1": true
+            },
+            "expected_mm": [
+              89.0,
+              54.0
+            ],
+            "timestamp_metadata": false
+          },
+          "ok": true,
+          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/pileup_digitizer_mc.pdf"
+        },
+        {
+          "details": {
+            "actual_mm": [
+              89.00000015277777,
+              53.99999995
+            ],
+            "editable_text": true,
+            "expected_mm": [
+              89.0,
+              54.0
+            ],
+            "timestamp_metadata": false
+          },
+          "ok": true,
+          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/pileup_digitizer_mc.svg"
+        },
+        {
+          "details": {
+            "actual_px": [
+              2102,
+              1275
+            ],
+            "dpi_ok": true,
+            "embedded_dpi": [
+              599.9988,
+              599.9988
+            ],
+            "expected_px": [
+              2102,
+              1276
+            ]
+          },
+          "ok": true,
+          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/pileup_digitizer_mc.png"
+        }
+      ],
+      "height_mm": 54.0,
+      "outputs": {
+        "pdf": {
+          "bytes": 13941,
+          "path": "docs/figures/paper/pileup_digitizer_mc.pdf",
+          "sha256": "39a697b4796ed44caf20bba530e7c9f92b65cf29ccfcdb58d77d9f8909f6671f"
+        },
+        "png": {
+          "bytes": 142824,
+          "path": "docs/figures/paper/pileup_digitizer_mc.png",
+          "sha256": "82858d491e6e2568444fbf3a8b5e9ff09a334bb596d34da75fd4ba346333c662"
+        },
+        "svg": {
+          "bytes": 14200,
+          "path": "docs/figures/paper/pileup_digitizer_mc.svg",
+          "sha256": "f948f4f5251b006d6b265c3700830e7e5256ab37d286afc32bf12bdd1518f2a5"
+        }
+      },
+      "plotted_data_sha256": "71517e94b20f26951de838543c89f5693737c0e4ffc936d28463a820ba40ea5b",
+      "qa_issues": [],
+      "question": "Which event rates correspond to the stored 5% and 10% overlap scan points?",
+      "source_paths": [
+        "reports/studies/clusterC/metrics.json"
+      ],
+      "source_table": "docs/figures/paper/source_tables/pileup_digitizer_mc_source.csv",
+      "source_table_sha256": "71517e94b20f26951de838543c89f5693737c0e4ffc936d28463a820ba40ea5b",
+      "status": "SIMULATION_RESULT",
+      "stem": "pileup_digitizer_mc",
+      "title": "Digitizer-domain overlap scan",
+      "width_mm": 89.0
+    },
+    {
+      "caption": "Exact tracked counts give 2.30% in selected data and 22.29% in thresholded MC. Wilson intervals show counting uncertainty only; unresolved geometry, trigger, gain and selection transfer dominate the scientific interpretation.",
+      "column": "single",
+      "environment": {
+        "matplotlib": "3.11.1",
+        "python": "3.11.5"
+      },
+      "evidence_class": "LEGACY_DATA_MC_DIAGNOSTIC",
+      "figure_id": "FIG-WIKI-008",
+      "file_checks": [
+        {
+          "details": {
+            "actual_mm": [
+              88.99999999998973,
+              42.99999999999028
+            ],
+            "embedded_fonts": {
+              "/F1": true
+            },
+            "expected_mm": [
+              89.0,
+              43.0
+            ],
+            "timestamp_metadata": false
+          },
+          "ok": true,
+          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/stopping_b8_tension.pdf"
+        },
+        {
+          "details": {
+            "actual_mm": [
+              89.00000015277777,
+              43.00000007777778
+            ],
+            "editable_text": true,
+            "expected_mm": [
+              89.0,
+              43.0
+            ],
+            "timestamp_metadata": false
+          },
+          "ok": true,
+          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/stopping_b8_tension.svg"
+        },
+        {
+          "details": {
+            "actual_px": [
+              2102,
+              1015
+            ],
+            "dpi_ok": true,
+            "embedded_dpi": [
+              599.9988,
+              599.9988
+            ],
+            "expected_px": [
+              2102,
+              1016
+            ]
+          },
+          "ok": true,
+          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/stopping_b8_tension.png"
+        }
+      ],
+      "height_mm": 43.0,
+      "outputs": {
+        "pdf": {
+          "bytes": 11771,
+          "path": "docs/figures/paper/stopping_b8_tension.pdf",
+          "sha256": "22606a18c58c2cc11727eaba8b70fd1b1eec220821eb5c5d8a89c64a654904fe"
+        },
+        "png": {
+          "bytes": 71317,
+          "path": "docs/figures/paper/stopping_b8_tension.png",
+          "sha256": "b4041127de4c20e1a8c75c2432f513833066fb40c9be2d95f99c876e93a38525"
+        },
+        "svg": {
+          "bytes": 9609,
+          "path": "docs/figures/paper/stopping_b8_tension.svg",
+          "sha256": "18dc5aeebd52529c2a971932013056f51d16f90e33f09680c9d1a85869d668ac"
+        }
+      },
+      "plotted_data_sha256": "8194cec832f2d22199b3a7260282966535b57cb050c1c07342ad53f9c1fab257",
+      "qa_issues": [],
+      "question": "How large is the exact B8 fraction mismatch in the legacy data/MC stopping profile?",
+      "source_paths": [
+        "docs/claim_ledger.csv"
+      ],
+      "source_table": "docs/figures/paper/source_tables/stopping_b8_tension_source.csv",
+      "source_table_sha256": "8194cec832f2d22199b3a7260282966535b57cb050c1c07342ad53f9c1fab257",
+      "status": "TENSION",
+      "stem": "stopping_b8_tension",
+      "title": "B8 stopping assignment disagrees",
+      "width_mm": 89.0
+    },
+    {
+      "caption": "Truth-labelled MC rates with Wilson 95% intervals: 283/87,555 overall and 156/7,302 within C12. C12 forms 156/283 early-peak tracks, but the separate beam-data anomaly is not identified as C12.",
+      "column": "single",
+      "environment": {
+        "matplotlib": "3.11.1",
+        "python": "3.11.5"
+      },
+      "evidence_class": "TRUTH_LEVEL_MC_ONLY",
+      "figure_id": "FIG-WIKI-009",
+      "file_checks": [
+        {
+          "details": {
+            "actual_mm": [
+              88.99999999998973,
+              45.99999999999944
+            ],
+            "embedded_fonts": {
+              "/F1": true
+            },
+            "expected_mm": [
+              89.0,
+              46.0
+            ],
+            "timestamp_metadata": false
+          },
+          "ok": true,
+          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/anomaly_truth_mc.pdf"
+        },
+        {
+          "details": {
+            "actual_mm": [
+              89.00000015277777,
+              46.000000074999996
+            ],
+            "editable_text": true,
+            "expected_mm": [
+              89.0,
+              46.0
+            ],
+            "timestamp_metadata": false
+          },
+          "ok": true,
+          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/anomaly_truth_mc.svg"
+        },
+        {
+          "details": {
+            "actual_px": [
+              2102,
+              1086
+            ],
+            "dpi_ok": true,
+            "embedded_dpi": [
+              599.9988,
+              599.9988
+            ],
+            "expected_px": [
+              2102,
+              1087
+            ]
+          },
+          "ok": true,
+          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/anomaly_truth_mc.png"
+        }
+      ],
+      "height_mm": 46.0,
+      "outputs": {
+        "pdf": {
+          "bytes": 12000,
+          "path": "docs/figures/paper/anomaly_truth_mc.pdf",
+          "sha256": "2479eb1f75c9b5b97a9f68fe2157a3349c6021147ad29de72fb30901d7e24d9a"
+        },
+        "png": {
+          "bytes": 77266,
+          "path": "docs/figures/paper/anomaly_truth_mc.png",
+          "sha256": "35d7130fe2427622087d14647f212496dec4bdd443262c45e5b953bf1311ba9a"
+        },
+        "svg": {
+          "bytes": 9653,
+          "path": "docs/figures/paper/anomaly_truth_mc.svg",
+          "sha256": "727413568206e31643f96c6dadaf61ad5c3739cc0662bda741b0c3aa5bd1217a"
+        }
+      },
+      "plotted_data_sha256": "53336883e9bff0602775f1b8e8f9a47157d7e6895521b1d6f27ebb71c8f61405",
+      "qa_issues": [],
+      "question": "How frequent is the early-peak morphology overall and within truth-labelled C12 tracks?",
+      "source_paths": [
+        "docs/claim_ledger.csv"
+      ],
+      "source_table": "docs/figures/paper/source_tables/anomaly_truth_mc_source.csv",
+      "source_table_sha256": "53336883e9bff0602775f1b8e8f9a47157d7e6895521b1d6f27ebb71c8f61405",
+      "status": "TRUTH_LEVEL_MC_ONLY",
+      "stem": "anomaly_truth_mc",
+      "title": "Early-peak morphology in truth MC",
+      "width_mm": 89.0
+    },
+    {
+      "caption": "Fixed synthetic-waveform MC output: three components explain 72.5% and eight explain 82.2%. These values supersede stale 0.89/0.997 statements and are not beam-data PCA results.",
+      "column": "single",
+      "environment": {
+        "matplotlib": "3.11.1",
+        "python": "3.11.5"
+      },
+      "evidence_class": "SYNTHETIC_WAVEFORM_MC",
+      "figure_id": "FIG-WIKI-010",
+      "file_checks": [
+        {
+          "details": {
+            "actual_mm": [
+              88.99999999998973,
+              48.000000000005556
+            ],
+            "embedded_fonts": {
+              "/F1": true
+            },
+            "expected_mm": [
+              89.0,
+              48.0
+            ],
+            "timestamp_metadata": false
+          },
+          "ok": true,
+          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/pca_truth_mc.pdf"
+        },
+        {
+          "details": {
+            "actual_mm": [
+              89.00000015277777,
+              47.99999995555555
+            ],
+            "editable_text": true,
+            "expected_mm": [
+              89.0,
+              48.0
+            ],
+            "timestamp_metadata": false
+          },
+          "ok": true,
+          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/pca_truth_mc.svg"
+        },
+        {
+          "details": {
+            "actual_px": [
+              2102,
+              1133
+            ],
+            "dpi_ok": true,
+            "embedded_dpi": [
+              599.9988,
+              599.9988
+            ],
+            "expected_px": [
+              2102,
+              1134
+            ]
+          },
+          "ok": true,
+          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/pca_truth_mc.png"
+        }
+      ],
+      "height_mm": 48.0,
+      "outputs": {
+        "pdf": {
+          "bytes": 13570,
+          "path": "docs/figures/paper/pca_truth_mc.pdf",
+          "sha256": "9de78d3ddcb8da5d7def1942a8e87704d3782cf8cc6c741316b9766d69f51b51"
+        },
+        "png": {
+          "bytes": 113729,
+          "path": "docs/figures/paper/pca_truth_mc.png",
+          "sha256": "fe8da858e7464396481774d6cebaf7444f011587a3140e86f48db404fbd733ce"
+        },
+        "svg": {
+          "bytes": 9703,
+          "path": "docs/figures/paper/pca_truth_mc.svg",
+          "sha256": "e2445440810972ba76926c4ac9ef26f3ce1d90a0f9074297a9ee2abb0f559b5b"
+        }
+      },
+      "plotted_data_sha256": "f991cd1ec3c5699b5761a1164e9682c0d1a8e8d05e585b95e4ef32b1e90e03b1",
+      "qa_issues": [],
+      "question": "How much variance is captured by compact PCA representations of the MC waveforms?",
+      "source_paths": [
+        "docs/claim_ledger.csv"
+      ],
+      "source_table": "docs/figures/paper/source_tables/pca_truth_mc_source.csv",
+      "source_table_sha256": "f991cd1ec3c5699b5761a1164e9682c0d1a8e8d05e585b95e4ef32b1e90e03b1",
+      "status": "TRUTH_LEVEL_MC_ONLY",
+      "stem": "pca_truth_mc",
+      "title": "Synthetic-waveform PCA compression",
+      "width_mm": 89.0
+    },
+    {
+      "caption": "Dimensionless cluster-D ADC-response elasticities only. Mixed-unit rows (gain envelope, kB span and missing material) are excluded rather than combined. This is a sensitivity inventory, not a propagated uncertainty budget.",
+      "column": "single",
+      "environment": {
+        "matplotlib": "3.11.1",
+        "python": "3.11.5"
+      },
+      "evidence_class": "SENSITIVITY_INPUTS",
+      "figure_id": "FIG-WIKI-011",
+      "file_checks": [
+        {
+          "details": {
+            "actual_mm": [
+              88.99999999998973,
+              75.99999999998528
+            ],
+            "embedded_fonts": {
+              "/F1": true,
+              "/F2": true
+            },
+            "expected_mm": [
+              89.0,
+              76.0
+            ],
+            "timestamp_metadata": false
+          },
+          "ok": true,
+          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/systematic_sensitivity_inputs.pdf"
+        },
+        {
+          "details": {
+            "actual_mm": [
+              89.00000015277777,
+              76.00000004722222
+            ],
+            "editable_text": true,
+            "expected_mm": [
+              89.0,
+              76.0
+            ],
+            "timestamp_metadata": false
+          },
+          "ok": true,
+          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/systematic_sensitivity_inputs.svg"
+        },
+        {
+          "details": {
+            "actual_px": [
+              2102,
+              1795
+            ],
+            "dpi_ok": true,
+            "embedded_dpi": [
+              599.9988,
+              599.9988
+            ],
+            "expected_px": [
+              2102,
+              1795
+            ]
+          },
+          "ok": true,
+          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/systematic_sensitivity_inputs.png"
+        }
+      ],
+      "height_mm": 76.0,
+      "outputs": {
+        "pdf": {
+          "bytes": 16686,
+          "path": "docs/figures/paper/systematic_sensitivity_inputs.pdf",
+          "sha256": "6fd52d0a13353bde16991e184fe9760fb21aab494e2937eebc27157926669652"
+        },
+        "png": {
+          "bytes": 131614,
+          "path": "docs/figures/paper/systematic_sensitivity_inputs.png",
+          "sha256": "aee3949bcdb745cd9dc59fdd0bdae76f9ae12ddd3ef70f58910c5f1bafca9378"
+        },
+        "svg": {
+          "bytes": 20140,
+          "path": "docs/figures/paper/systematic_sensitivity_inputs.svg",
+          "sha256": "794e71a186b4150210963fdff59aa7e704f082e975aa91880bd684daa6221887"
+        }
+      },
+      "plotted_data_sha256": "9b50fc74d879a318e62313148040730acb6323e5d6b1468b2cb79ebd9c502952",
+      "qa_issues": [],
+      "question": "Which dimensionless nuisance elasticities dominate the current MC sensitivity scan?",
+      "source_paths": [
+        "reports/studies/clusterE/systematic_budget.csv"
+      ],
+      "source_table": "docs/figures/paper/source_tables/systematic_sensitivity_inputs_source.csv",
+      "source_table_sha256": "9b50fc74d879a318e62313148040730acb6323e5d6b1468b2cb79ebd9c502952",
+      "status": "REVIEW",
+      "stem": "systematic_sensitivity_inputs",
+      "title": "ADC-response sensitivity inputs",
+      "width_mm": 89.0
+    }
+  ],
+  "repository_head": null,
+  "schema": "ccb-paper-grade-wiki-figures/1"
+}

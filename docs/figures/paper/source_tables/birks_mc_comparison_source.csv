@@ -1,0 +1,4 @@
+figure_id,figure_status,figure_evidence_class,method,kB_cm_per_MeV,role
+FIG-WIKI-006,SIMULATION_RESULT,SIMULATION_RESULT,Digitizer default,0.008,configuration
+FIG-WIKI-006,SIMULATION_RESULT,SIMULATION_RESULT,Total-deposit proxy,0.012679831932773108,proxy fit
+FIG-WIKI-006,SIMULATION_RESULT,SIMULATION_RESULT,Per-track dE/dx,0.015615126050420166,preferred MC fit

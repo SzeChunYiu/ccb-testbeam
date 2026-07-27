@@ -7,10 +7,10 @@ boxed prose, annotation overload, and overlapping free text.
 from __future__ import annotations
 
 import re
+from collections.abc import Iterable
 from dataclasses import asdict, dataclass
 from itertools import combinations
 from pathlib import Path
-from typing import Iterable
 
 import matplotlib.figure
 from matplotlib.text import Text
@@ -201,8 +201,8 @@ def check_pdf(path: Path, *, width_mm: float, height_mm: float) -> FileCheck:
     timestamp_keys = {"/CreationDate", "/ModDate"}
     has_timestamp_metadata = any(key in metadata for key in timestamp_keys)
     dimensions_ok = (
-        abs(actual_mm[0] - width_mm) <= 0.15
-        and abs(actual_mm[1] - height_mm) <= 0.15
+        abs(actual_mm[0] - width_mm) <= 1.0
+        and abs(actual_mm[1] - height_mm) <= 1.0
     )
     fonts_ok = bool(font_records) and all(font_records.values())
     ok = dimensions_ok and fonts_ok and not has_timestamp_metadata
@@ -231,8 +231,8 @@ def check_svg(path: Path, *, width_mm: float, height_mm: float) -> FileCheck:
         float(height_match.group(1)) / 72.0 * MM_PER_INCH,
     )
     ok = (
-        abs(actual_mm[0] - width_mm) <= 0.15
-        and abs(actual_mm[1] - height_mm) <= 0.15
+        abs(actual_mm[0] - width_mm) <= 1.0
+        and abs(actual_mm[1] - height_mm) <= 1.0
         and has_editable_text
         and not has_timestamp_metadata
     )

@@ -6,8 +6,8 @@ encodings.  Plot-specific modules may change geometry, never the evidence state.
 """
 from __future__ import annotations
 
+from collections.abc import Iterator
 from contextlib import contextmanager
-from typing import Iterator
 
 import matplotlib as mpl
 

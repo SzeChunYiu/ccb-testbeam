@@ -633,7 +633,7 @@ SPECS: tuple[FigureSpec, ...] = (
         "selected_pulse_inventory",
         "Selected-pulse inventory",
         "How are the exact S00 analysis pulses distributed across samples and staves?",
-        "Exact S00 reproduction. Sample I is dominated by B2; Sample II reaches deeper staves more often. Counts are deterministic for the fixed raw inputs and selection.",
+        "Exact S00 reproduction. Sample I is dominated by B2; Sample II reaches deeper staves more often. Counts are deterministic for the fixed raw inputs and selection.",  # noqa: E501
         "VALIDATED",
         "DATA_MEASUREMENT",
         "single",
@@ -646,7 +646,7 @@ SPECS: tuple[FigureSpec, ...] = (
         "claim_status_overview",
         "Claim ledger is mostly gated or blocked",
         "What fraction of the project claim surface is currently publication-authorized?",
-        "Status counts from the canonical 26-row claim ledger. Only one row is VALIDATED; visual polish must not promote gated, blocked, flawed or superseded evidence.",
+        "Status counts from the canonical 26-row claim ledger. Only one row is VALIDATED; visual polish must not promote gated, blocked, flawed or superseded evidence.",  # noqa: E501
         "REVIEW",
         "GOVERNANCE_LEDGER",
         "single",
@@ -659,7 +659,7 @@ SPECS: tuple[FigureSpec, ...] = (
         "timing_mc_method_closure",
         "Timing estimator closure on MC",
         "How much does the four-sensor estimator improve the MC residual width?",
-        "Krakow MC method closure. The combined four-sensor estimator reaches σ68 = 0.089 ns; this is not a detector timing measurement on beam data.",
+        "Krakow MC method closure. The combined four-sensor estimator reaches σ68 = 0.089 ns; this is not a detector timing measurement on beam data.",  # noqa: E501
         "MC_METHOD_CLOSURE",
         "MC_METHOD_CLOSURE",
         "single",
@@ -672,7 +672,7 @@ SPECS: tuple[FigureSpec, ...] = (
         "pid_mc_validation",
         "Grouped-fold PID stability on MC",
         "Is the realistic-chain proton/deuteron AUC stable across grouped folds?",
-        "Five contiguous event-block folds from the realistic ΔE–E MC chain. Fold ordering is categorical, so points are deliberately not connected. Transfer to beam data remains unvalidated.",
+        "Five contiguous event-block folds from the realistic ΔE–E MC chain. Fold ordering is categorical, so points are deliberately not connected. Transfer to beam data remains unvalidated.",  # noqa: E501
         "SIMULATION_RESULT",
         "SIMULATION_RESULT",
         "single",
@@ -685,7 +685,7 @@ SPECS: tuple[FigureSpec, ...] = (
         "adc_mc_calibration",
         "Gain closure and gated data/MC proxy",
         "How does MC digitizer closure compare with the gated MV0 data/MC proxy?",
-        "MC fits recover 119.168 ADC/MeV for both species near the configured 120 ADC/MeV. The separate MV0 proxy is 92 ADC/MeV with a 28 ADC/MeV heuristic systematic envelope, not a confidence interval, and remains gated.",
+        "MC fits recover 119.168 ADC/MeV for both species near the configured 120 ADC/MeV. The separate MV0 proxy is 92 ADC/MeV with a 28 ADC/MeV heuristic systematic envelope, not a confidence interval, and remains gated.",  # noqa: E501
         "GATED",
         "MC_CLOSURE_PLUS_GATED_DATA_MC_PROXY",
         "single",
@@ -698,7 +698,7 @@ SPECS: tuple[FigureSpec, ...] = (
         "birks_mc_comparison",
         "Birks-model dependence on MC",
         "How strongly does the inferred Birks coefficient depend on the fitting observable?",
-        "The per-track dE/dx fit gives kB = 0.0156 cm/MeV, above both the total-deposit proxy and the digitizer default. The spread is model dependence, not a confidence interval.",
+        "The per-track dE/dx fit gives kB = 0.0156 cm/MeV, above both the total-deposit proxy and the digitizer default. The spread is model dependence, not a confidence interval.",  # noqa: E501
         "SIMULATION_RESULT",
         "SIMULATION_RESULT",
         "single",
@@ -711,7 +711,7 @@ SPECS: tuple[FigureSpec, ...] = (
         "pileup_digitizer_mc",
         "Digitizer-domain overlap scan",
         "Which event rates correspond to the stored 5% and 10% overlap scan points?",
-        "Poisson overlap for the 180 ns acquisition window. The stored nearest scan points are 0.289 MHz (5.06%, not exactly 5%) and 0.605 MHz (10.31%, not exactly 10%). These are simulation-domain criteria; canonical detector Rmax remains blocked.",
+        "Poisson overlap for the 180 ns acquisition window. The stored nearest scan points are 0.289 MHz (5.06%, not exactly 5%) and 0.605 MHz (10.31%, not exactly 10%). These are simulation-domain criteria; canonical detector Rmax remains blocked.",  # noqa: E501
         "SIMULATION_RESULT",
         "SIMULATION_RESULT",
         "single",
@@ -724,7 +724,7 @@ SPECS: tuple[FigureSpec, ...] = (
         "stopping_b8_tension",
         "B8 stopping assignment disagrees",
         "How large is the exact B8 fraction mismatch in the legacy data/MC stopping profile?",
-        "Exact tracked counts give 2.30% in selected data and 22.29% in thresholded MC. Wilson intervals show counting uncertainty only; unresolved geometry, trigger, gain and selection transfer dominate the scientific interpretation.",
+        "Exact tracked counts give 2.30% in selected data and 22.29% in thresholded MC. Wilson intervals show counting uncertainty only; unresolved geometry, trigger, gain and selection transfer dominate the scientific interpretation.",  # noqa: E501
         "TENSION",
         "LEGACY_DATA_MC_DIAGNOSTIC",
         "single",
@@ -737,7 +737,7 @@ SPECS: tuple[FigureSpec, ...] = (
         "anomaly_truth_mc",
         "Early-peak morphology in truth MC",
         "How frequent is the early-peak morphology overall and within truth-labelled C12 tracks?",
-        "Truth-labelled MC rates with Wilson 95% intervals: 283/87,555 overall and 156/7,302 within C12. C12 forms 156/283 early-peak tracks, but the separate beam-data anomaly is not identified as C12.",
+        "Truth-labelled MC rates with Wilson 95% intervals: 283/87,555 overall and 156/7,302 within C12. C12 forms 156/283 early-peak tracks, but the separate beam-data anomaly is not identified as C12.",  # noqa: E501
         "TRUTH_LEVEL_MC_ONLY",
         "TRUTH_LEVEL_MC_ONLY",
         "single",
@@ -750,7 +750,7 @@ SPECS: tuple[FigureSpec, ...] = (
         "pca_truth_mc",
         "Synthetic-waveform PCA compression",
         "How much variance is captured by compact PCA representations of the MC waveforms?",
-        "Fixed synthetic-waveform MC output: three components explain 72.5% and eight explain 82.2%. These values supersede stale 0.89/0.997 statements and are not beam-data PCA results.",
+        "Fixed synthetic-waveform MC output: three components explain 72.5% and eight explain 82.2%. These values supersede stale 0.89/0.997 statements and are not beam-data PCA results.",  # noqa: E501
         "TRUTH_LEVEL_MC_ONLY",
         "SYNTHETIC_WAVEFORM_MC",
         "single",
@@ -763,7 +763,7 @@ SPECS: tuple[FigureSpec, ...] = (
         "systematic_sensitivity_inputs",
         "ADC-response sensitivity inputs",
         "Which dimensionless nuisance elasticities dominate the current MC sensitivity scan?",
-        "Dimensionless cluster-D ADC-response elasticities only. Mixed-unit rows (gain envelope, kB span and missing material) are excluded rather than combined. This is a sensitivity inventory, not a propagated uncertainty budget.",
+        "Dimensionless cluster-D ADC-response elasticities only. Mixed-unit rows (gain envelope, kB span and missing material) are excluded rather than combined. This is a sensitivity inventory, not a propagated uncertainty budget.",  # noqa: E501
         "REVIEW",
         "SENSITIVITY_INPUTS",
         "single",

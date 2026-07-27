@@ -4,6 +4,7 @@ These checks do not replace human review.  They deliberately catch the common
 regressions seen in the legacy wiki plots: clipped artists, font-size collapse,
 boxed prose, annotation overload, and overlapping free text.
 """
+
 from __future__ import annotations
 
 import re
@@ -35,7 +36,9 @@ class FileCheck:
 
 
 def _visible_text(fig: matplotlib.figure.Figure) -> list[Text]:
-    return [artist for artist in fig.findobj(Text) if artist.get_visible() and artist.get_text().strip()]
+    return [
+        artist for artist in fig.findobj(Text) if artist.get_visible() and artist.get_text().strip()
+    ]
 
 
 def _intersection_fraction(a: object, b: object) -> float:
@@ -150,9 +153,7 @@ def check_png(path: Path, *, width_mm: float, height_mm: float, dpi: int = 600) 
         )
         actual = image.size
         dpi_info = image.info.get("dpi")
-    dimensions_ok = (
-        abs(actual[0] - expected[0]) <= 1 and abs(actual[1] - expected[1]) <= 1
-    )
+    dimensions_ok = abs(actual[0] - expected[0]) <= 1 and abs(actual[1] - expected[1]) <= 1
     dpi_ok = (
         isinstance(dpi_info, tuple)
         and len(dpi_info) == 2
@@ -194,16 +195,11 @@ def check_pdf(path: Path, *, width_mm: float, height_mm: float) -> FileCheck:
     )
     resources = page.get("/Resources", {}).get_object()
     fonts = resources.get("/Font", {}).get_object()
-    font_records = {
-        str(name): _font_is_embedded(font) for name, font in fonts.items()
-    }
+    font_records = {str(name): _font_is_embedded(font) for name, font in fonts.items()}
     metadata = dict(reader.metadata or {})
     timestamp_keys = {"/CreationDate", "/ModDate"}
     has_timestamp_metadata = any(key in metadata for key in timestamp_keys)
-    dimensions_ok = (
-        abs(actual_mm[0] - width_mm) <= 1.0
-        and abs(actual_mm[1] - height_mm) <= 1.0
-    )
+    dimensions_ok = abs(actual_mm[0] - width_mm) <= 1.0 and abs(actual_mm[1] - height_mm) <= 1.0
     fonts_ok = bool(font_records) and all(font_records.values())
     ok = dimensions_ok and fonts_ok and not has_timestamp_metadata
     return FileCheck(

@@ -1,4 +1,5 @@
 """Atomic, multi-format export with dimensions, hashes and QA metadata."""
+
 from __future__ import annotations
 
 import hashlib
@@ -26,7 +27,9 @@ def sha256_file(path: Path) -> str:
 
 def _atomic_savefig(fig: matplotlib.figure.Figure, path: Path, **kwargs: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    fd, temporary_name = tempfile.mkstemp(prefix=f".{path.stem}.", suffix=path.suffix, dir=path.parent)
+    fd, temporary_name = tempfile.mkstemp(
+        prefix=f".{path.stem}.", suffix=path.suffix, dir=path.parent
+    )
     os.close(fd)
     temporary = Path(temporary_name)
     try:
@@ -75,7 +78,9 @@ def export_figure(
         dpi=600,
         metadata={**common_metadata, "Date": None},
     )
-    _atomic_savefig(fig, outputs["png"], format="png", dpi=600, metadata={"Software": "ccb_plotting"})
+    _atomic_savefig(
+        fig, outputs["png"], format="png", dpi=600, metadata={"Software": "ccb_plotting"}
+    )
 
     checks = [
         check_pdf(outputs["pdf"], width_mm=width_mm, height_mm=height_mm),

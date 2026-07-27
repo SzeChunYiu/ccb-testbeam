@@ -4,6 +4,7 @@ The defaults follow common journal artwork constraints: exact column widths,
 small but legible typography, vector-safe fonts, thin axes, and colour-blind-safe
 encodings.  Plot-specific modules may change geometry, never the evidence state.
 """
+
 from __future__ import annotations
 
 from collections.abc import Iterator

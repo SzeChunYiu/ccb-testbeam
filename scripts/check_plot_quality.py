@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Fail closed when generated CCB publication figures violate the style contract."""
+
 from __future__ import annotations
 
 import argparse

@@ -4,6 +4,7 @@ Every plotted number is read from a tracked CSV/JSON/claim-ledger row.  Missing,
 duplicate or non-finite inputs fail closed.  Captions remain outside the plotting
 area so the image contains only the visual evidence needed to answer one question.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -112,12 +113,18 @@ def _selected_pulse_inventory(root: Path) -> tuple[Figure, pd.DataFrame]:
         "reports/S00_data_integrity_pipeline_reproduction/count_match_table.csv",
         {"quantity", "report_value", "reproduced", "delta", "pass"},
     )
-    wanted = source[source["quantity"].str.contains("analysis B[2468] selected pulses", regex=True)].copy()
+    wanted = source[
+        source["quantity"].str.contains("analysis B[2468] selected pulses", regex=True)
+    ].copy()
     if len(wanted) != 8 or not wanted["pass"].astype(bool).all():
         raise ValueError("S00 analysis-by-stave rows are incomplete or not exact-pass")
-    wanted["sample"] = np.where(wanted["quantity"].str.startswith("sample_i_analysis"), "Sample I", "Sample II")
+    wanted["sample"] = np.where(
+        wanted["quantity"].str.startswith("sample_i_analysis"), "Sample I", "Sample II"
+    )
     wanted["stave"] = wanted["quantity"].str.extract(r"(B[2468])", expand=False)
-    pivot = wanted.pivot(index="sample", columns="stave", values="reproduced").loc[["Sample I", "Sample II"]]
+    pivot = wanted.pivot(index="sample", columns="stave", values="reproduced").loc[
+        ["Sample I", "Sample II"]
+    ]
 
     spec = SPECS_BY_ID["FIG-WIKI-001"]
     fig, axis = _new_figure(spec)
@@ -149,8 +156,17 @@ def _selected_pulse_inventory(root: Path) -> tuple[Figure, pd.DataFrame]:
 
 
 def _claim_status_overview(root: Path) -> tuple[Figure, pd.DataFrame]:
-    ledger = _load_csv(root, "docs/claim_ledger.csv", {"claim_id", "status", "ci_status", "truth_type"})
-    counts = ledger["status"].fillna("MISSING").astype(str).value_counts().rename_axis("status").reset_index(name="claims")
+    ledger = _load_csv(
+        root, "docs/claim_ledger.csv", {"claim_id", "status", "ci_status", "truth_type"}
+    )
+    counts = (
+        ledger["status"]
+        .fillna("MISSING")
+        .astype(str)
+        .value_counts()
+        .rename_axis("status")
+        .reset_index(name="claims")
+    )
     order = [
         "VALIDATED",
         "DONE_DATA_ONLY",
@@ -162,7 +178,9 @@ def _claim_status_overview(root: Path) -> tuple[Figure, pd.DataFrame]:
         "BLOCKED",
         "SUPERSEDED",
     ]
-    counts["rank"] = counts["status"].map({name: index for index, name in enumerate(order)}).fillna(len(order))
+    counts["rank"] = (
+        counts["status"].map({name: index for index, name in enumerate(order)}).fillna(len(order))
+    )
     counts = counts.sort_values(["rank", "status"]).drop(columns="rank")
     palette = {
         "VALIDATED": OKABE_ITO["green"],
@@ -179,18 +197,32 @@ def _claim_status_overview(root: Path) -> tuple[Figure, pd.DataFrame]:
     spec = SPECS_BY_ID["FIG-WIKI-002"]
     fig, axis = _new_figure(spec)
     y = np.arange(len(counts))
-    bars = axis.barh(y, counts["claims"], color=[palette.get(item, OKABE_ITO["grey"]) for item in counts["status"]], height=0.62)
+    bars = axis.barh(
+        y,
+        counts["claims"],
+        color=[palette.get(item, OKABE_ITO["grey"]) for item in counts["status"]],
+        height=0.62,
+    )
     display_status = {
         "DONE_DATA_ONLY": "DATA ONLY",
         "TRUTH_LEVEL_MC_ONLY": "TRUTH MC ONLY",
     }
-    axis.set_yticks(y, [display_status.get(item, item.replace("_", " ")) for item in counts["status"]])
+    axis.set_yticks(
+        y, [display_status.get(item, item.replace("_", " ")) for item in counts["status"]]
+    )
     axis.invert_yaxis()
     axis.set_xlabel("Claims in canonical ledger")
     axis.set_xticks(range(0, int(counts["claims"].max()) + 1, 2))
     light_axis_grid(axis, which="x")
     for bar, value in zip(bars, counts["claims"], strict=True):
-        axis.text(value + 0.18, bar.get_y() + bar.get_height() / 2, f"{int(value)}", va="center", ha="left", fontsize=5.8)
+        axis.text(
+            value + 0.18,
+            bar.get_y() + bar.get_height() / 2,
+            f"{int(value)}",
+            va="center",
+            ha="left",
+            fontsize=5.8,
+        )
     axis.set_xlim(0, float(counts["claims"].max()) + 1.7)
     return fig, counts
 
@@ -229,15 +261,21 @@ def _pid_mc_validation(root: Path) -> tuple[Figure, pd.DataFrame]:
     folds = counts.get("pid_oof_auc_5fold")
     if not isinstance(folds, list) or len(folds) != 5:
         raise ValueError("clusterA pid_oof_auc_5fold must contain five values")
-    fold_values = [_finite(value, label=f"PID fold {index}") for index, value in enumerate(folds, start=1)]
+    fold_values = [
+        _finite(value, label=f"PID fold {index}") for index, value in enumerate(folds, start=1)
+    ]
     full_auc = _finite(counts.get("pid_full_auc"), label="PID full AUC")
     table = pd.DataFrame({"fold": np.arange(1, 6), "auc": fold_values})
     table["full_auc"] = full_auc
 
     spec = SPECS_BY_ID["FIG-WIKI-004"]
     fig, axis = _new_figure(spec)
-    axis.scatter(table["fold"], table["auc"], color=OKABE_ITO["blue"], label="Held-out folds", zorder=3)
-    axis.axhline(full_auc, color=OKABE_ITO["vermillion"], linestyle="--", linewidth=0.8, label="Full sample")
+    axis.scatter(
+        table["fold"], table["auc"], color=OKABE_ITO["blue"], label="Held-out folds", zorder=3
+    )
+    axis.axhline(
+        full_auc, color=OKABE_ITO["vermillion"], linestyle="--", linewidth=0.8, label="Full sample"
+    )
     axis.set_xlabel("Grouped fold")
     axis.set_ylabel("ROC AUC")
     axis.set_xticks(table["fold"])
@@ -252,8 +290,18 @@ def _adc_mc_calibration(root: Path) -> tuple[Figure, pd.DataFrame]:
     try:
         block = metrics["VIS-ENE-001"]
         rows = [
-            ("Proton", block["proton"]["slope_adc_per_MeV"], block["proton"]["pull_rms"], block["proton"]["n_events"]),
-            ("Deuteron", block["deuteron"]["slope_adc_per_MeV"], block["deuteron"]["pull_rms"], block["deuteron"]["n_events"]),
+            (
+                "Proton",
+                block["proton"]["slope_adc_per_MeV"],
+                block["proton"]["pull_rms"],
+                block["proton"]["n_events"],
+            ),
+            (
+                "Deuteron",
+                block["deuteron"]["slope_adc_per_MeV"],
+                block["deuteron"]["pull_rms"],
+                block["deuteron"]["n_events"],
+            ),
         ]
     except KeyError as exc:
         raise ValueError(f"clusterC metrics missing calibration field {exc}") from exc
@@ -330,7 +378,9 @@ def _birks_mc_comparison(root: Path) -> tuple[Figure, pd.DataFrame]:
     except KeyError as exc:
         raise ValueError(f"clusterC metrics missing Birks field {exc}") from exc
     table = pd.DataFrame(rows, columns=["method", "kB_cm_per_MeV", "role"])
-    table["kB_cm_per_MeV"] = table["kB_cm_per_MeV"].map(lambda value: _finite(value, label="Birks kB"))
+    table["kB_cm_per_MeV"] = table["kB_cm_per_MeV"].map(
+        lambda value: _finite(value, label="Birks kB")
+    )
 
     spec = SPECS_BY_ID["FIG-WIKI-006"]
     fig, axis = _new_figure(spec)
@@ -372,8 +422,22 @@ def _pileup_digitizer_mc(root: Path) -> tuple[Figure, pd.DataFrame]:
     rates = np.linspace(0.0, max(1.05, float(table["rate_MHz"].max()) * 1.05), 300)
     analytic = 1.0 - np.exp(-(rates * 1e6) * window_s)
     axis.plot(rates, analytic * 100.0, color=OKABE_ITO["blue"], label="Poisson model")
-    axis.scatter(table["rate_MHz"].iloc[:2], table["poisson_overlap"].iloc[:2] * 100.0, color=OKABE_ITO["orange"], marker="o", label="Stored scan points", zorder=3)
-    axis.scatter(table["rate_MHz"].iloc[2], observed_max * 100.0, color=OKABE_ITO["vermillion"], marker="s", label="Simulation at max rate", zorder=3)
+    axis.scatter(
+        table["rate_MHz"].iloc[:2],
+        table["poisson_overlap"].iloc[:2] * 100.0,
+        color=OKABE_ITO["orange"],
+        marker="o",
+        label="Stored scan points",
+        zorder=3,
+    )
+    axis.scatter(
+        table["rate_MHz"].iloc[2],
+        observed_max * 100.0,
+        color=OKABE_ITO["vermillion"],
+        marker="s",
+        label="Simulation at max rate",
+        zorder=3,
+    )
     for target in (5.0, 10.0):
         axis.axhline(target, color=OKABE_ITO["light_grey"], linewidth=0.55, zorder=0)
     axis.set_xlabel("Event rate (MHz)")
@@ -386,7 +450,11 @@ def _pileup_digitizer_mc(root: Path) -> tuple[Figure, pd.DataFrame]:
 
 
 def _stopping_b8_tension(root: Path) -> tuple[Figure, pd.DataFrame]:
-    ledger = _load_csv(root, "docs/claim_ledger.csv", {"claim_id", "current_value", "numerator", "denominator", "status"})
+    ledger = _load_csv(
+        root,
+        "docs/claim_ledger.csv",
+        {"claim_id", "current_value", "numerator", "denominator", "status"},
+    )
     rows: list[dict[str, Any]] = []
     for claim_id, sample in [("CL-020", "Selected data"), ("CL-019", "Thresholded MC")]:
         row = _claim(ledger, claim_id)
@@ -397,7 +465,18 @@ def _stopping_b8_tension(root: Path) -> tuple[Figure, pd.DataFrame]:
         if not math.isclose(fraction, ledger_fraction, rel_tol=0.0, abs_tol=1e-14):
             raise ValueError(f"{claim_id} fraction does not match exact counts")
         low, high = _wilson(k, n)
-        rows.append({"claim_id": claim_id, "sample": sample, "numerator": int(k), "denominator": int(n), "fraction": fraction, "ci_low": low, "ci_high": high, "status": str(row["status"])})
+        rows.append(
+            {
+                "claim_id": claim_id,
+                "sample": sample,
+                "numerator": int(k),
+                "denominator": int(n),
+                "fraction": fraction,
+                "ci_low": low,
+                "ci_high": high,
+                "status": str(row["status"]),
+            }
+        )
     table = pd.DataFrame(rows)
 
     spec = SPECS_BY_ID["FIG-WIKI-008"]
@@ -406,7 +485,15 @@ def _stopping_b8_tension(root: Path) -> tuple[Figure, pd.DataFrame]:
     x = table["fraction"].to_numpy() * 100.0
     lower = (table["fraction"] - table["ci_low"]).to_numpy() * 100.0
     upper = (table["ci_high"] - table["fraction"]).to_numpy() * 100.0
-    axis.errorbar(x, y, xerr=np.vstack([lower, upper]), fmt="o", color=OKABE_ITO["vermillion"], ecolor=OKABE_ITO["grey"], capsize=2.0)
+    axis.errorbar(
+        x,
+        y,
+        xerr=np.vstack([lower, upper]),
+        fmt="o",
+        color=OKABE_ITO["vermillion"],
+        ecolor=OKABE_ITO["grey"],
+        capsize=2.0,
+    )
     axis.set_yticks(y, table["sample"])
     axis.invert_yaxis()
     axis.set_xlabel("Tracks/events assigned to B8 (%)")
@@ -416,7 +503,9 @@ def _stopping_b8_tension(root: Path) -> tuple[Figure, pd.DataFrame]:
 
 
 def _anomaly_truth_mc(root: Path) -> tuple[Figure, pd.DataFrame]:
-    ledger = _load_csv(root, "docs/claim_ledger.csv", {"claim_id", "numerator", "denominator", "notes", "status"})
+    ledger = _load_csv(
+        root, "docs/claim_ledger.csv", {"claim_id", "numerator", "denominator", "notes", "status"}
+    )
     row = _claim(ledger, "CL-022")
     total_k = _finite(row["numerator"], label="CL-022 numerator")
     total_n = _finite(row["denominator"], label="CL-022 denominator")
@@ -430,8 +519,22 @@ def _anomaly_truth_mc(root: Path) -> tuple[Figure, pd.DataFrame]:
     c12_ci = _wilson(c12_k, c12_n)
     table = pd.DataFrame(
         [
-            {"population": "All charged B-arm MC", "numerator": int(total_k), "denominator": int(total_n), "fraction": total_k / total_n, "ci_low": total_ci[0], "ci_high": total_ci[1]},
-            {"population": "C12 truth subset", "numerator": int(c12_k), "denominator": int(c12_n), "fraction": c12_k / c12_n, "ci_low": c12_ci[0], "ci_high": c12_ci[1]},
+            {
+                "population": "All charged B-arm MC",
+                "numerator": int(total_k),
+                "denominator": int(total_n),
+                "fraction": total_k / total_n,
+                "ci_low": total_ci[0],
+                "ci_high": total_ci[1],
+            },
+            {
+                "population": "C12 truth subset",
+                "numerator": int(c12_k),
+                "denominator": int(c12_n),
+                "fraction": c12_k / c12_n,
+                "ci_low": c12_ci[0],
+                "ci_high": c12_ci[1],
+            },
         ]
     )
 
@@ -441,7 +544,15 @@ def _anomaly_truth_mc(root: Path) -> tuple[Figure, pd.DataFrame]:
     x = table["fraction"].to_numpy() * 100.0
     lower = (table["fraction"] - table["ci_low"]).to_numpy() * 100.0
     upper = (table["ci_high"] - table["fraction"]).to_numpy() * 100.0
-    axis.errorbar(x, y, xerr=np.vstack([lower, upper]), fmt="o", color=OKABE_ITO["blue"], ecolor=OKABE_ITO["grey"], capsize=2.0)
+    axis.errorbar(
+        x,
+        y,
+        xerr=np.vstack([lower, upper]),
+        fmt="o",
+        color=OKABE_ITO["blue"],
+        ecolor=OKABE_ITO["grey"],
+        capsize=2.0,
+    )
     axis.set_yticks(y, table["population"])
     axis.invert_yaxis()
     axis.set_xlabel("Early-peak morphology rate (%)")
@@ -451,7 +562,9 @@ def _anomaly_truth_mc(root: Path) -> tuple[Figure, pd.DataFrame]:
 
 
 def _pca_truth_mc(root: Path) -> tuple[Figure, pd.DataFrame]:
-    ledger = _load_csv(root, "docs/claim_ledger.csv", {"claim_id", "current_value", "n_mc", "status"})
+    ledger = _load_csv(
+        root, "docs/claim_ledger.csv", {"claim_id", "current_value", "n_mc", "status"}
+    )
     rows = []
     for claim_id, components in [("CL-023", 3), ("CL-024", 8)]:
         row = _claim(ledger, claim_id)
@@ -468,7 +581,12 @@ def _pca_truth_mc(root: Path) -> tuple[Figure, pd.DataFrame]:
 
     spec = SPECS_BY_ID["FIG-WIKI-010"]
     fig, axis = _new_figure(spec)
-    axis.plot(table["components"], table["cumulative_explained_variance"] * 100.0, color=OKABE_ITO["blue"], marker="o")
+    axis.plot(
+        table["components"],
+        table["cumulative_explained_variance"] * 100.0,
+        color=OKABE_ITO["blue"],
+        marker="o",
+    )
     axis.set_xlabel("Principal components")
     axis.set_ylabel("Cumulative explained variance (%)")
     axis.set_xticks([3, 8])
@@ -479,12 +597,18 @@ def _pca_truth_mc(root: Path) -> tuple[Figure, pd.DataFrame]:
 
 
 def _systematic_sensitivity_inputs(root: Path) -> tuple[Figure, pd.DataFrame]:
-    source = _load_csv(root, "reports/studies/clusterE/systematic_budget.csv", {"nuisance", "abs_elasticity_adc", "source"})
+    source = _load_csv(
+        root,
+        "reports/studies/clusterE/systematic_budget.csv",
+        {"nuisance", "abs_elasticity_adc", "source"},
+    )
     numeric = pd.to_numeric(source["abs_elasticity_adc"], errors="coerce")
     # Keep only dimensionless elasticities.  The final three rows mix a heuristic
     # envelope, a physical kB span and a material column density, so combining them
     # in one bar chart would be dimensionally invalid.
-    table = source.loc[numeric.notna() & source["source"].astype(str).str.startswith("clusterD")].copy()
+    table = source.loc[
+        numeric.notna() & source["source"].astype(str).str.startswith("clusterD")
+    ].copy()
     table["abs_elasticity_adc"] = pd.to_numeric(table["abs_elasticity_adc"], errors="raise")
     table = table.sort_values("abs_elasticity_adc", ascending=True).reset_index(drop=True)
     if len(table) != 11:
@@ -651,7 +775,6 @@ SPECS: tuple[FigureSpec, ...] = (
 SPECS_BY_ID = {spec.figure_id: spec for spec in SPECS}
 
 
-
 def _source_signature(frame: pd.DataFrame) -> str:
     raw = frame.to_csv(index=False, lineterminator="\n").encode("utf-8")
     return hashlib.sha256(raw).hexdigest()
@@ -676,7 +799,9 @@ def build_all(repo_root: Path, output_dir: Path) -> dict[str, Any]:
                 }
                 collisions = set(metadata_columns) & set(source.columns)
                 if collisions:
-                    raise ValueError(f"{spec.figure_id}: source table metadata collision {sorted(collisions)}")
+                    raise ValueError(
+                        f"{spec.figure_id}: source table metadata collision {sorted(collisions)}"
+                    )
                 source = source.copy()
                 for name, value in reversed(tuple(metadata_columns.items())):
                     source.insert(0, name, value)

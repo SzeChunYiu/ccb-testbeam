@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Generate the canonical paper-grade CCB wiki figure set."""
+
 from __future__ import annotations
 
 import sys

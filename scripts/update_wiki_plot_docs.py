@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Generate the wiki/gallery surfaces from the canonical figure manifest."""
+
 from __future__ import annotations
 
 import argparse
@@ -132,13 +133,10 @@ def main(argv: list[str] | None = None) -> int:
         _gallery(figures, prefix="figures/paper/", title="CCB paper-grade figure gallery"),
         encoding="utf-8",
     )
-    (root / "docs/wiki_plot_manifest.csv").write_text(
-        _manifest_csv(figures), encoding="utf-8"
-    )
+    (root / "docs/wiki_plot_manifest.csv").write_text(_manifest_csv(figures), encoding="utf-8")
 
     raw_prefix = (
-        "https://raw.githubusercontent.com/SzeChunYiu/ccb-testbeam/main/"
-        "docs/figures/paper/"
+        "https://raw.githubusercontent.com/SzeChunYiu/ccb-testbeam/main/docs/figures/paper/"
     )
     wiki_dir = root / "wiki"
     wiki_dir.mkdir(parents=True, exist_ok=True)

@@ -719,15 +719,27 @@ def make_figures(counts_by_run: pd.DataFrame, selected: pd.DataFrame, out_dir: P
     plt.close(fig)
 
 
+#: Explicit gate states for the S00 data-integrity gates (issue #972). A skipped
+#: or failed gate must never be reported as a measured PASS, and an authorising
+#: run must require every P0 gate to be PASS.
+GATE_PASS = "PASS"
+GATE_FAIL = "FAIL"
+GATE_NOT_RUN_MISSING_INPUT = "NOT_RUN_MISSING_INPUT"
+GATE_NOT_APPLICABLE = "NOT_APPLICABLE"
+
+
 def write_manifest(out_dir: Path, config_path: Path, comparison: pd.DataFrame, selected_path: Path,
-                   amplitude_cut_adc: float, amplitude_cut_source: str) -> None:
+                   amplitude_cut_adc: float, amplitude_cut_source: str,
+                   gate_states: dict, authorising: bool) -> None:
     manifest = {
         "config": str(config_path),
         "count_match_passed": bool(comparison["pass"].all()),
+        "authorising": bool(authorising),
         "selected_pulse_table": str(selected_path),
         "amplitude_cut_adc": float(amplitude_cut_adc),
         "amplitude_cut_source": amplitude_cut_source,
         "amplitude_cut_env_var": AMPLITUDE_CUT_ENV,
+        "gate_states": {k: v for k, v in sorted(gate_states.items())},
         "artifacts": sorted(path.name for path in out_dir.iterdir() if path.is_file()),
     }
     (out_dir / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
@@ -761,11 +773,21 @@ def main() -> int:
 
     counts_by_run, counts_by_group, _, selected, ml_rows, population_prevalence = scan_raw(config)
     comparison = compare_expected(config, counts_by_group)
-    if args.skip_sorted or not Path(config.get("sorted_b_dir", "")).exists():
-        print("[s00] skipping sorted even-channel crosscheck (no sorted_b_dir or --skip-sorted)")
-        sorted_counts = counts_by_run[["run", "selected_pulses", "B2", "B4", "B6", "B8"]].copy()
+
+    # Sorted even-channel closure gate (issue #972). We never fabricate a
+    # measured crosscheck from raw counts: a missing/failed sorted gate is
+    # recorded as NOT_RUN_MISSING_INPUT and does not authorise the run.
+    sorted_b_dir = Path(config.get("sorted_b_dir", "") or "")
+    sorted_available = sorted_b_dir.exists() and args.skip_sorted is False
+    gate_states = {
+        "count_match": GATE_PASS if bool(comparison["pass"].all()) else GATE_FAIL,
+    }
+    if not sorted_available:
+        print("[s00] sorted even-channel crosscheck NOT_RUN_MISSING_INPUT (no sorted_b_dir or --skip-sorted)")
+        sorted_counts = pd.DataFrame(columns=["run", "selected_pulses", "B2", "B4", "B6", "B8"])
         sorted_compare = sorted_counts.copy()
-        sorted_compare["note"] = "skipped: sorted ROOT not staged on LUNARC"
+        sorted_compare["gate_state"] = GATE_NOT_RUN_MISSING_INPUT
+        gate_states["sorted_even_channel_crosscheck"] = GATE_NOT_RUN_MISSING_INPUT
     else:
         sorted_counts = sorted_crosscheck(config)
         sorted_compare = counts_by_run[["run", "selected_pulses", "B2", "B4", "B6", "B8"]].merge(
@@ -773,6 +795,8 @@ def main() -> int:
             on="run",
             suffixes=("_raw", "_sorted_even"),
         )
+        sorted_compare["gate_state"] = GATE_PASS
+        gate_states["sorted_even_channel_crosscheck"] = GATE_PASS
 
     counts_by_run.to_csv(out_dir / "counts_by_run.csv", index=False)
     counts_by_group.to_csv(out_dir / "counts_by_group.csv", index=False)
@@ -785,12 +809,22 @@ def main() -> int:
         run_ml_check(config, ml_rows, out_dir, population_prevalence=population_prevalence)
     if not args.skip_sha256:
         write_checksums(config, out_dir)
-    write_manifest(out_dir, args.config, comparison, selected_path, cut, cut_source)
+
+    # An authorising run requires every P0 data-integrity gate to be PASS.
+    # A missing/failed sorted closure is a non-authorising condition.
+    authorising = (
+        bool(comparison["pass"].all())
+        and gate_states["sorted_even_channel_crosscheck"] == GATE_PASS
+    )
+    write_manifest(out_dir, args.config, comparison, selected_path, cut, cut_source,
+                   gate_states, authorising)
 
     print(comparison.to_string(index=False))
     print(f"\nselected pulse table: {selected_path}")
     print(f"report artifacts: {out_dir}")
-    return 0 if bool(comparison["pass"].all()) else 1
+    print(f"gate states: {gate_states}")
+    print(f"authorising: {authorising}")
+    return 0 if authorising else 1
 
 
 if __name__ == "__main__":

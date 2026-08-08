@@ -214,17 +214,41 @@ def sha256_file(path: Path, block_size: int = 1024 * 1024) -> str:
 
 
 def configured_runs(config: dict) -> List[int]:
-    runs: List[int] = []
-    for values in config["run_groups"].values():
-        runs.extend(int(run) for run in values)
-    return sorted(set(runs))
+    """Return the unique configured runs, rejecting overlapping exclusive roles.
+
+    Raises ``ValueError`` if any run is assigned to more than one run group, so
+    a calibration/analysis split can never silently hide a duplicate via
+    ``set()`` or ``run_group_lookup``'s last-write-wins behaviour (issue #983).
+    """
+    groups = config["run_groups"]
+    if not isinstance(groups, dict) or not groups:
+        raise ValueError("run_groups must be a non-empty mapping")
+    assignments: Dict[int, List[str]] = defaultdict(list)
+    for group, runs in groups.items():
+        for run in runs:
+            assignments[int(run)].append(group)
+    overlaps = {run: groups_list for run, groups_list in assignments.items() if len(groups_list) > 1}
+    if overlaps:
+        detail = ", ".join(f"run {r} -> {sorted(g)}" for r, g in sorted(overlaps.items()))
+        raise ValueError(
+            f"overlapping exclusive run-role assignments (issue #983): {detail}. "
+            "Calibration/analysis/validation splits must be disjoint; assign any "
+            "descriptive multi-role tags orthogonally."
+        )
+    return sorted(assignments)
 
 
 def run_group_lookup(config: dict) -> Dict[int, str]:
     lookup: Dict[int, str] = {}
     for group, runs in config["run_groups"].items():
         for run in runs:
-            lookup[int(run)] = group
+            run_i = int(run)
+            if run_i in lookup:
+                raise ValueError(
+                    f"run {run_i} assigned to multiple groups ({lookup[run_i]} and {group}); "
+                    "exclusive run-role split is ambiguous (issue #983)"
+                )
+            lookup[run_i] = group
     return lookup
 
 

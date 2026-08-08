@@ -96,6 +96,20 @@ EventAction::EventAction(const AppConfig& cfg, RunAction* run_action)
   // Scientific production is fail-closed: an invalid detector-response model
   // must abort before event 0 rather than masquerade as a dead/zero-ADC sensor.
   sipm_config_ = BuildSipmConfig();
+  std::cout << "SIPM_CONFIG"
+            << " cells=" << sipm_config_.number_of_cells()
+            << " recovery_ns=" << sipm_config_.recovery_time_ns
+            << " dcr_hz=" << sipm_config_.dark_count_rate_hz
+            << " dark_enabled=" << (sipm_config_.enable_dark_counts ? 1 : 0)
+            << " crosstalk=" << sipm_config_.prompt_crosstalk_probability
+            << " afterpulse_fast=" << sipm_config_.afterpulse_fast_probability
+            << " window_start_ns=" << sipm_config_.window_start_ns
+            << " window_end_ns=" << sipm_config_.window_end_ns
+            << " sample_dt_ns=" << sipm_config_.sample_dt_ns
+            << " adc_bits=" << sipm_config_.adc_bits
+            << " adc_lsb_pe=" << sipm_config_.adc_lsb_pe
+            << " baseline_adc=" << sipm_config_.baseline_adc
+            << std::endl;
 }
 
 void EventAction::BeginOfEventAction(const G4Event*) { data_.Reset(); }

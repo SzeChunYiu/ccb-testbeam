@@ -141,8 +141,11 @@ def audit(root: Path) -> dict[str, Any]:
         "n_runs": str(len(runs)),
         "n_data": str(expected),
         "truth_type": "data_count",
-        "status": "VALIDATED",
-        "allowed_status_validated": "YES",
+        # CL-001 is GATED (not VALIDATED) until data-contract gates #952/#953/#954
+        # prove channel/schema/raw-to-sorted closure. The exact count is
+        # reproducible, but claim status is governingly conservative (issue #955).
+        "status": "GATED",
+        "allowed_status_validated": "NO",
         "source_report": str(report_path.relative_to(root)),
         "source_script": "scripts/01_build_pulse_table_from_root.py",
         "source_data": str(config["pulse_table_path"]),

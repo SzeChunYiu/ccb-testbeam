@@ -1,3 +1,4 @@
 geant4/results/*.root
 geant4/results/*.out
 geant4/results/*.err
+__pycache__/

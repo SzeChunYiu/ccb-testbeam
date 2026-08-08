@@ -58,7 +58,7 @@ Every claim in this thesis is labeled with one of the following statuses:
 
 | Claim | Current value | Evidence class | Status | Source |
 |---|---|---|---|---|
-| Selected B-stack pulses (S00) | 640,737 | DATA_MEASUREMENT | ✅ VALIDATED | CL-001 |
+| Selected B-stack pulses (S00) | 640,737 | DATA_MEASUREMENT | 🔒 GATED | CL-001 |
 | Combined timing σ₆₈ (4-sensor, MC) | 0.089 ns | MC_METHOD_CLOSURE | ✅ PASS | clusterB #918 |
 | PID p-vs-d AUC (realistic chain, MC) | 0.898 | SIMULATION_RESULT | ✅ PASS | clusterA #921 |
 | ADC calibration (digitizer gain, MC) | 119.17 ADC/MeV | SIMULATION_RESULT | ✅ PASS | clusterC #917 |
@@ -127,7 +127,7 @@ Raw ROOT files → Pulse table (640,737 selected B-pulses)
 
 ## 7. Established Results
 
-✅ S00 reproduction gate (640,737 pulses) is canonical, exact, and reproducible (CL-001).
+🔒 S00 reproduction gate (640,737 pulses) is canonical, exact, and reproducible — but gated at CL-001 pending data-contract gates #952, #953, #954.
 ✅ **MC method closure (clusters A–D, 2026-07-25):** on the Krakow 1M-event Geant4 MC
    the full analysis chain closes — combined timing σ₆₈ = **0.089 ns** (clusterB #918),
    PID AUC = **0.898** on the realistic ΔE-E chain (clusterA #921), ADC = **119.17

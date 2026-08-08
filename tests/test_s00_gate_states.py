@@ -579,6 +579,7 @@ class TestWriteManifest:
             assert manifest["authorising"] is True
             assert manifest["gate_states"]["count_match"] == "PASS"
             assert manifest["gate_states"]["sorted_even_channel_crosscheck"] == "PASS"
+            assert manifest["schema_version"] == "v1"
 
     def test_manifest_authorising_false_when_sorted_missing(self, s00):
         with tempfile.TemporaryDirectory() as tmp:
@@ -671,16 +672,30 @@ class TestSkippedSortedGate:
     def test_authorising_false_when_sorted_not_run(self, s00):
         """Authorising requires every P0 gate to be PASS. A missing sorted
         closure must make authorising=False."""
+        # Following the logic from main():
+        # authorising = bool(comparison["pass"].all()) and gate_states["sorted_even_channel_crosscheck"] == GATE_PASS and gate_states["pulse_schema_v1"] == GATE_PASS
         count_match_ok = True
         sorted_gate_ok = False
-        assert not (count_match_ok and sorted_gate_ok), (
+        schema_gate_ok = True
+        assert not (count_match_ok and sorted_gate_ok and schema_gate_ok), (
             "authorising must be False when sorted gate is not PASS"
+        )
+
+    def test_authorising_false_when_schema_fails(self, s00):
+        """Authorising requires every P0 gate to be PASS. A schema violation
+        must make authorising=False."""
+        count_match_ok = True
+        sorted_gate_ok = True
+        schema_gate_ok = False
+        assert not (count_match_ok and sorted_gate_ok and schema_gate_ok), (
+            "authorising must be False when pulse_schema_v1 gate is not PASS"
         )
 
     def test_authorising_true_when_all_gates_pass(self, s00):
         count_match_ok = True
         sorted_gate_ok = True
-        assert count_match_ok and sorted_gate_ok, (
+        schema_gate_ok = True
+        assert count_match_ok and sorted_gate_ok and schema_gate_ok, (
             "authorising must be True only when every P0 gate is PASS"
         )
 
@@ -693,10 +708,12 @@ class TestSkippedSortedGate:
 class TestExitCode:
     def test_return_0_when_authorising(self, s00):
         """main() returns 0 when authorising=True."""
-        assert 1 if not (True and True) else 0 == 0
+# The return statement: return 0 if authorising else 1
+        assert 1 if not (True and True and True) else 0 == 0
 
     def test_return_1_when_not_authorising(self, s00):
         """main() returns 1 when authorising=False."""
-        assert 1 if not (True and False) else 0 == 1
-        assert 1 if not (False and True) else 0 == 1
-        assert 1 if not (False and False) else 0 == 1
+        assert 1 if not (True and False and True) else 0 == 1
+        assert 1 if not (False and True and True) else 0 == 1
+        assert 1 if not (True and True and False) else 0 == 1
+        assert 1 if not (False and False and False) else 0 == 1

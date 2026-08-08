@@ -13,6 +13,10 @@
 # (particle, energy, hit_x) points. ONE immutable config per array task ->
 # ONE output file (no BeamOn-loop overwrite). Provenance recorded per file.
 #
+# Scientific production is fail-closed on optical inputs. Missing/malformed
+# required optical tables abort before event generation; permissive fallback is
+# reserved for explicitly non-authorising development runs outside this script.
+#
 # Self-contained at runtime: the ccb_stave_sim binary needs GCC/12.3.0 +
 # Geant4/11.2.2 on the linker path, so we (re)load the modules inside the job.
 # MT threading: the sim parses --threads; we default it to the allocation.
@@ -60,7 +64,7 @@ srun "${EXE}" \
   --particle "${PART}" --energy "${ENE}" \
   --hit-x "${HX}" --hit-y "${HY}" \
   --seed "${SEED}" --nevents "${NEV}" --threads "${THREADS}" \
-  --optical-dir "${OPTICAL}" \
+  --optical-dir "${OPTICAL}" --strict-optical \
   --output "${OUT}"
 
 echo "wrote ${OUT} (+ ${OUT}.meta.json)"

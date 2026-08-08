@@ -123,6 +123,15 @@ int main(int argc, char** argv) {
   }
 
   auto* ui = G4UImanager::GetUIpointer();
+  auto apply_required = [&](const G4String& command) -> bool {
+    const int status = ui->ApplyCommand(command);
+    if (status != 0) {
+      std::cerr << "fatal: Geant4 UI command failed with status " << status
+                << ": " << command << '\n';
+      return false;
+    }
+    return true;
+  };
 
   if (!cfg.macro.empty()) {
 #ifdef CCB_ENABLE_VIS
@@ -130,15 +139,24 @@ int main(int argc, char** argv) {
     auto* vis = new G4VisExecutive();
     vis->Initialize();
 #endif
-    ui->ApplyCommand("/control/execute " + cfg.macro);
+    const bool macro_ok = apply_required("/control/execute " + cfg.macro);
 #ifdef CCB_ENABLE_VIS
     delete vis;
 #endif
+    if (!macro_ok) {
+      delete runManager;
+      return 4;
+    }
   } else {
-    // Batch: run the configured number of events.
-    ui->ApplyCommand("/run/verbose 0");
-    ui->ApplyCommand("/event/verbose 0");
-    ui->ApplyCommand("/tracking/verbose 0");
+    // Batch: run the configured number of events. Required UI setup commands
+    // are fail-closed so an invalid Geant4 command cannot be ignored while the
+    // process still advertises a successful scientific run.
+    if (!apply_required("/run/verbose 0") ||
+        !apply_required("/event/verbose 0") ||
+        !apply_required("/tracking/verbose 0")) {
+      delete runManager;
+      return 4;
+    }
     runManager->BeamOn(cfg.n_events);
   }
 

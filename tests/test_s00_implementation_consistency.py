@@ -154,6 +154,8 @@ def test_build_ml_rows_for_batch_carries_eventno_and_weight(s00):
     area = np.array([[100.0, 5000.0]])
     peak = np.array([[3, 5]])
     baseline = np.array([[1.0, 2.0]])
+    peak_code_adc = np.array([[20.0, 3000.0]])  # absolute peak (raw max)
+    saturation = peak_code_adc >= 16383
     selected_mask = amplitude > 1000.0
     keep_mask = np.array([True, True])
     df = s00.build_ml_rows_for_batch(
@@ -165,6 +167,8 @@ def test_build_ml_rows_for_batch_carries_eventno_and_weight(s00):
         area=area,
         peak_sample=peak,
         baseline=baseline,
+        peak_code_adc=peak_code_adc,
+        saturation=saturation,
         selected_mask=selected_mask,
         keep_mask=keep_mask,
         keep_selected=0.20,
@@ -175,6 +179,13 @@ def test_build_ml_rows_for_batch_carries_eventno_and_weight(s00):
     # selected B4 pulse carries weight 1/0.20=5; rejected B2 carries 1/0.05=20
     assert df["sampling_weight"].tolist() == [20.0, 5.0]
     assert df["selected"].tolist() == [0, 1]
+    # v1 schema columns
+    assert "peak_height_adc" in df.columns
+    assert "peak_code_adc" in df.columns
+    assert "saturation" in df.columns
+    assert df["peak_height_adc"].tolist() == [10.0, 2000.0]
+    assert df["peak_code_adc"].tolist() == [20.0, 3000.0]
+    assert df["saturation"].tolist() == [False, False]
 
 
 def test_build_ml_rows_for_batch_keeps_two_pulses_of_one_event_together(s00):
@@ -185,6 +196,8 @@ def test_build_ml_rows_for_batch_keeps_two_pulses_of_one_event_together(s00):
     area = np.array([[4000.0, 6000.0]])
     peak = np.array([[4, 6]])
     baseline = np.array([[1.0, 2.0]])
+    peak_code_adc = np.array([[2500.0, 3200.0]])
+    saturation = peak_code_adc >= 16383
     selected_mask = amplitude > 1000.0
     keep_mask = np.array([True, True])
     df = s00.build_ml_rows_for_batch(
@@ -196,6 +209,8 @@ def test_build_ml_rows_for_batch_keeps_two_pulses_of_one_event_together(s00):
         area=area,
         peak_sample=peak,
         baseline=baseline,
+        peak_code_adc=peak_code_adc,
+        saturation=saturation,
         selected_mask=selected_mask,
         keep_mask=keep_mask,
         keep_selected=0.20,

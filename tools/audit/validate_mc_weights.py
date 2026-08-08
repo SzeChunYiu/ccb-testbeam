@@ -86,7 +86,6 @@ def _summarize(arr: np.ndarray) -> WeightAudit:
     finite = np.isfinite(arr)
     finite_arr = arr[finite]
     n_finite = int(finite_arr.size)
-    signed = finite_arr  # still signed
 
     sum_w = math.fsum(float(v) for v in finite_arr)
     sum_abs_w = math.fsum(float(abs(v)) for v in finite_arr)

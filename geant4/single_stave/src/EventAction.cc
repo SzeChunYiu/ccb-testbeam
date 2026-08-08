@@ -6,22 +6,72 @@
 #include "G4SystemOfUnits.hh"
 
 #include <algorithm>
+#include <cerrno>
+#include <cctype>
 #include <cmath>
 #include <cstdlib>
+#include <cstring>
 #include <iostream>
+#include <limits>
 #include <stdexcept>
+#include <string>
 
 #include "ccb/sipm/ResponseSimulator.hh"  // SIPM-P1-002
-#include <iostream>
+
+namespace {
+
+double ParseRequiredEnvDouble(const char* name,
+                              double min_value,
+                              bool min_inclusive,
+                              double max_value,
+                              bool max_inclusive) {
+  const char* raw = std::getenv(name);
+  if (raw == nullptr) {
+    throw std::logic_error(std::string("ParseRequiredEnvDouble called for unset env ") + name);
+  }
+
+  errno = 0;
+  char* end = nullptr;
+  const double value = std::strtod(raw, &end);
+  while (end != nullptr && *end != '\0' &&
+         std::isspace(static_cast<unsigned char>(*end))) {
+    ++end;
+  }
+  const bool min_ok = min_inclusive ? value >= min_value : value > min_value;
+  const bool max_ok = max_inclusive ? value <= max_value : value < max_value;
+  if (errno == ERANGE || end == raw || end == nullptr || *end != '\0' ||
+      !std::isfinite(value) || !min_ok || !max_ok) {
+    throw std::invalid_argument(std::string("invalid ") + name + "='" + raw + "'");
+  }
+  return value;
+}
+
+void ApplyOptionalEnvDouble(const char* name,
+                            double& out,
+                            double min_value,
+                            bool min_inclusive,
+                            double max_value = std::numeric_limits<double>::infinity(),
+                            bool max_inclusive = true) {
+  if (std::getenv(name) == nullptr) return;
+  out = ParseRequiredEnvDouble(name, min_value, min_inclusive, max_value, max_inclusive);
+}
+
+bool ParseStrictEnvBool(const char* name, bool default_value) {
+  const char* raw = std::getenv(name);
+  if (raw == nullptr) return default_value;
+  const std::string value(raw);
+  if (value == "1" || value == "true" || value == "TRUE" || value == "yes") return true;
+  if (value == "0" || value == "false" || value == "FALSE" || value == "no") return false;
+  throw std::invalid_argument(std::string("invalid boolean ") + name + "='" + raw + "'");
+}
+
+}  // namespace
 
 EventAction::EventAction(const AppConfig& cfg, RunAction* run_action)
     : cfg_(cfg), run_action_(run_action) {
-  try {
-    sipm_config_ = BuildSipmConfig();
-  } catch (const std::exception& e) {
-    std::cerr << "warning: SiPM core config invalid (" << e.what()
-              << "); ADC output will be zero. Check env overrides." << std::endl;
-  }
+  // Scientific production is fail-closed: an invalid detector-response model
+  // must abort before event 0 rather than masquerade as a dead/zero-ADC sensor.
+  sipm_config_ = BuildSipmConfig();
 }
 
 void EventAction::BeginOfEventAction(const G4Event*) { data_.Reset(); }
@@ -52,31 +102,26 @@ void EventAction::EndOfEventAction(const G4Event* event) {
   // and records the peak ADC above baseline.
   const std::uint64_t event_id = static_cast<std::uint64_t>(event->GetEventID());
   bool has_adc = false;
-  try {
-    for (int sid = 0; sid < kNSensors; ++sid) {
-      if (data_.sipm_arrivals[sid].empty()) {
-        data_.adc[sid] = 0.0;
-        continue;
-      }
-      // Copy base config and set sensor_id so simulate() filters correctly.
-      auto cfg = sipm_config_;
-      cfg.sensor_id = sid;
-      ccb::sipm::ResponseSimulator sipm(cfg);
-      auto result = sipm.simulate(data_.sipm_arrivals[sid], cfg_.seed,
-                                  event_id);
-      // Peak ADC above baseline (signal amplitude in ADC counts).
-      if (!result.waveform.adc.empty()) {
-        int peak_raw = *std::max_element(result.waveform.adc.begin(),
-                                          result.waveform.adc.end());
-        data_.adc[sid] = static_cast<double>(peak_raw) - cfg.baseline_adc;
-      } else {
-        data_.adc[sid] = 0.0;
-      }
-      if (data_.adc[sid] > 0.5) has_adc = true;
+  for (int sid = 0; sid < kNSensors; ++sid) {
+    if (data_.sipm_arrivals[sid].empty()) {
+      data_.adc[sid] = 0.0;
+      continue;
     }
-  } catch (const std::exception& e) {
-    std::cerr << "warning: SiPM core error at event " << event_id
-              << ": " << e.what() << std::endl;
+    // Copy base config and set sensor_id so simulate() filters correctly.
+    auto cfg = sipm_config_;
+    cfg.sensor_id = sid;
+    ccb::sipm::ResponseSimulator sipm(cfg);
+    auto result = sipm.simulate(data_.sipm_arrivals[sid], cfg_.seed,
+                                event_id);
+    // Peak ADC above baseline (signal amplitude in ADC counts).
+    if (!result.waveform.adc.empty()) {
+      int peak_raw = *std::max_element(result.waveform.adc.begin(),
+                                        result.waveform.adc.end());
+      data_.adc[sid] = static_cast<double>(peak_raw) - cfg.baseline_adc;
+    } else {
+      data_.adc[sid] = 0.0;
+    }
+    if (data_.adc[sid] > 0.5) has_adc = true;
   }
   if (has_adc) {
     std::cout << "SIPM_ADC event=" << event->GetEventID()
@@ -97,28 +142,41 @@ void EventAction::EndOfEventAction(const G4Event* event) {
 }
 
 ccb::sipm::ModelConfig EventAction::BuildSipmConfig() const {
-  // Start from the published representative parameters (no magic numbers here).
+  // Start from the published representative parameters.  They remain
+  // manufacturer-representative priors, not a CCB device calibration.
   auto c = ccb::sipm::ModelConfig::RepresentativeS13360_3050CS();
+
   // Wire the Geant4-side systematic knobs into the core config.
   c.pde_scale = cfg_.pde_scale;
   c.coupling_efficiency = cfg_.coupling_efficiency;
-  // Env overrides for core-specific parameters (all optional, all default
-  // to the representative spec).
-  auto getenv_d = [](const char* name, double& out) {
-    if (const char* e = std::getenv(name)) {
-      double v = std::strtod(e, nullptr);
-      if (std::isfinite(v) && v > 0) out = v;
-    }
-  };
-  getenv_d("CCB_SIPM_RECOVERY_TIME_NS", c.recovery_time_ns);
-  getenv_d("CCB_SIPM_DARK_COUNT_RATE_HZ", c.dark_count_rate_hz);
-  getenv_d("CCB_SIPM_WINDOW_END_NS", c.window_end_ns);
-  getenv_d("CCB_SIPM_SAMPLE_DT_NS", c.sample_dt_ns);
-  getenv_d("CCB_SIPM_CROSSTALK_PROB", c.prompt_crosstalk_probability);
-  getenv_d("CCB_SIPM_AFTERPULSE_FAST_PROB", c.afterpulse_fast_probability);
-  if (const char* e = std::getenv("CCB_SIPM_NO_DARK")) {
-    c.enable_dark_counts = !(std::strcmp(e, "1") == 0);
+
+  // Core electronics overrides supported by ccb-sipm-core.  The core validates
+  // the resulting configuration below.  Campaign-specific correlated-noise
+  // knobs are parsed strictly here because zero is a physically meaningful
+  // control value and malformed values must not silently fall back to defaults.
+  ccb::sipm::ModelConfig::ApplyEnvironmentOverrides(c);
+
+  ApplyOptionalEnvDouble("CCB_SIPM_RECOVERY_TIME_NS", c.recovery_time_ns,
+                         0.0, false);
+  ApplyOptionalEnvDouble("CCB_SIPM_DARK_COUNT_RATE_HZ", c.dark_count_rate_hz,
+                         0.0, true);
+  ApplyOptionalEnvDouble("CCB_SIPM_WINDOW_END_NS", c.window_end_ns,
+                         c.window_start_ns, false);
+  ApplyOptionalEnvDouble("CCB_SIPM_SAMPLE_DT_NS", c.sample_dt_ns,
+                         0.0, false);
+  ApplyOptionalEnvDouble("CCB_SIPM_CROSSTALK_PROB",
+                         c.prompt_crosstalk_probability,
+                         0.0, true, 1.0, false);
+  ApplyOptionalEnvDouble("CCB_SIPM_AFTERPULSE_FAST_PROB",
+                         c.afterpulse_fast_probability,
+                         0.0, true, 1.0, false);
+
+  // CCB_SIPM_NO_DARK=1 means disabled; =0 means enabled.  Other spellings are
+  // accepted only through the strict boolean parser, not by partial matching.
+  if (std::getenv("CCB_SIPM_NO_DARK") != nullptr) {
+    c.enable_dark_counts = !ParseStrictEnvBool("CCB_SIPM_NO_DARK", false);
   }
+
   c.validate();
   return c;
 }

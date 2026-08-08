@@ -43,7 +43,7 @@ device/electronics calibration is an operator-bench item.
 
 | Claim | Value | Evidence class | Status | Source |
 |---|---|---|---|---|
-| Selected B-stack pulses (S00 gate) | **640,737** | DATA_MEASUREMENT | ✅ VALIDATED | CL-001 |
+| Selected B-stack pulses (S00 gate) | **640,737** | DATA_MEASUREMENT | 🔒 GATED | CL-001 |
 | Combined timing σ₆₈ (4-sensor, MC) | **0.089 ns** | MC_METHOD_CLOSURE | ✅ PASS | clusterB #918 |
 | PID p-vs-d AUC (realistic chain, MC) | **0.898** | SIMULATION_RESULT | ✅ PASS | clusterA #921 |
 | ADC calibration (digitizer gain, MC) | **119.17 ADC/MeV** | SIMULATION_RESULT | ✅ PASS | clusterC #917 |

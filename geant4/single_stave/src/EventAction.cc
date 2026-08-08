@@ -48,12 +48,36 @@ double ParseRequiredEnvDouble(const char* name,
 
 void ApplyOptionalEnvDouble(const char* name,
                             double& out,
-                            double min_value,
-                            bool min_inclusive,
+                            double min_value = -std::numeric_limits<double>::infinity(),
+                            bool min_inclusive = true,
                             double max_value = std::numeric_limits<double>::infinity(),
                             bool max_inclusive = true) {
   if (std::getenv(name) == nullptr) return;
   out = ParseRequiredEnvDouble(name, min_value, min_inclusive, max_value, max_inclusive);
+}
+
+int ParseRequiredEnvInt(const char* name, int min_value, int max_value) {
+  const char* raw = std::getenv(name);
+  if (raw == nullptr) {
+    throw std::logic_error(std::string("ParseRequiredEnvInt called for unset env ") + name);
+  }
+  errno = 0;
+  char* end = nullptr;
+  const long value = std::strtol(raw, &end, 10);
+  while (end != nullptr && *end != '\0' &&
+         std::isspace(static_cast<unsigned char>(*end))) {
+    ++end;
+  }
+  if (errno == ERANGE || end == raw || end == nullptr || *end != '\0' ||
+      value < min_value || value > max_value) {
+    throw std::invalid_argument(std::string("invalid ") + name + "='" + raw + "'");
+  }
+  return static_cast<int>(value);
+}
+
+void ApplyOptionalEnvInt(const char* name, int& out, int min_value, int max_value) {
+  if (std::getenv(name) == nullptr) return;
+  out = ParseRequiredEnvInt(name, min_value, max_value);
 }
 
 bool ParseStrictEnvBool(const char* name, bool default_value) {
@@ -150,20 +174,33 @@ ccb::sipm::ModelConfig EventAction::BuildSipmConfig() const {
   c.pde_scale = cfg_.pde_scale;
   c.coupling_efficiency = cfg_.coupling_efficiency;
 
-  // Core electronics overrides supported by ccb-sipm-core.  The core validates
-  // the resulting configuration below.  Campaign-specific correlated-noise
-  // knobs are parsed strictly here because zero is a physically meaningful
-  // control value and malformed values must not silently fall back to defaults.
-  ccb::sipm::ModelConfig::ApplyEnvironmentOverrides(c);
+  // Strictly parse every ccb-sipm-core environment override currently exposed
+  // by the pinned core.  The core helper intentionally ignores malformed env
+  // values; scientific production must instead surface them as configuration
+  // errors so a typo cannot silently fall back to the representative default.
+  ApplyOptionalEnvDouble("CCB_SIPM_WINDOW_START_NS", c.window_start_ns);
+  ApplyOptionalEnvDouble("CCB_SIPM_WINDOW_END_NS", c.window_end_ns);
+  ApplyOptionalEnvDouble("CCB_SIPM_SAMPLE_DT_NS", c.sample_dt_ns, 0.0, false);
+  ApplyOptionalEnvInt("CCB_SIPM_SHAPER_STAGES", c.shaper_integrator_stages, 1, 6);
+  ApplyOptionalEnvDouble("CCB_SIPM_SHAPER_TAU_NS", c.pulse_decay_ns, 0.0, false);
+  ApplyOptionalEnvDouble("CCB_SIPM_SHAPER_EXTRA_TAU_NS",
+                         c.shaper_extra_stage_tau_ns, 0.0, false);
+  ApplyOptionalEnvInt("CCB_SIPM_ADC_BITS", c.adc_bits, 1, 30);
+  ApplyOptionalEnvDouble("CCB_SIPM_ADC_LSB_PE", c.adc_lsb_pe, 0.0, false);
+  ApplyOptionalEnvDouble("CCB_SIPM_BASELINE_ADC", c.baseline_adc);
+  ApplyOptionalEnvDouble("CCB_SIPM_PDE_SCALE", c.pde_scale, 0.0, true);
+  ApplyOptionalEnvDouble("CCB_SIPM_OVERVOLTAGE_V",
+                         c.device_provenance.overvoltage_V);
+  ApplyOptionalEnvDouble("CCB_SIPM_TEMPERATURE_C",
+                         c.device_provenance.temperature_C);
 
+  // Campaign-specific correlated-noise/recovery knobs.  Zero is deliberately
+  // accepted for rates/probabilities so the documented zero-control points are
+  // real controls rather than silent representative-default runs.
   ApplyOptionalEnvDouble("CCB_SIPM_RECOVERY_TIME_NS", c.recovery_time_ns,
                          0.0, false);
   ApplyOptionalEnvDouble("CCB_SIPM_DARK_COUNT_RATE_HZ", c.dark_count_rate_hz,
                          0.0, true);
-  ApplyOptionalEnvDouble("CCB_SIPM_WINDOW_END_NS", c.window_end_ns,
-                         c.window_start_ns, false);
-  ApplyOptionalEnvDouble("CCB_SIPM_SAMPLE_DT_NS", c.sample_dt_ns,
-                         0.0, false);
   ApplyOptionalEnvDouble("CCB_SIPM_CROSSTALK_PROB",
                          c.prompt_crosstalk_probability,
                          0.0, true, 1.0, false);
@@ -171,8 +208,7 @@ ccb::sipm::ModelConfig EventAction::BuildSipmConfig() const {
                          c.afterpulse_fast_probability,
                          0.0, true, 1.0, false);
 
-  // CCB_SIPM_NO_DARK=1 means disabled; =0 means enabled.  Other spellings are
-  // accepted only through the strict boolean parser, not by partial matching.
+  // CCB_SIPM_NO_DARK=1 means disabled; =0 means enabled.
   if (std::getenv("CCB_SIPM_NO_DARK") != nullptr) {
     c.enable_dark_counts = !ParseStrictEnvBool("CCB_SIPM_NO_DARK", false);
   }

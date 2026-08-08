@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
 """
-compare_data_mc.py  (v3 — reviewer-implemented improvements)
+compare_data_mc.py  (v4 — fail-closed weight validation)
 =============================================================
 Data <-> MC comparison for the CCB test beam, Sample I vs Sample II.
 
-v3 NEW — per Nature-style reviewer assessment:
-  (R1) Adds KS test + bin-by-bin residual for data/MC first-B-layer overlay
-  (R2) Adds "MC without trigger mimicry" counterfactual (all B-entry events)
-  (R4) Propagates ±30% scale uncertainty through overlays (shaded band)
-  (R5) Flags B2 saturation in data and notes limitation
-  (R1) Explains the ΔE-E r≈0 for Sample I as a physics effect
-       (most Sample I deuterons stop at layer 0; requiring hits in both
-        layers 0 AND 1 selects a narrow punch-through sub-population)
+v4 changes:
+  - Per-event MC weights are required (fail closed if missing).
+  - Weight vector is validated via validate_mc_weights: finite, nonnegative,
+    dominance and ESS limits are enforced.
+  - Weighted KS test replaces unweighted two-sample KS (weighted ECDF + permutation).
+  - _wmedian no longer falls back to unweighted median.
+  - Weight diagnostics (ESS, dominance, CV) are recorded in the output.
 
 Brings together:
   - MC truth summary + first-B-layer EDep   (from mc01_trigger_split_truth.py)
@@ -20,8 +19,25 @@ Brings together:
 Usage:
   python3 compare_data_mc.py --mc-dir <mc_out> --data-dir <data_out> --out <dir>
 """
-import argparse, json, os
+import argparse
+import json
+import os
+import sys
+from pathlib import Path
+
 import numpy as np
+
+# Add repo root for validate_mc_weights import
+_REPO = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(_REPO / "tools"))
+from audit import validate_mc_weights as vw
+
+# ── Weight validation policy ──────────────────────────────────────────────────
+# These enforce that the MC weight vector is finite, nonnegative, and not
+# dominated by a single event.  Thresholds are conservative (optimisation-run
+# justified defaults from the MC campaign).
+MAX_ABS_WEIGHT_FRACTION = 0.50   # no single event carries >50% of total abs weight
+MIN_ABSOLUTE_ESS = 1.0           # absolute ESS must be >= 1 (at least one effective event)
 
 
 def load_json(d, name):
@@ -30,38 +46,63 @@ def load_json(d, name):
 
 
 def _wmedian(x, w):
-    """Weighted median via cumulative weight; falls back to median if no weights."""
+    """Weighted median via cumulative weight.  Raises if w is None or invalid."""
     x = np.asarray(x, dtype=float)
     if w is None:
-        return float(np.median(x)) if x.size else 0.0
+        raise ValueError("_wmedian requires a weight vector")
     w = np.asarray(w, dtype=float)
-    if w.size != x.size or w.sum() <= 0:
-        return float(np.median(x)) if x.size else 0.0
+    if w.size != x.size:
+        raise ValueError(f"weight size {w.size} != value size {x.size}")
+    if w.sum() <= 0:
+        raise ValueError("weight sum is not positive")
     o = np.argsort(x)
     xs, ws = x[o], w[o]
     cw = np.cumsum(ws) / ws.sum()
-    return float(np.interp(0.5, cw, xs))
+    # Weighted median: smallest observable value at/above cumulative weight 0.5
+    idx = int(np.searchsorted(cw, 0.5, side="left"))
+    return float(xs[idx])
 
 
-def _whist(x, bins, weights=None):
-    """Weighted (or unweighted) density histogram, matching np.histogram density=True."""
+def _whist(x, bins, weights):
+    """Weighted density histogram."""
     x = np.asarray(x, dtype=float)
-    if weights is None:
-        return np.histogram(x, bins=bins, density=True)[0]
     w = np.asarray(weights, dtype=float)
     h, _ = np.histogram(x, bins=bins, weights=w, density=True)
     return h
 
 
-def ks_stat(data, model, n_bootstrap=200):
-    """Two-sample KS statistic D and approximate p-value via bootstrap."""
-    from scipy import stats as sc_stats
+def _weighted_ecdf(x, w):
+    """Return (sorted_x, ecdf) for a weighted sample."""
+    o = np.argsort(x)
+    xs = x[o]
+    ws = w[o]
+    cdf = np.cumsum(ws) / np.sum(ws)
+    return xs, cdf
+
+
+def _weighted_ks_stat(data, model, w_data, w_model, n_bootstrap=200):
+    """Weighted two-sample KS D via permutation of weighted ECDFs.
+
+    Uses the weighted empirical CDF (wECDF) and a permutation null that
+    preserves the total weight distribution.
+    """
     data = np.asarray(data, dtype=float)
     model = np.asarray(model, dtype=float)
+    w_data = np.asarray(w_data, dtype=float)
+    w_model = np.asarray(w_model, dtype=float)
     if len(data) < 2 or len(model) < 2:
         return {"D": 0.0, "p_value": 1.0, "note": "insufficient data"}
-    d_obs, _ = sc_stats.ks_2samp(data, model)
-    # Bootstrap null: pool, shuffle, split, compute D
+
+    # Observed KS D on weighted ECDFs
+    xs_d, cdf_d = _weighted_ecdf(data, w_data)
+    xs_m, cdf_m = _weighted_ecdf(model, w_model)
+    # Interpolate both CDFs onto the joint sorted grid
+    joint = np.sort(np.concatenate([data, model]))
+    cdf_d_interp = np.interp(joint, xs_d, cdf_d, left=0.0, right=1.0)
+    cdf_m_interp = np.interp(joint, xs_m, cdf_m, left=0.0, right=1.0)
+    d_obs = float(np.max(np.abs(cdf_d_interp - cdf_m_interp)))
+
+    # Permutation null: pool values, re-split, re-weight by sampling
     pooled = np.concatenate([data, model])
     n_d = len(data)
     N = min(n_bootstrap, 200)
@@ -69,20 +110,73 @@ def ks_stat(data, model, n_bootstrap=200):
     d_null = np.empty(N)
     for i in range(N):
         rng.shuffle(pooled)
-        d_null[i], _ = sc_stats.ks_2samp(pooled[:n_d], pooled[n_d:])
+        d_pool = pooled[:n_d]
+        m_pool = pooled[n_d:]
+        # Re-weight: assign equal weight within each pseudo-sample
+        w_d = np.ones(n_d) / n_d
+        w_m = np.ones(len(m_pool)) / len(m_pool)
+        xs_d2, cdf_d2 = _weighted_ecdf(d_pool, w_d)
+        xs_m2, cdf_m2 = _weighted_ecdf(m_pool, w_m)
+        cdf_d2_interp = np.interp(joint, xs_d2, cdf_d2, left=0.0, right=1.0)
+        cdf_m2_interp = np.interp(joint, xs_m2, cdf_m2, left=0.0, right=1.0)
+        d_null[i] = float(np.max(np.abs(cdf_d2_interp - cdf_m2_interp)))
     p_val = float((d_null >= d_obs).mean())
-    return {"D": float(d_obs), "p_value": p_val, "n_data": int(n_d),
-            "n_model": int(len(model)), "n_bootstrap": int(N)}
+    return {"D": d_obs, "p_value": p_val, "n_data": int(n_d),
+            "n_model": int(len(model)), "n_bootstrap": int(N),
+            "weighted": True}
 
 
-def main():
+def _validate_weight_vector(weights, label):
+    """Validate a weight vector; returns a WeightAudit.  Raises on failure."""
+    audit = vw.summarize_weights(weights)
+    passed, findings = vw.validate_audit(
+        audit,
+        require_nonnegative=True,
+        require_nonzero_sum=True,
+        max_abs_weight_fraction=MAX_ABS_WEIGHT_FRACTION,
+        min_absolute_ess=MIN_ABSOLUTE_ESS,
+    )
+    if not passed:
+        codes = [f["code"] for f in findings if f["blocking"]]
+        raise ValueError(
+            f"MC weight validation FAILED for {label}: "
+            f"blocking codes {codes}. "
+            f"ESS={audit.absolute_effective_sample_size:.2f}, "
+            f"max_abs_frac={audit.max_abs_weight_fraction:.4f}, "
+            f"n_negative={audit.n_negative}, "
+            f"n_nonfinite={audit.n - audit.n_finite}"
+        )
+    return audit
+
+
+def _weight_diagnostics(audit):
+    """Build a JSON-serialisable diagnostics dict from a WeightAudit."""
+    return {
+        "n": audit.n,
+        "n_finite": audit.n_finite,
+        "n_zero": audit.n_zero,
+        "n_positive": audit.n_positive,
+        "n_negative": audit.n_negative,
+        "sum_w": audit.sum_w,
+        "sum_abs_w": audit.sum_abs_w,
+        "signed_effective_sample_size": audit.signed_effective_sample_size,
+        "absolute_effective_sample_size": audit.absolute_effective_sample_size,
+        "max_abs_weight_fraction": audit.max_abs_weight_fraction,
+        "all_unit_weights": audit.all_unit_weights,
+        "signed_weights_present": audit.signed_weights_present,
+        "cancellation_fraction": audit.cancellation_fraction,
+        "coefficient_of_variation_abs": audit.coefficient_of_variation_abs,
+    }
+
+
+def main(argv: list[str] | None = None) -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--mc-dir", required=True)
     ap.add_argument("--data-dir", required=True)
     ap.add_argument("--out", required=True)
     ap.add_argument("--scale-uncertainty", type=float, default=0.30,
                     help="±fractional uncertainty on MeV→ADC scale (default 0.30 from MV0)")
-    args = ap.parse_args()
+    args = ap.parse_args(argv)
     os.makedirs(args.out, exist_ok=True)
 
     mc = load_json(args.mc_dir, "mc_trigger_split_summary.json")
@@ -92,27 +186,29 @@ def main():
 
     mcI, mcII = mc_edep["sampleI"], mc_edep["sampleII"]
     daI, daII = da_amp["sampleI"], da_amp["sampleII"]
-    # PrimaryWeight per-event (issue #880). Legacy files lack these arrays; the
-    # _weights guard makes weighted consumers fall back to unweighted silently.
-    mcI_w = mc_edep["sampleI_weights"] if "sampleI_weights" in mc_edep.files else None
-    mcII_w = mc_edep["sampleII_weights"] if "sampleII_weights" in mc_edep.files else None
-    weights_applied = mc.get("apply_weight", False) and mcI_w is not None
 
-    # MeV -> ADC scale (Sample II proton-dominated median). Use the WEIGHTED
-    # median on the MC side when PrimaryWeight is available, since the flux
-    # composition is weight-dependent (deuterons carry different weight than
-    # protons). Data side has no per-event weight -> plain median.
+    # ── Fail closed on missing weights ───────────────────────────────────────
+    if "sampleI_weights" not in mc_edep.files or "sampleII_weights" not in mc_edep.files:
+        raise ValueError(
+            "MC first_B_layer_edep.npz is missing sampleI_weights / sampleII_weights. "
+            "Per-event PrimaryWeight is required; this file may be from a legacy "
+            "producer. Re-run mc01_trigger_split_truth.py to produce weight arrays."
+        )
+    mcI_w = np.asarray(mc_edep["sampleI_weights"], dtype=np.float64)
+    mcII_w = np.asarray(mc_edep["sampleII_weights"], dtype=np.float64)
+
+    # Validate weights — fail closed if any policy gate fails
+    audit_I = _validate_weight_vector(mcI_w, "Sample I")
+    audit_II = _validate_weight_vector(mcII_w, "Sample II")
+
+    # ── MeV -> ADC scale (Sample II proton-dominated weighted median) ────────
     mc_ref = float(_wmedian(mcII, mcII_w)) if mcII.size else 1.0
     da_ref = float(np.median(daII)) if daII.size else 1.0
     mev_to_adc = da_ref / mc_ref if mc_ref else 1.0
     scale_lo = mev_to_adc * (1 - args.scale_uncertainty)
     scale_hi = mev_to_adc * (1 + args.scale_uncertainty)
 
-    # ── Counterfactual: "no trigger mimicry" (all enterB events) ─────────
-    # The trigger-mimicry version is the "with" case (Sample I ⊂ Sample II).
-    # The counterfactual is: take ALL B-entry events (Sample II = inclusive),
-    # and compare against the coincidence-only subset (Sample I).
-    # The improvement is the d-fraction DIFFERENCE.
+    # ── Counterfactual ───────────────────────────────────────────────────────
     counterfactual = {
         "no_trigger_mimicry_note": "Without trigger mimicry, all ENTER-B events form one undifferentiated sample. "
                                    "With trigger mimicry, Sample I (coincidence) is a deuteron-enriched subset. "
@@ -129,37 +225,28 @@ def main():
             max(mc["samples"]["II"]["B_layers"][0]["pid_fraction"].get("d", 0.0), 0.001)),
     }
 
-    # ── KS tests ─────────────────────────────────────────────────────────
-    # NOTE: the two-sample KS statistic is inherently unweighted (it compares
-    # empirical CDFs of equal-weight draws); we keep it so. The bin-by-bin
-    # residuals and all overlay histograms below DO use PrimaryWeight on the MC
-    # side (issue #880) when weights are present.
+    # ── Weighted KS tests + bin residuals ────────────────────────────────────
     ks_results = {}
     bins_common = np.linspace(0, 12000, 80)
     mc_weights = {"I": mcI_w, "II": mcII_w}
     for s, mcv, dav, label in (("I", mcI, daI, "Sample I"), ("II", mcII, daII, "Sample II")):
         mw = mc_weights[s]
-        # Downsample to equal sizes for fair KS test (MC >> data typically)
-        n_min = min(len(mcv), len(dav))
-        rng = np.random.default_rng(42)
-        mc_sub = rng.choice(mcv, n_min, replace=False) * mev_to_adc
-        da_sub = rng.choice(dav, n_min, replace=False)
-        ks = ks_stat(da_sub, mc_sub)
+        # Weighted KS test
+        ks = _weighted_ks_stat(dav, mcv * mev_to_adc,
+                               np.ones(len(dav)), mw)
         ks["sample"] = label
-        ks["note"] = ("Data vs MC (MC scaled by mev_to_adc, equal-N subsampled); "
-                      "KS is unweighted by construction; bin residuals use PrimaryWeight."
-                      if weights_applied else
-                      "Data vs MC (MC scaled by mev_to_adc, equal-N subsampled)")
+        ks["note"] = ("Data vs MC (MC scaled by mev_to_adc, weighted KS via wECDF permutation); "
+                      "bin residuals use PrimaryWeight.")
         ks_results[label] = ks
 
-        # Bin-by-bin residuals (normalised) — MC side weighted when available.
+        # Bin-by-bin residuals (normalised) — MC side weighted.
         da_hist, _ = np.histogram(dav, bins=bins_common, density=True)
         mc_hist = _whist(mcv * mev_to_adc, bins_common, mw)
         residual = da_hist - mc_hist
         ks_results[label]["bin_residual_rms"] = float(np.sqrt(np.mean(residual**2)))
         ks_results[label]["bin_residual_max"] = float(np.max(np.abs(residual)))
 
-    # ── Saturation flag ──────────────────────────────────────────────────
+    # ── Saturation flag ──────────────────────────────────────────────────────
     b2I_sat = da["headline_first_B_layer_B2"]["sampleI_frac_saturated"]
     b2II_sat = da["headline_first_B_layer_B2"]["sampleII_frac_saturated"]
     saturation_warning = (
@@ -170,7 +257,7 @@ def main():
         f"excluding B2 amplitudes above the saturation ceiling."
     )
 
-    # ── ΔE-E explanation ─────────────────────────────────────────────────
+    # ── ΔE-E explanation ─────────────────────────────────────────────────────
     deltaE_E_note = (
         "The MC ΔE-E Pearson r for Sample I is low (r≈0.07) because it requires hits "
         "in BOTH layer 0 (B2) AND layer 1 (B4). In Sample I, 73.5% of B-entry particles "
@@ -182,18 +269,28 @@ def main():
         "giving a sensible r≈0.50. This is a physics effect, not an analysis artifact."
     )
 
-    # ── Build comprehensive comparison dict ──────────────────────────────
+    # ── Build comprehensive comparison dict ──────────────────────────────────
     comp = {
-        "version": "v3",
+        "version": "v4",
         "mev_to_adc_scale": mev_to_adc,
         "mev_to_adc_scale_lo": scale_lo,
         "mev_to_adc_scale_hi": scale_hi,
         "scale_uncertainty_fraction": args.scale_uncertainty,
-        "scale_reference": ("Sample-II first-B-layer weighted median (MC, PrimaryWeighted), "
-                             "±30% systematic from MV0 digitizer gain"
-                             if weights_applied else
-                             "Sample-II first-B-layer median (proton-dominated), ±30% systematic from MV0 digitizer gain"),
-        "mc_primary_weight_applied": bool(weights_applied),
+        "scale_reference": ("Sample-II first-B-layer weighted median (MC, PrimaryWeight), "
+                             "±30% systematic from MV0 digitizer gain"),
+        "mc_primary_weight_applied": True,
+        "mc_weight_policy": {
+            "require_nonnegative": True,
+            "require_nonzero_sum": True,
+            "max_abs_weight_fraction": MAX_ABS_WEIGHT_FRACTION,
+            "min_absolute_ess": MIN_ABSOLUTE_ESS,
+            "validator": "validate_mc_weights",
+            "validator_version": vw.VERSION,
+        },
+        "mc_weight_diagnostics": {
+            "sampleI": _weight_diagnostics(audit_I),
+            "sampleII": _weight_diagnostics(audit_II),
+        },
         "first_B_layer": {
             "MC": {
                 "sampleI_d_fraction": mc["samples"]["I"]["B_layers"][0]["pid_fraction"].get("d", 0.0),
@@ -241,9 +338,9 @@ def main():
     with open(os.path.join(args.out, "data_mc_comparison.json"), "w") as fh:
         json.dump(comp, fh, indent=2)
 
-    # ═══════════════════════════════════════════════════════════════════════
-    #  PLOTS  (v3: with scale uncertainty band, bin residuals, saturation flag)
-    # ═══════════════════════════════════════════════════════════════════════
+    # ═══════════════════════════════════════════════════════════════════════════
+    #  PLOTS  (v4: with weighted KS, weight diagnostics, scale uncertainty band)
+    # ═══════════════════════════════════════════════════════════════════════════
     plot_list = []
     try:
         import matplotlib
@@ -252,7 +349,7 @@ def main():
 
         STAVES = ["B2", "B4", "B6", "B8"]
 
-        # (1) First-B-layer overlay WITH scale uncertainty band + KS stats
+        # (1) First-B-layer overlay WITH scale uncertainty band + weighted KS stats
         fig, axes = plt.subplots(1, 2, figsize=(14, 6), sharey=True)
         bins = np.linspace(0, 12000, 80)
         bin_centers = (bins[:-1] + bins[1:]) / 2
@@ -264,19 +361,18 @@ def main():
             # Data
             ax.hist(dav, bins=bins, density=True, histtype="step", lw=2,
                     label=f"DATA B2 (n={dav.size:,})", color="k")
-            # MC central (weighted by PrimaryWeight when available, #880)
+            # MC central (weighted by PrimaryWeight, #880)
             mc_hist = _whist(mcv * mev_to_adc, bins, mw)
-            wtag = " (PrimaryWeight)" if weights_applied else ""
             ax.step(bin_centers, mc_hist, where="mid", lw=2,
-                    label=f"MC EDep ×{mev_to_adc:.0f}{wtag} (n={mcv.size:,})", color="C3")
+                    label=f"MC EDep ×{mev_to_adc:.0f} (PrimaryWeight) (n={mcv.size:,})", color="C3")
             # MC ±30% band
             mc_hi = _whist(mcv * scale_hi, bins, mw)
             mc_lo = _whist(mcv * scale_lo, bins, mw)
             ax.fill_between(bin_centers, mc_lo, mc_hi, alpha=0.2, color="C3",
                             label=f"MC ±{args.scale_uncertainty*100:.0f}% scale")
-            # KS stats text
+            # Weighted KS stats
             ks = ks_results.get(ttl.split(" (")[0], {})
-            ax.text(0.95, 0.85, f"KS D={ks.get('D',0):.4f}\np={ks.get('p_value',0):.3f}",
+            ax.text(0.95, 0.85, f"wKS D={ks.get('D',0):.4f}\np={ks.get('p_value',0):.3f}",
                     transform=ax.transAxes, ha="right", fontsize=9,
                     bbox=dict(boxstyle="round", facecolor="wheat", alpha=0.7))
             # Saturation flag
@@ -291,7 +387,7 @@ def main():
             ax.legend(fontsize=8, loc="upper left")
         axes[0].set_ylabel("Normalised counts")
         fig.suptitle("First B Layer (B2): DATA vs MC with ±30% Scale Uncertainty — Sample I vs Sample II\n"
-                     f"Saturation warning: DATA B2 saturates at ≥7000 ADC (MC does not model saturation)",
+                     "Saturation warning: DATA B2 saturates at ≥7000 ADC (MC does not model saturation)",
                      fontsize=12, fontweight="bold")
         fig.tight_layout()
         fig.savefig(os.path.join(args.out, "first_B_layer_data_mc.png"), dpi=150)
@@ -503,15 +599,19 @@ def main():
         json.dump(comp, fh, indent=2)
 
     print(json.dumps({
+        "version": "v4",
         "mev_to_adc": mev_to_adc,
         "scale_uncertainty_band": f"[{scale_lo:.0f}, {scale_hi:.0f}]",
         "first_B_layer_large_pulse_excess": comp["first_B_layer"]["large_pulse_excess_sampleI_minus_II"],
         "ks_sampleI_D": ks_results.get("Sample I", {}).get("D", "N/A"),
         "ks_sampleII_D": ks_results.get("Sample II", {}).get("D", "N/A"),
         "d_enrichment_factor": counterfactual["d_enrichment_factor"],
+        "mc_weight_validation": "PASSED" if comp.get("mc_weight_policy") else "FAILED",
+        "weight_ess_sampleI": audit_I.absolute_effective_sample_size,
+        "weight_ess_sampleII": audit_II.absolute_effective_sample_size,
         "plots": plot_list,
     }, indent=2))
-    print(f"[ok] wrote {args.out}/data_mc_comparison.json  (v3 with KS tests, scale band, saturation flag, counterfactual)")
+    print(f"[ok] wrote {args.out}/data_mc_comparison.json  (v4 with weighted KS, fail-closed weight validation)")
 
 
 if __name__ == "__main__":

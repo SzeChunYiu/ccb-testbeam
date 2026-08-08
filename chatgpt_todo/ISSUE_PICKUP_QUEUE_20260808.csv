@@ -35,6 +35,12 @@ issue,audit_id,priority,domain,ready_now,depends_on,direct_work_on_audit_branch,
 998,AF-047,P1,mc_execution,partial,,yes,add BeamOn/event-count postcondition and macro hash provenance
 999,AF-046,P1,mc_primary,yes,986;991;992,no,implement geometry-aware primary ray-intersection preflight
 1000,AF-049,P0,mc_material,no,external CCB material evidence,no,replace polystyrene assumption with source-verified actual scintillator material and rerun ranges
+1005,AF-054,P0,mc_material,no,external coating evidence,no,replace massless-air coating with source-verified physical coating material and nuisance envelope
+1006,AF-055,P0,mc_hadronic,yes,1000;1005;986,no,make hadronic physics list configurable and validate applicable p/d model ensemble
+1007,AF-056,P0,mc_stopping,yes,1000;1006,no,separate primary stopping-power quantities from all-particle event Edep/path and revalidate
+1008,AF-057,P0,mc_quenching,partial,1000;1007,no,add quenching model-form uncertainty and held-out p/d light-response validation
+1009,AF-058,P0,mc_digitizer,partial,952;993;977;1010,no,persist full production SiPM waveform and sample it on exact real HRD DAQ schema
+1010,AF-059,P0,electronics,no,external CCB electronics evidence,no,measure or identify CCB front-end impulse noise saturation and sampling response
 1001,AF-050,P0,mc_statistics,yes,880,no,make data-MC comparison fail closed on weights and use weight-aware distribution test
 1002,AF-051,P1,report_generation,yes,956;1001,no,render numerical and causal narrative from validated machine-readable results
 963,AF-014,P1,waveform,partial,952;954,no,compare identifiable baseline models with injected pathologies

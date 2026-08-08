@@ -25,7 +25,9 @@
 #endif
 
 #include <cstdlib>
+#include <exception>
 #include <iostream>
+#include <string>
 
 int main(int argc, char** argv) {
   AppConfig cfg;
@@ -40,8 +42,27 @@ int main(int argc, char** argv) {
   // reproducible independently of worker scheduling and thread count.
   CLHEP::HepRandom::setTheSeed(static_cast<long>(cfg.seed));
 
-  // Load versioned optical tables once (hashes recorded in output metadata).
-  OpticalTables tables = OpticalTables::LoadDir(cfg.optical_dir);
+  // Load the action/provenance optical-table instance with the SAME strictness
+  // requested for DetectorConstruction. Historically this call omitted
+  // cfg.strict_optical, allowing SteppingAction::PdeAt() to receive an empty
+  // sipm_pde curve and silently use its 40% fallback in a nominally strict run.
+  OpticalTables tables;
+  try {
+    tables = OpticalTables::LoadDir(cfg.optical_dir, cfg.strict_optical);
+    if (cfg.strict_optical) {
+      const auto errors = tables.ValidateRequired({"sipm_pde"});
+      if (!errors.empty()) {
+        std::cerr << "fatal: strict action-level optical-table validation failed:\n";
+        for (const auto& error : errors) {
+          std::cerr << "  - " << error << '\n';
+        }
+        return 3;
+      }
+    }
+  } catch (const std::exception& exc) {
+    std::cerr << "fatal: optical-table initialization failed: " << exc.what() << '\n';
+    return 3;
+  }
 
   auto* runManager =
       G4RunManagerFactory::CreateRunManager(G4RunManagerType::Default);
@@ -76,7 +97,8 @@ int main(int argc, char** argv) {
 
   auto* detector = new DetectorConstruction(cfg);
   runManager->SetUserInitialization(detector);
-  runManager->SetUserInitialization(PhysicsList::Build("QGSP_BIC", 0.1, cfg.wls_time_profile));
+  runManager->SetUserInitialization(
+      PhysicsList::Build("QGSP_BIC", 0.1, cfg.wls_time_profile));
   // geometry_hash is deterministic (constructor), so actions can be set now.
   runManager->SetUserInitialization(
       new ActionInitialization(cfg, tables, detector->GeometryHash()));

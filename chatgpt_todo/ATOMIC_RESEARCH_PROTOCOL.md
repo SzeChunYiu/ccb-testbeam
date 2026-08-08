@@ -17,16 +17,38 @@ Every atomic task receives four explicit review passes. They are review lenses e
 
 For each pass record: evidence inspected, strongest counter-hypothesis, falsifier attempted, residual uncertainty, and vote (`ACCEPT`, `REVISE`, `BLOCK`, `REJECT`). `ACCEPT` requires all blocking criteria to pass; prose consensus cannot waive missing data or failed controls.
 
-## Nature-style literature workflow
+## Nature-skills workflow and limits
 
-The requested `nature-skills`, `nature-academic-search`, and `nature-reviewer` packages are not mounted as native tools in every ChatGPT runtime. When absent, follow their public methodology manually:
+The requested public skill collection is `Yuan1z0825/nature-skills`. Its current `nature-reviewer` and `nature-academic-search` instructions are used as methodological constraints in this project when the corresponding reusable skill folders are not mounted natively in the active ChatGPT runtime.
 
-- search multiple scholarly sources, prioritising primary papers, official detector documentation and collaboration manuals;
-- broaden queries and deduplicate results;
-- verify DOI/title/authors/year and distinguish peer-reviewed evidence from preprints/vendor measurements;
-- use stable concern IDs and separate blocking from non-blocking concerns;
-- do not claim reviewer independence or mutual blindness unless the runtime actually isolates contexts;
-- citation support is necessary but not sufficient: every external parameter used in MC must be tied to the exact material/device/configuration in this experiment or treated as a nuisance/systematic.
+### `nature-reviewer` rules adopted here
+
+The public skill requires source-grounded assessment of originality, scientific importance, interdisciplinary readership, technical soundness, and readability, with stable concern IDs, `claim_pointer`, `evidence_pointer`, Major/Minor severity, and a blocking flag. It also requires individual reviewer reports to be generated in genuinely isolated contexts before synthesis.
+
+This runtime does **not** expose isolated subagents for the present project audit. Therefore:
+
+- never call the four review lenses mutually blind or independent peer reviewers;
+- never invent reviewer identities, biographies, institutions, specialties, or editorial decisions;
+- use the four role-separated passes as adversarial coverage lenses in one shared context;
+- preserve disagreements and negative findings instead of rewriting passes to manufacture consensus;
+- if a future runtime can provide genuinely isolated invocations, freeze those reports before cross-review synthesis as the public `nature-reviewer` skill requires.
+
+### `nature-academic-search` rules adopted here
+
+Use the public skill's source-routing logic rather than one-engine convenience search. For this physics/instrumentation project:
+
+1. start with primary/authoritative sources: original peer-reviewed detector papers, DOI records/CrossRef, arXiv for physics preprints when appropriate, manufacturer documentation for device specifications, Geant4/NIST/PDG/CODATA for authoritative reference data;
+2. use secondary discovery sources only to find the primary source, not as the final basis for a quantitative detector parameter when a primary source exists;
+3. broaden queries and sources when a search returns nothing;
+4. deduplicate by DOI/title/authors/year and verify identifiers before adding a reference to the project evidence map;
+5. record source failures/rate limits rather than silently substituting memory;
+6. distinguish peer-reviewed measurements, preprints, manufacturer representative values, collaboration/CAD records, and fitted CCB parameters in the detector-property ledger.
+
+For MC, literature values are priors/comparison points. They do not establish the exact CCB hardware value unless the material/device/configuration is demonstrably the same. Unverified transfer values become nuisance/systematic ranges or `UNKNOWN_EXTERNAL`, not detector truth.
+
+### `nature-skills` provenance
+
+Project handoff documents should cite the public repository and exact skill path/commit when a review package materially relies on a rule from it. Do not vendor only `SKILL.md` while claiming the full skill was installed: the upstream installation guide notes that skills can depend on supporting `references/`, `static/`, scripts, and README context.
 
 ## Atomic evidence states
 
@@ -72,8 +94,20 @@ No timing, PID, light-collection, pile-up, or data/MC performance claim may be a
 9. MC event-weight and effective-sample-size audit;
 10. held-out validation plus systematic/nuisance scans.
 
-## Iteration rule
+## Recursive iteration rule
 
-After resolving an issue, recurse into its assumptions. Ask: what data contract did the fix assume; what hidden transformation remains; what uncertainty was introduced; what alternative mechanism is still observationally equivalent; what claim surface is now stale; what new negative control could falsify the result? Create child issues only when they are independently actionable.
+After resolving an issue, recurse into its assumptions. Ask:
+
+- What data contract did the fix assume?
+- What hidden transformation remains?
+- What physical parameter entered without CCB-specific evidence?
+- What statistical independence/weighting assumption entered the estimator?
+- What uncertainty did the fix introduce or fail to propagate?
+- What alternative mechanism remains observationally equivalent?
+- What negative control could still falsify the result?
+- Which public claim, figure, table, wiki paragraph, config, notebook, or cached artifact is now stale?
+- Does the new method pass on deliberately corrupted inputs and fail when it should?
+
+Create child issues only when they are independently actionable. Preserve negative results and superseded hypotheses so later AI sessions do not repeatedly rediscover them.
 
 The review is complete only when all remaining leaves are either validated, explicitly blocked with an external dependency, or documented negative results with no untested material alternative under the stated scope.

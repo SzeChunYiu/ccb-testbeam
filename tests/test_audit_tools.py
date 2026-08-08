@@ -57,6 +57,65 @@ def test_event_keys_duplicate_fails(tmp_path):
     assert exc.value.code == 1
 
 
+def test_event_keys_left_only_key_fails_key_set_equality(tmp_path):
+    """Left-only key should fail with --require-key-set-equality."""
+    left = pd.DataFrame({'run': [1, 1, 3], 'evt': [10, 11, 30], 'a': [0.1, 0.2, 0.3]})
+    right = pd.DataFrame({'run': [1, 1], 'evt': [10, 11], 'b': [1, 2]})
+    lp, rp = tmp_path / 'left.csv', tmp_path / 'right.csv'
+    left.to_csv(lp, index=False); right.to_csv(rp, index=False)
+    # Default mode (no key-set equality) passes because inner merge is one-to-one.
+    res = validate_event_keys.validate(lp, rp, ['run', 'evt'])
+    assert res['one_to_one'] is True
+    assert res['key_set_analysis']['left_only_count'] == 1
+    assert res['key_set_analysis']['shared_key_count'] == 2
+
+    # Strict mode fails.
+    res_strict = validate_event_keys.validate(
+        lp, rp, ['run', 'evt'], require_key_set_equality=True)
+    assert res_strict['one_to_one'] is False
+    assert res_strict['key_set_analysis']['left_only_count'] == 1
+
+
+def test_event_keys_right_only_key_fails_key_set_equality(tmp_path):
+    """Right-only key should fail with --require-key-set-equality."""
+    left = pd.DataFrame({'run': [1, 1], 'evt': [10, 11], 'a': [0.1, 0.2]})
+    right = pd.DataFrame({'run': [1, 1, 2], 'evt': [10, 11, 20], 'b': [1, 2, 3]})
+    lp, rp = tmp_path / 'left.csv', tmp_path / 'right.csv'
+    left.to_csv(lp, index=False); right.to_csv(rp, index=False)
+    res = validate_event_keys.validate(
+        lp, rp, ['run', 'evt'], require_key_set_equality=True)
+    assert res['one_to_one'] is False
+    assert res['key_set_analysis']['right_only_count'] == 1
+
+
+def test_event_keys_disjoint_sets_fail_key_set_equality(tmp_path):
+    """Disjoint unique key sets should fail."""
+    left = pd.DataFrame({'run': [1, 2], 'evt': [10, 20], 'a': [0.1, 0.2]})
+    right = pd.DataFrame({'run': [3, 4], 'evt': [30, 40], 'b': [1, 2]})
+    lp, rp = tmp_path / 'left.csv', tmp_path / 'right.csv'
+    left.to_csv(lp, index=False); right.to_csv(rp, index=False)
+    res = validate_event_keys.validate(
+        lp, rp, ['run', 'evt'], require_key_set_equality=True)
+    assert res['one_to_one'] is False
+    assert res['key_set_analysis']['shared_key_count'] == 0
+    assert res['key_set_analysis']['left_only_count'] == 2
+    assert res['key_set_analysis']['right_only_count'] == 2
+
+
+def test_event_keys_key_set_equality_sha256(tmp_path):
+    """Key-set equality mode should record input hashes."""
+    left = pd.DataFrame({'run': [1, 1], 'evt': [10, 11], 'a': [0.1, 0.2]})
+    right = pd.DataFrame({'run': [1, 1], 'evt': [10, 11], 'b': [1, 2]})
+    lp, rp = tmp_path / 'left.csv', tmp_path / 'right.csv'
+    left.to_csv(lp, index=False); right.to_csv(rp, index=False)
+    res = validate_event_keys.validate(
+        lp, rp, ['run', 'evt'], require_key_set_equality=True)
+    assert res['one_to_one'] is True
+    assert len(res['left_sha256']) == 64
+    assert len(res['right_sha256']) == 64
+    assert res['left_sha256'] != res['right_sha256']
+
+
 # --------------------------------------------------------------------------- #
 # validate_pulse_schema
 # --------------------------------------------------------------------------- #

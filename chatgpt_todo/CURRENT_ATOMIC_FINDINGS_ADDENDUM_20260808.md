@@ -18,6 +18,12 @@ Unless SHA-256 is separately disabled, the checksum stage still tries to hash co
 ### AF-035 — overlapping run groups are silently hidden/last-write-wins (#983)
 `configured_runs()` deduplicates with a set; `run_group_lookup()` overwrites duplicate assignments. Calibration/analysis leakage can therefore be created by configuration without an error. A fail-closed validator is implemented on this branch.
 
+### AF-048 — run sidecar omits beam position, angle and other response-defining AppConfig fields (#997)
+The position-scan MC cannot be reproduced from the current sidecar alone because `hit_x_cm`, `hit_y_cm`, `theta_deg`, `phi_deg`, WLS profile, strictness and multiple response settings are not persisted. Requested/effective full configuration must be hash-bound.
+
+### AF-053 — real-data CFD timing silently skips missing or empty requested runs (#1004)
+`load_waveforms()` logs and continues for missing/empty ROOT inputs. A nominal multi-run result can therefore silently become a different run population. Authorising execution must require exact run-domain completeness or an explicit canonical exclusion policy.
+
 ## SiPM/digitizer/optical MC
 
 ### AF-026 — `--sipm-n-cells` does not reach the production ccb-sipm-core microcell grid (#974)
@@ -56,6 +62,24 @@ The analyzer applies one `polyfit` even through saturation/nonlinear regimes. Us
 ### AF-038 — geometry hash is non-canonical and mixes/omits fields (#986)
 It omits geometry-changing fields such as far-end mode/coating/sensor thickness while including Birks, which is physics response, and concatenates values without names/units/schema. Split canonical geometry/optical/physics/digitizer digests.
 
+### AF-045 — `--strict-optical` was bypassed for the shared action-level OpticalTables/PDE (#996)
+`main.cc` originally loaded the table instance passed to actions without `cfg.strict_optical`, while `SteppingAction::PdeAt()` has a flat-40% fallback. This branch now loads that instance strictly and requires `sipm_pde` before run-manager construction. AF-032/AF-033 still remain.
+
+### AF-046 — configured primary position/direction is not geometry-intersection validated (#999)
+Finite `hit_x`, `hit_y`, `theta`, `phi` values can still launch a particle that misses or travels away from the intended front face. Automated position/angle campaigns need a ray-geometry preflight and executed-entry fraction gate.
+
+### AF-047 — Geant4 UI/macro command failures were ignored (#998)
+The audited main ignored `ApplyCommand` status and could return 0 after a missing/broken macro. This branch now makes required UI command errors nonzero. A macro still needs a postcondition proving expected BeamOn/event count.
+
+### AF-049 — BC-408 is modeled as polystyrene rather than source-verified PVT material (#1000)
+The repository calls the bars BC-408 but clones `G4_POLYSTYRENE` at 1.06 g/cm³. BC-408 is PVT-based; transport composition/density must be source-bound to the actual CCB bars and the proton/deuteron range study regenerated under the correct material.
+
+### AF-050 — `compare_data_mc.py` can silently discard MC weighting and applies unweighted KS to weighted MC (#1001)
+Missing/misaligned/nonpositive weights can fall back to unweighted medians, and the KS branch explicitly uses equal-weight MC values. A weight-aware target/test/uncertainty model is required, with #880 as the central weight audit.
+
+### AF-051 — `compare_data_mc.py` embeds hard-coded numerical/causal narrative (#1002)
+Fractions, correlations and “physics effect, not analysis artifact” prose are written as static strings rather than generated from validated results/claim state. Narrative must be rendered from machine-readable outputs and weakened automatically when upstream gates are blocked.
+
 ## Hardware/geometry provenance
 
 ### AF-039 — one-fibre vs two-fibre beam-test hardware contradiction (#987)
@@ -67,18 +91,25 @@ An academic setup chapter describes one Y-11 fibre per bar, while the single-sta
 ### AF-044 — 2 cm vs 4 cm analysed-stave spacing (#992)
 The timing note uses 2 cm per B2→B4→B6→B8 step; a newer repository setup document says 4 cm and explicitly notes the discrepancy. Build one physical layer ledger and derive TOF/range distances from it.
 
+## Timing and waveform inference
+
+### AF-052 — real-data CFD timing conditions on peak-time agreement before measuring timing (#1003)
+The CFD study derives per-stave peak-sample offsets from the same data and retains complete events only when their aligned peak spread is ≤1.5 samples before evaluating the timing residual. Because peak sample and CFD/template phase are correlated timing observables, this is a conditional clean-class result and can suppress topology/timing tails. Publish unconditioned and conditioned distributions, freeze preselection on calibration data, and quantify acceptance-vs-width bias with injection/MC closure.
+
 ## Pile-up/rate and nuclear-physics interpretation
 
 ### AF-040 — 3.05 MHz `Rmax` headline reuses 0.38 duty factor as `mu_max` (#988)
 The claim ledger already blocks/supersedes this interpretation. Recursive source inspection found S10's producer hard-codes `mu_max=0.380` and checks arithmetic, rather than deriving it from event-arrival exposure. The LaTeX chapter must not promote it as measured pile-up tolerance.
 
 ### AF-041 — ~105 MeV elastic-deuteron kinematics vs ~15.8 MeV 'deuteron-like' fitted scale (#989)
-The project uses incompatible-looking energy quantities without a truth-type reconciliation. A chapter also attributes deuteron range to NIST PSTAR, whose official scope is protons. Rebuild with relativistic reaction kinematics + validated deuteron transport and a strict energy-quantity dictionary.
+The project uses incompatible-looking energy quantities without a truth-type reconciliation. A chapter also attributes deuteron range to NIST PSTAR, whose official scope is protons. A branch tool now solves relativistic p+d elastic recoil kinematics and gives ~104.18 MeV for a 190 MeV proton with the outgoing deuteron at 38°; therefore the ~105 MeV elastic scale is plausible and the ~15.8 MeV quantity genuinely needs a different estimator/reaction/material-loss explanation.
 
 ## Review governance
 
 ### AF-042 — nature-reviewer acceptance badges are not claim authorization (#990)
 A chapter marked 'ACCEPTED 3/3' still contains unresolved detector/physics premises. Separate editorial/method review, source verification, executable reproduction and claim authorization; never describe AI role passes as independent human/blind reviewers.
+
+The audit protocol has now been aligned explicitly with the public `Yuan1z0825/nature-skills` methodology. Because this runtime has no isolated review subagents, the project uses role-separated adversarial passes but does not claim the mutually blind reviewer condition required by the upstream `nature-reviewer` skill.
 
 ## Direct implementation completed on this audit branch
 
@@ -86,11 +117,17 @@ A chapter marked 'ACCEPTED 3/3' still contains unresolved detector/physics premi
 - exact composite-key set/domain closure validator + tests;
 - exclusive run-group validator + tests;
 - strict/fail-closed SiPM env/digitizer initialization in `EventAction.cc`;
+- strict parsing of zero/nonfinite/trailing-garbage SiPM systematic controls;
 - effective SiPM config logging for integration verification;
 - SiPM zero-control + malformed-env integration regression script;
 - strict optical mode in the canonical calibration SLURM driver;
+- action-level strict optical/PDE startup gate in `main.cc`;
+- fail-closed Geant4 required UI/macro command status handling;
+- relativistic p+d elastic recoil kinematics tool + tests;
 - expert-review protocol, literature/method map and AI pickup guide.
 
 ## Work that remains intentionally unresolved
 
 The branch does **not** guess the correct 16/18-sample product, channel polarity, physical stave/fibre geometry, run-61/run-64 calibration role, or the correct incident deuteron distribution. Those require immutable raw data and/or authoritative hardware/run records. The correct scientific implementation is to make those missing contracts fail closed, not choose whichever value makes historical plots reproduce.
+
+The branch also does not claim that passing Python CI validates the Geant4 integration changes. The SiPM/Geant4 regression still needs execution in a recursive Geant4-capable checkout and the real-data gates still need immutable beam-data bytes.

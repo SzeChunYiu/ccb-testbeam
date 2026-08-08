@@ -48,6 +48,21 @@ def is_charged(pdg):
     if a > 1_000_000_000: return ((a // 10_000) % 1000) > 0
     return a in (2212, 11, 13, 211, 321) or (a > 1e9 and a <= 1e10)
 
+
+def deepest_edep_layer(layer_edep: dict[int, float], threshold: float,
+                        strict: bool = True) -> int:
+    """Deepest layer with Edep > threshold (strict=True) or >= threshold.
+
+    Returns the deepest layer index whose deposited energy exceeds the
+    threshold.  Returns -1 when no layer passes (NO_LAYER_PASSES sentinel).
+    """
+    deepest = -1
+    for lay, e in layer_edep.items():
+        if (e > threshold) if strict else (e >= threshold):
+            if int(lay) > deepest:
+                deepest = int(lay)
+    return deepest
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--mc", required=True)
@@ -72,9 +87,16 @@ def main():
 
     # Accumulators: per sample, per track
     mc_data = {"I": {"deltaE": [], "E_res": [], "E_full": [], "E_4layer": [],
-                     "pdg": [], "stop_layer": [], "nlayers": []},
+                     "pdg": [], "nlayers": []},
                "II": {"deltaE": [], "E_res": [], "E_full": [], "E_4layer": [],
-                      "pdg": [], "stop_layer": [], "nlayers": []}}
+                      "pdg": [], "nlayers": []}}
+    # Per-threshold stop_layer accumulators (issue #1039)
+    mc_stop_layers: dict[str, dict[str, list]] = {
+        "I": {}, "II": {}
+    }
+    for th in args.stop_thresholds:
+        for s in ("I", "II"):
+            mc_stop_layers[s][th] = []
 
     n_enterB = n_enterA = n_coinc = n_total = 0
 
@@ -124,19 +146,27 @@ def main():
                     E_full = sum(el.get(l, 0.0) for l in range(1, NB_LAYERS))
                     E_4layer = E_res  # same as data-matched
 
-                    stop_l = int(layers.max())  # deepest hit (any Edep)
+                    # stop_layer per threshold (issue #1039)
+                    stop_layers = {
+                        th: deepest_edep_layer(el, th, strict=True)
+                        for th in args.stop_thresholds
+                    }
                     D = mc_data[s]
                     D["deltaE"].append(deltaE)
                     D["E_res"].append(E_res)
                     D["E_full"].append(E_full)
                     D["E_4layer"].append(E_4layer)
                     D["pdg"].append(p0)
-                    D["stop_layer"].append(stop_l)
                     D["nlayers"].append(int(len(set(layers.tolist()))))
+                    # Per-threshold stop_layer (issue #1039)
+                    for th, sl in stop_layers.items():
+                        mc_stop_layers[s][th].append(sl)
 
     for s in ("I", "II"):
         for k in mc_data[s]:
             mc_data[s][k] = np.asarray(mc_data[s][k])
+        for th in args.stop_thresholds:
+            mc_stop_layers[s][th] = np.asarray(mc_stop_layers[s][th], dtype=int)
 
     # ── MC Summary Tables ──────────────────────────────────────────────
     mc_summary = {}
@@ -152,7 +182,22 @@ def main():
             if mask.sum() < 5:
                 mc_summary[s][sp] = {"n_events": int(mask.sum()), "note": "<5 events"}
                 continue
-            de = D["deltaE"][mask]; er = D["E_res"][mask]; sl = D["stop_layer"][mask]
+            de = D["deltaE"][mask]; er = D["E_res"][mask]
+            # Per-threshold stopping statistics (issue #1039)
+            stop_stats = {}
+            for th in args.stop_thresholds:
+                sl = mc_stop_layers[s][th][mask]
+                reach = {
+                    "median_stop_layer": float(np.median(sl)),
+                    "frac_stop_B2": float((sl == 0).mean()),
+                    "frac_reach_B4": float((sl >= 1).mean()),
+                    "frac_reach_B6": float((sl >= 2).mean()),
+                    "frac_reach_B8": float((sl >= 3).mean()),
+                    "frac_no_layer_pass": float((sl < 0).mean()),
+                    "comparison_rule": ">",
+                    "threshold_MeV": float(th),
+                }
+                stop_stats[str(th)] = reach
             mc_summary[s][sp] = {
                 "n_events": int(mask.sum()),
                 "deltaE_median_MeV": float(np.median(de)),
@@ -161,11 +206,7 @@ def main():
                 "Eres_median_MeV": float(np.median(er)),
                 "Eres_p16_MeV": float(np.percentile(er, 16)),
                 "Eres_p84_MeV": float(np.percentile(er, 84)),
-                "median_stop_layer": float(np.median(sl)),
-                "frac_stop_B2": float((sl == 0).mean()),
-                "frac_reach_B4": float((sl >= 1).mean()),
-                "frac_reach_B6": float((sl >= 2).mean()),
-                "frac_reach_B8": float((sl >= 3).mean()),
+                "stop_threshold_stats": stop_stats,
             }
 
     # ═══════════════════════════════════════════════════════════════════
@@ -177,6 +218,14 @@ def main():
     df = df[df["group"].str.endswith("_analysis")].copy()
 
     data_summary = {}
+    s00_amplitude_cut = 1000.0  # S00 selection gate
+    min_data_threshold = min(args.data_thresholds) if args.data_thresholds else s00_amplitude_cut
+    if min_data_threshold < s00_amplitude_cut:
+        print(f"[warn] --data-thresholds includes {min_data_threshold} ADC which is below the "
+              f"S00 selection cut ({s00_amplitude_cut} ADC). Pulses below the cut are "
+              f"not present in the selected-pulse table; reach fractions at thresholds "
+              f"below {s00_amplitude_cut} ADC are left-censored and not identifiable.",
+              file=sys.stderr)
     for s in ("I", "II"):
         sub = df[df["sample"] == s]
         # Per-event: match B2, B4, B6, B8 amplitudes
@@ -189,11 +238,35 @@ def main():
         deltaE_data = merged["amp_B2"].values
         E_res_data = merged["amp_B4"].values + merged["amp_B6"].values + merged["amp_B8"].values
         sat_B2 = (deltaE_data >= 7000)
-        # Deepest active stave
-        stave_presence = np.column_stack([merged["amp_B2"]>1000, merged["amp_B4"]>1000,
-                                          merged["amp_B6"]>1000, merged["amp_B8"]>1000])
-        deepest = np.argmax(stave_presence[:, ::-1], axis=1)
-        deepest = 3 - deepest  # invert: 0=B2, 1=B4, 2=B6, 3=B8
+
+        # Per-threshold deepest active stave (issue #1038: use args.data_thresholds)
+        per_threshold_reach = {}
+        for th in args.data_thresholds:
+            stave_presence = np.column_stack([
+                merged["amp_B2"] > th,
+                merged["amp_B4"] > th,
+                merged["amp_B6"] > th,
+                merged["amp_B8"] > th,
+            ])
+            deepest = np.argmax(stave_presence[:, ::-1], axis=1)
+            deepest = 3 - deepest  # invert: 0=B2, 1=B4, 2=B6, 3=B8
+            # When no stave passes, argmax returns 0 (first reverse index), so
+            # deepest becomes 3 — correct that: if no stave passes, set to -1.
+            no_pass = ~stave_presence.any(axis=1)
+            deepest[no_pass] = -1
+            per_threshold_reach[str(th)] = {
+                "threshold_ADC": float(th),
+                "frac_reach_B4": float((deepest >= 1).mean()),
+                "frac_reach_B6": float((deepest >= 2).mean()),
+                "frac_reach_B8": float((deepest >= 3).mean()),
+                "deepest_stave_fracs": {
+                    "B2": float((deepest == 0).mean()),
+                    "B4": float((deepest == 1).mean()),
+                    "B6": float((deepest == 2).mean()),
+                    "B8": float((deepest == 3).mean()),
+                    "NO_LAYER_PASSES": float((deepest == -1).mean()),
+                },
+            }
 
         data_summary[s] = {
             "n_events": int(len(merged)),
@@ -204,15 +277,8 @@ def main():
             "Eres_p16_ADC": float(np.percentile(E_res_data, 16)),
             "Eres_p84_ADC": float(np.percentile(E_res_data, 84)),
             "frac_saturated_B2": float(sat_B2.mean()),
-            "frac_reach_B4": float((deepest >= 1).mean()),
-            "frac_reach_B6": float((deepest >= 2).mean()),
-            "frac_reach_B8": float((deepest >= 3).mean()),
-            "deepest_stave_fracs": {
-                "B2": float((deepest == 0).mean()),
-                "B4": float((deepest == 1).mean()),
-                "B6": float((deepest == 2).mean()),
-                "B8": float((deepest == 3).mean()),
-            }
+            "s00_amplitude_cut_ADC": s00_amplitude_cut,
+            "per_threshold_reach": per_threshold_reach,
         }
 
     # ═══════════════════════════════════════════════════════════════════
@@ -285,21 +351,23 @@ def main():
             fig.savefig(f"{args.out}/data_{s}_deltaE_E_proxy.png", dpi=300)
             plt.close(fig)
 
-        # ── MC Penetration plots ───────────────────────────────────────
+        # ── MC Penetration plots (default threshold = args.stop_thresholds[0]) ──
+        default_mc_th = args.stop_thresholds[0]
         for s, slabel in (("I","Sample I"), ("II","Sample II")):
             D = mc_data[s]; sp_labels = np.array([species_label(p) for p in D["pdg"]])
+            sl_pen = mc_stop_layers[s][default_mc_th]
             # Proton + deuteron overlaid, normalized
             fig, ax = plt.subplots(figsize=(8, 5))
             for sp, color, label in (("p",CAT[0],"proton"),("d",CAT[5],"deuteron")):
                 m = sp_labels == sp
                 if m.sum() > 10:
-                    sl = D["stop_layer"][m]
+                    sl = sl_pen[m]
                     layers = np.arange(8)
                     frac = [(sl == l).sum()/m.sum() for l in layers]
                     ax.plot(layers, frac, "o-", color=color, linewidth=2, markersize=6, label=label)
             ax.set_xlabel("Stopping layer (0=B2, 1=B4, 2=B6, 3=B8, ...)", fontsize=11)
             ax.set_ylabel("Fraction of tracks", fontsize=11)
-            ax.set_title(f"MC {slabel} — Penetration Depth: Proton vs Deuteron", fontsize=12, fontweight="bold")
+            ax.set_title(f"MC {slabel} — Penetration Depth: Proton vs Deuteron\n(threshold={default_mc_th} MeV)", fontsize=12, fontweight="bold")
             ax.legend(); ax.grid(True, alpha=0.3)
             fig.tight_layout(); fig.savefig(f"{args.out}/mc_{s}_penetration_p_d.png", dpi=300); plt.close(fig)
 
@@ -308,13 +376,13 @@ def main():
             for sp, color, label in (("p",CAT[0],"proton"),("d",CAT[5],"deuteron"),("all","#333","all particles")):
                 m = sp_labels == sp if sp != "all" else np.ones(len(D["pdg"]),dtype=bool)
                 if m.sum() > 10:
-                    sl = D["stop_layer"][m]
+                    sl = sl_pen[m] if sp != "all" else sl_pen
                     layers = np.arange(8)
                     cumul = [(sl >= l).sum()/m.sum() for l in layers]
                     ax.plot(layers, cumul, "o-", color=color, linewidth=2, markersize=6, label=label)
             ax.set_xlabel("Layer L", fontsize=11)
             ax.set_ylabel("P(reaches layer L)", fontsize=11)
-            ax.set_title(f"MC {slabel} — Cumulative Penetration Probability", fontsize=12, fontweight="bold")
+            ax.set_title(f"MC {slabel} — Cumulative Penetration Probability\n(threshold={default_mc_th} MeV)", fontsize=12, fontweight="bold")
             ax.legend(); ax.grid(True, alpha=0.3)
             fig.tight_layout(); fig.savefig(f"{args.out}/mc_{s}_cumulative_penetration.png", dpi=300); plt.close(fig)
 
@@ -354,8 +422,9 @@ def main():
         for sp in ["p","d","all"]:
             if sp in mc_summary[s] and "n_events" in mc_summary[s][sp]:
                 ms = mc_summary[s][sp]
+                st = ms["stop_threshold_stats"][str(args.stop_thresholds[0])]
                 print(f"  MC {s} {sp}: n={ms['n_events']}, deltaE_med={ms['deltaE_median_MeV']:.1f}, "
-                      f"stop_B2={ms['frac_stop_B2']:.1%}, reach_B8={ms['frac_reach_B8']:.1%}")
+                      f"stop_B2={st['frac_stop_B2']:.1%}, reach_B8={st['frac_reach_B8']:.1%}")
 
 if __name__ == "__main__":
     main()

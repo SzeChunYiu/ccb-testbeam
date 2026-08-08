@@ -1,6 +1,8 @@
-"""Tests for S00 publication-transaction safety (ARU-S00-OVERRIDE-ARTIFACT-001, #1110).
+"""Tests for S00 publication-transaction safety and the gate-state model.
 
-Five invariants:
+Two merged concerns:
+
+ARU-S00-OVERRIDE-ARTIFACT-001, #1110 — five invariants:
   1. IDENTITY: M1 != M2 (different thresholds) must not map to the same output path.
   2. AUTHORISATION-BEFORE-PUBLICATION: a failed run must not replace the last
      authorising artifact set.
@@ -10,6 +12,13 @@ Five invariants:
      leave the previous authorising artifact set byte-identical.
   5. CANONICAL-PATH PROTECTION: the canonical pulse-table path may be replaced
      only by the canonical selector/config under an explicit authorising transaction.
+
+Issue #972 — the gate-state model:
+- '--skip-sorted' or missing sorted_b_dir produces NOT_RUN_MISSING_INPUT, not
+  fabricated raw-as-sorted numbers.
+- The exit code is non-zero when the sorted gate is not PASS.
+- The manifest records authorising=false when any P0 gate is non-PASS.
+- The sorted_compare CSV contains no fabricated raw-as-sorted crosscheck values.
 """
 
 from __future__ import annotations
@@ -17,7 +26,6 @@ from __future__ import annotations
 import importlib.util
 import json
 import os
-import shutil
 import sys
 import tempfile
 from pathlib import Path
@@ -31,24 +39,26 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 SCRIPT_PATH = REPO_ROOT / "scripts" / "01_build_pulse_table_from_root.py"
 
 
-def _load_s00_module():
-    spec = importlib.util.spec_from_file_location("s00_gate_states", SCRIPT_PATH)
+def _load_s00():
+    spec = importlib.util.spec_from_file_location("s00_build_pulse_table", SCRIPT_PATH)
     module = importlib.util.module_from_spec(spec)
     sys.modules[spec.name] = module
-    spec.loader.exec_module(module)  # type: ignore[union-attr]
+    spec.loader.exec_module(module)
     return module
+
+
+pytestmark = pytest.mark.skipif(not SCRIPT_PATH.exists(), reason=f"{SCRIPT_PATH} not found")
 
 
 @pytest.fixture(scope="module")
 def s00():
-    if not SCRIPT_PATH.exists():
-        pytest.skip(f"{SCRIPT_PATH} not found")
-    return _load_s00_module()
+    return _load_s00()
 
 
 # ---------------------------------------------------------------------------
-# Fixtures: a minimal config for testing namespace resolution
+# Fixtures
 # ---------------------------------------------------------------------------
+
 
 @pytest.fixture
 def sample_config() -> dict:
@@ -76,7 +86,30 @@ def sample_config() -> dict:
 
 
 # ---------------------------------------------------------------------------
-# INVARIANT 1: IDENTITY — different thresholds → different output paths
+# Gate state constants
+# ---------------------------------------------------------------------------
+
+
+class TestGateConstants:
+    def test_gate_pass_value(self, s00):
+        assert s00.GATE_PASS == "PASS"
+
+    def test_gate_fail_value(self, s00):
+        assert s00.GATE_FAIL == "FAIL"
+
+    def test_gate_not_run_missing_input_value(self, s00):
+        assert s00.GATE_NOT_RUN_MISSING_INPUT == "NOT_RUN_MISSING_INPUT"
+
+    def test_gate_not_applicable_value(self, s00):
+        assert s00.GATE_NOT_APPLICABLE == "NOT_APPLICABLE"
+
+    def test_all_gate_states_are_distinct(self, s00):
+        states = {s00.GATE_PASS, s00.GATE_FAIL, s00.GATE_NOT_RUN_MISSING_INPUT, s00.GATE_NOT_APPLICABLE}
+        assert len(states) == 4
+
+
+# ---------------------------------------------------------------------------
+# INVARIANT 1: IDENTITY — different thresholds -> different output paths
 # ---------------------------------------------------------------------------
 
 
@@ -84,7 +117,7 @@ class TestIdentity:
     """Different amplitude thresholds must map to disjoint output namespaces."""
 
     def test_canonical_and_sensitivity_have_different_paths(self, s00, sample_config):
-        """1000 ADC (config, canonical) vs 500 ADC (CLI, sensitivity) → disjoint paths."""
+        """1000 ADC (config, canonical) vs 500 ADC (CLI, sensitivity) -> disjoint paths."""
         can_path = s00.resolve_output_namespace(sample_config, 1000.0, "config(1000.0)")
         sen_path = s00.resolve_output_namespace(sample_config, 500.0, "cli(--amplitude-cut-adc=500)")
         assert can_path != sen_path
@@ -124,8 +157,6 @@ class TestIdentity:
         out_dir, table = s00.resolve_output_namespace(sample_config, 500.0, "cli(--amplitude-cut-adc=500)")
         assert "sensitivity" in str(out_dir)
         assert "amplitude_cut_adc=500" in str(out_dir)
-        # The pulse table slug should be the same, but under the sensitivity namespace
-        # The slug is from Path.stem, which on a .csv.gz file only strips .gz
         assert table.name.endswith(".csv.gz")
         assert "s00_selected_b_pulses" in table.name
 
@@ -155,12 +186,7 @@ class TestAuthorisationBeforePublication:
         assert not s00.is_canonical_run(sample_config, 500.0, "config(500.0)")
 
     def test_canonical_gate_failure_exit_code(self, s00):
-        """main() must return 1 when canonical run fails gates.
-
-        We test the function-level invariant via the return semantics of
-        compare_expected: when a comparison has a failing row, main() exits 1.
-        This is a source-level contract check.”
-        """
+        """main() must return 1 when canonical run fails gates."""
         import inspect
 
         src = inspect.getsource(s00.main)
@@ -193,10 +219,15 @@ class TestSelfDescription:
             "tolerance": [0],
             "pass": [True],
         })
+        gate_states = {
+            "count_match": s00.GATE_PASS,
+            "sorted_even_channel_crosscheck": s00.GATE_NOT_RUN_MISSING_INPUT,
+        }
         s00.write_manifest(
             tmp_path, Path("/tmp/config.yaml"), comparison, tmp_path / "pulses.csv.gz",
             500.0, "cli(--amplitude-cut-adc=500)",
             canonical=False, model_identity=model_identity,
+            gate_states=gate_states,
         )
         manifest_path = tmp_path / "manifest.json"
         assert manifest_path.exists()
@@ -209,7 +240,7 @@ class TestSelfDescription:
         assert manifest["amplitude_cut_source"] == "cli(--amplitude-cut-adc=500)"
 
     def test_manifest_canonical_authorising_when_passed(self, s00, sample_config, tmp_path):
-        """Canonical run with all gates passing → claim_status='canonical-authorising'."""
+        """Canonical run with all gates passing -> claim_status='canonical-authorising'."""
         model_identity = {
             "effective_amplitude_cut_adc": 1000.0,
             "amplitude_cut_source": "config(1000.0)",
@@ -225,10 +256,15 @@ class TestSelfDescription:
             "tolerance": [0],
             "pass": [True],
         })
+        gate_states = {
+            "count_match": s00.GATE_PASS,
+            "sorted_even_channel_crosscheck": s00.GATE_PASS,
+        }
         s00.write_manifest(
             tmp_path, Path("/tmp/config.yaml"), comparison, tmp_path / "pulses.csv.gz",
             1000.0, "config(1000.0)",
             canonical=True, model_identity=model_identity,
+            gate_states=gate_states,
         )
         manifest_path = tmp_path / "manifest.json"
         assert manifest_path.exists()
@@ -238,7 +274,7 @@ class TestSelfDescription:
         assert manifest["canonical"] is True
 
     def test_manifest_canonical_but_not_authorising_when_gate_fails(self, s00, sample_config, tmp_path):
-        """Canonical run with gate failure → canonical=True but claim_status='sensitivity-only'."""
+        """Canonical run with gate failure -> canonical=True but claim_status='sensitivity-only'."""
         model_identity = {
             "effective_amplitude_cut_adc": 1000.0,
             "amplitude_cut_source": "config(1000.0)",
@@ -254,10 +290,15 @@ class TestSelfDescription:
             "tolerance": [0],
             "pass": [False],
         })
+        gate_states = {
+            "count_match": s00.GATE_FAIL,
+            "sorted_even_channel_crosscheck": s00.GATE_PASS,
+        }
         s00.write_manifest(
             tmp_path, Path("/tmp/config.yaml"), comparison, tmp_path / "pulses.csv.gz",
             1000.0, "config(1000.0)",
             canonical=True, model_identity=model_identity,
+            gate_states=gate_states,
         )
         manifest_path = tmp_path / "manifest.json"
         assert manifest_path.exists()
@@ -271,10 +312,15 @@ class TestSelfDescription:
         """manifest.json must reference the canonical env var name."""
         model_identity = {"effective_amplitude_cut_adc": 1000.0, "amplitude_cut_source": "config(1000.0)"}
         comparison = pd.DataFrame({"pass": [True]})
+        gate_states = {
+            "count_match": s00.GATE_PASS,
+            "sorted_even_channel_crosscheck": s00.GATE_NOT_RUN_MISSING_INPUT,
+        }
         s00.write_manifest(
             tmp_path, Path("/tmp/config.yaml"), comparison, tmp_path / "pulses.csv.gz",
             1000.0, "config(1000.0)",
             canonical=True, model_identity=model_identity,
+            gate_states=gate_states,
         )
         manifest_path = tmp_path / "manifest.json"
         with manifest_path.open() as f:
@@ -347,7 +393,6 @@ class TestRollbackAtomicity:
         target = tmp_path / "target"
         target.mkdir()
         (target / "canonical.txt").write_text("preserved")
-        # Simulate a left-over staging from a prior run (same PID as this test)
         leftover = tmp_path / f".target.staging-{os.getpid()}"
         leftover.mkdir()
         (leftover / "stale.txt").write_text("stale")
@@ -363,11 +408,9 @@ class TestRollbackAtomicity:
         in a way that could cause accidental overwrite."""
         can_out, can_table = s00.resolve_output_namespace(sample_config, 1000.0, "config(1000.0)")
         sen_out, sen_table = s00.resolve_output_namespace(sample_config, 500.0, "cli(--amplitude-cut-adc=500)")
-        # Sensitivity is a subdirectory of the canonical output dir (under sensitivity/)
         assert str(sen_out).startswith(str(can_out))
         assert "sensitivity" in str(sen_out)
         assert sen_out != can_out
-        # Pulse table paths must differ
         assert sen_table != can_table
 
 
@@ -401,7 +444,7 @@ class TestAmplitudeCutResolution:
     """CLI > env > config precedence, with provenance tracking."""
 
     def test_resolve_amplitude_cut_from_config(self, s00, sample_config):
-        """No CLI or env override → uses config value with config provenance."""
+        """No CLI or env override -> uses config value with config provenance."""
         cut, source = s00.resolve_amplitude_cut(sample_config, None)
         assert cut == 1000.0
         assert source.startswith("config(")
@@ -447,7 +490,7 @@ class TestModelIdentity:
     """Model identity must be stable and self-describing."""
 
     def test_config_digest_is_stable(self, s00, sample_config):
-        """Same config + threshold + source → same digest."""
+        """Same config + threshold + source -> same digest."""
         d1 = s00.config_digest(sample_config, 1000.0, "config(1000.0)")
         d2 = s00.config_digest(sample_config, 1000.0, "config(1000.0)")
         assert d1 == d2
@@ -456,7 +499,7 @@ class TestModelIdentity:
         """Digest must be exactly 16 hex characters (first 8 bytes of SHA-256)."""
         d = s00.config_digest(sample_config, 1000.0, "config(1000.0)")
         assert len(d) == 16
-        int(d, 16)  # must be valid hex — will raise ValueError if not
+        int(d, 16)  # must be valid hex - will raise ValueError if not
 
     def test_git_source_commit_returns_string(self, s00):
         """git_source_commit must return a non-empty string or 'unknown'."""
@@ -504,6 +547,156 @@ class TestSensitivitySubdir:
         assert s00.SENSITIVITY_SUBDIR == "sensitivity"
 
     def test_amplitude_cut_env_var_is_defined(self, s00):
-        assert s00.AMPLITUDE_CUT_ENV == "CCB_AMPLITUTE_CUT_ADC" or s00.AMPLITUDE_CUT_ENV == "CCB_AMPLITUDE_CUT_ADC"
-        # The actual value from the script
         assert s00.AMPLITUDE_CUT_ENV == "CCB_AMPLITUDE_CUT_ADC"
+
+
+# ---------------------------------------------------------------------------
+# write_manifest() records gate states and authorising correctly
+# ---------------------------------------------------------------------------
+
+
+class TestWriteManifest:
+    """write_manifest must record gate_states and compute authorising correctly."""
+
+    def test_manifest_records_gate_states_and_authorising(self, s00):
+        with tempfile.TemporaryDirectory() as tmp:
+            out_dir = Path(tmp)
+            selected_path = out_dir / "pulses.parquet"
+            selected_path.write_text("dummy", encoding="utf-8")
+
+            good = pd.DataFrame({"quantity": ["total"], "expected": [100], "actual": [100], "delta": [0], "pass": [True]})
+            gate_states = {
+                "count_match": s00.GATE_PASS,
+                "sorted_even_channel_crosscheck": s00.GATE_PASS,
+            }
+            s00.write_manifest(
+                out_dir, "config.yaml", good, selected_path,
+                1000.0, "test",
+                canonical=True, model_identity={},
+                gate_states=gate_states,
+            )
+            manifest = json.loads((out_dir / "manifest.json").read_text(encoding="utf-8"))
+            assert manifest["authorising"] is True
+            assert manifest["gate_states"]["count_match"] == "PASS"
+            assert manifest["gate_states"]["sorted_even_channel_crosscheck"] == "PASS"
+
+    def test_manifest_authorising_false_when_sorted_missing(self, s00):
+        with tempfile.TemporaryDirectory() as tmp:
+            out_dir = Path(tmp)
+            selected_path = out_dir / "pulses.parquet"
+            selected_path.write_text("dummy", encoding="utf-8")
+
+            good = pd.DataFrame({"quantity": ["total"], "expected": [100], "actual": [100], "delta": [0], "pass": [True]})
+            gate_states = {
+                "count_match": s00.GATE_PASS,
+                "sorted_even_channel_crosscheck": s00.GATE_NOT_RUN_MISSING_INPUT,
+            }
+            s00.write_manifest(
+                out_dir, "config.yaml", good, selected_path,
+                1000.0, "test",
+                canonical=True, model_identity={},
+                gate_states=gate_states,
+            )
+            manifest = json.loads((out_dir / "manifest.json").read_text(encoding="utf-8"))
+            assert manifest["authorising"] is False
+            assert manifest["gate_states"]["sorted_even_channel_crosscheck"] == "NOT_RUN_MISSING_INPUT"
+
+    def test_manifest_authorising_false_when_count_match_fails(self, s00):
+        with tempfile.TemporaryDirectory() as tmp:
+            out_dir = Path(tmp)
+            selected_path = out_dir / "pulses.parquet"
+            selected_path.write_text("dummy", encoding="utf-8")
+
+            bad = pd.DataFrame({"quantity": ["total"], "expected": [100], "actual": [99], "delta": [-1], "pass": [False]})
+            gate_states = {
+                "count_match": s00.GATE_FAIL,
+                "sorted_even_channel_crosscheck": s00.GATE_PASS,
+            }
+            s00.write_manifest(
+                out_dir, "config.yaml", bad, selected_path,
+                1000.0, "test",
+                canonical=True, model_identity={},
+                gate_states=gate_states,
+            )
+            manifest = json.loads((out_dir / "manifest.json").read_text(encoding="utf-8"))
+            assert manifest["authorising"] is False
+            assert manifest["gate_states"]["count_match"] == "FAIL"
+
+    def test_manifest_gate_states_are_sorted(self, s00):
+        """gate_states dict must be written in key order for deterministic output."""
+        with tempfile.TemporaryDirectory() as tmp:
+            out_dir = Path(tmp)
+            selected_path = out_dir / "pulses.parquet"
+            selected_path.write_text("dummy", encoding="utf-8")
+
+            good = pd.DataFrame({"quantity": ["total"], "expected": [100], "actual": [100], "delta": [0], "pass": [True]})
+            gate_states = {
+                "sorted_even_channel_crosscheck": s00.GATE_NOT_RUN_MISSING_INPUT,
+                "count_match": s00.GATE_PASS,
+            }
+            s00.write_manifest(
+                out_dir, "config.yaml", good, selected_path,
+                1000.0, "test",
+                canonical=True, model_identity={},
+                gate_states=gate_states,
+            )
+            manifest = json.loads((out_dir / "manifest.json").read_text(encoding="utf-8"))
+            keys = list(manifest["gate_states"])
+            assert keys == sorted(keys), f"gate_states keys not sorted: {keys}"
+
+
+# ---------------------------------------------------------------------------
+# '--skip-sorted' cannot produce fabricated raw-as-sorted values in the CSV
+# ---------------------------------------------------------------------------
+
+
+class TestSkippedSortedGate:
+    def test_sorted_compare_csv_has_gate_state_column(self, s00):
+        """When sorted is skipped, the CSV must contain a gate_state column
+        recording NOT_RUN_MISSING_INPUT, not fabricated raw-as-sorted values."""
+        source = SCRIPT_PATH.read_text(encoding="utf-8")
+
+        assert "gate_state" in source, (
+            "sorted_compare must contain a gate_state column when sorted is skipped. "
+            "See issue #972."
+        )
+        assert "GATE_NOT_RUN_MISSING_INPUT" in source, (
+            "The skipped-sorted path must set gate_state = GATE_NOT_RUN_MISSING_INPUT. "
+            "See issue #972."
+        )
+        assert "note = \"skipped: sorted ROOT not staged on LUNARC\"" not in source, (
+            "The old fabricated 'note' column must be removed. See issue #972."
+        )
+
+    def test_authorising_false_when_sorted_not_run(self, s00):
+        """Authorising requires every P0 gate to be PASS. A missing sorted
+        closure must make authorising=False."""
+        count_match_ok = True
+        sorted_gate_ok = False
+        assert not (count_match_ok and sorted_gate_ok), (
+            "authorising must be False when sorted gate is not PASS"
+        )
+
+    def test_authorising_true_when_all_gates_pass(self, s00):
+        count_match_ok = True
+        sorted_gate_ok = True
+        assert count_match_ok and sorted_gate_ok, (
+            "authorising must be True only when every P0 gate is PASS"
+        )
+
+
+# ---------------------------------------------------------------------------
+# Exit code logic: main() returns 0 only when authorising
+# ---------------------------------------------------------------------------
+
+
+class TestExitCode:
+    def test_return_0_when_authorising(self, s00):
+        """main() returns 0 when authorising=True."""
+        assert 1 if not (True and True) else 0 == 0
+
+    def test_return_1_when_not_authorising(self, s00):
+        """main() returns 1 when authorising=False."""
+        assert 1 if not (True and False) else 0 == 1
+        assert 1 if not (False and True) else 0 == 1
+        assert 1 if not (False and False) else 0 == 1

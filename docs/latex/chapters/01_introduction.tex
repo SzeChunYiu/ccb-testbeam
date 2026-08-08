@@ -257,11 +257,13 @@ Pile-up behaves differently.  The original rate estimate with
 $\tau_{\mathrm{eff}}=\SI{90}{ns}$ gives $R_{\max}\simeq\SI{4.22}{MHz}$, but a
 direct timing-template live-time measurement finds a 10\% crossing of
 $\SI{124.79}{ns}$ with 95\% CI [123.33, 126.36] ns.  Substituting this value
-into Eq.~\eqref{eq:intro-poisson} gives
-$R_{\max}\simeq\SI{3.05}{MHz}$, so the rate limit is materially lower than the
-assumption-based headline.  ML scores are useful monitoring variables for
-current-dependent waveform changes, but the physics-facing rate handle remains
-the transparent topology and live-time model.
+into Eq.~\eqref{eq:intro-poisson} with the beam duty factor gives
+$R_{\max}\simeq\SI{3.05}{MHz}$ (a scaling exercise, not a validated
+absolute limit; see \S\ref{sec:pileup_verdict}), so the rate limit is
+materially lower than the assumption-based headline.  ML scores are useful
+monitoring variables for current-dependent waveform changes, but the
+physics-facing rate handle remains the transparent topology and live-time
+model.
 
 \begin{figure}[H]
 \centering

@@ -98,7 +98,7 @@ int main(int argc, char** argv) {
   auto* detector = new DetectorConstruction(cfg);
   runManager->SetUserInitialization(detector);
   runManager->SetUserInitialization(
-      PhysicsList::Build("QGSP_BIC", 0.1, cfg.wls_time_profile));
+      PhysicsList::Build("QGSP_BIC", cfg.production_cut_mm, cfg.wls_time_profile));
   // geometry_hash is deterministic (constructor), so actions can be set now.
   runManager->SetUserInitialization(
       new ActionInitialization(cfg, tables, detector->GeometryHash()));

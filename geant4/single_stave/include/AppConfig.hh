@@ -39,6 +39,11 @@ struct AppConfig {
 
   // --- Detector / optical systematics knobs (multiplicative unless noted) ---
   double birks_kB_mm_per_MeV = 0.126; // Birks constant kB [mm/MeV] (Edep scan var)
+  // Secondary-production range threshold [mm] (issue #1089). Controls Geant4
+  // production of gamma/e-/e+/proton secondaries — NOT optical-photon tracking.
+  // Coupled to Birks: changing it alters the explicit delta-ray population and
+  // thus the fitted kB (the "cut x kB coupling").
+  double production_cut_mm = 0.1;
   double reflectivity_scale = 1.0;    // scales the TiO2 reflectivity table
   double attenuation_scale  = 1.0;    // scales Y-11 bulk attenuation length
   double pde_scale          = 1.0;    // scales the SiPM PDE table

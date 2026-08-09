@@ -148,6 +148,26 @@ if(CCB_PYTHON3)
     FAIL_REGULAR_EXPRESSION "defect 2 has regressed")
 endif()
 
+# 1089) Production-cut regression (issue #1089). Proves --production-cut is
+#    wired through the CLI, the RUN_CONFIG line, and the .meta.json sidecar, and
+#    that it changes the explicit secondary population enough to move the
+#    Birks-suppressed visible energy (the cut x kB coupling). Runs the sim twice
+#    (fine and coarse cut) and parses the events ntuple via uproot. Exits 77
+#    (SKIP) when uproot is absent.
+if(CCB_PYTHON3)
+  add_test(
+    NAME ccb_stave_production_cut_regression
+    COMMAND ${CCB_PYTHON3}
+            "${PROJECT_SOURCE_DIR}/tests/test_production_cut_regression.py"
+            --exe "$<TARGET_FILE:ccb_stave_sim>"
+            --optical-dir "${CMAKE_BINARY_DIR}/optical"
+            --work-dir "${CMAKE_BINARY_DIR}/production_cut_regression")
+  set_tests_properties(ccb_stave_production_cut_regression PROPERTIES
+    TIMEOUT 300
+    SKIP_RETURN_CODE 77
+    FAIL_REGULAR_EXPRESSION "issue #1089 may have regressed")
+endif()
+
 # 6) Far-end modes (SIPM-P0-002): --far-end absorb|open|mirror|instrumented
 #    are accepted, recorded in RUN_CONFIG, and produce valid geometry.
 if(CCB_PYTHON3)

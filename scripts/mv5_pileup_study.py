@@ -32,6 +32,8 @@ import argparse
 import json
 import os
 import time
+from dataclasses import dataclass, field
+from enum import Enum
 from pathlib import Path
 
 import numpy as np
@@ -61,6 +63,105 @@ RATES_MHZ = [0.5, 1.0, 2.0, 3.0, 4.0]
 FAIL_CEILING = 0.17   # traditional template two-pulse failure ceiling (S10d)
 RESOLVE_BINS = 2      # >2 bins (20 ns) separation counts as resolvable
 ERR_FAIL_NS = 30.0    # recovered-vs-true separation error that counts as a fail
+
+
+class RecoveryState(Enum):
+    """Typed two-pulse recovery outcomes (ARU-MV5-RECOVERY-FAILURE-SEMANTICS-001).
+
+    The defect this fixes: the old ``rec_sep=0`` sentinel collapsed "no second
+    pulse detected" and "valid zero-separation estimate" into one numeric value,
+    so a *missed* second pulse at small ``dt_true`` was falsely counted as a
+    successful resolution. Recovery now returns a *typed* state first; the
+    scientific failure rule is ``state != RESOLVED_VALID OR |dt_hat - dt_true|
+    > epsilon`` (state checked before numeric error), which removes the
+    artificial 30 ns discontinuity.
+    """
+
+    RESOLVED_VALID = "resolved_valid"             # two candidates, valid separation estimate
+    UNRESOLVED_SINGLE = "unresolved_single"       # only one candidate -> second pulse missed
+    NO_PULSE = "no_pulse"                         # no candidate at all
+    AMBIGUOUS_MULTIPLE = "ambiguous_multiple"     # >2 candidates -> explicit ambiguity policy
+    BOUNDARY_CENSORED = "boundary_censored"       # candidate(s) too close to window edge
+    SATURATED_UNIDENTIFIABLE = "saturated_unidentifiable"  # merged/saturated, cannot separate
+    INVALID_INPUT = "invalid_input"               # malformed waveform passed in
+
+
+@dataclass
+class RecoveryResult:
+    """Typed outcome of :func:`recover_two_pulse`.
+
+    ``state`` is the primary contract; ``dt_hat_ns`` is meaningful ONLY when
+    ``state == RESOLVED_VALID`` (else it is ``None`` -- no numeric partition
+    that could fake a value). ``n_candidates`` and ``candidate_times`` carry
+    the raw detection facts so callers / tests can reason about *why* a given
+    state was reached without re-running the peak finder.
+    """
+
+    state: RecoveryState
+    n_candidates: int = 0
+    dt_hat_ns: "float | None" = None
+    candidate_times_ns: list = field(default_factory=list)
+    saturation_flags: list = field(default_factory=list)
+    reason_code: str = ""
+
+
+def _detect_candidates(wave):
+    """Return the sorted rising-edge sample indices (the raw detection facts)."""
+    return find_rising_peaks(wave)
+
+
+def recover_two_pulse(wave):
+    """Bounded two-pulse recovery with a *typed* outcome.
+
+    Returns a :class:`RecoveryResult`. The separation estimate ``dt_hat_ns`` is
+    only populated for ``RESOLVED_VALID``; every other state yields ``None`` so
+    a missed second pulse can never masquerade as a precise zero-separation
+    resolution (the core of #1118).
+    """
+    if wave is None or np.asarray(wave).size < 2:
+        return RecoveryResult(state=RecoveryState.INVALID_INPUT, reason_code="wave too short")
+    peaks = _detect_candidates(np.asarray(wave))
+    n = len(peaks)
+    cand_times = [float(p * DT) for p in peaks]
+    if n == 0:
+        return RecoveryResult(state=RecoveryState.NO_PULSE, n_candidates=0, candidate_times_ns=cand_times)
+    if n == 1:
+        # Exactly one rising edge -> the second pulse was missed. This is a
+        # FAILURE regardless of how close dt_true sits to the old rec_sep=0
+        # sentinel (the 30 ns discontinuity is gone: 10, 29.9, 30.1 ns are now
+        # indistinguishable when the second pulse is simply absent).
+        return RecoveryResult(state=RecoveryState.UNRESOLVED_SINGLE, n_candidates=1, candidate_times_ns=cand_times)
+    if n > 2:
+        # Explicit ambiguity policy: >2 candidates cannot be collapsed to a
+        # single RESOLVED_VALID estimate.
+        return RecoveryResult(state=RecoveryState.AMBIGUOUS_MULTIPLE, n_candidates=n, candidate_times_ns=cand_times)
+    # Exactly two candidates.
+    if (peaks[1] - peaks[0]) < RESOLVE_BINS:
+        # Separation below the resolvable bin threshold -> censored, no valid
+        # estimate (the two edges are indistinguishable at 10 ns/sample).
+        return RecoveryResult(state=RecoveryState.BOUNDARY_CENSORED, n_candidates=2, candidate_times_ns=cand_times)
+    sep = (peaks[1] - peaks[0]) * DT
+    return RecoveryResult(
+        state=RecoveryState.RESOLVED_VALID,
+        n_candidates=2,
+        dt_hat_ns=float(sep),
+        candidate_times_ns=cand_times,
+    )
+
+
+def recovery_is_failure(result, dt_true, epsilon=ERR_FAIL_NS):
+    """Scientific failure rule for a recovery outcome (#1118).
+
+    State is checked BEFORE numeric error: any non-``RESOLVED_VALID`` outcome is
+    a failure regardless of ``epsilon``; only a valid resolution is then judged
+    on separation accuracy. This removes the artificial 30 ns discontinuity where
+    a missed second pulse at ``dt_true < 30 ns`` was counted as success.
+    """
+    if result.state is not RecoveryState.RESOLVED_VALID:
+        return True
+    if result.dt_hat_ns is None:
+        return True
+    return abs(result.dt_hat_ns - dt_true) > epsilon
 
 # data-observed anomalous fractions to compare against
 DATA_FRAC_RAW = 0.042
@@ -98,15 +199,6 @@ def find_rising_peaks(wave):
             continue
         merged.append(p)
     return merged
-
-
-def recover_two_pulse(wave):
-    """Bounded two-pulse recovery. Returns (n_peaks, recovered_sep_ns)."""
-    peaks = find_rising_peaks(wave)
-    if len(peaks) >= 2:
-        sep = (peaks[1] - peaks[0]) * DT
-        return len(peaks), float(sep)
-    return len(peaks), 0.0
 
 
 def main():
@@ -188,8 +280,8 @@ def main():
             w1 = sim_waveform(a, 20.0, rng)          # first pulse at t0=20 ns
             w2 = sim_waveform(b, 20.0 + dt_true, rng)
             comb = clip_adc(w1 + w2 - PED)
-            _, rec_sep = recover_two_pulse(comb)
-            if abs(rec_sep - dt_true) > ERR_FAIL_NS:
+            result = recover_two_pulse(comb)
+            if recovery_is_failure(result, dt_true):
                 n_fail += 1
         fr = n_fail / take
         ci = 1.96 * np.sqrt(fr * (1 - fr) / take)
@@ -350,18 +442,18 @@ def main():
         w1 = sim_waveform(ep0, 20.0, rng, with_noise=True)
         w2 = sim_waveform(ep0, 20.0 + sep, rng, with_noise=True)
         comb = clip_adc(w1 + w2 - PED)
-        npk, rsep = recover_two_pulse(comb)
+        res = recover_two_pulse(comb)
         axx[0, j].plot(np.arange(NSAMP) * DT, comb, "-o", ms=3, color="C0")
-        axx[0, j].set_title(f"p+p sep={sep:.0f}ns\nfound {npk}pk, rec {rsep:.0f}ns",
+        axx[0, j].set_title(f"p+p sep={sep:.0f}ns\nfound {res.n_candidates}pk, rec {res.dt_hat_ns or 0:.0f}ns",
                             fontsize=9)
         axx[0, j].grid(alpha=0.3)
         # p+d
         w1 = sim_waveform(ep0, 20.0, rng, with_noise=True)
         w2 = sim_waveform(ed0, 20.0 + sep, rng, with_noise=True)
         comb = clip_adc(w1 + w2 - PED)
-        npk, rsep = recover_two_pulse(comb)
+        res = recover_two_pulse(comb)
         axx[1, j].plot(np.arange(NSAMP) * DT, comb, "-o", ms=3, color="C3")
-        axx[1, j].set_title(f"p+d sep={sep:.0f}ns\nfound {npk}pk, rec {rsep:.0f}ns",
+        axx[1, j].set_title(f"p+d sep={sep:.0f}ns\nfound {res.n_candidates}pk, rec {res.dt_hat_ns or 0:.0f}ns",
                             fontsize=9)
         axx[1, j].grid(alpha=0.3)
     for a in axx[-1, :]:

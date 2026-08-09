@@ -51,13 +51,24 @@ STABILITY_SEEDS = list(range(KM_SEED_BASE, KM_SEED_BASE + KM_N_SEEDS))
 MORPH_STATE_EDGES = [0.30, 0.55, 0.80]  # peak-sample thresholds for rule-based morphology states
 
 def load_waveforms():
+    """Scan ALL configured runs, then deterministically downsample the pooled
+    population. Unlike the former early-break prefix sampler, the target
+    sampling distribution is invariant to the order of ``RUNS``: every
+    configured run is scanned before any cap is applied, so no run can be
+    silently excluded because a predecessor filled the budget.
+
+    Returns the pooled arrays plus per-run/per-stave provenance counts.
+    """
     wfs, amps, staves, runs = [], [], [], []
+    run_counts = {run: 0 for run in RUNS}
+    stave_counts = {s: 0 for s in STAVES}
     snames = list(STAVES); schan = np.array([STAVES[s] for s in snames])
     for run in RUNS:
         fs = glob.glob(str(RAW / f"hrdb_run_{run:04d}.root"))
         if not fs:
             continue
         t = uproot.open(fs[0])[uproot.open(fs[0]).keys()[0]]
+        selected_this_run = 0
         for batch in t.iterate(["HRDv"], step_size=20000, library="np"):
             ev = np.stack(batch["HRDv"]).astype(np.float64).reshape(-1, 8, NSAMP)
             w = ev[:, schan, :]                                   # (events, 4, 18)
@@ -67,14 +78,25 @@ def load_waveforms():
             ei, si = np.where(amp > CUT)
             for e, s in zip(ei, si):
                 wfs.append(corr[e, s]); amps.append(amp[e, s]); staves.append(snames[s]); runs.append(run)
-        if len(wfs) > MAXPULSE:
-            break
+            selected_this_run += len(ei)
+        run_counts[run] = selected_this_run
+    for s in STAVES:
+        stave_counts[s] = int(np.sum(np.asarray(staves) == s))
+    run_counts = {r: c for r, c in run_counts.items() if c > 0}
     wfs = np.asarray(wfs); amps = np.asarray(amps)
     staves = np.asarray(staves); runs = np.asarray(runs)
+    # Global, order-invariant downsampling of the pooled population only AFTER
+    # every run has been scanned. Rows are sampled uniformly from the union of
+    # all declared runs, so the mixture measure does not depend on ``RUNS``
+    # order (see #1099).
     if len(wfs) > MAXPULSE:
         idx = RNG.choice(len(wfs), MAXPULSE, replace=False)
+        # Downsample the provenance arrays at the same time; recompute counts
+        # on the actual sampled rows.
         wfs, amps, staves, runs = wfs[idx], amps[idx], staves[idx], runs[idx]
-    return wfs, amps, staves, runs
+        run_counts = {r: int(np.sum(runs == r)) for r in RUNS if int(np.sum(runs == r)) > 0}
+        stave_counts = {s: int(np.sum(staves == s)) for s in STAVES}
+    return wfs, amps, staves, runs, run_counts, stave_counts
 
 def shape_features(wfs, amps):
     """Compute versioned, domain-checked pulse-shape features on the
@@ -400,8 +422,12 @@ def synthetic_controls():
 def main():
     t0 = time.time()
     print("loading waveforms ...")
-    wfs, amps, staves, runs = load_waveforms()
+    wfs, amps, staves, runs, run_counts, stave_counts = load_waveforms()
     print(f"loaded {len(wfs)} selected B-stave pulses")
+    # Per-run counts before and after downsampling (for provenance).
+    contributing_runs = sorted(run_counts.keys())
+    print(f"contributing runs: {contributing_runs}")
+    print(f"per-run counts: {run_counts}")
     feats, norm = shape_features(wfs, amps)
 
     # ---- Held-out split: fit everything on training runs, evaluate on held-out runs ----
@@ -531,13 +557,17 @@ def main():
            "train_pulses": int(len(xtr)), "heldout_pulses": int(len(xev)),
            "ae_seeds": AE_SEEDS,
            "device": dev,
-"sampling_method": "pooled_global_downsample_after_scan",
+           "sampling_method": "pooled_global_downsample_after_scan",
            "MAXPULSE": MAXPULSE,
            "AREA_EPS": AREA_EPS,
            "feature_definitions": feature_defs,
            "stave_counts_train": {s: int((str_ == s).sum()) for s in STAVES},
            "stave_counts_heldout": {s: int((sev == s).sum()) for s in STAVES},
            "feature_diagnostics": diagnostics,
+           "contributing_runs": contributing_runs,
+           "run_counts_selected": run_counts,
+           "stave_counts_sampled": stave_counts,
+           "stave_counts_all": {s: int((staves == s).sum()) for s in STAVES},
            "benchmark_pca_vs_ae": bench,
            "latent_definition": "post_ReLU_bottleneck_v2",
            "clusters_k3_heldout": clusters,

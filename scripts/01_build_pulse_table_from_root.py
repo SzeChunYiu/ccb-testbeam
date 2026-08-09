@@ -170,6 +170,8 @@ def build_ml_rows_for_batch(
     area: np.ndarray,
     peak_sample: np.ndarray,
     baseline: np.ndarray,
+    peak_code_adc: np.ndarray,
+    saturation: np.ndarray,
     selected_mask: np.ndarray,
     keep_mask: np.ndarray,
     keep_selected: float,
@@ -196,6 +198,9 @@ def build_ml_rows_for_batch(
             "eventno": event_numbers[kept_event].astype(int),
             "stave": stave_grid[kept_stave],
             "amplitude_adc": amplitude[kept_event, kept_stave],
+            "peak_height_adc": amplitude[kept_event, kept_stave],
+            "peak_code_adc": peak_code_adc[kept_event, kept_stave],
+            "saturation": saturation[kept_event, kept_stave],
             "area_adc_samples": area[kept_event, kept_stave],
             "peak_sample": peak_sample[kept_event, kept_stave].astype(int),
             "baseline_adc": baseline[kept_event, kept_stave],
@@ -299,6 +304,10 @@ def scan_raw(config: dict) -> Tuple[pd.DataFrame, pd.DataFrame, Dict[str, dict],
             all_events = np.stack(batch["HRDv"]).astype(np.float64).reshape(-1, 8, samples_per_channel)
             waveforms = all_events[:, stave_channels, :]
             baseline, amplitude, peak_sample, area = pulse_quantities(waveforms, baseline_indices)
+            # Absolute peak (raw max) for peak_code_adc and hardware saturation
+            # flag (14-bit CAEN V1742, max code = 16383).
+            peak_code_adc = waveforms.max(axis=-1)
+            saturation = waveforms.max(axis=-1) >= 16383
             selected_mask = amplitude > cut
             event_selected = selected_mask.any(axis=1)
 
@@ -326,6 +335,8 @@ def scan_raw(config: dict) -> Tuple[pd.DataFrame, pd.DataFrame, Dict[str, dict],
                             "channel": stave_channels[stave_idx].astype(int),
                             "baseline_adc": baseline[event_idx, stave_idx],
                             "amplitude_adc": amplitude[event_idx, stave_idx],
+                            "peak_code_adc": peak_code_adc[event_idx, stave_idx],
+                            "saturation": saturation[event_idx, stave_idx],
                             "peak_sample": peak_sample[event_idx, stave_idx].astype(int),
                             "area_adc_samples": area[event_idx, stave_idx],
                         }
@@ -354,6 +365,8 @@ def scan_raw(config: dict) -> Tuple[pd.DataFrame, pd.DataFrame, Dict[str, dict],
                         area=area,
                         peak_sample=peak_sample,
                         baseline=baseline,
+                        peak_code_adc=peak_code_adc,
+                        saturation=saturation,
                         selected_mask=selected_mask,
                         keep_mask=keep,
                         keep_selected=keep_selected,

@@ -58,6 +58,8 @@ PHYSICS_KEYS = (
     "birks_kB_mm_per_MeV",
     "reflectivity_scale",
     "attenuation_scale",
+    "scintillator_absorption_scale",
+    "y11_bulk_attenuation_scale",
     "pde_scale",
     "coupling_efficiency",
     "sipm_n_cells",

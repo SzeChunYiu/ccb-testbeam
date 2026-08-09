@@ -31,6 +31,8 @@ def metadata(seed: int, threads: int, n_events: int = 4) -> dict[str, object]:
         "birks_kB_mm_per_MeV": 0.126,
         "reflectivity_scale": 1.0,
         "attenuation_scale": 1.0,
+        "scintillator_absorption_scale": 1.0,
+        "y11_bulk_attenuation_scale": 1.0,
         "pde_scale": 1.0,
         "coupling_efficiency": 1.0,
         "sipm_n_cells": 1600,

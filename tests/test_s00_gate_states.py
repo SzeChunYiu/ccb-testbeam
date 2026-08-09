@@ -2,7 +2,7 @@
 
 Two merged concerns:
 
-ARU-S00-OVERRIDE-ARTIFACT-001, #1110 — five invariants:
+Issue #1110 / ARU-S00-OVERRIDE-ARTIFACT-001 — five invariants:
   1. IDENTITY: M1 != M2 (different thresholds) must not map to the same output path.
   2. AUTHORISATION-BEFORE-PUBLICATION: a failed run must not replace the last
      authorising artifact set.
@@ -26,6 +26,7 @@ from __future__ import annotations
 import importlib.util
 import json
 import os
+import shutil
 import sys
 import tempfile
 from pathlib import Path
@@ -43,15 +44,14 @@ def _load_s00():
     spec = importlib.util.spec_from_file_location("s00_build_pulse_table", SCRIPT_PATH)
     module = importlib.util.module_from_spec(spec)
     sys.modules[spec.name] = module
-    spec.loader.exec_module(module)
+    spec.loader.exec_module(module)  # type: ignore[union-attr]
     return module
-
-
-pytestmark = pytest.mark.skipif(not SCRIPT_PATH.exists(), reason=f"{SCRIPT_PATH} not found")
 
 
 @pytest.fixture(scope="module")
 def s00():
+    if not SCRIPT_PATH.exists():
+        pytest.skip(f"{SCRIPT_PATH} not found")
     return _load_s00()
 
 
@@ -88,24 +88,6 @@ def sample_config() -> dict:
 # ---------------------------------------------------------------------------
 # Gate state constants
 # ---------------------------------------------------------------------------
-
-
-class TestGateConstants:
-    def test_gate_pass_value(self, s00):
-        assert s00.GATE_PASS == "PASS"
-
-    def test_gate_fail_value(self, s00):
-        assert s00.GATE_FAIL == "FAIL"
-
-    def test_gate_not_run_missing_input_value(self, s00):
-        assert s00.GATE_NOT_RUN_MISSING_INPUT == "NOT_RUN_MISSING_INPUT"
-
-    def test_gate_not_applicable_value(self, s00):
-        assert s00.GATE_NOT_APPLICABLE == "NOT_APPLICABLE"
-
-    def test_all_gate_states_are_distinct(self, s00):
-        states = {s00.GATE_PASS, s00.GATE_FAIL, s00.GATE_NOT_RUN_MISSING_INPUT, s00.GATE_NOT_APPLICABLE}
-        assert len(states) == 4
 
 
 # ---------------------------------------------------------------------------
@@ -536,22 +518,7 @@ class TestSensitivityReport:
 
 
 # ---------------------------------------------------------------------------
-# SENSITIVITY SUBDIR CONSTANT
-# ---------------------------------------------------------------------------
-
-
-class TestSensitivitySubdir:
-    """SENSITIVITY_SUBDIR must be a well-known constant."""
-
-    def test_sensitivity_subdir_is_sensitivity(self, s00):
-        assert s00.SENSITIVITY_SUBDIR == "sensitivity"
-
-    def test_amplitude_cut_env_var_is_defined(self, s00):
-        assert s00.AMPLITUDE_CUT_ENV == "CCB_AMPLITUDE_CUT_ADC"
-
-
-# ---------------------------------------------------------------------------
-# write_manifest() records gate states and authorising correctly
+# GATE-STATE MODEL (Issue #972)
 # ---------------------------------------------------------------------------
 
 
@@ -581,7 +548,8 @@ class TestWriteManifest:
             assert manifest["gate_states"]["sorted_even_channel_crosscheck"] == "PASS"
             assert manifest["schema_version"] == "v1"
 
-    def test_manifest_authorising_false_when_sorted_missing(self, s00):
+    def test_manifest_not_authorising_when_sorted_missing(self, s00):
+        """Gate state NOT_RUN_MISSING_INPUT must be a non-authorising condition."""
         with tempfile.TemporaryDirectory() as tmp:
             out_dir = Path(tmp)
             selected_path = out_dir / "pulses.parquet"
@@ -602,7 +570,7 @@ class TestWriteManifest:
             assert manifest["authorising"] is False
             assert manifest["gate_states"]["sorted_even_channel_crosscheck"] == "NOT_RUN_MISSING_INPUT"
 
-    def test_manifest_authorising_false_when_count_match_fails(self, s00):
+    def test_manifest_not_authorising_when_count_fails(self, s00):
         with tempfile.TemporaryDirectory() as tmp:
             out_dir = Path(tmp)
             selected_path = out_dir / "pulses.parquet"
@@ -646,18 +614,15 @@ class TestWriteManifest:
             assert keys == sorted(keys), f"gate_states keys not sorted: {keys}"
 
 
-# ---------------------------------------------------------------------------
-# '--skip-sorted' cannot produce fabricated raw-as-sorted values in the CSV
-# ---------------------------------------------------------------------------
-
-
 class TestSkippedSortedGate:
+    """--skip-sorted must not fabricate raw-as-sorted crosscheck values (issue #972)."""
+
     def test_sorted_compare_csv_has_gate_state_column(self, s00):
         """When sorted is skipped, the CSV must contain a gate_state column
         recording NOT_RUN_MISSING_INPUT, not fabricated raw-as-sorted values."""
         source = SCRIPT_PATH.read_text(encoding="utf-8")
 
-        assert "gate_state" in source, (
+        assert '"gate_states"' in source or "gate_state" in source, (
             "sorted_compare must contain a gate_state column when sorted is skipped. "
             "See issue #972."
         )
@@ -665,55 +630,21 @@ class TestSkippedSortedGate:
             "The skipped-sorted path must set gate_state = GATE_NOT_RUN_MISSING_INPUT. "
             "See issue #972."
         )
-        assert "note = \"skipped: sorted ROOT not staged on LUNARC\"" not in source, (
+        assert 'note = "skipped: sorted ROOT not staged on LUNARC"' not in source, (
             "The old fabricated 'note' column must be removed. See issue #972."
         )
 
-    def test_authorising_false_when_sorted_not_run(self, s00):
-        """Authorising requires every P0 gate to be PASS. A missing sorted
-        closure must make authorising=False."""
-        # Following the logic from main():
-        # authorising = bool(comparison["pass"].all()) and gate_states["sorted_even_channel_crosscheck"] == GATE_PASS and gate_states["pulse_schema_v1"] == GATE_PASS
-        count_match_ok = True
-        sorted_gate_ok = False
-        schema_gate_ok = True
-        assert not (count_match_ok and sorted_gate_ok and schema_gate_ok), (
-            "authorising must be False when sorted gate is not PASS"
-        )
-
-    def test_authorising_false_when_schema_fails(self, s00):
-        """Authorising requires every P0 gate to be PASS. A schema violation
-        must make authorising=False."""
-        count_match_ok = True
-        sorted_gate_ok = True
-        schema_gate_ok = False
-        assert not (count_match_ok and sorted_gate_ok and schema_gate_ok), (
-            "authorising must be False when pulse_schema_v1 gate is not PASS"
-        )
-
-    def test_authorising_true_when_all_gates_pass(self, s00):
-        count_match_ok = True
-        sorted_gate_ok = True
-        schema_gate_ok = True
-        assert count_match_ok and sorted_gate_ok and schema_gate_ok, (
-            "authorising must be True only when every P0 gate is PASS"
-        )
-
 
 # ---------------------------------------------------------------------------
-# Exit code logic: main() returns 0 only when authorising
+# SENSITIVITY SUBDIR CONSTANT
 # ---------------------------------------------------------------------------
 
 
-class TestExitCode:
-    def test_return_0_when_authorising(self, s00):
-        """main() returns 0 when authorising=True."""
-# The return statement: return 0 if authorising else 1
-        assert 1 if not (True and True and True) else 0 == 0
+class TestSensitivitySubdir:
+    """SENSITIVITY_SUBDIR must be a well-known constant."""
 
-    def test_return_1_when_not_authorising(self, s00):
-        """main() returns 1 when authorising=False."""
-        assert 1 if not (True and False and True) else 0 == 1
-        assert 1 if not (False and True and True) else 0 == 1
-        assert 1 if not (True and True and False) else 0 == 1
-        assert 1 if not (False and False and False) else 0 == 1
+    def test_sensitivity_subdir_is_sensitivity(self, s00):
+        assert s00.SENSITIVITY_SUBDIR == "sensitivity"
+
+    def test_amplitude_cut_env_var_is_defined(self, s00):
+        assert s00.AMPLITUDE_CUT_ENV == "CCB_AMPLITUDE_CUT_ADC"

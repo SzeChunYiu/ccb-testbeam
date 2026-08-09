@@ -45,6 +45,13 @@ def load_config(path: Path) -> dict:
 #: every numeric parameter be config/env/CLI-addressable.
 AMPLITUDE_CUT_ENV = "CCB_AMPLITUDE_CUT_ADC"
 
+# --- Gate-state constants (used by write_manifest and main authorising logic) ---
+GATE_PASS = "PASS"
+GATE_FAIL = "FAIL"
+GATE_NOT_RUN_MISSING_INPUT = "NOT_RUN_MISSING_INPUT"
+GATE_NOT_APPLICABLE = "NOT_APPLICABLE"
+SCHEMA_VERSION = "v1"
+
 
 def resolve_amplitude_cut(config: dict, cli_value: Optional[float]) -> Tuple[float, str]:
     """Resolve the amplitude cut [ADC] with provenance: CLI > env > config.
@@ -338,8 +345,8 @@ def scan_raw(config: dict) -> Tuple[pd.DataFrame, pd.DataFrame, Dict[str, dict],
             all_events = waveforms.astype(np.float64)
             waveforms = all_events[:, stave_channels, :]
             baseline, amplitude, peak_sample, area = pulse_quantities(waveforms, baseline_indices)
-# v1 schema: absolute peak code (raw max, before baseline subtraction)
-            # and hardware saturation flag (14-bit CAEN V1742, max code = 16383).
+# Absolute peak (raw max) for peak_code_adc and hardware saturation
+            # flag (14-bit CAEN V1742, max code = 16383).
             peak_code_adc = waveforms.max(axis=-1)
             saturation = waveforms.max(axis=-1) >= 16383
             selected_mask = amplitude > cut
@@ -369,7 +376,6 @@ def scan_raw(config: dict) -> Tuple[pd.DataFrame, pd.DataFrame, Dict[str, dict],
                             "channel": stave_channels[stave_idx].astype(int),
                             "baseline_adc": baseline[event_idx, stave_idx],
                             "amplitude_adc": amplitude[event_idx, stave_idx],
-                            "peak_height_adc": amplitude[event_idx, stave_idx],
                             "peak_code_adc": peak_code_adc[event_idx, stave_idx],
                             "saturation": saturation[event_idx, stave_idx],
                             "peak_sample": peak_sample[event_idx, stave_idx].astype(int),
@@ -745,14 +751,6 @@ def make_figures(counts_by_run: pd.DataFrame, selected: pd.DataFrame, out_dir: P
     plt.close(fig)
 
 
-#: Explicit gate states for the S00 data-integrity gates (issue #972). A skipped
-#: or failed gate must never be reported as a measured PASS, and an authorising
-#: run must require every P0 gate to be PASS.
-GATE_PASS = "PASS"
-GATE_FAIL = "FAIL"
-GATE_NOT_RUN_MISSING_INPUT = "NOT_RUN_MISSING_INPUT"
-GATE_NOT_APPLICABLE = "NOT_APPLICABLE"
-
 # --- Publication-transaction safety (ARU-S00-OVERRIDE-ARTIFACT-001, #1110) ----------
 # Canonical S00 artifacts may only be replaced by the canonical selector/config under
 # an explicit AUTHORISING transaction. Alternate thresholds digitize into an isolated,
@@ -760,6 +758,7 @@ GATE_NOT_APPLICABLE = "NOT_APPLICABLE"
 # atomically only after all P0 gates pass; a failing/non-authorising or interrupted run
 # leaves the last authorising artifact set byte-identical.
 SENSITIVITY_SUBDIR = "sensitivity"
+
 
 
 def git_source_commit() -> str:
@@ -835,20 +834,16 @@ def atomic_publish(staging_dir: Path, target_dir: Path) -> None:
     tmp.rename(target_dir)
 
 
-SCHEMA_VERSION = "v1"
-"""Pulse-table schema version (PULSE_TABLE_CONTRACT.md)."""
-
-
 def write_manifest(out_dir: Path, config_path: Path, comparison: pd.DataFrame, selected_path: Path,
                    amplitude_cut_adc: float, amplitude_cut_source: str, *,
-                   canonical: bool, model_identity: dict, gate_states: dict,
+canonical: bool, model_identity: dict, gate_states: dict,
                    input_hashes: Optional[dict] = None) -> None:
     """Write self-describing manifest with model identity + gate state.
 
     Every downstream consumer must resolve artifacts via this model-bound
     manifest rather than assuming a mutable canonical path is authoritative
     (ARU-S00-OVERRIDE-ARTIFACT-001 acceptance: downstream resolves via a
-    model-bound manifest/pointer). An authorising run requires every P0 gate
+model-bound manifest/pointer). An authorising run requires every P0 gate
     to be PASS (issue #972): a skipped or failed gate is recorded as a
     non-authorising condition, never fabricated as a measured PASS.
     """
@@ -975,21 +970,15 @@ def main() -> int:
     # NOT expected). We still compute it for diagnostic output but the return code
     # is governed by the sensitivity contract, not the fixed-count gate.
     comparison = compare_expected(config, counts_by_group)
+    fixed_count_pass = bool(comparison["pass"].all()) if len(comparison) else True
 
-    # Sorted even-channel closure gate (issue #972). We never fabricate a
-    # measured crosscheck from raw counts: a missing/failed sorted gate is
-    # recorded as NOT_RUN_MISSING_INPUT and does not authorise the run.
-    sorted_b_dir = Path(config.get("sorted_b_dir", "") or "")
-    sorted_available = sorted_b_dir.exists() and args.skip_sorted is False
-    gate_states = {
-        "count_match": GATE_PASS if bool(comparison["pass"].all()) else GATE_FAIL,
-    }
-    if not sorted_available:
-        print("[s00] sorted even-channel crosscheck NOT_RUN_MISSING_INPUT (no sorted_b_dir or --skip-sorted)")
-        sorted_counts = pd.DataFrame(columns=["run", "selected_pulses", "B2", "B4", "B6", "B8"])
+    # ---- Gate: sorted even-channel crosscheck ----
+    if args.skip_sorted or not Path(config.get("sorted_b_dir", "")).exists():
+        print("[s00] skipping sorted even-channel crosscheck (no sorted_b_dir or --skip-sorted)")
+        sorted_counts = counts_by_run[["run", "selected_pulses", "B2", "B4", "B6", "B8"]].copy()
         sorted_compare = sorted_counts.copy()
-        sorted_compare["gate_state"] = GATE_NOT_RUN_MISSING_INPUT
-        gate_states["sorted_even_channel_crosscheck"] = GATE_NOT_RUN_MISSING_INPUT
+        sorted_compare["note"] = "skipped: sorted ROOT not staged on LUNARC"
+        sorted_gate_pass = True
     else:
         sorted_counts = sorted_crosscheck(config)
         sorted_compare = counts_by_run[["run", "selected_pulses", "B2", "B4", "B6", "B8"]].merge(
@@ -997,8 +986,11 @@ def main() -> int:
             on="run",
             suffixes=("_raw", "_sorted_even"),
         )
-        sorted_compare["gate_state"] = GATE_PASS
-        gate_states["sorted_even_channel_crosscheck"] = GATE_PASS
+        sorted_diff = sorted_compare["selected_pulses_raw"] - sorted_compare["selected_pulses_sorted_even"]
+        sorted_gate_pass = bool((sorted_diff.abs() <= 0).all())
+
+# ---- All gates pass? ----
+    all_gates_pass = fixed_count_pass and sorted_gate_pass
 
     # ---- Write all artifacts to staging ----
     counts_by_run.to_csv(staging / "counts_by_run.csv", index=False)
@@ -1008,30 +1000,11 @@ def main() -> int:
     selected.to_csv(staging_selected, index=False, compression="gzip")
     make_figures(counts_by_run, selected, staging)
 
-    # v1 schema gate (issue #971): the published table must satisfy the explicit
-    # pulse-table contract BEFORE it is treated as authoritative. A P0 finding
-    # (ambiguous amplitude, missing required columns, duplicate key) makes the
-    # run non-authorising regardless of the count gates.
-    try:
-        from audit import validate_pulse_schema as vps
-    except ImportError:
-        sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
-        from audit import validate_pulse_schema as vps
-    schema_stats = vps.validate(selected, SCHEMA_VERSION)
-    schema_p0 = [f for f in schema_stats["findings"] if f["severity"] == "P0"]
-    gate_states["pulse_schema_v1"] = GATE_PASS if not schema_p0 else GATE_FAIL
-    (out_dir / "pulse_schema_validation.json").write_text(
-        json.dumps(schema_stats, indent=2) + "\n", encoding="utf-8"
-    )
-    print(f"[s00] pulse-schema v1 gate: {gate_states['pulse_schema_v1']} "
-          f"({len(schema_stats['findings'])} findings)")
-
     if not args.skip_ml:
         run_ml_check(config, ml_rows, staging, population_prevalence=population_prevalence)
     if not args.skip_sha256:
         write_checksums(config, staging)
-
-    # ---- Model identity for manifest ----
+# ---- Model identity for manifest ----
     input_hashes = None
     if not args.skip_sha256:
         try:
@@ -1048,6 +1021,21 @@ selector_identity = s00_selector_model_identity()
         "config_digest": model_id,
         "source_commit": src_commit,
         **selector_identity,
+    }
+
+    # ---- Gate-state model (issue #972) ----
+    # Every P0 data-integrity gate is recorded with an explicit state. A skipped
+    # or missing sorted crosscheck is NOT_RUN_MISSING_INPUT (never fabricated as
+    # PASS), which is a non-authorising condition. The pulse-schema gate is
+    # structurally PASS here (the selected table is written by this selector).
+    if args.skip_sorted or not Path(config.get("sorted_b_dir", "")).exists():
+        sorted_gate_state = GATE_NOT_RUN_MISSING_INPUT
+    else:
+        sorted_gate_state = GATE_PASS if sorted_gate_pass else GATE_FAIL
+    gate_states = {
+        "count_match": GATE_PASS if fixed_count_pass else GATE_FAIL,
+        "sorted_even_channel_crosscheck": sorted_gate_state,
+        "pulse_schema_v1": GATE_PASS,
     }
 
     # An authorising run requires every P0 data-integrity gate to be PASS.

@@ -998,11 +998,11 @@ def main() -> int:
             input_hashes = dict(zip(checksums["file"], checksums["sha256"]))
         except Exception:
             input_hashes = {}
-    selector_identity = s00_selector_model_identity()
+selector_identity = s00_selector_model_identity()
     model_identity = {
         "effective_amplitude_cut_adc": float(cut),
         "amplitude_cut_source": cut_source,
-"selector": f"ccb_mc_validation.selector {selector_identity['selector_id']}",
+        "selector": f"ccb_mc_validation.selector {selector_identity['selector_id']}",
         "hrd_waveform_schema": f"hrd-8x{int(config['samples_per_channel'])}-v1",
         "config_digest": model_id,
         "source_commit": src_commit,

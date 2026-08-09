@@ -74,7 +74,9 @@ void AppConfig::PrintUsage(const char* prog) {
     "  --reflectivity-scale V   TiO2 reflectivity scale     (default 1.0)\n"
     "  --attenuation-scale V    Y-11 attenuation scale      (default 1.0)\n"
     "  --pde-scale V            SiPM PDE scale              (default 1.0)\n"
-    "  --coupling V             fibre-end->sensor coupling  (default 1.0)\n"
+    "  --collection-efficiency V  post-transport collection    (default 1.0)\n"
+	    "  --optical-interface-model M  dry_butt|grease|epoxy|bonded|windowed\n"
+	    "                               (default UNKNOWN_EXTERNAL)\n"
     "  --far-end MODE           absorb|open|mirror|instrumented (default instrumented)\n"
     "  --wls-time-profile P     exponential|delta           (default exponential)\n"
     "  --mode MODE              optical                     (default; fast kernel not yet implemented)\n"
@@ -108,7 +110,8 @@ std::string AppConfig::Describe() const {
      << " reflectivity_scale=" << reflectivity_scale
      << " attenuation_scale=" << attenuation_scale
      << " pde_scale=" << pde_scale
-     << " coupling=" << coupling_efficiency
+     << " collection_efficiency=" << collection_efficiency
+	     << " optical_interface_model=" << optical_interface_model
      << " far_end=" << far_end_mode
      << " wls_time_profile=" << wls_time_profile
      << " mode=" << (mode == SimMode::kOpticalCalibration ? "optical" : "fast")
@@ -147,7 +150,8 @@ bool AppConfig::ParseArgs(int argc, char** argv) {
     else if (eq(a, "--reflectivity-scale")){ if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --reflectivity-scale requires a finite number, got '"<<v<<"'\n";return false;} reflectivity_scale = t; }
     else if (eq(a, "--attenuation-scale")) { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --attenuation-scale requires a finite number, got '"<<v<<"'\n";return false;} attenuation_scale = t; }
     else if (eq(a, "--pde-scale"))         { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --pde-scale requires a finite number, got '"<<v<<"'\n";return false;} pde_scale = t; }
-    else if (eq(a, "--coupling"))          { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --coupling requires a finite number, got '"<<v<<"'\n";return false;} coupling_efficiency = t; }
+    else if (eq(a, "--collection-efficiency")) { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --collection-efficiency requires a finite number, got '"<<v<<"'\n";return false;} collection_efficiency = t; }
+	    else if (eq(a, "--optical-interface-model")) { if(!(v=need(i)))return false; optical_interface_model = v; }
     else if (eq(a, "--far-end")) {
       if(!(v=need(i)))return false;
       if (eq(v, "absorb") || eq(v, "open") || eq(v, "mirror") || eq(v, "instrumented"))
@@ -196,8 +200,8 @@ bool AppConfig::ParseArgs(int argc, char** argv) {
   if (n_events <= 0)           { std::cerr << "error: --nevents must be > 0\n"; return false; }
   if (n_threads <= 0)          { std::cerr << "error: --threads must be > 0\n"; return false; }
   if (sipm_n_cells <= 0)      { std::cerr << "error: --sipm-n-cells must be > 0\n"; return false; }
-  if (coupling_efficiency < 0 || coupling_efficiency > 1) {
-    std::cerr << "error: --coupling must be in [0,1]\n"; return false;
+  if (collection_efficiency < 0 || collection_efficiency > 1) {
+    std::cerr << "error: --collection-efficiency must be in [0,1]\n"; return false;
   }
   if (pde_scale < 0 || reflectivity_scale < 0 || attenuation_scale < 0) {
     std::cerr << "error: scale factors must be >= 0\n"; return false;

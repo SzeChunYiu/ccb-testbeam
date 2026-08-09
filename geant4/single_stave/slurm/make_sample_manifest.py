@@ -78,7 +78,7 @@ def main(argv: list[str] | None = None) -> int:
     cols = ["file", "sha256", "size_bytes", "particle", "kinetic_energy_MeV",
             "hit_x_cm", "seed", "n_events", "mode", "birks_kB_mm_per_MeV",
             "reflectivity_scale", "attenuation_scale", "pde_scale",
-            "coupling_efficiency", "sipm_n_cells", "geometry_hash", "git_commit"]
+            "collection_efficiency", "optical_interface_model", "sipm_n_cells", "geometry_hash", "git_commit"]
     with out_csv.open("w", newline="") as f:
         w = csv.writer(f)
         w.writerow(cols)
@@ -91,7 +91,8 @@ def main(argv: list[str] | None = None) -> int:
                 m.get("seed"), m.get("n_events"), m.get("mode"),
                 m.get("birks_kB_mm_per_MeV"), m.get("reflectivity_scale"),
                 m.get("attenuation_scale"), m.get("pde_scale"),
-                m.get("coupling_efficiency"), m.get("sipm_n_cells"),
+                m.get("collection_efficiency"), m.get("optical_interface_model"),
+                m.get("sipm_n_cells"),
                 m.get("geometry_hash"), m.get("git_commit"),
             ])
 

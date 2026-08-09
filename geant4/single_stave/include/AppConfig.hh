@@ -42,7 +42,20 @@ struct AppConfig {
   double reflectivity_scale = 1.0;    // scales the TiO2 reflectivity table
   double attenuation_scale  = 1.0;    // scales Y-11 bulk attenuation length
   double pde_scale          = 1.0;    // scales the SiPM PDE table
-  double coupling_efficiency = 1.0;   // fibre-end -> sensor optical coupling [0,1]
+  // Fibre-end-face -> sensor optical interface model (issue #1083).
+  // UNKNOWN_EXTERNAL = the physical end-face construction has not been
+  // recovered from hardware evidence; the hard-coded 10 um world-air gap
+  // and Y-11-core sensor placeholder are acknowledged placeholders.
+  // Future values: dry_butt, grease, epoxy, bonded, windowed.
+  std::string optical_interface_model = "UNKNOWN_EXTERNAL";
+
+  // Post-transport collection efficiency [0,1] (separate from the optical
+  // interface model above). Applied after the photon has crossed the
+  // sensor boundary: P_det = PDE(lambda) * collection_efficiency.  This
+  // scalar is NOT equivalent to the unresolved end-face interface and
+  // cannot substitute for it (see issue #1083, H1-H6).
+  double collection_efficiency = 1.0;
+
   std::string far_end_mode = "instrumented";  // absorb|open|mirror|instrumented (SIPM-P0-002)
 
   // --- Provenance / reproducibility ---

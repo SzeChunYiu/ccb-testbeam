@@ -253,7 +253,8 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
      << "  \"reflectivity_scale\": " << cfg_.reflectivity_scale << ",\n"
      << "  \"attenuation_scale\": " << cfg_.attenuation_scale << ",\n"
      << "  \"pde_scale\": " << cfg_.pde_scale << ",\n"
-     << "  \"coupling_efficiency\": " << cfg_.coupling_efficiency << ",\n"
+     << "  \"collection_efficiency\": " << cfg_.collection_efficiency << ",\n"
+	     << "  \"optical_interface_model\": " << j(cfg_.optical_interface_model) << ",\n"
      << "  \"sipm_n_cells\": " << cfg_.sipm_n_cells << ",\n"
      << "  \"far_end_mode\": " << j(cfg_.far_end_mode) << ",\n"
      << "  \"optical_tables\": {\n";

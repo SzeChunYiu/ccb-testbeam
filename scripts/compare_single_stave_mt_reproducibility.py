@@ -50,7 +50,8 @@ PHYSICS_PROVENANCE_KEYS = (
     "reflectivity_scale",
     "attenuation_scale",
     "pde_scale",
-    "coupling_efficiency",
+    "collection_efficiency",
+    "optical_interface_model",
     "sipm_n_cells",
     "optical_tables",
 )

@@ -128,3 +128,131 @@ def test_stop_thresholds_used_in_source(m):
     assert "deepest_edep_layer" in src, (
         "MC stop_layer must call deepest_edep_layer (#1039)"
     )
+
+
+# ---------------------------------------------------------------------------
+# #1040: DATA event-set anchor — union of B-staves
+# ---------------------------------------------------------------------------
+
+
+class TestDataEventSetAnchor:
+    def test_require_b2_flag_exists(self, m):
+        """The --require-b2 flag must be present in argparse."""
+        src = SCRIPT_PATH.read_text(encoding="utf-8")
+        assert "--require-b2" in src, (
+            "--require-b2 flag must be present in argparse (#1040)"
+        )
+
+    def test_union_of_eventno_across_staves(self, m):
+        """DATA analysis must use eventno union across all B-staves."""
+        src = SCRIPT_PATH.read_text(encoding="utf-8")
+        # The default (without --require-b2) uses set(sub["eventno"].unique())
+        # which is the union across all staves.
+        assert 'set(sub["eventno"].unique())' in src, (
+            "Default event set must be the union of all B-stave eventnos (#1040)"
+        )
+
+    def test_n_events_without_B2_recorded(self, m):
+        """The data_summary must include n_events_without_B2 and estimand."""
+        src = SCRIPT_PATH.read_text(encoding="utf-8")
+        assert "n_events_without_B2" in src, (
+            "data_summary must record n_events_without_B2 (#1040)"
+        )
+        assert "estimand" in src, (
+            "data_summary must record the estimand (#1040)"
+        )
+
+
+# ---------------------------------------------------------------------------
+# #1041: MC per-event aggregation (not per-track)
+# ---------------------------------------------------------------------------
+
+
+class TestMCPerEventAggregation:
+    def test_mc_event_id_across_chunks(self, m):
+        """MC must use a global event counter across iterate() chunks."""
+        src = SCRIPT_PATH.read_text(encoding="utf-8")
+        assert "mc_event_counter" in src, (
+            "MC must use a global mc_event_counter across iterate() chunks (#1041)"
+        )
+        assert "mc_event_id" in src, (
+            "MC must track mc_event_id per event (#1041)"
+        )
+
+    def test_no_trackid_grouping(self, m):
+        """MC must NOT use Sci_bar_TrackID for grouping."""
+        src = SCRIPT_PATH.read_text(encoding="utf-8")
+        # Sci_bar_TrackID must only appear in the branches list definition
+        # (which may span multiple lines).  Any line with Sci_bar_TrackID
+        # outside the branches list would be a grouping key, which is banned.
+        for i, line in enumerate(src.splitlines()):
+            if "Sci_bar_TrackID" in line and "branches" not in line:
+                # Continuation lines of the branches list start with a quoted
+                # string (e.g. '              "Sci_bar_EDep", ...').
+                assert line.strip().startswith('"'), (
+                    f"Sci_bar_TrackID outside branches list: line {i+1}: {line.strip()}"
+                )
+
+    def test_primary_pdg_by_largest_b2_deposit(self, m):
+        """Primary PDG must be determined by the largest B2 energy deposit."""
+        src = SCRIPT_PATH.read_text(encoding="utf-8")
+        assert "b2_by_pdg" in src, (
+            "MC must aggregate B2 deposits per PDG to find the primary (#1041)"
+        )
+        assert "max(b2_by_pdg, key=b2_by_pdg.get)" in src, (
+            "Primary PDG must be the one with the largest B2 deposit (#1041)"
+        )
+
+
+# ---------------------------------------------------------------------------
+# #1042: Fail-closed atomic publication
+# ---------------------------------------------------------------------------
+
+
+class TestAtomicPublication:
+    def test_pub_dir_used_for_all_savefig(self, m):
+        """All savefig calls must write to pub_dir, not args.out."""
+        src = SCRIPT_PATH.read_text(encoding="utf-8")
+        # Count savefig calls targeting args.out
+        out_savefigs = [l for l in src.splitlines() if "savefig" in l and "args.out" in l]
+        assert len(out_savefigs) == 0, (
+            f"savefig calls must use pub_dir, not args.out: {out_savefigs}"
+        )
+
+    def test_artifact_names_defined(self, m):
+        """ARTIFACT_NAMES must be defined with all expected artifacts."""
+        src = SCRIPT_PATH.read_text(encoding="utf-8")
+        assert "ARTIFACT_NAMES" in src, (
+            "ARTIFACT_NAMES must be defined (#1042)"
+        )
+
+    def test_manifest_json_generated(self, m):
+        """manifest.json must be generated with SHA-256 checksums."""
+        src = SCRIPT_PATH.read_text(encoding="utf-8")
+        assert "manifest.json" in src, (
+            "manifest.json must be generated (#1042)"
+        )
+        assert "sha256" in src.lower(), (
+            "manifest must use SHA-256 checksums (#1042)"
+        )
+
+    def test_atomic_publication(self, m):
+        """Artifacts must be published atomically via os.replace."""
+        src = SCRIPT_PATH.read_text(encoding="utf-8")
+        assert "os.replace" in src, (
+            "Artifacts must be published via os.replace (atomic) (#1042)"
+        )
+
+    def test_staging_directory_cleaned(self, m):
+        """Staging directory must be removed after publication."""
+        src = SCRIPT_PATH.read_text(encoding="utf-8")
+        assert "shutil.rmtree" in src, (
+            "Staging directory must be removed via shutil.rmtree (#1042)"
+        )
+
+    def test_missing_artifact_exits(self, m):
+        """Missing artifact must cause sys.exit(1)."""
+        src = SCRIPT_PATH.read_text(encoding="utf-8")
+        assert "sys.exit(1)" in src, (
+            "Missing artifact must cause sys.exit(1) (#1042)"
+        )

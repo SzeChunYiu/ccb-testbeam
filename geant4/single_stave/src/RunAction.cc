@@ -252,6 +252,8 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
      << "  \"birks_kB_mm_per_MeV\": " << cfg_.birks_kB_mm_per_MeV << ",\n"
      << "  \"reflectivity_scale\": " << cfg_.reflectivity_scale << ",\n"
      << "  \"attenuation_scale\": " << cfg_.attenuation_scale << ",\n"
+     << "  \"scintillator_absorption_scale\": " << cfg_.scintillator_absorption_scale << ",\n"
+     << "  \"y11_bulk_attenuation_scale\": " << cfg_.y11_bulk_attenuation_scale << ",\n"
      << "  \"pde_scale\": " << cfg_.pde_scale << ",\n"
      << "  \"coupling_efficiency\": " << cfg_.coupling_efficiency << ",\n"
      << "  \"sipm_n_cells\": " << cfg_.sipm_n_cells << ",\n"

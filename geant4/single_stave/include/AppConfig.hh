@@ -40,7 +40,13 @@ struct AppConfig {
   // --- Detector / optical systematics knobs (multiplicative unless noted) ---
   double birks_kB_mm_per_MeV = 0.126; // Birks constant kB [mm/MeV] (Edep scan var)
   double reflectivity_scale = 1.0;    // scales the TiO2 reflectivity table
-  double attenuation_scale  = 1.0;    // scales Y-11 bulk attenuation length
+  double attenuation_scale  = 1.0;    // DEPRECATED: use scintillator_absorption_scale
+                                       //   and y11_bulk_attenuation_scale instead.
+                                       //   Kept for legacy config compatibility;
+                                       //   affects both when the new fields are
+                                       //   at their default (1.0).
+  double scintillator_absorption_scale = 1.0; // scales scintillator self-absorption length
+  double y11_bulk_attenuation_scale    = 1.0; // scales Y-11 bulk attenuation length
   double pde_scale          = 1.0;    // scales the SiPM PDE table
   double coupling_efficiency = 1.0;   // fibre-end -> sensor optical coupling [0,1]
   std::string far_end_mode = "instrumented";  // absorb|open|mirror|instrumented (SIPM-P0-002)

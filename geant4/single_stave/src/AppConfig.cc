@@ -72,7 +72,10 @@ void AppConfig::PrintUsage(const char* prog) {
     "  --phi DEG                azimuth of tilt             (default 0)\n"
     "  --birks-kB VAL           Birks kB [mm/MeV]           (default 0.126)\n"
     "  --reflectivity-scale V   TiO2 reflectivity scale     (default 1.0)\n"
-    "  --attenuation-scale V    Y-11 attenuation scale      (default 1.0)\n"
+    "  --attenuation-scale V    DEPRECATED — use --scintillator-absorption-scale\n"
+    "                           and --y11-bulk-attenuation-scale instead.\n"
+    "  --scintillator-absorption-scale V  scales scintillator self-absorption  (default 1.0)\n"
+    "  --y11-bulk-attenuation-scale V     scales Y-11 bulk attenuation length  (default 1.0)\n"
     "  --pde-scale V            SiPM PDE scale              (default 1.0)\n"
     "  --coupling V             fibre-end->sensor coupling  (default 1.0)\n"
     "  --far-end MODE           absorb|open|mirror|instrumented (default instrumented)\n"
@@ -106,7 +109,9 @@ std::string AppConfig::Describe() const {
      << " phi_deg=" << phi_deg
      << " birks_kB=" << birks_kB_mm_per_MeV
      << " reflectivity_scale=" << reflectivity_scale
-     << " attenuation_scale=" << attenuation_scale
+     << " attenuation_scale(deprecated)=" << attenuation_scale
+     << " scintillator_absorption_scale=" << scintillator_absorption_scale
+     << " y11_bulk_attenuation_scale=" << y11_bulk_attenuation_scale
      << " pde_scale=" << pde_scale
      << " coupling=" << coupling_efficiency
      << " far_end=" << far_end_mode
@@ -145,7 +150,9 @@ bool AppConfig::ParseArgs(int argc, char** argv) {
     else if (eq(a, "--phi"))               { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --phi requires a finite number, got '"<<v<<"'\n";return false;} phi_deg = t; }
     else if (eq(a, "--birks-kB"))          { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --birks-kB requires a finite number, got '"<<v<<"'\n";return false;} birks_kB_mm_per_MeV = t; }
     else if (eq(a, "--reflectivity-scale")){ if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --reflectivity-scale requires a finite number, got '"<<v<<"'\n";return false;} reflectivity_scale = t; }
-    else if (eq(a, "--attenuation-scale")) { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --attenuation-scale requires a finite number, got '"<<v<<"'\n";return false;} attenuation_scale = t; }
+    else if (eq(a, "--attenuation-scale")) { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --attenuation-scale requires a finite number, got '"<<v<<"'\n";return false;} attenuation_scale = t; scintillator_absorption_scale = t; y11_bulk_attenuation_scale = t; }
+    else if (eq(a, "--scintillator-absorption-scale")) { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --scintillator-absorption-scale requires a finite number, got '"<<v<<"'\n";return false;} scintillator_absorption_scale = t; }
+    else if (eq(a, "--y11-bulk-attenuation-scale")) { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --y11-bulk-attenuation-scale requires a finite number, got '"<<v<<"'\n";return false;} y11_bulk_attenuation_scale = t; }
     else if (eq(a, "--pde-scale"))         { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --pde-scale requires a finite number, got '"<<v<<"'\n";return false;} pde_scale = t; }
     else if (eq(a, "--coupling"))          { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --coupling requires a finite number, got '"<<v<<"'\n";return false;} coupling_efficiency = t; }
     else if (eq(a, "--far-end")) {
@@ -199,7 +206,8 @@ bool AppConfig::ParseArgs(int argc, char** argv) {
   if (coupling_efficiency < 0 || coupling_efficiency > 1) {
     std::cerr << "error: --coupling must be in [0,1]\n"; return false;
   }
-  if (pde_scale < 0 || reflectivity_scale < 0 || attenuation_scale < 0) {
+  if (pde_scale < 0 || reflectivity_scale < 0 || attenuation_scale < 0 ||
+      scintillator_absorption_scale < 0 || y11_bulk_attenuation_scale < 0) {
     std::cerr << "error: scale factors must be >= 0\n"; return false;
   }
   // G4-003: env override for strict optical-table validation (production).

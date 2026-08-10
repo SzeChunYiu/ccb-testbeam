@@ -97,9 +97,7 @@ def test_legacy_separate_hash_then_stat_can_serialize_mixed_versions(tmp_path):
     assert later_size != len(payload_a)
 
 
-def test_same_open_stream_survives_path_replacement_without_mixing_row(
-    tmp_path, monkeypatch
-):
+def test_same_open_stream_rejects_path_replacement_during_read(tmp_path, monkeypatch):
     module = load_module()
     source = tmp_path / "raw.root"
     replacement = tmp_path / "replacement.root"
@@ -120,13 +118,11 @@ def test_same_open_stream_survives_path_replacement_without_mixing_row(
         return block
 
     monkeypatch.setattr(module.os, "read", replacing_read)
-    record = module.digest_raw_input(source, block_size=2)
+    with pytest.raises(module.RawInputProvenanceError, match="changed while being digested"):
+        module.digest_raw_input(source, block_size=2)
 
     assert swapped is True
-    assert record["sha256"] == hashlib.sha256(payload_a).hexdigest()
-    assert record["bytes"] == len(payload_a)
     assert source.read_bytes() == payload_b
-    assert int(record["bytes"]) != source.stat().st_size
 
 
 def test_same_open_stream_rejects_in_place_mutation_during_read(tmp_path, monkeypatch):

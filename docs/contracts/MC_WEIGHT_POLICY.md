@@ -48,7 +48,7 @@ owns the campaign-wide raw→event carrier contract.
 
 Signed-weight generators, if introduced, define a different measure and need a
 separate policy. They must not be coerced into the nonnegative probability
-measure below.
+measure below. Issue #1174 owns that signed-measure child universe.
 
 ## 2. Derived event-weight population contract
 
@@ -112,6 +112,13 @@ Every script that reads claim-bearing MC truth MUST do exactly one of:
 2. explicitly declare why weighting is algebraically irrelevant for the
    specific estimand.
 
+For a normalized nonnegative shape/probability estimator, successful population
+validation is not enough if the estimator immediately reopens raw `sum(w)` or
+raw weighted products that overflow/underflow only because of a common weight
+scale. Such estimators must consume `w/max(w)` (or an algebraically equivalent
+scale-normalized representation) so local contracts compose. Raw-unit moments
+remain provenance, not hidden validity gates.
+
 A downstream validator cannot repair a producer that already replaced missing
 or invalid weights by `1.0`, dropped rows silently, or collapsed an ambiguous
 raw vector. Data case-control/inclusion weights and MC physics/source weights
@@ -145,8 +152,10 @@ justified combination.
 |---|---|---|
 | Repository-wide raw→event carrier semantics | **ACTIVE / PARTIAL** | #880 |
 | Legacy proposal→target weight derivation | **BLOCKED / ACTIVE** | #1053 exact table/source provenance and production ROOT |
-| Post-adapter nonnegative event-population primitive | **VALIDATED_ON_MAIN** | PR #1171 / `main@069b1d66f1a775003b284376d71c76673136f60a`, policy `nonnegative_event_measure_v2` |
-| Legacy weight-helper scale-invariance migration | **TRIAGED / OPEN** | #1172; existing main helpers still square raw weights |
+| Post-adapter nonnegative event-population primitive | **VALIDATED_ON_MAIN** | PR #1171 / policy `nonnegative_event_measure_v2` |
+| Nonnegative helper scale-invariance migration | **ACTIVE / IMPLEMENTED_PR** | #1172 / PR #1175; exact-head CI and merge required |
+| Signed-weight source/estimand/numerical contract | **TRIAGED / OPEN** | #1174; do not reuse nonnegative probability semantics |
+| Legacy `mc01_trigger_split_truth.py` weight carrier | **BLOCKED** | #880/#1053 first-primary and fallback-to-unit semantics |
 | Production-sample ESS/provenance report | **BLOCKED_EXTERNAL** | exact immutable production ROOT bytes |
 | Event/stave truth producer integration | **ACTIVE / BLOCKED** | #1169 must dispatch on a source-authorized adapter and use this population contract |
 | Authorising weighted DATA↔MC inference | **BLOCKED** | #1049/#1052/#1164 plus detector-chain and null-calibration dependencies |

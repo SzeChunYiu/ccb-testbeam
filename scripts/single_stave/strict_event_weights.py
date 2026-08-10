@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Fail-closed event-weight validation and weighted summary primitives.
 
-This module is intentionally independent of ROOT/uproot so the numerical
-contract can be tested with small synthetic arrays.  Analysis entry points are
-expected to validate a complete event-aligned weight vector once and to call
-these helpers for every downstream weighted estimator.
+This module is intentionally independent of ROOT/uproot.  Nonnegative
+probability-measure validation delegates to the canonical package contract so
+weight units / common normalization cannot change authorisation.  Raw generator
+weight-carrier semantics remain upstream of this module.
 """
 from __future__ import annotations
 
@@ -18,9 +18,18 @@ from typing import Any, Mapping, Sequence
 
 import numpy as np
 
+from ccb_mc_validation.exceptions import DataContractError
+from ccb_mc_validation.truth.event_weight_population import (
+    EVENT_WEIGHT_POPULATION_POLICY_ID,
+    SUMMATION_METHOD_ID,
+    EventWeightPopulationSummary,
+    summarize_event_weight_population,
+)
+
 POLICY = "MC_WEIGHT_VECTOR_MUST_BE_UNAMBIGUOUS_FINITE_NONNEGATIVE_AND_EVENT_ALIGNED"
-VERSION = "1.0.0"
-SUMMATION_METHOD = "PYTHON_MATH_FSUM_BINARY64"
+POPULATION_POLICY = EVENT_WEIGHT_POPULATION_POLICY_ID
+VERSION = "2.0.0"
+SUMMATION_METHOD = SUMMATION_METHOD_ID
 WEIGHTED_MEDIAN_METHOD = "SORTED_NUMPY_CUMSUM_LINEAR_INTERPOLATION"
 
 
@@ -42,30 +51,53 @@ def _as_float_vector(values: Any, *, name: str) -> np.ndarray:
     return array
 
 
+def _validated_weight_array_and_summary(
+    weights: Any,
+    *,
+    expected_length: int | None = None,
+    name: str = "event_weights",
+) -> tuple[np.ndarray, EventWeightPopulationSummary]:
+    try:
+        summary = summarize_event_weight_population(
+            weights,
+            expected_length=expected_length,
+        )
+    except DataContractError as exc:
+        message = str(exc).replace("event_weight", name).replace("non-finite", "nonfinite")
+        if "no positive finite mass" in message:
+            message = f"{name} has no positive weight"
+        raise WeightValidationError(message) from exc
+
+    if summary.n_rows == 0:
+        raise WeightValidationError(f"{name} must not be empty")
+    if not summary.measure_defined or summary.weight_scale is None:
+        raise WeightValidationError(f"{name} has no positive weight")
+
+    array = np.asarray(weights, dtype=np.float64)
+    return np.array(array, dtype=np.float64, copy=True), summary
+
+
+def _scaled_weights(
+    weight_array: np.ndarray,
+    summary: EventWeightPopulationSummary,
+) -> np.ndarray:
+    assert summary.weight_scale is not None
+    return weight_array / summary.weight_scale
+
+
 def validate_event_weights(
     weights: Any,
     *,
     expected_length: int | None = None,
     name: str = "event_weights",
 ) -> np.ndarray:
-    """Return a defensive 1-D float copy after strict event-weight validation."""
-    array = _as_float_vector(weights, name=name)
-    if expected_length is not None and array.size != int(expected_length):
-        raise WeightValidationError(
-            f"{name} has {array.size} entries; expected {int(expected_length)}"
-        )
-    if np.any(array < 0.0):
-        bad = np.flatnonzero(array < 0.0)[:5].tolist()
-        raise WeightValidationError(f"{name} contains negative values at indices {bad}")
-    if not np.any(array > 0.0):
-        raise WeightValidationError(f"{name} has no positive weight")
-    total = math.fsum(float(value) for value in array)
-    squares = math.fsum(float(value) * float(value) for value in array)
-    if not math.isfinite(total) or total <= 0.0:
-        raise WeightValidationError(f"{name} has nonpositive or nonfinite total weight")
-    if not math.isfinite(squares) or squares <= 0.0:
-        raise WeightValidationError(f"{name} has nonpositive or nonfinite squared-weight sum")
-    return array.copy()
+    """Return a defensive copy after canonical nonnegative-population validation."""
+    array, _summary = _validated_weight_array_and_summary(
+        weights,
+        expected_length=expected_length,
+        name=name,
+    )
+    return array
 
 
 def _validated_values_and_weights(
@@ -74,40 +106,43 @@ def _validated_values_and_weights(
     *,
     value_name: str,
     minimum_size: int = 1,
-) -> tuple[np.ndarray, np.ndarray]:
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, EventWeightPopulationSummary]:
     value_array = _as_float_vector(values, name=value_name)
     if value_array.size < minimum_size:
         raise WeightValidationError(
             f"{value_name} requires at least {minimum_size} entries; received {value_array.size}"
         )
-    weight_array = validate_event_weights(weights, expected_length=value_array.size)
-    return value_array, weight_array
+    weight_array, summary = _validated_weight_array_and_summary(
+        weights,
+        expected_length=value_array.size,
+    )
+    return value_array, weight_array, _scaled_weights(weight_array, summary), summary
 
 
 def weighted_mean(values: Any, weights: Any) -> float:
-    value_array, weight_array = _validated_values_and_weights(
+    value_array, _weight_array, scaled_weights, summary = _validated_values_and_weights(
         values, weights, value_name="values"
     )
+    assert summary.sum_w_over_scale is not None
     numerator = math.fsum(
         float(weight) * float(value)
-        for value, weight in zip(value_array, weight_array, strict=True)
+        for value, weight in zip(value_array, scaled_weights, strict=True)
     )
-    denominator = math.fsum(float(weight) for weight in weight_array)
-    result = numerator / denominator
+    result = numerator / summary.sum_w_over_scale
     if not math.isfinite(result):
         raise WeightValidationError("weighted mean is nonfinite")
     return float(result)
 
 
 def weighted_median(values: Any, weights: Any) -> float:
-    value_array, weight_array = _validated_values_and_weights(
+    value_array, _weight_array, scaled_weights, summary = _validated_values_and_weights(
         values, weights, value_name="values"
     )
     order = np.argsort(value_array, kind="mergesort")
     sorted_values = value_array[order]
-    sorted_weights = weight_array[order]
-    total = math.fsum(float(weight) for weight in sorted_weights)
-    cumulative = np.cumsum(sorted_weights, dtype=float) / total
+    sorted_weights = scaled_weights[order]
+    assert summary.sum_w_over_scale is not None
+    cumulative = np.cumsum(sorted_weights, dtype=float) / summary.sum_w_over_scale
     result = float(np.interp(0.5, cumulative, sorted_values))
     if not math.isfinite(result):
         raise WeightValidationError("weighted median is nonfinite")
@@ -123,12 +158,18 @@ def weighted_fraction(mask: Any, weights: Any) -> float:
     if mask_array.size == 0:
         raise WeightValidationError("mask must not be empty")
     mask_bool = mask_array.astype(bool, copy=False)
-    weight_array = validate_event_weights(weights, expected_length=mask_bool.size)
-    numerator = math.fsum(
-        float(weight) for selected, weight in zip(mask_bool, weight_array, strict=True) if selected
+    weight_array, summary = _validated_weight_array_and_summary(
+        weights,
+        expected_length=mask_bool.size,
     )
-    denominator = math.fsum(float(weight) for weight in weight_array)
-    result = numerator / denominator
+    scaled_weights = _scaled_weights(weight_array, summary)
+    numerator = math.fsum(
+        float(weight)
+        for selected, weight in zip(mask_bool, scaled_weights, strict=True)
+        if selected
+    )
+    assert summary.sum_w_over_scale is not None
+    result = numerator / summary.sum_w_over_scale
     if not 0.0 <= result <= 1.0 or not math.isfinite(result):
         raise WeightValidationError("weighted fraction is outside [0, 1] or nonfinite")
     return float(result)
@@ -143,21 +184,32 @@ def weighted_correlation(x: Any, y: Any, weights: Any) -> float:
         )
     if x_array.size < 2:
         raise WeightValidationError("weighted correlation requires at least two entries")
-    weight_array = validate_event_weights(weights, expected_length=x_array.size)
-    mean_x = weighted_mean(x_array, weight_array)
-    mean_y = weighted_mean(y_array, weight_array)
-    denominator_weight = math.fsum(float(weight) for weight in weight_array)
+    weight_array, summary = _validated_weight_array_and_summary(
+        weights,
+        expected_length=x_array.size,
+    )
+    scaled_weights = _scaled_weights(weight_array, summary)
+    assert summary.sum_w_over_scale is not None
+    denominator_weight = summary.sum_w_over_scale
+    mean_x = math.fsum(
+        float(weight) * float(value)
+        for value, weight in zip(x_array, scaled_weights, strict=True)
+    ) / denominator_weight
+    mean_y = math.fsum(
+        float(weight) * float(value)
+        for value, weight in zip(y_array, scaled_weights, strict=True)
+    ) / denominator_weight
     covariance = math.fsum(
         float(weight) * (float(x_value) - mean_x) * (float(y_value) - mean_y)
-        for x_value, y_value, weight in zip(x_array, y_array, weight_array, strict=True)
+        for x_value, y_value, weight in zip(x_array, y_array, scaled_weights, strict=True)
     ) / denominator_weight
     variance_x = math.fsum(
         float(weight) * (float(x_value) - mean_x) ** 2
-        for x_value, weight in zip(x_array, weight_array, strict=True)
+        for x_value, weight in zip(x_array, scaled_weights, strict=True)
     ) / denominator_weight
     variance_y = math.fsum(
         float(weight) * (float(y_value) - mean_y) ** 2
-        for y_value, weight in zip(y_array, weight_array, strict=True)
+        for y_value, weight in zip(y_array, scaled_weights, strict=True)
     ) / denominator_weight
     if variance_x <= 0.0 or variance_y <= 0.0:
         raise WeightValidationError("weighted correlation is undefined for zero variance")
@@ -171,35 +223,61 @@ def weighted_correlation(x: Any, y: Any, weights: Any) -> float:
 
 
 def effective_sample_size(weights: Any) -> float:
-    weight_array = validate_event_weights(weights)
-    total = math.fsum(float(weight) for weight in weight_array)
-    squares = math.fsum(float(weight) * float(weight) for weight in weight_array)
-    result = total * total / squares
-    if not math.isfinite(result) or result <= 0.0 or result > weight_array.size + 1e-9:
-        raise WeightValidationError(f"invalid effective sample size: {result}")
+    _weight_array, summary = _validated_weight_array_and_summary(weights)
+    result = summary.effective_sample_size
+    if result is None:
+        raise WeightValidationError("effective sample size is undefined")
     return float(result)
 
 
+def _raw_std_or_none(
+    weight_array: np.ndarray,
+    summary: EventWeightPopulationSummary,
+) -> float | None:
+    scaled = _scaled_weights(weight_array, summary)
+    assert summary.sum_w_over_scale is not None
+    scaled_mean = summary.sum_w_over_scale / summary.n_rows
+    scaled_variance = math.fsum(
+        (float(value) - scaled_mean) ** 2 for value in scaled
+    ) / summary.n_rows
+    scaled_std = math.sqrt(max(0.0, scaled_variance))
+    assert summary.weight_scale is not None
+    raw_std = scaled_std * summary.weight_scale
+    return float(raw_std) if math.isfinite(raw_std) else None
+
+
 def summarize_weights(weights: Any, *, expected_length: int | None = None) -> dict[str, Any]:
-    weight_array = validate_event_weights(weights, expected_length=expected_length)
-    total = math.fsum(float(weight) for weight in weight_array)
-    squares = math.fsum(float(weight) * float(weight) for weight in weight_array)
-    ess_value = total * total / squares
+    weight_array, summary = _validated_weight_array_and_summary(
+        weights,
+        expected_length=expected_length,
+    )
+    raw_mean = (
+        float(summary.sum_w / summary.n_rows)
+        if summary.sum_w is not None
+        else None
+    )
     return {
         "policy": POLICY,
+        "population_policy_id": summary.policy_id,
         "validator_version": VERSION,
-        "summation_method": SUMMATION_METHOD,
-        "n_weights": int(weight_array.size),
-        "n_zero": int(np.count_nonzero(weight_array == 0.0)),
-        "n_positive": int(np.count_nonzero(weight_array > 0.0)),
+        "summation_method": summary.summation_method,
+        "statistical_unit": summary.statistical_unit,
+        "n_weights": summary.n_rows,
+        "n_zero": summary.n_zero,
+        "n_positive": summary.n_positive,
         "min": float(np.min(weight_array)),
         "max": float(np.max(weight_array)),
-        "mean": float(np.mean(weight_array)),
-        "std": float(np.std(weight_array)),
-        "sum_w": float(total),
-        "sum_w2": float(squares),
-        "ess": float(ess_value),
-        "ess_fraction": float(ess_value / weight_array.size),
+        "mean": raw_mean,
+        "std": _raw_std_or_none(weight_array, summary),
+        "weight_scale": summary.weight_scale,
+        "sum_w_over_scale": summary.sum_w_over_scale,
+        "sum_w2_over_scale2": summary.sum_w2_over_scale2,
+        "sum_w": summary.sum_w,
+        "sum_w2": summary.sum_w2,
+        "ess": summary.effective_sample_size,
+        "ess_fraction": summary.effective_sample_fraction,
+        "max_weight_fraction": summary.max_weight_fraction,
+        "measure_defined": summary.measure_defined,
     }
 
 

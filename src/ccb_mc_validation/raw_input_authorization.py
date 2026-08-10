@@ -11,9 +11,10 @@ import errno
 import hashlib
 import os
 import stat
+from collections.abc import Iterator, Mapping
 from contextlib import contextmanager
 from pathlib import Path
-from typing import BinaryIO, Iterator, Mapping
+from typing import BinaryIO
 
 
 class RawInputAuthorizationError(RuntimeError):

@@ -45,7 +45,13 @@ struct AppConfig {
   // thus the fitted kB (the "cut x kB coupling").
   double production_cut_mm = 0.1;
   double reflectivity_scale = 1.0;    // scales the TiO2 reflectivity table
-  double attenuation_scale  = 1.0;    // scales Y-11 bulk attenuation length
+  double attenuation_scale  = 1.0;    // DEPRECATED: use scintillator_absorption_scale
+                                       //   and y11_bulk_attenuation_scale instead.
+                                       //   Kept for legacy config compatibility;
+                                       //   affects both when the new fields are
+                                       //   at their default (1.0).
+  double scintillator_absorption_scale = 1.0; // scales scintillator self-absorption length
+  double y11_bulk_attenuation_scale    = 1.0; // scales Y-11 bulk attenuation length
   double pde_scale          = 1.0;    // scales the SiPM PDE table
   // Fibre-end-face -> sensor optical interface model (issue #1083).
   // UNKNOWN_EXTERNAL = the physical end-face construction has not been

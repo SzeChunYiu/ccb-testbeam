@@ -74,7 +74,10 @@ void AppConfig::PrintUsage(const char* prog) {
     "  --production-cut MM      secondary-production range threshold [mm]\n"
     "                           (default 0.1; gamma/e-/e+/p, NOT optical tracking)\n"
     "  --reflectivity-scale V   TiO2 reflectivity scale     (default 1.0)\n"
-    "  --attenuation-scale V    Y-11 attenuation scale      (default 1.0)\n"
+    "  --attenuation-scale V    DEPRECATED — use --scintillator-absorption-scale\n"
+    "                           and --y11-bulk-attenuation-scale instead.\n"
+    "  --scintillator-absorption-scale V  scales scintillator self-absorption  (default 1.0)\n"
+    "  --y11-bulk-attenuation-scale V     scales Y-11 bulk attenuation length  (default 1.0)\n"
     "  --pde-scale V            SiPM PDE scale              (default 1.0)\n"
     "  --collection-efficiency V  post-transport collection    (default 1.0)\n"
 	    "  --optical-interface-model M  dry_butt|grease|epoxy|bonded|windowed\n"
@@ -111,7 +114,9 @@ std::string AppConfig::Describe() const {
      << " birks_kB=" << birks_kB_mm_per_MeV
      << " production_cut_mm=" << production_cut_mm
      << " reflectivity_scale=" << reflectivity_scale
-     << " attenuation_scale=" << attenuation_scale
+     << " attenuation_scale(deprecated)=" << attenuation_scale
+     << " scintillator_absorption_scale=" << scintillator_absorption_scale
+     << " y11_bulk_attenuation_scale=" << y11_bulk_attenuation_scale
      << " pde_scale=" << pde_scale
      << " collection_efficiency=" << collection_efficiency
 	     << " optical_interface_model=" << optical_interface_model
@@ -152,7 +157,9 @@ bool AppConfig::ParseArgs(int argc, char** argv) {
     else if (eq(a, "--birks-kB"))          { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --birks-kB requires a finite number, got '"<<v<<"'\n";return false;} birks_kB_mm_per_MeV = t; }
     else if (eq(a, "--production-cut"))    { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --production-cut requires a finite number, got '"<<v<<"'\n";return false;} production_cut_mm = t; }
     else if (eq(a, "--reflectivity-scale")){ if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --reflectivity-scale requires a finite number, got '"<<v<<"'\n";return false;} reflectivity_scale = t; }
-    else if (eq(a, "--attenuation-scale")) { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --attenuation-scale requires a finite number, got '"<<v<<"'\n";return false;} attenuation_scale = t; }
+    else if (eq(a, "--attenuation-scale")) { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --attenuation-scale requires a finite number, got '"<<v<<"'\n";return false;} attenuation_scale = t; scintillator_absorption_scale = t; y11_bulk_attenuation_scale = t; }
+    else if (eq(a, "--scintillator-absorption-scale")) { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --scintillator-absorption-scale requires a finite number, got '"<<v<<"'\n";return false;} scintillator_absorption_scale = t; }
+    else if (eq(a, "--y11-bulk-attenuation-scale")) { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --y11-bulk-attenuation-scale requires a finite number, got '"<<v<<"'\n";return false;} y11_bulk_attenuation_scale = t; }
     else if (eq(a, "--pde-scale"))         { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --pde-scale requires a finite number, got '"<<v<<"'\n";return false;} pde_scale = t; }
     else if (eq(a, "--collection-efficiency")) { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --collection-efficiency requires a finite number, got '"<<v<<"'\n";return false;} collection_efficiency = t; }
 	    else if (eq(a, "--optical-interface-model")) { if(!(v=need(i)))return false; optical_interface_model = v; }
@@ -207,7 +214,8 @@ bool AppConfig::ParseArgs(int argc, char** argv) {
   if (collection_efficiency < 0 || collection_efficiency > 1) {
     std::cerr << "error: --collection-efficiency must be in [0,1]\n"; return false;
   }
-  if (pde_scale < 0 || reflectivity_scale < 0 || attenuation_scale < 0) {
+  if (pde_scale < 0 || reflectivity_scale < 0 || attenuation_scale < 0 ||
+      scintillator_absorption_scale < 0 || y11_bulk_attenuation_scale < 0) {
     std::cerr << "error: scale factors must be >= 0\n"; return false;
   }
   if (production_cut_mm <= 0) { std::cerr << "error: --production-cut must be > 0\n"; return false; }

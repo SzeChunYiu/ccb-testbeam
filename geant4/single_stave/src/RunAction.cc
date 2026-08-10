@@ -253,6 +253,8 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
      << "  \"production_cut_mm\": " << cfg_.production_cut_mm << ",\n"
      << "  \"reflectivity_scale\": " << cfg_.reflectivity_scale << ",\n"
      << "  \"attenuation_scale\": " << cfg_.attenuation_scale << ",\n"
+     << "  \"scintillator_absorption_scale\": " << cfg_.scintillator_absorption_scale << ",\n"
+     << "  \"y11_bulk_attenuation_scale\": " << cfg_.y11_bulk_attenuation_scale << ",\n"
      << "  \"pde_scale\": " << cfg_.pde_scale << ",\n"
      << "  \"collection_efficiency\": " << cfg_.collection_efficiency << ",\n"
 	     << "  \"optical_interface_model\": " << j(cfg_.optical_interface_model) << ",\n"

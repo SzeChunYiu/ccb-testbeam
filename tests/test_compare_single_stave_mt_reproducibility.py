@@ -31,6 +31,8 @@ def metadata(n_events: int = 3) -> dict[str, object]:
         "birks_kB_mm_per_MeV": 0.126,
         "reflectivity_scale": 1.0,
         "attenuation_scale": 1.0,
+        "scintillator_absorption_scale": 1.0,
+        "y11_bulk_attenuation_scale": 1.0,
         "pde_scale": 1.0,
         "collection_efficiency": 1.0,
         "optical_interface_model": "UNKNOWN_EXTERNAL",

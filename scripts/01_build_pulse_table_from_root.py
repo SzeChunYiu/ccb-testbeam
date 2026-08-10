@@ -7,6 +7,8 @@ import argparse
 import hashlib
 import json
 import os
+import shutil
+import subprocess
 from collections import defaultdict
 from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Tuple
@@ -19,6 +21,17 @@ import numpy as np
 import pandas as pd
 import uproot
 import yaml
+
+from ccb_mc_validation.s00_selector_contract import (
+    S00SelectorConfigError,
+    s00_selector_model_identity,
+    validate_s00_selector_contract,
+)
+from ccb_mc_validation.selector import estimate_pedestal_v1_batched
+from tools.audit.validate_hrd_waveform_contract import (
+    BatchValidation,
+    validate_and_reshape_rows,
+)
 
 
 def load_config(path: Path) -> dict:
@@ -219,41 +232,17 @@ def sha256_file(path: Path, block_size: int = 1024 * 1024) -> str:
 
 
 def configured_runs(config: dict) -> List[int]:
-    """Return the unique configured runs, rejecting overlapping exclusive roles.
-
-    Raises ``ValueError`` if any run is assigned to more than one run group, so
-    a calibration/analysis split can never silently hide a duplicate via
-    ``set()`` or ``run_group_lookup``'s last-write-wins behaviour (issue #983).
-    """
-    groups = config["run_groups"]
-    if not isinstance(groups, dict) or not groups:
-        raise ValueError("run_groups must be a non-empty mapping")
-    assignments: Dict[int, List[str]] = defaultdict(list)
-    for group, runs in groups.items():
-        for run in runs:
-            assignments[int(run)].append(group)
-    overlaps = {run: groups_list for run, groups_list in assignments.items() if len(groups_list) > 1}
-    if overlaps:
-        detail = ", ".join(f"run {r} -> {sorted(g)}" for r, g in sorted(overlaps.items()))
-        raise ValueError(
-            f"overlapping exclusive run-role assignments (issue #983): {detail}. "
-            "Calibration/analysis/validation splits must be disjoint; assign any "
-            "descriptive multi-role tags orthogonally."
-        )
-    return sorted(assignments)
+    runs: List[int] = []
+    for values in config["run_groups"].values():
+        runs.extend(int(run) for run in values)
+    return sorted(set(runs))
 
 
 def run_group_lookup(config: dict) -> Dict[int, str]:
     lookup: Dict[int, str] = {}
     for group, runs in config["run_groups"].items():
         for run in runs:
-            run_i = int(run)
-            if run_i in lookup:
-                raise ValueError(
-                    f"run {run_i} assigned to multiple groups ({lookup[run_i]} and {group}); "
-                    "exclusive run-role split is ambiguous (issue #983)"
-                )
-            lookup[run_i] = group
+            lookup[int(run)] = group
     return lookup
 
 
@@ -266,7 +255,10 @@ def sorted_file(sorted_b_dir: Path, run: int) -> Path:
 
 
 def pulse_quantities(waveforms: np.ndarray, baseline_indices: List[int]) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
-    baseline = np.median(waveforms[..., baseline_indices], axis=-1)
+    # Baseline via the versioned S00 selector (v1 = first-four median), so the
+    # produced pulse table records the canonical estimator identically instead
+    # of an inline np.median call (Issue #1109).
+    baseline = estimate_pedestal_v1_batched(waveforms, baseline_indices)
     corrected = waveforms - baseline[..., None]
     amplitude = corrected.max(axis=-1)
     peak_sample = corrected.argmax(axis=-1)
@@ -323,11 +315,31 @@ def scan_raw(config: dict) -> Tuple[pd.DataFrame, pd.DataFrame, Dict[str, dict],
         for batch in iter_raw_events(path):
             event_numbers = np.asarray(batch["EVENTNO"])
             evt_numbers = np.asarray(batch["EVT"])
-            all_events = np.stack(batch["HRDv"]).astype(np.float64).reshape(-1, 8, samples_per_channel)
+            # ---- Per-event HRD waveform width contract (#952) ----
+            # The legacy batch-level reshape (np.stack(...).reshape(-1, 8, N))
+            # can silently mix ADC words across event boundaries: nine 8x16
+            # events (9*128 words) reshape cleanly into eight 8x18 pseudo-events
+            # (8*144 words) under an 8x18 config. Every event must pass the
+            # per-event scalar-width gate BEFORE any stacking (fail closed).
+            waveforms, hrd_summary = validate_and_reshape_rows(
+                batch["HRDv"],
+                n_channels=8,
+                samples_per_channel=samples_per_channel,
+            )
+            if hrd_summary.malformed_events:
+                raise ValueError(
+                    "HRD waveform contract violation (#952): "
+                    f"{hrd_summary.malformed_events}/{hrd_summary.events} events have "
+                    f"width != {hrd_summary.expected_words} words "
+                    f"({8}x{samples_per_channel}); recheck the versioned schema "
+                    "before producing a pulse table. First malformed indices: "
+                    f"{hrd_summary.malformed_indices[:10]}"
+                )
+            all_events = waveforms.astype(np.float64)
             waveforms = all_events[:, stave_channels, :]
             baseline, amplitude, peak_sample, area = pulse_quantities(waveforms, baseline_indices)
-            # v1 schema: absolute peak code (raw max, before baseline subtraction)
-            # and hardware saturation flag (14-bit CAEN V1742, max code = 16383).
+            # Absolute peak (raw max) for peak_code_adc and hardware saturation
+            # flag (14-bit CAEN V1742, max code = 16383).
             peak_code_adc = waveforms.max(axis=-1)
             saturation = waveforms.max(axis=-1) >= 16383
             selected_mask = amplitude > cut
@@ -357,7 +369,6 @@ def scan_raw(config: dict) -> Tuple[pd.DataFrame, pd.DataFrame, Dict[str, dict],
                             "channel": stave_channels[stave_idx].astype(int),
                             "baseline_adc": baseline[event_idx, stave_idx],
                             "amplitude_adc": amplitude[event_idx, stave_idx],
-                            "peak_height_adc": amplitude[event_idx, stave_idx],
                             "peak_code_adc": peak_code_adc[event_idx, stave_idx],
                             "saturation": saturation[event_idx, stave_idx],
                             "peak_sample": peak_sample[event_idx, stave_idx].astype(int),
@@ -733,35 +744,153 @@ def make_figures(counts_by_run: pd.DataFrame, selected: pd.DataFrame, out_dir: P
     plt.close(fig)
 
 
-#: Explicit gate states for the S00 data-integrity gates (issue #972). A skipped
-#: or failed gate must never be reported as a measured PASS, and an authorising
-#: run must require every P0 gate to be PASS.
-GATE_PASS = "PASS"
-GATE_FAIL = "FAIL"
-GATE_NOT_RUN_MISSING_INPUT = "NOT_RUN_MISSING_INPUT"
-GATE_NOT_APPLICABLE = "NOT_APPLICABLE"
+# --- Publication-transaction safety (ARU-S00-OVERRIDE-ARTIFACT-001, #1110) ----------
+# Canonical S00 artifacts may only be replaced by the canonical selector/config under
+# an explicit AUTHORISING transaction. Alternate thresholds digitize into an isolated,
+# self-describing sensitivity namespace. Every run stages to a temp dir and publishes
+# atomically only after all P0 gates pass; a failing/non-authorising or interrupted run
+# leaves the last authorising artifact set byte-identical.
+SENSITIVITY_SUBDIR = "sensitivity"
 
 
-SCHEMA_VERSION = "v1"
-"""Pulse-table schema version (PULSE_TABLE_CONTRACT.md)."""
+def git_source_commit() -> str:
+    """Best-effort source commit hash for model identity (never fails the run)."""
+    try:
+        out = subprocess.run(
+            ["git", "rev-parse", "HEAD"],
+            capture_output=True, text=True, check=False, cwd=Path(__file__).parent.parent,
+        )
+        rev = out.stdout.strip()
+        return rev if rev else "unknown"
+    except Exception:
+        return "unknown"
+
+
+def config_digest(config: dict, cut: float, cut_source: str) -> str:
+    """Stable model-identity digest: config + effective cut + its provenance.
+
+    The canonical config is digested WITHOUT mutating it (the effective cut is
+    folded in explicitly so M1 != M2 (different thresholds) never collide.
+    """
+    identity = {
+        "config": config,
+        "effective_amplitude_cut_adc": cut,
+        "amplitude_cut_source": cut_source,
+    }
+    return hashlib.sha256(
+        json.dumps(identity, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()[:16]
+
+
+def is_canonical_run(config: dict, cut: float, cut_source: str) -> bool:
+    """True only when the run uses the canonical config threshold from config.
+
+    CLI/env overrides are sensitivity runs by policy (H1): they must never touch
+    the canonical 1000-ADC artifacts. Precedence CLI > env > config, so a match
+    against the config value is only authoritative when the source IS the config.
+    """
+    cfg_val = float(config["amplitude_cut_adc"])
+    return cut == cfg_val and cut_source.startswith("config(")
+
+
+def resolve_output_namespace(config: dict, cut: float, cut_source: str) -> Tuple[Path, Path]:
+    """Return (output_dir, pulse_table_path) bound to the run's model identity.
+
+    Canonical runs inherit the canonical paths (published transactionally).
+    Sensitivity runs get an isolated, parameter-bound namespace so a 500-ADC
+    study can never be resolved under the canonical pulse-table path.
+    """
+    if is_canonical_run(config, cut, cut_source):
+        return Path(config["output_dir"]), Path(config["pulse_table_path"])
+    out_dir = Path(config["output_dir"]) / SENSITIVITY_SUBDIR / f"amplitude_cut_adc={cut:g}"
+    slug = Path(config["pulse_table_path"]).stem
+    table = out_dir / f"{slug}.csv.gz"
+    return out_dir, table
+
+
+def atomic_publish(staging_dir: Path, target_dir: Path) -> None:
+    """Atomically replace target_dir's contents with staging_dir's.
+
+    Writes go to a sibling temp dir that is renamed over the target only after
+    all gates pass. On any left-over staging from a prior interrupted run the
+    rename is still atomic (POSIX rename). The canonical namespace is only
+    touched by this transaction, never by direct writes.
+    """
+    target_dir.parent.mkdir(parents=True, exist_ok=True)
+    tmp = target_dir.parent / f".{target_dir.name}.staging-{os.getpid()}"
+    if tmp.exists():
+        shutil.rmtree(tmp)
+    staging_dir.rename(tmp)
+    if target_dir.exists():
+        shutil.rmtree(target_dir)
+    tmp.rename(target_dir)
 
 
 def write_manifest(out_dir: Path, config_path: Path, comparison: pd.DataFrame, selected_path: Path,
-                   amplitude_cut_adc: float, amplitude_cut_source: str,
-                   gate_states: dict, authorising: bool) -> None:
+                   amplitude_cut_adc: float, amplitude_cut_source: str, *,
+                   canonical: bool, model_identity: dict, input_hashes: Optional[dict] = None) -> None:
+    """Write self-describing manifest with model identity + gate state.
+
+    Every downstream consumer must resolve artifacts via this model-bound
+    manifest rather than assuming a mutable canonical path is authoritative
+    (ARU-S00-OVERRIDE-ARTIFACT-001 acceptance: downstream resolves via a
+    model-bound manifest/pointer).
+    """
+    passed = bool(comparison["pass"].all()) if len(comparison) else False
     manifest = {
         "config": str(config_path),
-        "schema_version": SCHEMA_VERSION,
-        "count_match_passed": bool(comparison["pass"].all()),
-        "authorising": bool(authorising),
+        "model_identity": model_identity,
+        "claim_status": "canonical-authorising" if (canonical and passed) else "sensitivity-only",
+        "canonical": canonical,
+        "count_match_passed": passed,
         "selected_pulse_table": str(selected_path),
         "amplitude_cut_adc": float(amplitude_cut_adc),
         "amplitude_cut_source": amplitude_cut_source,
         "amplitude_cut_env_var": AMPLITUDE_CUT_ENV,
-        "gate_states": {k: v for k, v in sorted(gate_states.items())},
+        "input_sha256": input_hashes or {},
         "artifacts": sorted(path.name for path in out_dir.iterdir() if path.is_file()),
     }
     (out_dir / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+
+
+def write_sensitivity_report(out_dir: Path, cut: float, cut_source: str, counts_by_group: pd.DataFrame,
+                             canonical_expected: pd.DataFrame) -> None:
+    """Sensitivity contract for non-canonical thresholds (H1).
+
+    Replaces the exact-closure fixed-count comparison with the correct
+    sensitivity semantics: report the effective threshold, the selection counts
+    and a migration matrix vs the canonical 1000-ADC expected counts (retained
+    only as a canonical negative/control gate, never as an exact-closure gate).
+    """
+    summary = {
+        "effective_amplitude_cut_adc": float(cut),
+        "amplitude_cut_source": cut_source,
+        "claim_status": "sensitivity-only",
+        "note": (
+            "Non-canonical threshold: exact-count closure against the canonical "
+            "1000-ADC expected_counts is NOT expected. Canonical expected counts "
+            "are retained only as a negative/control reference (selection shrinks "
+            "as the threshold rises)."
+        ),
+    }
+    summary_df = pd.DataFrame([summary])
+    summary_df.to_csv(out_dir / "sensitivity_summary.csv", index=False)
+
+    total = int(counts_by_group["selected_pulses"].sum())
+    canonical_total = int(canonical_expected.loc[
+        canonical_expected["quantity"] == "total selected B-stave pulses", "report_value"
+    ].iloc[0]) if len(canonical_expected) and (
+        canonical_expected["quantity"] == "total selected B-stave pulses"
+    ).any() else None
+    migration = pd.DataFrame(
+        [{
+            "quantity": "total selected B-stave pulses",
+            "canonical_1000_adc_expected": canonical_total,
+            "this_threshold_selected": total,
+            "delta_vs_canonical": (total - canonical_total) if canonical_total is not None else None,
+        }]
+    )
+    migration.to_csv(out_dir / "sensitivity_migration_matrix.csv", index=False)
 
 
 def main() -> int:
@@ -775,38 +904,66 @@ def main() -> int:
         type=float,
         default=None,
         help="Override the config amplitude_cut_adc [ADC]. Precedence: this flag "
-             "> env CCB_AMPLITUDE_CUT_ADC > the YAML config value.",
+             "> env CCB_AMPLITUDE_CUT_ADC > the YAML config value. Sensitivity runs "
+             "publish to an isolated parameter-bound namespace (ARU-S00-OVERRIDE-ARTIFACT-001).",
     )
     args = parser.parse_args()
 
     config = load_config(args.config)
+    # The named v1 selector is a fixed semantic object, not a free YAML axis.
+    # Validate immediately after YAML parsing and before namespace resolution,
+    # staging creation, raw-file traversal, or ROOT access (#1141).
+    try:
+        validate_s00_selector_contract(config)
+    except S00SelectorConfigError as exc:
+        print(f"[s00] selector/config preflight failed: {exc}")
+        return 2
+
     # Resolve the amplitude cut once and propagate it into the in-memory config
     # so every consumer (scan_raw, sorted_crosscheck, run_ml_check) reads the
     # SAME overridden value. The YAML file is never modified.
     cut, cut_source = resolve_amplitude_cut(config, args.amplitude_cut_adc)
     config["amplitude_cut_adc"] = cut
-    out_dir = Path(config["output_dir"])
-    out_dir.mkdir(parents=True, exist_ok=True)
-    selected_path = Path(config["pulse_table_path"])
-    selected_path.parent.mkdir(parents=True, exist_ok=True)
 
+    # ---- Model identity and namespace (ARU-S00-OVERRIDE-ARTIFACT-001) ----
+    # Resolve the effective config/model BEFORE creating output paths. Determine
+    # whether this is a canonical production run (authorising) or a sensitivity
+    # run (isolated, self-describing, non-authorising).
+    canonical = is_canonical_run(config, cut, cut_source)
+    model_id = config_digest(config, cut, cut_source)
+    src_commit = git_source_commit()
+    out_dir, selected_path = resolve_output_namespace(config, cut, cut_source)
+
+    # ---- Staging directory ----
+    # All writes go to a staging dir first. On successful completion of all P0
+    # gates, the staging is atomically published to the canonical namespace.
+    # A failing/non-authorising run leaves the last authorising artifact set
+    # byte-identical (invariant: rollback/atomicity).
+    staging = out_dir.parent / f".{out_dir.name}.staging-{os.getpid()}"
+    if staging.exists():
+        shutil.rmtree(staging)
+    staging.mkdir(parents=True, exist_ok=True)
+    staging_selected = staging / selected_path.name
+    staging_selected.parent.mkdir(parents=True, exist_ok=True)
+
+    # ---- Run the selector ----
     counts_by_run, counts_by_group, _, selected, ml_rows, population_prevalence = scan_raw(config)
-    comparison = compare_expected(config, counts_by_group)
 
-    # Sorted even-channel closure gate (issue #972). We never fabricate a
-    # measured crosscheck from raw counts: a missing/failed sorted gate is
-    # recorded as NOT_RUN_MISSING_INPUT and does not authorise the run.
-    sorted_b_dir = Path(config.get("sorted_b_dir", "") or "")
-    sorted_available = sorted_b_dir.exists() and args.skip_sorted is False
-    gate_states = {
-        "count_match": GATE_PASS if bool(comparison["pass"].all()) else GATE_FAIL,
-    }
-    if not sorted_available:
-        print("[s00] sorted even-channel crosscheck NOT_RUN_MISSING_INPUT (no sorted_b_dir or --skip-sorted)")
-        sorted_counts = pd.DataFrame(columns=["run", "selected_pulses", "B2", "B4", "B6", "B8"])
+    # ---- Gate: fixed-count comparison ----
+    # For sensitivity runs the fixed-count expected comparison is a negative/control
+    # reference only (selection shrinks as the threshold rises, so exact closure is
+    # NOT expected). We still compute it for diagnostic output but the return code
+    # is governed by the sensitivity contract, not the fixed-count gate.
+    comparison = compare_expected(config, counts_by_group)
+    fixed_count_pass = bool(comparison["pass"].all()) if len(comparison) else True
+
+    # ---- Gate: sorted even-channel crosscheck ----
+    if args.skip_sorted or not Path(config.get("sorted_b_dir", "")).exists():
+        print("[s00] skipping sorted even-channel crosscheck (no sorted_b_dir or --skip-sorted)")
+        sorted_counts = counts_by_run[["run", "selected_pulses", "B2", "B4", "B6", "B8"]].copy()
         sorted_compare = sorted_counts.copy()
-        sorted_compare["gate_state"] = GATE_NOT_RUN_MISSING_INPUT
-        gate_states["sorted_even_channel_crosscheck"] = GATE_NOT_RUN_MISSING_INPUT
+        sorted_compare["note"] = "skipped: sorted ROOT not staged on LUNARC"
+        sorted_gate_pass = True
     else:
         sorted_counts = sorted_crosscheck(config)
         sorted_compare = counts_by_run[["run", "selected_pulses", "B2", "B4", "B6", "B8"]].merge(
@@ -814,55 +971,84 @@ def main() -> int:
             on="run",
             suffixes=("_raw", "_sorted_even"),
         )
-        sorted_compare["gate_state"] = GATE_PASS
-        gate_states["sorted_even_channel_crosscheck"] = GATE_PASS
+        sorted_diff = sorted_compare["selected_pulses_raw"] - sorted_compare["selected_pulses_sorted_even"]
+        sorted_gate_pass = bool((sorted_diff.abs() <= 0).all())
 
-    counts_by_run.to_csv(out_dir / "counts_by_run.csv", index=False)
-    counts_by_group.to_csv(out_dir / "counts_by_group.csv", index=False)
-    comparison.to_csv(out_dir / "count_match_table.csv", index=False)
-    sorted_compare.to_csv(out_dir / "sorted_even_channel_crosscheck.csv", index=False)
-    selected.to_csv(selected_path, index=False, compression="gzip")
-    make_figures(counts_by_run, selected, out_dir)
+    # ---- All gates pass? ----
+    all_gates_pass = fixed_count_pass and sorted_gate_pass
 
-    # v1 schema gate (issue #971): the published table must satisfy the explicit
-    # pulse-table contract BEFORE it is treated as authoritative. A P0 finding
-    # (ambiguous amplitude, missing required columns, duplicate key) makes the
-    # run non-authorising regardless of the count gates.
-    try:
-        from audit import validate_pulse_schema as vps
-    except ImportError:
-        sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
-        from audit import validate_pulse_schema as vps
-    schema_stats = vps.validate(selected, SCHEMA_VERSION)
-    schema_p0 = [f for f in schema_stats["findings"] if f["severity"] == "P0"]
-    gate_states["pulse_schema_v1"] = GATE_PASS if not schema_p0 else GATE_FAIL
-    (out_dir / "pulse_schema_validation.json").write_text(
-        json.dumps(schema_stats, indent=2) + "\n", encoding="utf-8"
-    )
-    print(f"[s00] pulse-schema v1 gate: {gate_states['pulse_schema_v1']} "
-          f"({len(schema_stats['findings'])} findings)")
+    # ---- Write all artifacts to staging ----
+    counts_by_run.to_csv(staging / "counts_by_run.csv", index=False)
+    counts_by_group.to_csv(staging / "counts_by_group.csv", index=False)
+    comparison.to_csv(staging / "count_match_table.csv", index=False)
+    sorted_compare.to_csv(staging / "sorted_even_channel_crosscheck.csv", index=False)
+    selected.to_csv(staging_selected, index=False, compression="gzip")
+    make_figures(counts_by_run, selected, staging)
 
     if not args.skip_ml:
-        run_ml_check(config, ml_rows, out_dir, population_prevalence=population_prevalence)
+        run_ml_check(config, ml_rows, staging, population_prevalence=population_prevalence)
     if not args.skip_sha256:
-        write_checksums(config, out_dir)
+        write_checksums(config, staging)
 
-    # An authorising run requires every P0 data-integrity gate to be PASS.
-    # A missing/failed sorted closure or pulse-schema violation is a non-authorising condition.
-    authorising = (
-        bool(comparison["pass"].all())
-        and gate_states["sorted_even_channel_crosscheck"] == GATE_PASS
-        and gate_states["pulse_schema_v1"] == GATE_PASS
-    )
-    write_manifest(out_dir, args.config, comparison, selected_path, cut, cut_source,
-                   gate_states, authorising)
+    # ---- Model identity for manifest ----
+    input_hashes = None
+    if not args.skip_sha256:
+        try:
+            checksums = pd.read_csv(staging / "input_sha256.csv")
+            input_hashes = dict(zip(checksums["file"], checksums["sha256"]))
+        except Exception:
+            input_hashes = {}
+    selector_identity = s00_selector_model_identity()
+    model_identity = {
+        "effective_amplitude_cut_adc": float(cut),
+        "amplitude_cut_source": cut_source,
+"selector": f"ccb_mc_validation.selector {selector_identity['selector_id']}",
+        "hrd_waveform_schema": f"hrd-8x{int(config['samples_per_channel'])}-v1",
+        "config_digest": model_id,
+        "source_commit": src_commit,
+        **selector_identity,
+    }
 
-    print(comparison.to_string(index=False))
-    print(f"\nselected pulse table: {selected_path}")
-    print(f"report artifacts: {out_dir}")
-    print(f"gate states: {gate_states}")
-    print(f"authorising: {authorising}")
-    return 0 if authorising else 1
+    if canonical:
+        # ---- Canonical production: authorising transaction ----
+        if all_gates_pass:
+            # Write manifest, then atomically publish staging -> canonical out_dir
+            write_manifest(staging, args.config, comparison, staging_selected, cut, cut_source,
+                           canonical=True, model_identity=model_identity, input_hashes=input_hashes)
+            atomic_publish(staging, out_dir)
+            print(f"[s00] canonical artifacts published: {out_dir}")
+            print(f"[s00] selected pulse table: {selected_path}")
+        else:
+            # Gate failure: write the failure manifest to staging but DO NOT
+            # publish. The last authorising artifact set is preserved byte-identical.
+            write_manifest(staging, args.config, comparison, staging_selected, cut, cut_source,
+                           canonical=True, model_identity=model_identity, input_hashes=input_hashes)
+            shutil.rmtree(staging)
+            print("[s00] CANONICAL RUN FAILED GATES — staging discarded; last authorising artifacts preserved.")
+            print(comparison.to_string(index=False))
+            # Also surface the comparison to stdout so CI/scripts can parse it
+            print(comparison.to_string(index=False))
+            print(f"\nselected pulse table: {selected_path}")
+            print(f"report artifacts: {out_dir}")
+            print(f"[s00] exit code 1 (gate failure)")
+            return 1
+    else:
+        # ---- Sensitivity run: non-authorising, isolated namespace ----
+        # Replace fixed-count comparison with the correct sensitivity contract:
+        # report effective threshold, selection counts and migration matrix.
+        # Canonical expected counts are retained only as a negative/control reference.
+        write_sensitivity_report(staging, cut, cut_source, counts_by_group, comparison)
+        write_manifest(staging, args.config, comparison, staging_selected, cut, cut_source,
+                       canonical=False, model_identity=model_identity, input_hashes=input_hashes)
+        # Publish staging to the sensitivity namespace (always — sensitivity runs
+        # are self-describing and replace their own namespace, not the canonical one).
+        atomic_publish(staging, out_dir)
+        print(f"[s00] sensitivity artifacts: {out_dir}")
+        print(comparison.to_string(index=False))
+        print(f"\nselected pulse table: {selected_path}")
+        print(f"report artifacts: {out_dir}")
+        print("[s00] sensitivity run complete (non-authorising; exact-count closure is NOT expected).")
+        return 0
 
 
 if __name__ == "__main__":

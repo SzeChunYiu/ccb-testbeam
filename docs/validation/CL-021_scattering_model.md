@@ -41,10 +41,35 @@ and any source-bound theory/Coulomb completion remain competing support models
 under #1178 and must be propagated as source-model sensitivity before a
 physical source claim is promoted.
 
-The source paper also reports a 3% point-to-point systematic uncertainty and a
-total systematic uncertainty below 4.5% at 190 MeV. Those systematic
-components are not encoded in the three-column repository table and have not
-yet been propagated through the source model. See #1179.
+The source paper reports a 3% point-to-point systematic uncertainty and total
+systematic uncertainty below 4.5% at 190 MeV. Section IV D explains that the
+point-to-point term was introduced as an extra per-point error until a
+high-order polynomial fit to the measured angular cross section reached
+approximately unit chi-square, after discussing target-thickness variation and
+background-subtraction systematics. The paper does not provide a row covariance
+matrix, so the 3% term must not silently be reinterpreted as 28 independent
+Gaussian nuisances.
+
+`results/research/sigma_cm_source_uncertainty_v1.json` therefore separates
+source facts from explicit model-dependent sensitivity. A fully common 4.5%
+scale control changes the normalized source CDF by no more than
+`3.3306690738754696e-16`, confirming that pure normalization cancels from the
+shape. As a deliberately **nonprobabilistic** stress envelope, allowing every
+central `sigma_i` independently to range over `[0.97, 1.03] sigma_i` gives a
+maximum upward CDF excursion `0.01430729974634637` and downward excursion
+`0.014380572923809676` on a 10,001-point measured-support scan, both near
+46.951812 degrees. The nominal source mean `theta_cm` is
+`56.78396200051643` degrees; the same box permits
+`56.050251002153615`–`57.5322672970398` degrees. These bounds are a sensitivity
+model, not a confidence interval and not an inferred covariance.
+
+For the retained third-column statistical uncertainties only, a separate
+first-order diagonal delta-method reference gives a maximum pointwise CDF
+standard uncertainty `0.0004453566889758832` near 49.488045 degrees and a
+mean-angle standard uncertainty `0.02252797870713097` degrees. That calculation
+is conditional on independent row statistical errors and does not replace the
+missing systematic covariance. #1179 remains open for a defensible nuisance
+model and generator/downstream propagation.
 
 The earlier central-value MV3 result remains a **nonauthorising source-model
 diagnostic**: B2 changed from 0.475 (uniform) to 0.253 (the superseded direct-CS

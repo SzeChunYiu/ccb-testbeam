@@ -1,7 +1,7 @@
 # knob: dark_count
 # channel: env  target: CCB_SIPM_DARK_COUNT_RATE_HZ  unit: Hz
 # rationale: DCR: 0 (cold) to 2 MHz (hot/irradiated); nominal ~0.5 MHz/cell model.
-# base_cli: --particle proton --energy 10 --hit-x 0 --hit-y 0 --theta 0 --phi 0
+# base_cli: --particle proton --energy 100 --hit-x 0 --hit-y 0 --theta 0 --phi 0
 # default_nevents: 60
 # columns: label,seed,nevents,cli_args,env_vars
 label,seed,nevents,cli_args,env_vars

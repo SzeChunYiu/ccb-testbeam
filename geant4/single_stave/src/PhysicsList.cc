@@ -9,7 +9,7 @@
 #include <iostream>
 
 G4VModularPhysicsList* PhysicsList::Build(const G4String& reference,
-                                          G4double optical_cut_mm,
+                                          G4double production_cut_mm,
                                           const G4String& wls_time_profile) {
   G4PhysListFactory factory;
   G4VModularPhysicsList* physics = nullptr;
@@ -31,6 +31,13 @@ G4VModularPhysicsList* PhysicsList::Build(const G4String& reference,
   op->SetScintByParticleType(false);
   op->SetWLSTimeProfile(wls_time_profile);
 
-  physics->SetDefaultCutValue(optical_cut_mm * CLHEP::mm);
+  // Set the global secondary-production range threshold. This is NOT an
+  // optical-photon tracking cut — G4OpticalPhysics uses its own dedicated
+  // tracking thresholds. The value controls production of gamma, e-, e+, and
+  // proton secondaries. Changing this value alters the explicit delta-ray
+  // population, which changes local ionization density bookkeeping in the
+  // Birks-quenching calculation (SteppingAction::UserSteppingAction). See
+  // issue #1089 for the cut x kB coupling.
+  physics->SetDefaultCutValue(production_cut_mm * CLHEP::mm);
   return physics;
 }

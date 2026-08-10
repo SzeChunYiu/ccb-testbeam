@@ -368,10 +368,16 @@
         "reference": 0.126,
         "required_equal": true
       },
-      "coupling_efficiency": {
+      "collection_efficiency": {
         "candidate": 1,
         "equal": true,
         "reference": 1,
+        "required_equal": true
+      },
+      "optical_interface_model": {
+        "candidate": "UNKNOWN_EXTERNAL",
+        "equal": true,
+        "reference": "UNKNOWN_EXTERNAL",
         "required_equal": true
       },
       "geometry_hash": {

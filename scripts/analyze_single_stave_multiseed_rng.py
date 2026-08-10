@@ -61,7 +61,8 @@ PHYSICS_KEYS = (
     "scintillator_absorption_scale",
     "y11_bulk_attenuation_scale",
     "pde_scale",
-    "coupling_efficiency",
+    "collection_efficiency",
+    "optical_interface_model",
     "sipm_n_cells",
     "optical_tables",
 )

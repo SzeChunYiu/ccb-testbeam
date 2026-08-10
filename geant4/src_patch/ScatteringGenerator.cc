@@ -18,7 +18,7 @@
 // * This  code  implementation is the result of  the  scientific and *
 // * technical work of the GEANEkin4 collaboration.                      *
 // * By using,  copying,  modifying or  distributing the software (or *
-// * any work based  on the software)  you  agree  to acknowledge its *
+// * any work based  on the software)  you  agree to acknowledge its *
 // * use  in  resulting  scientific  publications,  and indicate your *
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
@@ -33,18 +33,21 @@
 #include "ScatteringGenerator.hh"
 
 #include "G4Event.hh"
+#include "G4Exception.hh"
 #include "G4GenericMessenger.hh"
 #include "G4ParticleTable.hh"
 #include "G4PrimaryVertex.hh"
 #include "G4PhysicalConstants.hh"
 #include "G4SystemOfUnits.hh"
 #include "Randomize.hh"
+
+#include <algorithm>
 #include <cmath>
-
-#include "G4Threading.hh"
-#include "G4AutoLock.hh"
-
-namespace {G4Mutex ScatteringGeneratorMutex = G4MUTEX_INITIALIZER;}
+#include <cstdlib>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <vector>
 
 
 ScatteringGenerator::ScatteringGenerator():
@@ -52,10 +55,13 @@ ScatteringGenerator::ScatteringGenerator():
 	fTgtThickness(2.3*mm),
 	fBeamspot(10*mm),
 	fDEdxFile("dedx_p_in_CD2.txt"),
-	fCSFile("null")
+	fCSFile("null"),
+	fLoadedDEdxFile(""),
+	fLoadedCSFile(""),
+	haveWeights(false),
+	fSourceState(SourceState::UNINITIALIZED)
 {
 	DefineCommands();
-	//LoadELossTable();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -68,8 +74,55 @@ ScatteringGenerator::~ScatteringGenerator()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
+G4String ScatteringGenerator::GetSourceReadinessMode() const
+{
+	switch(fSourceState){
+		case SourceState::UNINITIALIZED: return "UNINITIALIZED";
+		case SourceState::UNCONFIGURED_UNIFORM: return "UNCONFIGURED_UNIFORM";
+		case SourceState::CONFIGURED_READY: return "CONFIGURED_READY";
+		case SourceState::FATAL: return "FATAL";
+	}
+	return "FATAL";
+}
+
+void ScatteringGenerator::FatalSourceError(const G4String& code, const G4String& message)
+{
+	fSourceState = SourceState::FATAL;
+	G4Exception("ScatteringGenerator", code.c_str(), FatalException, message.c_str());
+	// FatalException is expected not to return. Keep a process-level non-success
+	// fallback so a custom exception handler cannot accidentally authorise a run.
+	std::abort();
+}
+
+void ScatteringGenerator::EnsureSourceReady()
+{
+	if(fSourceState == SourceState::FATAL){
+		FatalSourceError("CCB_SOURCE_ALREADY_FATAL", "Source readiness was previously marked FATAL.");
+	}
+
+	if(fSourceState != SourceState::UNINITIALIZED){
+		if(fDEdxFile != fLoadedDEdxFile || fCSFile != fLoadedCSFile){
+			FatalSourceError(
+				"CCB_SOURCE_RECONFIGURED",
+				"dEdxFile/CSFile changed after source readiness was established; create a new generator instance before generating more events."
+			);
+		}
+		return;
+	}
+
+	LoadFiles();
+	if(fSourceState != SourceState::UNCONFIGURED_UNIFORM &&
+	   fSourceState != SourceState::CONFIGURED_READY){
+		FatalSourceError("CCB_SOURCE_NOT_READY", "Source loading returned without a valid terminal readiness state.");
+	}
+}
+
 void ScatteringGenerator::GeneratePrimaryVertex(G4Event* event)
 {
+	// Readiness is per generator instance and independent of global event ID.
+	// It is checked before consuming event RNG or computing any event observable.
+	EnsureSourceReady();
+
 	// Define setup geometry
 	const G4double det_size = 5*cm;
 	const G4double det_distance = 1*m;
@@ -95,7 +148,6 @@ void ScatteringGenerator::GeneratePrimaryVertex(G4Event* event)
 	G4double m2 = partdef2->GetPDGMass();
 	G4double m3 = m1;
 	G4double m4 = m2; 
-	if(event->GetEventID()==0) LoadFiles();
 	G4double Ekin = BeamEnergy(z0+fTgtThickness/2.);
 	
 	// Incoming energy, momentum, etc
@@ -119,9 +171,8 @@ void ScatteringGenerator::GeneratePrimaryVertex(G4Event* event)
 	G4double beta4cm = p4cm/E4cm;
 	G4double pcm= sqrt(E3cm*E3cm-m3*m3);
 
-	// CM ejectile angle -- sampled FROM the p+CD2 differential cross-section
-	// distribution p(theta) ~ sigma(theta)*sin(theta) (inverse-CDF), fixing the
-	// MV3 scattering-model residual (CL-021). Falls back to uniform when no CS.
+	// CM ejectile angle sampled from the declared source model when configured.
+	// Uniform sampling is permitted only in explicit CSFile=null readiness state.
 	G4double theta3cm = SampleThetaCM();
 	// Ejectile
 	G4double tantheta3 = sin(theta3cm)/(gamma*(cos(theta3cm)+beta/beta3cm));
@@ -169,55 +220,129 @@ void ScatteringGenerator::GeneratePrimaryVertex(G4Event* event)
 
 void ScatteringGenerator::LoadFiles()
 {
+	if(fSourceState != SourceState::UNINITIALIZED){
+		return;
+	}
+
 	G4cout << "Reading energy loss values from " << fDEdxFile << G4endl;
 	LoadELossTable();
 	haveWeights=false;
-	if(fCSFile=="null") return;
+
+	if(fCSFile=="null"){
+		ang.clear();
+		sigma.clear();
+		cdfTheta.clear();
+		cdfVal.clear();
+		cdfPdf.clear();
+		fLoadedDEdxFile = fDEdxFile;
+		fLoadedCSFile = fCSFile;
+		fSourceState = SourceState::UNCONFIGURED_UNIFORM;
+		G4cout << "ScatteringGenerator: source readiness=UNCONFIGURED_UNIFORM (CSFile=null)." << G4endl;
+		return;
+	}
 	
 	G4cout << "Reading differential cross sections from " << fCSFile << G4endl;
 	LoadCrossSection();
 	BuildSigmaCDF();
-	haveWeights=true;
+	fLoadedDEdxFile = fDEdxFile;
+	fLoadedCSFile = fCSFile;
+	fSourceState = SourceState::CONFIGURED_READY;
+	G4cout << "ScatteringGenerator: source readiness=CONFIGURED_READY." << G4endl;
 }
 
 void ScatteringGenerator::LoadELossTable()
 {
-	std::ifstream infile;
-	char line[100];
-
-	infile.open(fDEdxFile); 
+	std::ifstream infile(fDEdxFile.c_str());
 	if(!infile.is_open()){
-		printf("Cannot open the file %s!!\n",fDEdxFile.c_str());
-		exit(0);
+		FatalSourceError("CCB_DEDX_OPEN", "Cannot open required stopping-power table: " + fDEdxFile);
 	}
 
-	while(infile.getline(line,100)){
-		G4double tmpE, tmpDEdx;
-		sscanf(line,"%lf\t%lf\n",&tmpE,&tmpDEdx);
-		Ene.push_back(tmpE*938.28/931.5); // MeV/u to MeV
-		dEdx.push_back(tmpDEdx*1000.); // um to mm
-	}    
-	infile.close();
+	std::vector<G4double> nextEne;
+	std::vector<G4double> nextDEdx;
+	std::string line;
+	size_t lineNo = 0;
+	while(std::getline(infile, line)){
+		lineNo++;
+		size_t comment = line.find('#');
+		if(comment != std::string::npos) line.erase(comment);
+		if(line.find_first_not_of(" \t\r\n") == std::string::npos) continue;
+
+		std::istringstream row(line);
+		G4double tmpE = 0.0, tmpDEdx = 0.0;
+		if(!(row >> tmpE >> tmpDEdx)){
+			std::ostringstream msg;
+			msg << "Malformed stopping-table row " << lineNo << " in " << fDEdxFile;
+			FatalSourceError("CCB_DEDX_PARSE", msg.str().c_str());
+		}
+		if(!std::isfinite(tmpE) || !std::isfinite(tmpDEdx) || !(tmpE > 0.0) || tmpDEdx < 0.0){
+			std::ostringstream msg;
+			msg << "Invalid stopping-table values at row " << lineNo << " in " << fDEdxFile;
+			FatalSourceError("CCB_DEDX_DOMAIN", msg.str().c_str());
+		}
+
+		G4double convertedE = tmpE*938.28/931.5; // MeV/u to MeV
+		G4double convertedDEdx = tmpDEdx*1000.; // um to mm
+		if(!nextEne.empty() && !(convertedE > nextEne.back())){
+			std::ostringstream msg;
+			msg << "Stopping-table energies must be strictly increasing; row " << lineNo;
+			FatalSourceError("CCB_DEDX_ORDER", msg.str().c_str());
+		}
+		nextEne.push_back(convertedE);
+		nextDEdx.push_back(convertedDEdx);
+	}
+	if(nextEne.size() < 2 || nextDEdx.size() != nextEne.size()){
+		FatalSourceError("CCB_DEDX_CARDINALITY", "Stopping-power table requires at least two valid rows.");
+	}
+
+	Ene.swap(nextEne);
+	dEdx.swap(nextDEdx);
 }
 
 void ScatteringGenerator::LoadCrossSection()
 {
-	std::ifstream infile;
-	char line[100];
-
-	infile.open(fCSFile); 
+	std::ifstream infile(fCSFile.c_str());
 	if(!infile.is_open()){
-		printf("Cannot open the file %s!!\n",fCSFile.c_str());
-		exit(0);
+		FatalSourceError("CCB_CS_OPEN", "Cannot open configured cross-section table: " + fCSFile);
 	}
 
-	while(infile.getline(line,100)){
-		G4double tmpA, tmpCS;
-		sscanf(line,"%lf\t%lf\t%*f\n",&tmpA,&tmpCS);
-		ang.push_back(tmpA*pi/180.); // deg to rad
-		sigma.push_back(tmpCS);
-	}    
-	infile.close();
+	std::vector<G4double> nextAng;
+	std::vector<G4double> nextSigma;
+	std::string line;
+	size_t lineNo = 0;
+	while(std::getline(infile, line)){
+		lineNo++;
+		size_t comment = line.find('#');
+		if(comment != std::string::npos) line.erase(comment);
+		if(line.find_first_not_of(" \t\r\n") == std::string::npos) continue;
+
+		std::istringstream row(line);
+		G4double tmpA = 0.0, tmpCS = 0.0;
+		if(!(row >> tmpA >> tmpCS)){
+			std::ostringstream msg;
+			msg << "Malformed cross-section row " << lineNo << " in " << fCSFile;
+			FatalSourceError("CCB_CS_PARSE", msg.str().c_str());
+		}
+		if(!std::isfinite(tmpA) || !std::isfinite(tmpCS) || !(tmpA > 0.0) || !(tmpA < 180.0) || tmpCS < 0.0){
+			std::ostringstream msg;
+			msg << "Invalid cross-section values at row " << lineNo << " in " << fCSFile;
+			FatalSourceError("CCB_CS_DOMAIN", msg.str().c_str());
+		}
+
+		G4double convertedA = tmpA*pi/180.; // deg to rad
+		if(!nextAng.empty() && !(convertedA > nextAng.back())){
+			std::ostringstream msg;
+			msg << "Cross-section angles must be strictly increasing; row " << lineNo;
+			FatalSourceError("CCB_CS_ORDER", msg.str().c_str());
+		}
+		nextAng.push_back(convertedA);
+		nextSigma.push_back(tmpCS);
+	}
+	if(nextAng.size() < 2 || nextSigma.size() != nextAng.size()){
+		FatalSourceError("CCB_CS_CARDINALITY", "Configured cross-section table requires at least two valid rows.");
+	}
+
+	ang.swap(nextAng);
+	sigma.swap(nextSigma);
 }
 
 void ScatteringGenerator::BuildSigmaCDF()
@@ -231,10 +356,9 @@ void ScatteringGenerator::BuildSigmaCDF()
 	// angles p(theta) is linearly interpolated; outside measured support the nominal
 	// reference distribution has zero probability. This truncation is an explicit
 	// source-model choice, not evidence that the physical cross section vanishes.
-	cdfTheta.clear();
-	cdfVal.clear();
-	cdfPdf.clear();
-	if(ang.size() < 2 || sigma.size() != ang.size()){ return; }
+	if(ang.size() < 2 || sigma.size() != ang.size()){
+		FatalSourceError("CCB_CS_CDF_INPUT", "Configured cross-section arrays are not valid for CDF construction.");
+	}
 
 	// Positive common density scaling cannot change a normalized source law. Scale
 	// cross sections before multiplying/integrating so alternate units cannot cause
@@ -242,47 +366,43 @@ void ScatteringGenerator::BuildSigmaCDF()
 	G4double densityScale = 0.0;
 	for(size_t k = 0; k < ang.size(); k++){
 		if(!std::isfinite(ang[k]) || !std::isfinite(sigma[k]) || sigma[k] < 0.0){
-			G4cerr << "ScatteringGenerator::BuildSigmaCDF: non-finite/negative source node; CS sampling disabled." << G4endl;
-			cdfTheta.clear(); cdfVal.clear(); cdfPdf.clear();
-			return;
+			FatalSourceError("CCB_CS_CDF_NODE", "Configured source contains a non-finite or negative CDF node.");
 		}
 		if(k > 0 && !(ang[k] > ang[k-1])){
-			G4cerr << "ScatteringGenerator::BuildSigmaCDF: angles are not strictly increasing; CS sampling disabled." << G4endl;
-			cdfTheta.clear(); cdfVal.clear(); cdfPdf.clear();
-			return;
+			FatalSourceError("CCB_CS_CDF_ORDER", "Configured source angles are not strictly increasing.");
 		}
 		if(sigma[k] > densityScale) densityScale = sigma[k];
 	}
 	if(!(densityScale > 0.0)){
-		G4cerr << "ScatteringGenerator::BuildSigmaCDF: zero source density; CS sampling disabled." << G4endl;
-		return;
+		FatalSourceError("CCB_CS_ZERO_DENSITY", "Configured source has zero total density.");
 	}
 
-	cdfTheta = ang;
-	cdfPdf.reserve(ang.size());
+	std::vector<G4double> nextTheta = ang;
+	std::vector<G4double> nextPdf;
+	nextPdf.reserve(ang.size());
 	for(size_t k = 0; k < ang.size(); k++){
 		G4double p = (sigma[k] / densityScale) * std::sin(ang[k]);
 		if(!std::isfinite(p) || p < 0.0){
-			G4cerr << "ScatteringGenerator::BuildSigmaCDF: invalid node PDF; CS sampling disabled." << G4endl;
-			cdfTheta.clear(); cdfVal.clear(); cdfPdf.clear();
-			return;
+			FatalSourceError("CCB_CS_NODE_PDF", "Configured source produced an invalid node PDF.");
 		}
-		cdfPdf.push_back(p);
+		nextPdf.push_back(p);
 	}
 
-	cdfVal.assign(cdfTheta.size(), 0.0);
-	for(size_t i = 1; i < cdfTheta.size(); i++){
-		G4double dx  = cdfTheta[i] - cdfTheta[i-1];
-		G4double avg = 0.5 * (cdfPdf[i] + cdfPdf[i-1]);
-		cdfVal[i] = cdfVal[i-1] + avg * dx;
+	std::vector<G4double> nextVal(nextTheta.size(), 0.0);
+	for(size_t i = 1; i < nextTheta.size(); i++){
+		G4double dx  = nextTheta[i] - nextTheta[i-1];
+		G4double avg = 0.5 * (nextPdf[i] + nextPdf[i-1]);
+		nextVal[i] = nextVal[i-1] + avg * dx;
 	}
-	G4double norm = cdfVal.back();
+	G4double norm = nextVal.back();
 	if(!std::isfinite(norm) || !(norm > 0.0)){
-		G4cerr << "ScatteringGenerator::BuildSigmaCDF: invalid CDF norm (" << norm << "); CS sampling disabled." << G4endl;
-		cdfTheta.clear(); cdfVal.clear(); cdfPdf.clear();
-		return;
+		FatalSourceError("CCB_CS_CDF_NORM", "Configured source produced an invalid CDF normalization.");
 	}
-	for(size_t i = 0; i < cdfVal.size(); i++) cdfVal[i] /= norm;
+	for(size_t i = 0; i < nextVal.size(); i++) nextVal[i] /= norm;
+
+	cdfTheta.swap(nextTheta);
+	cdfPdf.swap(nextPdf);
+	cdfVal.swap(nextVal);
 	G4cout << "ScatteringGenerator: inverse-CDF ready over measured support ["
 	       << (ang.front()/pi)*180. << "," << (ang.back()/pi)*180. << "] deg from "
 	       << ang.size() << " CS pts; interpolation=linear_node_pdf_exact_inverse_v1; "
@@ -291,14 +411,15 @@ void ScatteringGenerator::BuildSigmaCDF()
 
 G4double ScatteringGenerator::SampleThetaCM()
 {
-	// Draw theta_cm from the linearly interpolated p(theta)=sigma(theta)*sin(theta)
-	// on measured support. BuildSigmaCDF stores exact trapezoid interval masses;
-	// this function uses the analytic quadratic interval-mass inverse, rather than
-	// interpolating theta linearly in cumulative probability.
-	if(cdfTheta.empty() || cdfVal.empty() || cdfPdf.empty()){ return pi * G4UniformRand(); }
-	if(cdfTheta.size() != cdfVal.size() || cdfTheta.size() != cdfPdf.size()){
-		G4cerr << "ScatteringGenerator::SampleThetaCM: inconsistent CDF state; using uniform fallback." << G4endl;
+	if(fSourceState == SourceState::UNCONFIGURED_UNIFORM){
 		return pi * G4UniformRand();
+	}
+	if(fSourceState != SourceState::CONFIGURED_READY){
+		FatalSourceError("CCB_CS_SAMPLE_NOT_READY", "SampleThetaCM called without CONFIGURED_READY or explicit uniform state.");
+	}
+	if(cdfTheta.empty() || cdfVal.empty() || cdfPdf.empty() ||
+	   cdfTheta.size() != cdfVal.size() || cdfTheta.size() != cdfPdf.size()){
+		FatalSourceError("CCB_CS_CDF_STATE", "Configured source CDF state is empty or inconsistent.");
 	}
 
 	G4double u = G4UniformRand();
@@ -319,13 +440,13 @@ G4double ScatteringGenerator::SampleThetaCM()
 	G4double a = cdfPdf[i-1];
 	G4double b = cdfPdf[i];
 	G4double intervalMass = 0.5 * (a + b) * width;
+	if(!(intervalMass > 0.0)) return left;
 	G4double targetMass = frac * intervalMass;
 	G4double slope = (b - a) / width;
 	G4double discriminant = a*a + 2.0*slope*targetMass;
 	if(discriminant < 0.0 && discriminant > -1e-14) discriminant = 0.0;
 	if(discriminant < 0.0){
-		G4cerr << "ScatteringGenerator::SampleThetaCM: negative inverse-CDF discriminant; using interval midpoint." << G4endl;
-		return 0.5 * (left + right);
+		FatalSourceError("CCB_CS_INVERSE_DISCRIMINANT", "Configured source inverse-CDF discriminant is negative.");
 	}
 	G4double root = std::sqrt(discriminant);
 	G4double denominator = a + root;
@@ -346,6 +467,9 @@ G4double ScatteringGenerator::SampleThetaCM()
 G4double ScatteringGenerator::EvalELoss(G4double in)
 {
 	if(in<=0.){ return 0; }
+	if(Ene.size() < 2 || dEdx.size() != Ene.size()){
+		FatalSourceError("CCB_DEDX_STATE", "EvalELoss called without a validated stopping-power table.");
+	}
 
 	G4double dxin=0., dx=0., dy=0., de=0.;
 	

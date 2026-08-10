@@ -1,23 +1,24 @@
 # Active Task
 
-- **Task ID:** `ARU-S00-SELECTOR-IDENTITY-REAUDIT`
+- **Task ID:** `ARU-S00-SELECTOR-EQUIVALENCE-CLOSURE`
 - **Owner:** hourly Atomic Research Universe audit session
-- **Session stamp:** `2026-08-10T030000Z`
-- **Initial remote main SHA:** `37ed6aa792fd409d1b2abdcf830ad76f4e7a52f2`
-- **Parent issue:** `#1109` (reopened this session after post-merge #1133 audit)
-- **Child issues:** `#1135`, `#1136`, `#1137`
-- **Related DAQ contract:** `#1073`
-- **Branch:** `audit/s00-selector-identity-reaudit`
-- **Policy:** `A_NAMED_SELECTOR_ID_MUST_BIND_ONE_FORMULA_ONE_DOMAIN_AND_EQUIVALENT_MAPS_MUST_BE_COLLAPSED_BEFORE_MODEL_COMPARISON`.
-- **Selected atom:** `waveform -> named selector identity -> pedestal/amplitude map -> threshold membership -> selected population -> CL-001/downstream claims`.
-- **Confirmed defect 1:** `estimate_pedestal_v1_batched()` accepts arbitrary caller-supplied baseline indices while the method is documented as frozen `v1_first_four_median`; `scan_raw()` forwards config `baseline_samples`.
-- **Known-answer falsifier:** fixed waveform at `T=1000 ADC` changes from selected (`[0,1,2,3]`, A=1700) to rejected (`[2,3,4,5]`, A=1000) under the same v1 code path.
-- **Input-domain gap:** scalar v1 accepts fewer than four samples by taking a shorter-slice median; nonfinite values can propagate NaN into ordinary rejection instead of typed input failure.
-- **Equivalence collapse:** `dynamic_range` and `rolling_min` both use `pedestal=min(w)` and the shared `amplitude=max(w)-pedestal`; they are exactly the same scalar amplitude/threshold map. Only validity metadata differs.
-- **P10 gap:** `early_robust_p10` computes P10 over the full waveform and is permutation-invariant; it is not an early/pre-trigger estimator and requires quiet-noise/negative-contamination calibration.
-- **DAQ cross-link:** selector `_is_saturated(..., code_max=16383)` repeats the unresolved ADC full-scale assumption in #1073; #1073 was updated instead of opening a duplicate.
-- **Expert votes:** detector/data-selection `REVISE`; adversarial `BLOCK`; validation/statistics `BLOCK`; claims/provenance `BLOCK`.
-- **Repository actions:** reopened #1109; opened #1135/#1136/#1137; corrected PR #1133 history; updated #1073; reviewed green CI and merged audit PR #1134 to `main@37ed6aa792fd409d1b2abdcf830ad76f4e7a52f2`; created immutable selector re-audit archive on this branch.
-- **Scientific boundary:** no raw beam-data run, Geant4 job, timing/PID/penetration result, or detector-performance quantity was generated. The historical 640,737 count is not numerically invalidated; its selector identity is not mechanically frozen.
-- **Next implementation:** #1135 first, then #1136 and #1137; continue parent #1109 only after software semantic closure and raw/DAQ dependencies permit real migration tests.
-- **Status:** `ACTIVE / FLAWED`
+- **Session stamp:** `2026-08-10T040000Z`
+- **Initial remote main SHA:** `f5ad219c03b51cb4a2e84f7620b8d9363a250fd6`
+- **Primary issue:** `#1136`
+- **Parent issue:** `#1109`
+- **Sibling blockers:** `#1135`, `#1137`
+- **Branch:** `fix/s00-selector-equivalence-contract`
+- **PR:** `#1140`
+- **Policy:** `EXACTLY_EQUIVALENT_SCALAR_MAPS_ARE_ONE_MODEL;_VALIDITY_POLICIES_ARE_SEPARATE_LAYERS`.
+- **Selected atom:** `selector method names -> amplitude-map identity -> validity-policy identity -> candidate count -> robustness/multiplicity claims`.
+- **Exact equivalence:** `dynamic_range` and `rolling_min` both compute `b=min(w)` and therefore the same `A=max(w)-min(w)` and threshold membership for every finite waveform when validity is not a veto.
+- **Implemented contract:** `src/ccb_mc_validation/selector_model_contract.py` maps legacy method aliases onto unique `amplitude_map_id` values and separate `validity_policy_id` values.
+- **Unique scalar-map universe:** `first_four_median_v1`, `range_max_minus_min_v1`, `full_window_p10_v1`.
+- **Regression tests:** registry coverage, exact alias collapse, randomized amplitude/selection equality, bipolar diagnostic-policy separation, P10 distinct-map negative control, duplicate-name candidate-count protection.
+- **Search result:** no current repository model-selection/reporting consumer outside selector/tests was found using both aliases as independent scalar models; the new registry is the forward contract for such consumers.
+- **Expert votes:** detector/waveform `ACCEPT local decomposition`; adversarial `ACCEPT equivalence / REVISE downstream usage`; validation/statistics `ACCEPT local contract pending CI`; claims/provenance `ACCEPT local contract`.
+- **Repository actions:** reviewed and merged prior audit PR #1138 to main as `f5ad219c03b51cb4a2e84f7620b8d9363a250fd6`; opened PR #1140; updated #1136 with implementation evidence; added immutable ARU archive.
+- **CI:** exact-head MC Validation CI run `31353910275` is in progress; do not merge/close #1136 before success and final review.
+- **Scientific boundary:** no raw beam data, Geant4, selected-pulse count, timing, PID, penetration, calibration, pile-up, or detector-performance value changed. This is mathematical/model-accounting closure only.
+- **Next:** if #1140 CI passes, merge and close #1136; then return to P0 #1135 for frozen v1 formula/domain/config-preflight enforcement.
+- **Status:** `ACTIVE / PARTIAL`

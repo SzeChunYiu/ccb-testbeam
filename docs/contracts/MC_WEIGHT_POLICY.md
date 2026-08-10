@@ -153,8 +153,8 @@ justified combination.
 | Repository-wide raw→event carrier semantics | **ACTIVE / PARTIAL** | #880 |
 | Legacy proposal→target weight derivation | **BLOCKED / ACTIVE** | #1053 exact table/source provenance and production ROOT |
 | Post-adapter nonnegative event-population primitive | **VALIDATED_ON_MAIN** | PR #1171 / policy `nonnegative_event_measure_v2` |
-| Nonnegative helper scale-invariance migration | **ACTIVE / IMPLEMENTED_PR** | #1172 / PR #1175; exact-head CI and merge required |
-| Signed-weight source/estimand/numerical contract | **TRIAGED / OPEN** | #1174; do not reuse nonnegative probability semantics |
+| Nonnegative helper scale-invariance migration | **VALIDATED_ON_MAIN / CROSS_CONSUMER_OPEN** | PR #1175 merged as `368ad62b`; #1172 still owns remaining claim-bearing consumer compatibility such as `compare_data_mc.py` |
+| Signed-weight source/estimand/numerical contract | **PARTIAL / NUMERICAL_RESEARCH_ON_MAIN** | PR #1176 merged as `45c7cbd1`; #1174 remains blocked on production source semantics and consumer policy |
 | Legacy `mc01_trigger_split_truth.py` weight carrier | **BLOCKED** | #880/#1053 first-primary and fallback-to-unit semantics |
 | Production-sample ESS/provenance report | **BLOCKED_EXTERNAL** | exact immutable production ROOT bytes |
 | Event/stave truth producer integration | **ACTIVE / BLOCKED** | #1169 must dispatch on a source-authorized adapter and use this population contract |

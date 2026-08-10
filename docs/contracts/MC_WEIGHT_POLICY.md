@@ -1,66 +1,128 @@
-# MC weight policy (v2) — resolves P0 A-003 governance
+# MC weight policy (v3) — source-aware raw→event→analysis contract
 
-**Problem (A-003, CONFIRMED):** the Krakow source samples the centre-of-mass
-angle `theta_cm` **uniformly** and stores the lab-angle cross-section weight in
-`PrimaryWeight`, but major downstream MC scripts do **not** consume
-`PrimaryWeight`. Unweighted truth distributions are therefore **not** the
-physical production distributions, and any model trained on them is biased.
+**Problem (A-003 / #880 / #1053):** a branch named `PrimaryWeight` does not by
+itself define the physical event measure. Repository history contains multiple
+non-equivalent generator contracts. The legacy Krakow source sampled
+`theta_cm` uniformly but stored a lab-angle cross-section field in
+`PrimaryWeight`; current patched source code directly samples a
+`sigma(theta_cm) * sin(theta_cm)` CDF and is a distinct unit-weight generation
+world. Repository-resident schema evidence also shows that raw
+`PrimaryWeight` can be a jagged `std::vector<double>` payload rather than an
+intrinsic scalar ROOT branch.
 
-## Analysis policy (fail-fast)
+Therefore raw branch representation, derived event weight, and downstream
+weight consumption are separate contracts. No analysis may infer the correct
+physical measure from the branch name alone.
 
-Every script that reads MC truth (`Sci_bar_*`, `hibeam`, `PrimaryPDG`,
-`output_krakow*`) MUST do exactly one of:
+## 1. Source/generator-measure contract
 
-1. **Consume weights** — apply `PrimaryWeight` (or a validated total weight
-   including the CM→lab Jacobian) to every truth histogram, fit, metric, and
-   training or validation sample; or
-2. **Explicitly declare irrelevance** — set a documented marker
-   `UNWEIGHTED_MC_JUSTIFICATION = "<reason>"` (or
-   `weight_policy = "unweighted"`) with a written argument for why weighting
-   cannot change the result. This is rare; an example is a per-event ratio in
-   which the same weight cancels algebraically.
+Every claim-bearing MC artifact MUST bind a versioned `generator_measure_mode`
+and enough immutable provenance to derive the proposal→target measure:
 
-A script that reads MC truth with a **nontrivial** `PrimaryWeight` present but
-neither consumed nor explicitly declared irrelevant is a **P0 defect**.
-`tools/audit/audit_repository.py` flags this as `MC_WEIGHT_NOT_DECLARED`.
+- generator commit/configuration and input-table identity;
+- source table SHA-256, frame, units and angular support when applicable;
+- proposal density and target density/measure;
+- raw weight branch name, ROOT typename/representation and schema;
+- a versioned raw→event `weight_adapter_id`;
+- explicit statement of whether a further analysis weight is required.
 
-## Weight-vector validation policy
+The supported adapter *classes* are conceptually distinct and must not be
+silently interchanged:
 
-Before an effective sample size or weighted result may be reported,
-`tools/audit/audit_mc_weight_usage.py` requires:
+1. **Scalar event weight.** Source provenance establishes one raw scalar event
+   weight. The adapter requires exactly that scalar.
+2. **Common replicated primary weight.** Source provenance establishes that a
+   per-primary vector repeats one event weight. The adapter may collapse it
+   only after proving every sibling value for the event is equal; disagreement
+   is a hard failure. Primary-row permutation must not change the result.
+3. **Direct-sampling/unit-weight mode.** The target source distribution is
+   already encoded in generation. Unit analysis weight is allowed only when
+   generator provenance establishes that mode; a stale legacy nonunit branch
+   must not be consumed accidentally.
 
-- exactly one recognized weight branch;
-- one scalar weight per tree entry;
-- no silent flattening, truncation, or filtering;
-- finite, nonnegative cross-section weights;
-- at least one positive weight and a positive finite sum of squared weights;
-- exact input byte size and SHA-256 in the report;
-- stable binary64 summation with `math.fsum`;
-- atomic JSON publication to a path distinct from the input ROOT file.
+Arbitrary `weights[0]`, choose-any, mean, sum, product, truncation, flattening,
+or filtering are **not** generic adapters. A first-primary carrier is allowed
+only if a source-specific contract independently proves that exact carrier
+semantics. Issue #1053 owns the legacy proposal/target derivation; issue #880
+owns the campaign-wide raw→event carrier contract.
 
-A missing, ambiguous, malformed, nonfinite, negative, empty, misaligned, or
-all-zero weight vector is a publication-blocking validation failure. The audit
-reports weighted effective sample size
-`ESS = (sum(w))^2 / sum(w^2)` only after all gates pass.
+Signed-weight generators, if introduced, define a different measure and need a
+separate policy. They must not be coerced into the nonnegative probability
+measure below.
+
+## 2. Derived event-weight population contract
+
+After the source-specific adapter, every final statistical row used by a
+normalized weighted estimator must have exactly one aligned derived event
+weight. For the current nonnegative probability-measure contract:
+
+- the statistical unit must be explicit (normally one immutable generator
+  event for MC truth/event products);
+- the derived vector must be one-dimensional, event-aligned, finite and
+  nonnegative;
+- zero-valued individual event weights are allowed, but a **non-empty**
+  selected population must have positive finite total mass and positive finite
+  squared-weight sum;
+- an empty diagnostic population is not a weighted empirical measure and must
+  not publish fake `ESS=0` as though inference were defined;
+- `sum(w)` and `sum(w^2)` must use stable binary64 `math.fsum` accounting and
+  fail closed on overflow/nonfinite results;
+- `ESS = (sum(w))^2 / sum(w^2)` is defined only after those gates pass, with
+  the invariant `1 <= ESS <= n_rows` for a non-empty nonnegative event
+  population;
+- report zero/positive counts, ESS fraction and `max(w)/sum(w)` so dominant
+  weights are visible.
+
+The reusable package implementation is
+`ccb_mc_validation.truth.event_weight_population` with policy ID
+`nonnegative_event_measure_v1`. It deliberately accepts only **derived** event
+weights; it does not decide which raw `PrimaryWeight` representation is
+scientifically correct.
+
+Duplicating/splitting an event into multiple rows with divided weight can leave
+a normalized weighted distribution unchanged while changing nominal row count
+and ESS. Therefore representation-splitting is not an independence-preserving
+operation: source-event identity/cluster membership must remain available and
+one generator event must not be promoted to multiple independent statistical
+units.
+
+## 3. Downstream analysis policy (fail fast)
+
+Every script that reads claim-bearing MC truth MUST do exactly one of:
+
+1. consume the source-authorized derived event weight exactly once at the final
+   statistical unit, including weighted summaries, fits, calibration/null
+   machinery and train/validation/test metrics where applicable; or
+2. explicitly declare why weighting is algebraically irrelevant for the
+   specific estimand.
+
+A downstream validator cannot repair a producer that already replaced missing
+or invalid weights by `1.0`, dropped rows silently, or collapsed an ambiguous
+raw vector. Data case-control/inclusion weights and MC physics/source weights
+are distinct factors and must remain separately named before any mathematically
+justified combination.
 
 ## Reporting requirements
 
-- Publish the exact input path, byte size, SHA-256, tree, and weight branch.
-- Publish entry count, weight count, sum of weights, sum of squared weights,
-  ESS, ESS fraction, zero/positive counts, and summation method.
-- Report the high-weight tail, including the 99th percentile, maximum, and
-  maximum-to-mean ratio.
+- Publish exact input path/object identity, byte size, SHA-256 and tree/schema.
+- Publish `generator_measure_mode`, raw representation and `weight_adapter_id`.
+- Publish final event count, derived-weight count, `sum(w)`, `sum(w^2)`, ESS,
+  ESS fraction, zero/positive counts, maximum-weight fraction and summation
+  method.
+- Bind sample/subsample inclusion rules and source-event IDs so event-level
+  topology and clustering can be reconstructed.
 - Prefer correcting the generator and regenerating production samples over
-  post-hoc reweighting when the ESS fraction is low.
-- Distinguish a validated weight vector from demonstrated downstream weight
-  consumption; branch validity alone does not prove an analysis used weights.
+  post-hoc reweighting when the source measure is ambiguous or ESS is poor.
+- Distinguish validated source semantics, validated event-weight population and
+  demonstrated downstream consumption; none implies the other two.
 
 ## Status
 
 | item | status | blocker |
 |---|---|---|
-| Publish weight policy | **DONE** | — |
-| `MC_WEIGHT_NOT_DECLARED` audit rule live | **DONE** | `tools/audit/audit_repository.py` |
-| Strict weight-vector and ESS audit | **DONE** | `tools/audit/audit_mc_weight_usage.py` |
-| ESS report per production sample | **BLOCKED_EXTERNAL** | needs exact production ROOT bytes on fs10 |
-| Reweight/regenerate downstream MC | **BLOCKED_COMPUTE** | LUNARC |
+| Repository-wide raw→event carrier semantics | **ACTIVE / PARTIAL** | #880 |
+| Legacy proposal→target weight derivation | **BLOCKED / ACTIVE** | #1053 exact table/source provenance and production ROOT |
+| Post-adapter nonnegative event-population primitive | **IMPLEMENTED_PENDING_CI** | branch/PR for `nonnegative_event_measure_v1` |
+| Production-sample ESS/provenance report | **BLOCKED_EXTERNAL** | exact immutable production ROOT bytes |
+| Event/stave truth producer integration | **ACTIVE / BLOCKED** | #1169 must dispatch on a source-authorized adapter and use this population contract |
+| Authorising weighted DATA↔MC inference | **BLOCKED** | #1049/#1052/#1164 plus detector-chain and null-calibration dependencies |

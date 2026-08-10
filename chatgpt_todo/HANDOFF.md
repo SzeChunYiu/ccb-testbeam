@@ -1,37 +1,60 @@
 # Latest Handoff
 
-## Validated and merged in this session
+## Selected atom: raw `PrimaryWeight` -> event-measure weight
 
-Two bounded weighted-null research steps are now on protected `main`.
+Review of active PR `#1169` exposed an unresolved source-to-statistical-unit contract upstream of the new H3 event/stave truth product. The product correctly aggregates all `Sci_bar_EDep` records into one generator-event/stave row and preserves Sample-I/Sample-II membership, but its weighted mode currently maps an arbitrary non-empty per-event `PrimaryWeight` payload to `weights[0]`. Its focused tests explicitly accept `[2.5, 9.0] -> 2.5`.
 
-1. PR `#1165` exact head `930f08df435bd42532707f078501c396fb1da37d` passed MC Validation run `31391922666` (`1337 passed, 1 skipped, 8 xfailed, 1 xpassed`) and was squash-merged as `a1d7afe17e526c0e90761e8d7da4924eea5862e5`. It makes the #1164 event-cluster representation falsifier executable.
-2. PR `#1167` exact head `90b1688a4f0f58f3d2bc23611b8854a9b9d9d21c` passed MC Validation run `31393379296` (`1347 passed, 1 skipped, 8 xfailed, 1 xpassed`) and was squash-merged as `4268175da2e282a755b7f59acc235cffee512ed4`. It makes the #1166 fitted-scale and fit/test-topology falsifiers executable.
+The repository does not yet justify that operation as a campaign-general event-weight definition. `docs/contracts/MC_WEIGHT_POLICY.md` and `tools/audit/audit_mc_weight_usage.py` describe one scalar weight per tree entry. Legacy `scripts/mc01_trigger_split_truth.py`, however, describes `PrimaryWeight` as a variable-length per-primary array and chooses the first value. `docs/validation/issue880_weight_semantics_audit.md` is `PARTIAL`, and `docs/validation/issue880_strict_producer_audit.md` explicitly says first-primary carrier correctness is unestablished, the production rerun is blocked and the retained issue-880 result remains `FLAWED`.
 
-Both are research-method closures only. Neither implements or authorises a production CCB p-value.
+## Stronger repository-resident schema evidence
 
-## Fitted-scale/topology result (#1166)
+The content-addressed S17a schema audit records `PrimaryWeight` as `std::vector<double>` / Uproot jagged for a `hibeam` ROOT file. The companion result binds the patched 100k smoke file to SHA-256
 
-Current `scripts/compare_data_mc.py` estimates
+`74387a04571cf92724fb97974b1214579996ed33cff0b128e6a96eb21fc3164a`.
 
-`shat = median(DATA_II) / weighted_median(MC_II, PrimaryWeight)`
+That run is explicitly nonproduction because `/ElGen/CSFile` was removed and the event count reduced to 100k. It therefore proves a real vector-valued raw schema exists, but does not establish production event-wise cardinality, sibling-weight equality, or physical weight semantics. The correct architecture must distinguish raw branch representation from the derived one-weight-per-event analysis vector.
 
-and reuses the result in Sample-II and Sample-I weighted-ECDF discrepancies. Canonical DATA Sample-I analysis runs 44–57 and Sample-II analysis runs 58–63,65 are disjoint, while `mc01_trigger_split_truth.py` defines Sample I as a coincidence subset of Sample II. Therefore the nuisance fit and source-membership graph are part of the null design.
+## Exact counterexample and surviving mechanisms
 
-The equal-weight LogNormal scale-family falsifier used 200 trials, 80 DATA, 160 MC and 99 bootstrap replicates/trial at seed base `20260810`. Fixed fitted scale rejected `0.000/0.015` at alpha `0.05/0.10`, while refitting inside each replicate gave `0.060/0.095`; mean p changed from `0.67775` to `0.5378`. The 95% Wilson intervals for the rejection estimates are approximately `[0,0.01885]` versus `[0.03465,0.10193]` at alpha 0.05 and `[0.00511,0.04317]` versus `[0.06166,0.14360]` at alpha 0.10. With 99 replicates, the Monte-Carlo p grid is 0.01. This supports only the narrow conclusion that nuisance freezing is not harmless in this declared fixture.
+For two event observables `X={0,1}` with event 2 weight 1, choosing the first value of event 1 payload `[2.5,9.0]` gives
 
-A separate 2,000-trial topology falsifier at seed `20260811` preserved MC-I as a Bernoulli-0.4 subset of MC-II, then replaced it with an independent same-marginal sample. corr(`shat`, median(MC-I)) changed from `-0.43589` to `0.00332`; mean Sample-I `D` changed from `0.14927` to `0.15842`; the 95th percentile changed from `0.24080` to `0.25758`. Marginal equality is therefore insufficient when source membership changes.
+`F_w(0) = 2.5/(2.5+1) = 0.7142857143`.
 
-## Four role-separated disposition
+Permuting only primary-row order to `[9.0,2.5]` gives
 
-- **Detector/calibration lead — REVISE.** Refitting/membership preservation are necessary design candidates, but the current ADC/MeV operand is still the wrong detector measurand under #1052/#994.
-- **Adversarial reviewer — BLOCK fixed/topology-blind nulls.** Both rejected mechanisms have executable negative controls on main.
-- **Statistics/validation reviewer — ACCEPT local falsifiers / BLOCK CCB inference.** The surviving method still needs nonuniform weights/ESS, event clusters, ties/saturation, unequal populations and substantially larger calibration studies with Monte-Carlo uncertainty.
-- **Claims/provenance reviewer — BLOCK promotion.** Weighted `D` is descriptive; the legacy p-value remains `NONAUTHORISING_BLOCKED_ISSUE_1049`; CL-013 remains GATED.
+`F_w(0) = 9/(9+1) = 0.9`.
 
-Capasso et al. (2009), DOI `10.1142/S0219525909002131`, supports re-estimating unknown parameters in EDF Monte-Carlo GOF calibration; Kojadinovic & Yan (2012), DOI `10.1002/cjs.11135`, treats estimated-parameter GOF as a distinct bootstrap problem. These are method context, not validation of the CCB weighted/clustered trigger design.
+Thus arbitrary first-element collapse changes the physical empirical measure under a representation-only permutation. The locally surviving adapter classes are:
 
-## Next highest-value atom
+- source-proven scalar event weight;
+- source-proven common replicated per-primary weight, requiring exact sibling equality and primary-row permutation invariance;
+- source-proven direct-sampled unit-weight mode.
 
-Work at the #1164/#1052 producer boundary before adding more p-value machinery. Preserve immutable DAQ/generator event IDs and Sample-I/Sample-II membership; emit explicit `statistical_unit`, aggregation policy, source/config hashes and event-weight semantics; and replace the first-B raw hit-record MC product with an event/stave response hierarchy. The final DATA analogue still requires quenching → optical/WLS → SiPM → electronics/digitizer → identical reconstruction, but event/stave deposited-energy and visible-energy products can be retained as explicitly non-detector-closure mechanism diagnostics.
+Sum/mean/product adapters define different measures and are rejected without a generator derivation. A `first_primary_only` adapter remains unidentified unless source evidence proves that element 0 alone carries the event measure when siblings differ.
 
-The strongest next negative controls are transport-step splitting at fixed event/stave total, multi-track same-event aggregation, duplicated rows with shared versus false-unique event IDs, nested-trigger membership preservation, one dominant PrimaryWeight/low ESS, and saturation/tie cases. No authorising p-value should return until these cross-scale contracts and a calibrated nuisance design pass together.
+## Four sequential review passes
+
+- **Generator/source-physics lead — REVISE.** Historical generators may attach a common weight to both outgoing primaries, but the exact production branch/cardinality/order and generator mode must be bound to bytes and source before H3 can choose an adapter.
+- **Adversarial mechanism reviewer — BLOCK arbitrary first-element collapse.** The primary-row permutation example is an exact falsifier unless sibling equality is guaranteed.
+- **Independent statistics/validation reviewer — BLOCK weighted inference / ACCEPT discriminator.** A non-empty all-zero selected population has no normalized weighted measure; post-adapter validation must require positive total mass and use the canonical stable sufficient-statistic rule.
+- **Claims/provenance reviewer — BLOCK closure.** The previous #880 closure exceeded its own strict audit's stated acceptance boundary; generator-measure mode and raw-weight adapter are absent from the H3 manifest.
+
+## Repository state and actions
+
+- `#880` has been reopened instead of creating a duplicate weight issue.
+- Full mechanism/falsifier/acceptance comments were added to `#880`; the prior closure-vs-audit contradiction is recorded there.
+- `#1053` now owns the requirement that `generator_measure_mode` also define a versioned raw-weight adapter.
+- `#1164` now states the invariant as exactly one **validated event-measure weight per final event row**, without assuming a universal raw branch shape.
+- PR `#1169` received a blocking scientific review and a follow-up correction: do not replace first-element collapse with an equally unjustified universal raw-cardinality-one rule.
+- Audit PR `#1170` preserves `ARU-MC-WEIGHT-CARRIER-001`, the S17a schema supplement, and this coordination state. Current head after coordination updates is newer than the initial `3768cf85...` audit head; fresh exact-head CI is required before merge.
+- PR `#1169` exact-head MC Validation run `31397051913` succeeded. That green result does not close the concern because the test suite currently encodes `[2.5,9.0] -> 2.5` as expected behavior.
+
+## Scientific boundary
+
+No production MC ROOT file was opened in this runtime. No event-wise `PrimaryWeight` cardinality/equality distribution, campaign ESS, weighted spectrum, p-value, PID, penetration, calibration or detector-performance result was regenerated. The S17a ROOT evidence is schema/plumbing evidence only. CL-021 remains open; #1053/#880/#1164/#1049 remain upstream/downstream gates.
+
+## Next highest-value work
+
+First resolve the carrier on immutable representative MC files for every generator-measure mode: record ROOT SHA/tree/schema, generator commit/config/table digest, per-event `PrimaryWeight` cardinality, sibling equality, primary PDG/TrackID association/order, zero/multi-primary cases, and source mode. Then add `generator_measure_mode` + `raw_weight_adapter_id` to the H3 manifest and fail closed when the raw payload violates its declared adapter.
+
+If production bytes remain unavailable, the safe implementation-only leaf is adapter-independent: reject a non-empty derived event-weight population when `sum(w)<=0` or `sum(w^2)<=0`, compute `sum(w)`, `sum(w^2)` and ESS with `math.fsum`, and keep the product `NONAUTHORISING_TRUTH_DIAGNOSTIC`. After that, continue the H4 stepwise quenching/visible-energy atom before any detector-level DATA/MC inference.

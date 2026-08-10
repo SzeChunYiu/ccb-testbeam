@@ -1,22 +1,23 @@
 # Active Task
 
-- **Task ID:** `ARU-S00-PUBLICATION-TRANSACTION-REAUDIT`
+- **Task ID:** `ARU-S00-SELECTOR-IDENTITY-REAUDIT`
 - **Owner:** hourly Atomic Research Universe audit session
-- **Session stamp:** `2026-08-10T015000Z`
-- **Initial remote main SHA:** `381c02d814cc85852fab8b8f3f999df269e13780`
-- **Primary issue:** `#1110` (reopened after deterministic re-audit)
-- **Branch:** `audit/s00-publication-transaction-reaudit`
-- **Policy:** `AUTHORITATIVE_S00_PUBLICATION_MUST_HAVE_A_CRASH_SAFE_COMMIT_POINT_AND_STABLE_PATH_IDENTITY`.
-- **Selected atom:** `staging generation -> publication commit point -> canonical report/pulse-table/manifest identity`.
-- **Confirmed defect 1:** `main()` and `atomic_publish()` construct the same `.staging-<pid>` path. `atomic_publish()` deletes that path before renaming it, so the real caller self-deletes its completed staging tree and raises `FileNotFoundError` before publication.
-- **Confirmed defect 2:** the selected pulse table is written to `staging / selected_path.name` and only the report tree is published. Current control flow does not publish to configured `data/processed/s00_selected_b_pulses.csv.gz`; the manifest serializes the ephemeral staging path instead.
-- **Confirmed defect 3:** `shutil.rmtree(target_dir)` followed by `tmp.rename(target_dir)` is not rollback-safe. A crash after/during deletion destroys the previous authorising generation and concurrent readers can observe partial/absent state.
-- **Minimal reproduction:** exact path logic produced `staging == atomic tmp: True`, then `FileNotFoundError`; staging and target were both absent after the failure in the no-prior-target fixture.
-- **Claims consequence:** `CL-001` remains `GATED`; its declared source-data/source-manifest paths must be revalidated after transaction repair. No numerical pulse count was changed in this session.
-- **Preferred repair:** immutable model-hash generations plus atomic same-filesystem replacement of a small authoritative pointer/manifest; compatibility aliases, if retained, must be separate atomic file replacements bound to the authorised immutable generation.
-- **Required tests:** exact-main staging-name integration; failure injection at commit point; post-publication configured pulse-table existence/hash; manifest path resolvability/no `.staging-<pid>`; concurrent-reader snapshot contract; CL-001 source binding.
-- **Expert votes:** data/reconstruction `BLOCK`; adversarial `REJECT closure`; validation `BLOCK`; claims/provenance `BLOCK`.
-- **Repository actions:** reopened #1110; posted detailed re-audit comment; created immutable archive `chatgpt_todo/archive/2026-08-10T015000Z_ARU-S00-PUBLICATION-TRANSACTION-REAUDIT.md` on the audit branch.
-- **Scientific boundary:** no raw beam data, Geant4 output, calibration, timing, PID, penetration, or detector-performance quantity was generated or reinterpreted.
-- **Next:** repair #1110 transaction semantics, then audit selector-v1 identity (`estimate_pedestal_v1_batched` accepts caller-selected indices while model identity says `v1_first_four_median`).
+- **Session stamp:** `2026-08-10T030000Z`
+- **Initial remote main SHA:** `37ed6aa792fd409d1b2abdcf830ad76f4e7a52f2`
+- **Parent issue:** `#1109` (reopened this session after post-merge #1133 audit)
+- **Child issues:** `#1135`, `#1136`, `#1137`
+- **Related DAQ contract:** `#1073`
+- **Branch:** `audit/s00-selector-identity-reaudit`
+- **Policy:** `A_NAMED_SELECTOR_ID_MUST_BIND_ONE_FORMULA_ONE_DOMAIN_AND_EQUIVALENT_MAPS_MUST_BE_COLLAPSED_BEFORE_MODEL_COMPARISON`.
+- **Selected atom:** `waveform -> named selector identity -> pedestal/amplitude map -> threshold membership -> selected population -> CL-001/downstream claims`.
+- **Confirmed defect 1:** `estimate_pedestal_v1_batched()` accepts arbitrary caller-supplied baseline indices while the method is documented as frozen `v1_first_four_median`; `scan_raw()` forwards config `baseline_samples`.
+- **Known-answer falsifier:** fixed waveform at `T=1000 ADC` changes from selected (`[0,1,2,3]`, A=1700) to rejected (`[2,3,4,5]`, A=1000) under the same v1 code path.
+- **Input-domain gap:** scalar v1 accepts fewer than four samples by taking a shorter-slice median; nonfinite values can propagate NaN into ordinary rejection instead of typed input failure.
+- **Equivalence collapse:** `dynamic_range` and `rolling_min` both use `pedestal=min(w)` and the shared `amplitude=max(w)-pedestal`; they are exactly the same scalar amplitude/threshold map. Only validity metadata differs.
+- **P10 gap:** `early_robust_p10` computes P10 over the full waveform and is permutation-invariant; it is not an early/pre-trigger estimator and requires quiet-noise/negative-contamination calibration.
+- **DAQ cross-link:** selector `_is_saturated(..., code_max=16383)` repeats the unresolved ADC full-scale assumption in #1073; #1073 was updated instead of opening a duplicate.
+- **Expert votes:** detector/data-selection `REVISE`; adversarial `BLOCK`; validation/statistics `BLOCK`; claims/provenance `BLOCK`.
+- **Repository actions:** reopened #1109; opened #1135/#1136/#1137; corrected PR #1133 history; updated #1073; reviewed green CI and merged audit PR #1134 to `main@37ed6aa792fd409d1b2abdcf830ad76f4e7a52f2`; created immutable selector re-audit archive on this branch.
+- **Scientific boundary:** no raw beam-data run, Geant4 job, timing/PID/penetration result, or detector-performance quantity was generated. The historical 640,737 count is not numerically invalidated; its selector identity is not mechanically frozen.
+- **Next implementation:** #1135 first, then #1136 and #1137; continue parent #1109 only after software semantic closure and raw/DAQ dependencies permit real migration tests.
 - **Status:** `ACTIVE / FLAWED`

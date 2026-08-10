@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-"""Audit one event-aligned MC weight vector and report weighted ESS.
+"""Audit one event-aligned nonnegative MC weight vector and report weighted ESS.
 
-The audit is fail-closed for missing or ambiguous weight branches, non-vector data,
-entry-count mismatches, nonfinite or negative weights, and zero total weight.
+The raw generator carrier is outside this helper.  Once a source adapter has
+produced one event-aligned nonnegative vector, normalized diagnostics delegate
+to ``nonnegative_event_measure_v2`` so a common positive weight scale cannot
+change authorisation merely through binary64 overflow/underflow.
 """
 from __future__ import annotations
 
@@ -17,7 +19,13 @@ from typing import Any
 
 import numpy as np
 
-VERSION = "2.0.0"
+from ccb_mc_validation.exceptions import DataContractError
+from ccb_mc_validation.truth.event_weight_population import (
+    EVENT_WEIGHT_POPULATION_POLICY_ID,
+    summarize_event_weight_population,
+)
+
+VERSION = "3.0.0"
 POLICY = "MC_WEIGHT_VECTOR_MUST_BE_UNAMBIGUOUS_FINITE_NONNEGATIVE_AND_EVENT_ALIGNED"
 WEIGHT_CANDIDATES = ("PrimaryWeight", "weight", "EventWeight")
 VALIDATION_FAILURES = {
@@ -45,6 +53,7 @@ def _base_result(root: Path, tree: str) -> dict[str, Any]:
         "validator": "audit_mc_weight_usage",
         "validator_version": VERSION,
         "policy": POLICY,
+        "population_policy_id": EVENT_WEIGHT_POPULATION_POLICY_ID,
         "input_path": str(root),
         "input_size_bytes": root.stat().st_size,
         "input_sha256": _sha256_file(root),
@@ -113,30 +122,36 @@ def _summarize_weight_vector(
             min=float(weights.min()),
         )
 
-    sum_w = math.fsum(float(value) for value in weights)
-    sum_w2 = math.fsum(float(value) * float(value) for value in weights)
-    if not math.isfinite(sum_w) or not math.isfinite(sum_w2):
-        return _failure(
-            base,
-            "P0_NONFINITE_WEIGHT",
-            branch=branch,
-            n_entries=n_entries,
-            n_weights=n_weights,
-            reason="nonfinite sufficient statistic",
-        )
-    if sum_w <= 0.0 or sum_w2 <= 0.0:
+    if not np.any(weights > 0.0):
         return _failure(
             base,
             "P0_ZERO_TOTAL_WEIGHT",
             branch=branch,
             n_entries=n_entries,
             n_weights=n_weights,
-            sum_w=sum_w,
-            sum_w2=sum_w2,
+            sum_w=0.0,
+            sum_w2=0.0,
         )
 
-    ess = sum_w * sum_w / sum_w2
-    mean = sum_w / n_weights
+    try:
+        summary = summarize_event_weight_population(
+            weights,
+            expected_length=n_entries,
+        )
+    except DataContractError as exc:
+        return _failure(
+            base,
+            "P0_WEIGHT_SHAPE_INVALID",
+            branch=branch,
+            n_entries=n_entries,
+            n_weights=n_weights,
+            reason=str(exc),
+        )
+
+    assert summary.effective_sample_size is not None
+    assert summary.effective_sample_fraction is not None
+    assert summary.max_weight_fraction is not None
+    mean = summary.sum_w / n_weights if summary.sum_w is not None else None
     quantiles = {
         str(q): float(np.quantile(weights, q)) for q in (0.0, 0.01, 0.5, 0.99, 1.0)
     }
@@ -147,18 +162,24 @@ def _summarize_weight_vector(
         "n": n_weights,
         "n_entries": n_entries,
         "n_weights": n_weights,
-        "n_zero": int((weights == 0.0).sum()),
-        "n_positive": int((weights > 0.0).sum()),
-        "sum_w": sum_w,
-        "sum_w2": sum_w2,
-        "ess": ess,
-        "ess_fraction": ess / n_weights,
+        "n_zero": summary.n_zero,
+        "n_positive": summary.n_positive,
+        "weight_scale": summary.weight_scale,
+        "sum_w_over_scale": summary.sum_w_over_scale,
+        "sum_w2_over_scale2": summary.sum_w2_over_scale2,
+        "sum_w": summary.sum_w,
+        "sum_w2": summary.sum_w2,
+        "ess": summary.effective_sample_size,
+        "ess_fraction": summary.effective_sample_fraction,
         "mean": mean,
         "min": float(weights.min()),
         "max": float(weights.max()),
-        "max_over_mean": float(weights.max()) / mean,
+        "max_weight_fraction": summary.max_weight_fraction,
+        "max_over_mean": float(n_weights * summary.max_weight_fraction),
         "quantiles": quantiles,
-        "summation_method": "PYTHON_MATH_FSUM_BINARY64",
+        "summation_method": summary.summation_method,
+        "statistical_unit": summary.statistical_unit,
+        "measure_defined": summary.measure_defined,
     }
 
 
@@ -213,7 +234,7 @@ def audit(root: Path, tree: str) -> dict[str, Any]:
 
 def _publish_json(path: Path, result: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    payload = json.dumps(result, indent=2, sort_keys=True) + "\n"
+    payload = json.dumps(result, indent=2, sort_keys=True, allow_nan=False) + "\n"
     with tempfile.NamedTemporaryFile(
         "w",
         encoding="utf-8",
@@ -256,6 +277,7 @@ def main(argv: list[str] | None = None) -> None:
             "validator": "audit_mc_weight_usage",
             "validator_version": VERSION,
             "policy": POLICY,
+            "population_policy_id": EVENT_WEIGHT_POPULATION_POLICY_ID,
             "status": "INPUT_ERROR",
             "input_path": str(args.root),
             "error": "ROOT file does not exist",
@@ -265,6 +287,7 @@ def main(argv: list[str] | None = None) -> None:
             "validator": "audit_mc_weight_usage",
             "validator_version": VERSION,
             "policy": POLICY,
+            "population_policy_id": EVENT_WEIGHT_POPULATION_POLICY_ID,
             "status": "INPUT_OUTPUT_ALIAS",
             "input_path": str(args.root),
             "output_path": str(args.out),
@@ -273,7 +296,7 @@ def main(argv: list[str] | None = None) -> None:
         result = audit(args.root, args.tree)
         _publish_json(args.out, result)
 
-    print(json.dumps(result, indent=2, sort_keys=True))
+    print(json.dumps(result, indent=2, sort_keys=True, allow_nan=False))
     if result["status"] == "OK":
         raise SystemExit(0)
     if result["status"] in VALIDATION_FAILURES:

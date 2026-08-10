@@ -1,23 +1,16 @@
 # Active Task
 
-- **Task ID:** `ARU-S00-SELECTOR-IDENTITY-REAUDIT`
+- **Task ID:** `ARU-S00-PUBLICATION-GENERATION-PRIMITIVE-001`
 - **Owner:** hourly Atomic Research Universe audit session
-- **Session stamp:** `2026-08-10T030000Z`
-- **Initial remote main SHA:** `37ed6aa792fd409d1b2abdcf830ad76f4e7a52f2`
-- **Parent issue:** `#1109` (reopened this session after post-merge #1133 audit)
-- **Child issues:** `#1135`, `#1136`, `#1137`
-- **Related DAQ contract:** `#1073`
-- **Branch:** `audit/s00-selector-identity-reaudit`
-- **Policy:** `A_NAMED_SELECTOR_ID_MUST_BIND_ONE_FORMULA_ONE_DOMAIN_AND_EQUIVALENT_MAPS_MUST_BE_COLLAPSED_BEFORE_MODEL_COMPARISON`.
-- **Selected atom:** `waveform -> named selector identity -> pedestal/amplitude map -> threshold membership -> selected population -> CL-001/downstream claims`.
-- **Confirmed defect 1:** `estimate_pedestal_v1_batched()` accepts arbitrary caller-supplied baseline indices while the method is documented as frozen `v1_first_four_median`; `scan_raw()` forwards config `baseline_samples`.
-- **Known-answer falsifier:** fixed waveform at `T=1000 ADC` changes from selected (`[0,1,2,3]`, A=1700) to rejected (`[2,3,4,5]`, A=1000) under the same v1 code path.
-- **Input-domain gap:** scalar v1 accepts fewer than four samples by taking a shorter-slice median; nonfinite values can propagate NaN into ordinary rejection instead of typed input failure.
-- **Equivalence collapse:** `dynamic_range` and `rolling_min` both use `pedestal=min(w)` and the shared `amplitude=max(w)-pedestal`; they are exactly the same scalar amplitude/threshold map. Only validity metadata differs.
-- **P10 gap:** `early_robust_p10` computes P10 over the full waveform and is permutation-invariant; it is not an early/pre-trigger estimator and requires quiet-noise/negative-contamination calibration.
-- **DAQ cross-link:** selector `_is_saturated(..., code_max=16383)` repeats the unresolved ADC full-scale assumption in #1073; #1073 was updated instead of opening a duplicate.
-- **Expert votes:** detector/data-selection `REVISE`; adversarial `BLOCK`; validation/statistics `BLOCK`; claims/provenance `BLOCK`.
-- **Repository actions:** reopened #1109; opened #1135/#1136/#1137; corrected PR #1133 history; updated #1073; reviewed green CI and merged audit PR #1134 to `main@37ed6aa792fd409d1b2abdcf830ad76f4e7a52f2`; created immutable selector re-audit archive on this branch.
-- **Scientific boundary:** no raw beam-data run, Geant4 job, timing/PID/penetration result, or detector-performance quantity was generated. The historical 640,737 count is not numerically invalidated; its selector identity is not mechanically frozen.
-- **Next implementation:** #1135 first, then #1136 and #1137; continue parent #1109 only after software semantic closure and raw/DAQ dependencies permit real migration tests.
-- **Status:** `ACTIVE / FLAWED`
+- **Session stamp:** `2026-08-10T070000Z`
+- **Initial remote main SHA:** `5cb0b9426dc2f9e1b58a33fcb36c2e0c3eaa8f0a`
+- **Validated merge before atom selection:** PR #1143 -> `5cb0b9426dc2f9e1b58a33fcb36c2e0c3eaa8f0a`; exact-head MC Validation CI run 910 was `success`.
+- **Parent issue:** `#1110`
+- **Branch:** `fix/s00-publication-generation-primitive`
+- **Selected atom:** `validated staging generation -> immutable generation -> atomic authority pointer -> downstream logical artifact resolution`.
+- **Contract:** a failed publication must leave the previous authority pointer byte-identical; a successful publication retains old immutable generations and changes authority only by atomic `CURRENT.json` replacement.
+- **Implemented:** reusable `s00_publication.py` primitive with strict IDs/paths, required-artifact validation, pre-move model-identity serialization, same-filesystem generation move, publisher locking, fsync, atomic pointer replacement, typed pointer parsing and logical resolver.
+- **Negative controls:** injected pointer-commit failure, missing artifact, existing generation ID, path traversal, wrong staging root, malformed pointer, missing authoritative artifact, and non-serializable model identity.
+- **Expert votes:** filesystem/reconstruction `ACCEPT primitive / BLOCK integration`; adversarial/concurrency `ACCEPT primitive / residual downstream-bypass risk`; validation `ACCEPT deterministic design / pending exact-head CI`; claims/provenance `BLOCK #1110 closure until producer and consumers use pointer authority`.
+- **Scientific boundary:** no beam ROOT or Geant4 execution; no S00 count or detector-performance quantity changed.
+- **Status:** `ACTIVE / IMPLEMENTED_PRIMITIVE_PENDING_CI_AND_INTEGRATION`

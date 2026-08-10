@@ -11,7 +11,7 @@ the generator.
 | knob | channel | target | unit | default grid | rationale |
 |------|---------|--------|------|--------------|-----------|
 | `pde_scale` | cli | `--pde-scale` | x PDE table | 0.6 0.8 1.0 1.2 1.4 | +/-40% spans the S13360-3050CS OV range + per-device PDE spread (~25-50% peak) |
-| `coupling` | cli | `--coupling` | frac | 0.5 0.7 0.85 0.95 1.0 | fibre-end->sensor coupling; 0.5 = poor air gap, 1.0 = optical contact |
+| `collection_efficiency` | cli | `--collection-efficiency` | frac | 0.5 0.7 0.85 0.95 1.0 | post-transport collection efficiency in [0,1]; 0.5 = poor, 1.0 = ideal |
 | `recovery_time` | env | `CCB_SIPM_RECOVERY_TIME_NS` | ns | 5 15 30 60 100 | microcell RC recovery (S13360-3050CS tens of ns) |
 | `dark_count` | env | `CCB_SIPM_DARK_COUNT_RATE_HZ` | Hz | 0 1e5 5e5 1e6 2e6 | dark-count rate; 0 = cold, 2 MHz = hot/irradiated |
 | `crosstalk` | env | `CCB_SIPM_CROSSTALK_PROB` | prob | 0 0.03 0.06 0.10 0.15 | prompt crosstalk; ~3% typ, swept 0-15% |
@@ -25,7 +25,7 @@ the generator.
 
 The representative operating point for every sweep is the `ccb-sipm-core`
 `ModelConfig::RepresentativeS13360_3050CS` + `AppConfig` defaults (PDE scale 1,
-coupling 1, recovery 30 ns, dark 0.5 MHz, crosstalk 3%, afterpulse 1%,
+collection_efficiency 1, recovery 30 ns, dark 0.5 MHz, crosstalk 3%, afterpulse 1%,
 window 250 ns, Birks 0.126, etc.).
 
 ## Defaults provenance

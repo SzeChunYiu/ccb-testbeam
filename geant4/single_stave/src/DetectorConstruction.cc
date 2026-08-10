@@ -41,7 +41,7 @@ DetectorConstruction::DetectorConstruction(const AppConfig& cfg) : cfg_(cfg) {
   std::ostringstream gs;
   gs << kStaveHalfX << kStaveHalfY << kStaveHalfZ << kHoleRadius << kFibreRadius
      << kFibreHalfX << kFibreSep << rCore << rInner << rOuter
-     << cfg_.birks_kB_mm_per_MeV;
+     << cfg_.birks_kB_mm_per_MeV << cfg_.optical_interface_model;
   geometry_hash_ = Sha256::hex(gs.str());
 }
 DetectorConstruction::~DetectorConstruction() { delete messenger_; }

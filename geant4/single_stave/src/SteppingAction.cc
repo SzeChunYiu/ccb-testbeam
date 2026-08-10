@@ -138,8 +138,8 @@ void SteppingAction::UserSteppingAction(const G4Step* step) {
     d.sipm_arrivals[sid].push_back(*boundary);
   }
 
-  // Detection: PDE(wavelength) * coupling efficiency.
-  const double p_det = PdeAt(wavelength_nm) * cfg_.coupling_efficiency;
+  // Detection: PDE(wavelength) * post-transport collection efficiency.
+  const double p_det = PdeAt(wavelength_nm) * cfg_.collection_efficiency;
   const bool detected = (G4UniformRand() < p_det);
   if (detected) ++d.n_detected[sid];
 

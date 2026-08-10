@@ -99,12 +99,12 @@ def build_knobs() -> List[Knob]:
         "+/-40% spans the OV range + device spread (S13360-3050CS ~25-50% peak).",
         env_list("PDE_SCALE", [0.6, 0.8, 1.0, 1.2, 1.4]),
     ))
-    # 2. Fibre-sensor coupling (CLI --coupling). Bounded in [0,1] by physics;
-    #    0.5 models a badly-coupled / air-gap sensor, 1.0 optical-contact.
+    # 2. Post-transport collection efficiency (CLI --collection-efficiency). Bounded in [0,1] by physics;
+    #    0.5 models a badly-coupled / air-gap sensor, 1.0 ideal.
     knobs.append(Knob(
-        "coupling", "cli", "--coupling", "frac",
-        "Fibre-end->sensor coupling in [0,1]; 0.5 = poor air gap, 1.0 = contact.",
-        env_list("COUPLING", [0.5, 0.7, 0.85, 0.95, 1.0]),
+        "collection_efficiency", "cli", "--collection-efficiency", "frac",
+        "Post-transport collection efficiency in [0,1]; 0.5 = poor, 1.0 = ideal.",
+        env_list("COLLECTION_EFFICIENCY", [0.5, 0.7, 0.85, 0.95, 1.0]),
     ))
     # 3. Microcell recovery time (env CCB_SIPM_RECOVERY_TIME_NS). The S13360-3050CS
     #    microcell RC recovery is ~tens of ns; 5-100 ns covers slow/fast cells and

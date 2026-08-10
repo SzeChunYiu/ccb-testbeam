@@ -186,7 +186,7 @@ ccb::sipm::ModelConfig EventAction::BuildSipmConfig() const {
 
   // Wire the Geant4-side systematic knobs into the core config.
   c.pde_scale = cfg_.pde_scale;
-  c.coupling_efficiency = cfg_.coupling_efficiency;
+  c.coupling_efficiency = cfg_.collection_efficiency;
 
   // Strictly parse every ccb-sipm-core environment override currently exposed
   // by the pinned core.  The core helper intentionally ignores malformed env

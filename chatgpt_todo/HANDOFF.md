@@ -2,96 +2,57 @@
 
 ## Session
 
-- **Task ID:** `ARU-S00-SELECTOR-IDENTITY-REAUDIT`
-- **Stamp:** `2026-08-10T030000Z`
+- **Task ID:** `ARU-S00-SELECTOR-PREFLIGHT-001`
+- **Stamp:** `2026-08-10T060000Z`
 - **Owner:** hourly Atomic Research Universe audit session
-- **Initial remote main:** `37ed6aa792fd409d1b2abdcf830ad76f4e7a52f2`
-- **Branch:** `audit/s00-selector-identity-reaudit`
-- **Parent:** #1109 (reopened)
-- **Children:** #1135, #1136, #1137
-- **Related:** #1073
-- **Acceptance:** merged selector module is a useful partial implementation, but selector identity/model decomposition remain `FLAWED / BLOCKED`.
+- **Initial main:** `f2fb7dc24f38c838d1d30b4a6137bb6444c93180`
+- **Validated merge during session:** PR #1142 -> `9883d96a63d779548f76a7d5cdef2170e507d2c0`
+- **Issue:** #1141
+- **Parent:** #1135
+- **Upstream scientific parent:** #1109
+- **Branch:** `fix/s00-selector-preflight-manifest`
+- **Status:** `PARTIAL`: pure preflight/model-identity layer implemented; canonical producer integration still required.
 
 ## Selected atom
 
-`waveform -> selector identity -> pedestal map -> amplitude map -> threshold membership -> selected population -> CL-001/downstream claims`.
+`YAML selector declaration -> semantic authorization -> namespace/staging -> ROOT access -> selector execution -> manifest identity -> CL-001 provenance`.
 
-## Finding 1 — frozen v1 is not mechanically frozen
-
-The documented historical selector is
+Canonical selector identity is fixed by merged #1142:
 
 ```text
-B_v1=(0,1,2,3)
-b_v1=median(w[B_v1])
-A_v1=max(w)-b_v1
+selector_id = v1_first_four_median
+baseline_indices = (0,1,2,3)
 ```
 
-but `estimate_pedestal_v1_batched(waveforms, baseline_indices)` accepts arbitrary indices and the production S00 scan forwards config `baseline_samples`.
+A different baseline tuple is no longer a parameter of v1; it is a different model and must not execute under the canonical selector identity.
 
-Current checked-in YAML is still `[0,1,2,3]`, so the historical count is not numerically changed by this audit. The defect is that the same named selector ID can execute a different map.
+## Work completed
 
-### Deterministic falsifier executed
+1. Verified exact-head MC Validation CI for PR #1142 was `success` and squash-merged it to main as `9883d96a63d779548f76a7d5cdef2170e507d2c0`.
+2. Created `src/ccb_mc_validation/s00_selector_contract.py` with a pure no-I/O `validate_s00_selector_contract(config)` and `s00_selector_model_identity()`.
+3. Added `tests/test_s00_selector_contract.py` covering the canonical tuple, NumPy-integral positive controls, shifted/reordered/missing/extra/duplicate/negative windows, string/float/bool aliases, missing/non-mapping config, and immutable identity-fragment behavior.
+4. Preserved the full ARU review in `chatgpt_todo/archive/2026-08-10T060000Z_ARU-S00-SELECTOR-PREFLIGHT-PARTIAL.md`.
 
-For one 18-sample waveform at `T=1000 ADC`:
+## Four sequential review passes
+
+- **Reconstruction/software lead — ACCEPT pure leaf / BLOCK integration.** The helper implements the correct semantic boundary, but an unused helper is not producer authorization.
+- **Adversarial mechanism reviewer — REVISE.** Lazy rejection during raw scan remains unacceptable because output staging and raw compute have already begun. The decisive negative control must count side effects.
+- **Statistics/validation reviewer — ACCEPT deterministic unit design / BLOCK producer claim.** No beam statistics are needed for selector identity; end-to-end producer sequencing still needs hostile-config execution and exact-head CI.
+- **Claims/provenance reviewer — BLOCK.** Manifest identity and CL-001 governance must bind the selector ID and exact tuple before any promotion.
+
+## Required next implementation
+
+Patch `scripts/01_build_pulse_table_from_root.py` so that immediately after `load_config(args.config)` it calls `validate_s00_selector_contract(config)`, before amplitude-cut namespace resolution, staging creation, raw-file traversal, or `uproot.open`. Then merge `s00_selector_model_identity()` into `model_identity` and add an end-to-end hostile-config test proving:
 
 ```text
-B=(0,1,2,3) -> pedestal=100,  amplitude=1700, selected=True
-B=(2,3,4,5) -> pedestal=800,  amplitude=1000, selected=False
-B=(4,5,6,7) -> pedestal=1550, amplitude=250,  selected=False
+uproot.open calls = 0
+iter_raw_events calls = 0
+staging mkdir calls = 0
+artifact writes = 0
 ```
 
-The scalar v1 also accepts fewer than four samples by taking a shorter-slice median. Nonfinite values can propagate NaN pedestal/amplitude into ordinary rejection. #1135 defines the fixed-domain/identity repair.
-
-## Finding 2 — exact candidate equivalence
-
-`dynamic_range` and `rolling_min` both compute
-
-```text
-pedestal = min(w)
-amplitude = max(w)-min(w)
-```
-
-so their amplitude and threshold membership are algebraically identical for every finite waveform. A randomized 10,000-waveform control gave maximum absolute amplitude difference `0.0`; the source identity is the stronger proof.
-
-Their only difference is validity-state metadata. Treat amplitude definition and validity policy as separate layers. Do not count the two method names as independent model support. #1136 owns this repair.
-
-## Finding 3 — P10 candidate is not an early-window estimator
-
-`early_robust_p10` computes the 10th percentile over the **full waveform**. It is permutation-invariant, so it contains no temporal evidence about whether a low sample is pre-trigger baseline or late undershoot.
-
-For symmetric quiet noise, raw P10 is a lower noise quantile rather than the baseline location unless calibrated; negative undershoot/dropout/bipolar samples contaminate exactly the lower tail. #1137 owns naming, identifiability and validation.
-
-## Cross-atom finding — saturation state inherits unresolved DAQ world
-
-The new selector `_is_saturated(..., code_max=16383)` embeds the same unresolved ADC/full-scale world in #1073. It also treats upper and lower rails asymmetrically (`any >=16383` versus `all <=1`). #1073 was updated rather than duplicated.
-
-## Four review passes
-
-- **Detector/data-selection lead — REVISE:** current YAML matches historical v1, but fixed selector identity/domain must be enforced. Hardware validity of samples 0-3 remains parent #1109.
-- **Adversarial reviewer — BLOCK:** baseline-index mutation flips membership under one method ID; exact candidate aliasing reduces the apparent model universe.
-- **Validation/statistics reviewer — BLOCK:** add scalar/batch parity, hostile index/config mutations, short/nonfinite failures, alias property tests, and state-policy separation.
-- **Claims/provenance reviewer — BLOCK:** CL-001 can bind a fixed historical selector only when formula, fixed tuple, input domain and source identity are mechanically bound.
-
-## Repository actions
-
-1. Reopened #1109 after PR #1133 had automatically closed it.
-2. Opened #1135 for frozen v1 semantic identity and input-domain closure.
-3. Opened #1136 for dynamic-range/rolling-min equivalence collapse.
-4. Opened #1137 for the full-window P10 semantic/identifiability gap.
-5. Added a post-merge scientific correction comment to PR #1133.
-6. Added the new selector saturation dependency to existing #1073.
-7. Reviewed PR #1134 changed files/diff and exact-head MC Validation CI (`success`).
-8. Squash-merged #1134 to main as `37ed6aa792fd409d1b2abdcf830ad76f4e7a52f2`.
-9. Added immutable archive `chatgpt_todo/archive/2026-08-10T030000Z_ARU-S00-SELECTOR-IDENTITY-REAUDIT.md` on this branch.
-
-## Required implementation order
-
-1. **#1135 first:** freeze `(0,1,2,3)` in code, fail closed on config mismatch before data/output access, validate finite/domain input, and prove scalar/batch parity.
-2. **#1136:** expose unique amplitude maps separately from validity policies; regression-test exact alias equivalence.
-3. **#1137:** rename/calibrate the full-window P10 candidate or implement a truly early-window estimator only after DAQ timing evidence.
-4. **#1073:** selector saturation state must consume the eventual typed DAQ code-range contract.
-5. Return to **#1109** for the still-unresolved real-waveform mechanism decomposition, threshold migrations and held-out downstream sensitivity.
+for `baseline_samples: [2,3,4,5]` and other malformed mutations. Keep #1141 open until this is integrated and exact-head CI passes.
 
 ## Scientific boundary
 
-No raw ROOT waveform population was rescanned, no Monte Carlo was run, and no timing, PID, penetration, pile-up, energy calibration or detector-performance value was produced. The historical `640737` S00 count is not numerically invalidated by this audit; the implementation identity and physical completeness of the selected population remain unresolved.
+No raw ROOT population was rescanned, no Geant4 job was run, and no timing, PID, penetration, pile-up, energy, or detector-performance quantity changed. The historical 640,737 count remains a count for the canonical first-four configuration; whether samples 0-3 are physically valid pedestal samples remains #1109.

@@ -69,7 +69,10 @@ class S00PublicationPointer:
 
 
 def _validate_generation_id(generation_id: str) -> str:
-    if not isinstance(generation_id, str) or not _GENERATION_ID_RE.fullmatch(generation_id):
+    if (
+        not isinstance(generation_id, str)
+        or not _GENERATION_ID_RE.fullmatch(generation_id)
+    ):
         raise S00PublicationError(
             "generation_id must match [A-Za-z0-9][A-Za-z0-9._=-]{0,127}"
         )
@@ -93,7 +96,9 @@ def _normalise_artifacts(artifacts: Mapping[str, str]) -> dict[str, str]:
     normalised: dict[str, str] = {}
     for logical_name, relative_path in artifacts.items():
         if not isinstance(logical_name, str) or not logical_name:
-            raise S00PublicationError("logical artifact names must be non-empty strings")
+            raise S00PublicationError(
+                "logical artifact names must be non-empty strings"
+            )
         normalised[logical_name] = _validate_relative_artifact_path(relative_path)
     return dict(sorted(normalised.items()))
 
@@ -123,7 +128,7 @@ def _publication_lock(pointer_path: Path) -> Iterator[None]:
 
 
 def create_staging_directory(generation_root: Path, *, token: str) -> Path:
-    """Create a fresh staging directory on the same filesystem as generations."""
+    """Create fresh staging on the same filesystem as immutable generations."""
     generation_root = Path(generation_root)
     _validate_generation_id(token)
     generation_root.mkdir(parents=True, exist_ok=True)
@@ -139,9 +144,13 @@ def _load_pointer_bytes(pointer_path: Path) -> S00PublicationPointer:
         raw = pointer_path.read_bytes()
         payload = json.loads(raw.decode("utf-8"))
     except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
-        raise S00PublicationError(f"invalid publication pointer {pointer_path}: {exc}") from exc
+        raise S00PublicationError(
+            f"invalid publication pointer {pointer_path}: {exc}"
+        ) from exc
     if not isinstance(payload, dict) or payload.get("schema") != POINTER_SCHEMA:
-        raise S00PublicationError(f"unsupported publication pointer schema: {payload!r}")
+        raise S00PublicationError(
+            f"unsupported publication pointer schema: {payload!r}"
+        )
     generation_id = _validate_generation_id(payload.get("generation_id"))
     artifacts_payload = payload.get("artifacts")
     model_identity = payload.get("model_identity")
@@ -161,7 +170,9 @@ def read_publication_pointer(pointer_path: Path) -> S00PublicationPointer:
     """Read one complete old-or-new authority pointer snapshot."""
     pointer_path = Path(pointer_path)
     if not pointer_path.is_file():
-        raise S00PublicationError(f"publication pointer does not exist: {pointer_path}")
+        raise S00PublicationError(
+            f"publication pointer does not exist: {pointer_path}"
+        )
     return _load_pointer_bytes(pointer_path)
 
 
@@ -178,7 +189,8 @@ def resolve_artifact(
     artifact = generation / pointer.artifacts[logical_name]
     if not artifact.is_file():
         raise S00PublicationError(
-            f"authoritative artifact missing from generation {pointer.generation_id}: {artifact}"
+            "authoritative artifact missing from generation "
+            f"{pointer.generation_id}: {artifact}"
         )
     return artifact
 
@@ -192,11 +204,12 @@ def publish_generation(
     artifacts: Mapping[str, str],
     model_identity: Mapping[str, object],
 ) -> S00PublicationPointer:
-    """Publish one immutable generation and atomically commit its authority pointer.
+    """Publish one immutable generation and atomically commit its pointer.
 
-    All required artifacts are validated before the staging directory is moved.
-    The staging directory must be a direct child of ``generation_root`` so its
-    rename to the immutable final directory remains on one filesystem.
+    All required artifacts and pointer serialization are validated before the
+    staging directory is moved. The staging directory must be a direct child of
+    ``generation_root`` so its rename to the immutable final directory stays on
+    one filesystem.
 
     If pointer publication fails after the generation move, the previous pointer
     is unchanged. The new generation can remain as a non-authoritative orphan and
@@ -214,10 +227,13 @@ def publish_generation(
     pointer_path.parent.mkdir(parents=True, exist_ok=True)
     if staging_dir.parent.resolve() != generation_root.resolve():
         raise S00PublicationError(
-            "staging_dir must be a direct child of generation_root for same-filesystem rename"
+            "staging_dir must be a direct child of generation_root for "
+            "same-filesystem rename"
         )
     if not staging_dir.is_dir():
-        raise S00PublicationError(f"staging directory does not exist: {staging_dir}")
+        raise S00PublicationError(
+            f"staging directory does not exist: {staging_dir}"
+        )
 
     for logical_name, relative_path in normalised_artifacts.items():
         candidate = staging_dir / relative_path
@@ -232,6 +248,12 @@ def publish_generation(
         artifacts=normalised_artifacts,
         model_identity=dict(model_identity),
     )
+    try:
+        pointer_bytes = pointer.to_json_bytes()
+    except (TypeError, ValueError) as exc:
+        raise S00PublicationError(
+            f"model identity is not JSON-serializable: {exc}"
+        ) from exc
 
     with _publication_lock(pointer_path):
         if final_generation.exists():
@@ -251,7 +273,7 @@ def publish_generation(
         tmp_path = Path(tmp_name)
         try:
             with os.fdopen(fd, "wb") as handle:
-                handle.write(pointer.to_json_bytes())
+                handle.write(pointer_bytes)
                 handle.flush()
                 os.fsync(handle.fileno())
             os.replace(tmp_path, pointer_path)

@@ -37,7 +37,10 @@ def _new_external_repo(tmp_path: Path, *, reviewed_baseline: bool) -> Path:
         if reviewed_baseline:
             shutil.copyfile(REPO_ROOT / reviewed_rel, destination)
         else:
-            destination.write_text(f"upstream baseline for {external_rel}\n", encoding="utf-8")
+            destination.write_text(
+                f"upstream baseline for {external_rel}\n",
+                encoding="utf-8",
+            )
 
     (root / "README.fixture").write_text("baseline\n", encoding="utf-8")
     _git(root, "add", ".")
@@ -46,7 +49,10 @@ def _new_external_repo(tmp_path: Path, *, reviewed_baseline: bool) -> Path:
 
 
 def _baseline_ids(root: Path) -> tuple[str, str]:
-    return _git(root, "rev-parse", "HEAD"), _git(root, "rev-parse", "HEAD^{tree}")
+    return (
+        _git(root, "rev-parse", "HEAD"),
+        _git(root, "rev-parse", "HEAD^{tree}"),
+    )
 
 
 def _install_reviewed_pair(root: Path) -> None:
@@ -64,11 +70,15 @@ def test_expected_two_file_unstaged_overlay_passes(tmp_path: Path) -> None:
     assert result["status"] == "PASS"
     assert result["baseline"] == {"head_commit": commit, "head_tree": tree}
     assert result["overlay"]["index_clean"] is True
-    assert {item["path"] for item in result["overlay"]["visible_git_deltas"]} == set(PAYLOADS)
-    assert {item["git_status"] for item in result["overlay"]["source_pair"]} == {" M"}
+    delta_paths = {item["path"] for item in result["overlay"]["visible_git_deltas"]}
+    assert delta_paths == set(PAYLOADS)
+    source_statuses = {item["git_status"] for item in result["overlay"]["source_pair"]}
+    assert source_statuses == {" M"}
 
 
-def test_clean_upstream_that_already_matches_reviewed_pair_passes(tmp_path: Path) -> None:
+def test_clean_upstream_that_already_matches_reviewed_pair_passes(
+    tmp_path: Path,
+) -> None:
     root = _new_external_repo(tmp_path, reviewed_baseline=True)
     commit, tree = _baseline_ids(root)
 
@@ -76,7 +86,8 @@ def test_clean_upstream_that_already_matches_reviewed_pair_passes(tmp_path: Path
 
     assert result["status"] == "PASS"
     assert result["overlay"]["visible_git_deltas"] == []
-    assert {item["git_status"] for item in result["overlay"]["source_pair"]} == {"CLEAN"}
+    source_statuses = {item["git_status"] for item in result["overlay"]["source_pair"]}
+    assert source_statuses == {"CLEAN"}
 
 
 def test_interrupted_one_file_overlay_fails_closed(tmp_path: Path) -> None:

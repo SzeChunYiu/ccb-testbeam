@@ -1,15 +1,16 @@
 # Active Task
 
-- **Task ID:** `WKS-NULL-CLUSTER-001`
+- **Task ID:** `WKS-NULL-SCALE-001`
 - **Owner:** hourly Atomic Research Universe audit session
-- **Session stamp:** `2026-08-10T130500Z`
-- **Current remote main SHA:** `08edd7fa9acffe4ace1381a1fac9acc899084347`
-- **Coordination repair:** PR `#1163` passed exact-head MC Validation and was squash-merged to main; issue `#1049` was then reopened because #1162 fixed only the observed weighted-ECDF distance, not its null calibration.
-- **Selected atom:** source-event cluster identity required by any weighted DATA/MC null. New child issue `#1164` records the typed contract and links #1049 to the first-B statistical-unit defect #1052.
-- **Research implementation:** branch `research/wks-null-cluster-contract` adds `tools/audit/research_weighted_null_cluster_contract.py`, focused tests, a machine-readable synthetic research result, and an immutable ARU record.
-- **Local synthetic validation:** `PYTHONPATH=. pytest -q tests/test_weighted_null_cluster_research.py` -> `7 passed in 0.11s`. Five-way weighted-row splitting leaves observed `D` unchanged; cluster-bootstrap replicates agree to `3.33e-16`, while iid row-bootstrap replicates differ by up to `0.3618`.
-- **Toy method boundary:** a known N(0,1) target / N(1,1) proposal importance-sampling study gave rejection fractions `0.045` at alpha 0.05 and `0.095` at alpha 0.10 over 200 trials. This is method research only, not CCB detector validation.
-- **Repository blocker:** current comparison NPZs discard DAQ/generator event cluster IDs; MC first-B values are raw hit/step EDep rows and DATA values are pulse rows. A calibrated CCB null cannot be authorised from those products.
-- **Claim state:** legacy numeric p-value remains `NONAUTHORISING_BLOCKED_ISSUE_1049`; CL-013 remains `GATED`; no detector-performance number changed.
-- **Next atom:** implement #1164/#1052 producer-level event-cluster/statistical-unit metadata and compatible event/stave response product, then test nuisance-scale refitting inside the null.
+- **Session stamp:** `2026-08-10T132700Z`
+- **Current remote main SHA:** `a1d7afe17e526c0e90761e8d7da4924eea5862e5`
+- **Just validated/merged:** PR `#1165` exact head `930f08df435bd42532707f078501c396fb1da37d`; MC Validation run `31391922666` succeeded with `1337 passed, 1 skipped, 8 xfailed, 1 xpassed`; squash merge `a1d7afe17e526c0e90761e8d7da4924eea5862e5` preserves the event-cluster representation falsifier under #1164.
+- **Selected atom:** issue `#1166`, fitted Sample-II median-ratio scale and fit/test membership topology inside any future weighted-null calibration.
+- **Repository topology:** canonical DATA Sample-I analysis runs 44–57 are disjoint from Sample-II analysis runs 58–63,65; MC Sample I is a coincidence subset of Sample II (`ENTER B`). The Sample-II scale is reused in Sample-I and Sample-II discrepancies.
+- **Synthetic nuisance falsifier:** equal-weight lognormal null, 200 trials, 80 DATA, 160 MC, 99 bootstrap replicates/trial, seed base 20260810. Fixed fitted scale rejects 0.000/0.015 at alpha 0.05/0.10; refitting inside each replicate gives 0.060/0.095. Method research only.
+- **Synthetic topology falsifier:** 2,000 trials, seed 20260811. Preserving MC-I subset-of-MC-II gives corr(scale, median MC-I) `-0.43589`; replacing MC-I with an independent same-marginal sample gives `0.00332` and shifts mean/95th-percentile Sample-I `D` from `0.14927/0.24080` to `0.15842/0.25758`.
+- **Implementation branch:** `research/wks-null-scale-topology` adds executable research-only scale/topology falsifiers, focused tests, machine-readable results and immutable ARU record. No production p-value is implemented.
+- **Cross-scale blockers:** #1164 source-event IDs/membership, #1052 matched event/stave detector response, #994 truth-type-specific ADC/MeV quantity identity, #880/#1022 weights, #1027 saturation/ties.
+- **Claim state:** weighted `D` remains descriptive; legacy numeric p-value remains `NONAUTHORISING_BLOCKED_ISSUE_1049`; CL-013 remains `GATED`; no detector-performance number changed.
+- **Next atom after this branch:** producer-level event/membership metadata and matched event/stave response (#1164/#1052), then rerun the nuisance/null design with real source-bound clusters and nonuniform weights.
 - **Status:** `ACTIVE / PARTIAL`

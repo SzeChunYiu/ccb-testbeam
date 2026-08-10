@@ -1,36 +1,31 @@
 # Latest Handoff
 
-## Active atom
+## Completed atom
 
 - **Task:** `ARU-DATAMC-ECDF-001` / issue #1051
-- **Branch / PR:** `fix/data-mc-right-continuous-ecdf` / #1162
-- **Base main:** `4c8cebefe077f081f182eafd34d6b20e8d4ac067`
-- **State:** implementation + adversarial tests complete on branch; exact-head MC Validation CI still required after the final handoff commits.
+- **Validated head:** `b8f9c6a363f9a2a7f658978641392f76605c9a46`
+- **CI:** MC Validation run `31387574136` completed successfully; lint passed and the full non-integration suite reported `1329 passed, 1 skipped, 8 xfailed, 1 xpassed`.
+- **Merged:** PR #1162 -> `97386889c1820e45b6ce04ba7ddfbda7128f2f46` on protected `main`; #1051 auto-closed.
 
-## Local scientific/software result
+## Validated local contract
 
-The observed DATA<->MC EDF discrepancy now implements the declared weighted empirical distribution
+`compare_data_mc.py` v5 now represents the weighted empirical distribution as
 
 `F_w(x) = sum_i w_i I(X_i <= x) / sum_i w_i`
 
-as a right-continuous step function. Equal-valued rows are collapsed into one support point carrying their total weight, arbitrary evaluation uses `searchsorted(..., side="right")`, and `D` is evaluated exactly on the union of DATA and MC support points. No `np.interp` path remains in the ECDF/KS-D implementation.
+with unique tied support and right-continuous step evaluation. `D = sup_x |F_data(x)-F_MC(x)|` is evaluated exactly on the union of support values. The old piecewise-linear `np.interp` mechanism is eliminated. Regression controls include the exact `[0,1]` midpoint falsifier, direct indicator-sum oracle, all-tied and saturated/quantized fixtures, weighted-row splitting/merging invariance, tie-order invariance, and independent equal-weight agreement with `scipy.stats.ks_2samp(...).statistic`.
 
-The regression suite covers the original two-point midpoint falsifier, exact tie aggregation, an all-tied 7000-ADC saturation spike, direct indicator-sum equality, weighted-row splitting/merging invariance, tie permutation invariance, equal-weight agreement with `scipy.stats.ks_2samp(...).statistic`, quantized/saturated support, and invalid empirical-measure inputs.
+## Four final review votes
 
-## Four role-separated votes
+- **Statistical-method lead — ACCEPT observed-statistic closure.** The finite empirical step-function `D` now matches the declared mathematical object; no statement is made about its weighted null distribution.
+- **Adversarial mechanism reviewer — ACCEPT local D / BLOCK inferential p-value.** Representation, tie ordering and interpolation pseudo-mass are eliminated as mechanisms; the legacy value-permutation null remains invalid for non-uniform MC weights.
+- **Independent statistics/validation reviewer — ACCEPT deterministic software/statistic closure.** Exact-head CI and two independent oracles validate the implemented observed statistic, not type-I calibration or detector physics.
+- **Claims/provenance reviewer — REVISE downstream products / no claim promotion.** Output v5 marks the retained numerical p-value `NONAUTHORISING_BLOCKED_ISSUE_1049`, plots display it as blocked, and real DATA/MC products must be regenerated before corrected `D` values are quoted.
 
-- **Statistical-method lead — ACCEPT local observed-statistic repair / pending exact-head CI.** The implemented measure has the required right-continuous step semantics and dimensional/unit contract is unchanged: input observable values retain their source units, weights are nonnegative dimensionless measure masses, and output `D` is dimensionless.
-- **Adversarial mechanism reviewer — ACCEPT local D contract / BLOCK p-value inference.** H3 piecewise-linear interpolation is eliminated; row representation and tie order no longer define independent hypotheses. The existing unit-weight permutation null remains scientifically invalid for weighted MC.
-- **Independent statistics/validation reviewer — ACCEPT deterministic/oracle tests / pending CI.** Direct indicator sums and SciPy's ordinary equal-weight KS statistic are independent checks of `D`; they do not validate a weighted null or p-value.
-- **Claims/provenance reviewer — REVISE downstream products / no claim promotion.** Output schema is advanced to v5 and tags the legacy numerical p-value `NONAUTHORISING_BLOCKED_ISSUE_1049`; plots label it blocked. Existing real-data comparison artifacts must be regenerated before any new D is quoted.
+## Evidence boundary
 
-## Surviving dependencies / child atoms
+No real beam ROOT bytes or campaign comparison outputs were available in this runtime. Therefore no real DATA/MC `D`, p-value, PID, penetration, timing, energy, pile-up, or detector-performance result was regenerated or promoted. #1027 still governs the physical meaning of ADC saturation/ties; #1022 still governs weight propagation in canonical DeltaE-E/penetration analyses.
 
-- #1049 remains the P0 owner for the weighted null hypothesis, resampling/calibration law, nuisance-scale treatment and type-I validation.
-- #880/#1022 remain the source-of-truth atoms for generator/analysis weight semantics.
-- #1027 remains the detector/DAQ atom for the physical meaning of ADC saturation/ties; this branch only proves the statistical estimator handles exact ties correctly.
-- No beam ROOT bytes or campaign MC artifacts are available in this runtime, so real DATA<->MC D values are not regenerated and no detector-performance result changes.
+## Next highest-value atom
 
-## Merge gate / next action
-
-Inspect exact-head MC Validation for the final #1162 head. If it passes on current base, merge #1162 and close only #1051. Do **not** close #1049 or treat the retained legacy p-value as a goodness-of-fit probability. After merge, the next highest-value code-ready atom is #1049 if weight semantics are sufficiently resolved; otherwise return to the highest-ready dependency among #880/#1022 rather than inventing a calibration law.
+Proceed to **#1049 / `ARU-WKS-NULL-001`**. The current numerical p-value shuffles pooled values and replaces the original weighted design with unit weights, so it is non-authorising even though observed `D` is now correct. The next research session should first define the concrete null and statistical unit from the actual DATA/MC sampling design, preserve PrimaryWeight semantics documented under #880, include the fitted MeV->ADC scale as a nuisance fitted from the same comparison chain, then choose and validate a design-consistent resampling/calibration law with explicit type-I simulations and tie/saturation stress tests. Do not assume iid rows, fixed scale, or signed-weight semantics without evidence.

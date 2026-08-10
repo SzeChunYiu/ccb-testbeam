@@ -78,7 +78,9 @@ class ScatteringGenerator : public G4VPrimaryGenerator
 	G4bool haveWeights;
 	std::vector<G4double> Ene, dEdx;
 	std::vector<G4double> ang, sigma;
-	std::vector<G4double> cdfTheta, cdfVal, cdfPdf; // exact inverse-CDF node state
+	std::vector<G4double> cdfTheta, cdfVal; // inverse-CDF for CS-weighted CM sampling
+		std::vector<G4double> pdfNode;           // pdf = sigma*sin(theta) at each CDF node
+		std::vector<G4double> cdfIntervalMass;   // unnormalized interval masses for quadratic solve
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

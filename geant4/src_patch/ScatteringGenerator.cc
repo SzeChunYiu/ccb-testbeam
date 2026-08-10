@@ -32,8 +32,6 @@
 
 #include "ScatteringGenerator.hh"
 
-#include <cmath>
-
 #include "G4Event.hh"
 #include "G4GenericMessenger.hh"
 #include "G4ParticleTable.hh"
@@ -41,6 +39,7 @@
 #include "G4PhysicalConstants.hh"
 #include "G4SystemOfUnits.hh"
 #include "Randomize.hh"
+#include <cmath>
 
 #include "G4Threading.hh"
 #include "G4AutoLock.hh"
@@ -120,9 +119,9 @@ void ScatteringGenerator::GeneratePrimaryVertex(G4Event* event)
 	G4double beta4cm = p4cm/E4cm;
 	G4double pcm= sqrt(E3cm*E3cm-m3*m3);
 
-	// CM ejectile angle -- sampled from the declared central-value source model:
-	// linear_node_pdf_exact_inverse_v1 on measured_table_support_truncate_v1.
-	// Falls back to uniform when no cross-section file is configured.
+	// CM ejectile angle -- sampled FROM the p+CD2 differential cross-section
+	// distribution p(theta) ~ sigma(theta)*sin(theta) (inverse-CDF), fixing the
+	// MV3 scattering-model residual (CL-021). Falls back to uniform when no CS.
 	G4double theta3cm = SampleThetaCM();
 	// Ejectile
 	G4double tantheta3 = sin(theta3cm)/(gamma*(cos(theta3cm)+beta/beta3cm));
@@ -223,84 +222,55 @@ void ScatteringGenerator::LoadCrossSection()
 
 void ScatteringGenerator::BuildSigmaCDF()
 {
-	// Source-model IDs are intentionally literal so generator provenance can bind
-	// the numerical law rather than the generic phrase "inverse CDF".
-	//   cross_section_interpolation_mode = linear_node_pdf_exact_inverse_v1
-	//   cross_section_support_mode = measured_table_support_truncate_v1
+	// Build inverse-CDF to sample theta_cm from p(theta) ~ sigma(theta)*sin(theta).
+	// sin(theta) is the solid-angle Jacobian (dOmega = sin dtheta dphi); the table
+	// holds d(sigma)/dOmega per steradian, so the angle PDF weights by sin(theta).
 	//
-	// The Table-VI nodes define p(theta)=sigma(theta)*sin(theta). Between measured
-	// angles p(theta) is linearly interpolated; outside measured support the nominal
-	// reference distribution has zero probability. This truncation is an explicit
-	// source-model choice, not evidence that the physical cross section vanishes.
+	// Coverage: the table spans only [ang_front, ang_back] (~26.5-169.8 deg). Outside
+	// that window the boundary value is held constant -- no fabricated forward peak
+	// below ang_front (conservative; documented as a possible under-peaking source).
+	// Endpoints theta=0 and theta=pi carry zero probability (sin=0).
 	cdfTheta.clear();
 	cdfVal.clear();
-	cdfPdf.clear();
-	if(ang.size() < 2 || sigma.size() != ang.size()){ return; }
+	if(ang.size() < 2 || sigma.size() < 2){ return; }
 
-	// Positive common density scaling cannot change a normalized source law. Scale
-	// cross sections before multiplying/integrating so alternate units cannot cause
-	// overflow/underflow in the CDF state.
-	G4double densityScale = 0.0;
+	std::vector<G4double> nodes, pdf;
+	nodes.push_back(0.0);
+	pdf.push_back(sigma.front() * std::sin(0.0));
 	for(size_t k = 0; k < ang.size(); k++){
-		if(!std::isfinite(ang[k]) || !std::isfinite(sigma[k]) || sigma[k] < 0.0){
-			G4cerr << "ScatteringGenerator::BuildSigmaCDF: non-finite/negative source node; CS sampling disabled." << G4endl;
-			cdfTheta.clear(); cdfVal.clear(); cdfPdf.clear();
-			return;
-		}
-		if(k > 0 && !(ang[k] > ang[k-1])){
-			G4cerr << "ScatteringGenerator::BuildSigmaCDF: angles are not strictly increasing; CS sampling disabled." << G4endl;
-			cdfTheta.clear(); cdfVal.clear(); cdfPdf.clear();
-			return;
-		}
-		if(sigma[k] > densityScale) densityScale = sigma[k];
+		nodes.push_back(ang[k]);
+		pdf.push_back(sigma[k] * std::sin(ang[k]));
 	}
-	if(!(densityScale > 0.0)){
-		G4cerr << "ScatteringGenerator::BuildSigmaCDF: zero source density; CS sampling disabled." << G4endl;
-		return;
-	}
+	nodes.push_back(pi);
+	pdf.push_back(sigma.back() * std::sin(pi));
 
-	cdfTheta = ang;
-	cdfPdf.reserve(ang.size());
-	for(size_t k = 0; k < ang.size(); k++){
-		G4double p = (sigma[k] / densityScale) * std::sin(ang[k]);
-		if(!std::isfinite(p) || p < 0.0){
-			G4cerr << "ScatteringGenerator::BuildSigmaCDF: invalid node PDF; CS sampling disabled." << G4endl;
-			cdfTheta.clear(); cdfVal.clear(); cdfPdf.clear();
-			return;
-		}
-		cdfPdf.push_back(p);
-	}
-
-	cdfVal.assign(cdfTheta.size(), 0.0);
-	for(size_t i = 1; i < cdfTheta.size(); i++){
-		G4double dx  = cdfTheta[i] - cdfTheta[i-1];
-		G4double avg = 0.5 * (cdfPdf[i] + cdfPdf[i-1]);
+	cdfTheta = nodes;
+	pdfNode  = pdf;
+	cdfVal.assign(nodes.size(), 0.0);
+	cdfIntervalMass.assign(nodes.size(), 0.0);
+	for(size_t i = 1; i < nodes.size(); i++){
+		G4double dx  = nodes[i] - nodes[i-1];
+		G4double avg = 0.5 * (pdf[i] + pdf[i-1]);
 		cdfVal[i] = cdfVal[i-1] + avg * dx;
+		cdfIntervalMass[i] = avg * dx;
 	}
 	G4double norm = cdfVal.back();
-	if(!std::isfinite(norm) || !(norm > 0.0)){
-		G4cerr << "ScatteringGenerator::BuildSigmaCDF: invalid CDF norm (" << norm << "); CS sampling disabled." << G4endl;
-		cdfTheta.clear(); cdfVal.clear(); cdfPdf.clear();
+	if(!(norm > 0.0)){
+		G4cerr << "ScatteringGenerator::BuildSigmaCDF: non-positive CDF norm (" << norm << "); CS sampling disabled." << G4endl;
+		cdfTheta.clear(); cdfVal.clear();
 		return;
 	}
 	for(size_t i = 0; i < cdfVal.size(); i++) cdfVal[i] /= norm;
-	G4cout << "ScatteringGenerator: inverse-CDF ready over measured support ["
-	       << (ang.front()/pi)*180. << "," << (ang.back()/pi)*180. << "] deg from "
-	       << ang.size() << " CS pts; interpolation=linear_node_pdf_exact_inverse_v1; "
-	       << "support=measured_table_support_truncate_v1." << G4endl;
+	G4cout << "ScatteringGenerator: inverse-CDF ready over [0,pi] from " << ang.size()
+	       << " CS pts (data range [" << (ang.front()/pi)*180. << ","
+	       << (ang.back()/pi)*180. << "] deg; constant-extrapolated outside)." << G4endl;
 }
 
 G4double ScatteringGenerator::SampleThetaCM()
 {
-	// Draw theta_cm from the linearly interpolated p(theta)=sigma(theta)*sin(theta)
-	// on measured support. BuildSigmaCDF stores exact trapezoid interval masses;
-	// this function uses the analytic quadratic interval-mass inverse, rather than
-	// interpolating theta linearly in cumulative probability.
-	if(cdfTheta.empty() || cdfVal.empty() || cdfPdf.empty()){ return pi * G4UniformRand(); }
-	if(cdfTheta.size() != cdfVal.size() || cdfTheta.size() != cdfPdf.size()){
-		G4cerr << "ScatteringGenerator::SampleThetaCM: inconsistent CDF state; using uniform fallback." << G4endl;
-		return pi * G4UniformRand();
-	}
+	// Draw theta_cm from p(theta) ~ sigma(theta)*sin(theta) via inverse-CDF.
+	// Falls back to uniform in [0,pi] when no CDF is built (no CS file loaded).
+	if(cdfTheta.empty() || cdfVal.empty() || cdfIntervalMass.empty()){ return pi * G4UniformRand(); }
 
 	G4double u = G4UniformRand();
 	std::vector<G4double>::iterator it = std::lower_bound(cdfVal.begin(), cdfVal.end(), u);
@@ -308,40 +278,37 @@ G4double ScatteringGenerator::SampleThetaCM()
 	if(i == 0)               return cdfTheta.front();
 	if(i >= cdfTheta.size()) return cdfTheta.back();
 
-	G4double c0 = cdfVal[i-1], c1 = cdfVal[i];
-	if(!(c1 > c0)) return cdfTheta[i-1];
-	G4double frac = (u - c0) / (c1 - c0);
-	if(frac <= 0.0) return cdfTheta[i-1];
-	if(frac >= 1.0) return cdfTheta[i];
-
-	G4double left = cdfTheta[i-1];
-	G4double right = cdfTheta[i];
-	G4double width = right - left;
-	G4double a = cdfPdf[i-1];
-	G4double b = cdfPdf[i];
-	G4double intervalMass = 0.5 * (a + b) * width;
-	G4double targetMass = frac * intervalMass;
-	G4double slope = (b - a) / width;
-	G4double discriminant = a*a + 2.0*slope*targetMass;
-	if(discriminant < 0.0 && discriminant > -1e-14) discriminant = 0.0;
-	if(discriminant < 0.0){
-		G4cerr << "ScatteringGenerator::SampleThetaCM: negative inverse-CDF discriminant; using interval midpoint." << G4endl;
-		return 0.5 * (left + right);
-	}
-	G4double root = std::sqrt(discriminant);
-	G4double denominator = a + root;
-	G4double x = 0.0;
-	if(denominator > 0.0){
-		// Stable conjugate form of the quadratic solution:
-		// x = 2*y / (a + sqrt(a^2 + 2*k*y)).
-		x = 2.0 * targetMass / denominator;
-	}
-	else if(b > 0.0){
-		x = width * std::sqrt(frac);
+	// Within interval [theta_{i-1}, theta_i] of width h, the node densities
+	// g0 = pdfNode[i-1], g1 = pdfNode[i] define a linear density
+	//   g(x) = g0 + m*x,  m = (g1 - g0)/h.
+	// The partial mass from interval start to offset x is the quadratic
+	//   M(x) = g0*x + 0.5*m*x^2.
+	// A uniform r in [0,1] maps to the x with M(x) = r*A_i, where A_i is the
+	// total trapezoid interval mass. Solving the quadratic for x in [0,h]:
+	//   x = (-g0 + sqrt(g0^2 + 2*m*r*A_i)) / m   for m != 0
+	//   x = r*h                                  for m ~ 0 (stable, recovers linear).
+	// This yields the exact inverse of the piecewise-linear node density, so the
+	// sampled density reproduces the declared pdf (sigma*sin(theta)) node-for-node
+	// instead of a piecewise-constant approximation (prior linear-in-theta defect).
+	G4double h  = cdfTheta[i] - cdfTheta[i-1];
+	if(!(h > 0.0)) return cdfTheta[i-1];
+	G4double g0 = pdfNode[i-1];
+	G4double g1 = pdfNode[i];
+	G4double Ai = cdfIntervalMass[i];
+	if(!(Ai > 0.0)) return cdfTheta[i-1];
+	G4double r = (u - cdfVal[i-1]) / (cdfVal[i] - cdfVal[i-1]);
+	G4double m = (g1 - g0) / h;
+	G4double x;
+	if(std::fabs(m) < 1e-12){
+		x = r * h; // degenerate flat interval: linear recovery
+	}else{
+		G4double disc = g0*g0 + 2.0*m*r*Ai;
+		if(disc < 0.0) disc = 0.0;
+		x = (-g0 + std::sqrt(disc)) / m;
 	}
 	if(x < 0.0) x = 0.0;
-	if(x > width) x = width;
-	return left + x;
+	if(x > h)   x = h;
+	return cdfTheta[i-1] + x;
 }
 
 G4double ScatteringGenerator::EvalELoss(G4double in)

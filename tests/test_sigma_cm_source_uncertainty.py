@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import math
 from pathlib import Path
 
@@ -14,6 +15,7 @@ from tools.audit.research_sigma_cm_source_uncertainty import (
 
 ROOT = Path(__file__).resolve().parents[1]
 TABLE = ROOT / "geant4/src_patch/sigma_pd_cm_190.txt"
+SOURCE = ROOT / "geant4/src_patch/sigma_pd_cm_190.source.json"
 
 
 def test_source_uncertainty_audit_binds_exact_table_and_nominal_model() -> None:
@@ -133,3 +135,15 @@ def test_box_solver_rejects_invalid_uncertainty_domain() -> None:
         ratio_box_extreme([1.0], [1.0], [0.0], 0.03, maximize=True)
     with pytest.raises(ValueError, match="nonnegative"):
         ratio_box_extreme([1.0], [-1.0], [1.0], 0.03, maximize=True)
+
+
+def test_source_sidecar_does_not_invent_systematic_covariance() -> None:
+    source = json.loads(SOURCE.read_text(encoding="utf-8"))
+    uncertainty = source["source_uncertainty_note"]
+
+    assert uncertainty["point_to_point_systematic_fraction"] == 0.03
+    assert uncertainty["total_systematic_fraction_bound"] == "<0.045"
+    assert uncertainty["point_to_point_source_section"] == "IV D"
+    assert uncertainty["published_row_covariance_matrix"] is False
+    assert "must not" not in uncertainty["point_to_point_construction"].lower()
+    assert "Do not" in uncertainty["analysis_boundary"]

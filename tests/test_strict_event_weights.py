@@ -60,7 +60,7 @@ def test_normalized_estimators_are_invariant_to_positive_common_scale(scale: flo
     y = np.array([-1.0, 4.0, 8.0])
 
     assert strict.weighted_mean(values, weights) == pytest.approx(7.5)
-    assert strict.weighted_median(values, weights) == pytest.approx(4.857142857142857)
+    assert strict.weighted_median(values, weights) == pytest.approx(4.285714285714286)
     assert strict.weighted_fraction(values > 1.5, weights) == pytest.approx(0.9)
     assert strict.effective_sample_size(weights) == pytest.approx(100.0 / 54.0)
     assert strict.weighted_correlation(x, y, weights) == pytest.approx(

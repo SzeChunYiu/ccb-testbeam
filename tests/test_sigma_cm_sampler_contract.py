@@ -157,7 +157,11 @@ def test_tracked_cpp_and_external_patch_declare_the_same_sampler_contract() -> N
     for text in (cpp, patch):
         assert INTERPOLATION_MODE in text
         assert SUPPORT_MODE in text
-        assert "analytic quadratic interval-mass inverse" in text
+        # Freeze executable inverse mechanics, not an incidental prose sentence.
+        assert "targetMass" in text
+        assert "discriminant" in text
+        assert "std::sqrt(discriminant)" in text
+        assert "2.0 * targetMass / denominator" in text
         assert "constant-extrapolated outside" not in text
         assert "cdfTheta[i-1] + frac * (cdfTheta[i] - cdfTheta[i-1])" not in text
         assert "densityScale" in text

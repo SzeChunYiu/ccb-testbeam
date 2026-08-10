@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import math
 from dataclasses import asdict, dataclass
+from numbers import Real
 from typing import Any
 
 import numpy as np
@@ -49,7 +50,30 @@ class EventWeightPopulationSummary:
 
 
 def _as_weight_vector(weights: Any, *, expected_length: int | None) -> np.ndarray:
-    raw = np.asarray(weights)
+    # A production caller normally supplies a NumPy numeric vector; keep that
+    # path O(n) without boxing millions of event weights. For generic Python
+    # sequences, inspect the original scalar types before NumPy can silently
+    # coerce booleans/text/complex values into a plausible float dtype.
+    if isinstance(weights, np.ndarray):
+        raw = weights
+    else:
+        original = np.asarray(weights, dtype=object)
+        if original.ndim != 1:
+            raise DataContractError(
+                f"event_weight must be one-dimensional, got shape {original.shape}"
+            )
+        invalid = [
+            index
+            for index, value in enumerate(original)
+            if isinstance(value, (bool, np.bool_)) or not isinstance(value, Real)
+        ]
+        if invalid:
+            raise DataContractError(
+                "event_weight must contain real numeric non-boolean scalars; "
+                f"invalid indices={invalid[:5]}"
+            )
+        raw = np.asarray(weights)
+
     if raw.ndim != 1:
         raise DataContractError(
             f"event_weight must be one-dimensional, got shape {raw.shape}"

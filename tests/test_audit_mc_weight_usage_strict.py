@@ -76,14 +76,67 @@ def test_valid_weights_record_exact_provenance_and_stable_ess(tmp_path, monkeypa
     result = audit_mc_weight_usage.audit(root, "hibeam")
 
     assert result["status"] == "OK"
-    assert result["validator_version"] == "2.0.0"
+    assert result["validator_version"] == "3.0.0"
+    assert result["population_policy_id"] == "nonnegative_event_measure_v2"
     assert result["n_entries"] == result["n_weights"] == result["n"] == 3
     assert result["sum_w"] == pytest.approx(4.0)
     assert result["sum_w2"] == pytest.approx(6.5)
     assert result["ess"] == pytest.approx(16.0 / 6.5)
+    assert result["max_weight_fraction"] == pytest.approx(0.5)
     assert result["input_size_bytes"] == len(root.read_bytes())
     assert result["input_sha256"] == hashlib.sha256(root.read_bytes()).hexdigest()
-    assert result["summation_method"] == "PYTHON_MATH_FSUM_BINARY64"
+    assert result["summation_method"] == "python_math_fsum_max_scaled_binary64_v2"
+
+
+@pytest.mark.parametrize("scale", [1.0, 1e300, 1e-300])
+def test_audit_diagnostics_are_invariant_to_positive_common_scale(
+    tmp_path,
+    monkeypatch,
+    scale,
+):
+    root = write_root_bytes(tmp_path)
+    weights = scale * np.array([1.0, 2.0, 7.0], dtype=np.float64)
+    install_fake_uproot(monkeypatch, FakeTree({"PrimaryWeight": weights}))
+
+    result = audit_mc_weight_usage.audit(root, "hibeam")
+
+    assert result["status"] == "OK"
+    assert result["ess"] == pytest.approx(100.0 / 54.0)
+    assert result["ess_fraction"] == pytest.approx((100.0 / 54.0) / 3.0)
+    assert result["max_weight_fraction"] == pytest.approx(0.7)
+    assert result["max_over_mean"] == pytest.approx(2.1)
+    assert result["sum_w_over_scale"] == pytest.approx(10.0 / 7.0)
+    assert result["sum_w2_over_scale2"] == pytest.approx(54.0 / 49.0)
+
+
+def test_audit_accepts_valid_measure_when_raw_moments_are_unrepresentable(
+    tmp_path,
+    monkeypatch,
+):
+    root = write_root_bytes(tmp_path)
+    cases = (
+        np.array([1e154, 1e154]),
+        np.array([1e308, 1e308]),
+        np.array([np.nextafter(0.0, 1.0), np.nextafter(0.0, 1.0)]),
+    )
+    for weights in cases:
+        install_fake_uproot(monkeypatch, FakeTree({"PrimaryWeight": weights}))
+        result = audit_mc_weight_usage.audit(root, "hibeam")
+        assert result["status"] == "OK"
+        assert result["ess"] == pytest.approx(2.0)
+        assert result["max_weight_fraction"] == pytest.approx(0.5)
+        assert result["sum_w_over_scale"] == pytest.approx(2.0)
+        assert result["sum_w2_over_scale2"] == pytest.approx(2.0)
+        assert result["sum_w2"] is None
+
+    install_fake_uproot(
+        monkeypatch,
+        FakeTree({"PrimaryWeight": np.array([1e308, 1e308])}),
+    )
+    overflow = audit_mc_weight_usage.audit(root, "hibeam")
+    assert overflow["sum_w"] is None
+    assert overflow["mean"] is None
+    json.dumps(overflow, allow_nan=False)
 
 
 @pytest.mark.parametrize(
@@ -164,6 +217,7 @@ def test_main_publishes_json_atomically_and_preserves_compatibility(
     assert payload["branch"] == "PrimaryWeight"
     assert payload["n"] == 4
     assert payload["ess"] == pytest.approx(4.0)
+    assert payload["population_policy_id"] == "nonnegative_event_measure_v2"
     assert list(out.parent.glob(f".{out.name}.*.tmp")) == []
 
 

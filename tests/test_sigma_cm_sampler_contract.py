@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import pytest
@@ -14,6 +15,7 @@ from tools.audit.research_sigma_cm_sampler_contract import (
 
 ROOT = Path(__file__).resolve().parents[1]
 TABLE = ROOT / "geant4/src_patch/sigma_pd_cm_190.txt"
+MODEL = ROOT / "geant4/src_patch/scattering_source_model_v1.json"
 CPP = ROOT / "geant4/src_patch/ScatteringGenerator.cc"
 HEADER = ROOT / "geant4/src_patch/ScatteringGenerator.hh"
 PATCH = ROOT / "geant4/src_patch/patch_scatter.py"
@@ -120,6 +122,19 @@ def test_linear_node_refinement_does_not_change_same_continuous_interval_law() -
             local_fraction = (target_mass - left_mass) / right_mass
             refined_t = 0.5 + 0.5 * inverse_linear_pdf_fraction(mid, b, local_fraction)
         assert refined_t == pytest.approx(direct_t, abs=2e-15)
+
+
+def test_source_model_sidecar_binds_table_modes_support_and_event_weight() -> None:
+    model = json.loads(MODEL.read_text(encoding="utf-8"))
+    assert model["cross_section_table"]["sha256"] == (
+        "0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc"
+    )
+    assert model["cross_section_interpolation_mode"] == INTERPOLATION_MODE
+    assert model["cross_section_support_mode"] == SUPPORT_MODE
+    assert model["support_theta_cm_deg"] == [26.49, 169.78]
+    assert model["event_weight_mode"] == "unit_direct_sampling_v1"
+    assert model["event_weight"] == 1.0
+    assert "NONAUTHORISING" in model["source_model_status"]
 
 
 def test_tracked_cpp_and_external_patch_declare_the_same_sampler_contract() -> None:

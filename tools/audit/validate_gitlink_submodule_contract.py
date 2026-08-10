@@ -70,8 +70,7 @@ def tracked_gitlinks(root: Path) -> dict[str, str]:
             ["git", "ls-files", "--stage", "-z"],
             cwd=root,
             check=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
+            capture_output=True,
         )
     except (OSError, subprocess.CalledProcessError) as exc:
         raise ContractError(f"cannot enumerate Git index at {root}: {exc}") from exc
@@ -100,8 +99,7 @@ def local_worktrees_ignored(root: Path) -> bool:
             ],
             cwd=root,
             check=False,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
+            capture_output=True,
         )
     except OSError as exc:
         raise ContractError(f"cannot run git check-ignore at {root}: {exc}") from exc

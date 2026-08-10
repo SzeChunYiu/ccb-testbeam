@@ -19,7 +19,16 @@ def test_repository_workflow_routes_geant4_to_required_test() -> None:
 def test_missing_pull_request_geant4_route_fails_closed(tmp_path: Path) -> None:
     workflow = tmp_path / "workflow.yml"
     workflow.write_text(
-        """name: test\non:\n  push:\n    paths: [\"geant4/**\"]\n  pull_request:\n    paths: [\"src/**\"]\njobs:\n  test:\n    runs-on: ubuntu-latest\n""",
+        """name: test
+on:
+  push:
+    paths: ["geant4/**"]
+  pull_request:
+    paths: ["src/**"]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+""",
         encoding="utf-8",
     )
     with pytest.raises(ValueError, match="pull_request.*geant4"):
@@ -29,7 +38,16 @@ def test_missing_pull_request_geant4_route_fails_closed(tmp_path: Path) -> None:
 def test_missing_required_test_job_fails_closed(tmp_path: Path) -> None:
     workflow = tmp_path / "workflow.yml"
     workflow.write_text(
-        """name: test\non:\n  push:\n    paths: [\"geant4/**\"]\n  pull_request:\n    paths: [\"geant4/**\"]\njobs:\n  other:\n    runs-on: ubuntu-latest\n""",
+        """name: test
+on:
+  push:
+    paths: ["geant4/**"]
+  pull_request:
+    paths: ["geant4/**"]
+jobs:
+  other:
+    runs-on: ubuntu-latest
+""",
         encoding="utf-8",
     )
     with pytest.raises(ValueError, match="required workflow job"):

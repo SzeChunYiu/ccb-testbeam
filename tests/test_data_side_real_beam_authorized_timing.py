@@ -9,6 +9,7 @@ import pandas as pd
 import pytest
 import uproot
 
+from ccb_mc_validation.raw_input_authorization import RawInputAuthorizationError
 from ccb_mc_validation.raw_uproot_authorization import RawManifestIndexError
 
 
@@ -114,5 +115,5 @@ def test_timing_rejects_replaced_raw_file(monkeypatch, tmp_path):
     module.OUT = tmp_path / "out"
     module.OUT.mkdir()
 
-    with pytest.raises(Exception, match="identity does not match"):
+    with pytest.raises(RawInputAuthorizationError, match="identity does not match"):
         module.timing(_canon(), {"raw_input_sha256": [row]})

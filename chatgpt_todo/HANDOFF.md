@@ -2,96 +2,74 @@
 
 ## Session
 
-- **Task ID:** `ARU-S00-PUBLICATION-CONTENT-IDENTITY-001`
-- **Stamp:** `2026-08-10T074800Z`
+- **Task ID:** `ARU-S00-VERIFIED-READ-SNAPSHOT-001`
+- **Stamp:** `2026-08-10T081600Z`
 - **Owner:** hourly Atomic Research Universe audit session
-- **Initial main:** `5cb0b9426dc2f9e1b58a33fcb36c2e0c3eaa8f0a`
-- **Validated merge this session:** PR #1145 -> `ef4f3cbabe010285558a425fc3e92d525b1803a2` after exact-head MC Validation CI run 919 = `success`.
-- **Issue:** #1147
-- **Parent:** #1110
-- **Branch / PR:** `fix/s00-publication-content-identity` / #1148
-- **Status:** `CONTENT_IDENTITY_IMPLEMENTED_PENDING_EXACT_HEAD_CI`
+- **Initial main:** `ef4f3cbabe010285558a425fc3e92d525b1803a2`
+- **Validated merge this session:** PR #1148 exact head `820e157b0b5ec9bd0d05cb60a889a547e2228c13` had MC Validation CI run 933 = `success`; squash-merged to main as `96be3588241753601a4a96e6451527e5b3ebfe6b`.
+- **Issue:** #1149
+- **Parents:** #1147 -> #1110
+- **Branch:** `fix/s00-verified-read-snapshot`
+- **Status:** `VERIFIED_READ_IMPLEMENTED_PENDING_EXACT_HEAD_CI_AND_CONSUMER_MIGRATION`
 
 ## Selected atom
 
-The child atom introduced by the immutable-generation fix is byte identity:
-
 ```text
-logical artifact path
--> physical in-generation regular file
--> SHA-256(bytes)
--> content-bound CURRENT.json pointer
--> verified resolver
+content-bound CURRENT.json
+-> one immutable generation identity
+-> mutable filesystem object
+-> verification
+-> exact bytes consumed downstream
 ```
 
-The required provenance invariant is:
+The v2 pointer merged through #1148 binds the authoritative SHA-256, but the existing `resolve_artifact()` API still proves only `H(file at t_verify)=H(pointer)` and then returns a mutable pathname. A consumer that later reopens that path can observe different bytes after in-place mutation or mutation through a hard-link alias.
+
+The required authorising-read invariant is stronger:
 
 ```text
-same pointer bytes + same generation_id + changed artifact bytes
-=> resolver failure, never silent authority
+H(bytes actually consumed) = H(pointer snapshot)
 ```
 
-A second invariant rejects path aliases:
+## Mechanism universe and collapse
 
-```text
-resolved artifact must remain physically inside the named generation
-AND no artifact path component may be a symbolic link
-```
-
-## Evidence / mechanism collapse
-
-The v1 primitive merged in #1145 was transactionally stronger than the legacy mutable-directory replacement, but its authority tuple was still only `(generation_id, relative_path, model_identity)`. Ordinary generation files remained writable, and `resolve_artifact()` checked only `is_file()`. Therefore in-place mutation could change the scientific object without changing the pointer. Separately, lexical `..`/absolute-path checks did not exclude a relative symlink because `Path.is_file()` follows symlinks.
-
-Rejected alternatives:
-
-- path-only "immutable" policy: no byte identity;
-- chmod-only read-only generations: permissions are mutable and are not provenance proof;
-- content-addressed generation ID alone: partial, but still requires complete artifact hashing and validation.
-
-Survivor: per-artifact SHA-256 binding in the pointer plus physical-containment / symlink rejection and resolver-time hash verification.
+- documentation-only single-writer assumption: rejected for strict authorisation;
+- chmod-only read-only generations: useful defense in depth, not byte provenance;
+- `st_nlink == 1` rejection: blocks one alias mechanism but not generic in-place/path races;
+- same-source-descriptor verify + rewind: collapses pathname replacement but not later writes to the same inode;
+- all-bytes memory copy: exact but potentially selected-table-sized memory;
+- **streaming private snapshot: selected.** Copy in bounded blocks to a secure temporary file and hash those exact copied blocks before the consumer can see the snapshot;
+- filesystem snapshot/object store: stronger infrastructure option, deferred.
 
 ## Work completed
 
-1. Opened #1147 as the non-duplicative child atom under #1110.
-2. Advanced pointer schema to `ccb.s00.publication-pointer.v2` before any production pointer integration.
-3. Added `artifact_sha256` to `S00PublicationPointer` and its JSON payload.
-4. Added strict lowercase 64-hex SHA-256 parsing and exact key parity between `artifacts` and `artifact_sha256`.
-5. Added physical containment validation using resolved paths and explicit rejection of symlink components.
-6. Hash and fsync every authoritative artifact while still in staging.
-7. Revalidate containment and SHA-256 after the staging->generation move and before pointer commit.
-8. Make `resolve_artifact()` recompute SHA-256 and fail closed on content mismatch.
-9. Added hostile tests for post-publication manifest/table mutation, external symlink artifact, symlinked parent directory, post-publication symlink substitution, missing digest map, malformed digests, digest-key mismatch, and a staging-directory symlink alias.
-10. Updated `ACTIVE_TASK.md`, this handoff, and the immutable ARU archive.
+1. Merged the already-successful #1148 content-identity primitive only after exact-head CI verification.
+2. Added `src/ccb_mc_validation/s00_verified_read.py`.
+3. The API reads `CURRENT.json` exactly once, validates the named generation path, opens the source with `O_NOFOLLOW` where supported, records `fstat` identity metadata, copies in bounded blocks to `tempfile.mkstemp`, hashes the exact copied bytes, fsyncs the snapshot, and yields only after digest equality.
+4. Compound suffixes such as `.csv.gz` are preserved so file-based downstream readers can retain compression inference.
+5. The yielded snapshot is made read-only for the context and removed on exit.
+6. Added deterministic tests for tamper-before-copy, tamper-after-copy, hard-link alias mutation before/after snapshot, pointer swap, cleanup, bad logical names, invalid block sizes and scratch directory errors.
+7. Added a separate hostile negative control proving the old `resolve_artifact()->later Path read` API can observe mutated bytes after successful verification.
+8. Preserved the full ARU record in `chatgpt_todo/archive/2026-08-10T081600Z_ARU-S00-VERIFIED-READ-SNAPSHOT.md`.
 
-## Audit-the-audit corrections
+## Four sequential expert passes
 
-Two child defects were found while reviewing the first #1148 implementation rather than waiting for CI to expose them:
+- **Filesystem/reconstruction lead — ACCEPT design / pending exact-head CI.** Private snapshot semantics bind the bytes consumed rather than merely a mutable path. Remaining empirical question: real selected-table I/O overhead.
+- **Adversarial mechanism reviewer — ACCEPT local contract / BLOCK direct-path authorisation.** Hard-link and post-verification mutation are neutralised for snapshot consumers; privileged mutation of the reader's private temp/process is outside the declared threat model.
+- **Statistics/validation reviewer — ACCEPT deterministic contract / pending CI.** This is an exact byte/state-machine problem, not a beam-statistical result. The hostile old-resolver control is intentionally retained.
+- **Claims/provenance reviewer — REVISE #1110 / no CL-001 promotion.** The new primitive is not authoritative until downstream claim/study consumers are migrated to it; legacy paths and `resolve_artifact()->reopen` remain non-authorising for strict concurrency claims.
 
-1. The first physical-path helper changed legacy controlled-error wording for a missing authoritative file. Existing tests separately require `required artifact` during publication and `authoritative artifact missing` during resolution. The controlled error now contains both semantic markers, preserving fail-closed behavior and existing test contracts.
-2. Artifact-component checks alone did not reject the staging directory itself being a symbolic link. `publish_generation()` now rejects a symlink staging root before the same-filesystem parent check, and a dedicated hostile regression verifies that no pointer or generation is created and the external target remains untouched.
+## External authority checked
 
-Any workflow run for a pre-correction head is stale and must not authorize merge. Only exact-head CI after these corrections is acceptable.
+Official Python documentation for `tempfile` documents secure temporary-file creation (`mkstemp`/`NamedTemporaryFile`) and warns against name-only `mktemp`; official `os` documentation provides `os.open`, `O_NOFOLLOW` where supported, and file-descriptor stat metadata. These sources support software semantics only.
 
-## Four sequential review passes
+## Unresolved children / next work
 
-- **Filesystem/reconstruction lead — ACCEPT design / pending exact-head CI.** The authority pointer now identifies bytes rather than only a pathname.
-- **Adversarial mechanism reviewer — ACCEPT after artifact + staging symlink and post-move controls / residual direct-bypass risk.** A direct legacy consumer can still bypass verified resolution; that remains #1110 integration work.
-- **Statistics/validation reviewer — ACCEPT deterministic contract / pending CI.** Hash equality and path containment are exact software/provenance assertions; no beam-statistical inference is involved.
-- **Claims/provenance reviewer — BLOCK claim promotion.** CL-001 and downstream users must not be promoted until producer integration emits v2 pointers and consumers use content-verifying resolution.
-
-## Authoritative sources checked
-
-Python documentation states that `Path.resolve()` makes paths absolute while resolving symbolic links, which supports the physical-containment falsifier. Python's `hashlib` documentation provides SHA-256/file-digest primitives; SHA-256 is used here as byte identity, not as a probabilistic detector-performance claim.
-
-## Next work
-
-1. Require exact-head CI on PR #1148; do not merge on stale checks.
-2. Then return to #1110 producer integration: report + selected pulse table in one generation, one pointer commit after all P0 gates.
-3. Migrate canonical validators/consumers to `resolve_artifact()` so digest verification cannot be bypassed by mutable legacy paths.
-4. Decide legacy-path compatibility semantics and prove they are aliases, never independent authorities.
-5. Add crash/concurrent-reader tests around the real producer transition.
-6. Keep physical validity of first-four pedestal samples in #1109 separate from this provenance atom.
+1. Exact-head CI for this branch; do not merge on stale workflow results.
+2. Measure snapshot read+write overhead on the actual selected pulse table before claiming the cost is negligible.
+3. Migrate the first authoritative downstream consumer to `verified_artifact_snapshot()` and prove its parser consumes the snapshot rather than reopening the generation/legacy path.
+4. Return to #1110 producer integration once active overlapping producer work (#1146) is reconciled; report + pulse table must enter one content-bound generation before a single pointer commit.
+5. Keep #1109 pedestal physics and CL-001 scientific status separate from this filesystem/provenance closure.
 
 ## Scientific boundary
 
-No raw beam ROOT data were opened, no S00 counts regenerated, no Geant4 simulation run, and no timing/PID/penetration/energy/pile-up/detector-performance quantity changed.
+No raw ROOT population was rescanned, no S00 count was regenerated, no Geant4 simulation was run, and no timing/PID/penetration/energy/pile-up/detector-performance quantity changed.

@@ -1,17 +1,17 @@
 # Active Task
 
-- **Task ID:** `ARU-S00-PUBLICATION-CONTENT-IDENTITY-001`
+- **Task ID:** `ARU-S00-VERIFIED-READ-SNAPSHOT-001`
 - **Owner:** hourly Atomic Research Universe audit session
-- **Session stamp:** `2026-08-10T074800Z`
-- **Initial remote main SHA:** `5cb0b9426dc2f9e1b58a33fcb36c2e0c3eaa8f0a`
-- **Validated merge before atom selection:** PR #1145 exact-head `065c0b1a08b0893e84221be11483d8a6817ff92e` had MC Validation CI run 919 = `success`; squash-merged to main as `ef4f3cbabe010285558a425fc3e92d525b1803a2`.
-- **Issue:** `#1147`
-- **Parent issue:** `#1110`
-- **Branch:** `fix/s00-publication-content-identity`
-- **Selected atom:** `immutable generation path identity -> artifact byte identity -> authority pointer -> verified downstream resolution`.
-- **Confirmed gap:** the v1 pointer committed only `(generation_id, relative_path, model_identity)`. Files remained writable and `resolve_artifact()` checked only `is_file()`, so post-publication byte mutation could silently change scientific content under the same authority. Lexically safe relative paths could also name symlinks because `is_file()` follows them.
-- **Surviving design:** pointer schema v2 binds one SHA-256 digest per logical artifact; publication rejects symlink components / physical escapes, hashes and fsyncs authoritative files before the generation move, revalidates containment + digest after the move, and the resolver re-hashes before returning authority.
-- **Implemented:** content-bound pointer payload; strict digest parser/key parity; SHA-256 generation; symlink/realpath containment guard; post-move digest revalidation; resolver hash verification; hostile content-mutation/symlink/malformed-pointer tests.
-- **Expert votes:** filesystem/reconstruction `ACCEPT design / pending exact-head CI`; adversarial `ACCEPT after symlink + post-move controls / residual direct-bypass risk`; validation `ACCEPT deterministic contract / pending CI`; claims/provenance `BLOCK downstream promotion until #1110 producer/consumers use verified resolution`.
-- **Scientific boundary:** no raw beam ROOT data, Geant4 job, S00 count regeneration, timing/PID/penetration result, or detector-performance quantity changed.
-- **Status:** `ACTIVE / IMPLEMENTED_PENDING_PR_CI`
+- **Session stamp:** `2026-08-10T081600Z`
+- **Initial remote main SHA:** `ef4f3cbabe010285558a425fc3e92d525b1803a2`
+- **Validated merge before atom selection:** PR #1148 exact head `820e157b0b5ec9bd0d05cb60a889a547e2228c13` had MC Validation CI run 933 = `success`; squash-merged to main as `96be3588241753601a4a96e6451527e5b3ebfe6b`.
+- **Issue:** `#1149`
+- **Parent issue:** `#1147`; upstream transaction parent `#1110`.
+- **Branch:** `fix/s00-verified-read-snapshot`
+- **Selected atom:** `content-bound pointer -> mutable generation pathname -> verification -> exact bytes consumed by an authorising downstream reader`.
+- **Confirmed gap:** `resolve_artifact()` verifies bytes and then returns a pathname. A later read can observe different bytes after in-place or hard-link mutation.
+- **Surviving design:** stream the source once into a private secure temporary snapshot while hashing the exact copied blocks; yield the snapshot only when its digest equals the digest in the one-time pointer snapshot.
+- **Implemented:** `s00_verified_read.py`, exact-byte snapshot metadata/cleanup, hard-link and pointer-swap controls, and a hostile test preserving the old resolver TOCTOU counterexample.
+- **Expert votes:** filesystem/reconstruction `ACCEPT design / pending CI`; adversarial `ACCEPT local snapshot contract / BLOCK direct-path authorisation`; statistics/validation `ACCEPT deterministic tests / pending CI`; claims/provenance `REVISE #1110 / no CL-001 promotion`.
+- **Scientific boundary:** no beam ROOT data, Geant4, S00 count regeneration, timing/PID/penetration result, or detector-performance quantity changed.
+- **Status:** `ACTIVE / IMPLEMENTED_PENDING_EXACT_HEAD_CI_AND_CONSUMER_MIGRATION`

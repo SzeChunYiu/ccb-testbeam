@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import pytest
+
 from tools.audit.validate_mc_ci_trigger_scope import validate_trigger_scope
 
 

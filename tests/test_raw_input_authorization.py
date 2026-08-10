@@ -87,7 +87,9 @@ def test_path_replacement_during_consumption_fails_closed(tmp_path):
     row = manifest_row(source)
     replacement.write_bytes(b"replacement")
 
-    with pytest.raises(RawInputAuthorizationError, match="consumer held authorized stream"):
+    with pytest.raises(
+        RawInputAuthorizationError, match="consumer held authorized stream"
+    ):
         with verified_raw_input_stream(source, row) as stream:
             replacement.replace(source)
             stream.seek(0)
@@ -99,7 +101,9 @@ def test_in_place_mutation_during_consumption_fails_closed(tmp_path):
     source.write_bytes(b"authorized")
     row = manifest_row(source)
 
-    with pytest.raises(RawInputAuthorizationError, match="consumer held authorized stream"):
+    with pytest.raises(
+        RawInputAuthorizationError, match="consumer held authorized stream"
+    ):
         with verified_raw_input_stream(source, row) as stream:
             with source.open("ab") as handle:
                 handle.write(b"-mutated")
@@ -113,7 +117,9 @@ def test_hardlink_alias_change_during_consumption_fails_closed(tmp_path):
     source.write_bytes(b"authorized")
     row = manifest_row(source)
 
-    with pytest.raises(RawInputAuthorizationError, match="consumer held authorized stream"):
+    with pytest.raises(
+        RawInputAuthorizationError, match="consumer held authorized stream"
+    ):
         with verified_raw_input_stream(source, row) as stream:
             os.link(source, alias)
             assert stream.read(4) == b"auth"

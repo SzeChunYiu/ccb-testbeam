@@ -2,7 +2,7 @@
 """Validate the external hibeam_g4 source overlay before compilation.
 
 The reviewed CCB ``ScatteringGenerator`` pair is installed into an external
-``hibeam_g4`` checkout.  That means a useful pre-build contract cannot simply
+``hibeam_g4`` checkout. That means a useful pre-build contract cannot simply
 require ``git status`` to be clean: the reviewed overlay is itself an expected
 working-tree delta unless the pinned upstream commit already contains identical
 bytes.
@@ -14,7 +14,7 @@ This validator therefore binds two layers separately:
    remains unstaged, and those paths equal the exact repository payload bytes.
 
 Any extra tracked change, staged change, untracked file, wrong baseline, source
-symlink, or partial/incorrect overlay fails closed.  Passing this validator is a
+symlink, or partial/incorrect overlay fails closed. Passing this validator is a
 pre-build source-identity condition only; it does not compile or run Geant4 and
 therefore cannot authorise generator or detector claims.
 """
@@ -31,7 +31,9 @@ from typing import Any
 
 SCHEMA = "ccb_geant4_external_overlay_v1"
 PAYLOADS = {
-    "include/ScatteringGenerator.hh": Path("geant4/src_patch/ScatteringGenerator.hh"),
+    "include/ScatteringGenerator.hh": Path(
+        "geant4/src_patch/ScatteringGenerator.hh"
+    ),
     "src/ScatteringGenerator.cc": Path("geant4/src_patch/ScatteringGenerator.cc"),
 }
 
@@ -44,9 +46,16 @@ def _git(root: Path, *args: str, text: bool = True) -> str | bytes:
         text=text,
     )
     if proc.returncode != 0:
-        stderr = proc.stderr.strip() if text else proc.stderr.decode(errors="replace").strip()
+        if text:
+            stderr = proc.stderr.strip()
+        else:
+            stderr = proc.stderr.decode(errors="replace").strip()
         raise ValueError(f"git {' '.join(args)} failed: {stderr}")
     return proc.stdout.strip() if text else proc.stdout
+
+
+def _identity(st: os.stat_result) -> tuple[int, int, int, int, int]:
+    return (st.st_dev, st.st_ino, st.st_size, st.st_mtime_ns, st.st_ctime_ns)
 
 
 def _regular_file_bytes(path: Path) -> bytes:
@@ -63,10 +72,7 @@ def _regular_file_bytes(path: Path) -> bytes:
         after = os.fstat(stream.fileno())
     final = path.lstat()
 
-    identity_before = (before.st_dev, before.st_ino, before.st_size, before.st_mtime_ns, before.st_ctime_ns)
-    identity_after = (after.st_dev, after.st_ino, after.st_size, after.st_mtime_ns, after.st_ctime_ns)
-    identity_final = (final.st_dev, final.st_ino, final.st_size, final.st_mtime_ns, final.st_ctime_ns)
-    if identity_before != identity_after or identity_after != identity_final:
+    if _identity(before) != _identity(after) or _identity(after) != _identity(final):
         raise ValueError(f"required file changed while being verified: {path}")
     if len(data) != before.st_size:
         raise ValueError(f"short/long read while verifying required file: {path}")
@@ -130,9 +136,13 @@ def validate_external_overlay(
     tree = _git(external_root, "rev-parse", "HEAD^{tree}")
     assert isinstance(head, str) and isinstance(tree, str)
     if head != expected_commit:
-        raise ValueError(f"external HEAD mismatch: expected {expected_commit}, observed {head}")
+        raise ValueError(
+            f"external HEAD mismatch: expected {expected_commit}, observed {head}"
+        )
     if tree != expected_tree:
-        raise ValueError(f"external HEAD tree mismatch: expected {expected_tree}, observed {tree}")
+        raise ValueError(
+            f"external HEAD tree mismatch: expected {expected_tree}, observed {tree}"
+        )
 
     allowed = set(PAYLOADS)
     status_entries = _status_entries(external_root)
@@ -142,9 +152,13 @@ def validate_external_overlay(
         if code[0] != " ":
             raise ValueError(f"staged/index mutation is not allowed: {code} {path}")
         if code != " M":
-            raise ValueError(f"unsupported external work-tree mutation: {code} {path}")
+            raise ValueError(
+                f"unsupported external work-tree mutation: {code} {path}"
+            )
         if path not in allowed:
-            raise ValueError(f"external work-tree mutation outside reviewed overlay: {path}")
+            raise ValueError(
+                f"external work-tree mutation outside reviewed overlay: {path}"
+            )
 
     source_records: list[dict[str, Any]] = []
     for external_rel, reviewed_rel in PAYLOADS.items():
@@ -158,7 +172,14 @@ def validate_external_overlay(
                 "reviewed_path": str(reviewed_rel),
                 "bytes": len(reviewed),
                 "sha256": _sha256(reviewed),
-                "git_status": next((code for code, path in status_entries if path == external_rel), "CLEAN"),
+                "git_status": next(
+                    (
+                        code
+                        for code, path in status_entries
+                        if path == external_rel
+                    ),
+                    "CLEAN",
+                ),
             }
         )
 
@@ -166,7 +187,9 @@ def validate_external_overlay(
     # cannot disappear behind the first status snapshot.
     final_status = _status_entries(external_root)
     if final_status != status_entries:
-        raise ValueError("external Git status changed while overlay provenance was being verified")
+        raise ValueError(
+            "external Git status changed while overlay provenance was being verified"
+        )
 
     return {
         "schema": SCHEMA,
@@ -186,7 +209,9 @@ def validate_external_overlay(
             "no_untracked_paths": True,
             "no_other_worktree_mutations": True,
         },
-        "scientific_scope": "PREBUILD_SOURCE_IDENTITY_ONLY_COMPILED_RUNTIME_VALIDATION_REQUIRED",
+        "scientific_scope": (
+            "PREBUILD_SOURCE_IDENTITY_ONLY_COMPILED_RUNTIME_VALIDATION_REQUIRED"
+        ),
     }
 
 

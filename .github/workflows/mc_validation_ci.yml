@@ -21,26 +21,7 @@ on:
       - ".gitmodules"
       - ".claude/worktrees/**"
       - ".github/workflows/mc_validation_ci.yml"
-  pull_request:
-    paths:
-      - "src/**"
-      - "scripts/**"
-      - "tools/**"
-      - "tests/**"
-      - "configs/**"
-      - "geant4/**"
-      - "docs/contracts/**"
-      - "docs/latex/**"
-      - "docs/ATOMIC_RESEARCH_PROTOCOL.md"
-      - "docs/AI_SESSION_PICKUP_GUIDE_20260808.md"
-      - "chatgpt_todo/**"
-      - "paper/figures.yaml"
-      - "constraints/**"
-      - "pyproject.toml"
-      - ".gitignore"
-      - ".gitmodules"
-      - ".claude/worktrees/**"
-      - ".github/workflows/mc_validation_ci.yml"
+  pull_request: {}
 
 jobs:
   test:

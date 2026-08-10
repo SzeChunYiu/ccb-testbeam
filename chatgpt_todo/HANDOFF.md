@@ -1,37 +1,42 @@
 # Latest Handoff
 
-## Validated and merged in this session
+## Selected atom: MC event/stave deposited-energy statistical unit
 
-Two bounded weighted-null research steps are now on protected `main`.
+PR #1169 on `feat/mc01-event-stave-truth-contract` implements the bounded H3 child of #1052/#1164. Branch point is protected `main@d088b5a886e0c8891d7926af7015193db7a503b8`.
 
-1. PR `#1165` exact head `930f08df435bd42532707f078501c396fb1da37d` passed MC Validation run `31391922666` (`1337 passed, 1 skipped, 8 xfailed, 1 xpassed`) and was squash-merged as `a1d7afe17e526c0e90761e8d7da4924eea5862e5`. It makes the #1164 event-cluster representation falsifier executable.
-2. PR `#1167` exact head `90b1688a4f0f58f3d2bc23611b8854a9b9d9d21c` passed MC Validation run `31393379296` (`1347 passed, 1 skipped, 8 xfailed, 1 xpassed`) and was squash-merged as `4268175da2e282a755b7f59acc235cffee512ed4`. It makes the #1166 fitted-scale and fit/test-topology falsifiers executable.
+The legacy comparison product is built from charged `Sci_bar_EDep` transport/hit records with a repeated event weight. The replacement contract uses one generator-event row and defines, for B stave `k`,
 
-Both are research-method closures only. Neither implements or authorises a production CCB p-value.
+`E_dep(e,k) = sum_h EDep_h I(event_h=e, arm_h=B, layer_h=k)`.
 
-## Fitted-scale/topology result (#1166)
+A charged-only sum is retained separately so trigger-charge semantics cannot silently redefine total deposited energy. The exact transport-step-splitting invariant is: replacing one record `E` by records `E_j` with `sum(E_j)=E` must leave event/stave EDep unchanged even though hit-row multiplicity changes.
 
-Current `scripts/compare_data_mc.py` estimates
+## Implemented repository work
 
-`shat = median(DATA_II) / weighted_median(MC_II, PrimaryWeight)`
+- `src/ccb_mc_validation/truth/event_stave.py` aggregates all-particle and charged-only B-stave EDep, validates event identity/topology/matrices, and enforces one nonnegative finite first-primary `PrimaryWeight` per selected generator event.
+- It reuses the existing content-bound `stable_event_id`/`build_event_rows` contract and stores Sample-I membership inside the Sample-II row universe, preserving `Sample I subset Sample II` without physical row duplication.
+- Source SHA-256 and byte count are measured from one opened regular-file descriptor; Uproot receives a duplicate seekable stream from that same open file and descriptor metadata must remain stable through consumer exit.
+- `scripts/mc01_event_stave_truth.py` writes `mc_event_stave_edep_v1.npz` and a manifest only after source consumption succeeds. The manifest records source identity, population scope, weights/ESS and the missing detector-response stages.
+- The new product has no `EDEP_CAP`; the legacy silent `600000` hit-prefix retention cannot truncate its event/stave arrays. `--max-events` is explicit and marked `PREFIX_DIAGNOSTIC`.
 
-and reuses the result in Sample-II and Sample-I weighted-ECDF discrepancies. Canonical DATA Sample-I analysis runs 44–57 and Sample-II analysis runs 58–63,65 are disjoint, while `mc01_trigger_split_truth.py` defines Sample I as a coincidence subset of Sample II. Therefore the nuisance fit and source-membership graph are part of the null design.
+## Executed falsifiers
 
-The equal-weight LogNormal scale-family falsifier used 200 trials, 80 DATA, 160 MC and 99 bootstrap replicates/trial at seed base `20260810`. Fixed fitted scale rejected `0.000/0.015` at alpha `0.05/0.10`, while refitting inside each replicate gave `0.060/0.095`; mean p changed from `0.67775` to `0.5378`. The 95% Wilson intervals for the rejection estimates are approximately `[0,0.01885]` versus `[0.03465,0.10193]` at alpha 0.05 and `[0.00511,0.04317]` versus `[0.06166,0.14360]` at alpha 0.10. With 99 replicates, the Monte-Carlo p grid is 0.01. This supports only the narrow conclusion that nuisance freezing is not harmless in this declared fixture.
+The new tests cover exact step-splitting energy invariance, multi-record event aggregation, neutral-vs-charged deposition, A-arm exclusion, malformed energy/layer input, invalid event weights, duplicate event IDs, broken Sample-I/Sample-II nesting, charged>total corruption, exact opened-source hashing, in-place source mutation, and a mocked Uproot file-like integration. A private isolated aggregation harness using minimal import stubs returned 16 passed with the builder-integration test excluded; only repository CI may authorize merge.
 
-A separate 2,000-trial topology falsifier at seed `20260811` preserved MC-I as a Bernoulli-0.4 subset of MC-II, then replaced it with an independent same-marginal sample. corr(`shat`, median(MC-I)) changed from `-0.43589` to `0.00332`; mean Sample-I `D` changed from `0.14927` to `0.15842`; the 95th percentile changed from `0.24080` to `0.25758`. Marginal equality is therefore insufficient when source membership changes.
+The neutral-deposit fixture is intentionally discriminating: a selected B0 event with proton 2 MeV plus neutron 3 MeV has all-particle `E_dep=5 MeV` and charged-only diagnostic `2 MeV`. Trigger-charge and detector deposited-energy scope are not the same contract.
 
-## Four role-separated disposition
+## Four role-separated review disposition
 
-- **Detector/calibration lead — REVISE.** Refitting/membership preservation are necessary design candidates, but the current ADC/MeV operand is still the wrong detector measurand under #1052/#994.
-- **Adversarial reviewer — BLOCK fixed/topology-blind nulls.** Both rejected mechanisms have executable negative controls on main.
-- **Statistics/validation reviewer — ACCEPT local falsifiers / BLOCK CCB inference.** The surviving method still needs nonuniform weights/ESS, event clusters, ties/saturation, unequal populations and substantially larger calibration studies with Monte-Carlo uncertainty.
-- **Claims/provenance reviewer — BLOCK promotion.** Weighted `D` is descriptive; the legacy p-value remains `NONAUTHORISING_BLOCKED_ISSUE_1049`; CL-013 remains GATED.
+- **Detector / Geant4 response lead — ACCEPT H3 / BLOCK detector closure.** Event/stave EDep is the correct invariant truth intermediate, but quenching through digitization remains absent.
+- **Adversarial mechanism reviewer — ACCEPT bounded contract / REVISE production-scale execution.** Hit-row inference is representation-dependent; source and identity contracts are now fail-closed. Real ROOT scale/memory and the pre-existing truncated event-ID design remain checks.
+- **Statistics / validation reviewer — ACCEPT event statistical unit / BLOCK authorising p-value.** One weight per event and retained nested-trigger membership repair necessary topology, not null calibration.
+- **Claims / provenance reviewer — ACCEPT nonauthorising provenance / BLOCK promotion.** A scalar MeV-to-ADC gain cannot substitute for quenching, optical/WLS, SiPM, electronics, sampling and identical reconstruction.
 
-Capasso et al. (2009), DOI `10.1142/S0219525909002131`, supports re-estimating unknown parameters in EDF Monte-Carlo GOF calibration; Kojadinovic & Yan (2012), DOI `10.1002/cjs.11135`, treats estimated-parameter GOF as a distinct bootstrap problem. These are method context, not validation of the CCB weighted/clustered trigger design.
+## Scientific and claim boundary
 
-## Next highest-value atom
+`mc_event_stave_edep_v1` is explicitly `NONAUTHORISING_TRUTH_DIAGNOSTIC`. No production ROOT file was available in this runtime, no Geant4 campaign was rerun, and no DATA/MC discrepancy, p-value, ADC/MeV scale, PID, timing, penetration, energy, pile-up or detector-performance quantity changed. #1049, #1052, #1164 and #1166 remain scientifically open.
 
-Work at the #1164/#1052 producer boundary before adding more p-value machinery. Preserve immutable DAQ/generator event IDs and Sample-I/Sample-II membership; emit explicit `statistical_unit`, aggregation policy, source/config hashes and event-weight semantics; and replace the first-B raw hit-record MC product with an event/stave response hierarchy. The final DATA analogue still requires quenching → optical/WLS → SiPM → electronics/digitizer → identical reconstruction, but event/stave deposited-energy and visible-energy products can be retained as explicitly non-detector-closure mechanism diagnostics.
+## Next highest-value work
 
-The strongest next negative controls are transport-step splitting at fixed event/stave total, multi-track same-event aggregation, duplicated rows with shared versus false-unique event IDs, nested-trigger membership preservation, one dominant PrimaryWeight/low ESS, and saturation/tie cases. No authorising p-value should return until these cross-scale contracts and a calibrated nuisance design pass together.
+First require exact-head/current-base MC Validation CI on #1169. If it passes, merge without bypassing protection and execute the producer on the immutable production MC source, recording source/output SHA-256, event counts, Sample-I/Sample-II membership counts, sum of weights, sum of squared weights, ESS, runtime and peak memory. Compare legacy H1 charged-hit and H3 event/stave spectra only as a mechanism diagnostic.
+
+Then implement H4: stepwise quenching/visible energy at the Geant4-step level before event aggregation. The next discriminating controls are step subdivision invariance under the chosen Birks formulation, stopping-power/local-dE/dx definition, material-specific quenching parameters and secondary deposition semantics. H5 still requires optical/WLS transport, direct fibre light, SiPM PDE/microcells/noise/recovery, electronics impulse/saturation, digitizer phase/aperture and identical DATA-like reconstruction before any detector-level comparison or #1049 p-value can become authorising.

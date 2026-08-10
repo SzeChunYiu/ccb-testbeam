@@ -2,72 +2,44 @@
 
 ## Session
 
-- **Task:** `ARU-RAW-CONSUMER-SAME-BYTES-001`
-- **Stamp:** `2026-08-10T112500Z`
+- **Task:** `ARU-RAW-UPROOT-SAME-STREAM-001`
+- **Stamp:** `2026-08-10T113500Z`
 - **Owner:** hourly Atomic Research Universe audit session
-- **Main at branch point:** `439d611efe9908ae91379b7024e98ead36e4d30b`
-- **Branch:** `fix/raw-consumer-same-bytes`
-- **Parents:** #1149, #993
-- **Dependencies:** #952, #953; upstream #1155 is merged/closed.
-- **Claim state:** CL-001 remains GATED.
+- **Main before work:** `439d611efe9908ae91379b7024e98ead36e4d30b`
+- **Merged upstream:** PR #1159 -> `4fe1efaf931083de0a3c61bd25a447f5cb21e7a2`, after exact-head MC Validation success.
+- **Branch:** `fix/raw-timing-manifest-bound-consumer`
+- **Parents:** #1149, #993; dependencies #952, #953; CL-001 remains GATED.
 
 ## Selected atom
 
-`same-stream raw manifest row -> later scientific consumer -> exact manifest-bound opened object or controlled failure`.
+`manifest-bound raw bytes -> Uproot random-access consumer -> same authorized bytes through the full parser lifetime`.
 
-Merged #1155 proves that each raw-input row is internally coherent:
+The required invariant is `H(B_consumed) = H(B_manifest) = row.sha256`. Merely hashing a path and later calling `uproot.open(path)` does not establish this when the pathname can change between operations.
 
-```text
-sha256(row) = H(B_manifest)
-bytes(row) = |B_manifest|
-```
+## Work completed
 
-but current `scripts/studies/data_side_real_beam.py::timing()` later performs an independent `uproot.open(RAW_DIR / ...)`. Therefore the row does not prove `B_consumer = B_manifest` if the pathname changes between the two operations.
+PR #1159's reusable `verified_raw_input_stream()` primitive was independently inspected, its exact-head CI was verified successful, and it was squash-merged with expected-head protection.
 
-## Implemented primitive
+On the follow-on branch, `src/ccb_mc_validation/raw_uproot_authorization.py` now adds:
 
-New module `src/ccb_mc_validation/raw_input_authorization.py` adds `verified_raw_input_stream()`.
+- strict unique `run -> manifest row` indexing;
+- fail-closed required-run completeness;
+- `open_verified_uproot()`, which passes only the verified seekable stream to Uproot and nests the whole Uproot file lifetime inside the descriptor guard context.
 
-It:
+`tests/test_raw_uproot_authorization.py` uses real tiny ROOT fixtures to check branch/array reads, asserts Uproot receives a file-like object rather than a string/Path, rejects replacement before open, detects pathname replacement during the Uproot lifetime, and rejects missing/duplicate/malformed run identities.
 
-1. strictly parses the manifest file/digest/descriptor fields;
-2. opens the raw path once with `O_NOFOLLOW`;
-3. requires a regular file and exact `(dev, ino, nlink, size, mtime_ns, ctime_ns)` match to the manifest row;
-4. hashes/counts that descriptor and requires exact SHA-256 + byte-count closure;
-5. rewinds it and yields a duplicate descriptor as a seekable binary file-like object;
-6. retains a guard descriptor and fails closed if descriptor/link metadata change before consumer-context exit.
-
-The consumer therefore never needs to resolve the pathname a second time after verification.
-
-## Mechanisms and equivalence collapse
-
-- Independent pathname reopen is rejected as authorizing.
-- Rearranging pathname `stat/hash/open` operations does not solve the same TOCTOU mechanism.
-- A descriptor-bound verified stream is the selected low-copy survivor.
-- A private content-addressed snapshot is stronger against concurrent in-place mutation but incurs a full copy; this remains a separate cost/immutability child rather than being conflated with the descriptor design.
-- A source-bound immutable data-host/object-store contract is another survivor if the real host can prove it mechanically.
-
-## Hostile tests added
-
-`tests/test_raw_input_authorization.py` covers stable read/seek, legacy independent-path replacement, same-content new-inode replacement, different-content replacement, replacement while the stream is held, in-place mutation, hard-link alias creation, digest mismatch, strict path/digest/integer schema, symlink rejection, and invalid block size.
-
-The same-content replacement test is intentionally important: equal SHA-256 content does not establish that a later analysis consumed the same source object from the same manifest transaction.
+These fixtures validate software semantics only; they are not beam-data validation.
 
 ## Four sequential review votes
 
-- **DAQ/raw provenance lead — ACCEPT primitive / BLOCK #993.** The primitive closes a consumer identity gap only; it does not derive 8x16<->8x18 lineage.
-- **Adversarial filesystem reviewer — ACCEPT bounded contract / REJECT snapshot-level overclaim.** An open descriptor prevents pathname replacement from redirecting reads, and post-consumer metadata catches ordinary mutation/link-state changes. Privileged metadata-forging writers and distributed-filesystem specifics are outside the proven threat model.
-- **Independent validation/statistics reviewer — ACCEPT deterministic design pending exact-head CI / BLOCK real artifact.** These are binary filesystem invariants, not beam-statistical tests. A mocked Uproot integration test is still required.
-- **Claims/provenance reviewer — ACCEPT local repair / BLOCK promotion.** No timing, PID, energy, detector-resolution, 8x16/8x18, or CL-001 claim is promoted.
-
-## Scientific and validation boundary
-
-No raw beam ROOT file was available in this runtime. The real 33-file provenance artifact was not regenerated, no production I/O benchmark was measured, no Geant4 simulation was run, and no detector result changed. This branch currently adds the reusable authorization primitive and its falsifiers; `timing()` still needs integration.
+- **DAQ / reconstruction lead — ACCEPT adapter / REVISE canonical integration.** Real Uproot random-access is exercised, but `scripts/studies/data_side_real_beam.py::timing()` still calls `uproot.open(path)`.
+- **Adversarial mechanism reviewer — ACCEPT bounded threat model / BLOCK pathname fallback.** A replacement while Uproot is alive must end in a provenance failure; privileged metadata-forging writers remain outside scope.
+- **Independent validation/statistics reviewer — ACCEPT deterministic tests pending exact-head CI / BLOCK physics inference.** No timing-resolution or detector estimator is validated by fixture tests.
+- **Claims/provenance reviewer — BLOCK #993 and CL-001 promotion.** 8x16<->8x18 lineage, event identity, mapping/polarity and real artifact regeneration remain independent atoms.
 
 ## Next atomic children
 
-1. Integrate `verified_raw_input_stream()` into the full Uproot iteration lifetime in `timing()`; Uproot officially accepts seekable Python file-like objects, so the integration need not reopen a path.
-2. Make missing/unmatched manifest rows fail closed instead of silently skipping required timing runs.
-3. Add a mocked Uproot test proving the parser receives a file-like stream and no independent pathname open occurs.
-4. Measure the extra verification-read cost on the real data host; compare descriptor streaming with a verified snapshot only if cost/threat requirements justify it.
-5. Regenerate the real manifest and continue #993/#953 event/channel/sample and word-level closure. Hash identity alone must never be used to infer the 16<->18 transform.
+1. Migrate canonical `data_side_real_beam.py::timing()` so every required run is bound to exactly one provenance row and Uproot consumes `open_verified_uproot()` for the complete iteration lifetime. Missing rows must fail before scientific outputs.
+2. Keep waveform-width semantics under existing #952 rather than opening a duplicate issue.
+3. Measure the additional full verification read on the real data host, with file size/hash, filesystem/device, cold/warm cache, block size, wall time and effective throughput.
+4. Regenerate the complete real manifest on the data host and continue #993/#953 exact event/channel/sample lineage. Same-bytes authorization alone does not identify the 16<->18 transformation.

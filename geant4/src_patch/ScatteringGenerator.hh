@@ -47,7 +47,7 @@ class ScatteringGenerator : public G4VPrimaryGenerator
 {
   public:
     /// Per-instance source readiness states.
-    enum SourceReadiness {
+    enum class SourceState {
       UNINITIALIZED,         ///< Constructor ran; no source files loaded yet.
       UNCONFIGURED_UNIFORM,  ///< fCSFile=="null"; uniform theta_cm is the explicit mode.
       CONFIGURED_READY,      ///< All configured sources validated and usable.
@@ -66,13 +66,13 @@ class ScatteringGenerator : public G4VPrimaryGenerator
 	G4ThreeVector GetParticleMomentumDirection2(){return particle2->GetMomentumDirection();}
 	G4double GetParticleEnergy1(){return particle1->GetKineticEnergy();}
 	G4double GetParticleEnergy2(){return particle2->GetKineticEnergy();}
-	SourceReadiness GetSourceReadiness() const { return fSourceReadiness; }
-	G4String GetCSFileDigest() const { return fCSFileDigest; }
-	G4String GetDEdxFileDigest() const { return fDEdxFileDigest; }
+	SourceState GetSourceState() const { return fSourceState; }
+	G4String GetLoadedCSFile() const { return fLoadedCSFile; }
+	G4String GetLoadedDEdxFile() const { return fLoadedDEdxFile; }
   private:
 	void DefineCommands();
-	bool LoadELossTable(std::vector<G4double>&, std::vector<G4double>&, G4String&);
-	bool LoadCrossSection(std::vector<G4double>&, std::vector<G4double>&, G4String&);
+	bool LoadELossTable(std::vector<G4double>&, std::vector<G4double>&);
+	bool LoadCrossSection(std::vector<G4double>&, std::vector<G4double>&);
 	bool BuildSigmaCDF(const std::vector<G4double>&, const std::vector<G4double>&,
 	                   std::vector<G4double>&, std::vector<G4double>&, std::vector<G4double>&);
 	G4double EvalELoss(G4double);
@@ -80,7 +80,7 @@ class ScatteringGenerator : public G4VPrimaryGenerator
 	G4double SampleThetaCM();
 	void EnsureSourceReady();
 	void EnsureFilesLoaded();
-	G4String FileSha256(const G4String&);
+	void FatalSourceError(const G4String&, const G4String&, const char*);
 	G4double BeamEnergy(G4double);
     G4GenericMessenger* fMessenger;
 	G4ThreeVector position; 
@@ -91,9 +91,9 @@ class ScatteringGenerator : public G4VPrimaryGenerator
 	G4double fBeamspot;
 	G4String fDEdxFile, fCSFile;
 	std::vector<G4double> Ene, dEdx;
-	SourceReadiness fSourceReadiness;
-	G4String fCSFileDigest;
-	G4String fDEdxFileDigest;
+	SourceState fSourceState;
+	G4String fLoadedDEdxFile;
+	G4String fLoadedCSFile;
 	std::vector<G4double> ang, sigma;
 	std::vector<G4double> cdfTheta, cdfVal, cdfPdf; // exact inverse-CDF node state
 };

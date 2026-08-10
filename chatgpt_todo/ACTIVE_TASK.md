@@ -1,18 +1,22 @@
 # Active Task
 
-- **Task ID:** `AUD-RMAX-001`
-- **Owner:** scheduled scientific-review session
-- **Session stamp:** `2026-07-26T200250Z`
-- **Initial remote main SHA:** `9c576de392c4f81aaea369b4612e16841eeef730`
-- **Policy:** `RMAX_CHECK_MUST_VALIDATE_CLAIM_STATE_AND_NEVER_INFER_RATE_FROM_OCCUPANCY`.
-- **Delivered:** evidence-aware checker v2.0.0; strict single-read WIKI/ledger provenance; canonical 43-column and unique-claim validation; blocked `CL-010` and exact `CL-011` binding; public overclaim rejection; consistent CLI status 0/1/2; atomic JSON publication; seven regressions; JSON/SVG evidence; detailed audit and immutable archive.
-- **Confirmed current flaw:** WIKI blob `841222816dc60f5fb90ada51ee027a71e0994254` still says `Rmax 2.92 MHz (data-derived, corroborates CL-010 3.05 MHz)`. The remediated checker correctly returns nonzero until that public sentence is corrected.
-- **Independent calculations:** 5% Poisson sensitivity `0.4110362912128549 MHz`; legacy `mu=0.38` sensitivity `3.045111305987686 MHz`; 3.05 MHz implies `mu=0.3806100610250359` and `P(N>=1)=0.31655566074793173`.
-- **Validation:** `py_compile` passed; focused pytest `7 passed in 0.04s`; current-like fixture `FLAWED` with one `WIKI_OVERAUTHORIZES_RMAX`; corrected fixture `VALIDATED` with zero findings; JSON/SVG parsing passed; maximum changed Python line length 93.
-- **Remote blobs:** checker `188716b5fb3982b32ba90dcb8364922caaf5ac21`; tests `80418bf8f728a6aeba8f56bd9620b7e02f8b4d7d`; renderer `30b7fea934b2381b162a98f155c3ee0dfc39bf23`; validation JSON `ceff04cc85bde02a7384d90d3587b27dc1d996d5`; SVG `f3540a2cd81582f023ae55a62345c16b048025e3`.
-- **Scientific boundary:** no live exposure, event-arrival rate, `mu_max`, recovery-failure ceiling, accepted absolute Rmax, calibration, or detector-performance quantity was produced.
-- **Unrun:** repository-wide pytest/ruff, complete Thesis QA workflow, link inventory, GitHub Actions.
-- **Archive:** `chatgpt_todo/archive/2026-07-26T200250Z_AUD-RMAX-001_CHECKER_SEMANTICS.md`.
-- **Acceptance:** checker software `VALIDATED / COMPLETE`; public WIKI claim state `FLAWED / BLOCKED`.
-- **Next:** correct the exact stale WIKI sentence, run `python scripts/check_rmax_formula.py`, and require status 0 before treating Thesis QA as green.
-- **Status:** `PARTIAL`
+- **Task ID:** `ARU-S00-PUBLICATION-TRANSACTION-REAUDIT`
+- **Owner:** hourly Atomic Research Universe audit session
+- **Session stamp:** `2026-08-10T015000Z`
+- **Initial remote main SHA:** `381c02d814cc85852fab8b8f3f999df269e13780`
+- **Primary issue:** `#1110` (reopened after deterministic re-audit)
+- **Branch:** `audit/s00-publication-transaction-reaudit`
+- **Policy:** `AUTHORITATIVE_S00_PUBLICATION_MUST_HAVE_A_CRASH_SAFE_COMMIT_POINT_AND_STABLE_PATH_IDENTITY`.
+- **Selected atom:** `staging generation -> publication commit point -> canonical report/pulse-table/manifest identity`.
+- **Confirmed defect 1:** `main()` and `atomic_publish()` construct the same `.staging-<pid>` path. `atomic_publish()` deletes that path before renaming it, so the real caller self-deletes its completed staging tree and raises `FileNotFoundError` before publication.
+- **Confirmed defect 2:** the selected pulse table is written to `staging / selected_path.name` and only the report tree is published. Current control flow does not publish to configured `data/processed/s00_selected_b_pulses.csv.gz`; the manifest serializes the ephemeral staging path instead.
+- **Confirmed defect 3:** `shutil.rmtree(target_dir)` followed by `tmp.rename(target_dir)` is not rollback-safe. A crash after/during deletion destroys the previous authorising generation and concurrent readers can observe partial/absent state.
+- **Minimal reproduction:** exact path logic produced `staging == atomic tmp: True`, then `FileNotFoundError`; staging and target were both absent after the failure in the no-prior-target fixture.
+- **Claims consequence:** `CL-001` remains `GATED`; its declared source-data/source-manifest paths must be revalidated after transaction repair. No numerical pulse count was changed in this session.
+- **Preferred repair:** immutable model-hash generations plus atomic same-filesystem replacement of a small authoritative pointer/manifest; compatibility aliases, if retained, must be separate atomic file replacements bound to the authorised immutable generation.
+- **Required tests:** exact-main staging-name integration; failure injection at commit point; post-publication configured pulse-table existence/hash; manifest path resolvability/no `.staging-<pid>`; concurrent-reader snapshot contract; CL-001 source binding.
+- **Expert votes:** data/reconstruction `BLOCK`; adversarial `REJECT closure`; validation `BLOCK`; claims/provenance `BLOCK`.
+- **Repository actions:** reopened #1110; posted detailed re-audit comment; created immutable archive `chatgpt_todo/archive/2026-08-10T015000Z_ARU-S00-PUBLICATION-TRANSACTION-REAUDIT.md` on the audit branch.
+- **Scientific boundary:** no raw beam data, Geant4 output, calibration, timing, PID, penetration, or detector-performance quantity was generated or reinterpreted.
+- **Next:** repair #1110 transaction semantics, then audit selector-v1 identity (`estimate_pedestal_v1_batched` accepts caller-selected indices while model identity says `v1_first_four_median`).
+- **Status:** `ACTIVE / FLAWED`

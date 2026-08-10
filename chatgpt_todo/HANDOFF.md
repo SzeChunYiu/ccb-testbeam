@@ -6,11 +6,12 @@
 - **Stamp:** `2026-08-10T081600Z`
 - **Owner:** hourly Atomic Research Universe audit session
 - **Initial main:** `ef4f3cbabe010285558a425fc3e92d525b1803a2`
-- **Validated merge this session:** PR #1148 exact head `820e157b0b5ec9bd0d05cb60a889a547e2228c13` had MC Validation CI run 933 = `success`; squash-merged to main as `96be3588241753601a4a96e6451527e5b3ebfe6b`.
-- **Issue:** #1149
-- **Parents:** #1147 -> #1110
-- **Branch:** `fix/s00-verified-read-snapshot`
-- **Status:** `VERIFIED_READ_IMPLEMENTED_PENDING_EXACT_HEAD_CI_AND_CONSUMER_MIGRATION`
+- **Prerequisite merge:** PR #1148 exact head `820e157b0b5ec9bd0d05cb60a889a547e2228c13` had MC Validation CI run 933 = `success`; squash-merged as `96be3588241753601a4a96e6451527e5b3ebfe6b`.
+- **Atom merge:** PR #1150 exact head `4675627807efff576cd9aa51b977b4480b64976b` had MC Validation CI run 943 = `success`; squash-merged as `83256325f5cf9021912578963fdc19f6b9257df2`.
+- **Exact CI result:** ruff gate passed; pytest reported `1257 passed, 1 skipped, 8 xfailed, 1 xpassed, 6 warnings in 90.64 s`.
+- **Issue:** #1149 remains open.
+- **Parents:** #1147 -> #1110.
+- **Status:** `SAME_BYTES_PRIMITIVE_VALIDATED_ON_MAIN / REAL_SCALE_BENCHMARK_AND_CONSUMER_MIGRATION_OPEN`
 
 ## Selected atom
 
@@ -22,9 +23,9 @@ content-bound CURRENT.json
 -> exact bytes consumed downstream
 ```
 
-The v2 pointer merged through #1148 binds the authoritative SHA-256, but the existing `resolve_artifact()` API still proves only `H(file at t_verify)=H(pointer)` and then returns a mutable pathname. A consumer that later reopens that path can observe different bytes after in-place mutation or mutation through a hard-link alias.
+The v2 pointer merged through #1148 binds the authoritative SHA-256, but `resolve_artifact()` by itself proves only `H(file at t_verify)=H(pointer)` and then returns a mutable pathname. The retained negative control demonstrates that a later path read can observe different bytes after a hard-link mutation.
 
-The required authorising-read invariant is stronger:
+The stronger authorising-read invariant is:
 
 ```text
 H(bytes actually consumed) = H(pointer snapshot)
@@ -37,38 +38,51 @@ H(bytes actually consumed) = H(pointer snapshot)
 - `st_nlink == 1` rejection: blocks one alias mechanism but not generic in-place/path races;
 - same-source-descriptor verify + rewind: collapses pathname replacement but not later writes to the same inode;
 - all-bytes memory copy: exact but potentially selected-table-sized memory;
-- **streaming private snapshot: selected.** Copy in bounded blocks to a secure temporary file and hash those exact copied blocks before the consumer can see the snapshot;
+- **streaming private snapshot: selected and now validated on main.** Copy in bounded blocks to a secure temporary file and hash those exact copied blocks before the consumer can see the snapshot;
 - filesystem snapshot/object store: stronger infrastructure option, deferred.
 
-## Work completed
+## Validated implementation
 
-1. Merged the already-successful #1148 content-identity primitive only after exact-head CI verification.
-2. Added `src/ccb_mc_validation/s00_verified_read.py`.
-3. The API reads `CURRENT.json` exactly once, validates the named generation path, opens the source with `O_NOFOLLOW` where supported, records `fstat` identity metadata, copies in bounded blocks to `tempfile.mkstemp`, hashes the exact copied bytes, fsyncs the snapshot, and yields only after digest equality.
-4. Compound suffixes such as `.csv.gz` are preserved so file-based downstream readers can retain compression inference.
-5. The yielded snapshot is made read-only for the context and removed on exit.
-6. Added deterministic tests for tamper-before-copy, tamper-after-copy, hard-link alias mutation before/after snapshot, pointer swap, cleanup, bad logical names, invalid block sizes and scratch directory errors.
-7. Added a separate hostile negative control proving the old `resolve_artifact()->later Path read` API can observe mutated bytes after successful verification.
-8. Preserved the full ARU record in `chatgpt_todo/archive/2026-08-10T081600Z_ARU-S00-VERIFIED-READ-SNAPSHOT.md`.
+`src/ccb_mc_validation/s00_verified_read.py` now provides `verified_artifact_snapshot()`:
 
-## Four sequential expert passes
+1. read `CURRENT.json` once to freeze one old-or-new authority snapshot;
+2. validate the named generation artifact;
+3. open the source with `O_NOFOLLOW` where supported and capture descriptor identity metadata;
+4. copy in bounded blocks into a secure `mkstemp` snapshot while hashing those exact copied bytes;
+5. fsync and require copied SHA-256 equality with the pointer;
+6. yield the private read-only snapshot to downstream code;
+7. remove the snapshot on context exit.
 
-- **Filesystem/reconstruction lead — ACCEPT design / pending exact-head CI.** Private snapshot semantics bind the bytes consumed rather than merely a mutable path. Remaining empirical question: real selected-table I/O overhead.
-- **Adversarial mechanism reviewer — ACCEPT local contract / BLOCK direct-path authorisation.** Hard-link and post-verification mutation are neutralised for snapshot consumers; privileged mutation of the reader's private temp/process is outside the declared threat model.
-- **Statistics/validation reviewer — ACCEPT deterministic contract / pending CI.** This is an exact byte/state-machine problem, not a beam-statistical result. The hostile old-resolver control is intentionally retained.
-- **Claims/provenance reviewer — REVISE #1110 / no CL-001 promotion.** The new primitive is not authoritative until downstream claim/study consumers are migrated to it; legacy paths and `resolve_artifact()->reopen` remain non-authorising for strict concurrency claims.
+Compound suffixes such as `.csv.gz` are preserved for file-based parsers. The implementation records the source device, inode, link count and size for provenance/diagnostics.
 
-## External authority checked
+## Deterministic falsifiers that passed exact-head CI
 
-Official Python documentation for `tempfile` documents secure temporary-file creation (`mkstemp`/`NamedTemporaryFile`) and warns against name-only `mktemp`; official `os` documentation provides `os.open`, `O_NOFOLLOW` where supported, and file-descriptor stat metadata. These sources support software semantics only.
+- source tamper before snapshot -> fail closed on digest mismatch;
+- source tamper after snapshot -> private consumed bytes unchanged;
+- hard-link alias mutation before snapshot -> fail closed;
+- hard-link alias mutation after snapshot -> private consumed bytes unchanged;
+- pointer advances from generation g1 to g2 while a snapshot is held -> reader remains bound to one complete g1 snapshot;
+- unknown logical artifact, invalid block sizes and invalid scratch directory -> controlled failures;
+- separate negative control proves `resolve_artifact()->later Path read` can observe a post-verification hard-link mutation.
 
-## Unresolved children / next work
+## Four sequential expert passes after CI
 
-1. Exact-head CI for this branch; do not merge on stale workflow results.
-2. Measure snapshot read+write overhead on the actual selected pulse table before claiming the cost is negligible.
-3. Migrate the first authoritative downstream consumer to `verified_artifact_snapshot()` and prove its parser consumes the snapshot rather than reopening the generation/legacy path.
-4. Return to #1110 producer integration once active overlapping producer work (#1146) is reconciled; report + pulse table must enter one content-bound generation before a single pointer commit.
-5. Keep #1109 pedestal physics and CL-001 scientific status separate from this filesystem/provenance closure.
+- **Filesystem/reconstruction lead — ACCEPT local same-bytes primitive.** The read contract now binds consumed bytes rather than only a pathname. Remaining empirical uncertainty is real selected-table I/O overhead.
+- **Adversarial mechanism reviewer — ACCEPT snapshot / BLOCK direct-path authorisation.** Source-path and hard-link mutations are neutralised for snapshot consumers; intentionally targeting the reader's private temp/process is outside the declared threat model.
+- **Statistics/validation reviewer — ACCEPT deterministic closure.** This is exact byte/state-machine validation, not a beam-statistical result. No physical inference was made from the CI suite.
+- **Claims/provenance reviewer — REVISE parent #1110 / no CL-001 promotion.** Authoritative consumers must migrate to the snapshot boundary before strict provenance claims can rely on it.
+
+## Coordination / unresolved work
+
+- #1149 remains open for the real selected-pulse-table I/O benchmark and authoritative consumer migration.
+- #1110 remains open: canonical report + selected pulse table still need one content-bound immutable generation and a single pointer commit after all P0 gates.
+- Active PR #1146 currently changes `scripts/01_build_pulse_table_from_root.py`; reconcile/merge/rebase that producer work before publication integration rather than creating a competing producer edit.
+- Direct legacy reads and `resolve_artifact()->reopen Path` remain non-authorising for strict concurrent-reader provenance.
+- #1109 pedestal physics and CL-001 scientific state remain separate; nothing in this filesystem work validates samples 0--3 as a physical pedestal or changes the historical pulse count.
+
+## CI observation not promoted into this atom
+
+The successful GitHub Actions job emitted a checkout post-job warning about a `.claude/worktrees/...` path missing from `.gitmodules`. The test/lint gate still concluded success. This was not used as evidence for or against the S00 read contract and should be audited separately only if it recurs or affects checkout/reproducibility.
 
 ## Scientific boundary
 

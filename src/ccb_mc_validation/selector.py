@@ -118,6 +118,56 @@ class AmplitudeResult:
 
 
 # ---------------------------------------------------------------------------
+# S00 selector identity — the fixed baseline window for the frozen v1 selector
+# ---------------------------------------------------------------------------
+
+S00_SELECTOR_V1_BASELINE_INDICES: tuple[int, ...] = (0, 1, 2, 3)
+"""The canonical baseline sample indices for the frozen v1 (``v1_first_four_median``)
+selector. This is the immutable identity of the S00 selector: it must never be
+changed, because the canonical S00 pulse table of 640,737 selected pulses was
+produced with this exact window. Any alternate window requires a distinct
+selector method ID."""
+
+
+def _validate_v1_waveform(waveform: np.ndarray) -> np.ndarray:
+    """Validate an input waveform for the frozen v1 selector.
+
+    The v1 selector's identity is ``b4 = median(waveform[0:4])``. A waveform
+    shorter than four samples silently truncates the baseline window, and a
+    nonfinite sample propagates ``NaN`` into the pedestal and amplitude. Both
+    are *typed failures* (an exception), never a normal rejected pulse — so a
+    record that cannot be evaluated under the exact v1 identity is surfaced
+    loudly instead of silently producing a biased count.
+
+    Args:
+        waveform: the raw waveform array.
+
+    Returns:
+        The waveform as a finite float64 array of length >= 4.
+
+    Raises:
+        ValueError: if the waveform has fewer than 4 samples or contains any
+            nonfinite (NaN/±Inf) sample, or is not one-dimensional.
+    """
+    wave = np.asarray(waveform, dtype=float)
+    if wave.ndim != 1:
+        raise ValueError(
+            f"v1 selector requires a 1-D waveform, got ndim={wave.ndim}"
+        )
+    if wave.size < len(S00_SELECTOR_V1_BASELINE_INDICES):
+        raise ValueError(
+            "v1 selector requires at least "
+            f"{len(S00_SELECTOR_V1_BASELINE_INDICES)} samples; got {wave.size}"
+        )
+    if not np.all(np.isfinite(wave)):
+        nonfinite = int(np.count_nonzero(~np.isfinite(wave)))
+        raise ValueError(
+            f"v1 selector requires finite samples; found {nonfinite} nonfinite"
+        )
+    return wave
+
+
+# ---------------------------------------------------------------------------
 # S00_selector_v1 — the historical, immutable first-four-median gate
 # ---------------------------------------------------------------------------
 
@@ -133,8 +183,12 @@ def estimate_pedestal_v1(waveform: np.ndarray) -> PedestalResult:
     The validity classification here is *descriptive only* — it does not alter
     the returned pedestal value. It exists so a downstream migration analysis
     can decompose which records this selector may have censored.
+
+    Raises:
+        ValueError: if the waveform has fewer than 4 samples, is not
+            one-dimensional, or contains any nonfinite (NaN/±Inf) sample.
     """
-    wave = np.asarray(waveform, dtype=float)
+    wave = _validate_v1_waveform(waveform)
     first_four = wave[0:4]
     pedestal = float(np.median(first_four))
     validity = classify_pedestal_validity(wave, first_four, pedestal)
@@ -157,12 +211,36 @@ def estimate_pedestal_v1_batched(
     axis=-1)``. Routing the batch through this named wrapper keeps the canonical
     S00 baseline estimator inside the versioned selector contract so the produced
     pulse table records the selector identity explicitly instead of an inline
-    ``np.median`` call. The forwarded baseline indices default to the historical
-    first-four samples ``[0, 1, 2, 3]``.
+    ``np.median`` call.
+
+    The baseline indices are *fixed* to the historical first-four samples
+    ``[0, 1, 2, 3]`` (``S00_SELECTOR_V1_BASELINE_INDICES``). Any caller that
+    passes a different tuple is a config mismatch and must be surfaced as a
+    typed failure, because the canonical count of 640,737 selected pulses was
+    produced with this exact window.
+
+    Raises:
+        ValueError: if ``baseline_indices`` is not exactly
+            ``S00_SELECTOR_V1_BASELINE_INDICES``, or if the input array has
+            fewer than 4 samples on the last axis, or contains nonfinite values.
     """
-    if baseline_indices is None:
-        baseline_indices = [0, 1, 2, 3]
-    return np.median(waveforms[..., np.asarray(baseline_indices)], axis=-1)
+    if baseline_indices is not None and tuple(baseline_indices) != S00_SELECTOR_V1_BASELINE_INDICES:
+        raise ValueError(
+            f"v1 selector baseline indices are fixed to "
+            f"{S00_SELECTOR_V1_BASELINE_INDICES}; got {baseline_indices!r}"
+        )
+    if waveforms.shape[-1] < len(S00_SELECTOR_V1_BASELINE_INDICES):
+        raise ValueError(
+            f"v1 selector requires at least "
+            f"{len(S00_SELECTOR_V1_BASELINE_INDICES)} samples on the last axis; "
+            f"got {waveforms.shape[-1]}"
+        )
+    if not np.all(np.isfinite(waveforms)):
+        nonfinite = int(np.count_nonzero(~np.isfinite(waveforms)))
+        raise ValueError(
+            f"v1 selector requires finite samples; found {nonfinite} nonfinite"
+        )
+    return np.median(waveforms[..., [0, 1, 2, 3]], axis=-1)
 
 
 # ---------------------------------------------------------------------------

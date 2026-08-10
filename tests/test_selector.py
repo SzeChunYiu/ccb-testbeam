@@ -10,6 +10,7 @@ import numpy as np
 import pytest
 
 from ccb_mc_validation.selector import (
+    S00_SELECTOR_V1_BASELINE_INDICES,
     AmplitudeResult,
     PedestalResult,
     PedestalValidity,
@@ -18,6 +19,7 @@ from ccb_mc_validation.selector import (
     estimate_pedestal_early_robust,
     estimate_pedestal_rolling_min,
     estimate_pedestal_v1,
+    estimate_pedestal_v1_batched,
     select_amplitude,
     selectors_available,
 )
@@ -278,6 +280,83 @@ class TestEstimatePedestalV1:
         w = np.full(18, 100.0, dtype=float)
         r = estimate_pedestal_v1(w)
         assert r.method == "v1_first_four_median"
+
+
+# ===================================================================
+# Tests: batched v1 selector + fixed baseline identity (Issue #1135)
+# ===================================================================
+
+
+class TestS00SelectorIdentity:
+    def test_fixed_baseline_indices(self) -> None:
+        """The v1 identity window is exactly (0, 1, 2, 3)."""
+        assert S00_SELECTOR_V1_BASELINE_INDICES == (0, 1, 2, 3)
+
+    def test_identity_is_immutable_tuple(self) -> None:
+        assert isinstance(S00_SELECTOR_V1_BASELINE_INDICES, tuple)
+
+
+class TestEstimatePedestalV1Batched:
+    def test_matches_scalar_on_quiet(self, quiet_waveform: np.ndarray) -> None:
+        batch = np.stack([quiet_waveform, quiet_waveform])
+        scalars = np.array(
+            [estimate_pedestal_v1(w).pedestal_adc for w in batch], dtype=float
+        )
+        batched = estimate_pedestal_v1_batched(batch)
+        assert batched.shape == (2,)
+        assert np.allclose(batched, scalars)
+
+    def test_matches_scalar_on_early_active(self, early_active_waveform: np.ndarray) -> None:
+        batch = np.stack([early_active_waveform, early_active_waveform])
+        scalars = np.array(
+            [estimate_pedestal_v1(w).pedestal_adc for w in batch], dtype=float
+        )
+        batched = estimate_pedestal_v1_batched(batch)
+        assert np.allclose(batched, scalars)
+
+    def test_default_indices_are_identity(self, quiet_waveform: np.ndarray) -> None:
+        batch = np.stack([quiet_waveform])
+        by_default = estimate_pedestal_v1_batched(batch)
+        by_explicit = estimate_pedestal_v1_batched(
+            batch, baseline_indices=list(S00_SELECTOR_V1_BASELINE_INDICES)
+        )
+        assert np.allclose(by_default, by_explicit)
+
+    def test_hostile_index_tuple_rejected(self, quiet_waveform: np.ndarray) -> None:
+        """A non-identity window must be a typed failure (Issue #1135)."""
+        batch = np.stack([quiet_waveform])
+        for hostile in ([1, 2, 3, 4], [0, 1, 2], [0, 1, 2, 3, 4], []):
+            with pytest.raises(ValueError, match="baseline indices are fixed"):
+                estimate_pedestal_v1_batched(batch, baseline_indices=hostile)
+
+    def test_short_axis_rejected(self) -> None:
+        batch = np.zeros((2, 3), dtype=float)  # only 3 samples on last axis
+        with pytest.raises(ValueError, match="at least"):
+            estimate_pedestal_v1_batched(batch)
+
+    def test_nonfinite_rejected(self) -> None:
+        batch = np.full((2, 18), 100.0, dtype=float)
+        batch[0, 5] = np.nan
+        with pytest.raises(ValueError, match="finite"):
+            estimate_pedestal_v1_batched(batch)
+
+
+class TestValidateV1Waveform:
+    def test_short_waveform_is_typed_failure(self) -> None:
+        w = np.full(3, 100.0, dtype=float)
+        with pytest.raises(ValueError, match="at least"):
+            estimate_pedestal_v1(w)
+
+    def test_nonfinite_is_typed_failure(self) -> None:
+        w = np.full(18, 100.0, dtype=float)
+        w[3] = np.nan
+        with pytest.raises(ValueError, match="finite"):
+            estimate_pedestal_v1(w)
+
+    def test_2d_waveform_rejected(self) -> None:
+        w = np.zeros((2, 18), dtype=float)
+        with pytest.raises(ValueError, match="1-D"):
+            estimate_pedestal_v1(w)
 
 
 # ===================================================================

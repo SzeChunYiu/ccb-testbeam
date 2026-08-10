@@ -1,7 +1,7 @@
 """Fail-closed authorization of raw-input bytes for scientific consumers.
 
 A provenance row that was produced from one stable byte stream does not by
-itself authorize a later independent pathname reopen.  This module binds a
+itself authorize a later independent pathname reopen. This module binds a
 consumer to the same manifest content identity and descriptor identity before
 exposing a seekable binary stream.
 """
@@ -32,7 +32,8 @@ _REQUIRED_INTEGER_FIELDS = (
 
 def _manifest_identity(row: Mapping[str, object]) -> dict[str, object]:
     """Parse the strict identity subset used by the consumer boundary."""
-    missing = [name for name in ("file", "sha256", *_REQUIRED_INTEGER_FIELDS) if name not in row]
+    required = ("file", "sha256", *_REQUIRED_INTEGER_FIELDS)
+    missing = [name for name in required if name not in row]
     if missing:
         raise RawInputAuthorizationError(
             "raw input manifest row is missing fields: " + ", ".join(missing)
@@ -40,7 +41,9 @@ def _manifest_identity(row: Mapping[str, object]) -> dict[str, object]:
 
     file_value = row["file"]
     if not isinstance(file_value, str) or not file_value:
-        raise RawInputAuthorizationError("raw input manifest file must be a nonempty string")
+        raise RawInputAuthorizationError(
+            "raw input manifest file must be a nonempty string"
+        )
 
     digest = row["sha256"]
     if (
@@ -118,13 +121,13 @@ def verified_raw_input_stream(
 
     The function opens ``path`` exactly once with ``O_NOFOLLOW``, verifies the
     opened regular file against the manifest digest and descriptor metadata,
-    then yields a duplicate descriptor as a binary file-like object.  The
+    then yields a duplicate descriptor as a binary file-like object. The
     original descriptor remains open as a guard and is re-checked after the
-    consumer finishes.  Any mutation or alias-state change during the consumer
+    consumer finishes. Any mutation or alias-state change during the consumer
     transaction fails closed before that transaction may be treated as
     authorizing scientific output.
 
-    The bounded contract assumes ordinary filesystem metadata semantics.  It
+    The bounded contract assumes ordinary filesystem metadata semantics. It
     does not claim protection from a privileged hostile writer capable of
     changing bytes while also forging/restoring inode metadata.
     """
@@ -154,7 +157,9 @@ def verified_raw_input_stream(
     try:
         before = os.fstat(descriptor)
         if not stat.S_ISREG(before.st_mode):
-            raise RawInputAuthorizationError(f"raw input is not a regular file: {path}")
+            raise RawInputAuthorizationError(
+                f"raw input is not a regular file: {path}"
+            )
         if _descriptor_identity(before) != _expected_identity(expected):
             raise RawInputAuthorizationError(
                 f"raw input descriptor identity does not match manifest: {path}"
@@ -173,19 +178,17 @@ def verified_raw_input_stream(
 
         os.lseek(descriptor, 0, os.SEEK_SET)
         consumer_descriptor = os.dup(descriptor)
-        try:
-            with os.fdopen(consumer_descriptor, "rb") as stream:
-                try:
-                    yield stream
-                except BaseException:
-                    raise
-                else:
-                    final = os.fstat(descriptor)
-                    if _descriptor_identity(final) != _descriptor_identity(verified):
-                        raise RawInputAuthorizationError(
-                            f"raw input changed while consumer held authorized stream: {path}"
-                        )
-        except BaseException:
-            raise
+        with os.fdopen(consumer_descriptor, "rb") as stream:
+            try:
+                yield stream
+            except BaseException:
+                raise
+            else:
+                final = os.fstat(descriptor)
+                if _descriptor_identity(final) != _descriptor_identity(verified):
+                    raise RawInputAuthorizationError(
+                        "raw input changed while consumer held authorized stream: "
+                        f"{path}"
+                    )
     finally:
         os.close(descriptor)

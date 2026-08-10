@@ -1,62 +1,77 @@
 # Latest Handoff
 
-## Selected atom: exact 190 MeV p-d cross-section source identity
+## Selected atom: configured scattering-source readiness (#1182)
 
-Protected `main` at the branch point is `d8c80ad625f415220d92f3cbc761b570b21fe92f`. Before starting this atom, PR #1177 exact head `6f326e83c0a0b9d95ce7e99a01b332d7af7742e3` was verified against MC Validation CI run `31410543289` (`success`) and squash-merged. The current work is on branch `audit/mc-sigma-table-provenance` and is not authorising until its own exact-head CI succeeds.
+Protected `main` at the branch point is `fa62e8bb6ce7de10f840ebfa016eaa40cd9f74ec`, where PR #1180 already bound the 190 MeV p-d source table to its primary-literature identity and gated CL-021. This session reviewed the current deterministic sampler repair in PR #1181 and then selected a distinct runtime-state child, `ARU-MC-CS-WORKER-INIT-001`.
 
-### Primary-literature and byte closure
+### Parent sampler status
 
-`geant4/src_patch/sigma_pd_cm_190.txt` is 640 bytes, 28 rows and SHA-256 `0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc`. That digest exactly matches the cross-section table recorded by both historical S21 and S21b.
+PR #1181 exact head is `edf71180b2f622b7cf16a8c1243d2140c2369eb9`. Its bounded numerical repair declares `linear_node_pdf_exact_inverse_v1` on `measured_table_support_truncate_v1`, with unit direct-sampling event weight. One exact-head MC Validation run, `31415757686`, completed successfully. A second required `test` check on the same head, run `31415753649`, was still in progress when polled. A squash-merge attempt was rejected by branch protection with `Required status check "test" is in progress`; no bypass was attempted. Keep #1178 open even after a future merge because Python CI does not compile the Geant4 source.
 
-All 28 triples match Table VI of K. Ermisch et al., *Systematic investigation of three-nucleon force effects in elastic scattering of polarized protons from deuterons at intermediate energies*, *Physical Review C* **71**, 064004 (2005), DOI `10.1103/PhysRevC.71.064004`.
+### New atomic contract
 
-The retained columns are exactly:
+The selected transition is
 
-1. CM scattering angle `theta_cm` in degrees;
-2. differential cross section `dσ/dΩ` in mb/sr;
-3. statistical uncertainty on `dσ/dΩ` in mb/sr.
+`messenger-selected files -> validate/parse -> per-generator-instance readiness -> BeamEnergy + SampleThetaCM -> primary event`.
 
-The measured support retained by the file is 26.49–169.78 degrees CM. The paper reports 3% point-to-point systematic uncertainty and total systematic uncertainty <4.5% at 190 MeV; those systematic terms are not encoded in the repository's three-column file.
+Required states are
 
-This eliminates the previous “perhaps the table is actually lab-frame” escape hypothesis in #1053. Combined with the retained S21b 30k-event closure (`PrimaryWeight = sigma(theta_lab)`, lab-angle R² ~ 0.999999999993), the legacy source assigned a **CM cross-section table at a lab angle**. That is a confirmed frame misuse. It still does not prove the raw `PrimaryWeight` vector's event-carrier semantics for every historical product, so #880/#1053 remain open.
+`UNINITIALIZED -> UNCONFIGURED_UNIFORM | CONFIGURED_READY | FATAL`.
 
-A new sidecar `geant4/src_patch/sigma_pd_cm_190.source.json` binds the DOI/Table-VI projection, frame, units, support, uncertainty meaning and historical digest identity. Focused tests freeze the exact 640 bytes and 28 source rows; the raw table itself is unchanged.
+For generator instance/worker `j`, event generation must satisfy
 
-### Adversarial child: current direct sampler is not exact for its own declared node PDF
+`Generate_j(e) => Ready_j`.
 
-The current direct source has the correct high-level campaign class: it calls `SampleThetaCM()` and leaves primary event weights at unity, avoiding double-counting the target law. But the exact numerical implementation is not yet closed.
+If a CS source is configured, `Ready_j` must mean `CONFIGURED_READY`. An invalid configured source must never become the same observable state as an explicitly unconfigured uniform proposal.
 
-`BuildSigmaCDF()` assigns node density `p_i = sigma_i sin(theta_i)` and integrates interval masses by trapezoids. `SampleThetaCM()` then linearly interpolates theta against cumulative mass. For interval width `d` and node values `a,b`, the trapezoid construction implies a linearly varying density, but the inverse generates a constant density within that interval. The exact CDF difference is
+### Executed source-level falsifier
 
-`Delta(x) = (b-a) x (1-x/d) / (2 Z)`,
+At current main and still at the reviewed #1181 head for the relevant paths:
 
-with maximum `|b-a| d/(8 Z)` at the midpoint.
+- `GeneratePrimaryVertex()` calls `LoadFiles()` only when `event->GetEventID()==0`, then immediately uses `BeamEnergy()`.
+- `BeamEnergy()->EvalELoss()` assumes a populated stopping table; an empty table can reach `dEdx[0]` and `Ene[0]`.
+- `SampleThetaCM()` uses a uniform fallback for empty CDF state, so an invalid configured source is not distinguished by state from intentional no-source generation.
+- required input open failure uses `exit(0)`, allowing shell-success semantics for a failed scientific input.
+- cross-section row parsing does not verify `sscanf` conversion count.
+- no explicit idempotent per-instance readiness flag/state is present; repeated loaders append mutable vectors.
 
-For the exact 28-row table, the repository-resident deterministic audit finds:
+The branch `audit/mc-source-readiness-contract` adds an executable deterministic static audit, focused tests, `results/research/scattering_source_readiness_v1.json`, and the immutable ARU archive. Its current verdict is `BLOCK_RUNTIME_AUTHORIZATION`. This is static source-contract evidence only, not a Geant4 execution result.
 
-- normalization `1.8240017962546702` under the current trapezoid construction;
-- current nominal probability below measured support: `0.3394630084684921`;
-- above measured support: `0.003869284858232269`;
-- total outside measured support: **`0.3433322933267244`**;
-- maximum CDF self-discrepancy versus the linearly varying node PDF: **`0.08486575211712302`** at 13.245 degrees.
+### Geant4 lifecycle evidence and unresolved condition
 
-These are deterministic software/numerical results, not Monte Carlo or detector validation. They are preserved in `tools/audit/research_sigma_cm_sampler_contract.py`, `tests/test_sigma_cm_sampler_contract.py`, and `results/research/sigma_cm_sampler_contract_v1.json`.
+Official Geant4 Application Developers documentation states that worker user actions are constructed per worker in MT mode and that event numbers processed by a worker are not sequential. Thus a global event-ID-zero predicate is not a valid general per-worker initialization primitive.
 
-### Four role-separated disposition
+However, this repository does not currently carry immutable evidence for the exact hibeam_g4 production run-manager choice, Geant4 MT build flag and worker count. The historical S21 review warned about this same event-zero/mutable-vector risk but did not establish that production was actually multi-worker. Therefore the MT failure mechanism remains a **surviving conditional hypothesis**, not a claimed historical failure.
 
-- **Source/kinematics lead — ACCEPT table provenance / REVISE source authorization.** Full row-level primary-source match eliminates the lab-table hypothesis. Residual: interpolation/support physics and source covariance.
-- **Adversarial mechanism reviewer — BLOCK exact-sampler wording.** Off-node CDF algebra falsifies equivalence of trapezoid integration plus linear-theta inversion to the linearly varying node PDF; the first interval alone gives the 0.08487 discrepancy.
-- **Independent statistics/validation reviewer — ACCEPT deterministic closure / BLOCK uncertainty-free source inference.** Table identity is exact; source systematics/covariance remain absent from the generator contract.
-- **Claims/provenance reviewer — REVISE CL-021 / BLOCK detector promotion.** `docs/validation/CL-021_scattering_model.md` is revised on the branch so historical B2/B8 central-value numbers remain nonauthorising diagnostics rather than proof that the current source model is fully physical.
+### Mechanisms disposition
 
-### Issues and child atoms
+- **H1 event-zero initialization:** survives only for a proven strictly sequential executable; rejected as a general worker-local contract.
+- **H2 idempotent per-instance lazy readiness after messenger configuration:** preferred implementation class.
+- **H3 constructor/run-hook initialization:** possible only if the messenger configuration lifecycle is proven correct.
+- **H4 configured-source failure -> uniform:** rejected because it silently changes the proposal measure.
+- **H5 missing source -> `exit(0)`:** rejected because failed scientific input cannot report successful process completion.
 
-- #1053 updated with exact source/frame/units/digest evidence.
-- #1178 (`ARU-MC-CS-SAMPLER-001`) opened for interpolation/inverse/support semantics, analytic CDF closure and seeded generator-level validation.
-- #1179 (`ARU-MC-CS-UNCERTAINTY-001`) opened for source statistical/systematic covariance and nuisance propagation.
+### Four sequential reviews
 
-No beam ROOT data were opened, no production Geant4 campaign was run, and no real ESS, weighted spectrum, p-value, PID, penetration, timing, energy, pile-up, rate, or detector-performance quantity was regenerated or promoted.
+- **Source/runtime lead — REVISE / BLOCK runtime authorisation.** Strongest counter-hypothesis is a guaranteed sequential hibeam_g4 executable. Exact run-manager/build/runtime provenance is required to eliminate or retain the worker-init mechanism.
+- **Adversarial mechanism reviewer — REJECT fail-open semantics.** Empty CDF uniform fallback, `exit(0)`, unchecked parsing and empty stopping-table dereference are independent of the sampler's inverse-CDF accuracy.
+- **Independent validation reviewer — ACCEPT deterministic source falsifier / BLOCK physics inference.** No stochastic test is needed for this state-contract defect, but compiled fault injection and seeded runtime closure remain mandatory.
+- **Claims/provenance reviewer — BLOCK CL-021 runtime promotion.** Green Python CI for #1181 does not compile or execute the generator, and this child must remain visible rather than being averaged into the successful inverse-CDF review.
+
+### Required implementation and experiments
+
+1. Implement an explicit per-instance readiness state reached before any call to `BeamEnergy()` or configured `SampleThetaCM()`.
+2. Parse stopping/source tables transactionally with checked row conversion, finite/domain/order/cardinality validation and idempotence.
+3. Make required stopping-data and configured-CS failures fatal with unmistakable non-success run semantics; preserve uniform sampling only for explicit `CSFile=null` mode.
+4. Bind the exact hibeam_g4 `main`, run-manager construction, Geant4 build flags and worker count for representative production runs.
+5. Execute missing/empty/one-row/malformed/nonfinite/negative/duplicate/decreasing/all-zero source fixtures plus analogous stopping-table faults.
+6. Run seeded compiled generator-only sequential closure and multi-worker closure if supported by the exact executable; record generator commit, Geant4 version/build mode, worker count, seed(s), event count, table hashes and mode IDs.
+7. Serialize readiness/source mode and the input/model identities in the production manifest before downstream MC products are authorising.
+
+### Claim and data boundary
+
+No beam ROOT data were opened. No production Geant4 sample was generated. No angular distribution, source uncertainty, ESS, p-value, PID, penetration, timing, energy, pile-up, rate or detector-performance result was regenerated or promoted. #1179 remains the separate source covariance/systematics atom; #880/#1053 remain the historical `PrimaryWeight` carrier/measure dependencies.
 
 ### Next
 
-Require exact-head CI on this branch and merge only if the regression/lint gate passes. Then #1178 is the highest-value executable atom: make `cross_section_interpolation_mode` and `cross_section_support_mode` explicit, implement an exact/numerically controlled inverse CDF, test off-node closure, and only then run seeded generator-only MC. #1179 follows for source uncertainty. Immutable production `PrimaryWeight` carrier evidence under #880/#1053 remains a separate prerequisite for #1169's historical weighted event path.
+Allow #1181 to merge only after every required exact-head check is complete. Then implement #1182 on top of the exact-inverse source, run the compiled hostile-input/lifecycle matrix, and bind exact runtime threading provenance. Once readiness and sampler execution are stable, move to #1179 source statistical/systematic nuisance propagation and then downstream truth/detector-response sensitivity.

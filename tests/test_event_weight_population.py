@@ -37,6 +37,7 @@ def test_nonempty_all_zero_population_fails_closed() -> None:
         [1.0, -np.inf],
         [[1.0], [2.0]],
         [True, False],
+        [True, 1.0],
         [1.0 + 2.0j],
         ["1.0", "2.0"],
     ),

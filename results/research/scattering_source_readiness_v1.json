@@ -14,9 +14,10 @@
   },
   "external_install_contract": {
     "path": "geant4/src_patch/patch_scatter.py",
-    "mode": "exact_tracked_source_atomic_install_v1",
+    "mode": "exact_tracked_source_per_file_atomic_install_v1",
     "target_root": "EXPLICIT_REQUIRED_ARGUMENT",
-    "post_install_verification": "EXACT_BYTE_EQUALITY",
+    "post_install_verification": "EXACT_PAIR_BYTE_EQUALITY_ON_SUCCESSFUL_RETURN",
+    "pair_crash_atomicity": "NOT_PROVIDED_REVERIFY_BEFORE_BUILD_REQUIRED",
     "status": "STATIC_PARITY_IMPLEMENTED_COMPILED_VALIDATION_REQUIRED"
   },
   "source_model": {
@@ -57,6 +58,7 @@
     "compiled hostile source/stopping-table controls",
     "exact hibeam_g4 commit/run-manager/thread-mode provenance",
     "real dedx_p_in_CD2.txt parser compatibility and digest",
+    "build-front-door re-verification of installed source/header pair after possible interrupted deployment",
     "production manifest source/readiness/input-hash serialization",
     "messenger lifecycle and worker configuration propagation"
   ],

@@ -92,7 +92,10 @@ def test_product_validator_accepts_nested_trigger_event_universe():
     validate_event_stave_product(**_valid_product())
 
 
-@pytest.mark.parametrize("mutation", ["duplicate_id", "broken_subset", "outside_ii", "charged_gt_total"])
+@pytest.mark.parametrize(
+    "mutation",
+    ["duplicate_id", "broken_subset", "outside_ii", "charged_gt_total"],
+)
 def test_product_validator_rejects_identity_topology_and_measurand_corruption(mutation):
     p = _valid_product()
     if mutation == "duplicate_id":

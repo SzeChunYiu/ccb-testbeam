@@ -2,10 +2,13 @@
 """Install the reviewed ScatteringGenerator sources into an external hibeam_g4 tree.
 
 The tracked ``ScatteringGenerator.cc/.hh`` files are the authoritative patch
-payload.  Installing those exact bytes avoids a split-brain state where the
+payload. Installing those exact bytes avoids a split-brain state where an
 external text-rewrite helper retains an older sampler/readiness mechanism than
-the reviewed source.  A successful install is still only a source-deployment
-step: the external Geant4 tree must be compiled and runtime-tested separately.
+the reviewed source. The destination root is mandatory so a run cannot silently
+patch a historical checkout chosen by a hard-coded path.
+
+A successful install is still only a source-deployment step: the external
+Geant4 tree must be provenance-bound, compiled, and runtime-tested separately.
 """
 
 from __future__ import annotations
@@ -18,7 +21,6 @@ from pathlib import Path
 
 
 HERE = Path(__file__).resolve().parent
-DEFAULT_SRC_ROOT = Path("/projects/hep/fs10/shared/nnbar/billy/hg4_src_scatter")
 PAYLOADS = {
     Path("include/ScatteringGenerator.hh"): HERE / "ScatteringGenerator.hh",
     Path("src/ScatteringGenerator.cc"): HERE / "ScatteringGenerator.cc",
@@ -76,17 +78,18 @@ def main() -> None:
     parser.add_argument(
         "--src-root",
         type=Path,
-        default=DEFAULT_SRC_ROOT,
-        help="external hibeam_g4 source root containing include/ and src/",
+        required=True,
+        help="exact external hibeam_g4 source root containing include/ and src/",
     )
     args = parser.parse_args()
 
     records = install_reviewed_sources(args.src_root)
     for record in records:
-        print(
-            "OK {path}: bytes={bytes} sha256={sha256}".format(**record)
-        )
-    print("DONE: exact tracked ScatteringGenerator source installed; compile/runtime validation still required")
+        print("OK {path}: bytes={bytes} sha256={sha256}".format(**record))
+    print(
+        "DONE: exact tracked ScatteringGenerator source installed; "
+        "compile/runtime validation still required"
+    )
 
 
 if __name__ == "__main__":

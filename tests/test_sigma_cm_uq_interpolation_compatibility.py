@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import pytest
@@ -12,11 +13,16 @@ from tools.audit.research_sigma_cm_uq_interpolation_compatibility import (
 
 ROOT = Path(__file__).resolve().parents[1]
 TABLE = ROOT / "geant4/src_patch/sigma_pd_cm_190.txt"
+RESULT = ROOT / "results/research/sigma_cm_uq_interpolation_compatibility_v1.json"
 
 
 @pytest.fixture(scope="module")
 def audit() -> dict[str, object]:
     return audit_compatibility(TABLE)
+
+
+def test_committed_result_is_exact_audit_serialization(audit: dict[str, object]) -> None:
+    assert json.loads(RESULT.read_text(encoding="utf-8")) == audit
 
 
 def test_current_mode_reproduces_prior_uq_contract(audit: dict[str, object]) -> None:

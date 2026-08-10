@@ -153,7 +153,11 @@ def read_events(path: Path, tree_name: str, observables: list[str]) -> dict[str,
         missing = sorted(set(required) - set(tree.keys()))
         if missing:
             raise KeyError(f"{path} missing branches: {missing}")
-        arrays = tree.arrays(required, library="np", how=dict)
+        arrays = tree.arrays(required, library="np")
+        if isinstance(arrays, np.ndarray) and arrays.dtype.names is not None:
+            arrays = {name: np.asarray(arrays[name]) for name in arrays.dtype.names}
+        elif isinstance(arrays, np.ndarray):
+            arrays = {required[0]: arrays}
     return {str(name): np.asarray(values) for name, values in arrays.items()}
 
 

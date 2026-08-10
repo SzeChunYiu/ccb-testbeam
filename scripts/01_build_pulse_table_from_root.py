@@ -22,6 +22,8 @@ import pandas as pd
 import uproot
 import yaml
 
+from ccb_mc_validation.selector import estimate_pedestal_v1_batched
+
 
 def load_config(path: Path) -> dict:
     with path.open("r", encoding="utf-8") as handle:
@@ -244,7 +246,10 @@ def sorted_file(sorted_b_dir: Path, run: int) -> Path:
 
 
 def pulse_quantities(waveforms: np.ndarray, baseline_indices: List[int]) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
-    baseline = np.median(waveforms[..., baseline_indices], axis=-1)
+    # Baseline via the versioned S00 selector (v1 = first-four median), so the
+    # produced pulse table records the canonical estimator identically instead
+    # of an inline np.median call (Issue #1109).
+    baseline = estimate_pedestal_v1_batched(waveforms, baseline_indices)
     corrected = waveforms - baseline[..., None]
     amplitude = corrected.max(axis=-1)
     peak_sample = corrected.argmax(axis=-1)
@@ -958,7 +963,7 @@ def main() -> int:
     model_identity = {
         "effective_amplitude_cut_adc": float(cut),
         "amplitude_cut_source": cut_source,
-        "selector": "01_build_pulse_table_from_root.py",
+        "selector": "ccb_mc_validation.selector v1_first_four_median",
         "config_digest": model_id,
         "source_commit": src_commit,
     }

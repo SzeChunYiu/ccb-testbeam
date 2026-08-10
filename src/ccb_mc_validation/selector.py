@@ -26,17 +26,74 @@ Design contract (acceptance criteria from the issue):
    decomposable by mechanism (H1-H8) via :func:`classify_pedestal_validity`.
 3. Estimators are pure functions over a waveform array, so they are testable
    against known-answer fixtures without raw ROOT data.
-4. The historical selector is preserved byte-for-byte as ``v1``; candidate
-   estimators are additive and never replace it in the canonical count path
-   until a migration decision is recorded.
+4. The historical selector is preserved as one exact mathematical map under
+   ``v1``; candidate estimators are additive and never replace it in the
+   canonical count path until a migration decision is recorded.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import Enum
+from typing import Iterable
 
 import numpy as np
+
+
+S00_SELECTOR_V1_ID = "v1_first_four_median"
+S00_SELECTOR_V1_BASELINE_INDICES = (0, 1, 2, 3)
+
+
+class SelectorInputError(ValueError):
+    """Controlled failure for inputs outside a named selector's valid domain."""
+
+
+def _validate_v1_baseline_indices(
+    baseline_indices: Iterable[int] | None,
+) -> tuple[int, int, int, int]:
+    """Return the frozen v1 baseline tuple or reject any semantic mutation.
+
+    The optional argument is retained only for backwards-compatible call sites.
+    It is an assertion of the named model identity, not a free selector
+    parameter. Alternate baseline windows require a separately versioned model.
+    """
+    if baseline_indices is None:
+        return S00_SELECTOR_V1_BASELINE_INDICES
+    try:
+        indices = tuple(baseline_indices)
+    except TypeError as exc:
+        raise SelectorInputError(
+            "v1 baseline indices must be exactly (0, 1, 2, 3)"
+        ) from exc
+    if indices != S00_SELECTOR_V1_BASELINE_INDICES:
+        raise SelectorInputError(
+            f"{S00_SELECTOR_V1_ID} is frozen to baseline indices "
+            f"{S00_SELECTOR_V1_BASELINE_INDICES}; got {indices!r}. "
+            "Use a separately versioned selector for another baseline window."
+        )
+    return S00_SELECTOR_V1_BASELINE_INDICES
+
+
+def _validate_v1_waveforms(waveforms: np.ndarray, *, scalar: bool) -> np.ndarray:
+    """Validate the closed numerical domain of the historical v1 map."""
+    wave = np.asarray(waveforms, dtype=float)
+    if scalar and wave.ndim != 1:
+        raise SelectorInputError(
+            f"{S00_SELECTOR_V1_ID} scalar input must be 1-D; got shape {wave.shape}"
+        )
+    if not scalar and wave.ndim < 1:
+        raise SelectorInputError(
+            f"{S00_SELECTOR_V1_ID} batched input needs a sample axis; got {wave.shape}"
+        )
+    if wave.shape[-1] < len(S00_SELECTOR_V1_BASELINE_INDICES):
+        raise SelectorInputError(
+            f"{S00_SELECTOR_V1_ID} needs at least four samples; got shape {wave.shape}"
+        )
+    if not np.isfinite(wave).all():
+        raise SelectorInputError(
+            f"{S00_SELECTOR_V1_ID} requires finite waveform samples"
+        )
+    return wave
 
 
 class PedestalValidity(Enum):
@@ -89,8 +146,12 @@ class PedestalResult:
     method: str
     validity: PedestalValidity
     pedestal_adc: float = float("nan")
-    first_four_samples: np.ndarray = field(default_factory=lambda: np.array([], dtype=float))
-    full_waveform: np.ndarray = field(default_factory=lambda: np.array([], dtype=float))
+    first_four_samples: np.ndarray = field(
+        default_factory=lambda: np.array([], dtype=float)
+    )
+    full_waveform: np.ndarray = field(
+        default_factory=lambda: np.array([], dtype=float)
+    )
 
 
 @dataclass
@@ -133,13 +194,17 @@ def estimate_pedestal_v1(waveform: np.ndarray) -> PedestalResult:
     The validity classification here is *descriptive only* — it does not alter
     the returned pedestal value. It exists so a downstream migration analysis
     can decompose which records this selector may have censored.
+
+    Inputs outside the named map's closed domain (non-1-D, fewer than four
+    samples, or non-finite ADC values) raise :class:`SelectorInputError` rather
+    than silently becoming ordinary physics rejections.
     """
-    wave = np.asarray(waveform, dtype=float)
-    first_four = wave[0:4]
+    wave = _validate_v1_waveforms(waveform, scalar=True)
+    first_four = wave[list(S00_SELECTOR_V1_BASELINE_INDICES)]
     pedestal = float(np.median(first_four))
     validity = classify_pedestal_validity(wave, first_four, pedestal)
     return PedestalResult(
-        method="v1_first_four_median",
+        method=S00_SELECTOR_V1_ID,
         validity=validity,
         pedestal_adc=pedestal,
         first_four_samples=first_four.copy(),
@@ -148,21 +213,19 @@ def estimate_pedestal_v1(waveform: np.ndarray) -> PedestalResult:
 
 
 def estimate_pedestal_v1_batched(
-    waveforms: np.ndarray, baseline_indices: list[int] | None = None
+    waveforms: np.ndarray,
+    baseline_indices: Iterable[int] | None = None,
 ) -> np.ndarray:
-    """Batched form of the historical v1 selector for ``(..., n_samples)`` arrays.
+    """Batched form of the frozen historical v1 selector.
 
-    ``estimate_pedestal_v1`` is ``median(waveform[0:4])``; for a batch of
-    waveforms the same computation is ``np.median(waveforms[..., baseline_indices],
-    axis=-1)``. Routing the batch through this named wrapper keeps the canonical
-    S00 baseline estimator inside the versioned selector contract so the produced
-    pulse table records the selector identity explicitly instead of an inline
-    ``np.median`` call. The forwarded baseline indices default to the historical
-    first-four samples ``[0, 1, 2, 3]``.
+    ``baseline_indices`` is retained only as a compatibility assertion for
+    existing callers. Any value other than exactly ``(0, 1, 2, 3)`` raises
+    :class:`SelectorInputError`. The v1 identity therefore cannot execute a
+    different mathematical map through the batched production path.
     """
-    if baseline_indices is None:
-        baseline_indices = [0, 1, 2, 3]
-    return np.median(waveforms[..., np.asarray(baseline_indices)], axis=-1)
+    indices = _validate_v1_baseline_indices(baseline_indices)
+    wave = _validate_v1_waveforms(waveforms, scalar=False)
+    return np.median(wave[..., list(indices)], axis=-1)
 
 
 # ---------------------------------------------------------------------------
@@ -185,7 +248,11 @@ def estimate_pedestal_dynamic_range(waveform: np.ndarray) -> PedestalResult:
     """
     wave = np.asarray(waveform, dtype=float)
     pedestal = float(np.min(wave))
-    validity = PedestalValidity.QUIET_VALID if _is_saturated(wave) is False else PedestalValidity.SATURATED
+    validity = (
+        PedestalValidity.QUIET_VALID
+        if _is_saturated(wave) is False
+        else PedestalValidity.SATURATED
+    )
     return PedestalResult(
         method="dynamic_range",
         validity=validity,
@@ -215,11 +282,16 @@ def estimate_pedestal_rolling_min(waveform: np.ndarray) -> PedestalResult:
     dyn = float(np.max(wave) - np.min(wave))
     if _is_saturated(wave):
         validity = PedestalValidity.SATURATED
-    elif first_four.size > 0 and float(np.min(wave)) < float(np.min(first_four)) - 300.0:
-        # The minimum lands on a strong negative excursion below the early
-        # window, so the pedestal tracks the bipolar dip rather than baseline.
+    elif (
+        first_four.size > 0
+        and float(np.min(wave)) < float(np.min(first_four)) - 300.0
+    ):
         validity = PedestalValidity.BIPOLAR_OR_POLARITY_UNKNOWN
-    elif first_four.size > 0 and dyn > 0 and (float(np.max(first_four)) - float(np.min(first_four))) / dyn > 0.9:
+    elif (
+        first_four.size > 0
+        and dyn > 0
+        and (float(np.max(first_four)) - float(np.min(first_four))) / dyn > 0.9
+    ):
         validity = PedestalValidity.NO_PEDESTAL_IDENTIFIABLE
     else:
         validity = PedestalValidity.QUIET_VALID
@@ -244,7 +316,10 @@ def estimate_pedestal_early_robust(waveform: np.ndarray) -> PedestalResult:
     wave = np.asarray(waveform, dtype=float)
     pedestal = float(np.percentile(wave, 10))
     dyn = float(np.max(wave) - np.min(wave))
-    if dyn > 0 and (np.percentile(wave, 90) - np.percentile(wave, 10)) / dyn > 0.9:
+    if (
+        dyn > 0
+        and (np.percentile(wave, 90) - np.percentile(wave, 10)) / dyn > 0.9
+    ):
         validity = PedestalValidity.NO_PEDESTAL_IDENTIFIABLE
     else:
         validity = PedestalValidity.QUIET_VALID
@@ -302,7 +377,11 @@ def classify_pedestal_validity(
     # H3: a strong negative excursion (polarity opposite to the positive pulse)
     # makes the pedestal polarity ambiguous.
     dyn = float(np.max(wave) - np.min(wave))
-    if dyn > amp_cut_adc and float(np.min(wave)) < float(np.min(first_four)) - 0.5 * amp_cut_adc:
+    if (
+        dyn > amp_cut_adc
+        and float(np.min(wave))
+        < float(np.min(first_four)) - 0.5 * amp_cut_adc
+    ):
         return PedestalValidity.BIPOLAR_OR_POLARITY_UNKNOWN
 
     median = float(np.median(first_four))
@@ -322,9 +401,9 @@ def classify_pedestal_validity(
         return PedestalValidity.EARLY_ACTIVE
 
     # H2: a recovery tail — the first samples are above the later quiet portion
-    # AND fall monotonically (prior-pulse baseline relaxation, not noise). Requiring
-    # a monotone descent keeps a merely-noisy early region (H5/H7/H8) from being
-    # mislabelled as recovery.
+    # AND fall monotonically (prior-pulse baseline relaxation, not noise).
+    # Requiring a monotone descent keeps a merely-noisy early region
+    # (H5/H7/H8) from being mislabelled as recovery.
     if (
         wave.size >= 8
         and median > float(np.median(wave[-4:])) + 150.0
@@ -334,10 +413,15 @@ def classify_pedestal_validity(
         return PedestalValidity.RECOVERY_CONTAMINATED
 
     # H4: a single jagged/dropout sample among otherwise-quiet first four.
-    # The non-outlier samples must be tightly clustered (ordered[2] - ordered[0] small)
-    # so a rising ramp (H1) or falling tail (H2) is not misclassified as jagged.
+    # The non-outlier samples must be tightly clustered (ordered[2]-ordered[0]
+    # small) so a rising ramp (H1) or falling tail (H2) is not misclassified.
     ordered = np.sort(first_four)
-    if ordered.size >= 4 and (ordered[3] - ordered[2]) > 150.0 and (ordered[2] - ordered[0]) < 150.0 and early_span > 150.0:
+    if (
+        ordered.size >= 4
+        and (ordered[3] - ordered[2]) > 150.0
+        and (ordered[2] - ordered[0]) < 150.0
+        and early_span > 150.0
+    ):
         return PedestalValidity.JAGGED
 
     # H5/H7/H8: the early region is too noisy relative to a clean baseline for
@@ -379,7 +463,9 @@ def select_amplitude(
         "early_robust_p10": estimate_pedestal_early_robust,
     }
     if method not in estimators:
-        raise KeyError(f"unknown selector method {method!r}; choices={sorted(estimators)}")
+        raise KeyError(
+            f"unknown selector method {method!r}; choices={sorted(estimators)}"
+        )
     wave = np.asarray(waveform, dtype=float)
     ped = estimators[method](wave)
     amplitude = float(np.max(wave) - ped.pedestal_adc)

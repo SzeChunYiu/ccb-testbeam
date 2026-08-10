@@ -2,93 +2,90 @@
 
 ## Session
 
-- **Task ID:** `ARU-S00-SELECTOR-EQUIVALENCE-CLOSURE`
-- **Stamp:** `2026-08-10T040000Z`
+- **Task ID:** `ARU-RAW-DIGEST-SAME-STREAM-CLOSURE`
+- **Stamp:** `2026-08-10T104900Z`
 - **Owner:** hourly Atomic Research Universe audit session
-- **Initial remote main:** `f5ad219c03b51cb4a2e84f7620b8d9363a250fd6`
-- **Branch:** `fix/s00-selector-equivalence-contract`
-- **PR:** #1140
-- **Primary issue:** #1136
-- **Parent:** #1109
-- **Sibling blockers:** #1135, #1137
-- **Acceptance:** local mathematical/model-accounting repair implemented; exact-head CI required before merge/closure.
+- **Initial remote main:** `7fb2a06596a87cb2dd294ec9d0b149e3575293e5`
+- **Branch:** `fix/raw-input-same-stream-provenance`
+- **Primary issue:** #1155
+- **Parent:** #993
+- **Related:** #952, #953; CL-001 remains GATED.
+- **Acceptance boundary:** implementation/tests complete on branch; exact-head/current-base GitHub Actions is required before merge or #1155 closure.
 
 ## Selected atom
 
-`selector method names -> scalar amplitude map -> validity policy -> candidate-model count -> robustness/multiplicity interpretation`.
+`raw ROOT pathname -> one opened regular-file byte stream -> SHA-256 + exact byte count + descriptor identity/stability -> raw-input provenance row -> waveform-lineage evidence`.
 
 ## Exact result
 
-Current source defines both `dynamic_range` and `rolling_min` with
+The pre-fix producer performed three separate pathname observations:
 
 ```text
-b(w)=min(w)
-A(w)=max(w)-b(w)=max(w)-min(w)
+path.exists()
+-> sha256_file(path)
+-> path.stat().st_size
 ```
 
-Therefore, on every finite waveform and finite threshold `T` when validity metadata is not a veto,
+A pathname replacement between those operations can serialize a row with a digest from state A and a byte count from state B.
+
+The new contract defines one stream `B` from one opened descriptor and requires
 
 ```text
-A_dynamic(w)=A_rolling(w)
-S_dynamic(w;T)=S_rolling(w;T)
+sha256 = H(B)
+bytes = |B|
 ```
 
-Their only surviving distinction is diagnostic validity-state policy. Agreement between these two names is tautological and cannot be counted as independent model support.
+with stable `(st_dev, st_ino, st_size, st_mtime_ns, st_ctime_ns)` before/after the read and exact `bytes_read == st_size_after` closure.
 
-## Implementation on PR #1140
+## Implementation
 
-Added `src/ccb_mc_validation/selector_model_contract.py` with separate identities for:
+`scripts/studies/data_side_real_beam.py` now includes `digest_raw_input()`:
 
-- `amplitude_map_id` — the unique scalar mathematical transformation;
-- `validity_policy_id` — diagnostic/censoring interpretation;
-- legacy/public selector method names — retained as aliases for provenance.
+- one `os.open()` call with `O_NOFOLLOW`;
+- regular-file requirement;
+- bounded `os.read()` loop feeding both SHA-256 and the byte counter;
+- `fstat()` source identity before and after the read;
+- fail-closed mutation detection;
+- recorded source device, inode, link count, mtime and ctime;
+- explicit schema `same-open-stream-v1` in `provenance.json`.
 
-Unique scalar maps are now represented as:
+`collect_raw_input_digests()` keeps #1154's complete-list/missing-run semantics but no longer uses separate `exists/hash/stat` observations. Only `FileNotFoundError` becomes an explicit missing run; symlink/nonregular/unstable inputs fail instead of producing an ordinary row.
 
-1. `first_four_median_v1`: `max(w)-median(w[0:4])`;
-2. `range_max_minus_min_v1`: `max(w)-min(w)`;
-3. `full_window_p10_v1`: `max(w)-P10(w)`.
+## Hostile tests
 
-Both `dynamic_range` and `rolling_min` map to `range_max_minus_min_v1`; their validity-policy IDs remain distinct.
+`tests/test_data_side_rmax_quarantine.py` now tests:
 
-Added `tests/test_selector_model_contract.py` with eight regressions:
+1. known exact SHA-256 and byte counts on stable synthetic files;
+2. the legacy `H(A)` + `|B|` mixed-version counterexample;
+3. pathname replacement after descriptor open, proving the repaired row stays bound to the original stream rather than the replacement;
+4. in-place append during hashing, which must fail closed;
+5. final-component symlink rejection;
+6. nonregular input and invalid block size;
+7. missing-run ordering and complete manifest preservation;
+8. persisted digest-schema identity.
 
-1. every public selector method is registry-bound;
-2. the four method names collapse to exactly three amplitude maps;
-3. dynamic-range/rolling-min share one map ID;
-4. validity policies remain separate;
-5. randomized finite waveforms give exactly equal pedestal, amplitude and selected flag for the aliases;
-6. bipolar fixture gives equal amplitude but intentionally different validity state;
-7. P10 is a genuinely distinct negative-control amplitude map;
-8. duplicate method names cannot inflate candidate count.
-
-Repository search found no current model-selection/reporting consumer outside selector/tests using both aliases as independent scalar models. The new registry is the forward contract for future comparison/multiplicity code.
+No test success is claimed yet. This runtime could not obtain a local checkout because ordinary network resolution to `github.com` is unavailable, so exact-head GitHub Actions is the authorising software validation path.
 
 ## Four sequential review passes
 
-- **Detector/waveform lead — ACCEPT local decomposition:** keep the range statistic and keep the cautious diagnostic, but as separate layers.
-- **Adversarial mechanism reviewer — ACCEPT equivalence / REVISE future gated use:** any validity-veto version must receive its own policy identity, denominator, migration table and provenance.
-- **Independent validation/statistics reviewer — ACCEPT local contract pending exact-head CI:** candidate counting can operate on unique map IDs; alias agreement cannot be replication evidence.
-- **Claims/provenance reviewer — ACCEPT local contract:** historical method names are preserved without being treated as independent mathematical hypotheses.
+- **DAQ/provenance lead — ACCEPT local contract / BLOCK #993 closure:** same-stream rows are necessary, not sufficient, for 8x16<->8x18 lineage.
+- **Adversarial filesystem reviewer — ACCEPT bounded contract:** path replacement, mutation, symlink and nonregular worlds are separated; privileged hostile-writer guarantees remain outside this atom.
+- **Independent validation/statistics reviewer — ACCEPT deterministic design pending CI / BLOCK real artifact:** synthetic state-machine falsifiers are decisive for the software contract, but the real 33-file manifest must be regenerated on the data host.
+- **Claims/provenance reviewer — ACCEPT repair / BLOCK promotion:** content-row coherence does not establish waveform transformation, polarity, timing, PID or detector performance.
 
 ## Repository actions
 
-1. Reviewed PR #1138 diff and exact-head MC Validation CI (`success`).
-2. Squash-merged #1138 to main as `f5ad219c03b51cb4a2e84f7620b8d9363a250fd6`.
-3. Created implementation branch `fix/s00-selector-equivalence-contract`.
-4. Added the machine-readable equivalence contract and property/negative-control tests.
-5. Added immutable archive `chatgpt_todo/archive/2026-08-10T040000Z_ARU-S00-SELECTOR-EQUIVALENCE-CLOSURE.md`.
-6. Opened PR #1140.
-7. Updated issue #1136 with implementation evidence and expert votes.
-
-## CI state
-
-PR #1140 head changed after coordination updates, so only the workflow associated with the **current exact head** may authorize merge. Do not reuse the earlier workflow result from an older branch commit. Verify `GitHub.fetch_commit_workflow_runs` on the latest head before merging.
+- Created branch `fix/raw-input-same-stream-provenance` from `main@7fb2a06596a87cb2dd294ec9d0b149e3575293e5`.
+- Added the one-open provenance implementation.
+- Added hostile regression tests.
+- Added immutable ARU archive `chatgpt_todo/archive/2026-08-10T104900Z_ARU-RAW-DIGEST-SAME-STREAM-CLOSURE.md`.
+- Updated `ACTIVE_TASK.md` and this handoff.
+- PR and CI status must be filled after PR creation; do not infer validation from earlier #1154/#1156 runs.
 
 ## Scientific boundary
 
-No raw beam data, Geant4 simulation, selected-pulse count, timing resolution, PID metric, penetration fraction, pile-up rate, energy calibration, or detector-performance value was produced or changed. This is exact mathematical/model-accounting closure only.
+No raw ROOT file was opened in this runtime, no real beam provenance artifact was regenerated, no Geant4 simulation was run, and no S00 count, timing, PID, penetration, energy, pile-up, calibration or detector-performance value changed. CL-001 remains GATED. #993 remains open.
 
 ## Next
 
-If exact-head CI for #1140 succeeds, review the final diff, merge #1140, and close #1136. Then return to **P0 #1135** to mechanically freeze `v1_first_four_median` to `(0,1,2,3)`, reject short/nonfinite inputs, and fail config mismatch before raw-data access or artifact staging.
+Open the focused #1155 PR and require exact-head/current-base CI. After merge, regenerate the complete real raw-input manifest on the data host using the original canonical files, then continue #993/#953 with exact event/channel/sample lineage rather than interpreting digest closure as a 16<->18 transform proof.

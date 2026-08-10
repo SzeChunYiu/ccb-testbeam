@@ -1,52 +1,41 @@
 # Latest Handoff
 
-## Completed atom: source-UQ × interpolation cross-atom compatibility (#1179)
+## Selected atom: configured scattering-source readiness (#1182)
 
-Protected `main` is now `d4d174d2a1b22eca17694fcf12177404a10eb657`. PR #1190 exact head `9bfa6795b47923a754183713f8f0f8963b4d02f6` passed MC Validation CI run `31430225650`: `1460 passed, 1 skipped, 8 xfailed, 1 xpassed`, six pre-existing warnings, clean ruff, diagnostic upload and enforcement. It was squash-merged as `d4d174d2a1b22eca17694fcf12177404a10eb657`.
+Protected `main` inspected for this atom is `f181f91ef8fd5826a4acba4973da2e4eeba6c45c`. Existing PR #1183 was materially stale (`57a7d387...` had diverged from current main), so the branch was reconciled without force-push by two-parent merge `2c0a25165b6e51e1ea1304df5e27b61f848c4b29`. Current-main source/UQ coordination was used as the merge-tree baseline while the existing #1182 static audit artifacts were retained.
 
-The exact source input remains `geant4/src_patch/sigma_pd_cm_190.txt`, 640 bytes / 28 rows, SHA-256 `0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc`, on 26.49–169.78 deg CM support. The explicit source-node sensitivity set remains the **NONPROBABILISTIC_ENVELOPE** `0.97 sigma_i <= sigma'_i <= 1.03 sigma_i`; neither it nor the interpolation class carries a nuisance probability law.
+### Runtime-state implementation now on the PR branch
 
-### Validated source-level cross-atom result
+Bounded implementation commit `e5c299fabf67c33ff983007d6dae17e8cbc7c48c` changes the tracked Geant4 source from event-zero/fail-open loading to the explicit per-instance state machine
 
-The surviving measured-support interpolation classes are `linear_node_pdf_exact_inverse_v1` and `linear_cross_section_then_jacobian_v1`. Propagating the same node box through each gives:
+`UNINITIALIZED -> UNCONFIGURED_UNIFORM | CONFIGURED_READY | FATAL`.
 
-- current box: `+0.01430729974634637/-0.014380572923809676` CDF;
-- alternative box: `+0.014310586515772328/-0.014374731878122216`;
-- alternative **central** CDF: zero violation of the current-mode box on the tested 10,001-point grid;
-- alternative **full box image**: extends beyond the current box by `0.0010650343985590949` upward at 39.586706 deg and `0.0002537872354466675` downward at 145.879228 deg;
-- two-model/node-box union relative to current nominal: `+0.015299817076167732` at 43.168956 deg and `-0.014380572923809676` at 46.951812 deg; mean-theta range 56.02560085079668–57.5322672970398 deg.
+`EnsureSourceReady()` now runs at the beginning of every `GeneratePrimaryVertex()` before event RNG. A configured cross-section source can produce an event only after the same generator instance reaches `CONFIGURED_READY`; the only path to uniform `theta_cm` is the explicit `CSFile=null` state. Missing/invalid configured files and inconsistent configured CDF state use Geant4 `FatalException` plus `std::abort()` fallback rather than `exit(0)` or uniform degradation.
 
-The machine result is bound to executable code by a regression that recomputes the audit and requires exact JSON object equality with `results/research/sigma_cm_uq_interpolation_compatibility_v1.json`.
+Stopping and cross-section tables are parsed into local vectors with checked required numeric fields, finite/domain/cardinality/order validation, then published by `swap` only after validation. `EvalELoss()` now guards the table cardinality before using endpoint arrays. Once readiness is established, changing `dEdxFile` or `CSFile` is fatal rather than silently mixing source identities; deliberate between-run reconfiguration is a separate lifecycle child.
 
-A supplemental independent local refinement (Python 3.13.5, SciPy 1.17.0, NumPy 2.3.5, no RNG) moved the principal CDF extrema by only O(10^-9): union upward `0.015299818568272061` and union downward `0.01438057665953929`. This confirms grid localisation does not affect the mechanism conclusion, but it is not a proof of global continuous-theta extrema; retain that child only if exact source-level bounds become claim-bearing.
+The central source law remains unchanged: `linear_node_pdf_exact_inverse_v1`, `measured_table_support_truncate_v1`, `unit_direct_sampling_v1`; source table SHA-256 `0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc`.
 
-Conditional diagonal-row-statistical references remain separate: max pointwise CDF standard uncertainty `0.0004453566889758832` current versus `0.0004435837618530407` alternative. Do not add these in quadrature with the model/node-box sensitivities without a source-bound common probability model.
+### Static validation and scientific boundary
 
-### Four review votes
+The updated executable audit/tests distinguish the old mechanisms from the proposed replacement. Legacy event-zero loading, hidden empty-CDF uniform fallback, success-status source failure, unchecked source parsing and unguarded stopping arrays remain explicit negative controls. The replacement source is expected to report `STATIC_CONTRACT_IMPLEMENTED_COMPILED_VALIDATION_REQUIRED` rather than runtime authorisation.
 
-- **Few-nucleon source physicist — REVISE:** interpolation remains a distinct source-model assumption even though it is subdominant to this deliberately broad node-box stress set.
-- **Adversarial numerical reviewer — ACCEPT discriminator / BLOCK collapse:** central-curve containment is insufficient; the alternative nuisance image escapes the current box.
-- **Independent statistics/UQ reviewer — ACCEPT deterministic mechanics / BLOCK inference:** confidence, quadrature and model averaging remain undefined without covariance/model probabilities.
-- **Claims/provenance reviewer — BLOCK CL-021 promotion:** runtime, support, covariance, manifest, generator and detector-chain gates remain unresolved.
+Repository exact-head CI is still required. The MC Validation workflow exercises Python/static tests and linting but does not compile `geant4/src_patch`, so even a green run cannot close the compiled runtime universe. No production Geant4 campaign, beam ROOT data, or detector response was executed.
 
-### Literature/support child update
+### Four sequential review votes
 
-A source-side literature pass was recorded on #1178. Ermisch et al. *Phys. Rev. C* **68**, 051001 (2003), DOI `10.1103/PhysRevC.68.051001`, explicitly describes the intermediate-energy p–d cross-section campaign as covering approximately 30–170 deg CM, so the near-forward/backward 190-MeV source law is genuinely not measured by that campaign. Witała, Golak & Skibiński, *Phys. Rev. C* **110**, 024005 (2024), provides a modern Coulomb-inclusive three-nucleon Faddeev framework, but this audit did not recover or execute a source-bound 190-MeV numerical completion. Truncation, constant/endpoint extension and Coulomb/Faddeev completion therefore remain separate source universes; no extrapolation was promoted.
+- **Source/runtime lead — ACCEPT bounded mechanism / BLOCK runtime authorisation:** per-instance lazy readiness solves the event-number dependency in source code, but exact hibeam_g4 executable commit, run-manager/thread mode, messenger lifecycle and real stopping-table compatibility are not yet bound.
+- **Adversarial mechanism reviewer — REVISE / BLOCK until compiled fault matrix:** static paths remove the known fail-open mechanisms, but C++ compile/link behavior, `FatalException` runtime semantics, worker-local command propagation and external-patch parity remain untested.
+- **Independent statistics/validation reviewer — ACCEPT deterministic contract / BLOCK physics inference:** readiness is a software state invariant, not evidence that a generated angular population or downstream detector observable is correct.
+- **Claims/provenance reviewer — BLOCK CL-021 promotion:** current reproduction script clones upstream hibeam_g4 without a pinned commit, production `dedx_p_in_CD2.txt` bytes/hash are absent, and no manifest binds readiness/source/build/thread metadata.
 
-### Next highest-value atom: #1182 source runtime readiness
+### Child atoms / exact next work
 
-Issue #1182 is the next dependency-ready P0 atom. Existing PR #1183 contains an executable static audit but intentionally does not change production Geant4 behavior and was built on an older main. Start by reconciling it against current main without force-push or dropping unrelated work.
+1. Inspect exact-head #1183 CI and repair any static/lint failures without weakening the contract.
+2. Recover/pin immutable hibeam_g4 source/build/run-manager provenance and worker count for representative production runs; repository `geant4/setup_and_run.sh` currently clones upstream without pinning a commit.
+3. Recover immutable `dedx_p_in_CD2.txt` bytes/hash and prove parser/domain compatibility.
+4. Bring `geant4/src_patch/patch_scatter.py` into semantic parity with the tracked readiness implementation, with a transformation/parity regression.
+5. Compile the patched generator in Geant4 11.2.2 or a provenance-equivalent pinned environment and execute missing/empty/one-row/malformed/nonfinite/nonmonotonic/zero-density source and stopping-table controls, explicit `CSFile=null`, repeated readiness, seeded sequential, and multi-worker controls where supported.
+6. Serialize readiness mode plus generator/source/stopping hashes, model IDs, executable/build/thread metadata, seeds and event count in production provenance before downstream products are authorising.
 
-Required state contract:
-
-`UNINITIALIZED -> UNCONFIGURED_UNIFORM | CONFIGURED_READY | FATAL`
-
-and, for every generator instance `j`, configured-source event generation must satisfy
-
-`GenerateEvent_j(e) => readiness_j == CONFIGURED_READY`.
-
-The implementation/review must make readiness per-instance and idempotent, check every source/stopping-table parse, make configured-source failure fatal with non-success semantics, preserve explicit `CSFile=null` as a distinct uniform proposal only if intentionally configured, and bind source/readiness/input hashes to production provenance. Exact executable/run-manager/thread-mode evidence plus compiled seeded sequential/event-parallel controls remain prerequisites for runtime authorisation.
-
-### Claim boundary
-
-#1179 remains open for source-bound covariance/decomposition. #1178 remains open for support/runtime/source closure. #1182 remains open for readiness. CL-021 remains `OPEN / GATED`. No beam ROOT data were opened; no production Geant4 campaign, B2/B8, PID, timing, penetration, energy, pile-up, ESS, p-value, rate, or detector-performance quantity was regenerated or promoted.
+#1182, #1178, #1179 and CL-021 remain open/gated. No B2/B8, PID, penetration, timing, energy, pile-up, ESS, p-value, rate or detector-performance result was regenerated or promoted.

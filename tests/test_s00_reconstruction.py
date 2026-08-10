@@ -154,6 +154,30 @@ def test_pulse_quantities_selection_gate_boundary(s00):
 
 
 # --------------------------------------------------------------------------
+# HRD waveform width contract (Issue #952)
+# --------------------------------------------------------------------------
+
+
+def test_hrd_waveform_contract_rejects_8x16_batch_under_8x18_config(s00):
+    """The 9×128 == 8×144 trap: nine 8x16 events (128 words each) can be
+    batch-reshaped into eight 8x18 pseudo-events (144 words each). The
+    per-event scalar-width gate must reject this, and the error message
+    must reference the #952 contract violation. (#952)"""
+    rows = [np.arange(128) + 1000 * i for i in range(9)]
+    with pytest.raises(ValueError, match=r"HRD waveform contract violation: expected 144 words/event"):
+        s00.validate_and_reshape_rows(rows, n_channels=8, samples_per_channel=18)
+
+
+def test_hrd_waveform_contract_passes_8x18_batch(s00):
+    """When every event has exactly 144 words (8x18), the per-event gate must
+    pass and the output shape must be (N, 8, 18). (#952)"""
+    rows = [np.arange(144) + 1000 * i for i in range(5)]
+    out, summary = s00.validate_and_reshape_rows(rows, n_channels=8, samples_per_channel=18)
+    assert out.shape == (5, 8, 18)
+    assert summary.malformed_events == 0
+
+
+# --------------------------------------------------------------------------
 # compare_expected(): pass/fail bookkeeping
 # --------------------------------------------------------------------------
 

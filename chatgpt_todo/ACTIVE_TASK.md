@@ -1,18 +1,19 @@
 # Active Task
 
-- **Task ID:** `AUD-RMAX-001`
-- **Owner:** scheduled scientific-review session
-- **Session stamp:** `2026-07-26T200250Z`
-- **Initial remote main SHA:** `9c576de392c4f81aaea369b4612e16841eeef730`
-- **Policy:** `RMAX_CHECK_MUST_VALIDATE_CLAIM_STATE_AND_NEVER_INFER_RATE_FROM_OCCUPANCY`.
-- **Delivered:** evidence-aware checker v2.0.0; strict single-read WIKI/ledger provenance; canonical 43-column and unique-claim validation; blocked `CL-010` and exact `CL-011` binding; public overclaim rejection; consistent CLI status 0/1/2; atomic JSON publication; seven regressions; JSON/SVG evidence; detailed audit and immutable archive.
-- **Confirmed current flaw:** WIKI blob `841222816dc60f5fb90ada51ee027a71e0994254` still says `Rmax 2.92 MHz (data-derived, corroborates CL-010 3.05 MHz)`. The remediated checker correctly returns nonzero until that public sentence is corrected.
-- **Independent calculations:** 5% Poisson sensitivity `0.4110362912128549 MHz`; legacy `mu=0.38` sensitivity `3.045111305987686 MHz`; 3.05 MHz implies `mu=0.3806100610250359` and `P(N>=1)=0.31655566074793173`.
-- **Validation:** `py_compile` passed; focused pytest `7 passed in 0.04s`; current-like fixture `FLAWED` with one `WIKI_OVERAUTHORIZES_RMAX`; corrected fixture `VALIDATED` with zero findings; JSON/SVG parsing passed; maximum changed Python line length 93.
-- **Remote blobs:** checker `188716b5fb3982b32ba90dcb8364922caaf5ac21`; tests `80418bf8f728a6aeba8f56bd9620b7e02f8b4d7d`; renderer `30b7fea934b2381b162a98f155c3ee0dfc39bf23`; validation JSON `ceff04cc85bde02a7384d90d3587b27dc1d996d5`; SVG `f3540a2cd81582f023ae55a62345c16b048025e3`.
-- **Scientific boundary:** no live exposure, event-arrival rate, `mu_max`, recovery-failure ceiling, accepted absolute Rmax, calibration, or detector-performance quantity was produced.
-- **Unrun:** repository-wide pytest/ruff, complete Thesis QA workflow, link inventory, GitHub Actions.
-- **Archive:** `chatgpt_todo/archive/2026-07-26T200250Z_AUD-RMAX-001_CHECKER_SEMANTICS.md`.
-- **Acceptance:** checker software `VALIDATED / COMPLETE`; public WIKI claim state `FLAWED / BLOCKED`.
-- **Next:** correct the exact stale WIKI sentence, run `python scripts/check_rmax_formula.py`, and require status 0 before treating Thesis QA as green.
-- **Status:** `PARTIAL`
+- **Task ID:** `ARU-S00-VERIFIED-READ-SNAPSHOT-001`
+- **Owner:** hourly Atomic Research Universe audit session
+- **Session stamp:** `2026-08-10T081600Z`
+- **Initial remote main SHA:** `ef4f3cbabe010285558a425fc3e92d525b1803a2`
+- **Validated prerequisite merge:** PR #1148 exact head `820e157b0b5ec9bd0d05cb60a889a547e2228c13` had MC Validation CI run 933 = `success`; squash-merged as `96be3588241753601a4a96e6451527e5b3ebfe6b`.
+- **Validated atom merge:** PR #1150 exact head `4675627807efff576cd9aa51b977b4480b64976b` had MC Validation CI run 943 = `success` (`1257 passed, 1 skipped, 8 xfailed, 1 xpassed`); squash-merged as `83256325f5cf9021912578963fdc19f6b9257df2`.
+- **Issue:** `#1149` remains open.
+- **Parent issue:** `#1147`; upstream transaction parent `#1110`.
+- **Selected atom:** `content-bound pointer -> mutable generation pathname -> verification -> exact bytes consumed by an authorising downstream reader`.
+- **Confirmed gap:** `resolve_artifact()` verifies bytes and then returns a pathname. A later read can observe different bytes after in-place or hard-link mutation.
+- **Merged survivor:** `verified_artifact_snapshot()` streams the source into a private secure temporary snapshot while hashing the exact copied blocks and yields only after equality with the one-time pointer snapshot.
+- **Validated controls:** pre-copy tamper fails closed; post-copy source/hard-link mutation cannot change the snapshot; pointer swap retains one complete old generation; the old `resolve_artifact()->later Path read` TOCTOU remains as an explicit negative control.
+- **Expert votes after CI:** filesystem/reconstruction `ACCEPT local primitive`; adversarial `ACCEPT snapshot / BLOCK direct-path authorisation`; statistics/validation `ACCEPT deterministic closure`; claims/provenance `REVISE #1110 / no CL-001 promotion`.
+- **Remaining #1149 acceptance:** benchmark the real selected-table copy/read overhead and migrate authoritative consumers to the verified snapshot API. Direct legacy paths and `resolve_artifact()->reopen Path` remain non-authorising for strict concurrent-reader provenance.
+- **Coordination:** active PR #1146 changes `01_build_pulse_table_from_root.py`; reconcile that producer work before #1110 publication integration rather than creating an overlapping producer branch.
+- **Scientific boundary:** no beam ROOT data, Geant4, S00 count regeneration, timing/PID/penetration result, or detector-performance quantity changed.
+- **Status:** `PARTIAL / SAME_BYTES_PRIMITIVE_VALIDATED_ON_MAIN / CONSUMER_MIGRATION_AND_REAL_SCALE_BENCHMARK_OPEN`

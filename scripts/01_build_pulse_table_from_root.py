@@ -22,6 +22,17 @@ import pandas as pd
 import uproot
 import yaml
 
+from ccb_mc_validation.s00_selector_contract import (
+    S00SelectorConfigError,
+    s00_selector_model_identity,
+    validate_s00_selector_contract,
+)
+from ccb_mc_validation.selector import estimate_pedestal_v1_batched
+from tools.audit.validate_hrd_waveform_contract import (
+    BatchValidation,
+    validate_and_reshape_rows,
+)
+
 
 def load_config(path: Path) -> dict:
     with path.open("r", encoding="utf-8") as handle:
@@ -244,7 +255,10 @@ def sorted_file(sorted_b_dir: Path, run: int) -> Path:
 
 
 def pulse_quantities(waveforms: np.ndarray, baseline_indices: List[int]) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
-    baseline = np.median(waveforms[..., baseline_indices], axis=-1)
+    # Baseline via the versioned S00 selector (v1 = first-four median), so the
+    # produced pulse table records the canonical estimator identically instead
+    # of an inline np.median call (Issue #1109).
+    baseline = estimate_pedestal_v1_batched(waveforms, baseline_indices)
     corrected = waveforms - baseline[..., None]
     amplitude = corrected.max(axis=-1)
     peak_sample = corrected.argmax(axis=-1)
@@ -301,7 +315,27 @@ def scan_raw(config: dict) -> Tuple[pd.DataFrame, pd.DataFrame, Dict[str, dict],
         for batch in iter_raw_events(path):
             event_numbers = np.asarray(batch["EVENTNO"])
             evt_numbers = np.asarray(batch["EVT"])
-            all_events = np.stack(batch["HRDv"]).astype(np.float64).reshape(-1, 8, samples_per_channel)
+            # ---- Per-event HRD waveform width contract (#952) ----
+            # The legacy batch-level reshape (np.stack(...).reshape(-1, 8, N))
+            # can silently mix ADC words across event boundaries: nine 8x16
+            # events (9*128 words) reshape cleanly into eight 8x18 pseudo-events
+            # (8*144 words) under an 8x18 config. Every event must pass the
+            # per-event scalar-width gate BEFORE any stacking (fail closed).
+            waveforms, hrd_summary = validate_and_reshape_rows(
+                batch["HRDv"],
+                n_channels=8,
+                samples_per_channel=samples_per_channel,
+            )
+            if hrd_summary.malformed_events:
+                raise ValueError(
+                    "HRD waveform contract violation (#952): "
+                    f"{hrd_summary.malformed_events}/{hrd_summary.events} events have "
+                    f"width != {hrd_summary.expected_words} words "
+                    f"({8}x{samples_per_channel}); recheck the versioned schema "
+                    "before producing a pulse table. First malformed indices: "
+                    f"{hrd_summary.malformed_indices[:10]}"
+                )
+            all_events = waveforms.astype(np.float64)
             waveforms = all_events[:, stave_channels, :]
             baseline, amplitude, peak_sample, area = pulse_quantities(waveforms, baseline_indices)
             # Absolute peak (raw max) for peak_code_adc and hardware saturation
@@ -876,6 +910,15 @@ def main() -> int:
     args = parser.parse_args()
 
     config = load_config(args.config)
+    # The named v1 selector is a fixed semantic object, not a free YAML axis.
+    # Validate immediately after YAML parsing and before namespace resolution,
+    # staging creation, raw-file traversal, or ROOT access (#1141).
+    try:
+        validate_s00_selector_contract(config)
+    except S00SelectorConfigError as exc:
+        print(f"[s00] selector/config preflight failed: {exc}")
+        return 2
+
     # Resolve the amplitude cut once and propagate it into the in-memory config
     # so every consumer (scan_raw, sorted_crosscheck, run_ml_check) reads the
     # SAME overridden value. The YAML file is never modified.
@@ -955,12 +998,15 @@ def main() -> int:
             input_hashes = dict(zip(checksums["file"], checksums["sha256"]))
         except Exception:
             input_hashes = {}
+    selector_identity = s00_selector_model_identity()
     model_identity = {
         "effective_amplitude_cut_adc": float(cut),
         "amplitude_cut_source": cut_source,
-        "selector": "01_build_pulse_table_from_root.py",
+"selector": f"ccb_mc_validation.selector {selector_identity['selector_id']}",
+        "hrd_waveform_schema": f"hrd-8x{int(config['samples_per_channel'])}-v1",
         "config_digest": model_id,
         "source_commit": src_commit,
+        **selector_identity,
     }
 
     if canonical:

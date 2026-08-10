@@ -2,86 +2,88 @@
 
 ## Session
 
-- **Task ID:** `AUD-RMAX-001`
-- **Stamp:** `2026-07-26T200250Z`
-- **Owner:** scheduled scientific-review session
-- **Initial remote main:** `9c576de392c4f81aaea369b4612e16841eeef730`
-- **Validated implementation/evidence/archive/active-task head:** `1fb4f7e5cbcff6299485edc731cf50002044e133`
-- **Destination:** authenticated sequential commits directly to `main`; no force-push, transport branch, pull-request merge, or history rewrite.
-- **Push result:** every GitHub contents write returned a successful commit SHA; post-write history showed the complete focused sequence on remote `main`.
-- **Acceptance:** checker software `VALIDATED / COMPLETE`; public WIKI claim state `FLAWED / BLOCKED`.
+- **Task ID:** `ARU-S00-VERIFIED-READ-SNAPSHOT-001`
+- **Stamp:** `2026-08-10T081600Z`
+- **Owner:** hourly Atomic Research Universe audit session
+- **Initial main:** `ef4f3cbabe010285558a425fc3e92d525b1803a2`
+- **Prerequisite merge:** PR #1148 exact head `820e157b0b5ec9bd0d05cb60a889a547e2228c13` had MC Validation CI run 933 = `success`; squash-merged as `96be3588241753601a4a96e6451527e5b3ebfe6b`.
+- **Atom merge:** PR #1150 exact head `4675627807efff576cd9aa51b977b4480b64976b` had MC Validation CI run 943 = `success`; squash-merged as `83256325f5cf9021912578963fdc19f6b9257df2`.
+- **Exact CI result:** ruff gate passed; pytest reported `1257 passed, 1 skipped, 8 xfailed, 1 xpassed, 6 warnings in 90.64 s`.
+- **Issue:** #1149 remains open.
+- **Parents:** #1147 -> #1110.
+- **Status:** `SAME_BYTES_PRIMITIVE_VALIDATED_ON_MAIN / REAL_SCALE_BENCHMARK_AND_CONSUMER_MIGRATION_OPEN`
 
-## Defect and policy
-
-Policy: `RMAX_CHECK_MUST_VALIDATE_CLAIM_STATE_AND_NEVER_INFER_RATE_FROM_OCCUPANCY`.
-
-The former Thesis QA checker printed `PASS` and then exited with status 1. It did not read `WIKI.md` or `docs/claim_ledger.csv`, and it called 3.05 MHz “measured (occupancy)” despite the unresolved exposure/rate-identifiability boundary.
-
-Current WIKI blob `841222816dc60f5fb90ada51ee027a71e0994254` still contains `Rmax 2.92 MHz (data-derived, corroborates CL-010 3.05 MHz)`, while canonical `CL-010` is value-withheld, `BLOCKED`, and blocked by `S-STAT-003`.
-
-## Remediation
-
-Checker v2.0.0 now:
-
-- reads WIKI and ledger exactly once as strict UTF-8 bytes;
-- records byte counts, SHA-256, and snapshot method;
-- enforces the exact 43-column ledger schema and unique `CL-010`/`CL-011` rows;
-- verifies the blocked/withheld `CL-010` contract and exact `CL-011` live-time estimand;
-- rejects stale public numerical Rmax endorsements;
-- labels all calculated rates as arithmetic/model sensitivities;
-- exits 0 only for a consistent blocked claim, 1 for scientific inconsistency, and 2 for malformed inputs;
-- atomically publishes optional JSON and rejects destructive aliases.
-
-## Independent calculations
-
-Using `tau = 124.79018394263471 ns`:
-
-- 5% Poisson arithmetic sensitivity: `0.4110362912128549 MHz`;
-- legacy `mu=0.38` sensitivity: `3.045111305987686 MHz`;
-- 3.05 MHz implies `mu=0.3806100610250359`;
-- 3.05 MHz implies `P(N>=1)=0.31655566074793173`.
-
-These calculations do not measure live exposure, event-arrival rate, `mu_max`, or an accepted absolute Rmax.
-
-## Validation
+## Selected atom
 
 ```text
-python -m py_compile \
-  scripts/check_rmax_formula.py \
-  tests/test_check_rmax_formula.py \
-  tools/audit/render_rmax_checker_semantics_evidence.py
-
-PYTHONPATH=. pytest -q tests/test_check_rmax_formula.py
-7 passed in 0.04s
+content-bound CURRENT.json
+-> one immutable generation identity
+-> mutable filesystem object
+-> verification
+-> exact bytes consumed downstream
 ```
 
-Current-like stale-WIKI fixture: `FLAWED`, one `WIKI_OVERAUTHORIZES_RMAX` finding, expected CLI status 1. Corrected fixture: `VALIDATED`, zero findings, expected CLI status 0. Duplicate claims, invalid UTF-8, and output aliasing fail closed. JSON and SVG parsing passed; maximum changed Python line length 93.
+The v2 pointer merged through #1148 binds the authoritative SHA-256, but `resolve_artifact()` by itself proves only `H(file at t_verify)=H(pointer)` and then returns a mutable pathname. The retained negative control demonstrates that a later path read can observe different bytes after a hard-link mutation.
 
-## Files and identities
+The stronger authorising-read invariant is:
 
-- `scripts/check_rmax_formula.py` — blob `188716b5fb3982b32ba90dcb8364922caaf5ac21`, SHA-256 `3f824bfb12609b213b3898c2c3f83d43809580aaae9cb3ac06f06ce4831df721`
-- `tests/test_check_rmax_formula.py` — blob `80418bf8f728a6aeba8f56bd9620b7e02f8b4d7d`, SHA-256 `edbbcfc42691496e08ebfba57dc873cbdf7b6a83bc8f23f747089ad4bc612323`
-- `tools/audit/render_rmax_checker_semantics_evidence.py` — blob `30b7fea934b2381b162a98f155c3ee0dfc39bf23`, SHA-256 `9824f275e640bb393c1d69451536d2fe453a5753928fb9e296db51c8f20407ad`
-- `docs/validation/rmax_checker_semantics_validation.json` — blob `ceff04cc85bde02a7384d90d3587b27dc1d996d5`
-- `docs/validation/rmax_checker_semantics.svg` — blob `f3540a2cd81582f023ae55a62345c16b048025e3`
-- immutable record: `chatgpt_todo/archive/2026-07-26T200250Z_AUD-RMAX-001_CHECKER_SEMANTICS.md`
+```text
+H(bytes actually consumed) = H(pointer snapshot)
+```
 
-## Direct-main sequence
+## Mechanism universe and collapse
 
-- `e4729b1f8cc3c328c8a6d4abfbdde50b99f3e56a` — task claim
-- `05b5fda18cfce54bd661e7f26ed18d82fc7156d3` — checker remediation
-- `d46da566f62a93aec5c62e452a7132f32b4347f6` — focused regressions
-- `21b8f6813468b1aa54095918b2b1033e8edefcc7` — evidence renderer
-- `89ffcbc22d707adcfb45cf7bcfc8b1601e69073e` — JSON evidence
-- `782e29e408a742045cb4fd9349c7cfaa2cff262e` — SVG evidence
-- `98d7286fc2e0c2ca7105caf47654b207197729d4` — audit report
-- `82ba886378f437f7fc53f0ca01f666eec4e046b9` — immutable archive
-- `1fb4f7e5cbcff6299485edc731cf50002044e133` — active-task completion
+- documentation-only single-writer assumption: rejected for strict authorisation;
+- chmod-only read-only generations: useful defense in depth, not byte provenance;
+- `st_nlink == 1` rejection: blocks one alias mechanism but not generic in-place/path races;
+- same-source-descriptor verify + rewind: collapses pathname replacement but not later writes to the same inode;
+- all-bytes memory copy: exact but potentially selected-table-sized memory;
+- **streaming private snapshot: selected and now validated on main.** Copy in bounded blocks to a secure temporary file and hash those exact copied blocks before the consumer can see the snapshot;
+- filesystem snapshot/object store: stronger infrastructure option, deferred.
 
-## Scientific boundary and next action
+## Validated implementation
 
-No live exposure, absolute event rate, `mu_max`, recovery-failure ceiling, accepted Rmax, calibration, or detector-performance quantity was produced. Repository-wide pytest/ruff, the complete Thesis QA workflow, link inventory, and GitHub Actions were not run.
+`src/ccb_mc_validation/s00_verified_read.py` now provides `verified_artifact_snapshot()`:
 
-The remediated gate is expected to remain nonzero on current `main` because the WIKI sentence is still scientifically inconsistent. Correct that exact sentence, then require `python scripts/check_rmax_formula.py` to return 0 before treating Thesis QA as green.
+1. read `CURRENT.json` once to freeze one old-or-new authority snapshot;
+2. validate the named generation artifact;
+3. open the source with `O_NOFOLLOW` where supported and capture descriptor identity metadata;
+4. copy in bounded blocks into a secure `mkstemp` snapshot while hashing those exact copied bytes;
+5. fsync and require copied SHA-256 equality with the pointer;
+6. yield the private read-only snapshot to downstream code;
+7. remove the snapshot on context exit.
 
-PR #868 remains closed, unmerged, and non-mergeable. `SESSION_LOG.md`, `BACKLOG.md`, `MASTER_INDEX.md`, and long aggregate matrices were reviewed but not partially rewritten: connector reads are paged while updates replace complete files, and transcription could erase append-only provenance. The immutable archive retains the append-equivalent record.
+Compound suffixes such as `.csv.gz` are preserved for file-based parsers. The implementation records the source device, inode, link count and size for provenance/diagnostics.
+
+## Deterministic falsifiers that passed exact-head CI
+
+- source tamper before snapshot -> fail closed on digest mismatch;
+- source tamper after snapshot -> private consumed bytes unchanged;
+- hard-link alias mutation before snapshot -> fail closed;
+- hard-link alias mutation after snapshot -> private consumed bytes unchanged;
+- pointer advances from generation g1 to g2 while a snapshot is held -> reader remains bound to one complete g1 snapshot;
+- unknown logical artifact, invalid block sizes and invalid scratch directory -> controlled failures;
+- separate negative control proves `resolve_artifact()->later Path read` can observe a post-verification hard-link mutation.
+
+## Four sequential expert passes after CI
+
+- **Filesystem/reconstruction lead — ACCEPT local same-bytes primitive.** The read contract now binds consumed bytes rather than only a pathname. Remaining empirical uncertainty is real selected-table I/O overhead.
+- **Adversarial mechanism reviewer — ACCEPT snapshot / BLOCK direct-path authorisation.** Source-path and hard-link mutations are neutralised for snapshot consumers; intentionally targeting the reader's private temp/process is outside the declared threat model.
+- **Statistics/validation reviewer — ACCEPT deterministic closure.** This is exact byte/state-machine validation, not a beam-statistical result. No physical inference was made from the CI suite.
+- **Claims/provenance reviewer — REVISE parent #1110 / no CL-001 promotion.** Authoritative consumers must migrate to the snapshot boundary before strict provenance claims can rely on it.
+
+## Coordination / unresolved work
+
+- #1149 remains open for the real selected-pulse-table I/O benchmark and authoritative consumer migration.
+- #1110 remains open: canonical report + selected pulse table still need one content-bound immutable generation and a single pointer commit after all P0 gates.
+- Active PR #1146 currently changes `scripts/01_build_pulse_table_from_root.py`; reconcile/merge/rebase that producer work before publication integration rather than creating a competing producer edit.
+- Direct legacy reads and `resolve_artifact()->reopen Path` remain non-authorising for strict concurrent-reader provenance.
+- #1109 pedestal physics and CL-001 scientific state remain separate; nothing in this filesystem work validates samples 0--3 as a physical pedestal or changes the historical pulse count.
+
+## CI observation not promoted into this atom
+
+The successful GitHub Actions job emitted a checkout post-job warning about a `.claude/worktrees/...` path missing from `.gitmodules`. The test/lint gate still concluded success. This was not used as evidence for or against the S00 read contract and should be audited separately only if it recurs or affects checkout/reproducibility.
+
+## Scientific boundary
+
+No raw ROOT population was rescanned, no S00 count was regenerated, no Geant4 simulation was run, and no timing/PID/penetration/energy/pile-up/detector-performance quantity changed.

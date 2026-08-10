@@ -1022,8 +1022,7 @@ selector_identity = s00_selector_model_identity()
         "source_commit": src_commit,
         **selector_identity,
     }
-
-    # ---- Gate-state model (issue #972) ----
+# ---- Gate-state model (issue #972) ----
     # Every P0 data-integrity gate is recorded with an explicit state. A skipped
     # or missing sorted crosscheck is NOT_RUN_MISSING_INPUT (never fabricated as
     # PASS), which is a non-authorising condition. The pulse-schema gate is

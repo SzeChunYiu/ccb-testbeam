@@ -14,6 +14,14 @@ on the measured Table-VI support only. Within each interval it analytically
 inverts the quadratic accumulated mass. Truncating at measured support is an
 explicit conservative reference-model choice, not evidence that the physical
 cross section is zero outside the published angular range.
+
+Source-module provenance (#1178): the tracked Geant4 primary generator in
+``geant4/src_patch/ScatteringGenerator.cc`` is bound to exactly this reference
+law. ``SampleThetaCM`` draws theta_cm from the same measured-support node PDF
+using the same analytic quadratic interval-mass inverse, guarded by
+``std::isfinite`` and normalized by a positive common ``densityScale``, and it
+declares the same ``INTERPOLATION_MODE`` / ``SUPPORT_MODE`` strings --- keeping
+the compiled sampler contract identical to the audited numerical reference.
 """
 
 from __future__ import annotations

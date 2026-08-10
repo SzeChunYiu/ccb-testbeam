@@ -1,65 +1,36 @@
 # Latest Handoff
 
-## Selected atom: 190 MeV p-d source uncertainty (#1179)
+## Selected atom: source interpolation order on identical measured support (#1178)
 
-Protected `main` at the branch point is `f5f96951c3f56986769a16cd53ab8e23dee3e287`. The deterministic exact-inverse measured-support central-value sampler from #1178 is already on main. This session does **not** reopen that numerical defect; it asks what uncertainty law can legitimately be attached to the 28 source nodes.
+Protected `main` at the branch point is `a1bcb6a68630845c31c0b8ebcd5b45de0cea1dd6`. The numerical inverse-CDF repair is on main, but #1178 remains open because compiled Geant4 closure, support physics, runtime fail-closed behavior (#1182), source uncertainty (#1179), manifest serialization, and downstream response propagation are unresolved.
 
-### Source-bound input and scientific meaning
+### Contract and mechanism split
 
-The exact table is `geant4/src_patch/sigma_pd_cm_190.txt`, SHA-256 `0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc`, 640 bytes, 28 rows, CM support 26.49–169.78 degrees. The third column is the absolute statistical uncertainty on `dσ/dΩ` in mb/sr. The primary source is K. Ermisch et al., *Physical Review C* 71, 064004 (2005), DOI `10.1103/PhysRevC.71.064004`, Table VI.
+The exact source table is `geant4/src_patch/sigma_pd_cm_190.txt`, SHA-256 `0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc`, 28 rows over 26.49–169.78 deg CM. The physical polar density is proportional to `sigma(theta) sin(theta)`.
 
-At 190 MeV the paper reports 3% point-to-point systematic uncertainty and total systematic uncertainty below 4.5%. Section IV D explains that the point-to-point term is an additional error introduced until a high-order polynomial fit to the angular cross section obtains approximately unit chi-square after discussing target-thickness variation and background-subtraction systematics. The paper does not publish a 28×28 covariance matrix in the retained data. Therefore an iid 3% Gaussian row model is an **additional assumption**, not a source fact.
+The current reference `linear_node_pdf_exact_inverse_v1` first forms tabulated polar-density nodes `g_i=sigma_i sin(theta_i)` and linearly interpolates `g`. The new comparison model `linear_cross_section_then_jacobian_v1` linearly interpolates the measured observable `sigma=dσ/dΩ` and only then multiplies by `sin(theta)`. Both pass exactly through every source node and use `measured_table_support_truncate_v1`, but they are not equivalent between nodes.
 
-### Equations and mechanism separation
+### Executed result
 
-The nominal source shape is
+`tools/audit/research_sigma_cm_interpolation_sensitivity.py` analytically integrates both source laws and finds a maximum normalized-CDF difference `0.0010129801982659559` at `43.94458149140975 deg`. The alternative mean angle shifts by `-0.024267831224125052 deg`; the median shifts by `-0.05619069758156213 deg`; the 95th percentile shifts by `+0.13082849690529305 deg`.
 
-`p(theta|sigma) = g(theta;sigma)/Z(sigma)`
+The strongest falsifier is representation refinement. Inserting one midpoint per interval with `sigma_mid=(sigma_left+sigma_right)/2` is exactly redundant under sigma-linear interpolation: its normalized-CDF change is `1.4432899320127035e-15`. The same inserted source representation changes the current node-PDF-linear CDF by `0.000768558730840585`. Thus the two descriptions are distinct model classes, not duplicate parameterizations.
 
-with linearly interpolated node densities `g_i=sigma_i sin(theta_i)` on measured support. For fixed theta,
+Local focused tests before push returned `4 passed in 0.05s`. An independent 500001-point dense numerical quadrature check agreed with the analytic normalization/mean to O(1e-11) and O(1e-9 deg), respectively. Machine-readable output is `results/research/sigma_cm_interpolation_sensitivity_v1.json`; the full equations, hypotheses, review votes and child atoms are archived in `chatgpt_todo/archive/2026-08-10T195100Z_ARU-MC-CS-INTERPOLATION.md`.
 
-`F(theta;sigma) = (a(theta)·sigma)/(b·sigma)`.
+### Four review votes
 
-This makes a bounded nodewise sensitivity exactly linear-fractional at each fixed theta. A common scale `sigma -> c sigma` cancels from normalized shape; angle-dependent distortions do not. Global-normalization parameterizations are therefore one equivalence class for shape, while smooth/angular/local residual modes remain distinct.
+- **Few-nucleon source physicist — REVISE:** retain the current interpolation as a named reference, not a uniquely source-authorized physical law.
+- **Adversarial numerical reviewer — ACCEPT distinction / BLOCK hidden equivalence:** redundant-knot invariance sharply separates the model classes.
+- **Independent statistics/UQ reviewer — ACCEPT deterministic sensitivity / BLOCK confidence language:** no probability law over interpolation families exists, so `0.001013` is not a one-sigma band.
+- **Claims/provenance reviewer — BLOCK CL-021 promotion:** source/runtime/support/UQ/detector gates remain open.
 
-### Executed results
+### Parallel #1179 / PR #1186 state
 
-New branch: `research/mc-source-uncertainty-envelope`.
-
-Added `tools/audit/research_sigma_cm_source_uncertainty.py`, tests, `results/research/sigma_cm_source_uncertainty_v1.json`, source-sidecar semantics, CL-021 update and immutable ARU record.
-
-Independent local deterministic environment: Python 3.13.5, `/opt/pyvenv/bin/python`, Linux 6.18.35 x86_64/glibc 2.41; no RNG. A focused local subset returned `4 passed` in 26.92 s. Exact-head repository CI is still required before merge.
-
-Results from the exact table/model:
-
-- nominal normalization `1.19776307651449`;
-- nominal mean theta_cm `56.78396200051643 deg`;
-- fully common +4.5% scale: max normalized-CDF change `3.3306690738754696e-16`;
-- nonprobabilistic independent-node ±3% box, 10,001-point theta scan:
-  - CDF upward excursion `0.01430729974634637`;
-  - downward excursion `0.014380572923809676`;
-  - both peak near `46.951812 deg`;
-  - mean-angle range `56.050251002153615–57.5322672970398 deg`;
-- alternating ±3% node controls: CDF sup shifts `0.0014567989868344983` and `0.0014569781233605278`;
-- conditional diagonal statistical reference: max pointwise CDF standard uncertainty `0.0004453566889758832` near `49.488045 deg`; mean-angle standard uncertainty `0.02252797870713097 deg`.
-
-The ±3% box is `NONPROBABILISTIC_ENVELOPE`: no confidence level or coverage is attached. The diagonal statistical result is conditional on independent row statistics and does not replace systematic covariance.
-
-### Four sequential review votes
-
-- **Few-nucleon source physicist — REVISE.** Common normalization cancels for shape, but experimental angular systematic correlations and support uncertainty are unresolved.
-- **Adversarial mechanism reviewer — BLOCK invented iid covariance.** The same 3% marginal allowance permits shape effects differing by about an order of magnitude between tested correlation patterns.
-- **Independent statistics/validation reviewer — ACCEPT deterministic mechanics / BLOCK coverage claim.** Linear-fractional extrema and conditional delta method are valid for their declared models; they do not identify the physical covariance.
-- **Claims/provenance reviewer — BLOCK CL-021 promotion.** #1179, #1178 support sensitivity, #1182 compiled/runtime readiness, production manifest binding and downstream detector response remain open.
-
-Full reasoning is archived at `chatgpt_todo/archive/2026-08-10T185000Z_ARU-MC-CS-UNCERTAINTY.md`.
-
-### Coordination hazard
-
-Open PR #1184 is stale relative to current main: its actual diff is now only comment/include reordering, and the proposed comment says the inverse-CDF change is “fixing the MV3 scattering-model residual (CL-021)”. That claim is too strong while #1179/#1182/support/runtime/detector gates remain. Do not merge that wording as scientific closure.
+PR #1186's first exact-head run `31422297344` had 1450 passing tests but failed enforcement because one new test searched for literal `Do not`, while the sidecar correctly expressed the same semantic boundary with `does not`. The test was repaired at head `4a2d1909b681517eee72389bf5f8d3604e4b8f54` to assert the substantive covariance/non-iid wording instead. Its replacement exact-head CI is still in progress; do not merge or call #1186 validated before that run succeeds.
 
 ### Next
 
-Require exact-head CI for the source-uncertainty research PR. Keep #1179 open even if the deterministic research lands. Highest-value follow-up is to recover any source-bound covariance/decomposition; if unavailable, preregister a transparent nuisance family (common normalization + smooth angular modes + bounded residual) and propagate it through a compiled fail-closed generator after #1182. In parallel, #1178 support-model sensitivity is likely a larger source uncertainty than the 3% table term and must remain separate.
+Open/validate the interpolation-sensitivity PR and cross-link it to #1178; keep the current generator mode unchanged because this atom is sensitivity research, not a model-selection result. If compiled Geant4 becomes available, the highest-value next step is paired generator-only propagation of surviving interpolation/support models with exact seed/event/source provenance. Without compiled runtime, continue #1179 only after its repaired exact-head CI succeeds, and then investigate an independently source-justified interpolation/support family rather than tuning to detector agreement.
 
-No beam ROOT data were opened, no production Geant4 campaign was run, and no detector-level result, ESS, p-value, PID, penetration, timing, energy, pile-up or rate claim was regenerated.
+No beam ROOT data were opened, no production Geant4 campaign was run, and no B2/B8, PID, timing, penetration, energy, pile-up, ESS, p-value or detector-performance quantity was regenerated or promoted.

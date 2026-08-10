@@ -1,13 +1,20 @@
 {
   "audit_id": "ARU-MC-CS-WORKER-INIT-001",
   "scope": "STATIC_SOURCE_CONTRACT_ONLY_NONAUTHORISING",
-  "source": {
+  "initial_source": {
     "commit": "fa62e8bb6ce7de10f840ebfa016eaa40cd9f74ec",
     "path": "geant4/src_patch/ScatteringGenerator.cc",
     "git_blob_sha1": "9b9195b8fa32125adfb8392bd602fcc74f5542fc",
     "bytes": 13232
   },
-  "pr1181_reviewed_head": "edf71180b2f622b7cf16a8c1243d2140c2369eb9",
+  "merged_inverse_source": {
+    "commit": "f5f96951c3f56986769a16cd53ab8e23dee3e287",
+    "path": "geant4/src_patch/ScatteringGenerator.cc",
+    "git_blob_sha1": "4a9f3de78ec12147159e2ec9b6fb52bf76f1cbe7",
+    "pr": 1181,
+    "reviewed_pr_head": "edf71180b2f622b7cf16a8c1243d2140c2369eb9",
+    "exact_head_ci_runs": [31415757686, 31415753649]
+  },
   "runtime_thread_mode": "UNRESOLVED_REQUIRES_EXACT_EXECUTABLE_PROVENANCE",
   "required_state_machine": [
     "UNINITIALIZED",
@@ -15,7 +22,7 @@
     "CONFIGURED_READY",
     "FATAL"
   ],
-  "findings": {
+  "findings_on_merged_inverse_source": {
     "event_zero_load_gate": true,
     "uniform_fallback_on_empty_cdf": true,
     "success_exit_on_input_open_failure": true,

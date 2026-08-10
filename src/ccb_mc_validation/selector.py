@@ -35,6 +35,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import Enum
+from numbers import Integral
 from typing import Iterable
 
 import numpy as np
@@ -56,15 +57,26 @@ def _validate_v1_baseline_indices(
     The optional argument is retained only for backwards-compatible call sites.
     It is an assertion of the named model identity, not a free selector
     parameter. Alternate baseline windows require a separately versioned model.
+    Only true integral index values are accepted: booleans and numerically equal
+    floating-point aliases are rejected so type coercion cannot bypass the
+    semantic identity check.
     """
     if baseline_indices is None:
         return S00_SELECTOR_V1_BASELINE_INDICES
     try:
-        indices = tuple(baseline_indices)
+        raw_indices = tuple(baseline_indices)
     except TypeError as exc:
         raise SelectorInputError(
             "v1 baseline indices must be exactly (0, 1, 2, 3)"
         ) from exc
+    if any(
+        isinstance(value, (bool, np.bool_)) or not isinstance(value, Integral)
+        for value in raw_indices
+    ):
+        raise SelectorInputError(
+            "v1 baseline indices must be integral values exactly (0, 1, 2, 3)"
+        )
+    indices = tuple(int(value) for value in raw_indices)
     if indices != S00_SELECTOR_V1_BASELINE_INDICES:
         raise SelectorInputError(
             f"{S00_SELECTOR_V1_ID} is frozen to baseline indices "

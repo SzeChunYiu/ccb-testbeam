@@ -18,7 +18,6 @@ TABLE = ROOT / "geant4/src_patch/sigma_pd_cm_190.txt"
 MODEL = ROOT / "geant4/src_patch/scattering_source_model_v1.json"
 CPP = ROOT / "geant4/src_patch/ScatteringGenerator.cc"
 HEADER = ROOT / "geant4/src_patch/ScatteringGenerator.hh"
-PATCH = ROOT / "geant4/src_patch/patch_scatter.py"
 
 
 def _recovered_mass_fraction(a: float, b: float, t: float) -> float:
@@ -149,19 +148,19 @@ def test_source_model_sidecar_binds_table_modes_support_and_event_weight() -> No
     assert "NONAUTHORISING" in model["source_model_status"]
 
 
-def test_tracked_cpp_and_external_patch_declare_the_same_sampler_contract() -> None:
+def test_tracked_cpp_declares_exact_sampler_contract() -> None:
     cpp = CPP.read_text(encoding="utf-8")
     header = HEADER.read_text(encoding="utf-8")
-    patch = PATCH.read_text(encoding="utf-8")
 
-    for text in (cpp, patch):
-        assert INTERPOLATION_MODE in text
-        assert SUPPORT_MODE in text
-        assert "analytic quadratic interval-mass inverse" in text
-        assert "constant-extrapolated outside" not in text
-        assert "cdfTheta[i-1] + frac * (cdfTheta[i] - cdfTheta[i-1])" not in text
-        assert "densityScale" in text
-
+    assert INTERPOLATION_MODE in cpp
+    assert SUPPORT_MODE in cpp
+    # Freeze executable inverse mechanics, not an incidental prose sentence.
+    assert "targetMass" in cpp
+    assert "discriminant" in cpp
+    assert "std::sqrt(discriminant)" in cpp
+    assert "2.0 * targetMass / denominator" in cpp
+    assert "constant-extrapolated outside" not in cpp
+    assert "cdfTheta[i-1] + frac * (cdfTheta[i] - cdfTheta[i-1])" not in cpp
+    assert "densityScale" in cpp
     assert "cdfPdf" in cpp
     assert "cdfPdf" in header
-    assert "cdfPdf" in patch

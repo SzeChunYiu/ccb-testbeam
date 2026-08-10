@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Deterministic audit of the current CM cross-section sampler discretization.
 
-This is a numerical/source-contract audit, not detector validation.  It compares
+This is a numerical/source-contract audit, not detector validation. It compares
 what ``BuildSigmaCDF`` integrates (trapezoids between p_i = sigma_i sin(theta_i))
 with what ``SampleThetaCM`` actually samples (uniform theta inside each CDF
 interval because it linearly interpolates theta against cumulative mass).
@@ -38,13 +38,21 @@ def _read_table(path: Path) -> tuple[bytes, list[float], list[float]]:
     return raw, angles, sigma
 
 
+def _display_path(path: Path) -> str:
+    try:
+        return str(path.resolve().relative_to(ROOT.resolve()))
+    except ValueError:
+        return str(path)
+
+
 def audit_sampler(path: Path) -> dict[str, object]:
     raw, angles, sigma = _read_table(path)
     theta = [0.0, *angles, math.pi]
     node_pdf = [0.0, *[s * math.sin(t) for s, t in zip(sigma, angles)], 0.0]
 
     interval_mass: list[float] = []
-    for left, right, p_left, p_right in zip(theta, theta[1:], node_pdf, node_pdf[1:]):
+    intervals = zip(theta, theta[1:], node_pdf, node_pdf[1:])
+    for left, right, p_left, p_right in intervals:
         interval_mass.append(0.5 * (p_left + p_right) * (right - left))
     norm = math.fsum(interval_mass)
     if not norm > 0.0:
@@ -55,14 +63,19 @@ def audit_sampler(path: Path) -> dict[str, object]:
     # BuildSigmaCDF treats each interval mass as the trapezoid integral of a
     # linearly varying node PDF. SampleThetaCM then interpolates theta linearly
     # in cumulative probability, which instead makes the generated density
-    # constant inside that interval.  For one interval of width d with node
+    # constant inside that interval. For one interval of width d with node
     # values a,b, the CDF difference is
     #   Delta(x) = (b-a) x (1-x/d) / (2 Z),
     # whose maximum absolute value occurs at x=d/2 and equals
     #   |b-a| d / (8 Z).
     cdf_deviations = [
         abs(p_right - p_left) * (right - left) / (8.0 * norm)
-        for left, right, p_left, p_right in zip(theta, theta[1:], node_pdf, node_pdf[1:])
+        for left, right, p_left, p_right in zip(
+            theta,
+            theta[1:],
+            node_pdf,
+            node_pdf[1:],
+        )
     ]
     worst_index = max(range(len(cdf_deviations)), key=cdf_deviations.__getitem__)
     worst_midpoint = 0.5 * (theta[worst_index] + theta[worst_index + 1])
@@ -70,11 +83,14 @@ def audit_sampler(path: Path) -> dict[str, object]:
     return {
         "schema_version": "ccb_sigma_cm_sampler_contract_v1",
         "input": {
-            "path": str(path),
+            "path": _display_path(path),
             "sha256": hashlib.sha256(raw).hexdigest(),
             "bytes": len(raw),
             "rows": len(angles),
-            "support_theta_cm_deg": [math.degrees(angles[0]), math.degrees(angles[-1])],
+            "support_theta_cm_deg": [
+                math.degrees(angles[0]),
+                math.degrees(angles[-1]),
+            ],
         },
         "current_algorithm": {
             "cdf_construction": "trapezoid_integral_of_node_pdf_sigma_times_sin_theta",
@@ -84,7 +100,9 @@ def audit_sampler(path: Path) -> dict[str, object]:
         "trapezoid_normalization_mb_per_sr_rad": norm,
         "probability_below_measured_support": interval_probability[0],
         "probability_above_measured_support": interval_probability[-1],
-        "probability_outside_measured_support": interval_probability[0] + interval_probability[-1],
+        "probability_outside_measured_support": (
+            interval_probability[0] + interval_probability[-1]
+        ),
         "max_cdf_deviation_vs_linear_node_pdf": cdf_deviations[worst_index],
         "max_cdf_deviation_interval_index": worst_index,
         "max_cdf_deviation_theta_cm_deg": math.degrees(worst_midpoint),

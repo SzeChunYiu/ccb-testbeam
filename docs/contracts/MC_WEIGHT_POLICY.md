@@ -61,21 +61,35 @@ weight. For the current nonnegative probability-measure contract:
 - the derived vector must be one-dimensional, event-aligned, finite and
   nonnegative;
 - zero-valued individual event weights are allowed, but a **non-empty**
-  selected population must have positive finite total mass and positive finite
-  squared-weight sum;
+  selected population must contain at least one positive finite weight;
 - an empty diagnostic population is not a weighted empirical measure and must
   not publish fake `ESS=0` as though inference were defined;
-- `sum(w)` and `sum(w^2)` must use stable binary64 `math.fsum` accounting and
-  fail closed on overflow/nonfinite results;
-- `ESS = (sum(w))^2 / sum(w^2)` is defined only after those gates pass, with
-  the invariant `1 <= ESS <= n_rows` for a non-empty nonnegative event
-  population;
-- report zero/positive counts, ESS fraction and `max(w)/sum(w)` so dominant
-  weights are visible.
+- the normalized measure must be invariant under any common positive rescaling
+  `w_i -> c w_i`. Weight units or arbitrary normalization magnitude must not
+  decide whether a mathematically identical measure is accepted;
+- choose `m = max(w) > 0`, define `u_i = w_i / m`, and use stable binary64
+  `math.fsum` accounting on `S1' = sum(u)` and `S2' = sum(u^2)`;
+- define `ESS = S1'^2 / S2'` and `max(w)/sum(w) = 1/S1'`, with
+  `1 <= ESS <= n_rows` for a non-empty nonnegative event population;
+- serialize `m`, `S1'`, and `S2'` as the authorising scale-normalized moments;
+- raw-unit `sum(w)` and `sum(w^2)` may be reported as convenience provenance
+  only when each has a positive finite binary64 representation. If a valid
+  measure's raw moment overflows or underflows binary64, serialize that raw
+  convenience field as null rather than rejecting the scale-equivalent measure;
+- report zero/positive counts, ESS fraction and maximum-weight fraction so
+  dominant weights are visible.
+
+For any `c > 0`,
+
+`F_{c w}(x) = F_w(x)` and `ESS(cw) = ESS(w)`.
+
+A validator that accepts `[1,2,7]` but rejects `[1e300,2e300,7e300]` solely
+because the raw squared-weight sum overflows is therefore not validating the
+probability measure; it is validating an arbitrary numerical representation.
 
 The reusable package implementation is
 `ccb_mc_validation.truth.event_weight_population` with policy ID
-`nonnegative_event_measure_v1`. It deliberately accepts only **derived** event
+`nonnegative_event_measure_v2`. It deliberately accepts only **derived** event
 weights; it does not decide which raw `PrimaryWeight` representation is
 scientifically correct. It supplies the core probability-measure and ESS gates;
 claim-bearing reports must additionally retain the high-weight-tail diagnostics
@@ -108,9 +122,12 @@ justified combination.
 
 - Publish exact input path/object identity, byte size, SHA-256 and tree/schema.
 - Publish `generator_measure_mode`, raw representation and `weight_adapter_id`.
-- Publish final event count, derived-weight count, `sum(w)`, `sum(w^2)`, ESS,
-  ESS fraction, zero/positive counts, maximum-weight fraction and summation
-  method.
+- Publish final event count, derived-weight count, the population-policy ID,
+  `weight_scale`, `sum_w_over_scale`, `sum_w2_over_scale2`, ESS, ESS fraction,
+  zero/positive counts, maximum-weight fraction and summation method.
+- Publish raw-unit `sum(w)` and `sum(w^2)` when they are representable as
+  positive finite binary64 values; otherwise publish null and retain the
+  scale-normalized moments rather than an Inf/0 sentinel.
 - Preserve the previous high-weight-tail requirement: report the 99th
   percentile, maximum, and maximum-to-mean ratio in addition to
   `max(w)/sum(w)`. The percentile estimator/convention must be named when it
@@ -128,7 +145,8 @@ justified combination.
 |---|---|---|
 | Repository-wide raw→event carrier semantics | **ACTIVE / PARTIAL** | #880 |
 | Legacy proposal→target weight derivation | **BLOCKED / ACTIVE** | #1053 exact table/source provenance and production ROOT |
-| Post-adapter nonnegative event-population primitive | **IMPLEMENTED_PENDING_CI** | branch/PR for `nonnegative_event_measure_v1` |
+| Post-adapter nonnegative event-population primitive | **IMPLEMENTED_PENDING_CI** | PR #1171, policy `nonnegative_event_measure_v2` |
+| Legacy weight-helper scale-invariance migration | **TRIAGED / OPEN** | `ARU-MC-WEIGHT-SCALE-001`; existing main helpers still square raw weights |
 | Production-sample ESS/provenance report | **BLOCKED_EXTERNAL** | exact immutable production ROOT bytes |
 | Event/stave truth producer integration | **ACTIVE / BLOCKED** | #1169 must dispatch on a source-authorized adapter and use this population contract |
 | Authorising weighted DATA↔MC inference | **BLOCKED** | #1049/#1052/#1164 plus detector-chain and null-calibration dependencies |

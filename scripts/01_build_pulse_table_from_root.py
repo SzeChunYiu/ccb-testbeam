@@ -22,6 +22,11 @@ import pandas as pd
 import uproot
 import yaml
 
+from ccb_mc_validation.s00_selector_contract import (
+    S00SelectorConfigError,
+    s00_selector_model_identity,
+    validate_s00_selector_contract,
+)
 from ccb_mc_validation.selector import estimate_pedestal_v1_batched
 
 
@@ -881,6 +886,15 @@ def main() -> int:
     args = parser.parse_args()
 
     config = load_config(args.config)
+    # The named v1 selector is a fixed semantic object, not a free YAML axis.
+    # Validate immediately after YAML parsing and before namespace resolution,
+    # staging creation, raw-file traversal, or ROOT access (#1141).
+    try:
+        validate_s00_selector_contract(config)
+    except S00SelectorConfigError as exc:
+        print(f"[s00] selector/config preflight failed: {exc}")
+        return 2
+
     # Resolve the amplitude cut once and propagate it into the in-memory config
     # so every consumer (scan_raw, sorted_crosscheck, run_ml_check) reads the
     # SAME overridden value. The YAML file is never modified.
@@ -960,12 +974,14 @@ def main() -> int:
             input_hashes = dict(zip(checksums["file"], checksums["sha256"]))
         except Exception:
             input_hashes = {}
+    selector_identity = s00_selector_model_identity()
     model_identity = {
         "effective_amplitude_cut_adc": float(cut),
         "amplitude_cut_source": cut_source,
-        "selector": "ccb_mc_validation.selector v1_first_four_median",
+        "selector": f"ccb_mc_validation.selector {selector_identity['selector_id']}",
         "config_digest": model_id,
         "source_commit": src_commit,
+        **selector_identity,
     }
 
     if canonical:

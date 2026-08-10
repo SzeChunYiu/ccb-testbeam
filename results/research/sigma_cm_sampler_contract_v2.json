@@ -19,6 +19,7 @@
     ],
     "max_inverse_interval_mass_fraction_error": 3.3306690738754696e-16,
     "normalization": 1.1977630765144902,
+    "positive_common_density_scaling_invariant": true,
     "probability_outside_measured_support": 0.0,
     "support_policy_interpretation": "The nominal reference distribution is conditional on the measured Table-VI angular support. This is an explicit conservative model choice, not evidence that the physical cross section vanishes outside the measured range. Extrapolation/support sensitivity remains a separate source-model uncertainty.",
     "support_theta_cm_deg": [

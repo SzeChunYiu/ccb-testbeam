@@ -1,40 +1,58 @@
 # Latest Handoff
 
-## Validated milestone: required PR validation is no longer path-filtered
+## Selected atom: exact external source overlay provenance before Geant4 compilation
 
-Protected `main` now contains PR #1194 as squash commit `0a77369cc39069747db9b91ff06804cb1df35cec`. Exact PR head `9a3f1d98d8cd7e028d6712a90eea6c0da7d05c08` passed MC Validation run `31439792614`: clean ruff, `1470 passed, 1 skipped, 8 xfailed, 1 xpassed`. This closes the bounded `ARU-CI-G4-TRIGGER-001` routing defect only.
+Protected `main` entered this session at `774eda1b1180098c7e00757db312ede41491094b`, after PR #1197 recorded the validated CI-routing milestone and resumed #1182. The static readiness/source-parity repair is already on main through #1183; #1178, #1179, #1058 and CL-021 remain open/gated.
 
-The merged workflow makes `pull_request` unfiltered, keeps scoped push routing with `geant4/**`, retains required job `test`, and carries `ccb_mc_ci_trigger_scope_v2`, which rejects PR path filters, a missing Geant4 push route, or a missing required job. This prevents a material PR from becoming ineligible to produce the protected required check merely because its files fall outside a finite allow-list.
+### Atomic contract and contradiction resolved
 
-### Scientific boundary
+The reviewed deployment helper `geant4/src_patch/patch_scatter.py` intentionally installs the repository-reviewed `ScatteringGenerator.hh/.cc` bytes into an external `hibeam_g4` checkout. Unless the pinned upstream commit already contains identical bytes, a correct installation necessarily makes those tracked external paths differ from `HEAD`. Therefore the shorthand contract “exact upstream commit/tree + clean Git state + reviewed installed pair” is over-constrained: generic cleanliness and a legitimate overlay can be mutually exclusive.
 
-The required job is still a Python/static validation lane. It does not compile/link/run `geant4/src_patch`, so no source population, detector response, CL-021 state, or DATA↔MC claim is validated by the CI-routing milestone.
+The source identity is instead decomposed into two layers:
 
-## Resumed atom: compiled/executable/input provenance
+1. **Pinned baseline:** external `HEAD` and `HEAD^{tree}` must equal exact approved values supplied by the run specification.
+2. **Allowed overlay:** the Git index remains clean; no untracked paths are present; every visible work-tree delta is an unstaged modification of only `include/ScatteringGenerator.hh` or `src/ScatteringGenerator.cc`; both external paths are regular non-symlink files byte-identical to `geant4/src_patch/ScatteringGenerator.hh/.cc`. A zero-delta baseline is allowed only when upstream already contains the reviewed bytes.
 
-Existing issue #1182 remains the parent. Repository inspection refined the remaining contract:
+This collapses two observationally equivalent correct states—upstream-already-equal and pinned-baseline-plus-reviewed-overlay—while excluding arbitrary dirty trees.
 
-- historical S17a ledgers already retain exact SHA-256 values for geometry, config, macro, Table-VI source, dE/dx table, and geoconf;
-- current `setup_and_run.sh` can silently reuse an arbitrary existing external checkout and does not bind its commit/tree/dirty state before compilation;
-- its historical GitHub bootstrap reference is not a sufficient current source identity; a current source location must never be substituted by floating `main` without exact commit/tree equivalence evidence;
-- `run_krakow.mac` requests 1,000,000 events but does not encode a repository-controlled RNG seed command, while `krakow.config` has the `Threads 9` setting commented, so run-manager/thread/seed state must be measured and serialized rather than inferred;
-- the stopping parser is now fail-closed, but #1058 still owns the scientific meaning of the dE/dx columns/material/source and the `938.28/931.5` plus `×1000` conversions.
+### Implementation and discriminating tests
 
-A deterministic local H1-vs-H2 sensitivity fixture reproduced the current 100-step 190 MeV beam-loss algorithm over 2.3 mm. Keeping the current `×1000` conversion fixed, removing only the `938.28/931.5` energy-axis factor changes the full-target reaction energy from `189.11967694826052` to `189.12379133383976 MeV`, a difference of about `-4.114 keV`. The 100-step solution is already close to the fine-step fixture limit. This rejects only the hypothesis that the ~0.7% axis factor alone creates a large beam-energy residual; it does not validate either unit convention, stopping-power type, CD2 composition/density, or source table.
+Branch `audit/geant4-build-frontdoor-provenance` adds schema `ccb_geant4_external_overlay_v1` in `tools/audit/validate_geant4_external_overlay.py` and focused tests in `tests/test_geant4_external_overlay.py`; both are added to the curated ruff lane.
 
-### Claims-governance child
+The deterministic fixture matrix creates temporary Git repositories and tests:
 
-Two public documents on main still described the historical HIBEAM sample as “validated” and the truth-level range/PID observations as confirming the data inference. PR #1196 (`ARU-CLAIM-G4-LEGACY-001`) rewrites `geant4/REPRODUCTION_STATUS.md` and `studies/MC_VALIDATION_PROGRAM.md` so those legacy outputs are explicitly historical/nonauthorising diagnostics and the full source→event/weight→detector response→data-like waveform→identical reconstruction→held-out uncertainty chain is required before detector validation. #1196 is open; exact-head CI must pass before merge.
+- exact two-file unstaged reviewed overlay — expected PASS;
+- clean upstream already byte-identical to the reviewed pair — expected PASS;
+- interrupted deployment where only one file is replaced — BLOCK on pair mismatch;
+- extra tracked mutation outside the overlay — BLOCK;
+- untracked source path — BLOCK;
+- staged/index mutation of an overlay file — BLOCK;
+- exact clean baseline with wrong source bytes — BLOCK;
+- wrong expected `HEAD` commit or tree — BLOCK.
 
-### Four sequential AI review votes
+The validator snapshots Git status before and after byte verification and rejects a status transition during inspection. Required source paths are rejected if they are symlinks or non-regular files. This closes the static logical gap only; it does not make mutable path verification equivalent to an immutable compiled-source snapshot.
 
-- **Source/simulation lead — ACCEPT #1194 routing closure / REVISE compiled provenance:** build feasibility and historical input hashes survive, but exact external executable/source-tree identity and runtime state do not.
-- **Adversarial mechanism reviewer — ACCEPT unfiltered required PR routing / BLOCK mutable external checkout:** directory existence, floating remotes, dirty trees, one-byte installed-source mismatches, or staged-input digest mismatches must fail closed.
-- **Independent statistics/validation reviewer — ACCEPT the 4.11 keV local axis-factor falsifier / BLOCK physical beam-loss inference:** the fixture isolates one numerical ambiguity only; material/source/unit uncertainty and an independent stopping reference remain unresolved.
-- **Claims/provenance reviewer — ACCEPT legacy-claim demotion direction / BLOCK CL-021 promotion:** historical truth may support diagnostics but not detector-performance claims until the dependency chain closes.
+### Competing mechanisms and eliminations
 
-### Next highest-value atom
+- **H1: require completely clean external Git state at build time.** Rejected as a universal rule because the approved overlay itself can be the only expected delta.
+- **H2: ignore dirty state once the reviewed pair matches.** Rejected because unrelated tracked/untracked modifications could alter the executable while the pair still matches.
+- **H3: pin upstream commit/tree and permit exactly the reviewed pair as the only unstaged delta.** Survives and is implemented.
+- **H4: permit staged overlay changes as equivalent.** Rejected for this front door because index state becomes an additional mutable provenance layer with no scientific need.
+- **H5: trust the overlay installer’s successful return without pre-build re-verification.** Rejected because the installer explicitly documents that its two-path replacement is not crash-atomic.
 
-Implement the fail-closed build/run front door under #1182: require an approved exact external generator commit/tree and clean state; verify the reviewed installed source pair immediately before build; bind compiler, Geant4, VGM, CMake, executable, run-manager and effective threads; verify all staged input digests; record random engine/seeds/event count/model IDs/output identity; and execute compiled hostile fixtures for missing/malformed/reconfigured source and stopping inputs plus explicit-uniform controls. If the approved external source tree is inaccessible, preserve that as the precise blocker and move to #1058 source/unit recovery rather than treating a floating replacement checkout as equivalent.
+### Four sequential AI review passes
 
-No beam ROOT data or production Geant4 campaign was executed in this handoff, and no detector-performance result was promoted.
+- **Source/build lead — ACCEPT static overlay decomposition / BLOCK compiled authorisation.** Evidence: current installer contract, mutable historical setup script, exact baseline/overlay model. Strongest counter-hypothesis: generic `git clean` is sufficient. Falsifier: a correct reviewed overlay on a differing upstream commit is necessarily dirty. Residual: approved upstream commit/tree and actual compiled source snapshot are still absent.
+- **Adversarial mechanism reviewer — ACCEPT exact allow-list / BLOCK mutable post-check build.** Evidence: interrupted-install, staged, untracked and extra-dirty fixtures. Strongest counter-hypothesis: matching the two source files alone is enough. Falsifier: unrelated source mutations remain possible and are rejected. Residual: mutation after the validator returns but before/during compilation.
+- **Independent validation reviewer — ACCEPT deterministic Git/byte-state falsifiers / BLOCK physics inference.** No stochastic or detector model enters this atom. Residual: compiler/toolchain/runtime state and hostile compiled fixtures.
+- **Claims/provenance reviewer — ACCEPT local provenance contract / BLOCK CL-021 promotion.** Passing schema `ccb_geant4_external_overlay_v1` can authorise only the source-identity precondition. It does not validate a generated angular population, event weight, detector response, or DATA↔MC result.
+
+### Repository actions
+
+Stale PR #1195 was independently compared with current main and closed without merge because it reintroduced two already-rejected mechanisms: the event-zero source-loading gate and finite `pull_request.paths` routing. The validated readiness fix remains the main implementation; no scientific result was discarded.
+
+### Remaining child atoms
+
+Even if the overlay PR passes CI, #1182 remains open. The next build/run front-door children are: content-bound staged-input identity at consumption rather than historical pathnames alone; a build source/input snapshot or equivalent re-verification that survives post-check mutation; compiler/Geant4/VGM/CMake/executable identity; run-manager/thread mode; random engine/seeds/event count/model IDs; compiled missing/malformed/reconfigured source and stopping fixtures; explicit `CSFile=null` control; repeated readiness; output hash/manifest binding; and downstream detector-response closure.
+
+No beam ROOT data or production Geant4 campaign was executed, and no B2/B8, PID, penetration, timing, calibration, pile-up, ESS, p-value, rate or detector-performance result was regenerated or promoted.

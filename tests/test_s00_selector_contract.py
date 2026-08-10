@@ -162,7 +162,7 @@ def test_main_source_binds_selector_identity_into_manifest() -> None:
     source = S00_SCRIPT.read_text(encoding="utf-8")
     assert "selector_identity = s00_selector_model_identity()" in source
     selector_line = (
-        '"selector": f"ccb_mc_validation.selector '
+        "\"selector\": f\"ccb_mc_validation.selector "
         "{selector_identity['selector_id']}\""
     )
     assert selector_line in source

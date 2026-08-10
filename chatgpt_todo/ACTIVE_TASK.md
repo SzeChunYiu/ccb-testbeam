@@ -1,13 +1,13 @@
 # Active Task
 
-- **Task ID:** `ARU-MC-CS-COMPILED-PROVENANCE-001`
+- **Task ID:** `ARU-CI-G4-TRIGGER-001`
 - **Owner:** hourly Atomic Research Universe audit session
-- **Protected main inspected:** `d62075693df5e0f58b64078097ddc4ebea86d90f`.
-- **Parent issue:** #1182 remains open; PR #1183 is merged as `d62075693df5e0f58b64078097ddc4ebea86d90f`.
-- **Validated static milestone:** exact PR head `0f5fe23bfd3ea2e4aa2ff019b108433571bdcf3e` passed MC Validation run `31436595715` with clean ruff and `1466 passed, 1 skipped, 8 xfailed, 1 xpassed`. The merged source implements per-instance `UNINITIALIZED -> UNCONFIGURED_UNIFORM | CONFIGURED_READY | FATAL`, checked transactional table publication, fatal configured-source/CDF failure, stopping-table cardinality guards, and fail-closed post-readiness source identity changes.
-- **Deployment parity milestone:** `patch_scatter.py` now requires explicit `--src-root`, performs per-file atomic replacement from the exact tracked `ScatteringGenerator.hh/.cc` payloads, then re-verifies the complete pair byte-for-byte before successful return. It does not provide two-path crash atomicity; the build front door must re-verify both installed identities before compilation.
-- **Preserved source law:** `linear_node_pdf_exact_inverse_v1` on `measured_table_support_truncate_v1`, `unit_direct_sampling_v1`; Table-VI source SHA-256 `0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc`.
-- **Current scientific gate:** repository CI validates Python/static contracts only and does not compile `geant4/src_patch`. No production Geant4 campaign or beam ROOT data were executed; static closure is not detector/source-population validation.
-- **Next atom contract:** bind one immutable external generator/build/run object before authorising events: exact hibeam_g4 commit/tree, installed source/header hashes, Geant4/compiler/build provenance, run-manager/thread mode, immutable `dedx_p_in_CD2.txt` hash/parser compatibility, configured source hash/model IDs, seeds and event count. The build/run front door must reject any identity mismatch and then execute hostile source/stopping fixtures plus explicit-uniform/repeated-readiness/sequential-worker controls.
-- **Claim state:** #1182, #1178, #1179 and CL-021 remain open/gated. No B2/B8, PID, penetration, timing, energy, pile-up, ESS, p-value, rate or detector-performance result was promoted.
-- **Status:** `ACTIVE / STATIC_SOURCE_READINESS_VALIDATED_ON_MAIN / STATIC_DEPLOYMENT_PARITY_VALIDATED_ON_MAIN / COMPILED_GEANT4_BLOCKED / EXECUTABLE_PROVENANCE_BLOCKED / STOPPING_TABLE_PROVENANCE_BLOCKED / BUILD_FRONTDOOR_PAIR_VERIFY_OPEN / MANIFEST_BLOCKED / DETECTOR_INFERENCE_BLOCKED`
+- **Protected main inspected:** `e4c924b901b37093f7b66eaf8d1d1dad07ea3498` after validated coordination PR #1193.
+- **Parent dependency:** #1182 / `ARU-MC-CS-COMPILED-PROVENANCE-001`; #1178, #1179 and CL-021 remain open/gated.
+- **Selected routing defect:** the required `MC Validation CI` workflow defines branch-protection job `test` but, before this branch, neither `push.paths` nor `pull_request.paths` included `geant4/**`.
+- **Live negative-control witness:** PR #1192 exact head `bef24345e815152e22523a44b708c4359ad2958f` changes only three `geant4/src_patch/**` files and has zero associated workflow runs. Its patch is also scientifically stale because it restores an `event->GetEventID()==0` initialization gate already removed by validated main.
+- **Bounded repair on branch:** add `geant4/**` to both workflow trigger events; add `validate_mc_ci_trigger_scope.py` plus regressions that fail closed on a missing event route or missing `test` job; archive the exact routing/claim boundary.
+- **Supporting deterministic fixture:** `python -m pytest -q tests/test_mc_ci_trigger_scope.py` -> `3 passed in 0.06s`; validator CLI -> `PASS`. Exact-head GitHub CI is still required before merge.
+- **Scientific boundary:** scheduling the existing job is only a static/Python routing precondition. The workflow still does not compile/link/run `geant4/src_patch`; no generator distribution, detector response or DATA/MC claim is authorised by this atom.
+- **Next child after routing closure:** `ARU-MC-CS-COMPILED-PROVENANCE-001` — pinned external hibeam_g4 source/tree, exact installed-source verification immediately before build, compiler/Geant4/build/run-manager/thread provenance, immutable source/stopping inputs, seeds/event count, compiled hostile fixtures and content-bound run manifest.
+- **Status:** `ACTIVE / DETERMINISTIC_ROUTING_FIX_IMPLEMENTED / EXACT_HEAD_CI_REQUIRED / COMPILED_GEANT4_BLOCKED / EXECUTABLE_PROVENANCE_BLOCKED / MANIFEST_BLOCKED / DETECTOR_INFERENCE_BLOCKED`

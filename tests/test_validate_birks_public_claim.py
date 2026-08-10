@@ -32,6 +32,8 @@ def write_ledger(
     *,
     include_birks: bool,
     status: str = "GATED",
+    value: str = "0.0156",
+    unit: str = "cm/MeV",
     duplicate: bool = False,
     blank_blockers: bool = False,
 ) -> None:
@@ -51,21 +53,25 @@ def write_ledger(
     rows.append(base)
     if include_birks:
         birks = dict(common)
-        birks.update({
-            "claim_id": "CL-027",
-            "chapter": "Energy",
-            "section": "7",
-            "claim_text": "Birks kB effective Cluster-C simulation-fit value",
-            "current_value": "0.0156",
-            "unit": "cm/MeV",
-            "truth_type": "simulation_result",
-            "status": status,
-            "source_report": "reports/studies/clusterC/SUMMARY.md",
-            "source_script": "scripts/clusterC/clusterC_pileup_energy_study.py",
-            "source_commit": "abc123",
-            "ci_status": "MODEL_IDENTITY_INCOMPLETE",
-            "blocked_by": "" if blank_blockers else "#1007;#1008;#1079;#1089;#1095",
-        })
+        birks.update(
+            {
+                "claim_id": "CL-027",
+                "chapter": "Energy",
+                "section": "7",
+                "claim_text": "Birks kB effective Cluster-C simulation-fit value",
+                "current_value": value,
+                "unit": unit,
+                "truth_type": "simulation_result",
+                "status": status,
+                "source_report": "reports/studies/clusterC/SUMMARY.md",
+                "source_script": "scripts/clusterC/clusterC_pileup_energy_study.py",
+                "source_commit": "abc123",
+                "ci_status": "MODEL_IDENTITY_INCOMPLETE",
+                "blocked_by": (
+                    "" if blank_blockers else "#1007;#1008;#1079;#1089;#1095"
+                ),
+            }
+        )
         rows.append(birks)
         if duplicate:
             duplicate_row = dict(birks)
@@ -78,7 +84,13 @@ def write_ledger(
             writer.writerow([row[field] for field in FIELDS])
 
 
-def write_claims(path: Path, *, include_birks: bool, status: str = "GATED") -> None:
+def write_claims(
+    path: Path,
+    *,
+    include_birks: bool,
+    status: str = "GATED",
+    headline: str = "0.0156 cm/MeV; model identity incomplete",
+) -> None:
     with path.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.writer(handle)
         writer.writerow(
@@ -99,7 +111,7 @@ def write_claims(path: Path, *, include_birks: bool, status: str = "GATED") -> N
             writer.writerow(
                 [
                     "Birks kB effective simulation fit",
-                    "0.0156 cm/MeV; model identity incomplete",
+                    headline,
                     "SIMULATION_RESULT",
                     status,
                     "CL-027",
@@ -110,30 +122,30 @@ def write_claims(path: Path, *, include_birks: bool, status: str = "GATED") -> N
 
 
 def public_texts(
-    *, status: str | None = "GATED", include_value: bool = True
+    *, status: str | None = "GATED", value: str | None = "0.0156 cm/MeV"
 ) -> tuple[str, str, str]:
-    value = "0.0156 cm/MeV" if include_value else "withheld"
+    display_value = value if value is not None else "withheld"
     status_cell = f"**{status}**" if status else ""
     readme = f"""
 The row-by-row authority is docs/claim_ledger.csv; this section mirrors
 reports/studies/clusterE/claims_table.csv.
 | Claim | Value | Evidence class | Status | Source |
 |---|---|---|---|---|
-| Birks kB (per-track dE/dx, MC) | **{value}** | SIMULATION_RESULT | {status_cell} | CL-027 |
+| Birks kB | **{display_value}** | SIMULATION_RESULT | {status_cell} | CL-027 |
 """
     wiki = f"""
 Numbers are reproduced verbatim from `reports/studies/clusterE/claims_table.csv`;
 no value is hand-entered.
 | Claim | Headline | Evidence class | Status | Source |
 |---|---|---|---|---|
-| Birks kB (per-track dE/dx fit) | {value} | SIMULATION_RESULT | {status_cell} | CL-027 |
+| Birks kB (per-track dE/dx fit) | {display_value} | SIMULATION_RESULT | {status_cell} | CL-027 |
 """
     narrative = f"""
 Every number below is reproduced from `reports/studies/clusterE/claims_table.csv` —
 no value is hand-entered.
 | Result | Value | Evidence class | Status |
 |---|---|---|---|
-| Birks kB (per-track dE/dx fit) | **{value}** | SIMULATION_RESULT | {status_cell} |
+| Birks kB (per-track dE/dx fit) | **{display_value}** | SIMULATION_RESULT | {status_cell} |
 """
     return readme, wiki, narrative
 
@@ -144,11 +156,14 @@ def make_inputs(
     ledger_birks: bool,
     claims_birks: bool,
     public_status: str | None = "GATED",
+    public_value: str | None = "0.0156 cm/MeV",
     ledger_status: str = "GATED",
-    include_value: bool = True,
+    ledger_value: str = "0.0156",
+    ledger_unit: str = "cm/MeV",
+    source_headline: str = "0.0156 cm/MeV; model identity incomplete",
     blank_blockers: bool = False,
 ) -> tuple[Path, Path, Path, Path, Path]:
-    readme, wiki, narrative = public_texts(status=public_status, include_value=include_value)
+    readme, wiki, narrative = public_texts(status=public_status, value=public_value)
     readme_path = tmp_path / "README.md"
     wiki_path = tmp_path / "WIKI.md"
     narrative_path = tmp_path / "PUBLICATION_NARRATIVE.md"
@@ -161,9 +176,16 @@ def make_inputs(
         ledger_path,
         include_birks=ledger_birks,
         status=ledger_status,
+        value=ledger_value,
+        unit=ledger_unit,
         blank_blockers=blank_blockers,
     )
-    write_claims(claims_path, include_birks=claims_birks, status=ledger_status)
+    write_claims(
+        claims_path,
+        include_birks=claims_birks,
+        status=ledger_status,
+        headline=source_headline,
+    )
     return readme_path, wiki_path, narrative_path, ledger_path, claims_path
 
 
@@ -177,6 +199,19 @@ def test_current_like_public_value_without_ledger_or_source_fails(tmp_path: Path
     assert result["canonical_birks_claim_id"] is None
 
 
+def test_mutating_unbound_value_cannot_bypass_gate(tmp_path: Path) -> None:
+    paths = make_inputs(
+        tmp_path,
+        ledger_birks=False,
+        claims_birks=False,
+        public_status="PASS",
+        public_value="0.0157 cm/MeV",
+    )
+    result = MODULE.audit(*paths)
+    codes = [issue["code"] for issue in result["issues"]]
+    assert codes.count("PUBLIC_BIRKS_NUMERIC_CLAIM_UNBOUND") == 3
+
+
 def test_gated_bound_claim_and_source_table_pass(tmp_path: Path) -> None:
     paths = make_inputs(tmp_path, ledger_birks=True, claims_birks=True)
     result = MODULE.audit(*paths)
@@ -184,6 +219,46 @@ def test_gated_bound_claim_and_source_table_pass(tmp_path: Path) -> None:
     assert result["issues"] == []
     assert result["canonical_birks_claim_id"] == "CL-027"
     assert result["canonical_birks_status"] == "GATED"
+    assert result["canonical_birks_value_cm_per_mev"] == pytest.approx(0.0156)
+
+
+def test_equivalent_mm_per_mev_public_value_passes(tmp_path: Path) -> None:
+    paths = make_inputs(
+        tmp_path,
+        ledger_birks=True,
+        claims_birks=True,
+        public_value="0.156 mm/MeV",
+        source_headline="0.156 mm/MeV; model identity incomplete",
+    )
+    result = MODULE.audit(*paths)
+    assert result["status"] == "VALIDATED"
+    assert result["issues"] == []
+
+
+def test_public_value_mismatch_is_detected(tmp_path: Path) -> None:
+    paths = make_inputs(
+        tmp_path,
+        ledger_birks=True,
+        claims_birks=True,
+        public_value="0.0157 cm/MeV",
+    )
+    result = MODULE.audit(*paths)
+    assert "PUBLIC_BIRKS_VALUE_MISMATCH" in [
+        issue["code"] for issue in result["issues"]
+    ]
+
+
+def test_source_value_mismatch_is_detected(tmp_path: Path) -> None:
+    paths = make_inputs(
+        tmp_path,
+        ledger_birks=True,
+        claims_birks=True,
+        source_headline="0.0157 cm/MeV; model identity incomplete",
+    )
+    result = MODULE.audit(*paths)
+    assert "BIRKS_SOURCE_TABLE_VALUE_MISMATCH" in [
+        issue["code"] for issue in result["issues"]
+    ]
 
 
 def test_public_pass_is_stronger_than_gated_ledger(tmp_path: Path) -> None:
@@ -215,7 +290,12 @@ def test_gated_ledger_requires_explicit_blockers(tmp_path: Path) -> None:
 
 
 def test_withholding_public_number_needs_no_synthetic_birks_row(tmp_path: Path) -> None:
-    paths = make_inputs(tmp_path, ledger_birks=False, claims_birks=False, include_value=False)
+    paths = make_inputs(
+        tmp_path,
+        ledger_birks=False,
+        claims_birks=False,
+        public_value=None,
+    )
     result = MODULE.audit(*paths)
     assert result["status"] == "VALIDATED"
     assert result["issues"] == []

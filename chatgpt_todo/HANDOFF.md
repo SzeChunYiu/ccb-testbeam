@@ -1,60 +1,95 @@
 # Latest Handoff
 
-## Selected atom: raw `PrimaryWeight` -> event-measure weight
+## Selected atom: positive-scale invariance of derived event weights
 
-Review of active PR `#1169` exposed an unresolved source-to-statistical-unit contract upstream of the new H3 event/stave truth product. The product correctly aggregates all `Sci_bar_EDep` records into one generator-event/stave row and preserves Sample-I/Sample-II membership, but its weighted mode currently maps an arbitrary non-empty per-event `PrimaryWeight` payload to `weights[0]`. Its focused tests explicitly accept `[2.5, 9.0] -> 2.5`.
+Current protected `main` is `dcb4c12a4d7714d2f420e5ca1a61d2fb6048edbe`, which includes the merged #1170 source-carrier audit. The raw `PrimaryWeight` representation -> one event-measure weight map remains scientifically unresolved under #880/#1053. This session stayed downstream of that source adapter and reviewed only the numerical probability-measure contract used once exactly one nonnegative derived weight exists per immutable generator event.
 
-The repository does not yet justify that operation as a campaign-general event-weight definition. `docs/contracts/MC_WEIGHT_POLICY.md` and `tools/audit/audit_mc_weight_usage.py` describe one scalar weight per tree entry. Legacy `scripts/mc01_trigger_split_truth.py`, however, describes `PrimaryWeight` as a variable-length per-primary array and chooses the first value. `docs/validation/issue880_weight_semantics_audit.md` is `PARTIAL`, and `docs/validation/issue880_strict_producer_audit.md` explicitly says first-primary carrier correctness is unestablished, the production rerun is blocked and the retained issue-880 result remains `FLAWED`.
+## Exact invariant and defect
 
-## Stronger repository-resident schema evidence
+For event observable `X_i` and weights `w_i`,
 
-The content-addressed S17a schema audit records `PrimaryWeight` as `std::vector<double>` / Uproot jagged for a `hibeam` ROOT file. The companion result binds the patched 100k smoke file to SHA-256
+`F_w(x) = sum_i w_i I(X_i <= x) / sum_i w_i`,
 
-`74387a04571cf92724fb97974b1214579996ed33cff0b128e6a96eb21fc3164a`.
+`ESS(w) = (sum_i w_i)^2 / sum_i w_i^2`,
 
-That run is explicitly nonproduction because `/ElGen/CSFile` was removed and the event count reduced to 100k. It therefore proves a real vector-valued raw schema exists, but does not establish production event-wise cardinality, sibling-weight equality, or physical weight semantics. The correct architecture must distinguish raw branch representation from the derived one-weight-per-event analysis vector.
+and `d_max(w)=max(w)/sum(w)`.
 
-## Exact counterexample and surviving mechanisms
+For any common positive factor `c`, these normalized quantities obey
 
-For two event observables `X={0,1}` with event 2 weight 1, choosing the first value of event 1 payload `[2.5,9.0]` gives
+`F_{cw}=F_w`, `ESS(cw)=ESS(w)`, and `d_max(cw)=d_max(w)`.
 
-`F_w(0) = 2.5/(2.5+1) = 0.7142857143`.
+PR #1171 initially violated that invariant by requiring the **raw-unit** binary64 first and second moments to be finite. The test suite explicitly treated `[1e154,1e154]` second-moment overflow as an invalid measure. That makes software authorisation depend on weight units/normalization rather than the event measure itself.
 
-Permuting only primary-row order to `[9.0,2.5]` gives
+## Executed discriminating fixtures
 
-`F_w(0) = 9/(9+1) = 0.9`.
+Python 3.13.5 / NumPy 2.3.5, deterministic analytical fixtures, no random seed:
 
-Thus arbitrary first-element collapse changes the physical empirical measure under a representation-only permutation. The locally surviving adapter classes are:
+- `[1,2,7]`: raw path accepts, ESS `1.8518518518518519`.
+- `[1e300,2e300,7e300]`: same normalized measure; raw square sum becomes `inf` and the old path rejects. Max-scaled ESS `1.8518518518518516`, max fraction `0.7`.
+- `[1e-300,2e-300,7e-300]`: same normalized measure; raw square sum becomes `0.0` and the old path rejects. Max-scaled ESS `1.851851851851852`, max fraction `0.7`.
+- `[1e154,1e154]`: raw second-moment `math.fsum` raises intermediate overflow; max-scaled sums `(2,2)` give ESS `2`, dominance `0.5`.
+- `[1e308,1e308]`: raw total `math.fsum` overflows even though normalized weights are `(1/2,1/2)`; max-scaled ESS remains `2`.
+- two minimum-positive subnormal equal weights: raw square sum underflows to `0`; max-scaled ESS remains `2`.
 
-- source-proven scalar event weight;
-- source-proven common replicated per-primary weight, requiring exact sibling equality and primary-row permutation invariance;
-- source-proven direct-sampled unit-weight mode.
+These collapse the raw-moment algebraic rearrangements into one rejected mechanism. The surviving implementation is max-scaling:
 
-Sum/mean/product adapters define different measures and are rejected without a generator derivation. A `first_primary_only` adapter remains unidentified unless source evidence proves that element 0 alone carries the event measure when siblings differ.
+`m=max(w)>0`, `u_i=w_i/m`, `S1'=fsum(u)`, `S2'=fsum(u^2)`,
 
-## Four sequential review passes
+`ESS=S1'^2/S2'`, `d_max=1/S1'`.
 
-- **Generator/source-physics lead — REVISE.** Historical generators may attach a common weight to both outgoing primaries, but the exact production branch/cardinality/order and generator mode must be bound to bytes and source before H3 can choose an adapter.
-- **Adversarial mechanism reviewer — BLOCK arbitrary first-element collapse.** The primary-row permutation example is an exact falsifier unless sibling equality is guaranteed.
-- **Independent statistics/validation reviewer — BLOCK weighted inference / ACCEPT discriminator.** A non-empty all-zero selected population has no normalized weighted measure; post-adapter validation must require positive total mass and use the canonical stable sufficient-statistic rule.
-- **Claims/provenance reviewer — BLOCK closure.** The previous #880 closure exceeded its own strict audit's stated acceptance boundary; generator-measure mode and raw-weight adapter are absent from the H3 manifest.
+## Repository work completed on active PR #1171
 
-## Repository state and actions
+The branch `fix/mc-event-weight-population-contract` was repaired in place rather than opening a competing implementation PR:
 
-- `#880` has been reopened instead of creating a duplicate weight issue.
-- Full mechanism/falsifier/acceptance comments were added to `#880`; the prior closure-vs-audit contradiction is recorded there.
-- `#1053` now owns the requirement that `generator_measure_mode` also define a versioned raw-weight adapter.
-- `#1164` now states the invariant as exactly one **validated event-measure weight per final event row**, without assuming a universal raw branch shape.
-- PR `#1169` received a blocking scientific review and a follow-up correction: do not replace first-element collapse with an equally unjustified universal raw-cardinality-one rule.
-- Audit PR `#1170` preserves `ARU-MC-WEIGHT-CARRIER-001`, the S17a schema supplement, and this coordination state. Current head after coordination updates is newer than the initial `3768cf85...` audit head; fresh exact-head CI is required before merge.
-- PR `#1169` exact-head MC Validation run `31397051913` succeeded. That green result does not close the concern because the test suite currently encodes `[2.5,9.0] -> 2.5` as expected behavior.
+- `event_weight_population.py` now uses policy `nonnegative_event_measure_v2` and summation ID `python_math_fsum_max_scaled_binary64_v2`;
+- it serializes authoritative `weight_scale`, `sum_w_over_scale`, and `sum_w2_over_scale2`;
+- raw `sum_w` / `sum_w2` are convenience provenance only and become explicit `None` if binary64 cannot represent a positive finite raw moment;
+- all-zero, negative, nonfinite, malformed, masked, or event-misaligned vectors still fail closed;
+- empty diagnostics remain `measure_defined=false` with null ESS/dominance;
+- regression coverage now includes extreme positive scale changes, total/second-moment overflow, subnormal underflow, ordinary-range equivalence, order stability, one-dominant-weight, and JSON-without-Inf/NaN semantics;
+- `docs/contracts/MC_WEIGHT_POLICY.md` and the PR body were updated to remove the obsolete “raw overflow invalidates the measure” rule;
+- immutable audit `chatgpt_todo/archive/2026-08-10T151500Z_ARU-MC-WEIGHT-SCALE-001.md` records derivation, failures, role votes and cross-atom propagation.
 
-## Scientific boundary
+An isolated replica of the exact current module/tests returned `24 passed in 0.09s` with pytest exit code 0. The runtime printed an unrelated artifact-tool spreadsheet warmup timeout on stderr; that warning is recorded in the archive and was not produced by the MC test module. This local run is nonauthorising: only exact-head repository CI can authorize merge.
 
-No production MC ROOT file was opened in this runtime. No event-wise `PrimaryWeight` cardinality/equality distribution, campaign ESS, weighted spectrum, p-value, PID, penetration, calibration or detector-performance result was regenerated. The S17a ROOT evidence is schema/plumbing evidence only. CL-021 remains open; #1053/#880/#1164/#1049 remain upstream/downstream gates.
+## New child #1172
+
+Search found no existing open issue for this numerical universe, so issue #1172 now owns migration of the same raw-moment mechanism already present on current `main` in:
+
+- `tools/audit/validate_mc_weights.py`;
+- `tools/audit/audit_mc_weight_usage.py`;
+- `scripts/single_stave/strict_event_weights.py`;
+- any additional claim-bearing consumer found by repository search.
+
+#1172 explicitly separates normalized probability/shape measures from future absolute-yield estimands and does not silently change signed-weight semantics.
+
+## Four sequential review votes
+
+- **Generator/source-physics lead — REVISE.** A common factor cancels from the normalized event measure, even though absolute expected-yield claims may need a different contract. Raw adapter/source mode remains unresolved.
+- **Adversarial numerical reviewer — BLOCK raw-moment validity gate.** `math.fsum` cannot repair products that already overflow/underflow and can itself overflow on a finite total; exact scale-only counterexamples exist.
+- **Independent statistics/validation reviewer — ACCEPT local max-scaled nonnegative contract pending CI / BLOCK inference.** ESS/dominance invariants survive the hostile fixtures, but clustered-event ESS, signed weights and null calibration remain separate universes.
+- **Claims/provenance reviewer — REVISE repository helpers / no promotion.** The defect is a software/provenance contract even if current production weights do not reach extreme scales. No historical physics result is declared numerically changed without real input evidence.
+
+## Dependency and claim boundary
+
+PR #1169 remains blocked from treating arbitrary `weights[0]` as a validated raw adapter. The required chain remains:
+
+`generator_measure_mode + immutable source provenance`
+
+`-> versioned raw_weight_adapter_id`
+
+`-> one derived event weight / immutable generator event`
+
+`-> nonnegative_event_measure_v2 population validation`
+
+`-> H3 event/stave truth diagnostic`
+
+`-> quenching/optical/SiPM/electronics/digitizer/reconstruction`
+
+`-> weighted DATA/MC inference only after #1049/#1052/#1164 gates`.
+
+No production ROOT file or Geant4 campaign was available. No real campaign ESS, weighted spectrum, p-value, PID, penetration, timing, calibration, pile-up, rate, or detector-performance result changed.
 
 ## Next highest-value work
 
-First resolve the carrier on immutable representative MC files for every generator-measure mode: record ROOT SHA/tree/schema, generator commit/config/table digest, per-event `PrimaryWeight` cardinality, sibling equality, primary PDG/TrackID association/order, zero/multi-primary cases, and source mode. Then add `generator_measure_mode` + `raw_weight_adapter_id` to the H3 manifest and fail closed when the raw payload violates its declared adapter.
-
-If production bytes remain unavailable, the safe implementation-only leaf is adapter-independent: reject a non-empty derived event-weight population when `sum(w)<=0` or `sum(w^2)<=0`, compute `sum(w)`, `sum(w^2)` and ESS with `math.fsum`, and keep the product `NONAUTHORISING_TRUTH_DIAGNOSTIC`. After that, continue the H4 stepwise quenching/visible-energy atom before any detector-level DATA/MC inference.
+First inspect fresh exact-head CI for the fully updated #1171 branch; do not reuse older green runs from pre-scale-invariance heads. If the current head passes and remains mergeable, merge the bounded primitive/policy repair. Then take #1172 and migrate duplicate helpers to the package contract, with ordinary-range backward-compatibility and extreme-scale negative controls. If immutable representative production MC becomes available before that, source-carrier cardinality/equality measurement under #880/#1053 has higher physical information value and should pre-empt the code-only migration.

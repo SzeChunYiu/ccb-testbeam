@@ -1,16 +1,13 @@
 # Active Task
 
-- **Task ID:** `ARU-MC-G4-CMAKE-TOOLCHAIN-001` / concern `PROV-G4-CMAKE-001`
+- **Task ID:** `ARU-CI-BASE-FRESHNESS-001`
 - **Owner:** hourly Atomic Research Universe audit session
-- **Protected main inspected:** `dbb57b46f30da6298ce2850571dec3aab4b3674d`, after exact-head-successful coordination PR #1200 was squash-merged.
-- **Parent dependency:** #1182 / compiled Geant4 provenance; #1178, #1179, #1058 and CL-021 remain gated. #1182 was reopened this run because its auto-closure contradicted unresolved acceptance criteria.
-- **Validated predecessor:** #1199 `ccb_geant4_build_binding_{begin,final}_v1` binds two observed source/input states to an executable identity but explicitly leaves `build_contract` caller-declared and cannot exclude transient mutate-and-restore.
-- **Selected atomic gap:** independently measure the configured CMake/compiler/package state instead of trusting only declared toolchain labels.
-- **Input contract:** PASS `ccb_geant4_build_binding_final_v1`; exact `CMakeCache.txt`; explicit required cache keys; one or more package sentinels rooted at cache-selected package directories.
-- **Invariant:** verify final-receipt digest; re-hash the bound executable; same-stream hash/parse `CMakeCache.txt`; require unique resolved `CMAKE_COMMAND`, `CMAKE_CXX_COMPILER`, `CMAKE_GENERATOR`; hash/probe the cache-selected CMake and C++ compiler; hash resolved package sentinels; self-digest the attestation.
-- **Implementation branch:** `audit/geant4-cmake-toolchain-attestation` adds `tools/audit/geant4_toolchain_attestation.py`, hostile tests, curated ruff coverage and immutable ARU documentation.
-- **Local deterministic evidence:** `python -m pytest -q test_geant4_toolchain_attestation.py` -> `7 passed in 0.05s`; no RNG. Local ruff unavailable (`ruff: command not found`), therefore exact-head repository CI remains mandatory.
-- **Encoded falsifiers:** declared fake compiler label cannot override cache-selected measured compiler; post-receipt executable mutation blocks; duplicate/missing cache keys block; nonzero tool probe blocks; relative package root blocks; symlink sentinel records target plus resolved target hash.
-- **Scientific boundary:** CMake configured state does not prove each compiler/link invocation, immutable consumption, runtime-loaded library identity, RNG/thread/event count, runtime input/output identity, or any Geant4/detector observable.
-- **Next child after exact-head CI:** `ARU-MC-G4-LINK-RUNTIME-IDENTITY-001` and/or `ARU-MC-G4-IMMUTABLE-CONSUMPTION-001`, followed by `ARU-MC-G4-RUNTIME-MANIFEST-001` and compiled hostile source/stopping controls.
-- **Status:** `ACTIVE / TOOLCHAIN_ATTESTATION_IMPLEMENTED_ON_BRANCH / EXACT_HEAD_CI_REQUIRED / REAL_BUILD_CACHE_UNAVAILABLE / IMMUTABLE_CONSUMPTION_BLOCKED / DYNAMIC_LINK_IDENTITY_BLOCKED / RUNTIME_MANIFEST_BLOCKED / DETECTOR_INFERENCE_BLOCKED`
+- **Branch-point protected main:** `57407692c7d3af5de82585c5597b666cd74ad742` (PR #1187 merged after exact-head MC Validation run `31426849092`).
+- **Selected atom:** whether a green PR-head CI result can authorise protected-main integration when the head does not contain the current `main` commit.
+- **Exact discriminator:** PR #1186 head `4a2d1909b681517eee72389bf5f8d3604e4b8f54` had successful exact-head `test` checks but was `behind`; compare against then-current `main@a1bcb6a...` gave `status=diverged`, `ahead_by=11`, `behind_by=1`, merge base `f5f96951...`, and the normal protected squash merge was rejected with HTTP 405. Current-base control PR #1187 had the same CI workflow, `mergeable_state=clean`, and merged normally as `57407692...`.
+- **Leading mechanism:** strict current-base ancestry is the operative merge gate; a generic Check-Runs/classic-status mismatch is weakened by the #1187 control. Exact hidden protection settings remain unobservable to the connector (403), so the configured rule itself is not claimed as directly inspected.
+- **Implementation:** issue #1188 plus `tools/audit/validate_pr_base_freshness.py`, which emits `pr_base_freshness_v1` JSON and exits 0 only when the exact base is an ancestor of the head with `behind_by=0`; stale/diverged is exit 2, inspection failure exit 3.
+- **Local deterministic validation:** synthetic Git-graph tests exercise stale/diverged, refreshed/current-base, CLI JSON/exit codes, and missing-ref fail-closed behavior; `pytest -q tests/test_pr_base_freshness.py` -> `3 passed in 12.97s`. No RNG. Local ruff execution was unavailable because the installed executable returned a permission error; repository exact-head CI is required.
+- **Parallel scientific state:** interpolation-order sensitivity from #1187 is now on main but remains deterministic source-model sensitivity only. PR #1186 source-UQ work is not on main; #1179, #1178, #1182 and CL-021 remain open/gated.
+- **Next experiment:** refresh #1186 onto current main by a normal non-force workflow, verify `behind_by=0`, require fresh `test` CI, then retry the normal protected merge. Apply the same ancestry audit to stale readiness PR #1183.
+- **Status:** `ACTIVE / A_B_DISCRIMINATOR_EXECUTED / LOCAL_GIT_GUARD_IMPLEMENTED / EXACT_HEAD_REPOSITORY_CI_PENDING / #1186_REFRESH_PENDING / NO_PHYSICS_CLAIM_CHANGE`

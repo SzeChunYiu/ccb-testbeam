@@ -1,60 +1,39 @@
 # Latest Handoff
 
-## Selected atom: independently attest the CMake-selected Geant4 build toolchain
+## Selected atom: current-base ancestry as merge-authorisation evidence (#1188)
 
-Protected `main` is `dbb57b46f30da6298ce2850571dec3aab4b3674d`. PR #1200 was merged only after exact-head MC Validation run `31445196091` succeeded. It records #1199's two-boundary build-binding milestone and leaves immutable consumption/toolchain/runtime provenance open. Issue #1182 had nevertheless been auto-closed; this run reopened it because its own compiled/runtime acceptance criteria remain unsatisfied.
+Protected main advanced during this session from `a1bcb6a68630845c31c0b8ebcd5b45de0cea1dd6` to `57407692c7d3af5de82585c5597b666cd74ad742` when PR #1187 passed exact-head MC Validation run `31426849092` and was squash-merged normally. The merged work quantifies interpolation-order sensitivity only; #1178/#1179/#1182 and CL-021 remain open/gated.
 
-### Why this atom exists
+### Discriminator
 
-#1199's final receipt binds observed source/input state to an executable hash, but `build_contract` is caller-supplied JSON. A declared compiler/version string can therefore be internally consistent while disagreeing with the compiler actually selected in the CMake build tree. The historical `geant4/setup_and_run.sh` additionally states that one conda compiler/ROOT combination was necessary while invoking `cmake`/`make` from a mutable shell environment.
+PR #1186 head `4a2d1909b681517eee72389bf5f8d3604e4b8f54` had successful exact-head `test` checks from MC Validation run `31426279702`, yet GitHub reported `mergeable_state=behind`. Against then-current main `a1bcb6a...`, the compare graph was `diverged`, `ahead_by=11`, `behind_by=1`, merge base `f5f96951c3f56986769a16cd53ab8e23dee3e287`. A normal squash merge with the exact expected head was rejected with HTTP 405, `Required status check "test" is expected.` No bypass or force update was attempted.
 
-`ARU-MC-G4-CMAKE-TOOLCHAIN-001` therefore measures configured build state from the exact `CMakeCache.txt` and package sentinels instead of treating labels as evidence.
+Control PR #1187 used the same required workflow, reported `mergeable_state=clean`, completed its `test` job successfully, and the same normal protected merge path succeeded. This sharply weakens the earlier generic Check-Runs/classic-status mismatch hypothesis and makes stale-base ancestry the leading mechanism for #1186's rejection. Exact branch-protection configuration remains inaccessible to the connector (403), so the hidden configuration is still a residual uncertainty.
 
-### Implemented contract on branch
+### Implemented guard
 
-Branch `audit/geant4-cmake-toolchain-attestation` adds schema `ccb_geant4_cmake_toolchain_attestation_v1`:
+Issue #1188 owns `ARU-CI-BASE-FRESHNESS-001`. On branch `audit/ci-base-freshness-contract`, `tools/audit/validate_pr_base_freshness.py` checks the local Git graph only. Given exact protected base and PR head refs, it resolves both commits, records their merge base and left/right commit counts, checks base ancestry, emits versioned JSON, and exits:
 
-1. verify a PASS `ccb_geant4_build_binding_final_v1` receipt and its canonical digest;
-2. re-hash the bound executable and require exact identity with the #1199 receipt;
-3. read one regular non-symlink `CMakeCache.txt` byte stream, record SHA-256/byte count, and parse the exact bytes;
-4. require unique resolved `CMAKE_COMMAND`, `CMAKE_CXX_COMPILER`, and `CMAKE_GENERATOR` plus caller-required cache keys;
-5. resolve/hash the cache-selected CMake and C++ compiler executables and require successful bounded `--version` probes;
-6. derive package sentinel paths from cache-selected absolute package roots and record symlink spelling plus resolved target hash;
-7. emit a canonical self-digested attestation with explicit limitations.
+- 0 for exact current-base ancestry (`behind_by=0`),
+- 2 for stale/diverged ancestry,
+- 3 if the graph itself cannot be inspected.
 
-CMake's official documentation supports the distinction: the first configuration selects the C++ compiler and stores it as `CMAKE_CXX_COMPILER`, while `CMAKE_GENERATOR` identifies the native build-system generator. The attestor uses that configured state rather than current-PATH guesses.
+It intentionally does not conflate ancestry with required-check status; both gates must pass.
 
-### Competing mechanisms and eliminations
+A synthetic Git-repository falsifier was executed locally with no RNG. A feature branched before one new main commit yielded `behind_by=1`, `ahead_by=1` and nonauthorising status; a feature created from the new main yielded `behind_by=0`, `ahead_by=1` and authorising status; an unknown ref failed closed. `pytest -q tests/test_pr_base_freshness.py` returned `3 passed in 12.97s`. Local ruff could not be executed because the available executable returned an OS permission error, so exact-head repository CI remains mandatory before merge.
 
-- **Declared build-contract labels only:** rejected; they are caller assertions.
-- **Probe current PATH `cmake`/`c++`:** rejected as sufficient because current PATH need not equal configure-time selection.
-- **CMake-cache selected compiler/CMake paths plus package sentinels:** survives as a bounded configured-build provenance mechanism.
-- **Treat cache state as proof of every compiler/link/runtime load:** rejected; transient source substitution, per-invocation wrapper/tool substitution, link inputs and runtime loader resolution are not observed.
+### Four sequential review votes
 
-Symlink aliases that resolve to the same regular target are collapsed as one byte identity while retaining both spelling and target metadata.
+- **Scientific-software lead — ACCEPT mechanism / REVISE workflow:** current-base control falsifies a generic check-API explanation; exact hidden protection config remains unknown.
+- **Adversarial reviewer — BLOCK stale-head authorisation:** rerunning checks on unchanged stale ancestry does not test the current integration state.
+- **Independent validation reviewer — ACCEPT A/B discriminator / REQUIRE real refresh rerun:** causal closure requires #1186 refreshed to current main, fresh CI, and a successful normal protected merge.
+- **Claims/provenance reviewer — BLOCK any statement that #1186 is on main:** its branch result is reviewable but absent from protected main.
 
-### Executed deterministic falsifiers
+### Immediate handoff
 
-Local command: `cd /tmp && python -m pytest -q test_geant4_toolchain_attestation.py`.
+1. Wait for / inspect exact-head repository CI on the new #1188 guard PR; do not merge it before green CI.
+2. Refresh #1186 onto the latest main through a normal **non-force** workflow, record new head and merge base, verify `behind_by=0`, and require fresh MC Validation CI before retrying merge.
+3. Audit PR #1183 similarly; its recorded base `f5f96951...` is stale relative to current main and it owns the audit precursor to #1182's P0 source-readiness fix.
+4. Do not let this repository-provenance repair promote any source, detector, ESS, p-value, PID, timing, penetration, energy or pile-up claim.
 
-Result: `7 passed in 0.05s`, Python 3.13, no RNG.
-
-Fixtures cover a nominal cache-selected CMake/C++ + Geant4/VGM package world; a deliberately false caller-declared compiler string; executable mutation after the final #1199 receipt; duplicate compiler cache keys; missing required cache keys; failing compiler version probe; relative package cache roots; and symlink package sentinels with resolved-target hashing.
-
-Local ruff was unavailable (`ruff: command not found`), so the branch is **not** merge-authorised until exact-head repository CI passes.
-
-### Four sequential AI review passes
-
-- **Build/physics integration lead — REVISE:** accepts the configured-state measurement and rejects metadata-only toolchain identity. Strongest counter-hypothesis: build-contract labels are already sufficient. Falsifier: declared fake compiler label versus independently cache-selected path/hash. Residual: no real external HIBEAM build cache in this runtime.
-- **Adversarial mechanism reviewer — ACCEPT bounded detector / BLOCK immutable-consumption claim:** cache state and executable identity are stable observables, but they cannot exclude mutate-and-restore or per-invocation substitution. Residual: frozen build namespace and link provenance.
-- **Independent validation reviewer — ACCEPT deterministic oracle / BLOCK physics inference:** exact hashes and seven hostile fixtures close local software semantics; no event population or detector observable enters the test.
-- **Claims/provenance reviewer — BLOCK CL-021 promotion:** dynamic dependency identity, run manager/thread mode, random engine/seeds, event count, runtime input hashes, output ROOT/tree/schema/hash and downstream detector-response compatibility remain absent.
-
-### Child atoms
-
-- `ARU-MC-G4-IMMUTABLE-CONSUMPTION-001`: frozen/content-addressed compiler input namespace or equivalent proof at consumption time.
-- `ARU-MC-G4-LINK-RUNTIME-IDENTITY-001`: link-editor inputs and actual runtime-loaded Geant4/VGM/ROOT/system library files/hashes.
-- `ARU-MC-G4-RUNTIME-MANIFEST-001`: run-manager/thread mode, RNG engine/seeds, event count, source/support/weight IDs, runtime inputs, exit status, output file/tree/schema/hash.
-- Compiled hostile cross-section and stopping-table controls remain open under #1182/#1058.
-
-No production Geant4 executable/build cache, beam ROOT bytes, or detector-chain output was available here. No angular population, weight, B2/B8, PID, penetration, timing, calibration, pile-up, ESS, p-value, rate, or detector-performance quantity was regenerated or promoted.
+No beam ROOT bytes were opened and no production Geant4 campaign was run in this atom.

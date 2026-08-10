@@ -1,24 +1,22 @@
 # Active Task
 
-- **Task ID:** `ARU-S00-SELECTOR-EQUIVALENCE-CLOSURE`
+- **Task ID:** `ARU-RAW-DIGEST-SAME-STREAM-CLOSURE`
 - **Owner:** hourly Atomic Research Universe audit session
-- **Session stamp:** `2026-08-10T040000Z`
-- **Initial remote main SHA:** `f5ad219c03b51cb4a2e84f7620b8d9363a250fd6`
-- **Primary issue:** `#1136`
-- **Parent issue:** `#1109`
-- **Sibling blockers:** `#1135`, `#1137`
-- **Branch:** `fix/s00-selector-equivalence-contract`
-- **PR:** `#1140`
-- **Policy:** `EXACTLY_EQUIVALENT_SCALAR_MAPS_ARE_ONE_MODEL;_VALIDITY_POLICIES_ARE_SEPARATE_LAYERS`.
-- **Selected atom:** `selector method names -> amplitude-map identity -> validity-policy identity -> candidate count -> robustness/multiplicity claims`.
-- **Exact equivalence:** `dynamic_range` and `rolling_min` both compute `b=min(w)` and therefore the same `A=max(w)-min(w)` and threshold membership for every finite waveform when validity is not a veto.
-- **Implemented contract:** `src/ccb_mc_validation/selector_model_contract.py` maps legacy method aliases onto unique `amplitude_map_id` values and separate `validity_policy_id` values.
-- **Unique scalar-map universe:** `first_four_median_v1`, `range_max_minus_min_v1`, `full_window_p10_v1`.
-- **Regression tests:** registry coverage, exact alias collapse, randomized amplitude/selection equality, bipolar diagnostic-policy separation, P10 distinct-map negative control, duplicate-name candidate-count protection.
-- **Search result:** no current repository model-selection/reporting consumer outside selector/tests was found using both aliases as independent scalar models; the new registry is the forward contract for such consumers.
-- **Expert votes:** detector/waveform `ACCEPT local decomposition`; adversarial `ACCEPT equivalence / REVISE downstream usage`; validation/statistics `ACCEPT local contract pending CI`; claims/provenance `ACCEPT local contract`.
-- **Repository actions:** reviewed and merged prior audit PR #1138 to main as `f5ad219c03b51cb4a2e84f7620b8d9363a250fd6`; opened PR #1140; updated #1136 with implementation evidence; added immutable ARU archive.
-- **CI:** exact-head MC Validation CI run `31353910275` is in progress; do not merge/close #1136 before success and final review.
-- **Scientific boundary:** no raw beam data, Geant4, selected-pulse count, timing, PID, penetration, calibration, pile-up, or detector-performance value changed. This is mathematical/model-accounting closure only.
-- **Next:** if #1140 CI passes, merge and close #1136; then return to P0 #1135 for frozen v1 formula/domain/config-preflight enforcement.
+- **Session stamp:** `2026-08-10T104900Z`
+- **Initial remote main SHA:** `7fb2a06596a87cb2dd294ec9d0b149e3575293e5`
+- **Primary issue:** `#1155`
+- **Parent issue:** `#993`
+- **Related blockers:** `#952`, `#953`; CL-001 remains `GATED`.
+- **Branch:** `fix/raw-input-same-stream-provenance`
+- **PR:** `#1157`
+- **Policy:** `ONE_PROVENANCE_ROW_BINDS_DIGEST_AND_BYTE_COUNT_TO_ONE_OPENED_STABLE_STREAM`.
+- **Selected atom:** `raw ROOT pathname -> opened regular-file stream -> SHA-256 + byte count + descriptor identity/stability -> provenance row -> waveform-lineage evidence`.
+- **Exact invariant:** `sha256=H(B)` and `bytes=|B|` for the same opened byte stream `B`; separate pathname hash/stat observations are not authorising.
+- **Implemented contract:** `digest_raw_input()` opens once with `O_NOFOLLOW`, hashes/counts identical `os.read()` blocks, checks regular-file identity and before/after `fstat` stability, and records descriptor metadata. `collect_raw_input_digests()` preserves complete-list/missing-run semantics while propagating identity failures.
+- **Hostile tests added:** legacy mixed-version hash/stat counterexample; path replacement after open; in-place mutation; symlink rejection; nonregular input; invalid block size; stable exact hash/size and persisted schema controls.
+- **Expert votes:** DAQ/provenance `ACCEPT local / BLOCK #993 closure`; adversarial filesystem `ACCEPT bounded contract`; validation/statistics `ACCEPT design pending CI / BLOCK real artifact`; claims/provenance `ACCEPT repair / BLOCK claim promotion`.
+- **Repository actions:** implementation, tests and immutable ARU archive are on PR #1157. No raw beam file or Geant4 result was produced.
+- **Validation:** local full-checkout pytest is unavailable because this runtime cannot resolve `github.com`; only the workflow associated with the final exact PR head/current base may authorize merge. Earlier workflow runs become stale if coordination commits move the head.
+- **Scientific boundary:** this repair makes future raw-input rows internally same-stream coherent. It does not establish 8x16<->8x18 lineage, exact raw->sorted closure, polarity, or any detector-performance result.
+- **Next:** require exact-head/current-base CI for PR #1157, then regenerate the complete real raw-input manifest on the data host and continue #993/#953 event-channel-sample lineage.
 - **Status:** `ACTIVE / PARTIAL`

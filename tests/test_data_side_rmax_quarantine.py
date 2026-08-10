@@ -4,11 +4,13 @@ import hashlib
 import importlib.util
 import json
 import math
+import os
 import sys
 import types
 from pathlib import Path
 
 import pandas as pd
+import pytest
 
 
 SCRIPT = Path(__file__).parents[1] / "scripts/studies/data_side_real_beam.py"
@@ -75,6 +77,99 @@ def test_raw_digest_collection_is_complete_for_available_inputs(tmp_path):
         hashlib.sha256(payloads[run]).hexdigest() for run in (31, 33, 34)
     ]
     assert [row["bytes"] for row in digests] == [5, 5, 5]
+    assert all(int(row["source_ino"]) > 0 for row in digests)
+    assert all(int(row["source_nlink"]) >= 1 for row in digests)
+
+
+def test_legacy_separate_hash_then_stat_can_serialize_mixed_versions(tmp_path):
+    module = load_module()
+    source = tmp_path / "raw.root"
+    payload_a = b"AAAA"
+    payload_b = b"BBBBBBBBBB"
+    source.write_bytes(payload_a)
+
+    digest_a = module.sha256_file(source)
+    source.write_bytes(payload_b)
+    later_size = source.stat().st_size
+
+    assert digest_a == hashlib.sha256(payload_a).hexdigest()
+    assert later_size == len(payload_b)
+    assert later_size != len(payload_a)
+
+
+def test_same_open_stream_rejects_path_replacement_during_read(tmp_path, monkeypatch):
+    module = load_module()
+    source = tmp_path / "raw.root"
+    replacement = tmp_path / "replacement.root"
+    payload_a = b"abcdef"
+    payload_b = b"replacement-is-longer"
+    source.write_bytes(payload_a)
+    replacement.write_bytes(payload_b)
+
+    real_read = module.os.read
+    swapped = False
+
+    def replacing_read(descriptor, size):
+        nonlocal swapped
+        block = real_read(descriptor, size)
+        if block and not swapped:
+            replacement.replace(source)
+            swapped = True
+        return block
+
+    monkeypatch.setattr(module.os, "read", replacing_read)
+    with pytest.raises(module.RawInputProvenanceError, match="changed while being digested"):
+        module.digest_raw_input(source, block_size=2)
+
+    assert swapped is True
+    assert source.read_bytes() == payload_b
+
+
+def test_same_open_stream_rejects_in_place_mutation_during_read(tmp_path, monkeypatch):
+    module = load_module()
+    source = tmp_path / "raw.root"
+    source.write_bytes(b"abcdefgh")
+
+    real_read = module.os.read
+    mutated = False
+
+    def mutating_read(descriptor, size):
+        nonlocal mutated
+        block = real_read(descriptor, size)
+        if block and not mutated:
+            with source.open("ab") as handle:
+                handle.write(b"Z")
+            mutated = True
+        return block
+
+    monkeypatch.setattr(module.os, "read", mutating_read)
+    with pytest.raises(module.RawInputProvenanceError, match="changed while being digested"):
+        module.digest_raw_input(source, block_size=2)
+    assert mutated is True
+
+
+def test_raw_digest_rejects_final_component_symlink(tmp_path):
+    module = load_module()
+    if not hasattr(os, "O_NOFOLLOW"):
+        pytest.skip("platform does not expose O_NOFOLLOW")
+    target = tmp_path / "target.root"
+    link = tmp_path / "raw.root"
+    target.write_bytes(b"beam-bytes")
+    link.symlink_to(target)
+
+    with pytest.raises(module.RawInputProvenanceError, match="symlink"):
+        module.digest_raw_input(link)
+
+
+def test_raw_digest_rejects_nonregular_input_and_invalid_block_size(tmp_path):
+    module = load_module()
+    source = tmp_path / "raw.root"
+    source.write_bytes(b"beam-bytes")
+
+    with pytest.raises(ValueError, match="block_size must be positive"):
+        module.digest_raw_input(source, block_size=0)
+    with pytest.raises(module.RawInputProvenanceError, match="not a regular file"):
+        module.digest_raw_input(tmp_path)
 
 
 def test_data_provenance_never_truncates_digest_manifest(tmp_path):
@@ -108,5 +203,8 @@ def test_data_provenance_never_truncates_digest_manifest(tmp_path):
     assert [row["run"] for row in record["raw_input_sha256"]] == runs
     assert record["raw_input_missing_runs"] == []
     assert record["raw_input_sha256_complete"] is True
+    assert record["raw_input_digest_schema"] == "same-open-stream-v1"
+    assert "one O_NOFOLLOW descriptor" in record["raw_input_digest_contract"]
     assert persisted["raw_input_sha256"] == record["raw_input_sha256"]
     assert persisted["raw_input_sha256_count"] == len(persisted["raw_input_sha256"])
+    assert persisted["raw_input_digest_schema"] == "same-open-stream-v1"

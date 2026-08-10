@@ -1,49 +1,52 @@
 # Latest Handoff
 
-## Selected atom: source-UQ × interpolation cross-atom compatibility (#1179)
+## Completed atom: source-UQ × interpolation cross-atom compatibility (#1179)
 
-Protected `main` at the branch point is `af0c3989df0009fb74d5b820123e5c7cbcbce67f`. PR #1186 is now merged after exact-head MC Validation run `31428708910` succeeded, so the deterministic 3% node-box / conditional row-statistical sensitivity is on main. #1179 remains open because no source-bound systematic covariance/decomposition has been recovered.
+Protected `main` is now `d4d174d2a1b22eca17694fcf12177404a10eb657`. PR #1190 exact head `9bfa6795b47923a754183713f8f0f8963b4d02f6` passed MC Validation CI run `31430225650`: `1460 passed, 1 skipped, 8 xfailed, 1 xpassed`, six pre-existing warnings, clean ruff, diagnostic upload and enforcement. It was squash-merged as `d4d174d2a1b22eca17694fcf12177404a10eb657`.
 
-### Exact contract
+The exact source input remains `geant4/src_patch/sigma_pd_cm_190.txt`, 640 bytes / 28 rows, SHA-256 `0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc`, on 26.49–169.78 deg CM support. The explicit source-node sensitivity set remains the **NONPROBABILISTIC_ENVELOPE** `0.97 sigma_i <= sigma'_i <= 1.03 sigma_i`; neither it nor the interpolation class carries a nuisance probability law.
 
-Input is `geant4/src_patch/sigma_pd_cm_190.txt`, 640 bytes / 28 rows, SHA-256 `0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc`, covering 26.49–169.78 deg CM. The normalized source CDF is `F=N/Z`, and for both surviving interpolation classes the numerator and normalization are linear in the source-node cross sections.
+### Validated source-level cross-atom result
 
-The explicit source-node set remains the **NONPROBABILISTIC_ENVELOPE** `0.97 sigma_i <= sigma'_i <= 1.03 sigma_i`. It has no nuisance probability law or coverage interpretation.
+The surviving measured-support interpolation classes are `linear_node_pdf_exact_inverse_v1` and `linear_cross_section_then_jacobian_v1`. Propagating the same node box through each gives:
 
-### New cross-atom result
+- current box: `+0.01430729974634637/-0.014380572923809676` CDF;
+- alternative box: `+0.014310586515772328/-0.014374731878122216`;
+- alternative **central** CDF: zero violation of the current-mode box on the tested 10,001-point grid;
+- alternative **full box image**: extends beyond the current box by `0.0010650343985590949` upward at 39.586706 deg and `0.0002537872354466675` downward at 145.879228 deg;
+- two-model/node-box union relative to current nominal: `+0.015299817076167732` at 43.168956 deg and `-0.014380572923809676` at 46.951812 deg; mean-theta range 56.02560085079668–57.5322672970398 deg.
 
-The current interpolation is `linear_node_pdf_exact_inverse_v1`; the surviving comparison is `linear_cross_section_then_jacobian_v1`. On a deterministic 10,001-point measured-support grid, the alternative **central** CDF lies entirely inside the current-mode 3% box. That does not close the model-form universe: propagating the same node box through the alternative interpolation extends beyond the current-mode box by `0.0010650343985590949` upward at 39.586706 deg and `0.0002537872354466675` downward at 145.879228 deg.
+The machine result is bound to executable code by a regression that recomputes the audit and requires exact JSON object equality with `results/research/sigma_cm_uq_interpolation_compatibility_v1.json`.
 
-The union of both interpolation classes and the same node box, relative to the current nominal source, reaches `+0.015299817076167732` in CDF at 43.168956 deg and `-0.014380572923809676` at 46.951812 deg. Its mean-theta range is 56.02560085079668–57.5322672970398 deg. These are sensitivity bounds, not confidence limits.
+A supplemental independent local refinement (Python 3.13.5, SciPy 1.17.0, NumPy 2.3.5, no RNG) moved the principal CDF extrema by only O(10^-9): union upward `0.015299818568272061` and union downward `0.01438057665953929`. This confirms grid localisation does not affect the mechanism conclusion, but it is not a proof of global continuous-theta extrema; retain that child only if exact source-level bounds become claim-bearing.
 
-The alternative interpolation's own box excursions are `+0.014310586515772328` and `-0.014374731878122216`; the current values reproduce the merged #1179 result exactly at `+0.01430729974634637/-0.014380572923809676`.
-
-Conditional diagonal-row-statistical references remain close but distinct: max pointwise CDF standard uncertainty `0.0004453566889758832` for the current interpolation versus `0.0004435837618530407` for the alternative; mean-angle standard uncertainty `0.02252797870713097` versus `0.022356857259092505` deg. Do not add these in quadrature with interpolation or node-box sensitivity because the required common probabilistic nuisance model is absent.
+Conditional diagonal-row-statistical references remain separate: max pointwise CDF standard uncertainty `0.0004453566889758832` current versus `0.0004435837618530407` alternative. Do not add these in quadrature with the model/node-box sensitivities without a source-bound common probability model.
 
 ### Four review votes
 
-- **Few-nucleon source physicist — REVISE:** interpolation is subdominant to the deliberately broad node-box stress set but remains a distinct source-model assumption.
-- **Adversarial numerical reviewer — ACCEPT discriminator / BLOCK collapse:** central-curve containment does not imply containment of the alternative model's full nuisance image.
-- **Independent statistics/UQ reviewer — ACCEPT deterministic mechanics / BLOCK inference:** no confidence, quadrature or model-averaging semantics are authorised without a source-bound covariance/model prior.
-- **Claims/provenance reviewer — BLOCK CL-021 promotion:** runtime, support physics, covariance, production manifest and detector-chain gates remain open.
+- **Few-nucleon source physicist — REVISE:** interpolation remains a distinct source-model assumption even though it is subdominant to this deliberately broad node-box stress set.
+- **Adversarial numerical reviewer — ACCEPT discriminator / BLOCK collapse:** central-curve containment is insufficient; the alternative nuisance image escapes the current box.
+- **Independent statistics/UQ reviewer — ACCEPT deterministic mechanics / BLOCK inference:** confidence, quadrature and model averaging remain undefined without covariance/model probabilities.
+- **Claims/provenance reviewer — BLOCK CL-021 promotion:** runtime, support, covariance, manifest, generator and detector-chain gates remain unresolved.
 
-### Repository work
+### Literature/support child update
 
-Branch `research/mc-source-uq-interpolation-compat` contains:
+A source-side literature pass was recorded on #1178. Ermisch et al. *Phys. Rev. C* **68**, 051001 (2003), DOI `10.1103/PhysRevC.68.051001`, explicitly describes the intermediate-energy p–d cross-section campaign as covering approximately 30–170 deg CM, so the near-forward/backward 190-MeV source law is genuinely not measured by that campaign. Witała, Golak & Skibiński, *Phys. Rev. C* **110**, 024005 (2024), provides a modern Coulomb-inclusive three-nucleon Faddeev framework, but this audit did not recover or execute a source-bound 190-MeV numerical completion. Truncation, constant/endpoint extension and Coulomb/Faddeev completion therefore remain separate source universes; no extrapolation was promoted.
 
-- `tools/audit/research_sigma_cm_uq_interpolation_compatibility.py`;
-- `tests/test_sigma_cm_uq_interpolation_compatibility.py`;
-- `results/research/sigma_cm_uq_interpolation_compatibility_v1.json`;
-- `chatgpt_todo/archive/2026-08-10T203000Z_ARU-MC-CS-UQ-INTERPOLATION-COMPAT.md`;
-- this handoff and `ACTIVE_TASK.md`.
+### Next highest-value atom: #1182 source runtime readiness
 
-Local equivalent execution used Python 3.13.5, no RNG, and returned `4 passed in 11.97s`. Exact-head repository CI is still required before merge.
+Issue #1182 is the next dependency-ready P0 atom. Existing PR #1183 contains an executable static audit but intentionally does not change production Geant4 behavior and was built on an older main. Start by reconciling it against current main without force-push or dropping unrelated work.
 
-### Child atoms / next
+Required state contract:
 
-1. Recover source-bound covariance/decomposition or preregister explicit common/smooth/residual sensitivity families; do not invent iid 3% rows.
-2. Propagate surviving source uncertainty/interpolation worlds through independently justified support models; measured-support truncation remains conditional.
-3. After #1182, run compiled seeded generator-only propagation with exact source/model/seed/event manifests.
-4. If the cross-model envelope becomes claim-bearing, remove the remaining finite-grid theta localisation with an analytic extremum search.
+`UNINITIALIZED -> UNCONFIGURED_UNIFORM | CONFIGURED_READY | FATAL`
 
-No beam ROOT data were opened, no production Geant4 campaign was generated, and no B2/B8, PID, timing, penetration, energy, pile-up, ESS, p-value, rate or detector-performance quantity was regenerated or promoted.
+and, for every generator instance `j`, configured-source event generation must satisfy
+
+`GenerateEvent_j(e) => readiness_j == CONFIGURED_READY`.
+
+The implementation/review must make readiness per-instance and idempotent, check every source/stopping-table parse, make configured-source failure fatal with non-success semantics, preserve explicit `CSFile=null` as a distinct uniform proposal only if intentionally configured, and bind source/readiness/input hashes to production provenance. Exact executable/run-manager/thread-mode evidence plus compiled seeded sequential/event-parallel controls remain prerequisites for runtime authorisation.
+
+### Claim boundary
+
+#1179 remains open for source-bound covariance/decomposition. #1178 remains open for support/runtime/source closure. #1182 remains open for readiness. CL-021 remains `OPEN / GATED`. No beam ROOT data were opened; no production Geant4 campaign, B2/B8, PID, timing, penetration, energy, pile-up, ESS, p-value, rate, or detector-performance quantity was regenerated or promoted.

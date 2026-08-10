@@ -1,0 +1,70 @@
+{
+  "comparison": {
+    "alternative_minus_current_mean_theta_cm_deg": -0.024267831224125052,
+    "max_abs_normalized_cdf_difference": 0.0010129801982659559,
+    "quantile_shifts": {
+      "0.05": {
+        "alternative_deg": 27.79913723120159,
+        "alternative_minus_current_deg": -0.0007387917619055714,
+        "current_deg": 27.7998760229635
+      },
+      "0.25": {
+        "alternative_deg": 33.774290477078374,
+        "alternative_minus_current_deg": -0.027034756385609406,
+        "current_deg": 33.80132523346398
+      },
+      "0.5": {
+        "alternative_deg": 44.5032162331041,
+        "alternative_minus_current_deg": -0.05619069758156213,
+        "current_deg": 44.55940693068566
+      },
+      "0.75": {
+        "alternative_deg": 65.75578727183553,
+        "alternative_minus_current_deg": -0.06766085121427168,
+        "current_deg": 65.8234481230498
+      },
+      "0.95": {
+        "alternative_deg": 139.14708994826123,
+        "alternative_minus_current_deg": 0.13082849690529305,
+        "current_deg": 139.01626145135592
+      }
+    },
+    "signed_current_minus_alternative_at_max": -0.0010129801982659559,
+    "theta_cm_deg_at_max_abs_cdf_difference": 43.94458149140975
+  },
+  "input": {
+    "bytes": 640,
+    "path": "geant4/src_patch/sigma_pd_cm_190.txt",
+    "rows": 28,
+    "sha256": "0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc",
+    "support_theta_cm_deg": [
+      26.49,
+      169.78
+    ]
+  },
+  "interpretation": "The current and alternative models match every published sigma node and use identical measured support, but differ between nodes because interpolation and the sin(theta) Jacobian do not commute. The source paper does not prescribe an interpolation rule between its tabulated angles, so this difference is model-form sensitivity rather than evidence that either interpolation is uniquely physical.",
+  "models": {
+    "alternative": {
+      "interpolation_mode": "linear_cross_section_then_jacobian_v1",
+      "mean_theta_cm_deg": 56.759694169292274,
+      "normalization": 1.2035777046844027,
+      "support_mode": "measured_table_support_truncate_v1"
+    },
+    "current": {
+      "interpolation_mode": "linear_node_pdf_exact_inverse_v1",
+      "mean_theta_cm_deg": 56.7839620005164,
+      "normalization": 1.1977630765144902,
+      "support_mode": "measured_table_support_truncate_v1"
+    }
+  },
+  "representation_refinement_control": {
+    "alternative_mode_max_abs_cdf_change": 1.4432899320127035e-15,
+    "alternative_mode_theta_cm_deg_at_max_change": 40.24,
+    "construction": "insert one midpoint per interval with sigma_mid=(sigma_left+sigma_right)/2",
+    "current_mode_max_abs_cdf_change": 0.000768558730840585,
+    "current_mode_theta_cm_deg_at_max_change": 43.75661087434171,
+    "scientific_meaning": "The inserted knots are redundant under a piecewise-linear interpolation of the published cross section sigma. They are not redundant under piecewise-linear interpolation of sigma*sin(theta), demonstrating that the two parameterizations are distinct model classes."
+  },
+  "schema_version": "ccb_sigma_cm_interpolation_sensitivity_v1",
+  "scientific_boundary": "Deterministic central-value source sensitivity only. No off-support extrapolation, covariance model, generator runtime, detector response, or detector-level claim is validated by this result."
+}

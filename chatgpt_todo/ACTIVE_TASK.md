@@ -1,17 +1,13 @@
 # Active Task
 
-- **Task ID:** `ARU-RAW-UPROOT-SAME-STREAM-001`
+- **Task ID:** `ARU-DATAMC-ECDF-001`
 - **Owner:** hourly Atomic Research Universe audit session
-- **Session stamp:** `2026-08-10T114700Z`
-- **Initial remote main SHA:** `439d611efe9908ae91379b7024e98ead36e4d30b`
-- **Merged upstream primitive:** PR `#1159`, squash merge `4fe1efaf931083de0a3c61bd25a447f5cb21e7a2` after exact-head MC Validation success.
-- **Parent issues:** `#993`, `#1149`; related blockers `#952`, `#953`; CL-001 remains `GATED`.
-- **Branch / PR:** `fix/raw-timing-manifest-bound-consumer` / `#1160`.
-- **Policy:** `UPROOT_MUST_CONSUME_THE_VERIFIED_STREAM_NOT_REOPEN_THE_PATHNAME`.
-- **Exact invariant:** `H(B_consumed) = H(B_manifest) = row.sha256`, with `(dev,ino,nlink,size,mtime_ns,ctime_ns)` stable through verification and consumer-context exit.
-- **Implementation:** `raw_uproot_authorization.py` adds unique run indexing, required-run completeness and `open_verified_uproot()`. Canonical `scripts/studies/data_side_real_beam.py::timing()` now requires the provenance record, binds every needed run to one row, removes silent missing-path skip/direct `uproot.open(path)`, and keeps each full tree iteration inside the verified Uproot context.
-- **Hostile controls:** real tiny-ROOT adapter read; file-like-not-path spy; pre-open replacement; pathname replacement during Uproot lifetime; duplicate/missing/malformed run rows; canonical timing success; missing manifest row before raw open; replaced canonical raw file rejection.
-- **Scientific boundary:** fixture tests validate software/provenance semantics only. No beam file, real 33-file manifest, timing/PID/energy/MC result or detector-performance claim is produced. #993/#952/#953 remain unresolved.
-- **Current gate:** exact-head MC Validation for PR #1160 head `a3fb8db3299501cc22276e03e9e0e06006ebc115` is in progress; do not merge or claim closure until it passes.
-- **Next after CI:** benchmark the extra verification read on the data host, regenerate the real manifest, then resume #993/#953 exact event/channel/sample lineage; keep waveform-width semantics under #952.
-- **Status:** `ACTIVE / PARTIAL`
+- **Session stamp:** `2026-08-10T115300Z`
+- **Current remote main SHA:** `f023b8f01272f996e296475b0068095f48b27acf`
+- **Just validated/merged:** PR `#1160` on exact head `16a2273e5b1a3c043ddc604264a5a68c1406c1ec`; MC Validation run `31385123680` succeeded; squash merge `f023b8f01272f996e296475b0068095f48b27acf`.
+- **Raw provenance state:** canonical `data_side_real_beam.py::timing()` now binds every required run to one manifest row and keeps the full Uproot iteration inside the verified descriptor stream. #1149 remains open for its original S00 selected-table contract/benchmark; #993/#952/#953 and CL-001 remain unresolved/GATED.
+- **Data-host blockers:** no real beam ROOT bytes are available here for the complete manifest regeneration or verification-read benchmark. Do not substitute fixture/synthetic I/O as production evidence.
+- **Selected next executable atom:** `#1051` / `ARU-DATAMC-ECDF-001`, the confirmed P0 defect where `compare_data_mc` linearly interpolates weighted empirical CDFs instead of evaluating right-continuous step functions.
+- **Required ECDF invariant:** `F_w(x)=sum_i w_i I(X_i <= x)/sum_i w_i`; aggregate tied support exactly, remain constant between support points, and make KS-D invariant to splitting one weighted row into identical copies with divided weight.
+- **Dependencies / separation:** #1049 owns weighted-KS null/p-value calibration; #880/#1022 own weight semantics; #1027 owns ADC saturation/ties. Repair #1051 first without claiming p-value validity.
+- **Status:** `ACTIVE / TRIAGED`

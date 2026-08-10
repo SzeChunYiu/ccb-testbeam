@@ -28,6 +28,10 @@ from ccb_mc_validation.s00_selector_contract import (
     validate_s00_selector_contract,
 )
 from ccb_mc_validation.selector import estimate_pedestal_v1_batched
+from tools.audit.validate_hrd_waveform_contract import (
+    BatchValidation,
+    validate_and_reshape_rows,
+)
 
 
 def load_config(path: Path) -> dict:
@@ -311,7 +315,27 @@ def scan_raw(config: dict) -> Tuple[pd.DataFrame, pd.DataFrame, Dict[str, dict],
         for batch in iter_raw_events(path):
             event_numbers = np.asarray(batch["EVENTNO"])
             evt_numbers = np.asarray(batch["EVT"])
-            all_events = np.stack(batch["HRDv"]).astype(np.float64).reshape(-1, 8, samples_per_channel)
+            # ---- Per-event HRD waveform width contract (#952) ----
+            # The legacy batch-level reshape (np.stack(...).reshape(-1, 8, N))
+            # can silently mix ADC words across event boundaries: nine 8x16
+            # events (9*128 words) reshape cleanly into eight 8x18 pseudo-events
+            # (8*144 words) under an 8x18 config. Every event must pass the
+            # per-event scalar-width gate BEFORE any stacking (fail closed).
+            waveforms, hrd_summary = validate_and_reshape_rows(
+                batch["HRDv"],
+                n_channels=8,
+                samples_per_channel=samples_per_channel,
+            )
+            if hrd_summary.malformed_events:
+                raise ValueError(
+                    "HRD waveform contract violation (#952): "
+                    f"{hrd_summary.malformed_events}/{hrd_summary.events} events have "
+                    f"width != {hrd_summary.expected_words} words "
+                    f"({8}x{samples_per_channel}); recheck the versioned schema "
+                    "before producing a pulse table. First malformed indices: "
+                    f"{hrd_summary.malformed_indices[:10]}"
+                )
+            all_events = waveforms.astype(np.float64)
             waveforms = all_events[:, stave_channels, :]
             baseline, amplitude, peak_sample, area = pulse_quantities(waveforms, baseline_indices)
             # Absolute peak (raw max) for peak_code_adc and hardware saturation
@@ -978,7 +1002,8 @@ def main() -> int:
     model_identity = {
         "effective_amplitude_cut_adc": float(cut),
         "amplitude_cut_source": cut_source,
-        "selector": f"ccb_mc_validation.selector {selector_identity['selector_id']}",
+"selector": f"ccb_mc_validation.selector {selector_identity['selector_id']}",
+        "hrd_waveform_schema": f"hrd-8x{int(config['samples_per_channel'])}-v1",
         "config_digest": model_id,
         "source_commit": src_commit,
         **selector_identity,

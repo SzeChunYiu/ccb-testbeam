@@ -37,12 +37,24 @@ def test_v1_identity_binds_exact_first_four_tuple() -> None:
         [-1, 0, 1, 2],
         [0, 1, 2, 18],
         ["0", "1", "2", "3"],
+        [0.0, 1.0, 2.0, 3.0],
+        [False, True, 2, 3],
     ],
 )
-def test_batched_v1_rejects_any_noncanonical_baseline_indices(indices: list[object]) -> None:
+def test_batched_v1_rejects_any_noncanonical_baseline_indices(
+    indices: list[object],
+) -> None:
     waveforms = np.stack([_quiet_waveform(), _quiet_waveform()])
-    with pytest.raises(SelectorInputError, match="frozen to baseline indices"):
+    with pytest.raises(SelectorInputError, match="baseline indices"):
         estimate_pedestal_v1_batched(waveforms, indices)
+
+
+def test_batched_v1_accepts_integral_numpy_indices() -> None:
+    waveforms = np.stack([_quiet_waveform(), _quiet_waveform() + 10.0])
+    indices = np.asarray([0, 1, 2, 3], dtype=np.int64)
+    expected = estimate_pedestal_v1_batched(waveforms)
+    actual = estimate_pedestal_v1_batched(waveforms, indices)
+    np.testing.assert_array_equal(actual, expected)
 
 
 def test_batched_v1_accepts_none_list_and_tuple_as_same_identity() -> None:

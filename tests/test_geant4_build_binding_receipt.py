@@ -147,7 +147,7 @@ def test_staged_input_mutation_between_begin_and_finalize_fails_closed(
         )
 
 
-def test_symlinked_input_and_executable_fail_closed(tmp_path: Path) -> None:
+def test_symlinked_input_fails_closed(tmp_path: Path) -> None:
     root, commit, tree = _fixture_external(tmp_path)
     inputs = _staged_inputs(tmp_path)
     target = tmp_path / "target.config"
@@ -158,6 +158,9 @@ def test_symlinked_input_and_executable_fail_closed(tmp_path: Path) -> None:
     with pytest.raises(ValueError, match="regular non-symlink"):
         _begin(root, commit, tree, inputs)
 
+
+def test_symlinked_executable_fails_closed(tmp_path: Path) -> None:
+    root, commit, tree = _fixture_external(tmp_path)
     inputs = _staged_inputs(tmp_path)
     begin = _begin(root, commit, tree, inputs)
     real_executable = tmp_path / "real_hibeam_g4"

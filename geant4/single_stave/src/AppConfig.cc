@@ -71,6 +71,8 @@ void AppConfig::PrintUsage(const char* prog) {
     "  --theta DEG              polar tilt from +z          (default 0)\n"
     "  --phi DEG                azimuth of tilt             (default 0)\n"
     "  --birks-kB VAL           Birks kB [mm/MeV]           (default 0.126)\n"
+    "  --production-cut MM      secondary-production range threshold [mm]\n"
+    "                           (default 0.1; gamma/e-/e+/p, NOT optical tracking)\n"
     "  --reflectivity-scale V   TiO2 reflectivity scale     (default 1.0)\n"
     "  --attenuation-scale V    DEPRECATED — use --scintillator-absorption-scale\n"
     "                           and --y11-bulk-attenuation-scale instead.\n"
@@ -110,6 +112,7 @@ std::string AppConfig::Describe() const {
      << " theta_deg=" << theta_deg
      << " phi_deg=" << phi_deg
      << " birks_kB=" << birks_kB_mm_per_MeV
+     << " production_cut_mm=" << production_cut_mm
      << " reflectivity_scale=" << reflectivity_scale
      << " attenuation_scale(deprecated)=" << attenuation_scale
      << " scintillator_absorption_scale=" << scintillator_absorption_scale
@@ -152,6 +155,7 @@ bool AppConfig::ParseArgs(int argc, char** argv) {
     else if (eq(a, "--theta"))             { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --theta requires a finite number, got '"<<v<<"'\n";return false;} theta_deg = t; }
     else if (eq(a, "--phi"))               { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --phi requires a finite number, got '"<<v<<"'\n";return false;} phi_deg = t; }
     else if (eq(a, "--birks-kB"))          { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --birks-kB requires a finite number, got '"<<v<<"'\n";return false;} birks_kB_mm_per_MeV = t; }
+    else if (eq(a, "--production-cut"))    { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --production-cut requires a finite number, got '"<<v<<"'\n";return false;} production_cut_mm = t; }
     else if (eq(a, "--reflectivity-scale")){ if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --reflectivity-scale requires a finite number, got '"<<v<<"'\n";return false;} reflectivity_scale = t; }
     else if (eq(a, "--attenuation-scale")) { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --attenuation-scale requires a finite number, got '"<<v<<"'\n";return false;} attenuation_scale = t; scintillator_absorption_scale = t; y11_bulk_attenuation_scale = t; }
     else if (eq(a, "--scintillator-absorption-scale")) { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --scintillator-absorption-scale requires a finite number, got '"<<v<<"'\n";return false;} scintillator_absorption_scale = t; }
@@ -214,6 +218,7 @@ bool AppConfig::ParseArgs(int argc, char** argv) {
       scintillator_absorption_scale < 0 || y11_bulk_attenuation_scale < 0) {
     std::cerr << "error: scale factors must be >= 0\n"; return false;
   }
+  if (production_cut_mm <= 0) { std::cerr << "error: --production-cut must be > 0\n"; return false; }
   // G4-003: env override for strict optical-table validation (production).
   if (!strict_optical) {
     if (const char* e = std::getenv("CCB_STRICT_OPTICAL")) {

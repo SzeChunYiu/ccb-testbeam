@@ -145,8 +145,8 @@ justified combination.
 |---|---|---|
 | Repository-wide raw→event carrier semantics | **ACTIVE / PARTIAL** | #880 |
 | Legacy proposal→target weight derivation | **BLOCKED / ACTIVE** | #1053 exact table/source provenance and production ROOT |
-| Post-adapter nonnegative event-population primitive | **IMPLEMENTED_PENDING_CI** | PR #1171, policy `nonnegative_event_measure_v2` |
-| Legacy weight-helper scale-invariance migration | **TRIAGED / OPEN** | `ARU-MC-WEIGHT-SCALE-001`; existing main helpers still square raw weights |
+| Post-adapter nonnegative event-population primitive | **VALIDATED_ON_MAIN** | PR #1171 / `main@069b1d66f1a775003b284376d71c76673136f60a`, policy `nonnegative_event_measure_v2` |
+| Legacy weight-helper scale-invariance migration | **TRIAGED / OPEN** | #1172; existing main helpers still square raw weights |
 | Production-sample ESS/provenance report | **BLOCKED_EXTERNAL** | exact immutable production ROOT bytes |
 | Event/stave truth producer integration | **ACTIVE / BLOCKED** | #1169 must dispatch on a source-authorized adapter and use this population contract |
 | Authorising weighted DATA↔MC inference | **BLOCKED** | #1049/#1052/#1164 plus detector-chain and null-calibration dependencies |

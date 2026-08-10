@@ -50,6 +50,11 @@ class EventWeightPopulationSummary:
 
 
 def _as_weight_vector(weights: Any, *, expected_length: int | None) -> np.ndarray:
+    if np.ma.isMaskedArray(weights):
+        raise DataContractError(
+            "event_weight must not be a masked array; missing weights need an explicit policy"
+        )
+
     # A production caller normally supplies a NumPy numeric vector; keep that
     # path O(n) without boxing millions of event weights. For generic Python
     # sequences, inspect the original scalar types before NumPy can silently

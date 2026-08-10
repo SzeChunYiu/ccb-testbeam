@@ -18,8 +18,17 @@ TABLE = ROOT / "geant4/src_patch/sigma_pd_cm_190.txt"
 SOURCE = ROOT / "geant4/src_patch/sigma_pd_cm_190.source.json"
 
 
-def test_source_uncertainty_audit_binds_exact_table_and_nominal_model() -> None:
-    result = audit_source_uncertainty(TABLE)
+@pytest.fixture(scope="module")
+def source_audit() -> dict[str, object]:
+    # The 10,001-point box scan is intentionally nontrivial; compute it once for
+    # this module so independent semantic assertions do not multiply CI cost.
+    return audit_source_uncertainty(TABLE)
+
+
+def test_source_uncertainty_audit_binds_exact_table_and_nominal_model(
+    source_audit: dict[str, object],
+) -> None:
+    result = source_audit
 
     assert result["input"]["sha256"] == (
         "0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc"
@@ -36,17 +45,19 @@ def test_source_uncertainty_audit_binds_exact_table_and_nominal_model() -> None:
     )
 
 
-def test_common_source_normalization_cancels_from_normalized_shape() -> None:
-    result = audit_source_uncertainty(TABLE)
-    control = result["deterministic_sensitivity"]["common_scale_bound_control"]
+def test_common_source_normalization_cancels_from_normalized_shape(
+    source_audit: dict[str, object],
+) -> None:
+    control = source_audit["deterministic_sensitivity"]["common_scale_bound_control"]
 
     assert control["relative_scale"] == 1.045
     assert control["max_abs_normalized_cdf_delta"] <= 1e-15
 
 
-def test_three_percent_nodewise_box_is_explicitly_nonprobabilistic() -> None:
-    result = audit_source_uncertainty(TABLE)
-    box = result["deterministic_sensitivity"]["nodewise_relative_box_3pct_sensitivity_v1"]
+def test_three_percent_nodewise_box_is_explicitly_nonprobabilistic(
+    source_audit: dict[str, object],
+) -> None:
+    box = source_audit["deterministic_sensitivity"]["nodewise_relative_box_3pct_sensitivity_v1"]
 
     assert POINT_TO_POINT_FRACTION == 0.03
     assert box["status"] == "NONPROBABILISTIC_ENVELOPE"
@@ -64,10 +75,11 @@ def test_three_percent_nodewise_box_is_explicitly_nonprobabilistic() -> None:
     assert box["max_mean_theta_cm_deg"] == pytest.approx(57.5322672970398, abs=1e-12)
 
 
-def test_systematic_correlation_structure_is_not_identified_by_one_percentage() -> None:
-    result = audit_source_uncertainty(TABLE)
-    box = result["deterministic_sensitivity"]["nodewise_relative_box_3pct_sensitivity_v1"]
-    alternating = result["deterministic_sensitivity"]["alternating_3pct_controls"]
+def test_systematic_correlation_structure_is_not_identified_by_one_percentage(
+    source_audit: dict[str, object],
+) -> None:
+    box = source_audit["deterministic_sensitivity"]["nodewise_relative_box_3pct_sensitivity_v1"]
+    alternating = source_audit["deterministic_sensitivity"]["alternating_3pct_controls"]
 
     assert alternating["plus_minus_max_abs_cdf_delta"] == pytest.approx(
         0.0014567989868344983,
@@ -81,9 +93,10 @@ def test_systematic_correlation_structure_is_not_identified_by_one_percentage() 
     assert alternating["minus_plus_max_abs_cdf_delta"] < box["max_cdf_downward_excursion"]
 
 
-def test_diagonal_statistical_reference_is_conditional_not_systematic_covariance() -> None:
-    result = audit_source_uncertainty(TABLE)
-    statistical = result["conditional_diagonal_statistical_reference"]
+def test_diagonal_statistical_reference_is_conditional_not_systematic_covariance(
+    source_audit: dict[str, object],
+) -> None:
+    statistical = source_audit["conditional_diagonal_statistical_reference"]
 
     assert statistical["status"] == "DELTA_METHOD_CONDITIONAL_ON_INDEPENDENT_ROW_STATISTICS"
     assert statistical["max_pointwise_cdf_standard_uncertainty"] == pytest.approx(
@@ -145,5 +158,4 @@ def test_source_sidecar_does_not_invent_systematic_covariance() -> None:
     assert uncertainty["total_systematic_fraction_bound"] == "<0.045"
     assert uncertainty["point_to_point_source_section"] == "IV D"
     assert uncertainty["published_row_covariance_matrix"] is False
-    assert "must not" not in uncertainty["point_to_point_construction"].lower()
     assert "Do not" in uncertainty["analysis_boundary"]

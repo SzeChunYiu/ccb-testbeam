@@ -2,87 +2,78 @@
 
 ## Session
 
-- **Task ID:** `ARU-S00-VERIFIED-READ-SNAPSHOT-001`
-- **Stamp:** `2026-08-10T081600Z`
+- **Task ID:** `ARU-GITLINK-SUBMODULE-CONTRACT-001`
+- **Stamp:** `2026-08-10T084850Z`
 - **Owner:** hourly Atomic Research Universe audit session
-- **Initial main:** `ef4f3cbabe010285558a425fc3e92d525b1803a2`
-- **Prerequisite merge:** PR #1148 exact head `820e157b0b5ec9bd0d05cb60a889a547e2228c13` had MC Validation CI run 933 = `success`; squash-merged as `96be3588241753601a4a96e6451527e5b3ebfe6b`.
-- **Atom merge:** PR #1150 exact head `4675627807efff576cd9aa51b977b4480b64976b` had MC Validation CI run 943 = `success`; squash-merged as `83256325f5cf9021912578963fdc19f6b9257df2`.
-- **Exact CI result:** ruff gate passed; pytest reported `1257 passed, 1 skipped, 8 xfailed, 1 xpassed, 6 warnings in 90.64 s`.
-- **Issue:** #1149 remains open.
-- **Parents:** #1147 -> #1110.
-- **Status:** `SAME_BYTES_PRIMITIVE_VALIDATED_ON_MAIN / REAL_SCALE_BENCHMARK_AND_CONSUMER_MIGRATION_OPEN`
+- **Initial main:** `ca6fa3155394e99cc62e2a16d3bd7a4df10c809b`
+- **Issue:** #1152
+- **Branch:** `fix/repo-gitlink-submodule-contract`
+- **Status:** `IMPLEMENTED_ON_BRANCH / EXACT_HEAD_CI_REQUIRED`
 
 ## Selected atom
 
 ```text
-content-bound CURRENT.json
--> one immutable generation identity
--> mutable filesystem object
--> verification
--> exact bytes consumed downstream
+tracked Git tree
+-> mode-160000 gitlink paths G
+-> .gitmodules declared paths M
+-> checkout/submodule metadata
+-> reproducible repository state
 ```
 
-The v2 pointer merged through #1148 binds the authoritative SHA-256, but `resolve_artifact()` by itself proves only `H(file at t_verify)=H(pointer)` and then returns a mutable pathname. The retained negative control demonstrates that a later path read can observe different bytes after a hard-link mutation.
-
-The stronger authorising-read invariant is:
+The fail-closed path-identity invariant is:
 
 ```text
-H(bytes actually consumed) = H(pointer snapshot)
+G == M
 ```
 
-## Mechanism universe and collapse
+with both difference sets empty. Local Claude worktree paths must additionally be ignored so generated agent worktrees are not normal repository content.
 
-- documentation-only single-writer assumption: rejected for strict authorisation;
-- chmod-only read-only generations: useful defense in depth, not byte provenance;
-- `st_nlink == 1` rejection: blocks one alias mechanism but not generic in-place/path races;
-- same-source-descriptor verify + rewind: collapses pathname replacement but not later writes to the same inode;
-- all-bytes memory copy: exact but potentially selected-table-sized memory;
-- **streaming private snapshot: selected and now validated on main.** Copy in bounded blocks to a secure temporary file and hash those exact copied blocks before the consumer can see the snapshot;
-- filesystem snapshot/object store: stronger infrastructure option, deferred.
+## Verified evidence
 
-## Validated implementation
+At the initial main SHA, tree inspection found three tracked mode-160000 entries: two `.claude/worktrees/agent-*` paths plus the legitimate `geant4/single_stave/sipm` submodule. `.gitmodules` declares only the SiPM path and currently points it to `https://github.com/SzeChunYiu/ccb-sipm-core.git`.
 
-`src/ccb_mc_validation/s00_verified_read.py` now provides `verified_artifact_snapshot()`:
+History inspection shows both orphan worktree gitlinks first entered in `d1140f18ba1588bfffa3229ddc69511a6df46620` (`fix(s00): enforce atomic report-directory publication (#1122)`), unrelated to dependency management. This supports accidental local-worktree staging rather than deliberate hidden submodules.
 
-1. read `CURRENT.json` once to freeze one old-or-new authority snapshot;
-2. validate the named generation artifact;
-3. open the source with `O_NOFOLLOW` where supported and capture descriptor identity metadata;
-4. copy in bounded blocks into a secure `mkstemp` snapshot while hashing those exact copied bytes;
-5. fsync and require copied SHA-256 equality with the pointer;
-6. yield the private read-only snapshot to downstream code;
-7. remove the snapshot on context exit.
+The earlier successful workflow emitted a checkout post-job warning for a `.claude/worktrees/...` submodule path missing from `.gitmodules`. The scientific/software test gate still succeeded; this is therefore treated as repository-integrity/reproducibility evidence, not as a failed detector-validation run.
 
-Compound suffixes such as `.csv.gz` are preserved for file-based parsers. The implementation records the source device, inode, link count and size for provenance/diagnostics.
+## Repair on branch
 
-## Deterministic falsifiers that passed exact-head CI
+- removed `.claude/worktrees/agent-ab8006f38e5298275` and `.claude/worktrees/agent-ad26366bc4a0411a0` as tracked gitlinks;
+- preserved `geant4/single_stave/sipm`;
+- added `.claude/worktrees/` to `.gitignore`;
+- added `tools/audit/validate_gitlink_submodule_contract.py`;
+- added `tests/test_gitlink_submodule_contract.py`;
+- preserved the full derivation/review in `chatgpt_todo/archive/2026-08-10T084850Z_ARU-GITLINK-SUBMODULE-CONTRACT.md`.
 
-- source tamper before snapshot -> fail closed on digest mismatch;
-- source tamper after snapshot -> private consumed bytes unchanged;
-- hard-link alias mutation before snapshot -> fail closed;
-- hard-link alias mutation after snapshot -> private consumed bytes unchanged;
-- pointer advances from generation g1 to g2 while a snapshot is held -> reader remains bound to one complete g1 snapshot;
-- unknown logical artifact, invalid block sizes and invalid scratch directory -> controlled failures;
-- separate negative control proves `resolve_artifact()->later Path read` can observe a post-verification hard-link mutation.
+The validator uses `git ls-files --stage -z` for tracked gitlinks, parses `.gitmodules`, requires exact set equality, and checks the recurrence-ignore rule with `git check-ignore --no-index`. It fails closed on orphan gitlinks, configured paths that are not gitlinks, malformed metadata, duplicate submodule paths, or a missing ignore rule.
 
-## Four sequential expert passes after CI
+## Adversarial controls
 
-- **Filesystem/reconstruction lead — ACCEPT local same-bytes primitive.** The read contract now binds consumed bytes rather than only a pathname. Remaining empirical uncertainty is real selected-table I/O overhead.
-- **Adversarial mechanism reviewer — ACCEPT snapshot / BLOCK direct-path authorisation.** Source-path and hard-link mutations are neutralised for snapshot consumers; intentionally targeting the reader's private temp/process is outside the declared threat model.
-- **Statistics/validation reviewer — ACCEPT deterministic closure.** This is exact byte/state-machine validation, not a beam-statistical result. No physical inference was made from the CI suite.
-- **Claims/provenance reviewer — REVISE parent #1110 / no CL-001 promotion.** Authoritative consumers must migrate to the snapshot boundary before strict provenance claims can rely on it.
+- orphan gitlink -> fail;
+- configured submodule without gitlink -> fail;
+- unignored `.claude/worktrees/...` -> fail;
+- malformed Git index record -> controlled failure;
+- duplicate `.gitmodules` path -> controlled failure;
+- positive repository integration control -> exactly the legitimate SiPM path remains and local worktrees are ignored.
+
+A plain `.gitignore` rule is deliberately not treated as sufficient, because forced staging can bypass an ignore rule. The validator is the merge-time recurrence gate.
+
+## Four sequential expert passes
+
+- **Git/reproducibility lead — ACCEPT implementation shape, pending exact-head CI.** The current contradiction is removed at tree level and the legitimate declared submodule remains.
+- **Adversarial repository-metadata reviewer — ACCEPT with validator.** Deletion alone would be insufficient; generated path names can recur, so both ignore and exact-set validation are required.
+- **CI/validation reviewer — BLOCK merge until exact-head Actions.** Source inspection cannot prove import/Git-version/workflow behavior. Required gate: exact-head lint/tests plus disappearance of the orphan-submodule checkout warning.
+- **Claims/provenance reviewer — ACCEPT repository repair / no scientific promotion.** This branch changes Git metadata and audit machinery only; it does not alter or validate detector data, simulation, reconstruction, or public scientific quantities.
+
+## Execution boundary
+
+No local pytest result is claimed because this automation runtime has authenticated GitHub repository access but no checked-out private-repository shell. Exact-head GitHub Actions is the execution authority for this change.
 
 ## Coordination / unresolved work
 
-- #1149 remains open for the real selected-pulse-table I/O benchmark and authoritative consumer migration.
-- #1110 remains open: canonical report + selected pulse table still need one content-bound immutable generation and a single pointer commit after all P0 gates.
-- Active PR #1146 currently changes `scripts/01_build_pulse_table_from_root.py`; reconcile/merge/rebase that producer work before publication integration rather than creating a competing producer edit.
-- Direct legacy reads and `resolve_artifact()->reopen Path` remain non-authorising for strict concurrent-reader provenance.
-- #1109 pedestal physics and CL-001 scientific state remain separate; nothing in this filesystem work validates samples 0--3 as a physical pedestal or changes the historical pulse count.
-
-## CI observation not promoted into this atom
-
-The successful GitHub Actions job emitted a checkout post-job warning about a `.claude/worktrees/...` path missing from `.gitmodules`. The test/lint gate still concluded success. This was not used as evidence for or against the S00 read contract and should be audited separately only if it recurs or affects checkout/reproducibility.
+- Close #1152 only after the repaired head passes required CI, the checkout warning is absent, and the merge is present on remote main.
+- The S00 authority transaction remains independent and open under #1110/#1146; return there after this bounded repository-integrity leaf is validated.
+- #1149 same-bytes consumer migration and real selected-table benchmark also remain independent.
 
 ## Scientific boundary
 

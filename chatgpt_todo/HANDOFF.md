@@ -1,44 +1,38 @@
 # Latest Handoff
 
-## Selected atom: configured scattering-source readiness (#1182)
+## Merged milestone: configured scattering-source readiness (#1182)
 
-Protected `main` inspected is `f181f91ef8fd5826a4acba4973da2e4eeba6c45c`. Existing PR #1183 was reconciled without force-push by two-parent merge `2c0a25165b6e51e1ea1304df5e27b61f848c4b29`, preserving the prior audit while taking current main as the implementation base.
+Protected `main` now contains PR #1183 as squash commit `d62075693df5e0f58b64078097ddc4ebea86d90f`. Exact PR head `0f5fe23bfd3ea2e4aa2ff019b108433571bdcf3e` passed MC Validation run `31436595715`: clean ruff, `1466 passed, 1 skipped, 8 xfailed, 1 xpassed`. This validates the bounded repository/static software contract only; the workflow does not compile `geant4/src_patch`.
 
-### Runtime-state implementation on the PR branch
+### Contract now on main
 
-Tracked `ScatteringGenerator.cc/.hh` now implement the explicit per-instance state machine
+Tracked `ScatteringGenerator.cc/.hh` implement per-instance readiness independent of global event ID:
 
 `UNINITIALIZED -> UNCONFIGURED_UNIFORM | CONFIGURED_READY | FATAL`.
 
-`EnsureSourceReady()` executes at the beginning of `GeneratePrimaryVertex()` before event RNG. A configured cross-section source can produce an event only after the same generator instance reaches `CONFIGURED_READY`; the only uniform `theta_cm` path is explicit `CSFile=null`. Missing/invalid configured source or stopping data and inconsistent configured CDF state use Geant4 `FatalException` plus `std::abort()` fallback rather than `exit(0)` or hidden uniform degradation.
+For configured source mode, `GeneratePrimaryVertex()` calls `EnsureSourceReady()` before event RNG, so event generation requires the same generator instance to be `CONFIGURED_READY`. Uniform `theta_cm` is restricted to explicit `CSFile=null`; missing/invalid configured source or stopping data and inconsistent configured CDF state are fatal rather than a success exit or hidden uniform fallback. Stopping and cross-section rows are parsed into local validated vectors and published transactionally, and post-readiness file identity changes fail closed.
 
-Stopping and cross-section rows are parsed into local vectors with checked required fields, finite/domain/cardinality/order validation, then published transactionally. `EvalELoss()` guards table cardinality. Changing `dEdxFile` or `CSFile` after readiness is fatal instead of mixing source identities; deliberate between-run reconfiguration remains a separate lifecycle child.
+The central source law remains `linear_node_pdf_exact_inverse_v1`, `measured_table_support_truncate_v1`, `unit_direct_sampling_v1`; Table-VI SHA-256 is `0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc`.
 
-The central source law is unchanged: `linear_node_pdf_exact_inverse_v1`, `measured_table_support_truncate_v1`, `unit_direct_sampling_v1`; source table SHA-256 `0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc`.
+### External deployment parity
 
-### External patch/source split-brain child
+The historical text-rewrite `patch_scatter.py` was a distinct stale representation that still embedded the superseded fail-open source path. It has been replaced by an exact-byte installer: the external root is mandatory via `--src-root`; each destination file is atomically replaced from the tracked reviewed `.hh/.cc` bytes; successful return then requires the complete pair to reread byte-identically. A temp-tree regression proves successful-return pair parity, while missing target layout is a negative control.
 
-The historical `patch_scatter.py` still embedded the superseded fail-open source path after the tracked C++ repair. That representation has now been eliminated: the helper atomically installs the exact tracked `ScatteringGenerator.hh/.cc` bytes into an explicitly selected external hibeam_g4 tree and verifies byte identity after replacement. A temporary-tree regression requires exact equality; a missing `include/` or `src/` layout must fail closed. This establishes static deployment parity only and does not prove the external tree compiles or that any production executable used those bytes.
+Two-path filesystem replacement is not crash-atomic. An interruption between header/source replacement can leave a partial external deployment, so a material child remains: the future build front door must re-verify both source identities immediately before compilation. Static source parity is therefore not executable provenance.
 
-### Static CI history and boundary
+### CI falsifiers retained
 
-MC Validation run `31433066785` reached `1462 passed, 1 skipped, 8 xfailed, 1 xpassed` before failing two regression expectations. Both were test-contract defects rather than production C++ evidence: one declaration-only enum fixture incorrectly expected scoped readiness-state usage, and one sampler test froze an incidental prose phrase instead of the quadratic inverse operations. The tests were repaired without weakening the source invariant.
-
-Current PR head after the external-installer and coordination updates is the latest commit on `audit/mc-source-readiness-contract`; exact-head CI must be rechecked before merge. Repository CI exercises Python/static tests and linting but does not compile `geant4/src_patch`, so green CI cannot close the compiled runtime universe. No production Geant4 campaign, beam ROOT data, or detector response was executed.
+Earlier runs were not hidden. Run `31433066785` failed two regression expectations after 1462 passing tests: one fixture confused enum declaration with scoped readiness usage and one test froze incidental prose instead of inverse mechanics. After correction, run `31436259144` exposed one further negative-control mismatch: a bare non-class-qualified `GeneratePrimaryVertex()` fixture was correctly not recognized as the production per-instance call contract. That fixture was weakened explicitly rather than weakening the production audit. Final run `31436595715` then passed all authorising repository checks.
 
 ### Four sequential review votes
 
-- **Source/runtime lead — ACCEPT bounded mechanism / BLOCK runtime authorisation:** per-instance lazy readiness solves the event-number dependency in source code, but exact hibeam_g4 executable commit, run-manager/thread mode, messenger lifecycle and real stopping-table compatibility are not yet bound.
-- **Adversarial mechanism reviewer — ACCEPT static patch parity / BLOCK compiled fault matrix:** exact-byte installation removes text-patch drift, while compile/link behavior, `FatalException` runtime semantics, worker-local command propagation and hostile source/stopping fixtures remain unexecuted.
-- **Independent statistics/validation reviewer — ACCEPT deterministic state/deployment contract / BLOCK physics inference:** readiness and byte parity are software invariants, not evidence that a generated angular population or downstream detector observable is correct.
-- **Claims/provenance reviewer — BLOCK CL-021 promotion:** `geant4/setup_and_run.sh` still clones upstream hibeam_g4 without a pinned commit, production `dedx_p_in_CD2.txt` bytes/hash are absent, and no production manifest binds readiness/source/build/thread metadata.
+- **Source/runtime lead — ACCEPT static mechanism / BLOCK runtime authorisation:** the event-ID dependency and configured-source fail-open paths are removed in tracked source, but exact external executable/build/run-manager/thread provenance and real stopping-table compatibility remain unbound.
+- **Adversarial mechanism reviewer — ACCEPT successful-return deployment parity / BLOCK compiled fault matrix:** stale text-patch drift is removed, but compile/link behavior, Geant4 fatal semantics, worker command propagation, interrupted-deployment pre-build verification and hostile runtime fixtures remain open.
+- **Independent statistics/validation reviewer — ACCEPT deterministic software closure / BLOCK physics inference:** state-machine and byte-parity tests validate software semantics only, not a generated angular population, detector response or DATA/MC agreement.
+- **Claims/provenance reviewer — BLOCK CL-021 promotion:** `geant4/setup_and_run.sh` still clones hibeam_g4 without a pinned commit, immutable production `dedx_p_in_CD2.txt` identity is absent, and no production manifest binds source/stopping/build/thread/seeds/event count.
 
-### Child atoms / next work
+### Next highest-value atom
 
-1. Require green exact-head #1183 CI and do not reinterpret that Python/static gate as compiled Geant4 validation.
-2. Recover/pin immutable hibeam_g4 source/build/run-manager provenance and worker count for representative production runs; `geant4/setup_and_run.sh` currently clones upstream without pinning a commit.
-3. Recover immutable `dedx_p_in_CD2.txt` bytes/hash and prove parser/domain compatibility.
-4. Compile the exact installed generator in Geant4 11.2.2 or a provenance-equivalent pinned environment and execute missing/empty/one-row/malformed/nonfinite/nonmonotonic/zero-density source and stopping-table controls, explicit `CSFile=null`, repeated readiness, seeded sequential, and multi-worker controls where supported.
-5. Serialize readiness mode plus generator/source/stopping hashes, model IDs, executable/build/thread metadata, seeds and event count in production provenance before downstream products are authorising.
+`ARU-MC-CS-COMPILED-PROVENANCE-001`: establish one fail-closed build/run front door that binds exact hibeam_g4 commit/tree, installed source/header hashes, Geant4/compiler/build identity, run-manager/thread mode, immutable stopping/source inputs, model IDs, seeds and event count; re-verify installed source pair before compilation; then compile and execute missing/empty/one-row/malformed/nonfinite/nonmonotonic/zero-density source/stopping fixtures, explicit `CSFile=null`, repeated readiness, seeded sequential controls and multi-worker controls where supported.
 
-#1182, #1178, #1179 and CL-021 remain open/gated. No B2/B8, PID, penetration, timing, energy, pile-up, ESS, p-value, rate or detector-performance result was regenerated or promoted.
+#1182, #1178, #1179 and CL-021 remain open/gated. No production Geant4, beam ROOT, B2/B8, detector response, PID, penetration, timing, energy, pile-up, ESS, p-value, rate or detector-performance quantity was regenerated or promoted.

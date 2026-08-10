@@ -1,15 +1,14 @@
 # Active Task
 
-- **Task ID:** `ARU-MC-CS-TABLE-PROVENANCE-001 / ARU-MC-CS-SAMPLER-001`
+- **Task ID:** `ARU-MC-CS-SAMPLER-001 / ARU-MC-CS-UNCERTAINTY-001`
 - **Owner:** hourly Atomic Research Universe audit session
-- **Session stamp:** `2026-08-10T170100Z`
-- **Branch-point protected main:** `d8c80ad625f415220d92f3cbc761b570b21fe92f`; PR #1177 was first merged only after exact-head MC Validation CI run `31410543289` succeeded.
-- **Selected source-table result:** `geant4/src_patch/sigma_pd_cm_190.txt` is 640 bytes, 28 rows, SHA-256 `0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc`, exactly matching the historical S21/S21b table digest. All 28 triples match Table VI of Ermisch et al., *Phys. Rev. C* 71, 064004 (2005), DOI `10.1103/PhysRevC.71.064004`: `theta_cm` [deg], `dσ/dΩ` [mb/sr], statistical uncertainty [mb/sr], support 26.49–169.78 deg.
-- **Resolved hypothesis:** the exact table is not a lab-frame cross-section table. Combined with retained S21b closure `PrimaryWeight = sigma(theta_lab)`, the legacy weight assignment is a confirmed frame misuse of a CM table. #1053 remains open for full proposal→target and raw-carrier semantics.
-- **New deterministic child:** current `BuildSigmaCDF()` integrates trapezoid masses of node values `sigma_i sin(theta_i)`, while `SampleThetaCM()` linearly interpolates theta inside each CDF interval, yielding a piecewise-constant interval density rather than the linearly varying node PDF implied by the trapezoid construction. Exact audit: max CDF self-discrepancy `0.08486575211712302` at 13.245 deg; nominal probability outside measured Table-VI support `0.3433322933267244`.
-- **Child issues:** #1178 owns interpolation/inverse/support semantics; #1179 owns statistical/systematic cross-section nuisance propagation. The source reports 3% point-to-point systematic and total systematic <4.5%; those components are absent from the three-column data file.
-- **Claim state:** `docs/validation/CL-021_scattering_model.md` is revised on this branch from “physically correct” to source-model GATED. Historical B2/B8 central-value numbers remain nonauthorising diagnostics. No detector, beam-data, or production-MC quantity was regenerated.
-- **Repository work on branch:** source sidecar, exact byte/row regression, deterministic sampler audit + regression + machine-readable result, ARU archive, CL-021 governance update.
-- **Validation gate:** branch changes require exact-head MC Validation CI before merge. Local checkout execution remains unavailable because the container cannot resolve `github.com`; deterministic values were independently recomputed in the analysis runtime from the exact table bytes.
-- **Next highest-value atom after provenance merge:** #1178 exact inverse-CDF/support contract, then #1179 source uncertainty. Immutable production `PrimaryWeight` carrier evidence under #880/#1053 remains necessary before #1169 can authorize historical weighted event products.
-- **Status:** `ACTIVE / SOURCE_TABLE_PROVENANCE_RESOLVED / SAMPLER_NUMERICS_BLOCKED / SOURCE_UNCERTAINTY_BLOCKED / DETECTOR_INFERENCE_BLOCKED`
+- **Session stamp:** `2026-08-10T171300Z`
+- **Current protected main:** `fa62e8bb6ce7de10f840ebfa016eaa40cd9f74ec`.
+- **Validated/merged this session:** PR #1180 exact head `f7f987cc92e4d22792bde691224af36d9fe97e7f` passed MC Validation CI run `31412606076`; checkout, installation, ruff, unit tests, diagnostic upload, enforcement and post-job cleanup all succeeded. PR #1180 squash-merged as `fa62e8bb6ce7de10f840ebfa016eaa40cd9f74ec`.
+- **Validated source-table atom:** `sigma_pd_cm_190.txt` is 640 bytes, 28 rows, SHA-256 `0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc`, and matches Table VI of Ermisch et al., *Phys. Rev. C* 71, 064004 (2005): CM angle [deg], `dσ/dΩ` [mb/sr], statistical uncertainty [mb/sr], support 26.49–169.78 deg. The lab-table hypothesis in #1053 is eliminated.
+- **Legacy consequence:** retained S21b closure `PrimaryWeight=sigma(theta_lab)` is now a confirmed frame misuse of a CM table. #880/#1053 remain open for proposal→target and raw-to-event carrier semantics.
+- **Active sampler blocker #1178:** current trapezoid-CDF + linear-theta inverse yields a piecewise-constant interval density. Exact deterministic audit on main gives max CDF self-discrepancy about `0.084865752117123` at 13.245 deg and nominal probability outside measured support about `0.34333229332672427`.
+- **Active uncertainty blocker #1179:** the source reports 3% point-to-point systematic and total systematic <4.5%, but those systematic terms are not encoded or propagated.
+- **Claim state:** CL-021 validation doc and historical report now carry explicit source-model gates; historical B2/B8 numbers remain nonauthorising mechanism diagnostics. No detector claim was promoted.
+- **Next highest-value atom:** #1178 exact inverse-CDF/interpolation/support contract; then #1179 source uncertainty. Immutable production `PrimaryWeight` carrier evidence under #880/#1053 remains necessary before #1169 can authorize historical weighted event products.
+- **Status:** `ACTIVE / SOURCE_TABLE_PROVENANCE_VALIDATED_ON_MAIN / SAMPLER_NUMERICS_BLOCKED / SOURCE_UNCERTAINTY_BLOCKED / DETECTOR_INFERENCE_BLOCKED`

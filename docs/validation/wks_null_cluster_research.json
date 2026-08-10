@@ -1,0 +1,32 @@
+{
+  "split_invariance": {
+    "bootstrap_seed": 99,
+    "cluster_bootstrap_max_abs_delta": 3.3306690738754696e-16,
+    "cluster_bootstrap_mean_split": 0.2227850406275412,
+    "cluster_bootstrap_mean_unsplit": 0.2227850406275412,
+    "data_seed": 7,
+    "n_bootstrap": 100,
+    "observed_d_split": 0.2892157294690689,
+    "observed_d_unsplit": 0.2892157294690688,
+    "row_bootstrap_max_abs_delta": 0.36178488205380754,
+    "row_bootstrap_mean_split": 0.15651673573442573,
+    "row_bootstrap_mean_unsplit": 0.2227850406275412,
+    "split_factor": 5
+  },
+  "synthetic_importance_type1": {
+    "alpha_005_rejection_fraction": 0.045,
+    "alpha_010_rejection_fraction": 0.095,
+    "exact_weight": "exp(-x + 0.5)",
+    "mean_model_ess": 63.67561764906291,
+    "mean_p_value": 0.4759,
+    "model_ess_p10": 49.05168174557246,
+    "model_ess_p50": 64.1263315632699,
+    "model_ess_p90": 78.50247380123736,
+    "n_bootstrap": 99,
+    "n_data": 80,
+    "n_model": 160,
+    "n_trials": 200,
+    "proposal": "N(1,1)",
+    "target": "N(0,1)"
+  }
+}

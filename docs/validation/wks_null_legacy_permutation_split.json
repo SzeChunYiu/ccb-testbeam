@@ -1,0 +1,19 @@
+{
+  "atom": "WKS-NULL-CLUSTER-001",
+  "implementation_under_test": "scripts/compare_data_mc.py::_weighted_ks_stat",
+  "method": "legacy_unit_weight_value_permutation",
+  "status": "NONAUTHORISING_BLOCKED_ISSUE_1049",
+  "data_seed": 7,
+  "permutation_seed": 42,
+  "n_data": 30,
+  "n_model_unsplit": 25,
+  "split_factor": 5,
+  "n_model_split": 125,
+  "n_permutations": 200,
+  "observed_D_unsplit": 0.2892157294690688,
+  "observed_D_split": 0.2892157294690689,
+  "legacy_p_value_unsplit": 0.16,
+  "legacy_p_value_split": 0.025,
+  "absolute_p_value_shift": 0.135,
+  "interpretation": "The weighted empirical measure is unchanged by five-way row splitting with weight divided by five, but the legacy unit-weight value-permutation p-value crosses 0.05 solely because the row representation changed. This is a software/statistical falsifier, not detector validation."
+}

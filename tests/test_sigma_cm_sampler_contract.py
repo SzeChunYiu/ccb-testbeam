@@ -91,6 +91,18 @@ def test_exact_linear_pdf_inverse_has_fail_closed_domain() -> None:
         inverse_linear_pdf_fraction(float("nan"), 2.0, 0.5)
 
 
+def test_exact_inverse_is_invariant_to_positive_density_scale() -> None:
+    # Only relative interval density matters. Raw quadratic products would
+    # overflow at 1e300 and underflow at 1e-300, so these are adversarial units/
+    # representation controls rather than alternate physical source models.
+    base = inverse_linear_pdf_fraction(1.0, 5.0, 0.37)
+    for scale in (1e-300, 1e-200, 1e200, 1e300):
+        assert inverse_linear_pdf_fraction(scale, 5.0 * scale, 0.37) == pytest.approx(
+            base,
+            abs=2e-15,
+        )
+
+
 def test_implemented_reference_is_measured_support_exact_inverse() -> None:
     result = audit_sampler(TABLE)
     reference = result["implemented_reference"]
@@ -148,6 +160,7 @@ def test_tracked_cpp_and_external_patch_declare_the_same_sampler_contract() -> N
         assert "analytic quadratic interval-mass inverse" in text
         assert "constant-extrapolated outside" not in text
         assert "cdfTheta[i-1] + frac * (cdfTheta[i] - cdfTheta[i-1])" not in text
+        assert "densityScale" in text
 
     assert "cdfPdf" in cpp
     assert "cdfPdf" in header

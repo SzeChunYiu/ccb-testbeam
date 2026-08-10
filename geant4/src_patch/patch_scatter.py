@@ -28,6 +28,12 @@ Files are read into local temporaries and only published to the members via
 ``swap()`` once every element validates.  A multi-column parse failure, a
 non-finite/negative node, or a non-monotonic energy/angle table aborts the
 whole load and leaves the instance FATAL -- never a half-populated CDF.
+
+Sampler contract (declared here so the patch and the tracked .cc bind the same
+law): theta_cm is drawn by the analytic quadratic interval-mass inverse of the
+linearly interpolated p(theta)=sigma(theta)*sin(theta) on measured support
+(``cross_section_interpolation_mode = linear_node_pdf_exact_inverse_v1``,
+``cross_section_support_mode = measured_table_support_truncate_v1``).
 """
 
 import base64

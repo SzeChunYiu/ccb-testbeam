@@ -7,10 +7,11 @@
 - **Owner:** hourly Atomic Research Universe audit session
 - **Initial remote main:** `7fb2a06596a87cb2dd294ec9d0b149e3575293e5`
 - **Branch:** `fix/raw-input-same-stream-provenance`
+- **PR:** #1157
 - **Primary issue:** #1155
 - **Parent:** #993
 - **Related:** #952, #953; CL-001 remains GATED.
-- **Acceptance boundary:** implementation/tests complete on branch; exact-head/current-base GitHub Actions is required before merge or #1155 closure.
+- **Acceptance boundary:** implementation/tests are complete on PR #1157; only exact-head/current-base GitHub Actions may authorize merge or #1155 closure.
 
 ## Selected atom
 
@@ -64,7 +65,7 @@ with stable `(st_dev, st_ino, st_size, st_mtime_ns, st_ctime_ns)` before/after t
 7. missing-run ordering and complete manifest preservation;
 8. persisted digest-schema identity.
 
-No test success is claimed yet. This runtime could not obtain a local checkout because ordinary network resolution to `github.com` is unavailable, so exact-head GitHub Actions is the authorising software validation path.
+No test success is claimed yet. This runtime could not obtain a local checkout because ordinary network resolution to `github.com` is unavailable. PR #1157 has been opened; if its head moves after a workflow starts, that earlier workflow is stale and must not authorize merge.
 
 ## Four sequential review passes
 
@@ -79,8 +80,8 @@ No test success is claimed yet. This runtime could not obtain a local checkout b
 - Added the one-open provenance implementation.
 - Added hostile regression tests.
 - Added immutable ARU archive `chatgpt_todo/archive/2026-08-10T104900Z_ARU-RAW-DIGEST-SAME-STREAM-CLOSURE.md`.
-- Updated `ACTIVE_TASK.md` and this handoff.
-- PR and CI status must be filled after PR creation; do not infer validation from earlier #1154/#1156 runs.
+- Opened PR #1157 and bound `ACTIVE_TASK.md` / this handoff to it.
+- Do not infer validation from earlier #1154/#1156 runs; inspect the final #1157 head and its current-base workflow.
 
 ## Scientific boundary
 
@@ -88,4 +89,4 @@ No raw ROOT file was opened in this runtime, no real beam provenance artifact wa
 
 ## Next
 
-Open the focused #1155 PR and require exact-head/current-base CI. After merge, regenerate the complete real raw-input manifest on the data host using the original canonical files, then continue #993/#953 with exact event/channel/sample lineage rather than interpreting digest closure as a 16<->18 transform proof.
+Require exact-head/current-base CI for PR #1157. After merge, regenerate the complete real raw-input manifest on the data host using the original canonical files, then continue #993/#953 with exact event/channel/sample lineage rather than interpreting digest closure as a 16<->18 transform proof.

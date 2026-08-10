@@ -77,7 +77,9 @@ The reusable package implementation is
 `ccb_mc_validation.truth.event_weight_population` with policy ID
 `nonnegative_event_measure_v1`. It deliberately accepts only **derived** event
 weights; it does not decide which raw `PrimaryWeight` representation is
-scientifically correct.
+scientifically correct. It supplies the core probability-measure and ESS gates;
+claim-bearing reports must additionally retain the high-weight-tail diagnostics
+listed below.
 
 Duplicating/splitting an event into multiple rows with divided weight can leave
 a normalized weighted distribution unchanged while changing nominal row count
@@ -109,6 +111,10 @@ justified combination.
 - Publish final event count, derived-weight count, `sum(w)`, `sum(w^2)`, ESS,
   ESS fraction, zero/positive counts, maximum-weight fraction and summation
   method.
+- Preserve the previous high-weight-tail requirement: report the 99th
+  percentile, maximum, and maximum-to-mean ratio in addition to
+  `max(w)/sum(w)`. The percentile estimator/convention must be named when it
+  can affect a claim threshold.
 - Bind sample/subsample inclusion rules and source-event IDs so event-level
   topology and clustering can be reconstructed.
 - Prefer correcting the generator and regenerating production samples over

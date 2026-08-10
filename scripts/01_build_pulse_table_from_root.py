@@ -22,11 +22,6 @@ import pandas as pd
 import uproot
 import yaml
 
-from ccb_mc_validation.s00_selector_contract import (
-    S00SelectorConfigError,
-    s00_selector_model_identity,
-    validate_s00_selector_contract,
-)
 from ccb_mc_validation.selector import estimate_pedestal_v1_batched
 
 
@@ -853,25 +848,18 @@ def write_sensitivity_report(out_dir: Path, cut: float, cut_source: str, counts_
     summary_df.to_csv(out_dir / "sensitivity_summary.csv", index=False)
 
     total = int(counts_by_group["selected_pulses"].sum())
-    canonical_total = int(counts_by_group["selected_pulses"].sum())
-    if len(canonical_expected) and (
+    canonical_total = int(canonical_expected.loc[
+        canonical_expected["quantity"] == "total selected B-stave pulses", "report_value"
+    ].iloc[0]) if len(canonical_expected) and (
         canonical_expected["quantity"] == "total selected B-stave pulses"
-    ).any():
-        canonical_total = int(
-            canonical_expected.loc[
-                canonical_expected["quantity"] == "total selected B-stave pulses",
-                "report_value",
-            ].iloc[0]
-        )
+    ).any() else None
     migration = pd.DataFrame(
-        [
-            {
-                "quantity": "total selected B-stave pulses",
-                "canonical_1000_adc_expected": canonical_total,
-                "this_threshold_selected": total,
-                "delta_vs_canonical": total - canonical_total,
-            }
-        ]
+        [{
+            "quantity": "total selected B-stave pulses",
+            "canonical_1000_adc_expected": canonical_total,
+            "this_threshold_selected": total,
+            "delta_vs_canonical": (total - canonical_total) if canonical_total is not None else None,
+        }]
     )
     migration.to_csv(out_dir / "sensitivity_migration_matrix.csv", index=False)
 
@@ -893,15 +881,6 @@ def main() -> int:
     args = parser.parse_args()
 
     config = load_config(args.config)
-    # The named v1 selector is a fixed semantic object, not a free YAML axis.
-    # Validate this immediately after parsing and before namespace resolution,
-    # staging creation, raw-file traversal, or ROOT access (#1141).
-    try:
-        validate_s00_selector_contract(config)
-    except S00SelectorConfigError as exc:
-        print(f"[s00] selector/config preflight failed: {exc}")
-        return 2
-
     # Resolve the amplitude cut once and propagate it into the in-memory config
     # so every consumer (scan_raw, sorted_crosscheck, run_ml_check) reads the
     # SAME overridden value. The YAML file is never modified.
@@ -981,14 +960,12 @@ def main() -> int:
             input_hashes = dict(zip(checksums["file"], checksums["sha256"]))
         except Exception:
             input_hashes = {}
-    selector_identity = s00_selector_model_identity()
     model_identity = {
         "effective_amplitude_cut_adc": float(cut),
         "amplitude_cut_source": cut_source,
-        "selector": f"ccb_mc_validation.selector {selector_identity['selector_id']}",
+        "selector": "ccb_mc_validation.selector v1_first_four_median",
         "config_digest": model_id,
         "source_commit": src_commit,
-        **selector_identity,
     }
 
     if canonical:

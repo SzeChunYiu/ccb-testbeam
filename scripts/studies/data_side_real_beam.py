@@ -51,7 +51,7 @@ def sha256_file(path: Path, block_size: int = 1 << 20) -> str:
 
 
 def collect_raw_input_digests(
-    used_runs: list[int], raw_dir: Path = RAW_DIR
+    used_runs: list[int], raw_dir: Path | None = None
 ) -> tuple[list[dict[str, object]], list[int]]:
     """Return complete digest records and explicitly missing canonical runs.
 
@@ -60,10 +60,11 @@ def collect_raw_input_digests(
     accompanying count rather than receiving a sample under a full-manifest
     field name.
     """
+    root = RAW_DIR if raw_dir is None else raw_dir
     digests: list[dict[str, object]] = []
     missing_runs: list[int] = []
     for run in used_runs:
-        path = raw_dir / f"hrdb_run_{run:04d}.root"
+        path = root / f"hrdb_run_{run:04d}.root"
         if not path.exists():
             missing_runs.append(int(run))
             continue

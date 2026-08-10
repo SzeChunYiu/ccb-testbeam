@@ -1,26 +1,22 @@
 # Latest Handoff
 
-## Selected atom: Geant4 changes must enter required MC Validation CI
+## Selected atom: required PR validation cannot be path-filtered
 
-Protected `main` began this atom at `e4c924b901b37093f7b66eaf8d1d1dad07ea3498`, after coordination-only PR #1193 passed MC Validation run `31437027034` and was squash-merged. The predecessor configured-source readiness implementation remains a **static/software** milestone only; #1182/#1178/#1179 and CL-021 are still open/gated.
+Protected `main` began this atom at `e4c924b901b37093f7b66eaf8d1d1dad07ea3498`, after coordination-only PR #1193 passed MC Validation run `31437027034` and was squash-merged. The configured-source readiness milestone remains static/software only; #1182/#1178/#1179 and CL-021 are still open/gated.
 
-### Defect demonstrated
+### Defect and stronger mechanism
 
-`.github/workflows/mc_validation_ci.yml` defines the protected `test` job but its pre-repair path filters omit `geant4/**` from both `push` and `pull_request`. PR #1192 is the concrete repository witness: exact head `bef24345e815152e22523a44b708c4359ad2958f` modifies only `geant4/src_patch/ScatteringGenerator.cc`, `.hh`, and `patch_scatter.py`, and GitHub has no workflow run for that head.
+Protected `main` requires status `test`. Before repair, `.github/workflows/mc_validation_ci.yml` path-filtered both `push` and `pull_request` and omitted `geant4/**`. PR #1192 is the concrete witness: exact head `bef24345e815152e22523a44b708c4359ad2958f` modifies only three `geant4/src_patch/**` files and has no workflow run. The same PR also restores `if(event->GetEventID()==0) EnsureFilesLoaded();`, undoing validated per-instance readiness; it was therefore closed rather than merged.
 
-This is not merely a CI inconvenience. #1192 also restores `if(event->GetEventID()==0) EnsureFilesLoaded();`, undoing the per-instance first-use readiness already validated on main. A material generator regression therefore exists in a path class that the required workflow currently does not even schedule.
+Authoritative GitHub Actions documentation states that path filters determine whether a `push`/`pull_request` workflow runs, and that a required workflow skipped by path filtering leaves its check pending and blocks merge. Therefore simply adding one more directory to a finite pull-request allow-list is not the stable fix. PR #1194 now makes `pull_request` **unfiltered**, retains scoped push routing with `geant4/**`, and requires job `test`.
 
-### Repair on `audit/geant4-ci-trigger-contract`
-
-The branch adds `geant4/**` to both workflow event path lists, retains required job `test`, and adds `tools/audit/validate_mc_ci_trigger_scope.py` plus negative controls. The validator uses `yaml.BaseLoader` to preserve the literal `on` key and fails closed when either event route or the required job is missing.
-
-Supporting fixture run before repository write: `python -m pytest -q tests/test_mc_ci_trigger_scope.py` -> `3 passed in 0.06s`; CLI validator -> `PASS`. Exact-head repository CI is required before merge and must not be inferred from this local fixture.
+`tools/audit/validate_mc_ci_trigger_scope.py` schema `ccb_mc_ci_trigger_scope_v2` fails closed on any required-PR `paths`/`paths-ignore`, a missing Geant4 push route, or a missing `test` job. Supporting deterministic fixture execution: `python -m pytest -q tests/test_mc_ci_trigger_scope.py` -> **4 passed in 0.05s**; CLI -> **PASS** with `pull_request.unfiltered=true`, `push.pattern_present=true`, `required_job=test`. Exact-head repository CI remains required before merge.
 
 ### Four sequential AI review votes
 
-- **Source/simulation lead — ACCEPT routing repair / BLOCK runtime authorisation:** routing Geant4 changes into static tests is necessary, but there is still no external compile/link/run.
-- **Adversarial CI reviewer — REJECT current omission / ACCEPT broad `geant4/**` route:** a narrow `src_patch/**` route would still miss physics-changing configs, macros and setup scripts.
-- **Independent statistics/validation reviewer — ACCEPT deterministic routing gate / BLOCK physics inference:** no stochastic source or detector observable is tested here.
+- **Source/simulation lead — ACCEPT routing repair / BLOCK runtime authorisation:** every PR can now enter static validation, but no external Geant4 compile/link/run is established.
+- **Adversarial CI reviewer — REJECT finite required-PR path allow-lists / ACCEPT unfiltered PR event:** another omitted material directory would otherwise recreate the same skipped-required-check mechanism.
+- **Independent statistics/validation reviewer — ACCEPT deterministic routing gate / BLOCK physics inference:** no generated source or detector observable is tested.
 - **Claims/provenance reviewer — ACCEPT CI precondition / BLOCK CL-021 promotion:** required repository checks cannot substitute for executable/input/seed/thread provenance.
 
 ### Next highest-value child

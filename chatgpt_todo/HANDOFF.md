@@ -10,8 +10,8 @@
 - **Issue:** #1141
 - **Parent:** #1135
 - **Upstream scientific parent:** #1109
-- **Branch:** `fix/s00-selector-preflight-manifest`
-- **Status:** `PARTIAL`: pure preflight/model-identity layer implemented; canonical producer integration still required.
+- **Branch / PR:** `fix/s00-selector-preflight-manifest` / #1143
+- **Status:** `IMPLEMENTED_PENDING_EXACT_HEAD_CI`.
 
 ## Selected atom
 
@@ -24,35 +24,30 @@ selector_id = v1_first_four_median
 baseline_indices = (0,1,2,3)
 ```
 
-A different baseline tuple is no longer a parameter of v1; it is a different model and must not execute under the canonical selector identity.
-
 ## Work completed
 
 1. Verified exact-head MC Validation CI for PR #1142 was `success` and squash-merged it to main as `9883d96a63d779548f76a7d5cdef2170e507d2c0`.
-2. Created `src/ccb_mc_validation/s00_selector_contract.py` with a pure no-I/O `validate_s00_selector_contract(config)` and `s00_selector_model_identity()`.
-3. Added `tests/test_s00_selector_contract.py` covering the canonical tuple, NumPy-integral positive controls, shifted/reordered/missing/extra/duplicate/negative windows, string/float/bool aliases, missing/non-mapping config, and immutable identity-fragment behavior.
-4. Preserved the full ARU review in `chatgpt_todo/archive/2026-08-10T060000Z_ARU-S00-SELECTOR-PREFLIGHT-PARTIAL.md`.
+2. Added pure `validate_s00_selector_contract(config)` and `s00_selector_model_identity()` in `src/ccb_mc_validation/s00_selector_contract.py`.
+3. Patched the canonical producer so the selector contract is checked immediately after YAML parsing, before amplitude-cut/namespace resolution, staging, raw-file traversal, or ROOT access. Failure returns controlled input status 2.
+4. Bound `selector_id` and exact `baseline_indices` into manifest `model_identity`.
+5. Added hostile deterministic config/domain tests plus a producer-level side-effect sentinel proving a bad selector cannot reach namespace resolution, raw scan, raw iteration, `uproot.open`, staging `mkdir`, manifest writes, or figure writes.
+6. Preserved the ARU reasoning in `chatgpt_todo/archive/2026-08-10T060000Z_ARU-S00-SELECTOR-PREFLIGHT-PARTIAL.md`.
+
+## Audit-the-audit correction
+
+The first producer integration attempt accidentally altered unrelated `write_sensitivity_report()` fallback semantics. Adversarial per-file diff review detected that spillover before merge. The script change was fully reverted and then reapplied surgically. The current PR script diff is limited to selector-contract imports, the immediate preflight, and selector identity fields in `model_identity`.
 
 ## Four sequential review passes
 
-- **Reconstruction/software lead — ACCEPT pure leaf / BLOCK integration.** The helper implements the correct semantic boundary, but an unused helper is not producer authorization.
-- **Adversarial mechanism reviewer — REVISE.** Lazy rejection during raw scan remains unacceptable because output staging and raw compute have already begun. The decisive negative control must count side effects.
-- **Statistics/validation reviewer — ACCEPT deterministic unit design / BLOCK producer claim.** No beam statistics are needed for selector identity; end-to-end producer sequencing still needs hostile-config execution and exact-head CI.
-- **Claims/provenance reviewer — BLOCK.** Manifest identity and CL-001 governance must bind the selector ID and exact tuple before any promotion.
+- **Reconstruction/software lead — ACCEPT implementation / pending CI.** The producer now places semantic authorization before side effects.
+- **Adversarial mechanism reviewer — ACCEPT after surgical reapply / pending CI.** The earlier unrelated diff was eliminated; the hostile path has explicit side-effect sentinels.
+- **Statistics/validation reviewer — ACCEPT deterministic design / pending exact-head CI.** No beam statistics are required for this software invariant.
+- **Claims/provenance reviewer — ACCEPT selector binding / keep CL-001 GATED.** Selector provenance is now explicit, but existing data-contract blockers remain and no claim is promoted.
 
-## Required next implementation
+## Remaining gate
 
-Patch `scripts/01_build_pulse_table_from_root.py` so that immediately after `load_config(args.config)` it calls `validate_s00_selector_contract(config)`, before amplitude-cut namespace resolution, staging creation, raw-file traversal, or `uproot.open`. Then merge `s00_selector_model_identity()` into `model_identity` and add an end-to-end hostile-config test proving:
-
-```text
-uproot.open calls = 0
-iter_raw_events calls = 0
-staging mkdir calls = 0
-artifact writes = 0
-```
-
-for `baseline_samples: [2,3,4,5]` and other malformed mutations. Keep #1141 open until this is integrated and exact-head CI passes.
+Do not merge PR #1143 or close #1141 until the latest exact-head MC Validation CI succeeds. After CI success, inspect the exact final diff once more, then the #1141 producer-preflight leaf can close. Parent #1135 may then be reconsidered for software-semantic closure; physical first-four pedestal validity remains #1109 and publication transaction safety remains #1110.
 
 ## Scientific boundary
 
-No raw ROOT population was rescanned, no Geant4 job was run, and no timing, PID, penetration, pile-up, energy, or detector-performance quantity changed. The historical 640,737 count remains a count for the canonical first-four configuration; whether samples 0-3 are physically valid pedestal samples remains #1109.
+No raw ROOT population was rescanned, no Geant4 job was run, and no timing, PID, penetration, pile-up, energy, or detector-performance quantity changed. The historical 640,737 count remains a count for the canonical first-four configuration; whether samples 0–3 are physically valid pedestal samples remains unresolved.

@@ -157,6 +157,8 @@ G4double ScatteringGenerator::SampleThetaCM()
 G4double ScatteringGenerator::EvalELoss(G4double in)"""
 
 cc_pairs = [
+    ('#include "ScatteringGenerator.hh"',
+     '#include "ScatteringGenerator.hh"\n\n#include <cmath>'),
     (T+"// Random ejectile angle in cm system\n"+T+"G4double theta3cm=pi*G4UniformRand();",
      T+"// CM ejectile angle -- sampled from the declared central-value source model:\n"
      +T+"// linear_node_pdf_exact_inverse_v1 on measured_table_support_truncate_v1.\n"

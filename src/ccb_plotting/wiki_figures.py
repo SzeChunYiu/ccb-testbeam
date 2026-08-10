@@ -822,6 +822,10 @@ def build_all(repo_root: Path, output_dir: Path) -> dict[str, Any]:
                 output_path = Path(str(output["path"]))
                 if output_path.is_relative_to(repo_root):
                     output["path"] = output_path.relative_to(repo_root).as_posix()
+            for fc in export.get("file_checks", []):
+                fc_path = Path(str(fc["path"]))
+                if fc_path.is_relative_to(repo_root):
+                    fc["path"] = fc_path.relative_to(repo_root).as_posix()
             records.append(
                 {
                     "figure_id": spec.figure_id,

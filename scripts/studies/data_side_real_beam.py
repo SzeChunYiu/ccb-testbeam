@@ -50,6 +50,34 @@ def sha256_file(path: Path, block_size: int = 1 << 20) -> str:
     return digest.hexdigest()
 
 
+def collect_raw_input_digests(
+    used_runs: list[int], raw_dir: Path = RAW_DIR
+) -> tuple[list[dict[str, object]], list[int]]:
+    """Return complete digest records and explicitly missing canonical runs.
+
+    The returned digest list is never truncated for presentation. A provenance
+    consumer must be able to verify every available input represented by the
+    accompanying count rather than receiving a sample under a full-manifest
+    field name.
+    """
+    digests: list[dict[str, object]] = []
+    missing_runs: list[int] = []
+    for run in used_runs:
+        path = raw_dir / f"hrdb_run_{run:04d}.root"
+        if not path.exists():
+            missing_runs.append(int(run))
+            continue
+        digests.append(
+            {
+                "run": int(run),
+                "file": str(path),
+                "sha256": sha256_file(path),
+                "bytes": path.stat().st_size,
+            }
+        )
+    return digests, missing_runs
+
+
 def cfd_time(corr, fraction=CFD_FRACTION, period=SAMPLE_T):
     """Return the rising-edge constant-fraction crossing time in ns."""
     amp = corr.max()
@@ -111,20 +139,11 @@ def data_provenance():
     used_runs = sorted(canon.run.unique().tolist())
     record["canonical_run_range"] = [min(used_runs), max(used_runs)]
     record["n_runs_used"] = len(used_runs)
-    digests = []
-    for run in used_runs:
-        path = RAW_DIR / f"hrdb_run_{run:04d}.root"
-        if path.exists():
-            digests.append(
-                {
-                    "run": run,
-                    "file": str(path),
-                    "sha256": sha256_file(path),
-                    "bytes": path.stat().st_size,
-                }
-            )
-    record["raw_input_sha256"] = digests[:3]
+    digests, missing_runs = collect_raw_input_digests(used_runs)
+    record["raw_input_sha256"] = digests
     record["raw_input_sha256_count"] = len(digests)
+    record["raw_input_missing_runs"] = missing_runs
+    record["raw_input_sha256_complete"] = not missing_runs
     (OUT / "provenance.json").write_text(json.dumps(record, indent=2))
     return record, canon
 
@@ -339,7 +358,12 @@ def main() -> int:
         "elapsed_s": round(time.time() - started, 1),
     }
     (OUT / "metrics.json").write_text(json.dumps(metrics, indent=2))
-    print(json.dumps({key: value for key, value in metrics.items() if key != "provenance_summary"}, indent=2))
+    print(
+        json.dumps(
+            {key: value for key, value in metrics.items() if key != "provenance_summary"},
+            indent=2,
+        )
+    )
     return 0
 
 

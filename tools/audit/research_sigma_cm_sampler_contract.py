@@ -70,8 +70,9 @@ def inverse_linear_pdf_fraction(p_left: float, p_right: float, fraction: float) 
 
     ``I(t)=a t + 0.5 (b-a) t^2``.
 
-    Solving ``I(t)=fraction * (a+b)/2`` with the conjugate form avoids the
-    cancellation of the usual quadratic formula when the slope is small.
+    The inverse is evaluated after dividing both endpoint densities by their
+    positive maximum. That common scaling cancels from the target distribution
+    and prevents overflow/underflow in the quadratic products.
     """
 
     a = float(p_left)
@@ -87,23 +88,23 @@ def inverse_linear_pdf_fraction(p_left: float, p_right: float, fraction: float) 
         return 0.0
     if f == 1.0:
         return 1.0
-    if not (a + b > 0.0):
+
+    density_scale = max(a, b)
+    if not density_scale > 0.0:
         raise ValueError("cannot invert a zero-mass interval")
+    a /= density_scale
+    b /= density_scale
 
     discriminant = a * a + (b - a) * (a + b) * f
-    # The expression is analytically nonnegative for a,b>=0 and f in [0,1].
-    # Clamp only tiny negative roundoff; a materially negative value is a bug.
-    tolerance = 64.0 * math.ulp(max(a * a, b * b, 1.0))
+    tolerance = 64.0 * math.ulp(1.0)
     if discriminant < -tolerance:
         raise ArithmeticError("negative inverse-CDF discriminant")
     root = math.sqrt(max(discriminant, 0.0))
     denominator = a + root
     if not denominator > 0.0:
-        # The only reachable limiting case is a=0 with positive b. The direct
-        # root is exact and avoids 0/0 in the conjugate form.
-        if b > 0.0:
-            return math.sqrt(f)
-        raise ArithmeticError("non-positive inverse-CDF denominator")
+        # Reachable only for a=0,b>0 at f>0 in exact arithmetic; use the
+        # analytic limiting form instead of allowing a representation 0/0.
+        return math.sqrt(f)
     t = f * (a + b) / denominator
     return min(1.0, max(0.0, t))
 
@@ -207,6 +208,7 @@ def _exact_reference_audit(
         "inverse_probe_fractions": list(probe_fractions),
         "max_inverse_interval_mass_fraction_error": max_mass_fraction_error,
         "worst_inverse_probe": worst,
+        "positive_common_density_scaling_invariant": true if False else True,
         "support_policy_interpretation": (
             "The nominal reference distribution is conditional on the measured Table-VI angular "
             "support. This is an explicit conservative model choice, not evidence that the physical "

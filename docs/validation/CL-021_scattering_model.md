@@ -41,6 +41,16 @@ and any source-bound theory/Coulomb completion remain competing support models
 under #1178 and must be propagated as source-model sensitivity before a
 physical source claim is promoted.
 
+The between-node interpolation itself is also a model-form assumption. The
+surviving `linear_cross_section_then_jacobian_v1` alternative interpolates the
+published `dσ/dΩ` first and then multiplies by `sin(theta)`. It agrees at every
+published cross-section node and on support, but its normalized CDF differs from
+the current reference by at most `0.0010129801982659559`; its mean `theta_cm`
+is lower by `0.024267831224125052` degrees. The source paper does not prescribe
+one of these between-node rules, so this is deterministic model sensitivity,
+not a confidence band or evidence that either interpolation is uniquely
+physical.
+
 The source paper reports a 3% point-to-point systematic uncertainty and total
 systematic uncertainty below 4.5% at 190 MeV. Section IV D explains that the
 point-to-point term was introduced as an extra per-point error until a
@@ -63,11 +73,27 @@ maximum upward CDF excursion `0.01430729974634637` and downward excursion
 `56.050251002153615`–`57.5322672970398` degrees. These bounds are a sensitivity
 model, not a confidence interval and not an inferred covariance.
 
+The interpolation and source-node universes do not collapse into one another.
+`results/research/sigma_cm_uq_interpolation_compatibility_v1.json` propagates
+the same explicit 3% node box through both surviving interpolation classes.
+The alternative central curve lies inside the current-mode box on the tested
+10,001-point grid, but its **full propagated box** extends beyond the current
+box by `0.0010650343985590949` upward near 39.586706 degrees and
+`0.0002537872354466675` downward near 145.879228 degrees. The union of both
+interpolation classes and the same node box, measured relative to the current
+nominal source, reaches `+0.015299817076167732` in CDF near 43.168956 degrees
+and `-0.014380572923809676` near 46.951812 degrees; the mean-angle union is
+56.02560085079668–57.5322672970398 degrees. This union is a deterministic
+cross-model sensitivity set, not a probability distribution, and it must not be
+added in quadrature with statistical uncertainties.
+
 For the retained third-column statistical uncertainties only, a separate
 first-order diagonal delta-method reference gives a maximum pointwise CDF
 standard uncertainty `0.0004453566889758832` near 49.488045 degrees and a
-mean-angle standard uncertainty `0.02252797870713097` degrees. That calculation
-is conditional on independent row statistical errors and does not replace the
+mean-angle standard uncertainty `0.02252797870713097` degrees for the current
+interpolation. Under the alternative interpolation these become
+`0.0004435837618530407` and `0.022356857259092505` degrees. Those calculations
+are conditional on independent row statistical errors and do not replace the
 missing systematic covariance. #1179 remains open for a defensible nuisance
 model and generator/downstream propagation.
 

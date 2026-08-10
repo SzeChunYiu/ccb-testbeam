@@ -2,85 +2,72 @@
 
 ## Session
 
-- **Completed task:** `ARU-RAW-DIGEST-SAME-STREAM-CLOSURE`
-- **Next task:** `ARU-RAW-CONSUMER-SAME-BYTES-001`
-- **Stamp:** `2026-08-10T111000Z`
+- **Task:** `ARU-RAW-CONSUMER-SAME-BYTES-001`
+- **Stamp:** `2026-08-10T112500Z`
 - **Owner:** hourly Atomic Research Universe audit session
-- **Main before implementation:** `7fb2a06596a87cb2dd294ec9d0b149e3575293e5`
-- **Main after merge:** `572cd4218051d763cbdc55d290be570941cba67d`
-- **Implementation PR:** #1157
-- **Closed leaf:** #1155
-- **Open parents / child compatibility:** #993, #952, #953, #1149
+- **Main at branch point:** `439d611efe9908ae91379b7024e98ead36e4d30b`
+- **Branch:** `fix/raw-consumer-same-bytes`
+- **Parents:** #1149, #993
+- **Dependencies:** #952, #953; upstream #1155 is merged/closed.
 - **Claim state:** CL-001 remains GATED.
 
-## Completed atom
+## Selected atom
 
-`raw ROOT pathname -> one opened regular-file byte stream -> SHA-256 + exact byte count + descriptor identity/stability -> raw-input provenance row`.
+`same-stream raw manifest row -> later scientific consumer -> exact manifest-bound opened object or controlled failure`.
 
-The merged contract requires
-
-```text
-sha256 = H(B)
-bytes = |B|
-```
-
-for the same opened stream `B`, with stable `(st_dev, st_ino, st_size, st_mtime_ns, st_ctime_ns)` before/after the read and exact byte-count closure. Final-component symlinks, nonregular files, and tested source mutations fail closed.
-
-## Adversarial result preserved
-
-The first exact-head workflow, run `31381447250` on head `fa188b57a94762f10d6ad786c3bd00cdd5f20dc8`, failed with `1 failed, 1294 passed, 1 skipped, 8 xfailed, 1 xpassed`. The only failure falsified the test author's expectation that replacing a pathname after descriptor open would still return an ordinary coherent row. On the CI filesystem, the replacement changed the descriptor metadata stability tuple and the implementation rejected the source.
-
-The implementation was not weakened. The hostile test was revised to require this stronger fail-closed behavior.
-
-## Final validation and repository state
-
-Final PR #1157 head:
-
-`5040e2ae6a7e49e90fa796625e7e94a34fd5442c`
-
-MC Validation run `31381908999` completed successfully:
+Merged #1155 proves that each raw-input row is internally coherent:
 
 ```text
-ruff: All checks passed!
-pytest: 1295 passed, 1 skipped, 8 xfailed, 1 xpassed, 6 warnings in 90.18s
-final enforcement: PASS
+sha256(row) = H(B_manifest)
+bytes(row) = |B_manifest|
 ```
 
-The retained workflow artifact is `validation-logs-31381908999-1`, artifact ID `9060283089`, digest `sha256:edb09ba7e6eb9be0319259676612e40e019c7ae3e335ce3460ade5fec5318700`.
+but current `scripts/studies/data_side_real_beam.py::timing()` later performs an independent `uproot.open(RAW_DIR / ...)`. Therefore the row does not prove `B_consumer = B_manifest` if the pathname changes between the two operations.
 
-`main` was rechecked immediately before merge and remained the tested base `7fb2a06596a87cb2dd294ec9d0b149e3575293e5`. PR #1157 was squash-merged as:
+## Implemented primitive
 
-`572cd4218051d763cbdc55d290be570941cba67d`
+New module `src/ccb_mc_validation/raw_input_authorization.py` adds `verified_raw_input_stream()`.
 
-Issue #1155 was then closed as completed with the scientific scope explicitly bounded.
+It:
+
+1. strictly parses the manifest file/digest/descriptor fields;
+2. opens the raw path once with `O_NOFOLLOW`;
+3. requires a regular file and exact `(dev, ino, nlink, size, mtime_ns, ctime_ns)` match to the manifest row;
+4. hashes/counts that descriptor and requires exact SHA-256 + byte-count closure;
+5. rewinds it and yields a duplicate descriptor as a seekable binary file-like object;
+6. retains a guard descriptor and fails closed if descriptor/link metadata change before consumer-context exit.
+
+The consumer therefore never needs to resolve the pathname a second time after verification.
+
+## Mechanisms and equivalence collapse
+
+- Independent pathname reopen is rejected as authorizing.
+- Rearranging pathname `stat/hash/open` operations does not solve the same TOCTOU mechanism.
+- A descriptor-bound verified stream is the selected low-copy survivor.
+- A private content-addressed snapshot is stronger against concurrent in-place mutation but incurs a full copy; this remains a separate cost/immutability child rather than being conflated with the descriptor design.
+- A source-bound immutable data-host/object-store contract is another survivor if the real host can prove it mechanically.
+
+## Hostile tests added
+
+`tests/test_raw_input_authorization.py` covers stable read/seek, legacy independent-path replacement, same-content new-inode replacement, different-content replacement, replacement while the stream is held, in-place mutation, hard-link alias creation, digest mismatch, strict path/digest/integer schema, symlink rejection, and invalid block size.
+
+The same-content replacement test is intentionally important: equal SHA-256 content does not establish that a later analysis consumed the same source object from the same manifest transaction.
 
 ## Four sequential review votes
 
-- **DAQ/provenance lead — ACCEPT local closure / BLOCK #993 closure.** Same-stream file rows are necessary, not a proof of the 8x16<->8x18 transformation.
-- **Adversarial filesystem reviewer — ACCEPT after falsifier-driven revision.** Legacy split observations, in-place mutation, pathname replacement, symlink and nonregular worlds now have explicit negative controls; privileged hostile-writer guarantees are outside this atom.
-- **Independent validation/statistics reviewer — ACCEPT software closure / BLOCK real artifact.** Exact-head CI is green and the first failed hostile test demonstrated non-tautological validation. The actual 33-file manifest was not regenerated here.
-- **Claims/provenance reviewer — ACCEPT bounded repair / BLOCK promotion.** No CL-001, timing, PID, penetration, energy or detector-performance claim is promoted.
+- **DAQ/raw provenance lead — ACCEPT primitive / BLOCK #993.** The primitive closes a consumer identity gap only; it does not derive 8x16<->8x18 lineage.
+- **Adversarial filesystem reviewer — ACCEPT bounded contract / REJECT snapshot-level overclaim.** An open descriptor prevents pathname replacement from redirecting reads, and post-consumer metadata catches ordinary mutation/link-state changes. Privileged metadata-forging writers and distributed-filesystem specifics are outside the proven threat model.
+- **Independent validation/statistics reviewer — ACCEPT deterministic design pending exact-head CI / BLOCK real artifact.** These are binary filesystem invariants, not beam-statistical tests. A mocked Uproot integration test is still required.
+- **Claims/provenance reviewer — ACCEPT local repair / BLOCK promotion.** No timing, PID, energy, detector-resolution, 8x16/8x18, or CL-001 claim is promoted.
 
-## Recursive child compatibility
+## Scientific and validation boundary
 
-The real-beam study now creates internally coherent manifest rows, but later scientific code independently reopens `RAW_DIR/hrdb_run_*.root` with `uproot.open`. Therefore
+No raw beam ROOT file was available in this runtime. The real 33-file provenance artifact was not regenerated, no production I/O benchmark was measured, no Geant4 simulation was run, and no detector result changed. This branch currently adds the reusable authorization primitive and its falsifiers; `timing()` still needs integration.
 
-```text
-H(B_manifest) = H(row)
-```
+## Next atomic children
 
-does not establish
-
-```text
-B_consumer = B_manifest
-```
-
-if the pathname can change between the provenance pass and the scientific read. This is the same verified-read/consumer universe already tracked as #1149; the issue was cross-linked instead of creating a duplicate.
-
-## Scientific boundary
-
-No raw ROOT beam file was opened in this runtime, no real 33-file provenance artifact was regenerated, no Geant4 simulation was run, and no S00 count, timing, PID, penetration, energy, pile-up, calibration, or detector-performance value changed. #993 remains open.
-
-## Next
-
-Use #1149 as the authority for the raw-side same-bytes consumer atom. Design and execute a deterministic path-replacement/mutation test across the manifest-to-`uproot.open` boundary; select verified stream/snapshot consumption or a mechanically enforced immutable-source contract. When the data host is available, regenerate the complete canonical raw-input manifest and resume #993/#953 word-level event/channel/sample lineage rather than inferring 16x18 closure from hashes alone.
+1. Integrate `verified_raw_input_stream()` into the full Uproot iteration lifetime in `timing()`; Uproot officially accepts seekable Python file-like objects, so the integration need not reopen a path.
+2. Make missing/unmatched manifest rows fail closed instead of silently skipping required timing runs.
+3. Add a mocked Uproot test proving the parser receives a file-like stream and no independent pathname open occurs.
+4. Measure the extra verification-read cost on the real data host; compare descriptor streaming with a verified snapshot only if cost/threat requirements justify it.
+5. Regenerate the real manifest and continue #993/#953 event/channel/sample and word-level closure. Hash identity alone must never be used to infer the 16<->18 transform.

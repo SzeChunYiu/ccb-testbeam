@@ -1,60 +1,36 @@
 # Latest Handoff
 
-## Selected atom: exact inverse-CDF and explicit source support (#1178)
+## Selected atom: source interpolation order on identical measured support (#1178)
 
-Protected `main` at the branch point is `fa62e8bb6ce7de10f840ebfa016eaa40cd9f74ec`, where PR #1180 already bound `sigma_pd_cm_190.txt` to Ermisch et al. Table VI and gated CL-021. The current bounded implementation is on branch `fix/mc-sigma-exact-inverse-support`; do not treat it as merged or runtime-validated until its own exact-head CI passes.
+Protected `main` at the branch point is `a1bcb6a68630845c31c0b8ebcd5b45de0cea1dd6`. The numerical inverse-CDF repair is on main, but #1178 remains open because compiled Geant4 closure, support physics, runtime fail-closed behavior (#1182), source uncertainty (#1179), manifest serialization, and downstream response propagation are unresolved.
 
-### Exact input/output contract
+### Contract and mechanism split
 
-Input is the 640-byte, 28-row 190 MeV p-d CM differential-cross-section table, SHA-256 `0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc`, measured over 26.49–169.78 degrees CM. The nominal source-law node density is
+The exact source table is `geant4/src_patch/sigma_pd_cm_190.txt`, SHA-256 `0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc`, 28 rows over 26.49–169.78 deg CM. The physical polar density is proportional to `sigma(theta) sin(theta)`.
 
-`p_i = (dσ/dΩ)_i sin(theta_i)`.
+The current reference `linear_node_pdf_exact_inverse_v1` first forms tabulated polar-density nodes `g_i=sigma_i sin(theta_i)` and linearly interpolates `g`. The new comparison model `linear_cross_section_then_jacobian_v1` linearly interpolates the measured observable `sigma=dσ/dΩ` and only then multiplies by `sin(theta)`. Both pass exactly through every source node and use `measured_table_support_truncate_v1`, but they are not equivalent between nodes.
 
-The branch declares three stable source-model IDs:
+### Executed result
 
-- `cross_section_interpolation_mode = linear_node_pdf_exact_inverse_v1`;
-- `cross_section_support_mode = measured_table_support_truncate_v1`;
-- `event_weight_mode = unit_direct_sampling_v1`.
+`tools/audit/research_sigma_cm_interpolation_sensitivity.py` analytically integrates both source laws and finds a maximum normalized-CDF difference `0.0010129801982659559` at `43.94458149140975 deg`. The alternative mean angle shifts by `-0.024267831224125052 deg`; the median shifts by `-0.05619069758156213 deg`; the 95th percentile shifts by `+0.13082849690529305 deg`.
 
-These are bound with the table digest in `geant4/src_patch/scattering_source_model_v1.json`.
+The strongest falsifier is representation refinement. Inserting one midpoint per interval with `sigma_mid=(sigma_left+sigma_right)/2` is exactly redundant under sigma-linear interpolation: its normalized-CDF change is `1.4432899320127035e-15`. The same inserted source representation changes the current node-PDF-linear CDF by `0.000768558730840585`. Thus the two descriptions are distinct model classes, not duplicate parameterizations.
 
-### Mechanism eliminated and replacement equation
+Local focused tests before push returned `4 passed in 0.05s`. An independent 500001-point dense numerical quadrature check agreed with the analytic normalization/mean to O(1e-11) and O(1e-9 deg), respectively. Machine-readable output is `results/research/sigma_cm_interpolation_sensitivity_v1.json`; the full equations, hypotheses, review votes and child atoms are archived in `chatgpt_todo/archive/2026-08-10T195100Z_ARU-MC-CS-INTERPOLATION.md`.
 
-The superseded `BuildSigmaCDF()` used trapezoid interval masses but `SampleThetaCM()` interpolated theta linearly in cumulative probability. Therefore each interval was sampled with constant density even though its CDF had been constructed from a linearly varying node PDF. For interval width `d`, endpoint densities `a,b`, and local coordinate `x`, the declared linear law has
+### Four review votes
 
-`I(x) = a x + (b-a)x^2/(2d)`
+- **Few-nucleon source physicist — REVISE:** retain the current interpolation as a named reference, not a uniquely source-authorized physical law.
+- **Adversarial numerical reviewer — ACCEPT distinction / BLOCK hidden equivalence:** redundant-knot invariance sharply separates the model classes.
+- **Independent statistics/UQ reviewer — ACCEPT deterministic sensitivity / BLOCK confidence language:** no probability law over interpolation families exists, so `0.001013` is not a one-sigma band.
+- **Claims/provenance reviewer — BLOCK CL-021 promotion:** source/runtime/support/UQ/detector gates remain open.
 
-with total mass `M=(a+b)d/2`. For requested local mass fraction `f`, the replacement solves `I(x)=fM` using the stable conjugate form
+### Parallel #1179 / PR #1186 state
 
-`x = 2 y / (a + sqrt(a^2 + 2 k y))`,
-
-where `k=(b-a)/d` and `y=fM`.
-
-The old deterministic audit is preserved as v1: maximum CDF self-discrepancy ~`0.084865752117123` at 13.245 degrees and ~`0.343332293326724` nominal probability outside measured support. The replacement v2 reference uses measured nodes only, has normalization `1.1977630765144902`, and reaches maximum tested interval-mass-fraction error `3.3306690738754696e-16` over flat/rising/falling/endpoint and every-table-interval off-node controls.
-
-### Support semantics are still a physics gate
-
-`measured_table_support_truncate_v1` is a deliberate conditional reference, not a statement that the physical cross section is zero outside 26.49–169.78 degrees. The previous hidden `[0,pi]` extension is removed from the nominal source because it was neither source-bound nor negligible, but truncation versus an authoritative extrapolation/theory/Coulomb completion remains a distinct sensitivity universe inside #1178. It must not be chosen by tuning to detector agreement.
-
-### Four role-separated review votes
-
-- **Source/kinematics physicist — ACCEPT numerical inverse / REVISE source authorization.** Exact Table-VI input and interval algebra are closed; off-support physics and source covariance are not.
-- **Adversarial numerical reviewer — ACCEPT deterministic replacement / BLOCK runtime authorization.** The old sampler is analytically falsified and knot-refinement controls support the continuous linear law, but repository CI does not compile this Geant4 C++ and invalid-source fallback still needs compiled fault tests.
-- **Independent statistics/validation reviewer — ACCEPT deterministic contract / BLOCK stochastic validation.** Python/reference closure is machine-testable; a seeded generator-only empirical-CDF test in an actual Geant4 build remains absent.
-- **Claims/provenance reviewer — REVISE CL-021 / BLOCK promotion.** The source-model sidecar improves traceability, but support sensitivity, #1179 uncertainty, production manifest serialization and the detector-response chain remain unresolved.
-
-The full evidence, equations, counter-hypotheses and child atoms are preserved in `chatgpt_todo/archive/2026-08-10T173000Z_ARU-MC-CS-SAMPLER-EXACT-INVERSE.md`.
-
-### Repository changes on the branch
-
-`ScatteringGenerator.cc/.hh` now retain node-PDF state and analytically invert the linearly varying density on measured support. `patch_scatter.py` is updated to reproduce those semantics in the external Geant4 checkout. The deterministic research utility now reports both the frozen legacy defect and the implemented reference, with v2 machine-readable output and expanded regression controls. `docs/validation/CL-021_scattering_model.md` explicitly separates numerical closure from support physics. The v1 defect result remains immutable provenance.
-
-### What remains blocked
-
-The current GitHub Actions MC Validation workflow runs Python tests/lint but does **not** compile `geant4/src_patch`. Therefore even a green PR check only validates deterministic/source-level contracts, not C++ build/runtime. Keep #1178 open until a real Geant4 build records source/Geant4/compiler hashes and a fixed seed/event count, generated `theta_cm` is compared against the declared reference, malformed/missing/nonfinite/nonmonotonic source inputs are fault-tested, and the production manifest serializes table SHA, interpolation/support/weight modes, generator commit, seed and event count. #1179 separately owns source statistical/systematic covariance. #1053/#880 remain relevant to historical nonunit `PrimaryWeight` products.
-
-No beam ROOT data were opened, no production Geant4 campaign was generated, and no real ESS, weighted spectrum, p-value, PID, penetration, timing, energy, pile-up, rate or detector-performance quantity was changed.
+PR #1186's first exact-head run `31422297344` had 1450 passing tests but failed enforcement because one new test searched for literal `Do not`, while the sidecar correctly expressed the same semantic boundary with `does not`. The test was repaired at head `4a2d1909b681517eee72389bf5f8d3604e4b8f54` to assert the substantive covariance/non-iid wording instead. Its replacement exact-head CI is still in progress; do not merge or call #1186 validated before that run succeeds.
 
 ### Next
 
-Open the bounded PR, require exact-head MC Validation CI, inspect its diff for C++/external-patch parity, and merge only if the available gate succeeds while preserving the explicit runtime blocker. After that the next executable atom is a compiled seeded generator-only closure for #1178 if a Geant4 environment is available; otherwise #1179 source covariance/support sensitivity is the highest-value analytical leaf. Historical event-weight carrier evidence under #880/#1053 remains independent and must not be inferred from the new unit-weight direct-sampling mode.
+Open/validate the interpolation-sensitivity PR and cross-link it to #1178; keep the current generator mode unchanged because this atom is sensitivity research, not a model-selection result. If compiled Geant4 becomes available, the highest-value next step is paired generator-only propagation of surviving interpolation/support models with exact seed/event/source provenance. Without compiled runtime, continue #1179 only after its repaired exact-head CI succeeds, and then investigate an independently source-justified interpolation/support family rather than tuning to detector agreement.
+
+No beam ROOT data were opened, no production Geant4 campaign was run, and no B2/B8, PID, timing, penetration, energy, pile-up, ESS, p-value or detector-performance quantity was regenerated or promoted.

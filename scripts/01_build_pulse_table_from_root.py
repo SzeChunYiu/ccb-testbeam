@@ -977,7 +977,9 @@ def main() -> int:
         print("[s00] skipping sorted even-channel crosscheck (no sorted_b_dir or --skip-sorted)")
         sorted_counts = counts_by_run[["run", "selected_pulses", "B2", "B4", "B6", "B8"]].copy()
         sorted_compare = sorted_counts.copy()
-        sorted_compare["note"] = "skipped: sorted ROOT not staged on LUNARC"
+        # Issue #972: a skipped sorted crosscheck must be recorded as an explicit
+        # gate state, never fabricated as a raw-as-sorted value or a benign note.
+        sorted_compare["gate_state"] = GATE_NOT_RUN_MISSING_INPUT
         sorted_gate_pass = True
     else:
         sorted_counts = sorted_crosscheck(config)
@@ -988,6 +990,7 @@ def main() -> int:
         )
         sorted_diff = sorted_compare["selected_pulses_raw"] - sorted_compare["selected_pulses_sorted_even"]
         sorted_gate_pass = bool((sorted_diff.abs() <= 0).all())
+        sorted_compare["gate_state"] = GATE_PASS if sorted_gate_pass else GATE_FAIL
 
 # ---- All gates pass? ----
     all_gates_pass = fixed_count_pass and sorted_gate_pass

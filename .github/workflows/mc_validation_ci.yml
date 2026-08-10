@@ -16,6 +16,9 @@ on:
       - "paper/figures.yaml"
       - "constraints/**"
       - "pyproject.toml"
+      - ".gitignore"
+      - ".gitmodules"
+      - ".claude/worktrees/**"
       - ".github/workflows/mc_validation_ci.yml"
   pull_request:
     paths:
@@ -32,6 +35,9 @@ on:
       - "paper/figures.yaml"
       - "constraints/**"
       - "pyproject.toml"
+      - ".gitignore"
+      - ".gitmodules"
+      - ".claude/worktrees/**"
       - ".github/workflows/mc_validation_ci.yml"
 
 jobs:
@@ -61,12 +67,14 @@ jobs:
             scripts/data01_sample_split_staves.py \
             scripts/generate_all.py \
             src/ccb_figures/figures/fig20_key_results.py \
+            tools/audit/validate_gitlink_submodule_contract.py \
             tests/test_compare_single_stave_mt_reproducibility.py \
             tests/test_compare_single_stave_photon_trees.py \
             tests/test_analyze_single_stave_multiseed_rng.py \
             tests/test_data01_composite_key_and_seeding.py \
             tests/test_mv3_stopping_net_amplitude.py \
             tests/test_fig20_no_quantitative_literals.py \
+            tests/test_gitlink_submodule_contract.py \
             2>&1 | tee ruff.log
           echo "status=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
       - name: Run unit tests

@@ -52,6 +52,7 @@ jobs:
             src/ccb_figures/figures/fig20_key_results.py \
             tools/audit/validate_gitlink_submodule_contract.py \
             tools/audit/validate_mc_ci_trigger_scope.py \
+            tools/audit/validate_geant4_external_overlay.py \
             tests/test_compare_single_stave_mt_reproducibility.py \
             tests/test_compare_single_stave_photon_trees.py \
             tests/test_analyze_single_stave_multiseed_rng.py \
@@ -60,6 +61,7 @@ jobs:
             tests/test_fig20_no_quantitative_literals.py \
             tests/test_gitlink_submodule_contract.py \
             tests/test_mc_ci_trigger_scope.py \
+            tests/test_geant4_external_overlay.py \
             2>&1 | tee ruff.log
           echo "status=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
       - name: Run unit tests

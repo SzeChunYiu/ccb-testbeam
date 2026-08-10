@@ -115,7 +115,7 @@ G4Material* DetectorConstruction::BuildScintillator() {
   // Emission and absorption from versioned tables (fall back to a broad band).
   FillFromCurve(mpt, "SCINTILLATIONCOMPONENT1", tables.Get("scintillator_emission"), 1.0, 1.0);
   FillFromCurve(mpt, "ABSLENGTH", tables.Get("scintillator_absorption"),
-                cfg_.attenuation_scale, CLHEP::cm);
+                cfg_.scintillator_absorption_scale, CLHEP::cm);
 
   // Scintillation yield / time constants (polystyrene-based, order of magnitude).
   mpt->AddConstProperty("SCINTILLATIONYIELD", 10000. / MeV);
@@ -143,7 +143,7 @@ G4Material* DetectorConstruction::BuildFibreCore() {
   FillFromCurve(mpt, "WLSABSLENGTH", tables.Get("y11_absorption"), 1.0, CLHEP::mm);
   FillFromCurve(mpt, "WLSCOMPONENT", tables.Get("y11_emission"), 1.0, 1.0);
   FillFromCurve(mpt, "ABSLENGTH", tables.Get("y11_bulk_attenuation"),
-                cfg_.attenuation_scale, CLHEP::cm);
+                cfg_.y11_bulk_attenuation_scale, CLHEP::cm);
   mpt->AddConstProperty("WLSTIMECONSTANT", 8.5 * ns);  // Y-11 decay time
   core->SetMaterialPropertiesTable(mpt);
   return core;

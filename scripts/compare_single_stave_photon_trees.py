@@ -71,7 +71,12 @@ def read_tree(path: Path, tree_name: str) -> dict[str, np.ndarray]:
         if tree_name not in root_file:
             available = sorted(str(key).split(";", 1)[0] for key in root_file.keys())
             raise KeyError(f"tree {tree_name!r} absent from {path}; available={available}")
-        arrays = root_file[tree_name].arrays(library="np", how=dict)
+        tree = root_file[tree_name]
+        arrays = tree.arrays(tree.keys(), library="np")
+        if isinstance(arrays, np.ndarray) and arrays.dtype.names is not None:
+            arrays = {name: np.asarray(arrays[name]) for name in arrays.dtype.names}
+        elif isinstance(arrays, np.ndarray):
+            arrays = {tree.keys()[0]: arrays}
     return {str(name): np.asarray(values) for name, values in arrays.items()}
 
 

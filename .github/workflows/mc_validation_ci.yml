@@ -8,6 +8,7 @@ on:
       - "tools/**"
       - "tests/**"
       - "configs/**"
+      - "geant4/**"
       - "docs/contracts/**"
       - "docs/latex/**"
       - "docs/ATOMIC_RESEARCH_PROTOCOL.md"
@@ -20,25 +21,7 @@ on:
       - ".gitmodules"
       - ".claude/worktrees/**"
       - ".github/workflows/mc_validation_ci.yml"
-  pull_request:
-    paths:
-      - "src/**"
-      - "scripts/**"
-      - "tools/**"
-      - "tests/**"
-      - "configs/**"
-      - "docs/contracts/**"
-      - "docs/latex/**"
-      - "docs/ATOMIC_RESEARCH_PROTOCOL.md"
-      - "docs/AI_SESSION_PICKUP_GUIDE_20260808.md"
-      - "chatgpt_todo/**"
-      - "paper/figures.yaml"
-      - "constraints/**"
-      - "pyproject.toml"
-      - ".gitignore"
-      - ".gitmodules"
-      - ".claude/worktrees/**"
-      - ".github/workflows/mc_validation_ci.yml"
+  pull_request: {}
 
 jobs:
   test:
@@ -68,6 +51,7 @@ jobs:
             scripts/generate_all.py \
             src/ccb_figures/figures/fig20_key_results.py \
             tools/audit/validate_gitlink_submodule_contract.py \
+            tools/audit/validate_mc_ci_trigger_scope.py \
             tests/test_compare_single_stave_mt_reproducibility.py \
             tests/test_compare_single_stave_photon_trees.py \
             tests/test_analyze_single_stave_multiseed_rng.py \
@@ -75,6 +59,7 @@ jobs:
             tests/test_mv3_stopping_net_amplitude.py \
             tests/test_fig20_no_quantitative_literals.py \
             tests/test_gitlink_submodule_contract.py \
+            tests/test_mc_ci_trigger_scope.py \
             2>&1 | tee ruff.log
           echo "status=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
       - name: Run unit tests

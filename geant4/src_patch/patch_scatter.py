@@ -49,21 +49,31 @@ BUILD_CDF = """void ScatteringGenerator::BuildSigmaCDF()
 \tcdfPdf.clear();
 \tif(ang.size() < 2 || sigma.size() != ang.size()){ return; }
 
-\tcdfTheta = ang;
-\tcdfPdf.reserve(ang.size());
+\t// Positive common density scaling cannot change a normalized source law.
+\tG4double densityScale = 0.0;
 \tfor(size_t k = 0; k < ang.size(); k++){
+\t\tif(!std::isfinite(ang[k]) || !std::isfinite(sigma[k]) || sigma[k] < 0.0){
+\t\t\tG4cerr << \"ScatteringGenerator::BuildSigmaCDF: non-finite/negative source node; CS sampling disabled.\" << G4endl;
+\t\t\tcdfTheta.clear(); cdfVal.clear(); cdfPdf.clear();
+\t\t\treturn;
+\t\t}
 \t\tif(k > 0 && !(ang[k] > ang[k-1])){
 \t\t\tG4cerr << \"ScatteringGenerator::BuildSigmaCDF: angles are not strictly increasing; CS sampling disabled.\" << G4endl;
 \t\t\tcdfTheta.clear(); cdfVal.clear(); cdfPdf.clear();
 \t\t\treturn;
 \t\t}
-\t\tif(!(sigma[k] >= 0.0)){
-\t\t\tG4cerr << \"ScatteringGenerator::BuildSigmaCDF: invalid negative/non-finite cross section; CS sampling disabled.\" << G4endl;
-\t\t\tcdfTheta.clear(); cdfVal.clear(); cdfPdf.clear();
-\t\t\treturn;
-\t\t}
-\t\tG4double p = sigma[k] * std::sin(ang[k]);
-\t\tif(!(p >= 0.0)){
+\t\tif(sigma[k] > densityScale) densityScale = sigma[k];
+\t}
+\tif(!(densityScale > 0.0)){
+\t\tG4cerr << \"ScatteringGenerator::BuildSigmaCDF: zero source density; CS sampling disabled.\" << G4endl;
+\t\treturn;
+\t}
+
+\tcdfTheta = ang;
+\tcdfPdf.reserve(ang.size());
+\tfor(size_t k = 0; k < ang.size(); k++){
+\t\tG4double p = (sigma[k] / densityScale) * std::sin(ang[k]);
+\t\tif(!std::isfinite(p) || p < 0.0){
 \t\t\tG4cerr << \"ScatteringGenerator::BuildSigmaCDF: invalid node PDF; CS sampling disabled.\" << G4endl;
 \t\t\tcdfTheta.clear(); cdfVal.clear(); cdfPdf.clear();
 \t\t\treturn;
@@ -78,8 +88,8 @@ BUILD_CDF = """void ScatteringGenerator::BuildSigmaCDF()
 \t\tcdfVal[i] = cdfVal[i-1] + avg * dx;
 \t}
 \tG4double norm = cdfVal.back();
-\tif(!(norm > 0.0)){
-\t\tG4cerr << \"ScatteringGenerator::BuildSigmaCDF: non-positive CDF norm (\" << norm << \" ); CS sampling disabled.\" << G4endl;
+\tif(!std::isfinite(norm) || !(norm > 0.0)){
+\t\tG4cerr << \"ScatteringGenerator::BuildSigmaCDF: invalid CDF norm (\" << norm << \" ); CS sampling disabled.\" << G4endl;
 \t\tcdfTheta.clear(); cdfVal.clear(); cdfPdf.clear();
 \t\treturn;
 \t}
@@ -123,7 +133,7 @@ G4double ScatteringGenerator::SampleThetaCM()
 \tG4double targetMass = frac * intervalMass;
 \tG4double slope = (b - a) / width;
 \tG4double discriminant = a*a + 2.0*slope*targetMass;
-\tif(discriminant < 0.0 && discriminant > -1e-14*a*a) discriminant = 0.0;
+\tif(discriminant < 0.0 && discriminant > -1e-14) discriminant = 0.0;
 \tif(discriminant < 0.0){
 \t\tG4cerr << \"ScatteringGenerator::SampleThetaCM: negative inverse-CDF discriminant; using interval midpoint.\" << G4endl;
 \t\treturn 0.5 * (left + right);

@@ -1,6 +1,6 @@
 # Data-Side Analysis on Real Beam Data (LUNARC ccb_data)
 
-**Status:** MEASURED_DATA (provenance verified) + GATED (timing, format-limited) + BLOCKED (absolute Rmax).
+**Status:** MEASURED_DATA + GATED (waveform lineage/timing) + BLOCKED (absolute Rmax).
 **Branch:** `studies/data-side-analysis` · **Driver:** `scripts/studies/data_side_real_beam.py`
 **Raw source:** `/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/` (`hrdb_run_*.root`, runs 12–65; 748 MB)
 **Inputs:** canonical S00 table `reports/1781028640.1299.266407ae/s00_selected_b_pulses.csv.gz` (640,737 rows) + raw HRDv waveforms.
@@ -11,7 +11,7 @@
 
 ---
 
-## 0. Data provenance — the located data IS the canonical S00 source
+## 0. Data provenance — located raw data overlaps canonical S00, but 16↔18 lineage is gated
 
 The raw ccb_data stores waveforms as **8 channels × 16 samples = 128 values/event**
 (channel-major layout; `SAMPLES_PER_CHANNEL = 16`, NOT 18 as in the laptop-era configs).
@@ -28,17 +28,26 @@ cut (>1000 ADC, baseline = median of first 4 samples, even channels B2/B4/B6/B8)
 | Event 31/391389/B2 amplitude | 7858.5 (exact match, both) |
 | Event 31/391389/B2 peak sample | 6 (exact match); area 56,055 (16-samp) vs 63,262 (18-samp) |
 
-**Conclusion:** the located ccb_data is confirmed to be the SAME beam data as canonical
-S00 — event-level baseline+amplitude+peak match **exactly** for B2 over 578,019 overlapping
-pulses; the only difference is the 2 trailing samples (16 vs 18), which carry pulse-tail
-area and a few late-peaking deep-stave pulses (canonical-only = 23,360). The additional
-s00c "median-first-four" quality gate (laptop-side, on `data/sorted-b`, not staged) reduces
-the raw 706,373 → 640,737; it is a baseline-quality cut rejecting spurious deep-stave
-pulses. **The downstream physics below uses the validated canonical 640,737 table
-(provenance now confirmed) and the raw HRDv where waveforms are required.**
+**Interpretation:** the located ccb_data has strong event-level correspondence with the
+canonical S00 product: baseline+amplitude+peak match exactly for B2 over 578,019 overlapping
+pulses. These feature-level agreements are consistent with a product that shares the first
+16 samples and differs in a two-sample tail, but they do **not** prove that mechanism. The
+exact 8×16↔8×18 producer lineage, channel/sample mapping, and disputed two-sample origin remain
+open under #993. Competing possibilities include a separate acquisition/conversion product,
+padding/reconstruction, or another transformation that preserves early-sample features. The
+canonical-only population is 23,360 records, so the product/tail distinction can matter
+for selection or downstream observables.
 
-Full sha256 of the 33 raw inputs in `provenance.json` (sample):
-`hrdb_run_0031.root = 0986c826…68140c268` (runs 31–65 used).
+The additional s00c "median-first-four" quality gate (laptop-side, on `data/sorted-b`, not
+staged) reduces the raw 706,373 → 640,737. The downstream physics below uses the canonical
+640,737 table as its fixed input, but **CL-001 remains GATED** under the canonical claim ledger
+pending #952/#953/#954, and the 16↔18 lineage itself remains unresolved under #993.
+
+**Provenance correction:** the tracked `provenance.json` currently reports
+`raw_input_sha256_count: 33` but serializes only three digest records because the historical
+producer wrote `digests[:3]`. It is therefore not a complete 33-file digest manifest. The
+producer repair is tracked under #993; the real artifact must be regenerated on the data host
+before full raw-input provenance is claimed.
 
 ## 1. VIS-DE-001-DATA — ΔE-E on real beam data
 
@@ -77,10 +86,10 @@ on the raw 8×16 @ 100 MS/s (10 ns/sample) waveforms, on the B4∧B6 coincidence
 The B4 and B6 pulse-times are essentially **uncorrelated event-by-event**: B6 peaks either
 at sample 0 (rising edge outside the window), sample 7, or sample 15, while B4 spreads over
 samples 3–15. The ~38 ns residual is dominated by the 10 ns sampling quantisation +
-arbitrary trigger phase + the missing samples 16–17. **This is a measured data-format
-limitation, not detector resolution.** A real-data timing resolution needs the median-gated
-18-sample waveforms plus a template/optimal-filter pickoff. Figure:
-`VIS-TIM-DATA_sampling_limited.png`.
+arbitrary trigger phase + the unavailable/disputed samples 16–17. **This is a measured
+data-format limitation, not detector resolution.** A real-data timing resolution requires
+an authorising waveform product with resolved provenance plus a validated timing pickoff.
+Figure: `VIS-TIM-DATA_sampling_limited.png`.
 
 ## 3. VIS-PU-DATA — selected-pulse occupancy; absolute Rmax is withheld
 
@@ -116,7 +125,7 @@ Figure: `VIS-PU-DATA_occupancy_rmax.png` is descriptive occupancy evidence only.
 
 | Claim | Status | Evidence |
 |---|---|---|
-| CL-001 (S00 pulses) | VALIDATED (+ raw provenance confirmed) | event-level exact match, 617,377/640,737 |
+| CL-001 (S00 pulses) | **GATED** | deterministic 640,737 fixed-input count; width/closure/polarity gates #952/#953/#954 and lineage #993 remain open |
 | CL-002..004 (timing σ₆₈) | GATED / data-format-limited | sampling-limited raw-format residual; no detector resolution |
 | CL-005..006 (timing combination/covariance) | BLOCKED | source-bound covariance and uncertainty absent |
 | CL-010 (Rmax) | **BLOCKED** (`S-STAT-003`) | occupancy is descriptive; rate exposure and accepted quality criterion absent |

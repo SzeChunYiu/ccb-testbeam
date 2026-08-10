@@ -1,23 +1,18 @@
 # Active Task
 
-- **Task ID:** `ARU-S00-SELECTOR-IDENTITY-REAUDIT`
+- **Task ID:** `ARU-S00-SELECTOR-PREFLIGHT-001`
 - **Owner:** hourly Atomic Research Universe audit session
-- **Session stamp:** `2026-08-10T030000Z`
-- **Initial remote main SHA:** `37ed6aa792fd409d1b2abdcf830ad76f4e7a52f2`
-- **Parent issue:** `#1109` (reopened this session after post-merge #1133 audit)
-- **Child issues:** `#1135`, `#1136`, `#1137`
-- **Related DAQ contract:** `#1073`
-- **Branch:** `audit/s00-selector-identity-reaudit`
-- **Policy:** `A_NAMED_SELECTOR_ID_MUST_BIND_ONE_FORMULA_ONE_DOMAIN_AND_EQUIVALENT_MAPS_MUST_BE_COLLAPSED_BEFORE_MODEL_COMPARISON`.
-- **Selected atom:** `waveform -> named selector identity -> pedestal/amplitude map -> threshold membership -> selected population -> CL-001/downstream claims`.
-- **Confirmed defect 1:** `estimate_pedestal_v1_batched()` accepts arbitrary caller-supplied baseline indices while the method is documented as frozen `v1_first_four_median`; `scan_raw()` forwards config `baseline_samples`.
-- **Known-answer falsifier:** fixed waveform at `T=1000 ADC` changes from selected (`[0,1,2,3]`, A=1700) to rejected (`[2,3,4,5]`, A=1000) under the same v1 code path.
-- **Input-domain gap:** scalar v1 accepts fewer than four samples by taking a shorter-slice median; nonfinite values can propagate NaN into ordinary rejection instead of typed input failure.
-- **Equivalence collapse:** `dynamic_range` and `rolling_min` both use `pedestal=min(w)` and the shared `amplitude=max(w)-pedestal`; they are exactly the same scalar amplitude/threshold map. Only validity metadata differs.
-- **P10 gap:** `early_robust_p10` computes P10 over the full waveform and is permutation-invariant; it is not an early/pre-trigger estimator and requires quiet-noise/negative-contamination calibration.
-- **DAQ cross-link:** selector `_is_saturated(..., code_max=16383)` repeats the unresolved ADC full-scale assumption in #1073; #1073 was updated instead of opening a duplicate.
-- **Expert votes:** detector/data-selection `REVISE`; adversarial `BLOCK`; validation/statistics `BLOCK`; claims/provenance `BLOCK`.
-- **Repository actions:** reopened #1109; opened #1135/#1136/#1137; corrected PR #1133 history; updated #1073; reviewed green CI and merged audit PR #1134 to `main@37ed6aa792fd409d1b2abdcf830ad76f4e7a52f2`; created immutable selector re-audit archive on this branch.
-- **Scientific boundary:** no raw beam-data run, Geant4 job, timing/PID/penetration result, or detector-performance quantity was generated. The historical 640,737 count is not numerically invalidated; its selector identity is not mechanically frozen.
-- **Next implementation:** #1135 first, then #1136 and #1137; continue parent #1109 only after software semantic closure and raw/DAQ dependencies permit real migration tests.
-- **Status:** `ACTIVE / FLAWED`
+- **Session stamp:** `2026-08-10T060000Z`
+- **Initial remote main SHA:** `f2fb7dc24f38c838d1d30b4a6137bb6444c93180`
+- **Main after validated merge this session:** `9883d96a63d779548f76a7d5cdef2170e507d2c0` (PR #1142)
+- **Issue:** `#1141`
+- **Parent:** `#1135`
+- **Upstream scientific parent:** `#1109`
+- **Branch:** `fix/s00-selector-preflight-manifest`
+- **Selected atom:** `YAML selector declaration -> no-I/O semantic preflight -> publication namespace -> staging -> ROOT access -> selector execution -> manifest identity -> CL-001 provenance`.
+- **Contract:** canonical S00 is `selector_id=v1_first_four_median` with `baseline_indices=(0,1,2,3)` and a semantic mismatch must fail before staging or ROOT access.
+- **Implemented this session:** pure `validate_s00_selector_contract(config)` plus exact selector manifest-identity fragment and hostile deterministic tests.
+- **Expert votes:** reconstruction/software `ACCEPT pure leaf / BLOCK integration`; adversarial `REVISE`; statistics/validation `ACCEPT unit design / BLOCK producer claim`; claims/provenance `BLOCK CL-001 promotion`.
+- **Residual integration:** canonical `main()` must call preflight immediately after YAML parsing; hostile end-to-end test must prove zero ROOT opens/raw iteration/staging/artifact writes; manifest must include selector ID + exact baseline tuple.
+- **Scientific boundary:** no raw beam data or Geant4 run; no selected-pulse count or detector-performance result changed. Physical validity of samples 0-3 remains #1109.
+- **Status:** `ACTIVE / PARTIAL`

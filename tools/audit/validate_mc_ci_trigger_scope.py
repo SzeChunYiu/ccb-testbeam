@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
-"""Fail closed when MC Validation CI does not route Geant4 changes to required test.
+"""Fail closed when required MC Validation CI can skip a pull request.
 
-This validator checks workflow routing only.  It does not claim that the
+The protected branch requires job ``test``. GitHub documents that a workflow
+skipped by path filtering leaves its associated required check pending, so the
+pull-request event must not be path-filtered. Push routing remains scoped but
+must include the material ``geant4/**`` subtree.
+
+This validator checks workflow routing only. It does not claim that the
 workflow compiles Geant4 or authorises detector/source physics.
 """
 from __future__ import annotations
@@ -13,9 +18,8 @@ from typing import Any
 
 import yaml
 
-SCHEMA = "ccb_mc_ci_trigger_scope_v1"
-REQUIRED_EVENTS = ("push", "pull_request")
-REQUIRED_PATTERN = "geant4/**"
+SCHEMA = "ccb_mc_ci_trigger_scope_v2"
+REQUIRED_PUSH_PATTERN = "geant4/**"
 REQUIRED_JOB = "test"
 
 
@@ -32,24 +36,31 @@ def validate_trigger_scope(path: Path) -> dict[str, Any]:
     if not isinstance(on, dict):
         raise ValueError("workflow must define mapping-valued 'on'")
 
-    event_evidence: dict[str, dict[str, Any]] = {}
-    for event in REQUIRED_EVENTS:
-        event_cfg = on.get(event)
-        if not isinstance(event_cfg, dict):
-            raise ValueError(f"workflow must define '{event}' routing")
-        paths = event_cfg.get("paths")
-        if not isinstance(paths, list):
-            raise ValueError(f"workflow '{event}' must define a paths list")
-        normalized = [str(item) for item in paths]
-        if REQUIRED_PATTERN not in normalized:
+    push_cfg = on.get("push")
+    if not isinstance(push_cfg, dict):
+        raise ValueError("workflow must define 'push' routing")
+    push_paths = push_cfg.get("paths")
+    if not isinstance(push_paths, list):
+        raise ValueError("workflow 'push' must define a paths list")
+    normalized_push = [str(item) for item in push_paths]
+    if REQUIRED_PUSH_PATTERN not in normalized_push:
+        raise ValueError(
+            f"workflow 'push' does not route {REQUIRED_PUSH_PATTERN!r} to validation"
+        )
+
+    if "pull_request" not in on:
+        raise ValueError("workflow must define 'pull_request' routing")
+    pull_request_cfg = on.get("pull_request")
+    if pull_request_cfg is None:
+        pull_request_cfg = {}
+    if not isinstance(pull_request_cfg, dict):
+        raise ValueError("workflow 'pull_request' configuration must be a mapping or null")
+    for forbidden_filter in ("paths", "paths-ignore"):
+        if forbidden_filter in pull_request_cfg:
             raise ValueError(
-                f"workflow '{event}' does not route {REQUIRED_PATTERN!r} to validation"
+                "required pull_request workflow must not use "
+                f"{forbidden_filter!r}; skipped required checks remain pending"
             )
-        event_evidence[event] = {
-            "required_pattern": REQUIRED_PATTERN,
-            "pattern_present": True,
-            "path_count": len(normalized),
-        }
 
     jobs = workflow.get("jobs")
     if not isinstance(jobs, dict) or REQUIRED_JOB not in jobs:
@@ -60,7 +71,14 @@ def validate_trigger_scope(path: Path) -> dict[str, Any]:
         "status": "PASS",
         "workflow": str(path),
         "required_job": REQUIRED_JOB,
-        "events": event_evidence,
+        "push": {
+            "required_pattern": REQUIRED_PUSH_PATTERN,
+            "pattern_present": True,
+            "path_count": len(normalized_push),
+        },
+        "pull_request": {
+            "unfiltered": True,
+        },
         "scientific_scope": "ROUTING_PRECONDITION_ONLY_NOT_COMPILED_GEANT4_VALIDATION",
     }
 

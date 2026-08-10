@@ -8,11 +8,12 @@
 - **Issue:** `#1141`
 - **Parent:** `#1135`
 - **Upstream scientific parent:** `#1109`
-- **Branch:** `fix/s00-selector-preflight-manifest`
-- **Selected atom:** `YAML selector declaration -> no-I/O semantic preflight -> publication namespace -> staging -> ROOT access -> selector execution -> manifest identity -> CL-001 provenance`.
-- **Contract:** canonical S00 is `selector_id=v1_first_four_median` with `baseline_indices=(0,1,2,3)` and a semantic mismatch must fail before staging or ROOT access.
-- **Implemented this session:** pure `validate_s00_selector_contract(config)` plus exact selector manifest-identity fragment and hostile deterministic tests.
-- **Expert votes:** reconstruction/software `ACCEPT pure leaf / BLOCK integration`; adversarial `REVISE`; statistics/validation `ACCEPT unit design / BLOCK producer claim`; claims/provenance `BLOCK CL-001 promotion`.
-- **Residual integration:** canonical `main()` must call preflight immediately after YAML parsing; hostile end-to-end test must prove zero ROOT opens/raw iteration/staging/artifact writes; manifest must include selector ID + exact baseline tuple.
-- **Scientific boundary:** no raw beam data or Geant4 run; no selected-pulse count or detector-performance result changed. Physical validity of samples 0-3 remains #1109.
-- **Status:** `ACTIVE / PARTIAL`
+- **Branch / PR:** `fix/s00-selector-preflight-manifest` / `#1143`
+- **Selected atom:** `YAML selector declaration -> semantic authorization -> publication namespace -> staging -> ROOT access -> selector execution -> manifest identity -> CL-001 provenance`.
+- **Contract:** canonical S00 is `selector_id=v1_first_four_median` with `baseline_indices=(0,1,2,3)` and a mismatch must fail before staging or ROOT access.
+- **Implemented:** pure selector-config contract, immediate producer preflight after YAML parsing, explicit selector ID + baseline tuple in manifest `model_identity`, hostile config/domain tests, and an end-to-end side-effect sentinel proving the failure path cannot reach namespace resolution, raw scan/iteration, `uproot.open`, staging `mkdir`, manifest writes, or figure writes.
+- **Audit-the-audit:** the first producer edit unintentionally changed sensitivity-report fallback semantics. Diff review detected that unrelated change; the script edit was fully reverted and then reapplied surgically. Current script diff contains only selector-contract import/preflight/model-identity changes.
+- **Expert votes:** reconstruction/software `ACCEPT implementation / pending CI`; adversarial `ACCEPT after surgical reapply / pending CI`; statistics/validation `ACCEPT deterministic test design / pending exact-head CI`; claims/provenance `ACCEPT selector binding / CL-001 remains GATED`.
+- **Exact-head gate:** PR #1143 head `a01b7e887215b1dcbe277fe696e12116722aef3a`; MC Validation CI run 898 is in progress. Do not merge or close #1141 before exact-head success.
+- **Scientific boundary:** no raw beam data or Geant4 run; no selected-pulse count or detector-performance result changed. Physical validity of samples 0-3 remains #1109. Publication transaction #1110 remains separate.
+- **Status:** `ACTIVE / IMPLEMENTED_PENDING_CI`

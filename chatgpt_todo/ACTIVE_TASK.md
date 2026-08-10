@@ -8,15 +8,15 @@
 - **Parent issue:** `#993`
 - **Related blockers:** `#952`, `#953`; CL-001 remains `GATED`.
 - **Branch:** `fix/raw-input-same-stream-provenance`
-- **PR:** pending creation after branch review.
+- **PR:** `#1157`
 - **Policy:** `ONE_PROVENANCE_ROW_BINDS_DIGEST_AND_BYTE_COUNT_TO_ONE_OPENED_STABLE_STREAM`.
 - **Selected atom:** `raw ROOT pathname -> opened regular-file stream -> SHA-256 + byte count + descriptor identity/stability -> provenance row -> waveform-lineage evidence`.
 - **Exact invariant:** `sha256=H(B)` and `bytes=|B|` for the same opened byte stream `B`; separate pathname hash/stat observations are not authorising.
 - **Implemented contract:** `digest_raw_input()` opens once with `O_NOFOLLOW`, hashes/counts identical `os.read()` blocks, checks regular-file identity and before/after `fstat` stability, and records descriptor metadata. `collect_raw_input_digests()` preserves complete-list/missing-run semantics while propagating identity failures.
 - **Hostile tests added:** legacy mixed-version hash/stat counterexample; path replacement after open; in-place mutation; symlink rejection; nonregular input; invalid block size; stable exact hash/size and persisted schema controls.
 - **Expert votes:** DAQ/provenance `ACCEPT local / BLOCK #993 closure`; adversarial filesystem `ACCEPT bounded contract`; validation/statistics `ACCEPT design pending CI / BLOCK real artifact`; claims/provenance `ACCEPT repair / BLOCK claim promotion`.
-- **Repository actions:** implementation and tests are on the branch; immutable ARU archive added. No raw beam file or Geant4 result was produced.
-- **Validation:** local full-checkout pytest is unavailable because this runtime cannot resolve `github.com`; exact-head GitHub Actions is required after PR creation. No test success is claimed yet.
+- **Repository actions:** implementation, tests and immutable ARU archive are on PR #1157. No raw beam file or Geant4 result was produced.
+- **Validation:** local full-checkout pytest is unavailable because this runtime cannot resolve `github.com`; only the workflow associated with the final exact PR head/current base may authorize merge. Earlier workflow runs become stale if coordination commits move the head.
 - **Scientific boundary:** this repair makes future raw-input rows internally same-stream coherent. It does not establish 8x16<->8x18 lineage, exact raw->sorted closure, polarity, or any detector-performance result.
-- **Next:** open the focused PR, require exact-head/current-base CI, then regenerate the complete real raw-input manifest on the data host and continue #993/#953 event-channel-sample lineage.
+- **Next:** require exact-head/current-base CI for PR #1157, then regenerate the complete real raw-input manifest on the data host and continue #993/#953 event-channel-sample lineage.
 - **Status:** `ACTIVE / PARTIAL`

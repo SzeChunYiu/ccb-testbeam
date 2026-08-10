@@ -22,7 +22,11 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import uproot
+
+from ccb_mc_validation.raw_uproot_authorization import (
+    open_verified_uproot,
+    require_manifest_rows,
+)
 
 RAW_DIR = Path("/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root")
 CANON = Path("reports/1781028640.1299.266407ae/s00_selected_b_pulses.csv.gz")
@@ -296,48 +300,57 @@ def _coincidence_sets(canon):
     return set(zip(b4b6.run, b4b6.eventno)), set(zip(b4b6b8.run, b4b6b8.eventno))
 
 
-def timing(canon):
-    """Measure the sampling-limited B4-B6 residual on the raw 16-sample format."""
+def timing(canon, provenance):
+    """Measure sampling-limited B4-B6 timing from manifest-authorized raw bytes."""
     need_b4b6, need_b4b6b8 = _coincidence_sets(canon)
-    by_run = {}
+    by_run: dict[int, set[int]] = {}
     for run, event in need_b4b6 | need_b4b6b8:
-        by_run.setdefault(run, set()).add(int(event))
+        by_run.setdefault(int(run), set()).add(int(event))
+
+    manifest_rows = provenance.get("raw_input_sha256")
+    if not isinstance(manifest_rows, list):
+        raise RawInputProvenanceError("raw_input_sha256 must be a complete row list")
+    authorized_rows = require_manifest_rows(manifest_rows, by_run)
+
     records = []
     for run in sorted(by_run):
         path = RAW_DIR / f"hrdb_run_{run:04d}.root"
-        if not path.exists():
-            continue
         wanted = by_run[run]
-        tree = uproot.open(path)["h101"]
-        for batch in tree.iterate(["EVENTNO", "HRDv"], step_size=20000, library="np"):
-            event_numbers = np.asarray(batch["EVENTNO"]).astype(int)
-            for index, event in enumerate(event_numbers):
-                if int(event) not in wanted:
-                    continue
-                waveform = np.asarray(batch["HRDv"][index], dtype=float)
-                if waveform.size != 8 * NSAMP:
-                    continue
-                waveform = waveform.reshape(8, NSAMP)
-                times = {}
-                maxima = {}
-                for stave, channel in STAVE_CH.items():
-                    corrected = waveform[channel] - np.median(
-                        waveform[channel, BASELINE_IDX]
+        with open_verified_uproot(path, authorized_rows[run]) as raw_file:
+            tree = raw_file["h101"]
+            for batch in tree.iterate(
+                ["EVENTNO", "HRDv"], step_size=20000, library="np"
+            ):
+                event_numbers = np.asarray(batch["EVENTNO"]).astype(int)
+                for index, event in enumerate(event_numbers):
+                    if int(event) not in wanted:
+                        continue
+                    waveform = np.asarray(batch["HRDv"][index], dtype=float)
+                    if waveform.size != 8 * NSAMP:
+                        continue
+                    waveform = waveform.reshape(8, NSAMP)
+                    times = {}
+                    maxima = {}
+                    for stave, channel in STAVE_CH.items():
+                        corrected = waveform[channel] - np.median(
+                            waveform[channel, BASELINE_IDX]
+                        )
+                        maxima[stave] = int(corrected.argmax())
+                        times[stave] = (
+                            None
+                            if corrected.max() < AMPLITUDE_CUT
+                            else cfd_time(corrected)
+                        )
+                    records.append(
+                        {
+                            "run": run,
+                            "eventno": int(event),
+                            "B4_argmax": maxima["B4"],
+                            "B6_argmax": maxima["B6"],
+                            "B8_argmax": maxima["B8"],
+                            **{f"{key}_t": value for key, value in times.items()},
+                        }
                     )
-                    maxima[stave] = int(corrected.argmax())
-                    times[stave] = (
-                        None if corrected.max() < AMPLITUDE_CUT else cfd_time(corrected)
-                    )
-                records.append(
-                    {
-                        "run": run,
-                        "eventno": int(event),
-                        "B4_argmax": maxima["B4"],
-                        "B6_argmax": maxima["B6"],
-                        "B8_argmax": maxima["B8"],
-                        **{f"{key}_t": value for key, value in times.items()},
-                    }
-                )
     frame = pd.DataFrame(records)
     paired = frame.dropna(subset=["B4_t", "B6_t"])
     time_of_flight = SPACING_CM * TOF_PER_CM
@@ -368,6 +381,8 @@ def timing(canon):
         "acq_window_ns": ACQ_WINDOW_NS,
         "mc_combined_sigma68_ns_for_reference": MC_COMBINED_SIGMA68_NS,
         "canonical_B6_CL002_ns_was_mc_toy": 0.68,
+        "raw_input_authorization": "manifest-bound-same-open-stream-v1",
+        "raw_runs_authorized": sorted(by_run),
         "note": "Measured data-format limitation, not detector resolution.",
     }
     figure, axes = plt.subplots(1, 2, figsize=(11, 4.2))
@@ -436,7 +451,7 @@ def main() -> int:
             key: value for key, value in provenance.items() if key != "raw_input_sha256"
         },
         "VIS-DE-001-DATA": deltae_e(canon),
-        "VIS-TIM-DATA": timing(canon),
+        "VIS-TIM-DATA": timing(canon, provenance),
         "VIS-PU-DATA": rmax(canon),
         "MC_anchors": {
             "combined_sigma68_ns": MC_COMBINED_SIGMA68_NS,

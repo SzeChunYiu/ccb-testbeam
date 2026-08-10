@@ -170,6 +170,11 @@ def _validated_artifact_path(
         raise S00PublicationError(
             f"artifact {logical_name!r} must not contain symlink components: {candidate}"
         )
+    if not candidate.exists():
+        raise S00PublicationError(
+            "required artifact missing; authoritative artifact missing from generation: "
+            f"{logical_name!r}: {candidate}"
+        )
     try:
         root_resolved = root.resolve(strict=True)
         candidate_resolved = candidate.resolve(strict=True)
@@ -332,6 +337,8 @@ def publish_generation(
 
     generation_root.mkdir(parents=True, exist_ok=True)
     pointer_path.parent.mkdir(parents=True, exist_ok=True)
+    if staging_dir.is_symlink():
+        raise S00PublicationError("staging_dir itself must not be a symbolic link")
     if staging_dir.parent.resolve() != generation_root.resolve():
         raise S00PublicationError(
             "staging_dir must be a direct child of generation_root for "

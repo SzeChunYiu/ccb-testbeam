@@ -2,52 +2,64 @@
 
 ## Session
 
-- **Task ID:** `ARU-S00-SELECTOR-PREFLIGHT-001`
-- **Stamp:** `2026-08-10T060000Z`
+- **Task ID:** `ARU-S00-PUBLICATION-GENERATION-PRIMITIVE-001`
+- **Stamp:** `2026-08-10T070000Z`
 - **Owner:** hourly Atomic Research Universe audit session
-- **Initial main:** `f2fb7dc24f38c838d1d30b4a6137bb6444c93180`
-- **Validated merge during session:** PR #1142 -> `9883d96a63d779548f76a7d5cdef2170e507d2c0`
-- **Issue:** #1141
-- **Parent:** #1135
-- **Upstream scientific parent:** #1109
-- **Branch / PR:** `fix/s00-selector-preflight-manifest` / #1143
-- **Status:** `IMPLEMENTED_PENDING_EXACT_HEAD_CI`.
+- **Initial main:** `5cb0b9426dc2f9e1b58a33fcb36c2e0c3eaa8f0a`
+- **Parent issue:** #1110
+- **Branch:** `fix/s00-publication-generation-primitive`
+- **Status:** `PRIMITIVE_IMPLEMENTED_PENDING_EXACT_HEAD_CI_AND_PRODUCER_INTEGRATION`
+
+## Prior leaf closure
+
+PR #1143 exact-head `e916aac8398928ab1e612ee769f5ea339e758a5d` had MC Validation CI run 910 = `success` and was squash-merged to main as `5cb0b9426dc2f9e1b58a33fcb36c2e0c3eaa8f0a`. The attempted GitHub issue-comment write for #1141 was blocked by the connector safety interceptor, so no closure comment/state change is claimed here.
 
 ## Selected atom
 
-`YAML selector declaration -> semantic authorization -> namespace/staging -> ROOT access -> selector execution -> manifest identity -> CL-001 provenance`.
-
-Canonical selector identity is fixed by merged #1142:
+The new atom is the S00 publication commit point:
 
 ```text
-selector_id = v1_first_four_median
-baseline_indices = (0,1,2,3)
+validated staging generation
+-> immutable generation
+-> fsync
+-> atomic CURRENT.json authority pointer replacement
+-> downstream logical artifact resolution
+```
+
+The key invariant is:
+
+```text
+publication failure before pointer commit
+=> bytes(previous CURRENT.json) remain unchanged
 ```
 
 ## Work completed
 
-1. Verified exact-head MC Validation CI for PR #1142 was `success` and squash-merged it to main as `9883d96a63d779548f76a7d5cdef2170e507d2c0`.
-2. Added pure `validate_s00_selector_contract(config)` and `s00_selector_model_identity()` in `src/ccb_mc_validation/s00_selector_contract.py`.
-3. Patched the canonical producer so the selector contract is checked immediately after YAML parsing, before amplitude-cut/namespace resolution, staging, raw-file traversal, or ROOT access. Failure returns controlled input status 2.
-4. Bound `selector_id` and exact `baseline_indices` into manifest `model_identity`.
-5. Added hostile deterministic config/domain tests plus a producer-level side-effect sentinel proving a bad selector cannot reach namespace resolution, raw scan, raw iteration, `uproot.open`, staging `mkdir`, manifest writes, or figure writes.
-6. Preserved the ARU reasoning in `chatgpt_todo/archive/2026-08-10T060000Z_ARU-S00-SELECTOR-PREFLIGHT-PARTIAL.md`.
-
-## Audit-the-audit correction
-
-The first producer integration attempt accidentally altered unrelated `write_sensitivity_report()` fallback semantics. Adversarial per-file diff review detected that spillover before merge. The script change was fully reverted and then reapplied surgically. The current PR script diff is limited to selector-contract imports, the immediate preflight, and selector identity fields in `model_identity`.
+1. Added `src/ccb_mc_validation/s00_publication.py` with an immutable-generation + atomic-pointer publication primitive.
+2. Added strict generation IDs and generation-relative logical artifact paths.
+3. Required staging to live directly under the generation root so the staging->generation rename stays on one filesystem.
+4. Validated required artifacts and JSON-serializable model identity before moving staging.
+5. Added advisory publisher locking, file/directory fsync, atomic pointer replacement, typed pointer parsing and logical artifact resolution.
+6. Preserved old generations on successful replacement; the commit path never recursively deletes the previous authority.
+7. Added deterministic tests for successful transition, old-generation retention, injected pointer-commit failure, missing artifacts, immutable-generation collision, path traversal, wrong staging root, malformed pointer, missing authoritative artifact and non-serializable model identity.
+8. Preserved the complete ARU review in `chatgpt_todo/archive/2026-08-10T070000Z_ARU-S00-PUBLICATION-GENERATION-PRIMITIVE.md`.
 
 ## Four sequential review passes
 
-- **Reconstruction/software lead — ACCEPT implementation / pending CI.** The producer now places semantic authorization before side effects.
-- **Adversarial mechanism reviewer — ACCEPT after surgical reapply / pending CI.** The earlier unrelated diff was eliminated; the hostile path has explicit side-effect sentinels.
-- **Statistics/validation reviewer — ACCEPT deterministic design / pending exact-head CI.** No beam statistics are required for this software invariant.
-- **Claims/provenance reviewer — ACCEPT selector binding / keep CL-001 GATED.** Selector provenance is now explicit, but existing data-contract blockers remain and no claim is promoted.
+- **Filesystem/reconstruction lead — ACCEPT primitive / BLOCK integration.** The authority transition is coherent, but the canonical producer still calls legacy `atomic_publish()`.
+- **Adversarial/concurrency reviewer — ACCEPT primitive with residual integration risk.** Crash after generation move leaves only a non-authoritative orphan; real downstream readers must still be proved to follow the pointer.
+- **Statistics/validation reviewer — ACCEPT deterministic design / pending exact-head CI.** No beam statistics are needed for this filesystem invariant.
+- **Claims/provenance reviewer — BLOCK #1110 closure.** CL-001 and downstream code still resolve mutable legacy paths and must migrate to the model-bound authority root.
 
-## Remaining gate
+## Next integration work
 
-Do not merge PR #1143 or close #1141 until the latest exact-head MC Validation CI succeeds. After CI success, inspect the exact final diff once more, then the #1141 producer-preflight leaf can close. Parent #1135 may then be reconsidered for software-semantic closure; physical first-four pedestal validity remains #1109 and publication transaction safety remains #1110.
+1. Wire `scripts/01_build_pulse_table_from_root.py` to build the report and pulse table inside one immutable generation and publish one pointer only after all authorisation gates pass.
+2. Define generation-root and pointer paths in the S00 config/provenance contract.
+3. Migrate canonical downstream consumers and validators to logical pointer resolution.
+4. Decide whether legacy report/pulse-table paths are compatibility aliases or retired; they must not remain independent authorities.
+5. Add exact-producer injected-crash and concurrent-reader tests.
+6. Keep orphan cleanup separate from the authorisation transaction and prove it cannot remove current/referenced generations.
 
 ## Scientific boundary
 
-No raw ROOT population was rescanned, no Geant4 job was run, and no timing, PID, penetration, pile-up, energy, or detector-performance quantity changed. The historical 640,737 count remains a count for the canonical first-four configuration; whether samples 0–3 are physically valid pedestal samples remains unresolved.
+No raw beam ROOT data were opened, no S00 counts regenerated, no Geant4 simulation run, and no timing/PID/penetration/energy/pile-up/detector-performance quantity changed.

@@ -5,6 +5,7 @@ from types import SimpleNamespace
 import numpy as np
 import pytest
 
+from scripts import mc01_event_stave_truth as producer
 from ccb_mc_validation.exceptions import DataContractError
 from ccb_mc_validation.truth.event_stave import (
     EVENT_STAVE_SCHEMA_ID,
@@ -190,3 +191,55 @@ def test_builder_preserves_event_identity_trigger_topology_and_one_weight(monkey
     np.testing.assert_allclose(payload["b_stave_edep_mev"][:, 1], [0.0, 1.0])
     assert len(set(payload["event_id"].tolist())) == 2
     assert not isinstance(seen["arg"], (str, bytes))
+
+
+def _publication_fixture():
+    payload = {
+        "event_id": np.array(["abc"], dtype="U16"),
+        "entry_index": np.array([0], dtype=np.int64),
+        "sample_I": np.array([False]),
+        "sample_II": np.array([True]),
+        "event_weight": np.array([1.0]),
+        "b_stave_edep_mev": np.zeros((1, 8)),
+        "b_stave_charged_edep_mev": np.zeros((1, 8)),
+        "b_stave_hit_count": np.zeros((1, 8), dtype=np.int64),
+        "b_stave_charged_hit_count": np.zeros((1, 8), dtype=np.int64),
+    }
+    metadata = {
+        "source_sha256": "a" * 64,
+        "tree_name": "hibeam",
+        "coinc_ns": 15.0,
+        "weighting_enabled": True,
+        "authorisation_state": "NONAUTHORISING_TRUTH_DIAGNOSTIC",
+    }
+    return payload, metadata
+
+
+def test_publication_exposes_product_and_manifest_as_one_immutable_generation(tmp_path):
+    payload, metadata = _publication_fixture()
+    product, manifest, record = producer._publish_generation(
+        tmp_path, payload, metadata, max_events=0
+    )
+    assert product.is_file()
+    assert manifest.is_file()
+    assert product.parent == manifest.parent
+    assert product.parent.name == record["generation_id"]
+    assert record["product_sha256"] == hashlib.sha256(product.read_bytes()).hexdigest()
+    before = product.read_bytes()
+    with pytest.raises(DataContractError, match="generation already exists"):
+        producer._publish_generation(tmp_path, payload, metadata, max_events=0)
+    assert product.read_bytes() == before
+
+
+def test_publication_failure_leaves_no_visible_generation(monkeypatch, tmp_path):
+    payload, metadata = _publication_fixture()
+
+    def fail_save(*_args, **_kwargs):
+        raise RuntimeError("injected product write failure")
+
+    monkeypatch.setattr(producer.np, "savez_compressed", fail_save)
+    with pytest.raises(RuntimeError, match="injected"):
+        producer._publish_generation(tmp_path, payload, metadata, max_events=0)
+    generations = tmp_path / "generations"
+    assert generations.is_dir()
+    assert [path for path in generations.iterdir() if path.is_dir()] == []

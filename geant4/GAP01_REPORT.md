@@ -1,6 +1,8 @@
 # GAP-01: Krakau MC Stopping-Depth Material Budget Fix
 
-## Status: IMPLEMENTED + VALIDATED (χ² improvement modest; root cause is broader than material alone)
+> **Current authority (2026-08 audit): HISTORICAL / NONAUTHORISING.** The geometry edit and the numerical comparisons below are retained as legacy simulation diagnostics. The earlier label `IMPLEMENTED + VALIDATED` is superseded: this run predates closure of the current scattering-source, external-executable/input, stopping-table, weighting, selection-matching, and detector-response provenance gates (#1182, #1178, #1179, #1058; CL-021). Its χ² values therefore must not be used as validated evidence that material budget is or is not the dominant cause of the DATA↔MC discrepancy. The report remains useful as a conditional mechanism study under its historical generator/configuration.
+
+## Historical status: IMPLEMENTED + VALIDATED at the time (now superseded)
 
 ## What was done
 
@@ -56,21 +58,15 @@ hibeam_g4 rebuilt from source on LUNARC against:
 
 ## Key finding
 
-**The inter-stave dead material (the MV3b primary gap) has been added but produces only
-a marginal χ² improvement (1.03×).** A scan of upstream absorber thickness shows that
-adding 10 g/cm² Al makes the χ² WORSE — the absorber shifts protons from B8 to B4/B6
-instead of concentrating them at B2 as the data requires.
+**Historical conditional finding:** under this exact legacy source/configuration, the inter-stave dead-material variation produced only a marginal numerical χ² change (1.03×), while the tested 10 g/cm² uniform Al absorber made that legacy discrepancy metric worse. Because the current source/selection/response/provenance chain is not closed, this does **not** establish a project-level conclusion that the real DATA↔MC discrepancy is not primarily a material-budget issue.
 
-**The data-MC discrepancy is NOT primarily a material-budget issue.** The data's stopping
-distribution is sharply peaked at B2 (87.6%), while the MC produces a broad distribution
-regardless of how much uniform material is added. This points to additional physics issues:
-1. The p+CD2 scattering energy spectrum may be too broad (too many high-energy protons)
-2. Energy-loss straggling or multiple-scattering effects in the upstream material
-3. Data selection biases (trigger efficiency, geometric acceptance) not modeled in MC
+Within the historical fixture, the data stopping distribution was sharply peaked at B2 (87.6%) while the MC distribution remained broad under the tested material variations. Surviving mechanisms to retest after source/runtime closure include:
+1. p+CD2 source-energy/angular-model differences;
+2. energy-loss/straggling/multiple-scattering and actual upstream material;
+3. DATA trigger/reconstruction/selection versus MC acceptance mismatch;
+4. detector-response and digitization differences absent from truth-level comparisons.
 
-**Recommendation**: The material budget fix is necessary but not sufficient. The next
-investigation should focus on the scattering cross-section model (sigma_pd_cm_190.txt)
-and the data-MC selection matching, not further material budget additions.
+**Current recommendation:** retain the GAP-01 scan as a conditional material-sensitivity study, but do not rank material versus source/selection/response explanations until the same current, content-bound MC population is propagated through matched reconstruction with nuisance/systematic variations.
 
 ## Files
 - `geant4/configs/build_krakow_gap01.C` — geometry modification macro (env-configurable)

@@ -2,81 +2,87 @@
 
 ## Session
 
-- **Task ID:** `ARU-GITLINK-SUBMODULE-CONTRACT-001`
-- **Stamp:** `2026-08-10T084850Z`
+- **Task ID:** `ARU-RAW-DIGEST-SAME-STREAM-001`
+- **Stamp:** `2026-08-10T094900Z`
 - **Owner:** hourly Atomic Research Universe audit session
-- **Initial main:** `ca6fa3155394e99cc62e2a16d3bd7a4df10c809b`
-- **Current validated merge-base main:** `9c68115e1d374c61dad8b83dfc99569c8b0fb84b`
-- **Issue:** #1152
-- **Branch:** `fix/repo-gitlink-submodule-contract`
-- **Status:** `IMPLEMENTED / CI-VALIDATED ON MERGE REF / PROTECTED-MERGE RECHECK REQUIRED`
+- **Initial/current main:** `4fda4b5013a712a329646127140d8a52d322af92`
+- **Parent issue:** #993
+- **Child issue:** #1155
+- **Reviewed PR:** #1154 (`e7ab22893ffad0266acb7c4243ebb748a1334ec7`)
+- **Branch:** `audit/raw-digest-same-stream-review`
+- **Status:** `INDEPENDENT_REVIEW_COMPLETE / CHILD_ATOM_OPEN / NO_SCIENTIFIC_PROMOTION`
 
 ## Selected atom
 
 ```text
-tracked Git tree
--> mode-160000 gitlink paths G
--> .gitmodules declared paths M
--> checkout/submodule metadata
--> reproducible repository state
+raw ROOT pathname
+-> opened byte stream
+-> SHA-256 digest + byte count + source identity
+-> provenance row
 ```
 
-The fail-closed path-identity invariant is:
+The exact local invariant is:
 
 ```text
-G == M
+sha256 = H(B)
+bytes  = |B|
 ```
 
-with both difference sets empty. Local Claude worktree paths must additionally be ignored so generated agent worktrees are not normal repository content.
+for the same opened byte stream `B`. Source identity metadata must be derived from the same descriptor/snapshot rather than from a later pathname lookup.
 
-## Verified evidence
+## Verified repository state
 
-At the initial main SHA, tree inspection found three tracked mode-160000 entries: two `.claude/worktrees/agent-*` paths plus the legitimate `geant4/single_stave/sipm` submodule. `.gitmodules` declares only the SiPM path and currently points it to `https://github.com/SzeChunYiu/ccb-sipm-core.git`.
+Current `main` is `4fda4b5013a712a329646127140d8a52d322af92`. Recent main changes include #1146, #1153, #1132 and #1108.
 
-History inspection shows both orphan worktree gitlinks first entered in `d1140f18ba1588bfffa3229ddc69511a6df46620` (`fix(s00): enforce atomic report-directory publication (#1122)`), unrelated to dependency management. This supports accidental local-worktree staging rather than deliberate hidden submodules.
+PR #1154 correctly repairs an exact provenance contradiction: the historical producer computed every available raw-file digest but persisted only `digests[:3]` while reporting the full digest count. The PR removes that truncation, records missing runs and completeness, adds synthetic tests, and corrects data-side report prose so CL-001 remains GATED and 8x16<->8x18 lineage remains unresolved.
 
-The earlier successful workflow emitted a checkout post-job warning for a `.claude/worktrees/...` submodule path missing from `.gitmodules`. The scientific/software test gate still succeeded; this is therefore treated as repository-integrity/reproducibility evidence, not as a failed detector-validation run.
+Both `test` check-runs on PR #1154 exact head `e7ab228...` are now green. However, the successful pull-request merge-ref was built against then-current main `f8da281e...`. Current main later advanced to `4fda4b50...`. `compare(main@4fda4b50, head@e7ab2289)` reports `diverged`, with the head 6 commits ahead and 3 behind and merge base `9c68115e...`. Therefore those earlier checks are not reused as current-base merge authority.
 
-## Repair on branch
+## Remaining row-level provenance defect
 
-- removed `.claude/worktrees/agent-ab8006f38e5298275` and `.claude/worktrees/agent-ad26366bc4a0411a0` as tracked gitlinks;
-- preserved `geant4/single_stave/sipm`;
-- added `.claude/worktrees/` to `.gitignore`;
-- added `tools/audit/validate_gitlink_submodule_contract.py`;
-- added `tests/test_gitlink_submodule_contract.py`;
-- extended MC Validation CI triggers to `.gitignore`, `.gitmodules`, and `.claude/worktrees/**` so force-added recurrence cannot bypass the validator;
-- preserved the full derivation/review in `chatgpt_todo/archive/2026-08-10T084850Z_ARU-GITLINK-SUBMODULE-CONTRACT.md`.
+The current PR helper still performs separate observations:
 
-The validator uses `git ls-files --stage -z` for tracked gitlinks, parses `.gitmodules`, requires exact set equality, and checks the recurrence-ignore rule with `git check-ignore --no-index`. It fails closed on orphan gitlinks, configured paths that are not gitlinks, malformed metadata, duplicate submodule paths, or a missing ignore rule.
+```text
+path.exists()
+sha256_file(path)
+path.stat().st_size
+```
 
-## Adversarial controls
+If the pathname is replaced or modified between the hash read and the later stat, a row can bind `sha256(A)` to `bytes(B)`. Reordering those separate calls does not solve the mechanism class.
 
-- orphan gitlink -> fail;
-- configured submodule without gitlink -> fail;
-- unignored `.claude/worktrees/...` -> fail;
-- malformed Git index record -> controlled failure;
-- duplicate `.gitmodules` path -> controlled failure;
-- positive repository integration control -> exactly the legitimate SiPM path remains and local worktrees are ignored.
+Issue #1155 was opened with a one-open same-stream design. The preferred implementation is a small helper that opens once, hashes bounded blocks while counting those exact bytes, captures descriptor metadata with `fstat`, and fails closed under an explicit source-stability policy. A content-addressed/immutable source snapshot is an acceptable stronger world if the data host supports it.
 
-A plain `.gitignore` rule is deliberately not treated as sufficient, because forced staging can bypass an ignore rule. The validator is the merge-time recurrence gate.
+## Required hostile controls
+
+- replace the pathname after digest read but before metadata collection: old design can create a mixed-version row; repaired design must not;
+- mutate source contents in-place during read: reject instability or explicitly bind the exact read stream under a documented immutable-source contract;
+- stable-file positive control with exact digest and byte count;
+- same descriptor supplies digest, byte count and source identity;
+- explicit symlink/alias policy;
+- preserve PR #1154's stable ordering, complete-list semantics and missing-run reporting.
+
+Synthetic files are sufficient for this software/provenance atom. No beam-data hash should be fabricated in CI.
 
 ## Four sequential expert passes
 
-- **Git/reproducibility lead — ACCEPT.** The orphan gitlinks are removed, the declared SiPM submodule remains, and the repository-level equality invariant is executable.
-- **Adversarial repository-metadata reviewer — ACCEPT.** The recurrence hole at the CI trigger boundary was closed; deletion plus ignore plus exact-set validation is materially stronger than deletion alone.
-- **CI/validation reviewer — ACCEPT implementation evidence / REQUIRE fresh protected-merge check.** MC Validation run 963 succeeded on synthetic merge commit `73923ec25cb7140bd62f43a9df93194056cbb932`, which merged exact head `8edfc1af4572dcd676b5e48819e22507a384ca93` into then-current main `9c68115e1d374c61dad8b83dfc99569c8b0fb84b`. Ruff passed; pytest reported `1266 passed, 1 skipped, 8 xfailed, 1 xpassed, 6 warnings`; checkout post-job cleanup no longer emitted the orphan-submodule warning. GitHub later regenerated the PR merge ref and the protected merge endpoint returned `Required status check "test" is expected`, so this handoff commit intentionally retriggers CI rather than bypassing branch protection.
-- **Claims/provenance reviewer — ACCEPT repository repair / no scientific promotion.** This branch changes Git metadata and audit machinery only; it does not alter or validate detector data, simulation, reconstruction, or public scientific quantities.
+- **DAQ/provenance lead — REVISE.** #1154 fixes manifest completeness but not row-level same-stream identity.
+- **Adversarial filesystem reviewer — BLOCK current row authority.** Path replacement or mutation can separate digest and size semantics.
+- **Independent validation reviewer — ACCEPT deterministic child design / require executable mutation tests.** Beam statistics are irrelevant to this atom.
+- **Claims/provenance reviewer — ACCEPT child / BLOCK scientific promotion.** #993 remains open and CL-001 remains GATED.
 
-## Execution boundary
+## Repository actions
 
-MC Validation CI run 963 is a successful execution record for the repaired code on a merge ref containing main `9c68115e...`. The available job log confirms successful checkout, ruff, unit tests, enforcement, and post-checkout cleanup with no `No url found for submodule path` failure. The attempted squash merge was rejected by branch protection because GitHub expected a fresh required `test` status after regenerating the merge ref; this is treated as a gating-state change, not permission to bypass protection. The present handoff-only commit exists to trigger a fresh pull-request run for the current merge ref.
-
-## Coordination / unresolved work
-
-- Close #1152 only after the fresh required check succeeds and the merge is actually present on remote `main`.
-- The S00 authority transaction remains independent and open under #1110; #1146 is already on main and must be included in any later producer-publication integration.
-- #1149 same-bytes consumer migration and real selected-table benchmark also remain independent.
+- submitted a COMMENT review on PR #1154, anchored to exact head `e7ab228...`, recording `RP-RAW-DIGEST-001` and the stale-current-base CI gate;
+- opened #1155 with the exact atom definition, competing mechanism worlds, equivalence collapse, implementation surface, hostile tests and acceptance contract;
+- preserved the full derivation in `chatgpt_todo/archive/2026-08-10T094900Z_ARU-RAW-DIGEST-SAME-STREAM-REVIEW.md`;
+- did not push code onto the active PR #1154 branch, avoiding concurrent implementation conflict.
 
 ## Scientific boundary
 
-No raw ROOT population was rescanned, no S00 count was regenerated, no Geant4 simulation was run, and no timing/PID/penetration/energy/pile-up/detector-performance quantity changed.
+No raw ROOT file was available to this runtime. No digest manifest was regenerated. No S00 count, timing, PID, penetration, energy, pile-up, calibration, Geant4 or detector-performance quantity changed. This run produced provenance-review evidence and an implementation-ready child atom only.
+
+## Next actions
+
+1. Refresh PR #1154 onto current main and require fresh current-base exact-head CI.
+2. Implement #1155 as a one-open same-stream raw digest helper with mutation/path-replacement controls, either on a coordinated follow-up branch or after #1154 is safely integrated.
+3. Keep #993 open until stage-by-stage event/channel/sample lineage between 8x16 and 8x18 products is demonstrated.

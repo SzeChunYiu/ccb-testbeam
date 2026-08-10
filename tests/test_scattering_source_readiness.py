@@ -78,10 +78,11 @@ def test_readiness_token_alone_does_not_hide_fail_open_mechanisms() -> None:
     }
     '''
     result = audit_source_text(source)
-    # Merely declaring the enum names is deliberately not enough to satisfy the
-    # stronger source audit, which requires scoped state transitions/usages.
+    # Bare declarations/calls are deliberately weaker than the production audit,
+    # which requires scoped readiness states and the class-qualified generator
+    # implementation. They must not hide the independently detected fail-open paths.
     assert result["findings"]["explicit_instance_readiness_state"] is False
-    assert result["findings"]["per_event_instance_readiness_call"] is True
+    assert result["findings"]["per_event_instance_readiness_call"] is False
     assert result["findings"]["success_exit_on_input_open_failure"] is True
     assert result["findings"]["uniform_fallback_on_empty_cdf"] is True
     assert result["verdict"] == "BLOCK_RUNTIME_AUTHORIZATION"

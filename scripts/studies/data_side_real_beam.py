@@ -8,8 +8,11 @@ fails closed on scientific authorization.
 """
 from __future__ import annotations
 
+import errno
 import hashlib
 import json
+import os
+import stat
 import time
 from pathlib import Path
 
@@ -40,6 +43,11 @@ MC_CFD_SIGMA68_NS = 0.151
 MC_DEE_CORR = -0.533
 TAU_CL011_NS = 124.79018394263471
 MU_LEGACY = 0.38
+RAW_INPUT_DIGEST_SCHEMA = "same-open-stream-v1"
+
+
+class RawInputProvenanceError(RuntimeError):
+    """Raised when raw-input identity cannot be bound to a stable byte stream."""
 
 
 def sha256_file(path: Path, block_size: int = 1 << 20) -> str:
@@ -50,6 +58,78 @@ def sha256_file(path: Path, block_size: int = 1 << 20) -> str:
     return digest.hexdigest()
 
 
+def digest_raw_input(path: Path, block_size: int = 1 << 20) -> dict[str, object]:
+    """Hash and count one stable regular-file stream from one open descriptor.
+
+    The final path component must not be a symlink.  ``sha256`` and ``bytes``
+    are derived from the exact same ``os.read`` stream, while descriptor
+    identity and mutation-sensitive metadata are checked before and after the
+    read.  The digest, not the mutable pathname, is the long-term content
+    identity recorded by the manifest.
+    """
+    if block_size <= 0:
+        raise ValueError("block_size must be positive")
+    nofollow = getattr(os, "O_NOFOLLOW", None)
+    if nofollow is None:
+        raise RawInputProvenanceError(
+            "raw provenance requires os.O_NOFOLLOW for fail-closed symlink policy"
+        )
+    try:
+        descriptor = os.open(path, os.O_RDONLY | nofollow)
+    except OSError as exc:
+        if exc.errno == errno.ELOOP:
+            raise RawInputProvenanceError(
+                f"raw input final path component must not be a symlink: {path}"
+            ) from exc
+        raise
+
+    try:
+        before = os.fstat(descriptor)
+        if not stat.S_ISREG(before.st_mode):
+            raise RawInputProvenanceError(f"raw input is not a regular file: {path}")
+
+        digest = hashlib.sha256()
+        byte_count = 0
+        while True:
+            block = os.read(descriptor, block_size)
+            if not block:
+                break
+            digest.update(block)
+            byte_count += len(block)
+        after = os.fstat(descriptor)
+    finally:
+        os.close(descriptor)
+
+    before_state = (
+        before.st_dev,
+        before.st_ino,
+        before.st_size,
+        before.st_mtime_ns,
+        before.st_ctime_ns,
+    )
+    after_state = (
+        after.st_dev,
+        after.st_ino,
+        after.st_size,
+        after.st_mtime_ns,
+        after.st_ctime_ns,
+    )
+    if before_state != after_state or byte_count != after.st_size:
+        raise RawInputProvenanceError(
+            f"raw input changed while being digested: {path}"
+        )
+
+    return {
+        "sha256": digest.hexdigest(),
+        "bytes": int(byte_count),
+        "source_dev": int(after.st_dev),
+        "source_ino": int(after.st_ino),
+        "source_nlink": int(after.st_nlink),
+        "source_mtime_ns": int(after.st_mtime_ns),
+        "source_ctime_ns": int(after.st_ctime_ns),
+    }
+
+
 def collect_raw_input_digests(
     used_runs: list[int], raw_dir: Path | None = None
 ) -> tuple[list[dict[str, object]], list[int]]:
@@ -58,22 +138,24 @@ def collect_raw_input_digests(
     The returned digest list is never truncated for presentation. A provenance
     consumer must be able to verify every available input represented by the
     accompanying count rather than receiving a sample under a full-manifest
-    field name.
+    field name. Every available row binds hash and byte count to one opened
+    descriptor through :func:`digest_raw_input`.
     """
     root = RAW_DIR if raw_dir is None else raw_dir
     digests: list[dict[str, object]] = []
     missing_runs: list[int] = []
     for run in used_runs:
         path = root / f"hrdb_run_{run:04d}.root"
-        if not path.exists():
+        try:
+            digest_record = digest_raw_input(path)
+        except FileNotFoundError:
             missing_runs.append(int(run))
             continue
         digests.append(
             {
                 "run": int(run),
                 "file": str(path),
-                "sha256": sha256_file(path),
-                "bytes": path.stat().st_size,
+                **digest_record,
             }
         )
     return digests, missing_runs
@@ -111,6 +193,11 @@ def data_provenance():
         "raw_dir": str(RAW_DIR),
         "nsamp_per_channel": NSAMP,
         "layout": "channel-major (8,16); verified by exact baseline/amplitude match",
+        "raw_input_digest_schema": RAW_INPUT_DIGEST_SCHEMA,
+        "raw_input_digest_contract": (
+            "sha256 and bytes come from one O_NOFOLLOW descriptor; "
+            "fstat identity/size/mtime/ctime must remain stable during read"
+        ),
     }
     if rebuilt is not None:
         rebuilt_keys = set(zip(rebuilt.run, rebuilt.eventno, rebuilt.stave))

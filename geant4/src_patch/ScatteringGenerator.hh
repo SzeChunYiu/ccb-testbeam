@@ -18,7 +18,7 @@
 // * This  code  implementation is the result of  the  scientific and *
 // * technical work of the GEANT4 collaboration.                      *
 // * By using,  copying,  modifying or  distributing the software (or *
-// * any work based  on the software)  you  agree to acknowledge its *
+// * any work based  on the software)  you  agree  to acknowledge its *
 // * use  in  resulting  scientific  publications,  and indicate your *
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
@@ -34,10 +34,9 @@
 #define ScatteringGenerator_h 1
 
 #include "G4VPrimaryGenerator.hh"
+#include "G4String.hh"
 #include "G4ParticleDefinition.hh"
 #include "G4PrimaryParticle.hh"
-
-#include <vector>
 
 class G4Event;
 class G4GenericMessenger;
@@ -46,6 +45,14 @@ class G4GenericMessenger;
 
 class ScatteringGenerator : public G4VPrimaryGenerator
 {
+  public:
+    /// Per-instance source readiness states.
+    enum SourceReadiness {
+      UNINITIALIZED,         ///< Constructor ran; no source files loaded yet.
+      UNCONFIGURED_UNIFORM,  ///< fCSFile=="null"; uniform theta_cm is the explicit mode.
+      CONFIGURED_READY,      ///< All configured sources validated and usable.
+      FATAL                  ///< Configured source load/validation failed; no event generation.
+    };
   public:
     ScatteringGenerator();    
    ~ScatteringGenerator();
@@ -59,24 +66,21 @@ class ScatteringGenerator : public G4VPrimaryGenerator
 	G4ThreeVector GetParticleMomentumDirection2(){return particle2->GetMomentumDirection();}
 	G4double GetParticleEnergy1(){return particle1->GetKineticEnergy();}
 	G4double GetParticleEnergy2(){return particle2->GetKineticEnergy();}
-	G4String GetSourceReadinessMode() const;
+	SourceReadiness GetSourceReadiness() const { return fSourceReadiness; }
+	G4String GetCSFileDigest() const { return fCSFileDigest; }
+	G4String GetDEdxFileDigest() const { return fDEdxFileDigest; }
   private:
-	enum class SourceState {
-		UNINITIALIZED,
-		UNCONFIGURED_UNIFORM,
-		CONFIGURED_READY,
-		FATAL
-	};
 	void DefineCommands();
-	void EnsureSourceReady();
-	void FatalSourceError(const G4String&, const G4String&);
-	void LoadFiles();
-	void LoadELossTable();
-	void LoadCrossSection();
+	bool LoadELossTable(std::vector<G4double>&, std::vector<G4double>&, G4String&);
+	bool LoadCrossSection(std::vector<G4double>&, std::vector<G4double>&, G4String&);
+	bool BuildSigmaCDF(const std::vector<G4double>&, const std::vector<G4double>&,
+	                   std::vector<G4double>&, std::vector<G4double>&, std::vector<G4double>&);
 	G4double EvalELoss(G4double);
 	G4double EvalWeight(G4double);
 	G4double SampleThetaCM();
-	void BuildSigmaCDF();
+	void EnsureSourceReady();
+	void EnsureFilesLoaded();
+	G4String FileSha256(const G4String&);
 	G4double BeamEnergy(G4double);
     G4GenericMessenger* fMessenger;
 	G4ThreeVector position; 
@@ -86,10 +90,10 @@ class ScatteringGenerator : public G4VPrimaryGenerator
 	G4double fTgtThickness;
 	G4double fBeamspot;
 	G4String fDEdxFile, fCSFile;
-	G4String fLoadedDEdxFile, fLoadedCSFile;
-	G4bool haveWeights;
-	SourceState fSourceState;
 	std::vector<G4double> Ene, dEdx;
+	SourceReadiness fSourceReadiness;
+	G4String fCSFileDigest;
+	G4String fDEdxFileDigest;
 	std::vector<G4double> ang, sigma;
 	std::vector<G4double> cdfTheta, cdfVal, cdfPdf; // exact inverse-CDF node state
 };

@@ -7,15 +7,20 @@ import argparse
 import csv
 import hashlib
 import json
+import math
 import re
 import sys
 from pathlib import Path
 from typing import Any, NamedTuple
 
-VERSION = "1.0.0"
+VERSION = "1.1.0"
 EXPECTED_LEDGER_COLUMNS = 43
 BIRKS_TOKEN = "birks"
-PUBLIC_NUMERIC_RE = re.compile(r"(?<![0-9.])0\.0156\s*cm/MeV", re.IGNORECASE)
+BIRKS_VALUE_RE = re.compile(
+    r"(?<![0-9.])(?P<value>[0-9]+(?:\.[0-9]+)?)\s*"
+    r"(?P<unit>cm|mm)\s*/\s*MeV",
+    re.IGNORECASE,
+)
 CANONICAL_STATUSES = {
     "VALIDATED",
     "DONE_DATA_ONLY",
@@ -55,6 +60,12 @@ class ParsedLedger(NamedTuple):
     rows: list[dict[str, str]]
     widths: dict[str, int]
     header: list[str]
+
+
+class BirksValue(NamedTuple):
+    raw_value: float
+    raw_unit: str
+    cm_per_mev: float
 
 
 def _read_utf8_snapshot(path: Path) -> Snapshot:
@@ -167,16 +178,30 @@ def _extract_statuses(line: str) -> list[str]:
     return list(dict.fromkeys(result))
 
 
+def _parse_birks_values(text: str) -> list[BirksValue]:
+    values: list[BirksValue] = []
+    for match in BIRKS_VALUE_RE.finditer(text):
+        raw_value = float(match.group("value"))
+        raw_unit = match.group("unit").casefold()
+        cm_per_mev = raw_value if raw_unit == "cm" else raw_value / 10.0
+        values.append(BirksValue(raw_value, raw_unit, cm_per_mev))
+    return values
+
+
 def _public_birks_lines(text: str) -> list[dict[str, Any]]:
     hits: list[dict[str, Any]] = []
     for number, line in enumerate(text.splitlines(), start=1):
-        if BIRKS_TOKEN not in line.casefold() or not PUBLIC_NUMERIC_RE.search(line):
+        if BIRKS_TOKEN not in line.casefold():
+            continue
+        values = _parse_birks_values(line)
+        if not values:
             continue
         hits.append(
             {
                 "line": number,
                 "text": line.strip(),
                 "statuses": _extract_statuses(line),
+                "values_cm_per_mev": [value.cm_per_mev for value in values],
                 "cells": _markdown_cells(line),
             }
         )
@@ -189,8 +214,24 @@ def _source_claim_rows(rows: list[dict[str, str]]) -> list[dict[str, str]]:
         for row in rows
         if BIRKS_TOKEN in row["claim"].casefold()
         or BIRKS_TOKEN in row["headline"].casefold()
-        or PUBLIC_NUMERIC_RE.search(row["headline"])
     ]
+
+
+def _ledger_value_cm_per_mev(row: dict[str, str]) -> float | None:
+    try:
+        value = float(row["current_value"])
+    except ValueError:
+        return None
+    unit = row["unit"].casefold().replace(" ", "")
+    if unit == "cm/mev":
+        return value
+    if unit == "mm/mev":
+        return value / 10.0
+    return None
+
+
+def _same_value(left: float, right: float) -> bool:
+    return math.isclose(left, right, rel_tol=1e-12, abs_tol=1e-15)
 
 
 def _append_public_issues(
@@ -199,6 +240,7 @@ def _append_public_issues(
     text: str,
     hits: list[dict[str, Any]],
     canonical_row: dict[str, str] | None,
+    canonical_value: float | None,
     source_rows: list[dict[str, str]],
     issues: list[dict[str, Any]],
 ) -> None:
@@ -231,6 +273,19 @@ def _append_public_issues(
     ledger_status = canonical_row["status"]
     for hit in hits:
         statuses = hit["statuses"]
+        if canonical_value is not None and any(
+            not _same_value(value, canonical_value)
+            for value in hit["values_cm_per_mev"]
+        ):
+            issues.append(
+                {
+                    "code": "PUBLIC_BIRKS_VALUE_MISMATCH",
+                    "document": name,
+                    "line": hit["line"],
+                    "public_values_cm_per_mev": hit["values_cm_per_mev"],
+                    "ledger_value_cm_per_mev": canonical_value,
+                }
+            )
         if "PASS" in statuses and ledger_status != "VALIDATED":
             issues.append(
                 {
@@ -267,7 +322,7 @@ def _validate_canonical_row(
     row: dict[str, str],
     source_rows: list[dict[str, str]],
     issues: list[dict[str, Any]],
-) -> None:
+) -> float | None:
     required_nonblank = (
         "current_value",
         "unit",
@@ -295,32 +350,19 @@ def _validate_canonical_row(
                 "status": row["status"],
             }
         )
-    try:
-        value = float(row["current_value"])
-    except ValueError:
+    canonical_value = _ledger_value_cm_per_mev(row)
+    if canonical_value is None or not math.isfinite(canonical_value) or canonical_value < 0:
         issues.append(
             {
-                "code": "BIRKS_LEDGER_VALUE_NOT_NUMERIC",
+                "code": "BIRKS_LEDGER_VALUE_UNIT_INVALID",
                 "claim_id": row["claim_id"],
                 "value": row["current_value"],
+                "unit": row["unit"],
             }
         )
-    else:
-        if abs(value - 0.0156) > 1e-12 or row["unit"].casefold() != "cm/mev":
-            issues.append(
-                {
-                    "code": "BIRKS_LEDGER_VALUE_UNIT_MISMATCH",
-                    "claim_id": row["claim_id"],
-                    "value": row["current_value"],
-                    "unit": row["unit"],
-                }
-            )
-    matching_source = [
-        source
-        for source in source_rows
-        if source["claim_id"] == row["claim_id"]
-        or PUBLIC_NUMERIC_RE.search(source["headline"])
-    ]
+        canonical_value = None
+
+    matching_source = [source for source in source_rows if source["claim_id"] == row["claim_id"]]
     if len(matching_source) != 1:
         issues.append(
             {
@@ -329,7 +371,7 @@ def _validate_canonical_row(
                 "matches": len(matching_source),
             }
         )
-        return
+        return canonical_value
     source = matching_source[0]
     if source["status"] != row["status"]:
         issues.append(
@@ -340,14 +382,20 @@ def _validate_canonical_row(
                 "ledger_status": row["status"],
             }
         )
-    if not PUBLIC_NUMERIC_RE.search(source["headline"]):
+    source_values = _parse_birks_values(source["headline"])
+    if canonical_value is not None and (
+        len(source_values) != 1
+        or not _same_value(source_values[0].cm_per_mev, canonical_value)
+    ):
         issues.append(
             {
                 "code": "BIRKS_SOURCE_TABLE_VALUE_MISMATCH",
                 "claim_id": row["claim_id"],
                 "headline": source["headline"],
+                "ledger_value_cm_per_mev": canonical_value,
             }
         )
+    return canonical_value
 
 
 def audit(
@@ -374,6 +422,10 @@ def audit(
     source_rows = _source_claim_rows(source_rows_all)
 
     issues: list[dict[str, Any]] = []
+    canonical_value = None
+    if canonical_row is not None:
+        canonical_value = _validate_canonical_row(canonical_row, source_rows, issues)
+
     public_hits: dict[str, list[dict[str, Any]]] = {}
     for name, snapshot in docs.items():
         hits = _public_birks_lines(snapshot.text)
@@ -383,11 +435,10 @@ def audit(
             text=snapshot.text,
             hits=hits,
             canonical_row=canonical_row,
+            canonical_value=canonical_value,
             source_rows=source_rows,
             issues=issues,
         )
-    if canonical_row is not None:
-        _validate_canonical_row(canonical_row, source_rows, issues)
 
     return {
         "validator": Path(__file__).name,
@@ -399,10 +450,16 @@ def audit(
         "clusterE_claims_table": source_snapshot.provenance,
         "canonical_birks_claim_id": canonical_row["claim_id"] if canonical_row else None,
         "canonical_birks_status": canonical_row["status"] if canonical_row else None,
+        "canonical_birks_value_cm_per_mev": canonical_value,
         "source_birks_rows": [row.get("claim_id", "") for row in source_rows],
         "public_occurrences": {
             name: [
-                {"line": hit["line"], "text": hit["text"], "statuses": hit["statuses"]}
+                {
+                    "line": hit["line"],
+                    "text": hit["text"],
+                    "statuses": hit["statuses"],
+                    "values_cm_per_mev": hit["values_cm_per_mev"],
+                }
                 for hit in hits
             ]
             for name, hits in public_hits.items()

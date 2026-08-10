@@ -1,6 +1,6 @@
 knob,channel,target,unit,npoints,rationale
 pde_scale,cli,--pde-scale,x PDE table,5,"+/-40% spans the OV range + device spread (S13360-3050CS ~25-50% peak)."
-coupling,cli,--coupling,frac,5,"Fibre-end->sensor coupling in [0,1]; 0.5 = poor air gap, 1.0 = contact."
+collection_efficiency,cli,--collection-efficiency,frac,5,"Post-transport collection efficiency in [0,1]; 0.5 = poor, 1.0 = ideal."
 recovery_time,env,CCB_SIPM_RECOVERY_TIME_NS,ns,5,"Microcell RC recovery; S13360-3050CS tens of ns, swept 5-100 ns."
 dark_count,env,CCB_SIPM_DARK_COUNT_RATE_HZ,Hz,5,"DCR: 0 (cold) to 2 MHz (hot/irradiated); nominal ~0.5 MHz/cell model."
 crosstalk,env,CCB_SIPM_CROSSTALK_PROB,prob,5,"Prompt crosstalk; S13360-3050CS spec ~3% typ, swept 0-15%."

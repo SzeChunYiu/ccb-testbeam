@@ -158,4 +158,8 @@ def test_source_sidecar_does_not_invent_systematic_covariance() -> None:
     assert uncertainty["total_systematic_fraction_bound"] == "<0.045"
     assert uncertainty["point_to_point_source_section"] == "IV D"
     assert uncertainty["published_row_covariance_matrix"] is False
-    assert "Do not" in uncertainty["analysis_boundary"]
+    boundary = uncertainty["analysis_boundary"].lower()
+    assert "does not" in boundary
+    assert "independent gaussian" in boundary
+    assert "covariance" in boundary
+    assert "explicit model choices" in boundary

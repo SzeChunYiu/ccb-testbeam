@@ -157,6 +157,34 @@ def test_main_rejects_bad_selector_before_any_producer_side_effect(
     assert calls == {name: 0 for name in calls}
 
 
+def test_main_canonical_selector_reaches_next_execution_boundary(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """The checked-in selector semantics pass preflight without needing ROOT."""
+    s00 = _load_s00_module()
+    canonical_config = {
+        "baseline_samples": [0, 1, 2, 3],
+        "amplitude_cut_adc": 1000.0,
+    }
+
+    class ReachedAmplitudeResolution(RuntimeError):
+        pass
+
+    def reached_boundary(*args, **kwargs):
+        raise ReachedAmplitudeResolution
+
+    monkeypatch.setattr(s00, "load_config", lambda _path: canonical_config)
+    monkeypatch.setattr(s00, "resolve_amplitude_cut", reached_boundary)
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [str(S00_SCRIPT), "--config", "ignored.yaml"],
+    )
+
+    with pytest.raises(ReachedAmplitudeResolution):
+        s00.main()
+
+
 def test_main_source_binds_selector_identity_into_manifest() -> None:
     """The producer must merge the exact selector fragment into model_identity."""
     source = S00_SCRIPT.read_text(encoding="utf-8")

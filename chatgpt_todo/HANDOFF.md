@@ -1,30 +1,36 @@
 # Latest Handoff
 
-## Completed atom
+## Active atom
 
-- **Task:** `ARU-RAW-UPROOT-SAME-STREAM-001`
-- **Validated head:** `16a2273e5b1a3c043ddc604264a5a68c1406c1ec`
-- **CI:** MC Validation run `31385123680` completed successfully; checkout, install, lint, unit tests and enforcement all passed.
-- **Merged:** PR #1160 -> `f023b8f01272f996e296475b0068095f48b27acf` on protected `main`.
-- **Invariant now implemented in canonical raw timing:** `H(B_consumed) = H(B_manifest) = row.sha256`, with descriptor identity stable through verification and the full Uproot iteration lifetime.
+- **Task:** `ARU-DATAMC-ECDF-001` / issue #1051
+- **Branch / PR:** `fix/data-mc-right-continuous-ecdf` / #1162
+- **Base main:** `4c8cebefe077f081f182eafd34d6b20e8d4ac067`
+- **State:** implementation + adversarial tests complete on branch; exact-head MC Validation CI still required after the final handoff commits.
 
-`src/ccb_mc_validation/raw_uproot_authorization.py` supplies strict unique run indexing, required-run completeness, and `open_verified_uproot()`. `scripts/studies/data_side_real_beam.py::timing()` now consumes the provenance record, requires one manifest row for every timing-required run, removes silent missing-path skip/direct `uproot.open(path)`, and keeps every ROOT iteration inside the verified stream context. Tiny ROOT controls validate real Uproot random access, file-like-not-path input, pre-open replacement rejection, in-lifetime replacement detection, missing/duplicate/malformed run rows, and canonical timing integration.
+## Local scientific/software result
 
-## Four final review votes
+The observed DATA<->MC EDF discrepancy now implements the declared weighted empirical distribution
 
-- **DAQ / reconstruction lead — ACCEPT local same-bytes integration.** Physical pedestal validity, timing estimator interpretation, and 8x16/8x18 lineage remain unresolved.
-- **Adversarial mechanism reviewer — ACCEPT bounded ordinary-filesystem contract.** Future pathname fallback is non-authorizing; privileged metadata-forging writers and distributed-filesystem semantics are outside the measured threat model.
-- **Independent validation/statistics reviewer — ACCEPT deterministic software closure.** Fixture tests are not detector-performance validation, and the production-size verification cost remains unmeasured.
-- **Claims/provenance reviewer — BLOCK #993/CL-001 promotion.** #952/#953, event identity, mapping/polarity, real manifest regeneration and cross-atom closure remain open.
+`F_w(x) = sum_i w_i I(X_i <= x) / sum_i w_i`
 
-## Unresolved children
+as a right-continuous step function. Equal-valued rows are collapsed into one support point carrying their total weight, arbitrary evaluation uses `searchsorted(..., side="right")`, and `D` is evaluated exactly on the union of DATA and MC support points. No `np.interp` path remains in the ECDF/KS-D implementation.
 
-The raw-side implementation is present on remote main, but the real data host is still required to regenerate the complete manifest, benchmark the extra verification pass, and rerun canonical real-beam outputs. #1149 stays open for its original S00 selected-table read contract/scale benchmark. #993/#952/#953 remain open; same-bytes authorization does not identify the historical 16<->18 transformation.
+The regression suite covers the original two-point midpoint falsifier, exact tie aggregation, an all-tied 7000-ADC saturation spike, direct indicator-sum equality, weighted-row splitting/merging invariance, tie permutation invariance, equal-weight agreement with `scipy.stats.ks_2samp(...).statistic`, quantized/saturated support, and invalid empirical-measure inputs.
 
-## Next highest-value executable atom
+## Four role-separated votes
 
-Because immutable beam bytes/data-host benchmarking are unavailable in this runtime, move to the independent code-ready P0 statistical atom **#1051 / `ARU-DATAMC-ECDF-001`** rather than stalling. `scripts/compare_data_mc.py` currently represents a weighted empirical CDF with linear interpolation. The next session should implement the right-continuous weighted step CDF
+- **Statistical-method lead — ACCEPT local observed-statistic repair / pending exact-head CI.** The implemented measure has the required right-continuous step semantics and dimensional/unit contract is unchanged: input observable values retain their source units, weights are nonnegative dimensionless measure masses, and output `D` is dimensionless.
+- **Adversarial mechanism reviewer — ACCEPT local D contract / BLOCK p-value inference.** H3 piecewise-linear interpolation is eliminated; row representation and tie order no longer define independent hypotheses. The existing unit-weight permutation null remains scientifically invalid for weighted MC.
+- **Independent statistics/validation reviewer — ACCEPT deterministic/oracle tests / pending CI.** Direct indicator sums and SciPy's ordinary equal-weight KS statistic are independent checks of `D`; they do not validate a weighted null or p-value.
+- **Claims/provenance reviewer — REVISE downstream products / no claim promotion.** Output schema is advanced to v5 and tags the legacy numerical p-value `NONAUTHORISING_BLOCKED_ISSUE_1049`; plots label it blocked. Existing real-data comparison artifacts must be regenerated before any new D is quoted.
 
-`F_w(x) = sum_i w_i I(X_i <= x) / sum_i w_i`,
+## Surviving dependencies / child atoms
 
-collapse tied support exactly, prove invariance under weighted-row splitting/merging, cross-check equal-weight KS-D against an independent oracle, and keep p-value/null calibration explicitly blocked under #1049 until that separate atom is repaired.
+- #1049 remains the P0 owner for the weighted null hypothesis, resampling/calibration law, nuisance-scale treatment and type-I validation.
+- #880/#1022 remain the source-of-truth atoms for generator/analysis weight semantics.
+- #1027 remains the detector/DAQ atom for the physical meaning of ADC saturation/ties; this branch only proves the statistical estimator handles exact ties correctly.
+- No beam ROOT bytes or campaign MC artifacts are available in this runtime, so real DATA<->MC D values are not regenerated and no detector-performance result changes.
+
+## Merge gate / next action
+
+Inspect exact-head MC Validation for the final #1162 head. If it passes on current base, merge #1162 and close only #1051. Do **not** close #1049 or treat the retained legacy p-value as a goodness-of-fit probability. After merge, the next highest-value code-ready atom is #1049 if weight semantics are sufficiently resolved; otherwise return to the highest-ready dependency among #880/#1022 rather than inventing a calibration law.

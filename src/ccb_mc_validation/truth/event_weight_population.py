@@ -16,14 +16,14 @@ from __future__ import annotations
 import math
 from dataclasses import asdict, dataclass
 from numbers import Real
-from typing import Any
+from typing import Any, Iterable
 
 import numpy as np
 
 from ccb_mc_validation.exceptions import DataContractError
 
-EVENT_WEIGHT_POPULATION_POLICY_ID = "nonnegative_event_measure_v1"
-SUMMATION_METHOD_ID = "python_math_fsum_binary64_v1"
+EVENT_WEIGHT_POPULATION_POLICY_ID = "nonnegative_event_measure_v2"
+SUMMATION_METHOD_ID = "python_math_fsum_max_scaled_binary64_v2"
 STATISTICAL_UNIT = "generator_event"
 
 
@@ -37,8 +37,11 @@ class EventWeightPopulationSummary:
     n_rows: int
     n_positive: int
     n_zero: int
-    sum_w: float
-    sum_w2: float
+    weight_scale: float | None
+    sum_w_over_scale: float | None
+    sum_w2_over_scale2: float | None
+    sum_w: float | None
+    sum_w2: float | None
     effective_sample_size: float | None
     effective_sample_fraction: float | None
     max_weight_fraction: float | None
@@ -113,6 +116,18 @@ def _as_weight_vector(weights: Any, *, expected_length: int | None) -> np.ndarra
     return np.array(array, dtype=np.float64, copy=True)
 
 
+def _positive_fsum_or_none(values: Iterable[float]) -> float | None:
+    """Return a positive finite raw-unit sum, or ``None`` if binary64 cannot."""
+
+    try:
+        total = math.fsum(values)
+    except OverflowError:
+        return None
+    if not math.isfinite(total) or total <= 0.0:
+        return None
+    return float(total)
+
+
 def summarize_event_weight_population(
     weights: Any,
     *,
@@ -125,11 +140,19 @@ def summarize_event_weight_population(
     returned as ``None``. A non-empty population must contain positive total
     mass; an all-zero population fails closed.
 
-    ``math.fsum`` is used for both first and second weight moments so recorded
-    provenance does not depend on ordinary left-to-right or NumPy reduction
-    error. ESS is evaluated as ``(sum_w / sqrt(sum_w2))**2`` to avoid an
-    avoidable overflow from squaring ``sum_w``.
+    The normalized measure and ESS are invariant under a common positive
+    rescaling of all weights. They are therefore evaluated after dividing by
+    the maximum positive weight. ``math.fsum`` is then applied to scaled first
+    and second moments whose terms lie in [0, 1], avoiding avoidable
+    overflow/underflow from a mere change of weight units or normalization.
+
+    Raw-unit ``sum_w`` and ``sum_w2`` are retained as convenience provenance
+    when each has a positive finite binary64 representation. If a valid measure
+    has a raw moment outside binary64 range, that convenience field is ``None``;
+    the authoritative scale-normalized triplet
+    ``(weight_scale, sum_w_over_scale, sum_w2_over_scale2)`` remains available.
     """
+
     array = _as_weight_vector(weights, expected_length=expected_length)
     n_rows = int(array.size)
     if n_rows == 0:
@@ -140,6 +163,9 @@ def summarize_event_weight_population(
             n_rows=0,
             n_positive=0,
             n_zero=0,
+            weight_scale=None,
+            sum_w_over_scale=None,
+            sum_w2_over_scale2=None,
             sum_w=0.0,
             sum_w2=0.0,
             effective_sample_size=None,
@@ -148,28 +174,25 @@ def summarize_event_weight_population(
             measure_defined=False,
         )
 
-    try:
-        sum_w = math.fsum(float(value) for value in array)
-    except OverflowError as exc:
+    weight_scale = float(np.max(array))
+    if not math.isfinite(weight_scale) or weight_scale <= 0.0:
         raise DataContractError(
-            "non-empty event_weight population has non-finite total mass"
-        ) from exc
-    try:
-        sum_w2 = math.fsum(float(value) * float(value) for value in array)
-    except OverflowError as exc:
-        raise DataContractError(
-            "non-empty event_weight population has non-finite squared-weight sum"
-        ) from exc
-    if not math.isfinite(sum_w) or sum_w <= 0.0:
-        raise DataContractError(
-            "non-empty event_weight population has non-positive or non-finite total mass"
-        )
-    if not math.isfinite(sum_w2) or sum_w2 <= 0.0:
-        raise DataContractError(
-            "non-empty event_weight population has non-positive or non-finite squared-weight sum"
+            "non-empty event_weight population has no positive finite mass"
         )
 
-    ess = (sum_w / math.sqrt(sum_w2)) ** 2
+    scaled = array / weight_scale
+    sum_w_over_scale = math.fsum(float(value) for value in scaled)
+    sum_w2_over_scale2 = math.fsum(
+        float(value) * float(value) for value in scaled
+    )
+    if not math.isfinite(sum_w_over_scale) or sum_w_over_scale <= 0.0:
+        raise DataContractError("invalid scale-normalized event_weight total mass")
+    if not math.isfinite(sum_w2_over_scale2) or sum_w2_over_scale2 <= 0.0:
+        raise DataContractError(
+            "invalid scale-normalized event_weight squared-weight sum"
+        )
+
+    ess = sum_w_over_scale * sum_w_over_scale / sum_w2_over_scale2
     tolerance = 64.0 * np.finfo(np.float64).eps * max(1, n_rows)
     if not math.isfinite(ess) or ess < 1.0 - tolerance or ess > n_rows + tolerance:
         raise DataContractError(
@@ -177,8 +200,7 @@ def summarize_event_weight_population(
         )
     ess = min(float(n_rows), max(1.0, float(ess)))
 
-    max_weight = float(np.max(array))
-    max_weight_fraction = max_weight / sum_w
+    max_weight_fraction = 1.0 / sum_w_over_scale
     if (
         not math.isfinite(max_weight_fraction)
         or max_weight_fraction <= 0.0
@@ -189,6 +211,11 @@ def summarize_event_weight_population(
         )
     max_weight_fraction = min(1.0, float(max_weight_fraction))
 
+    sum_w = _positive_fsum_or_none(float(value) for value in array)
+    sum_w2 = _positive_fsum_or_none(
+        float(value) * float(value) for value in array
+    )
+
     n_positive = int(np.count_nonzero(array > 0.0))
     n_zero = int(n_rows - n_positive)
     return EventWeightPopulationSummary(
@@ -198,8 +225,11 @@ def summarize_event_weight_population(
         n_rows=n_rows,
         n_positive=n_positive,
         n_zero=n_zero,
-        sum_w=float(sum_w),
-        sum_w2=float(sum_w2),
+        weight_scale=weight_scale,
+        sum_w_over_scale=float(sum_w_over_scale),
+        sum_w2_over_scale2=float(sum_w2_over_scale2),
+        sum_w=sum_w,
+        sum_w2=sum_w2,
         effective_sample_size=ess,
         effective_sample_fraction=float(ess / n_rows),
         max_weight_fraction=max_weight_fraction,

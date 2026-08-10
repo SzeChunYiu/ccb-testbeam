@@ -73,19 +73,22 @@ A charged-only sum is retained separately so trigger-charge semantics cannot sil
 - `src/ccb_mc_validation/truth/event_stave.py` aggregates all-particle and charged-only B-stave EDep, validates event identity/topology/matrices, and enforces one nonnegative finite first-primary `PrimaryWeight` per selected generator event.
 - It reuses the existing content-bound `stable_event_id`/`build_event_rows` contract and stores Sample-I membership inside the Sample-II row universe, preserving `Sample I subset Sample II` without physical row duplication.
 - Source SHA-256 and byte count are measured from one opened regular-file descriptor; Uproot receives a duplicate seekable stream from that same open file and descriptor metadata must remain stable through consumer exit.
-- `scripts/mc01_event_stave_truth.py` writes `mc_event_stave_edep_v1.npz` and a manifest only after source consumption succeeds. The manifest records source identity, population scope, weights/ESS and the missing detector-response stages.
+- `scripts/mc01_event_stave_truth.py` creates `mc_event_stave_edep_v1.npz` plus a manifest inside a private staging directory. Product SHA-256 is bound into the manifest; both files are fsynced; one directory rename publishes an immutable `generations/<generation_id>/` under `flock`. Existing generations are never overwritten and there is no mutable latest alias.
+- Generation identity binds source SHA, tree/coincidence/weighting/population settings, exact executing source hashes for the producer/constants/event-builder/event-stave/PDG/trigger modules, and Python/NumPy/Uproot versions.
 - The new product has no `EDEP_CAP`; the legacy silent `600000` hit-prefix retention cannot truncate its event/stave arrays. `--max-events` is explicit and marked `PREFIX_DIAGNOSTIC`.
 
 ## Executed falsifiers
 
-The new tests cover exact step-splitting energy invariance, multi-record event aggregation, neutral-vs-charged deposition, A-arm exclusion, malformed energy/layer input, invalid event weights, duplicate event IDs, broken Sample-I/Sample-II nesting, charged>total corruption, exact opened-source hashing, in-place source mutation, and a mocked Uproot file-like integration. A private isolated aggregation harness using minimal import stubs returned 16 passed with the builder-integration test excluded; only repository CI may authorize merge.
+Tests cover exact step-splitting energy invariance, multi-record event aggregation, neutral-vs-charged deposition, A-arm exclusion, malformed energy/layer input, invalid event weights, duplicate event IDs, broken Sample-I/Sample-II nesting, charged>total corruption, exact opened-source hashing, in-place source mutation, mocked Uproot file-like integration, duplicate immutable-generation rejection, and injected product-write failure leaving no visible generation. A private isolated aggregation harness using minimal import stubs returned 16 passed with the builder-integration test excluded; only repository CI may authorize merge.
 
 The neutral-deposit fixture is intentionally discriminating: a selected B0 event with proton 2 MeV plus neutron 3 MeV has all-particle `E_dep=5 MeV` and charged-only diagnostic `2 MeV`. Trigger-charge and detector deposited-energy scope are not the same contract.
+
+The first publication implementation is preserved as a rejected child mechanism: independently replacing the NPZ and manifest allowed a crash window with mixed generations. Reordering those two commits is equivalent and was rejected. The current immutable-generation directory transaction removes that mixed-pair window for this diagnostic producer.
 
 ## Four role-separated review disposition
 
 - **Detector / Geant4 response lead — ACCEPT H3 / BLOCK detector closure.** Event/stave EDep is the correct invariant truth intermediate, but quenching through digitization remains absent.
-- **Adversarial mechanism reviewer — ACCEPT bounded contract / REVISE production-scale execution.** Hit-row inference is representation-dependent; source and identity contracts are now fail-closed. Real ROOT scale/memory and the pre-existing truncated event-ID design remain checks.
+- **Adversarial mechanism reviewer — ACCEPT bounded aggregation and immutable-generation publication / REVISE production-scale execution.** Hit-row inference is representation-dependent; source and artifact identity now fail closed. Real ROOT scale/memory and the pre-existing truncated event-ID design remain checks.
 - **Statistics / validation reviewer — ACCEPT event statistical unit / BLOCK authorising p-value.** One weight per event and retained nested-trigger membership repair necessary topology, not null calibration.
 - **Claims / provenance reviewer — ACCEPT nonauthorising provenance / BLOCK promotion.** A scalar MeV-to-ADC gain cannot substitute for quenching, optical/WLS, SiPM, electronics, sampling and identical reconstruction.
 
@@ -95,6 +98,6 @@ The neutral-deposit fixture is intentionally discriminating: a selected B0 event
 
 ## Next highest-value work
 
-First require exact-head/current-base MC Validation CI on #1169. If it passes, merge without bypassing protection and execute the producer on the immutable production MC source, recording source/output SHA-256, event counts, Sample-I/Sample-II membership counts, sum of weights, sum of squared weights, ESS, runtime and peak memory. Compare legacy H1 charged-hit and H3 event/stave spectra only as a mechanism diagnostic.
+First require exact-head/current-base MC Validation CI on the final #1169 head. If it passes, merge without bypassing protection and execute the producer on the immutable production MC source, recording source/output SHA-256, event counts, Sample-I/Sample-II membership counts, sum of weights, sum of squared weights, ESS, runtime and peak memory. Compare legacy H1 charged-hit and H3 event/stave spectra only as a mechanism diagnostic.
 
 Then implement H4: stepwise quenching/visible energy at the Geant4-step level before event aggregation. The next discriminating controls are step subdivision invariance under the chosen Birks formulation, stopping-power/local-dE/dx definition, material-specific quenching parameters and secondary deposition semantics. H5 still requires optical/WLS transport, direct fibre light, SiPM PDE/microcells/noise/recovery, electronics impulse/saturation, digitizer phase/aperture and identical DATA-like reconstruction before any detector-level comparison or #1049 p-value can become authorising.

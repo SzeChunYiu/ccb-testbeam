@@ -9,7 +9,7 @@
 - **Validated merge this session:** PR #1145 -> `ef4f3cbabe010285558a425fc3e92d525b1803a2` after exact-head MC Validation CI run 919 = `success`.
 - **Issue:** #1147
 - **Parent:** #1110
-- **Branch:** `fix/s00-publication-content-identity`
+- **Branch / PR:** `fix/s00-publication-content-identity` / #1148
 - **Status:** `CONTENT_IDENTITY_IMPLEMENTED_PENDING_EXACT_HEAD_CI`
 
 ## Selected atom
@@ -60,13 +60,22 @@ Survivor: per-artifact SHA-256 binding in the pointer plus physical-containment 
 6. Hash and fsync every authoritative artifact while still in staging.
 7. Revalidate containment and SHA-256 after the staging->generation move and before pointer commit.
 8. Make `resolve_artifact()` recompute SHA-256 and fail closed on content mismatch.
-9. Added hostile tests for post-publication manifest/table mutation, external symlink artifact, symlinked parent directory, post-publication symlink substitution, missing digest map, malformed digests and digest-key mismatch.
-10. Updated `ACTIVE_TASK.md` and this handoff; immutable ARU archive is created on the same branch.
+9. Added hostile tests for post-publication manifest/table mutation, external symlink artifact, symlinked parent directory, post-publication symlink substitution, missing digest map, malformed digests, digest-key mismatch, and a staging-directory symlink alias.
+10. Updated `ACTIVE_TASK.md`, this handoff, and the immutable ARU archive.
+
+## Audit-the-audit corrections
+
+Two child defects were found while reviewing the first #1148 implementation rather than waiting for CI to expose them:
+
+1. The first physical-path helper changed legacy controlled-error wording for a missing authoritative file. Existing tests separately require `required artifact` during publication and `authoritative artifact missing` during resolution. The controlled error now contains both semantic markers, preserving fail-closed behavior and existing test contracts.
+2. Artifact-component checks alone did not reject the staging directory itself being a symbolic link. `publish_generation()` now rejects a symlink staging root before the same-filesystem parent check, and a dedicated hostile regression verifies that no pointer or generation is created and the external target remains untouched.
+
+Any workflow run for a pre-correction head is stale and must not authorize merge. Only exact-head CI after these corrections is acceptable.
 
 ## Four sequential review passes
 
 - **Filesystem/reconstruction lead — ACCEPT design / pending exact-head CI.** The authority pointer now identifies bytes rather than only a pathname.
-- **Adversarial mechanism reviewer — ACCEPT after symlink and post-move controls / residual direct-bypass risk.** A direct legacy consumer can still bypass verified resolution; that remains #1110 integration work.
+- **Adversarial mechanism reviewer — ACCEPT after artifact + staging symlink and post-move controls / residual direct-bypass risk.** A direct legacy consumer can still bypass verified resolution; that remains #1110 integration work.
 - **Statistics/validation reviewer — ACCEPT deterministic contract / pending CI.** Hash equality and path containment are exact software/provenance assertions; no beam-statistical inference is involved.
 - **Claims/provenance reviewer — BLOCK claim promotion.** CL-001 and downstream users must not be promoted until producer integration emits v2 pointers and consumers use content-verifying resolution.
 
@@ -76,7 +85,7 @@ Python documentation states that `Path.resolve()` makes paths absolute while res
 
 ## Next work
 
-1. Wait for exact-head CI on the #1147 PR; do not merge on stale checks.
+1. Require exact-head CI on PR #1148; do not merge on stale checks.
 2. Then return to #1110 producer integration: report + selected pulse table in one generation, one pointer commit after all P0 gates.
 3. Migrate canonical validators/consumers to `resolve_artifact()` so digest verification cannot be bypassed by mutable legacy paths.
 4. Decide legacy-path compatibility semantics and prove they are aliases, never independent authorities.

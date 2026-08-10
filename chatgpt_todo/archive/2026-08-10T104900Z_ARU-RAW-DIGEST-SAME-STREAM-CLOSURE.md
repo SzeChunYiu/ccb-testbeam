@@ -5,9 +5,10 @@
 - **Task ID:** `ARU-RAW-DIGEST-SAME-STREAM-CLOSURE`
 - **Primary issue:** #1155
 - **Parent:** #993
-- **Related:** #952, #953, CL-001
+- **Related:** #952, #953, #1149, CL-001
 - **Initial remote main:** `7fb2a06596a87cb2dd294ec9d0b149e3575293e5`
 - **Branch:** `fix/raw-input-same-stream-provenance`
+- **PR:** #1157
 - **Evidence type:** deterministic software/provenance validation; no new beam or MC result.
 
 ## Atomic contract
@@ -35,20 +36,20 @@ The stability gate is
 
 and `bytes_read == st_size_after`.
 
-The pathname remains a locator. Content identity is the digest; replacing the pathname after the descriptor is opened must not create a row combining the digest of one object with the size of another.
+The pathname remains a locator, not content identity. Any mutation that changes the descriptor stability tuple during hashing is rejected rather than serialized as an ordinary row.
 
 ## Competing mechanisms and equivalence collapse
 
 - **H1 stable regular-file source:** one descriptor can bind digest, count and source identity. Survives.
-- **H2 pathname replacement between separate hash/stat calls:** current pre-fix design can serialize `H(A)` with `|B|`. Eliminated by one-open stream semantics.
-- **H3 in-place mutation during hashing:** same descriptor can still observe an unstable object; require before/after `fstat` stability and exact byte-count closure. Survives only as a controlled failure state.
-- **H4 final-component symlink/alias:** implicit path following makes source identity ambiguous. Final-component symlinks are rejected with `O_NOFOLLOW`.
+- **H2 pathname replacement between separate hash/stat calls:** pre-fix design can serialize `H(A)` with `|B|`. Eliminated by one-open stream semantics plus stability gate.
+- **H3 in-place mutation during hashing:** same descriptor can observe an unstable object; before/after `fstat` and exact byte-count closure reject the tested append mutation. Survives only as a controlled failure state.
+- **H4 final-component symlink/alias:** implicit final-component following makes source identity ambiguous. Final-component symlinks are rejected with `O_NOFOLLOW`.
 - **H5 reorder `stat(path)` and `hash(path)`:** collapsed with H2; reordering separate pathname observations does not repair the race.
-- **H6 immutable/content-addressed source snapshot:** stronger external model. Not required for row-level same-stream closure, but remains a valid future child if the data-host threat model requires protection beyond ordinary file mutation detection.
+- **H6 immutable/content-addressed source snapshot:** stronger external model. Not required for row-level same-stream closure, but remains the preferred extension if the data-host threat model requires stronger immutable-consumption guarantees.
 
 ## Implementation
 
-`scripts/studies/data_side_real_beam.py` now defines `digest_raw_input()` and `RawInputProvenanceError`.
+`scripts/studies/data_side_real_beam.py` defines `digest_raw_input()` and `RawInputProvenanceError`.
 
 The helper:
 
@@ -57,7 +58,7 @@ The helper:
 3. accepts only regular files;
 4. hashes bounded `os.read()` blocks while counting those exact same bytes;
 5. captures `fstat()` before and after the read;
-6. fails closed when device/inode/size/mtime/ctime changes or the counted bytes differ from final descriptor size;
+6. fails closed when device/inode/size/mtime/ctime changes or counted bytes differ from final descriptor size;
 7. records digest, bytes, device, inode, link count, mtime and ctime;
 8. causes symlink/nonregular/unstable inputs to fail rather than be serialized as ordinary provenance.
 
@@ -65,20 +66,32 @@ The helper:
 
 The provenance payload records schema `same-open-stream-v1` and the stability contract. The complete-list and explicit-missing-run behavior from #1154 is preserved.
 
-## Deterministic falsifiers added
+## Deterministic falsifiers and CI discovery
 
-`tests/test_data_side_rmax_quarantine.py` now contains:
+`tests/test_data_side_rmax_quarantine.py` contains:
 
 - stable known-byte positive controls with exact SHA-256 and byte count;
-- a legacy split-observation counterexample: hash A, replace contents with differently sized B, then stat, proving `H(A)`/`|B|` can coexist under the old pattern;
-- pathname replacement after the repaired descriptor is open: the result remains bound to A's exact bytes and size rather than mixing with replacement B;
-- in-place append during hashing: repaired helper must raise `RawInputProvenanceError`;
+- a legacy split-observation counterexample: hash A, mutate to differently sized B, then stat, proving `H(A)`/`|B|` can coexist under the old pattern;
+- pathname replacement after the repaired descriptor is open;
+- in-place append during hashing;
 - final-component symlink rejection;
 - nonregular input and invalid-block-size rejection;
 - preservation of missing-run ordering and non-truncated manifest behavior;
 - persisted digest-schema identity.
 
-No test result is claimed until GitHub Actions executes the exact PR head.
+### First exact-head CI falsifier
+
+PR #1157 head `fa188b57a94762f10d6ad786c3bd00cdd5f20dc8`, workflow run `31381447250`, job `93432302892`:
+
+- checkout: PASS;
+- dependency install: PASS;
+- ruff: `All checks passed!`;
+- pytest log: `1 failed, 1294 passed, 1 skipped, 8 xfailed, 1 xpassed`;
+- enforcement step: FAIL.
+
+The sole failure was the adversarial path-replacement test. The first test design predicted that replacing the pathname after open would still yield a coherent row for the original descriptor. The implementation instead raised `RawInputProvenanceError` because replacement changes the open inode's metadata-change time on the CI filesystem, so the before/after stability tuple differed.
+
+This is a stronger fail-closed result, not a reason to weaken the implementation. The test was revised to require controlled rejection of path replacement. The failed expectation and correction are intentionally preserved here.
 
 ## Four sequential expert reviews
 
@@ -86,49 +99,49 @@ No test result is claimed until GitHub Actions executes the exact PR head.
 
 **Background:** raw DAQ product identity, file-level provenance, waveform-lineage contracts.
 
-**Evidence inspected:** #1155, merged #1154 producer, current data-side source/tests, #993 parent contract.
+**Evidence inspected:** #1155, merged #1154 producer, current data-side source/tests, #993 parent contract, first #1157 CI artifact.
 
-**Strongest counter-hypothesis:** one-open file hashing is unnecessary if the LUNARC raw directory is immutable. Even if operational immutability is true, it is not encoded by the existing producer and does not justify split pathname observations.
+**Strongest counter-hypothesis:** one-open hashing is unnecessary if the data host guarantees source immutability. Even if operational immutability is true, it is not encoded by the old producer and does not justify split pathname observations.
 
-**Attempted falsifier:** explicit A->B replacement between legacy hash and size observations.
+**Attempted falsifier:** explicit A->B state change between legacy hash and size observations.
 
 **Residual uncertainty:** real data-host immutability policy and exact 33-file source state are unavailable here.
 
 **Vote:** `ACCEPT` row-integrity repair; `BLOCK` 8x16<->8x18 lineage promotion.
 
-### B. Adversarial filesystem reviewer — ACCEPT after hostile controls
+### B. Adversarial filesystem reviewer — ACCEPT after revision
 
 **Background:** POSIX descriptor/path semantics, TOCTOU, symlink and mutation attacks.
 
-**Evidence inspected:** old separate path operations, new one-descriptor implementation, mutation fixtures.
+**Evidence inspected:** old separate path operations, one-descriptor implementation, hostile fixtures, CI failure trace.
 
-**Strongest counter-hypothesis:** a pathname replacement after open could still contaminate the row. The one-open test instead binds the original inode/stream; the replacement only changes the locator's later referent.
+**Strongest counter-hypothesis:** pathname replacement after open might silently leave a valid row whose locator now refers to other bytes. The CI falsifier showed the current metadata stability gate rejects that tested replacement instead.
 
 **Attempted falsifiers:** path replacement during read, in-place append during read, final symlink, directory input.
 
-**Residual uncertainty:** a privileged/adversarial writer capable of pathological same-size in-place changes and metadata manipulation is outside the ordinary data-host contract; a content-addressed immutable snapshot would be the stronger model if required.
+**Residual uncertainty:** a privileged/adversarial writer capable of pathological same-size in-place changes while defeating ordinary metadata-change evidence remains outside this bounded contract; a content-addressed immutable snapshot is stronger if that threat model is required.
 
-**Vote:** `ACCEPT` bounded same-stream contract; do not call it a hostile-root filesystem guarantee.
+**Vote:** `ACCEPT` fail-closed same-stream contract after revising the test expectation.
 
-### C. Independent validation / statistics reviewer — ACCEPT deterministic design pending CI
+### C. Independent validation / statistics reviewer — ACCEPT design; exact-head rerun required
 
 **Background:** reproducible validation, exact invariants, negative controls.
 
-**Evidence inspected:** existing #1154 completeness tests and new known-answer/mutation controls.
+**Evidence inspected:** #1154 completeness tests, new known-answer/mutation controls, exact CI artifact.
 
-**Strongest counter-hypothesis:** tests merely restate implementation. The legacy mixed-version counterexample and independent pathname/mutation interventions exercise different state transitions rather than only nominal outputs.
+**Strongest counter-hypothesis:** tests merely restate implementation. The first CI run disproved one reviewer expectation, demonstrating that the hostile fixtures can reveal state behavior not assumed by the test author.
 
-**Attempted falsifier:** alter source state at controlled read boundaries and require either exact old-stream binding or fail-closed instability.
+**Attempted falsifier:** alter source state at controlled read boundaries and require either exact stable-stream closure or a controlled provenance failure.
 
-**Residual uncertainty:** no real ROOT file is available in this runtime, so the regenerated 33-file provenance artifact is not validated here.
+**Residual uncertainty:** corrected exact-head CI is still required; no real ROOT file is available in this runtime, so the regenerated 33-file provenance artifact is not validated here.
 
-**Vote:** `ACCEPT` software test design pending exact-head CI; `BLOCK` empirical artifact closure.
+**Vote:** `REVISE -> ACCEPT design`, pending corrected exact-head CI; `BLOCK` empirical artifact closure.
 
 ### D. Claims / provenance reviewer — ACCEPT bounded repair; BLOCK claim promotion
 
 **Background:** source-to-claim traceability and fail-closed claim governance.
 
-**Evidence inspected:** #1155 acceptance, #993 lineage requirement, CL-001's existing GATED status.
+**Evidence inspected:** #1155 acceptance, #993 lineage requirement, CL-001's existing GATED status, data-side report provenance caveat.
 
 **Strongest counter-hypothesis:** stronger digest rows could be interpreted as proving the 16/18 product relationship. Rejected: a file digest identifies bytes but does not establish transformations between products.
 
@@ -152,12 +165,17 @@ raw file bytes
 
 The local repair prevents a mixed-version row from contaminating the provenance chain. It does not make any downstream transformation valid by itself.
 
-## Child atoms / unresolved dependencies
+## Recursive child / compatibility atom
 
-1. Regenerate the complete real raw-input manifest on the data host from the original 33 canonical files; retain command, host/filesystem context, producer commit and artifact hash.
-2. Continue #993 with stage-by-stage event/channel/sample closure between the 8x16 and historical 8x18 products.
-3. Continue #953 exact raw->sorted key/word closure and #952 waveform-width census.
-4. If repository policy requires adversarial-writer protection rather than ordinary stable-source detection, define a content-addressed immutable source-snapshot atom instead of silently expanding this helper's threat model.
+The main study calls `data_provenance()` and later reopens raw run paths in `timing()` through `uproot.open`. A coherent manifest row therefore does not, by itself, establish that later scientific consumers read the same bytes that were hashed. This is the same verified-read/consumption universe already open as #1149 for S00 artifacts, so no duplicate issue was created. #1149 was cross-linked to #1155/#993 with the raw-side falsifier and solution classes: verified stream/snapshot consumption or a mechanically enforced and recorded immutable-source contract.
+
+## Unresolved dependencies
+
+1. Obtain corrected exact-head/current-base CI for PR #1157.
+2. Regenerate the complete real raw-input manifest on the data host from the original 33 canonical files; retain command, host/filesystem context, producer commit and artifact hash.
+3. Continue #993 with stage-by-stage event/channel/sample closure between the 8x16 and historical 8x18 products.
+4. Continue #953 exact raw->sorted key/word closure and #952 waveform-width census.
+5. Reuse #1149 for same-bytes consumer migration rather than treating pathname reopen as authorising provenance.
 
 ## Scientific boundary
 

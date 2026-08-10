@@ -2,72 +2,40 @@
 
 ## Session
 
-- **Task:** `ARU-RAW-CONSUMER-SAME-BYTES-001`
-- **Stamp:** `2026-08-10T112500Z`
+- **Task:** `ARU-RAW-UPROOT-SAME-STREAM-001`
+- **Stamp:** `2026-08-10T114700Z`
 - **Owner:** hourly Atomic Research Universe audit session
-- **Main at branch point:** `439d611efe9908ae91379b7024e98ead36e4d30b`
-- **Branch:** `fix/raw-consumer-same-bytes`
-- **Parents:** #1149, #993
-- **Dependencies:** #952, #953; upstream #1155 is merged/closed.
-- **Claim state:** CL-001 remains GATED.
+- **Main before work:** `439d611efe9908ae91379b7024e98ead36e4d30b`
+- **Merged upstream:** PR #1159 -> `4fe1efaf931083de0a3c61bd25a447f5cb21e7a2`, after exact-head MC Validation success.
+- **Branch / PR:** `fix/raw-timing-manifest-bound-consumer` / #1160
+- **Parents:** #1149, #993; dependencies #952, #953; CL-001 remains GATED.
 
 ## Selected atom
 
-`same-stream raw manifest row -> later scientific consumer -> exact manifest-bound opened object or controlled failure`.
+`manifest-bound raw bytes -> canonical Uproot timing consumer -> exact same authorized bytes through the complete parser/iteration lifetime`.
 
-Merged #1155 proves that each raw-input row is internally coherent:
+Required invariant: `H(B_consumed) = H(B_manifest) = row.sha256`, with `(dev,ino,nlink,size,mtime_ns,ctime_ns)` stable through verification and consumer-context exit.
 
-```text
-sha256(row) = H(B_manifest)
-bytes(row) = |B_manifest|
-```
+## Work completed
 
-but current `scripts/studies/data_side_real_beam.py::timing()` later performs an independent `uproot.open(RAW_DIR / ...)`. Therefore the row does not prove `B_consumer = B_manifest` if the pathname changes between the two operations.
+PR #1159's reusable `verified_raw_input_stream()` primitive was independently inspected, its exact-head CI was verified successful, and it was squash-merged with expected-head protection.
 
-## Implemented primitive
+PR #1160 adds `src/ccb_mc_validation/raw_uproot_authorization.py` with strict unique run indexing, required-run completeness, and `open_verified_uproot()`. The adapter passes only the verified seekable stream to Uproot and nests the entire Uproot file lifetime inside the descriptor guard context.
 
-New module `src/ccb_mc_validation/raw_input_authorization.py` adds `verified_raw_input_stream()`.
+The canonical `scripts/studies/data_side_real_beam.py::timing()` is now migrated on the branch: it receives the provenance record, canonicalizes timing run IDs, requires one row per needed run, removes the old missing-path silent skip and direct `uproot.open(path)`, iterates each ROOT tree inside the verified Uproot context, and records `manifest-bound-same-open-stream-v1` plus the authorized run list in its output.
 
-It:
-
-1. strictly parses the manifest file/digest/descriptor fields;
-2. opens the raw path once with `O_NOFOLLOW`;
-3. requires a regular file and exact `(dev, ino, nlink, size, mtime_ns, ctime_ns)` match to the manifest row;
-4. hashes/counts that descriptor and requires exact SHA-256 + byte-count closure;
-5. rewinds it and yields a duplicate descriptor as a seekable binary file-like object;
-6. retains a guard descriptor and fails closed if descriptor/link metadata change before consumer-context exit.
-
-The consumer therefore never needs to resolve the pathname a second time after verification.
-
-## Mechanisms and equivalence collapse
-
-- Independent pathname reopen is rejected as authorizing.
-- Rearranging pathname `stat/hash/open` operations does not solve the same TOCTOU mechanism.
-- A descriptor-bound verified stream is the selected low-copy survivor.
-- A private content-addressed snapshot is stronger against concurrent in-place mutation but incurs a full copy; this remains a separate cost/immutability child rather than being conflated with the descriptor design.
-- A source-bound immutable data-host/object-store contract is another survivor if the real host can prove it mechanically.
-
-## Hostile tests added
-
-`tests/test_raw_input_authorization.py` covers stable read/seek, legacy independent-path replacement, same-content new-inode replacement, different-content replacement, replacement while the stream is held, in-place mutation, hard-link alias creation, digest mismatch, strict path/digest/integer schema, symlink rejection, and invalid block size.
-
-The same-content replacement test is intentionally important: equal SHA-256 content does not establish that a later analysis consumed the same source object from the same manifest transaction.
+Fixture tests cover real tiny-ROOT adapter reads, file-like-not-path argument, pre-open replacement, replacement while Uproot is alive, duplicate/missing/malformed run rows, canonical timing success, missing manifest row before raw open, and canonical raw-file replacement rejection. These are software/provenance tests, not beam validation.
 
 ## Four sequential review votes
 
-- **DAQ/raw provenance lead — ACCEPT primitive / BLOCK #993.** The primitive closes a consumer identity gap only; it does not derive 8x16<->8x18 lineage.
-- **Adversarial filesystem reviewer — ACCEPT bounded contract / REJECT snapshot-level overclaim.** An open descriptor prevents pathname replacement from redirecting reads, and post-consumer metadata catches ordinary mutation/link-state changes. Privileged metadata-forging writers and distributed-filesystem specifics are outside the proven threat model.
-- **Independent validation/statistics reviewer — ACCEPT deterministic design pending exact-head CI / BLOCK real artifact.** These are binary filesystem invariants, not beam-statistical tests. A mocked Uproot integration test is still required.
-- **Claims/provenance reviewer — ACCEPT local repair / BLOCK promotion.** No timing, PID, energy, detector-resolution, 8x16/8x18, or CL-001 claim is promoted.
-
-## Scientific and validation boundary
-
-No raw beam ROOT file was available in this runtime. The real 33-file provenance artifact was not regenerated, no production I/O benchmark was measured, no Geant4 simulation was run, and no detector result changed. This branch currently adds the reusable authorization primitive and its falsifiers; `timing()` still needs integration.
+- **DAQ / reconstruction lead — ACCEPT canonical same-bytes integration pending exact-head CI.** Physical first-four baseline validity, sampling interpretation, and 8x16/8x18 lineage remain separate atoms.
+- **Adversarial mechanism reviewer — ACCEPT bounded descriptor/Uproot contract / BLOCK any future pathname fallback.** Privileged writers able to mutate bytes while forging/restoring metadata remain outside the proven threat model.
+- **Independent validation/statistics reviewer — ACCEPT deterministic fixture design pending exact-head CI / BLOCK detector inference.** No timing-resolution or detector estimator is validated by these fixtures.
+- **Claims/provenance reviewer — BLOCK #993 and CL-001 promotion.** Event identity, width lineage, mapping/polarity, real manifest regeneration, and downstream cross-atom closure remain unresolved.
 
 ## Next atomic children
 
-1. Integrate `verified_raw_input_stream()` into the full Uproot iteration lifetime in `timing()`; Uproot officially accepts seekable Python file-like objects, so the integration need not reopen a path.
-2. Make missing/unmatched manifest rows fail closed instead of silently skipping required timing runs.
-3. Add a mocked Uproot test proving the parser receives a file-like stream and no independent pathname open occurs.
-4. Measure the extra verification-read cost on the real data host; compare descriptor streaming with a verified snapshot only if cost/threat requirements justify it.
-5. Regenerate the real manifest and continue #993/#953 event/channel/sample and word-level closure. Hash identity alone must never be used to infer the 16<->18 transform.
+1. Wait only for exact-head CI on the final #1160 branch state; do not reuse earlier green heads after documentation/code changes.
+2. Measure the extra full verification read on the real data host: source bytes/hash, filesystem/device, cold/warm cache, block size, wall time, throughput and storage overhead. Compare with a copied snapshot only if threat/cost evidence requires it.
+3. Regenerate the complete real manifest on the data host and rerun the canonical timing producer before treating prior report artifacts as authorizing under the new contract.
+4. Continue #993/#953 exact event/channel/sample and word-level lineage. Keep 8x16/8x18 waveform-width semantics under existing #952; same-bytes authorization does not identify the transform.

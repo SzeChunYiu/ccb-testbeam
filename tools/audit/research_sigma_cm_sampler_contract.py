@@ -67,12 +67,9 @@ def inverse_linear_pdf_fraction(p_left: float, p_right: float, fraction: float) 
     mass. The returned value is ``x / interval_width`` in ``[0, 1]``.
 
     For ``p(t)=a+(b-a)t``, the accumulated mass is
-
-    ``I(t)=a t + 0.5 (b-a) t^2``.
-
-    The inverse is evaluated after dividing both endpoint densities by their
-    positive maximum. That common scaling cancels from the target distribution
-    and prevents overflow/underflow in the quadratic products.
+    ``I(t)=a t + 0.5 (b-a) t^2``. Both endpoint densities are first divided by
+    their positive maximum. The common scaling cancels from the target law and
+    prevents overflow/underflow in the quadratic products.
     """
 
     a = float(p_left)
@@ -102,8 +99,6 @@ def inverse_linear_pdf_fraction(p_left: float, p_right: float, fraction: float) 
     root = math.sqrt(max(discriminant, 0.0))
     denominator = a + root
     if not denominator > 0.0:
-        # Reachable only for a=0,b>0 at f>0 in exact arithmetic; use the
-        # analytic limiting form instead of allowing a representation 0/0.
         return math.sqrt(f)
     t = f * (a + b) / denominator
     return min(1.0, max(0.0, t))
@@ -112,33 +107,20 @@ def inverse_linear_pdf_fraction(p_left: float, p_right: float, fraction: float) 
 def _legacy_audit(angles: list[float], sigma: list[float]) -> dict[str, object]:
     theta = [0.0, *angles, math.pi]
     node_pdf = [0.0, *[s * math.sin(t) for s, t in zip(sigma, angles)], 0.0]
-
     interval_mass = [
         0.5 * (p_left + p_right) * (right - left)
-        for left, right, p_left, p_right in zip(
-            theta,
-            theta[1:],
-            node_pdf,
-            node_pdf[1:],
-        )
+        for left, right, p_left, p_right in zip(theta, theta[1:], node_pdf, node_pdf[1:])
     ]
     norm = math.fsum(interval_mass)
     if not norm > 0.0:
         raise ValueError("non-positive legacy sampler normalization")
     interval_probability = [mass / norm for mass in interval_mass]
-
     cdf_deviations = [
         abs(p_right - p_left) * (right - left) / (8.0 * norm)
-        for left, right, p_left, p_right in zip(
-            theta,
-            theta[1:],
-            node_pdf,
-            node_pdf[1:],
-        )
+        for left, right, p_left, p_right in zip(theta, theta[1:], node_pdf, node_pdf[1:])
     ]
     worst_index = max(range(len(cdf_deviations)), key=cdf_deviations.__getitem__)
     worst_midpoint = 0.5 * (theta[worst_index] + theta[worst_index + 1])
-
     return {
         "cdf_construction": "trapezoid_integral_of_node_pdf_sigma_times_sin_theta",
         "inverse": "linear_theta_interpolation_within_each_cdf_interval",
@@ -146,29 +128,19 @@ def _legacy_audit(angles: list[float], sigma: list[float]) -> dict[str, object]:
         "normalization": norm,
         "probability_below_measured_support": interval_probability[0],
         "probability_above_measured_support": interval_probability[-1],
-        "probability_outside_measured_support": (
-            interval_probability[0] + interval_probability[-1]
-        ),
+        "probability_outside_measured_support": interval_probability[0] + interval_probability[-1],
         "max_cdf_deviation_vs_linear_node_pdf": cdf_deviations[worst_index],
         "max_cdf_deviation_interval_index": worst_index,
         "max_cdf_deviation_theta_cm_deg": math.degrees(worst_midpoint),
     }
 
 
-def _exact_reference_audit(
-    angles: list[float],
-    sigma: list[float],
-) -> dict[str, object]:
+def _exact_reference_audit(angles: list[float], sigma: list[float]) -> dict[str, object]:
     theta = list(angles)
     node_pdf = [s * math.sin(t) for s, t in zip(sigma, theta)]
     interval_mass = [
         0.5 * (a + b) * (right - left)
-        for left, right, a, b in zip(
-            theta,
-            theta[1:],
-            node_pdf,
-            node_pdf[1:],
-        )
+        for left, right, a, b in zip(theta, theta[1:], node_pdf, node_pdf[1:])
     ]
     norm = math.fsum(interval_mass)
     if not norm > 0.0:
@@ -208,7 +180,7 @@ def _exact_reference_audit(
         "inverse_probe_fractions": list(probe_fractions),
         "max_inverse_interval_mass_fraction_error": max_mass_fraction_error,
         "worst_inverse_probe": worst,
-        "positive_common_density_scaling_invariant": true if False else True,
+        "positive_common_density_scaling_invariant": True,
         "support_policy_interpretation": (
             "The nominal reference distribution is conditional on the measured Table-VI angular "
             "support. This is an explicit conservative model choice, not evidence that the physical "
@@ -229,10 +201,7 @@ def audit_sampler(path: Path) -> dict[str, object]:
             "sha256": hashlib.sha256(raw).hexdigest(),
             "bytes": len(raw),
             "rows": len(angles),
-            "support_theta_cm_deg": [
-                math.degrees(angles[0]),
-                math.degrees(angles[-1]),
-            ],
+            "support_theta_cm_deg": [math.degrees(angles[0]), math.degrees(angles[-1])],
         },
         "legacy_v1": legacy,
         "implemented_reference": exact,
@@ -256,7 +225,6 @@ def main() -> int:
     parser.add_argument("--table", type=Path, default=DEFAULT_TABLE)
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
-
     result = audit_sampler(args.table)
     text = json.dumps(result, indent=2, sort_keys=True) + "\n"
     if args.output is None:

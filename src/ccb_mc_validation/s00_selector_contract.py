@@ -2,7 +2,7 @@
 
 This module isolates the no-I/O semantic contract required by issue #1141.
 It deliberately performs no filesystem access, ROOT access, artifact creation,
-or detector inference.  The canonical producer can call it immediately after
+or detector inference. The canonical producer can call it immediately after
 YAML parsing, before resolving output namespaces or creating staging paths.
 """
 
@@ -27,23 +27,34 @@ def validate_s00_selector_contract(config: Mapping[str, Any]) -> tuple[int, int,
     """Validate the frozen selector identity without performing any I/O.
 
     Canonical S00 uses exactly ``v1_first_four_median`` with baseline indices
-    ``(0, 1, 2, 3)``.  ``baseline_samples`` remains in the historical YAML for
+    ``(0, 1, 2, 3)``. ``baseline_samples`` remains in the historical YAML for
     provenance/backward compatibility, but it is an assertion of this named
-    model rather than a free parameter.  Alternate windows require a distinct
+    model rather than a free parameter. Alternate windows require a distinct
     selector/model identity and a non-authorising sensitivity namespace.
 
-    Returns the canonical tuple on success.  Raises
+    The YAML field itself must be a sequence-style list. This prevents mapping,
+    set, generator, or other iterable objects from acquiring canonical meaning
+    merely because their iteration happens to yield ``0,1,2,3``.
+
+    Returns the canonical tuple on success. Raises
     :class:`S00SelectorConfigError` on a controlled semantic-input failure.
     """
     if not isinstance(config, Mapping):
         raise S00SelectorConfigError("S00 config must be a mapping")
     if "baseline_samples" not in config:
         raise S00SelectorConfigError(
-            f"{S00_SELECTOR_V1_ID} requires baseline_samples={list(S00_SELECTOR_V1_BASELINE_INDICES)}"
+            f"{S00_SELECTOR_V1_ID} requires "
+            f"baseline_samples={list(S00_SELECTOR_V1_BASELINE_INDICES)}"
+        )
+
+    baseline_samples = config["baseline_samples"]
+    if not isinstance(baseline_samples, list):
+        raise S00SelectorConfigError(
+            "baseline_samples must be a YAML list exactly [0, 1, 2, 3]"
         )
 
     try:
-        return _validate_v1_baseline_indices(config["baseline_samples"])
+        return _validate_v1_baseline_indices(baseline_samples)
     except SelectorInputError as exc:
         raise S00SelectorConfigError(str(exc)) from exc
 

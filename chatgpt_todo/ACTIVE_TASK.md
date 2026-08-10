@@ -1,15 +1,16 @@
 # Active Task
 
-- **Task ID:** `ARU-MC-CS-INTERPOLATION-001`
+- **Task ID:** `ARU-MC-CS-UQ-INTERPOLATION-COMPAT-001`
 - **Owner:** hourly Atomic Research Universe audit session
-- **Branch-point protected main:** `a1bcb6a68630845c31c0b8ebcd5b45de0cea1dd6`.
-- **Selected atom:** interpolation-order model form for the exact 190 MeV p-d source on the already-declared measured-support reference: `linear_node_pdf_exact_inverse_v1` versus `linear_cross_section_then_jacobian_v1`.
-- **Input contract:** `geant4/src_patch/sigma_pd_cm_190.txt`, 640 bytes, 28 rows, SHA-256 `0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc`, 26.49–169.78 deg CM, `dσ/dΩ` in mb/sr.
-- **Exact result:** the two models agree at every tabulated cross-section node but differ between nodes because interpolation and multiplication by `sin(theta)` do not commute. Their normalized CDFs differ by at most `0.0010129801982659559` at `43.94458149140975 deg`; the alternative mean angle is lower by `0.024267831224125052 deg` and its median is lower by `0.05619069758156213 deg`.
-- **Adversarial representation control:** inserting one exact sigma-linear midpoint per original interval changes the sigma-linear-then-Jacobian model by only `1.4432899320127035e-15` in CDF but changes the current node-PDF-linear model by `0.000768558730840585`. They are therefore distinct model classes, not duplicate parameterizations.
-- **Implementation:** `tools/audit/research_sigma_cm_interpolation_sensitivity.py`, focused regression tests, machine-readable result `results/research/sigma_cm_interpolation_sensitivity_v1.json`, and immutable ARU archive.
-- **Local deterministic validation before push:** `python -m pytest -q tests/test_sigma_cm_interpolation_sensitivity.py` -> `4 passed in 0.05s`; an independent 500001-point dense quadrature check agreed with the analytic integrals to O(1e-11) normalization / O(1e-9 deg) mean-angle scale.
-- **Parallel source-UQ lane:** PR #1186 initially failed only because a brittle test searched for literal `Do not` while the sidecar expressed the same boundary as `does not`; the branch was repaired at `4a2d1909b681517eee72389bf5f8d3604e4b8f54` with semantic assertions. Its new exact-head CI is still running and must pass before merge.
-- **Claim state:** CL-021 remains `OPEN / GATED`. This result is deterministic source-model sensitivity, not a confidence band, not detector validation, and not evidence that either interpolation is uniquely physical.
-- **Open dependencies:** #1178 support-model sensitivity + compiled generator closure; #1179 source covariance/UQ; #1182 fail-closed runtime readiness; production manifest binding; full detector-response propagation.
-- **Status:** `ACTIVE / DETERMINISTIC_INTERPOLATION_SENSITIVITY_EXECUTED / PR_AND_EXACT_HEAD_CI_PENDING / GEANT4_RUNTIME_BLOCKED / SOURCE_UQ_BLOCKED / DETECTOR_INFERENCE_BLOCKED`
+- **Branch-point protected main:** `af0c3989df0009fb74d5b820123e5c7cbcbce67f`; PR #1186 source-UQ sensitivity is merged after exact-head MC Validation run `31428708910` succeeded.
+- **Selected atom:** cross-atom compatibility of the two surviving measured-support interpolation classes with the explicit nonprobabilistic ±3% Table-VI node box under #1179.
+- **Input contract:** `geant4/src_patch/sigma_pd_cm_190.txt`, 640 bytes, 28 rows, SHA-256 `0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc`, 26.49–169.78 deg CM, `dσ/dΩ` in mb/sr with published row statistical uncertainties.
+- **Competing worlds:** current `linear_node_pdf_exact_inverse_v1`; alternative `linear_cross_section_then_jacobian_v1`; each propagated through the same explicit `[0.97,1.03] sigma_i` box. No probability weights are assigned to interpolation classes or box corners.
+- **Executed result:** the alternative central curve has zero violation of the current-mode 3% box on the 10,001-point grid, but the alternative **box image** extends beyond the current box by `0.0010650343985590949` upward at 39.586706 deg and `0.0002537872354466675` downward at 145.879228 deg. Therefore central-curve containment is not cross-model closure.
+- **Union sensitivity:** relative to the current nominal source, the two-model/3%-box union reaches `+0.015299817076167732` CDF at 43.168956 deg and `-0.014380572923809676` at 46.951812 deg; mean-theta union is 56.02560085079668–57.5322672970398 deg. This is a deterministic sensitivity set, not a confidence band.
+- **Conditional statistical reference:** max pointwise diagonal-row-statistical CDF standard uncertainty is `0.0004453566889758832` (current) versus `0.0004435837618530407` (alternative); these are conditional delta-method diagnostics and are not combined in quadrature with model-form/box sensitivities.
+- **Implementation:** `tools/audit/research_sigma_cm_uq_interpolation_compatibility.py`, `tests/test_sigma_cm_uq_interpolation_compatibility.py`, `results/research/sigma_cm_uq_interpolation_compatibility_v1.json`, and immutable ARU archive on branch `research/mc-source-uq-interpolation-compat`.
+- **Local validation:** Python 3.13.5, no RNG; focused equivalent regression returned `4 passed in 11.97s`. Exact-head repository CI is required before merge.
+- **Claim state:** CL-021 remains `OPEN / GATED`; no production Geant4 or detector result was regenerated.
+- **Open dependencies:** #1179 source covariance/decomposition; #1178 support-model sensitivity; #1182 compiled fail-closed runtime readiness; production manifest binding; generator-level propagation; full detector-response propagation.
+- **Status:** `ACTIVE / CROSS_ATOM_SOURCE_SENSITIVITY_EXECUTED / EXACT_HEAD_CI_PENDING / SOURCE_COVARIANCE_BLOCKED / SUPPORT_PHYSICS_GATED / GEANT4_RUNTIME_BLOCKED / DETECTOR_INFERENCE_BLOCKED`

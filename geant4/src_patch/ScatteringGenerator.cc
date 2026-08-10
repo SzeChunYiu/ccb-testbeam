@@ -32,8 +32,6 @@
 
 #include "ScatteringGenerator.hh"
 
-#include <cmath>
-
 #include "G4Event.hh"
 #include "G4GenericMessenger.hh"
 #include "G4ParticleTable.hh"
@@ -41,6 +39,7 @@
 #include "G4PhysicalConstants.hh"
 #include "G4SystemOfUnits.hh"
 #include "Randomize.hh"
+#include <cmath>
 
 #include "G4Threading.hh"
 #include "G4AutoLock.hh"
@@ -120,9 +119,9 @@ void ScatteringGenerator::GeneratePrimaryVertex(G4Event* event)
 	G4double beta4cm = p4cm/E4cm;
 	G4double pcm= sqrt(E3cm*E3cm-m3*m3);
 
-	// CM ejectile angle -- sampled from the declared central-value source model:
-	// linear_node_pdf_exact_inverse_v1 on measured_table_support_truncate_v1.
-	// Falls back to uniform when no cross-section file is configured.
+	// CM ejectile angle -- sampled FROM the p+CD2 differential cross-section
+	// distribution p(theta) ~ sigma(theta)*sin(theta) (inverse-CDF), fixing the
+	// MV3 scattering-model residual (CL-021). Falls back to uniform when no CS.
 	G4double theta3cm = SampleThetaCM();
 	// Ejectile
 	G4double tantheta3 = sin(theta3cm)/(gamma*(cos(theta3cm)+beta/beta3cm));

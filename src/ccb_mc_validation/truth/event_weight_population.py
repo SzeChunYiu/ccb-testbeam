@@ -54,12 +54,11 @@ def _as_weight_vector(weights: Any, *, expected_length: int | None) -> np.ndarra
         raise DataContractError(
             f"event_weight must be one-dimensional, got shape {raw.shape}"
         )
-    if raw.dtype.kind == "b":
-        raise DataContractError("event_weight must be numeric weights, not booleans")
-    try:
-        array = raw.astype(np.float64, copy=False)
-    except (TypeError, ValueError) as exc:
-        raise DataContractError("event_weight must contain numeric values") from exc
+    if raw.dtype.kind not in "iuf":
+        raise DataContractError(
+            "event_weight must use a real numeric integer/unsigned/float dtype"
+        )
+    array = raw.astype(np.float64, copy=False)
     if expected_length is not None:
         if isinstance(expected_length, bool) or not isinstance(
             expected_length, (int, np.integer)

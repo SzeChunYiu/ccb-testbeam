@@ -47,6 +47,12 @@ def test_invalid_probability_measure_inputs_are_rejected(bad: object) -> None:
         summarize_event_weight_population(bad)
 
 
+def test_masked_weight_cannot_silently_reappear_from_underlying_storage() -> None:
+    masked = np.ma.array([1.0, 999.0], mask=[False, True])
+    with pytest.raises(DataContractError, match="masked array"):
+        summarize_event_weight_population(masked)
+
+
 def test_expected_length_is_part_of_event_alignment_contract() -> None:
     with pytest.raises(DataContractError, match="length 2 != expected 3"):
         summarize_event_weight_population([1.0, 2.0], expected_length=3)

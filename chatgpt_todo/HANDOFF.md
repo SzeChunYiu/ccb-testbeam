@@ -1,36 +1,49 @@
 # Latest Handoff
 
-## Selected atom: source interpolation order on identical measured support (#1178)
+## Selected atom: source-UQ × interpolation cross-atom compatibility (#1179)
 
-Protected `main` at the branch point is `a1bcb6a68630845c31c0b8ebcd5b45de0cea1dd6`. The numerical inverse-CDF repair is on main, but #1178 remains open because compiled Geant4 closure, support physics, runtime fail-closed behavior (#1182), source uncertainty (#1179), manifest serialization, and downstream response propagation are unresolved.
+Protected `main` at the branch point is `af0c3989df0009fb74d5b820123e5c7cbcbce67f`. PR #1186 is now merged after exact-head MC Validation run `31428708910` succeeded, so the deterministic 3% node-box / conditional row-statistical sensitivity is on main. #1179 remains open because no source-bound systematic covariance/decomposition has been recovered.
 
-### Contract and mechanism split
+### Exact contract
 
-The exact source table is `geant4/src_patch/sigma_pd_cm_190.txt`, SHA-256 `0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc`, 28 rows over 26.49–169.78 deg CM. The physical polar density is proportional to `sigma(theta) sin(theta)`.
+Input is `geant4/src_patch/sigma_pd_cm_190.txt`, 640 bytes / 28 rows, SHA-256 `0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc`, covering 26.49–169.78 deg CM. The normalized source CDF is `F=N/Z`, and for both surviving interpolation classes the numerator and normalization are linear in the source-node cross sections.
 
-The current reference `linear_node_pdf_exact_inverse_v1` first forms tabulated polar-density nodes `g_i=sigma_i sin(theta_i)` and linearly interpolates `g`. The new comparison model `linear_cross_section_then_jacobian_v1` linearly interpolates the measured observable `sigma=dσ/dΩ` and only then multiplies by `sin(theta)`. Both pass exactly through every source node and use `measured_table_support_truncate_v1`, but they are not equivalent between nodes.
+The explicit source-node set remains the **NONPROBABILISTIC_ENVELOPE** `0.97 sigma_i <= sigma'_i <= 1.03 sigma_i`. It has no nuisance probability law or coverage interpretation.
 
-### Executed result
+### New cross-atom result
 
-`tools/audit/research_sigma_cm_interpolation_sensitivity.py` analytically integrates both source laws and finds a maximum normalized-CDF difference `0.0010129801982659559` at `43.94458149140975 deg`. The alternative mean angle shifts by `-0.024267831224125052 deg`; the median shifts by `-0.05619069758156213 deg`; the 95th percentile shifts by `+0.13082849690529305 deg`.
+The current interpolation is `linear_node_pdf_exact_inverse_v1`; the surviving comparison is `linear_cross_section_then_jacobian_v1`. On a deterministic 10,001-point measured-support grid, the alternative **central** CDF lies entirely inside the current-mode 3% box. That does not close the model-form universe: propagating the same node box through the alternative interpolation extends beyond the current-mode box by `0.0010650343985590949` upward at 39.586706 deg and `0.0002537872354466675` downward at 145.879228 deg.
 
-The strongest falsifier is representation refinement. Inserting one midpoint per interval with `sigma_mid=(sigma_left+sigma_right)/2` is exactly redundant under sigma-linear interpolation: its normalized-CDF change is `1.4432899320127035e-15`. The same inserted source representation changes the current node-PDF-linear CDF by `0.000768558730840585`. Thus the two descriptions are distinct model classes, not duplicate parameterizations.
+The union of both interpolation classes and the same node box, relative to the current nominal source, reaches `+0.015299817076167732` in CDF at 43.168956 deg and `-0.014380572923809676` at 46.951812 deg. Its mean-theta range is 56.02560085079668–57.5322672970398 deg. These are sensitivity bounds, not confidence limits.
 
-Local focused tests before push returned `4 passed in 0.05s`. An independent 500001-point dense numerical quadrature check agreed with the analytic normalization/mean to O(1e-11) and O(1e-9 deg), respectively. Machine-readable output is `results/research/sigma_cm_interpolation_sensitivity_v1.json`; the full equations, hypotheses, review votes and child atoms are archived in `chatgpt_todo/archive/2026-08-10T195100Z_ARU-MC-CS-INTERPOLATION.md`.
+The alternative interpolation's own box excursions are `+0.014310586515772328` and `-0.014374731878122216`; the current values reproduce the merged #1179 result exactly at `+0.01430729974634637/-0.014380572923809676`.
+
+Conditional diagonal-row-statistical references remain close but distinct: max pointwise CDF standard uncertainty `0.0004453566889758832` for the current interpolation versus `0.0004435837618530407` for the alternative; mean-angle standard uncertainty `0.02252797870713097` versus `0.022356857259092505` deg. Do not add these in quadrature with interpolation or node-box sensitivity because the required common probabilistic nuisance model is absent.
 
 ### Four review votes
 
-- **Few-nucleon source physicist — REVISE:** retain the current interpolation as a named reference, not a uniquely source-authorized physical law.
-- **Adversarial numerical reviewer — ACCEPT distinction / BLOCK hidden equivalence:** redundant-knot invariance sharply separates the model classes.
-- **Independent statistics/UQ reviewer — ACCEPT deterministic sensitivity / BLOCK confidence language:** no probability law over interpolation families exists, so `0.001013` is not a one-sigma band.
-- **Claims/provenance reviewer — BLOCK CL-021 promotion:** source/runtime/support/UQ/detector gates remain open.
+- **Few-nucleon source physicist — REVISE:** interpolation is subdominant to the deliberately broad node-box stress set but remains a distinct source-model assumption.
+- **Adversarial numerical reviewer — ACCEPT discriminator / BLOCK collapse:** central-curve containment does not imply containment of the alternative model's full nuisance image.
+- **Independent statistics/UQ reviewer — ACCEPT deterministic mechanics / BLOCK inference:** no confidence, quadrature or model-averaging semantics are authorised without a source-bound covariance/model prior.
+- **Claims/provenance reviewer — BLOCK CL-021 promotion:** runtime, support physics, covariance, production manifest and detector-chain gates remain open.
 
-### Parallel #1179 / PR #1186 state
+### Repository work
 
-PR #1186's first exact-head run `31422297344` had 1450 passing tests but failed enforcement because one new test searched for literal `Do not`, while the sidecar correctly expressed the same semantic boundary with `does not`. The test was repaired at head `4a2d1909b681517eee72389bf5f8d3604e4b8f54` to assert the substantive covariance/non-iid wording instead. Its replacement exact-head CI is still in progress; do not merge or call #1186 validated before that run succeeds.
+Branch `research/mc-source-uq-interpolation-compat` contains:
 
-### Next
+- `tools/audit/research_sigma_cm_uq_interpolation_compatibility.py`;
+- `tests/test_sigma_cm_uq_interpolation_compatibility.py`;
+- `results/research/sigma_cm_uq_interpolation_compatibility_v1.json`;
+- `chatgpt_todo/archive/2026-08-10T203000Z_ARU-MC-CS-UQ-INTERPOLATION-COMPAT.md`;
+- this handoff and `ACTIVE_TASK.md`.
 
-Open/validate the interpolation-sensitivity PR and cross-link it to #1178; keep the current generator mode unchanged because this atom is sensitivity research, not a model-selection result. If compiled Geant4 becomes available, the highest-value next step is paired generator-only propagation of surviving interpolation/support models with exact seed/event/source provenance. Without compiled runtime, continue #1179 only after its repaired exact-head CI succeeds, and then investigate an independently source-justified interpolation/support family rather than tuning to detector agreement.
+Local equivalent execution used Python 3.13.5, no RNG, and returned `4 passed in 11.97s`. Exact-head repository CI is still required before merge.
 
-No beam ROOT data were opened, no production Geant4 campaign was run, and no B2/B8, PID, timing, penetration, energy, pile-up, ESS, p-value or detector-performance quantity was regenerated or promoted.
+### Child atoms / next
+
+1. Recover source-bound covariance/decomposition or preregister explicit common/smooth/residual sensitivity families; do not invent iid 3% rows.
+2. Propagate surviving source uncertainty/interpolation worlds through independently justified support models; measured-support truncation remains conditional.
+3. After #1182, run compiled seeded generator-only propagation with exact source/model/seed/event manifests.
+4. If the cross-model envelope becomes claim-bearing, remove the remaining finite-grid theta localisation with an analytic extremum search.
+
+No beam ROOT data were opened, no production Geant4 campaign was generated, and no B2/B8, PID, timing, penetration, energy, pile-up, ESS, p-value, rate or detector-performance quantity was regenerated or promoted.

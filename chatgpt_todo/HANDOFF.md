@@ -1,31 +1,45 @@
 # Latest Handoff
 
-## Completed atom
+## Completed work in this session
 
-- **Task:** `ARU-DATAMC-ECDF-001` / issue #1051
-- **Validated head:** `b8f9c6a363f9a2a7f658978641392f76605c9a46`
-- **CI:** MC Validation run `31387574136` completed successfully; lint passed and the full non-integration suite reported `1329 passed, 1 skipped, 8 xfailed, 1 xpassed`.
-- **Merged:** PR #1162 -> `97386889c1820e45b6ce04ba7ddfbda7128f2f46` on protected `main`; #1051 auto-closed.
+The previous coordination PR `#1163` passed its exact-head required check and was squash-merged to protected `main` as `08edd7fa9acffe4ace1381a1fac9acc899084347`. Issue `#1049` was reopened because the merged #1051/#1162 work validates only the observed right-continuous weighted-ECDF distance `D`, not a p-value calibration.
 
-## Validated local contract
+The selected atom is now `WKS-NULL-CLUSTER-001`, child issue `#1164`. Current `compare_data_mc.py` cannot support a design-consistent clustered null because both of its first-B NPZ inputs discard source-event identity. DATA exports B2 pulse amplitudes without `(run,eventno)`; MC exports raw first-layer `Sci_bar_EDep` hit/step rows with repeated `PrimaryWeight` but no generator-event ID. This composes directly with the already-open measurand blocker #1052.
 
-`compare_data_mc.py` v5 now represents the weighted empirical distribution as
+## Executable falsifier added on the research branch
 
-`F_w(x) = sum_i w_i I(X_i <= x) / sum_i w_i`
+`tools/audit/research_weighted_null_cluster_contract.py` implements an independent weighted-ECDF oracle plus research-only centered row/cluster bootstrap diagnostics. It is deliberately not an authorising p-value engine.
 
-with unique tied support and right-continuous step evaluation. `D = sup_x |F_data(x)-F_MC(x)|` is evaluated exactly on the union of support values. The old piecewise-linear `np.interp` mechanism is eliminated. Regression controls include the exact `[0,1]` midpoint falsifier, direct indicator-sum oracle, all-tied and saturated/quantized fixtures, weighted-row splitting/merging invariance, tie-order invariance, and independent equal-weight agreement with `scipy.stats.ks_2samp(...).statistic`.
+Exact local checks using the same source staged for the branch:
 
-## Four final review votes
+```text
+PYTHONPATH=. pytest -q tests/test_weighted_null_cluster_research.py
+7 passed in 0.11s
 
-- **Statistical-method lead — ACCEPT observed-statistic closure.** The finite empirical step-function `D` now matches the declared mathematical object; no statement is made about its weighted null distribution.
-- **Adversarial mechanism reviewer — ACCEPT local D / BLOCK inferential p-value.** Representation, tie ordering and interpolation pseudo-mass are eliminated as mechanisms; the legacy value-permutation null remains invalid for non-uniform MC weights.
-- **Independent statistics/validation reviewer — ACCEPT deterministic software/statistic closure.** Exact-head CI and two independent oracles validate the implemented observed statistic, not type-I calibration or detector physics.
-- **Claims/provenance reviewer — REVISE downstream products / no claim promotion.** Output v5 marks the retained numerical p-value `NONAUTHORISING_BLOCKED_ISSUE_1049`, plots display it as blocked, and real DATA/MC products must be regenerated before corrected `D` values are quoted.
+PYTHONPATH=. python tools/audit/research_weighted_null_cluster_contract.py --coverage
+```
 
-## Evidence boundary
+With 30 DATA rows, 25 weighted MC rows, seed 7, five-way representation splitting and 100 bootstrap replicates at seed 99:
 
-No real beam ROOT bytes or campaign comparison outputs were available in this runtime. Therefore no real DATA/MC `D`, p-value, PID, penetration, timing, energy, pile-up, or detector-performance result was regenerated or promoted. #1027 still governs the physical meaning of ADC saturation/ties; #1022 still governs weight propagation in canonical DeltaE-E/penetration analyses.
+- observed `D`: `0.2892157294690688` unsplit and `0.2892157294690689` split;
+- cluster-bootstrap maximum replicate delta: `3.3306690738754696e-16`;
+- row-bootstrap maximum replicate delta: `0.36178488205380754`;
+- cluster-bootstrap mean is identical (`0.2227850406275412`);
+- row-bootstrap mean shifts from `0.2227850406275412` to `0.15651673573442573`.
 
-## Next highest-value atom
+A separate known synthetic importance-sampling null, DATA ~ N(0,1), proposal MC ~ N(1,1), exact weight `exp(-x+0.5)`, 200 trials, 80 DATA, 160 MC and 99 bootstrap replicates per trial gave rejection fractions 0.045 at alpha 0.05 and 0.095 at alpha 0.10. Treat this only as a research-screening result; it does not include CCB clustering, Sample-II scale fitting, saturation, or detector response.
 
-Proceed to **#1049 / `ARU-WKS-NULL-001`**. The current numerical p-value shuffles pooled values and replaces the original weighted design with unit weights, so it is non-authorising even though observed `D` is now correct. The next research session should first define the concrete null and statistical unit from the actual DATA/MC sampling design, preserve PrimaryWeight semantics documented under #880, include the fitted MeV->ADC scale as a nuisance fitted from the same comparison chain, then choose and validate a design-consistent resampling/calibration law with explicit type-I simulations and tie/saturation stress tests. Do not assume iid rows, fixed scale, or signed-weight semantics without evidence.
+## Four role-separated votes
+
+- **Detector/physics lead — REVISE.** Event IDs and an event/stave detector-response measurand are prerequisites; current hit/pulse rows are not a matched statistical unit.
+- **Adversarial reviewer — BLOCK current NPZ inference.** Five-way row splitting changes iid-row bootstrap variance while preserving the weighted measure, so row-level resampling is representation-dependent.
+- **Statistics/validation reviewer — ACCEPT the cluster-identity falsifier / BLOCK a CCB p-value.** The synthetic importance-weight study keeps cluster resampling worth testing, but low ESS, dominant weights, ties, unequal populations, multi-row clusters and nuisance refitting remain open.
+- **Claims/provenance reviewer — BLOCK promotion.** `D` remains descriptive, legacy p-value remains non-authorising, and CL-013 remains GATED.
+
+## Literature boundary
+
+Hult & Nyquist (2016, DOI `10.1016/j.spa.2015.08.002`) supports the general interpretation of importance-sampling output as a weighted empirical measure. Kojadinovic & Yan (2012, DOI `10.1002/cjs.11135`) supports treating fitted-parameter goodness-of-fit as a separate bootstrap problem. Neither source validates the CCB cluster bootstrap or its MeV-to-ADC nuisance treatment.
+
+## Next highest-value work
+
+Implement #1164/#1052 at the producer contract: preserve immutable DAQ/generator event IDs, declare statistical units/weight semantics, and replace the first-B raw-hit MC product with a compatible event/stave detector-response hierarchy. Then repeat the representation-splitting and cluster-multiplicity tests, and compare refitting the Sample-II scale inside every null replicate against a held-out calibration design. Do not reinstate an authorising p-value until simulation type-I calibration and the full detector/statistical-unit chain pass.

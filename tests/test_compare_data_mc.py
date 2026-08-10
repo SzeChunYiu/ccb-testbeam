@@ -1,4 +1,4 @@
-"""Tests for scripts/compare_data_mc.py v4 (fail-closed weight validation)."""
+"""Tests for scripts/compare_data_mc.py v5 (exact weighted ECDF discrepancy)."""
 from __future__ import annotations
 
 import json
@@ -164,7 +164,8 @@ class TestWeightedKS:
         w = np.ones(100)
         result = cmc._weighted_ks_stat(x, x, w, w, n_bootstrap=50)
         assert result["D"] <= 0.2  # should be close to 0
-        assert result["p_value"] >= 0.01  # should not be trivially significant
+        assert result["p_value"] >= 0.01  # legacy diagnostic only
+        assert result["p_value_status"] == "NONAUTHORISING_BLOCKED_ISSUE_1049"
 
     def test_different_means(self):
         rng = np.random.default_rng(42)
@@ -173,13 +174,15 @@ class TestWeightedKS:
         w = np.ones(100)
         result = cmc._weighted_ks_stat(x, y, w, w, n_bootstrap=50)
         assert result["D"] > 0.5
-        assert result["p_value"] < 0.05
+        assert result["p_value"] < 0.05  # legacy diagnostic only
+        assert result["p_value_status"] == "NONAUTHORISING_BLOCKED_ISSUE_1049"
 
     def test_insufficient_data(self):
         result = cmc._weighted_ks_stat(np.array([1.0]), np.array([2.0]),
                                         np.ones(1), np.ones(1))
         assert result["D"] == 0.0
         assert result["p_value"] == 1.0
+        assert result["p_value_status"] == "NONAUTHORISING_BLOCKED_ISSUE_1049"
 
 
 class TestWeightValidation:
@@ -225,7 +228,7 @@ class TestEndToEnd:
         ])
         assert (out / "data_mc_comparison.json").exists()
         comp = json.loads((out / "data_mc_comparison.json").read_text(encoding="utf-8"))
-        assert comp["version"] == "v4"
+        assert comp["version"] == "v5"
         assert comp["mc_primary_weight_applied"] is True
         assert "mc_weight_diagnostics" in comp
         assert "sampleI" in comp["mc_weight_diagnostics"]
@@ -235,6 +238,9 @@ class TestEndToEnd:
             ks = comp["ks_tests"][s]
             assert ks["weighted"] is True
             assert ks["D"] >= 0
+            assert ks["cdf_convention"] == "right_continuous"
+            assert ks["ecdf_support"] == "unique_tie_aggregated"
+            assert ks["p_value_status"] == "NONAUTHORISING_BLOCKED_ISSUE_1049"
 
     def test_legacy_missing_weights_fails_closed(self, mock_mc_dir_legacy,
                                                   mock_data_dir, tmp_path):

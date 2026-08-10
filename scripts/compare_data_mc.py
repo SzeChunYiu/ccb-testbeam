@@ -1,15 +1,22 @@
 #!/usr/bin/env python3
 """
-compare_data_mc.py  (v4 — fail-closed weight validation)
-=============================================================
+compare_data_mc.py  (v5 — exact weighted ECDF discrepancy)
+==========================================================
 Data <-> MC comparison for the CCB test beam, Sample I vs Sample II.
 
-v4 changes:
+v5 changes:
+  - Weighted ECDFs are right-continuous step functions on unique support.
+  - Tied observations are collapsed into one jump carrying their total weight.
+  - Weighted KS D is evaluated exactly on the union of support points; no linear
+    interpolation is used.
+  - The legacy unit-weight permutation p-value is retained only as a clearly
+    non-authorising diagnostic blocked by issue #1049.
+
+v4 changes retained:
   - Per-event MC weights are required (fail closed if missing).
   - Weight vector is validated via validate_mc_weights: finite, nonnegative,
     dominance and ESS limits are enforced.
-  - Weighted KS test replaces unweighted two-sample KS (weighted ECDF + permutation).
-  - _wmedian no longer falls back to unweighted median.
+  - _wmedian does not fall back to an unweighted median.
   - Weight diagnostics (ESS, dominance, CV) are recorded in the output.
 
 Brings together:
@@ -72,37 +79,98 @@ def _whist(x, bins, weights):
 
 
 def _weighted_ecdf(x, w):
-    """Return (sorted_x, ecdf) for a weighted sample."""
-    o = np.argsort(x)
-    xs = x[o]
-    ws = w[o]
-    cdf = np.cumsum(ws) / np.sum(ws)
-    return xs, cdf
+    """Return unique support and right-continuous weighted empirical CDF.
+
+    The jump at support value ``a`` is the total weight of every row with
+    ``x == a`` divided by the total sample weight.  This representation is
+    invariant, up to floating roundoff, to splitting or merging identical
+    weighted rows.
+    """
+    x = np.asarray(x, dtype=float)
+    w = np.asarray(w, dtype=float)
+    if x.ndim != 1 or w.ndim != 1:
+        raise ValueError("weighted ECDF requires one-dimensional values and weights")
+    if x.size != w.size:
+        raise ValueError(f"weight size {w.size} != value size {x.size}")
+    if x.size == 0:
+        raise ValueError("weighted ECDF requires at least one observation")
+    if not np.isfinite(x).all():
+        raise ValueError("weighted ECDF values must be finite")
+    if not np.isfinite(w).all():
+        raise ValueError("weighted ECDF weights must be finite")
+    if np.any(w < 0):
+        raise ValueError("weighted ECDF weights must be nonnegative")
+    total = float(np.sum(w))
+    if total <= 0:
+        raise ValueError("weighted ECDF weight sum must be positive")
+
+    order = np.argsort(x, kind="mergesort")
+    xs = x[order]
+    ws = w[order]
+    support, first = np.unique(xs, return_index=True)
+    mass = np.add.reduceat(ws, first)
+    cdf = np.cumsum(mass, dtype=float) / total
+    cdf[-1] = 1.0
+    return support, cdf
+
+
+def _evaluate_weighted_ecdf(support, cdf, points):
+    """Evaluate a right-continuous step ECDF at arbitrary points."""
+    support = np.asarray(support, dtype=float)
+    cdf = np.asarray(cdf, dtype=float)
+    points = np.asarray(points, dtype=float)
+    if support.ndim != 1 or cdf.ndim != 1 or support.size != cdf.size:
+        raise ValueError("support and CDF must be one-dimensional arrays of equal size")
+    if support.size == 0:
+        raise ValueError("weighted ECDF support must not be empty")
+    if not np.all(np.diff(support) > 0):
+        raise ValueError("weighted ECDF support must be strictly increasing")
+    if not np.isfinite(points).all():
+        raise ValueError("weighted ECDF evaluation points must be finite")
+
+    idx = np.searchsorted(support, points, side="right") - 1
+    out = np.zeros(points.shape, dtype=float)
+    mask = idx >= 0
+    out[mask] = cdf[idx[mask]]
+    return out
+
+
+def _weighted_ks_distance(data, model, w_data, w_model):
+    """Exact supremum distance between two right-continuous weighted ECDFs."""
+    support_d, cdf_d = _weighted_ecdf(data, w_data)
+    support_m, cdf_m = _weighted_ecdf(model, w_model)
+    joint = np.union1d(support_d, support_m)
+    eval_d = _evaluate_weighted_ecdf(support_d, cdf_d, joint)
+    eval_m = _evaluate_weighted_ecdf(support_m, cdf_m, joint)
+    return float(np.max(np.abs(eval_d - eval_m)))
 
 
 def _weighted_ks_stat(data, model, w_data, w_model, n_bootstrap=200):
-    """Weighted two-sample KS D via permutation of weighted ECDFs.
+    """Weighted two-sample ECDF distance plus legacy blocked permutation p-value.
 
-    Uses the weighted empirical CDF (wECDF) and a permutation null that
-    preserves the total weight distribution.
+    ``D`` is the exact supremum distance between the two right-continuous
+    weighted empirical CDFs.  The numerical p-value is retained only for
+    backwards traceability: issue #1049 establishes that the current unit-weight
+    value-permutation null is not calibrated for non-uniform MC weights and is
+    therefore non-authorising.
     """
     data = np.asarray(data, dtype=float)
     model = np.asarray(model, dtype=float)
     w_data = np.asarray(w_data, dtype=float)
     w_model = np.asarray(w_model, dtype=float)
     if len(data) < 2 or len(model) < 2:
-        return {"D": 0.0, "p_value": 1.0, "note": "insufficient data"}
+        return {
+            "D": 0.0,
+            "p_value": 1.0,
+            "p_value_status": "NONAUTHORISING_BLOCKED_ISSUE_1049",
+            "cdf_convention": "right_continuous",
+            "note": "insufficient data",
+        }
 
-    # Observed KS D on weighted ECDFs
-    xs_d, cdf_d = _weighted_ecdf(data, w_data)
-    xs_m, cdf_m = _weighted_ecdf(model, w_model)
-    # Interpolate both CDFs onto the joint sorted grid
-    joint = np.sort(np.concatenate([data, model]))
-    cdf_d_interp = np.interp(joint, xs_d, cdf_d, left=0.0, right=1.0)
-    cdf_m_interp = np.interp(joint, xs_m, cdf_m, left=0.0, right=1.0)
-    d_obs = float(np.max(np.abs(cdf_d_interp - cdf_m_interp)))
+    d_obs = _weighted_ks_distance(data, model, w_data, w_model)
 
-    # Permutation null: pool values, re-split, re-weight by sampling
+    # Legacy non-authorising permutation null retained for provenance only.
+    # Issue #1049 owns replacement with a calibrated design-consistent null.
     pooled = np.concatenate([data, model])
     n_d = len(data)
     N = min(n_bootstrap, 200)
@@ -112,18 +180,22 @@ def _weighted_ks_stat(data, model, w_data, w_model, n_bootstrap=200):
         rng.shuffle(pooled)
         d_pool = pooled[:n_d]
         m_pool = pooled[n_d:]
-        # Re-weight: assign equal weight within each pseudo-sample
         w_d = np.ones(n_d) / n_d
         w_m = np.ones(len(m_pool)) / len(m_pool)
-        xs_d2, cdf_d2 = _weighted_ecdf(d_pool, w_d)
-        xs_m2, cdf_m2 = _weighted_ecdf(m_pool, w_m)
-        cdf_d2_interp = np.interp(joint, xs_d2, cdf_d2, left=0.0, right=1.0)
-        cdf_m2_interp = np.interp(joint, xs_m2, cdf_m2, left=0.0, right=1.0)
-        d_null[i] = float(np.max(np.abs(cdf_d2_interp - cdf_m2_interp)))
+        d_null[i] = _weighted_ks_distance(d_pool, m_pool, w_d, w_m)
     p_val = float((d_null >= d_obs).mean())
-    return {"D": d_obs, "p_value": p_val, "n_data": int(n_d),
-            "n_model": int(len(model)), "n_bootstrap": int(N),
-            "weighted": True}
+    return {
+        "D": d_obs,
+        "p_value": p_val,
+        "p_value_status": "NONAUTHORISING_BLOCKED_ISSUE_1049",
+        "p_value_method": "legacy_unit_weight_value_permutation",
+        "cdf_convention": "right_continuous",
+        "ecdf_support": "unique_tie_aggregated",
+        "n_data": int(n_d),
+        "n_model": int(len(model)),
+        "n_bootstrap": int(N),
+        "weighted": True,
+    }
 
 
 def _validate_weight_vector(weights, label):
@@ -231,12 +303,15 @@ def main(argv: list[str] | None = None) -> None:
     mc_weights = {"I": mcI_w, "II": mcII_w}
     for s, mcv, dav, label in (("I", mcI, daI, "Sample I"), ("II", mcII, daII, "Sample II")):
         mw = mc_weights[s]
-        # Weighted KS test
+        # Weighted ECDF distance; p-value is legacy/non-authorising under #1049.
         ks = _weighted_ks_stat(dav, mcv * mev_to_adc,
                                np.ones(len(dav)), mw)
         ks["sample"] = label
-        ks["note"] = ("Data vs MC (MC scaled by mev_to_adc, weighted KS via wECDF permutation); "
-                      "bin residuals use PrimaryWeight.")
+        ks["note"] = (
+            "Data vs MC (MC scaled by mev_to_adc, exact right-continuous weighted ECDF D); "
+            "legacy permutation p-value is NONAUTHORISING/BLOCKED by #1049; "
+            "bin residuals use PrimaryWeight."
+        )
         ks_results[label] = ks
 
         # Bin-by-bin residuals (normalised) — MC side weighted.
@@ -271,7 +346,7 @@ def main(argv: list[str] | None = None) -> None:
 
     # ── Build comprehensive comparison dict ──────────────────────────────────
     comp = {
-        "version": "v4",
+        "version": "v5",
         "mev_to_adc_scale": mev_to_adc,
         "mev_to_adc_scale_lo": scale_lo,
         "mev_to_adc_scale_hi": scale_hi,
@@ -339,7 +414,7 @@ def main(argv: list[str] | None = None) -> None:
         json.dump(comp, fh, indent=2)
 
     # ═══════════════════════════════════════════════════════════════════════════
-    #  PLOTS  (v4: with weighted KS, weight diagnostics, scale uncertainty band)
+    #  PLOTS  (v5: exact weighted ECDF D; p-value visibly blocked by #1049)
     # ═══════════════════════════════════════════════════════════════════════════
     plot_list = []
     try:
@@ -349,7 +424,7 @@ def main(argv: list[str] | None = None) -> None:
 
         STAVES = ["B2", "B4", "B6", "B8"]
 
-        # (1) First-B-layer overlay WITH scale uncertainty band + weighted KS stats
+        # (1) First-B-layer overlay WITH scale uncertainty band + weighted ECDF D
         fig, axes = plt.subplots(1, 2, figsize=(14, 6), sharey=True)
         bins = np.linspace(0, 12000, 80)
         bin_centers = (bins[:-1] + bins[1:]) / 2
@@ -370,11 +445,17 @@ def main(argv: list[str] | None = None) -> None:
             mc_lo = _whist(mcv * scale_lo, bins, mw)
             ax.fill_between(bin_centers, mc_lo, mc_hi, alpha=0.2, color="C3",
                             label=f"MC ±{args.scale_uncertainty*100:.0f}% scale")
-            # Weighted KS stats
+            # Weighted ECDF discrepancy; legacy p is explicitly non-authorising.
             ks = ks_results.get(ttl.split(" (")[0], {})
-            ax.text(0.95, 0.85, f"wKS D={ks.get('D',0):.4f}\np={ks.get('p_value',0):.3f}",
-                    transform=ax.transAxes, ha="right", fontsize=9,
-                    bbox=dict(boxstyle="round", facecolor="wheat", alpha=0.7))
+            ax.text(
+                0.95,
+                0.85,
+                f"wECDF D={ks.get('D', 0):.4f}\nlegacy p BLOCKED (#1049)",
+                transform=ax.transAxes,
+                ha="right",
+                fontsize=9,
+                bbox=dict(boxstyle="round", facecolor="wheat", alpha=0.7),
+            )
             # Saturation flag
             sat_frac = b2I_sat if "I" in ttl else b2II_sat
             if sat_frac > 0.05:
@@ -599,7 +680,7 @@ def main(argv: list[str] | None = None) -> None:
         json.dump(comp, fh, indent=2)
 
     print(json.dumps({
-        "version": "v4",
+        "version": "v5",
         "mev_to_adc": mev_to_adc,
         "scale_uncertainty_band": f"[{scale_lo:.0f}, {scale_hi:.0f}]",
         "first_B_layer_large_pulse_excess": comp["first_B_layer"]["large_pulse_excess_sampleI_minus_II"],
@@ -611,7 +692,10 @@ def main(argv: list[str] | None = None) -> None:
         "weight_ess_sampleII": audit_II.absolute_effective_sample_size,
         "plots": plot_list,
     }, indent=2))
-    print(f"[ok] wrote {args.out}/data_mc_comparison.json  (v4 with weighted KS, fail-closed weight validation)")
+    print(
+        f"[ok] wrote {args.out}/data_mc_comparison.json  "
+        "(v5 exact weighted ECDF D; legacy p blocked by #1049)"
+    )
 
 
 if __name__ == "__main__":

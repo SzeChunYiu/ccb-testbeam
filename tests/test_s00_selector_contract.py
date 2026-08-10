@@ -43,7 +43,9 @@ def test_canonical_selector_contract_is_accepted() -> None:
 
 
 def test_numpy_integral_aliases_are_accepted_as_discrete_indices() -> None:
-    config = {"baseline_samples": [np.int64(0), np.int32(1), np.int16(2), np.int8(3)]}
+    config = {
+        "baseline_samples": [np.int64(0), np.int32(1), np.int16(2), np.int8(3)]
+    }
     assert validate_s00_selector_contract(config) == S00_SELECTOR_V1_BASELINE_INDICES
 
 
@@ -59,6 +61,9 @@ def test_numpy_integral_aliases_are_accepted_as_discrete_indices() -> None:
         ["0", 1, 2, 3],
         [0.0, 1.0, 2.0, 3.0],
         [False, True, 2, 3],
+        (0, 1, 2, 3),
+        {0, 1, 2, 3},
+        {0: "a", 1: "b", 2: "c", 3: "d"},
         123,
         None,
     ],
@@ -113,7 +118,9 @@ def test_main_rejects_bad_selector_before_any_producer_side_effect(
     def forbidden(name: str):
         def _forbidden(*args, **kwargs):
             calls[name] += 1
-            raise AssertionError(f"producer side effect reached before selector preflight: {name}")
+            raise AssertionError(
+                f"producer side effect reached before selector preflight: {name}"
+            )
 
         return _forbidden
 
@@ -124,15 +131,27 @@ def test_main_rejects_bad_selector_before_any_producer_side_effect(
         return original_mkdir(self, *args, **kwargs)
 
     monkeypatch.setattr(s00, "load_config", lambda _path: bad_config)
-    monkeypatch.setattr(s00, "resolve_amplitude_cut", forbidden("resolve_amplitude_cut"))
-    monkeypatch.setattr(s00, "resolve_output_namespace", forbidden("resolve_output_namespace"))
+    monkeypatch.setattr(
+        s00,
+        "resolve_amplitude_cut",
+        forbidden("resolve_amplitude_cut"),
+    )
+    monkeypatch.setattr(
+        s00,
+        "resolve_output_namespace",
+        forbidden("resolve_output_namespace"),
+    )
     monkeypatch.setattr(s00, "scan_raw", forbidden("scan_raw"))
     monkeypatch.setattr(s00, "iter_raw_events", forbidden("iter_raw_events"))
     monkeypatch.setattr(s00.uproot, "open", forbidden("uproot_open"))
     monkeypatch.setattr(s00, "write_manifest", forbidden("write_manifest"))
     monkeypatch.setattr(s00, "make_figures", forbidden("make_figures"))
     monkeypatch.setattr(Path, "mkdir", counted_mkdir)
-    monkeypatch.setattr(sys, "argv", [str(S00_SCRIPT), "--config", "ignored.yaml"])
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [str(S00_SCRIPT), "--config", "ignored.yaml"],
+    )
 
     assert s00.main() == 2
     assert calls == {name: 0 for name in calls}
@@ -142,5 +161,9 @@ def test_main_source_binds_selector_identity_into_manifest() -> None:
     """The producer must merge the exact selector fragment into model_identity."""
     source = S00_SCRIPT.read_text(encoding="utf-8")
     assert "selector_identity = s00_selector_model_identity()" in source
-    assert '"selector": f"ccb_mc_validation.selector {selector_identity[\'selector_id\']}"' in source
+    selector_line = (
+        '"selector": f"ccb_mc_validation.selector '
+        "{selector_identity['selector_id']}\""
+    )
+    assert selector_line in source
     assert "**selector_identity" in source

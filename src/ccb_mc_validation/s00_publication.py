@@ -1,24 +1,27 @@
-"""Crash-safe immutable-generation publication for S00 artifacts.
+"""Crash-safe, content-bound immutable-generation publication for S00 artifacts.
 
-This module isolates the publication primitive required by ARU issue #1110.
-It does not decide whether a scientific run is authorising; callers must make
-that decision before publication. The primitive guarantees that a successful
-publication changes authority through one small atomic pointer replacement,
-while prior immutable generations are never deleted in the commit path.
+This module isolates the publication primitive required by ARU issues #1110 and
+#1147. It does not decide whether a scientific run is authorising; callers must
+make that decision before publication. A successful publication changes authority
+through one small atomic pointer replacement, while prior generations are never
+deleted in the commit path.
 
 The intended transaction is::
 
     build staging generation
     -> validate required artifacts/model identity
+    -> bind SHA-256 identities for authoritative artifacts
+    -> fsync authoritative artifacts
     -> move staging to immutable generations/<generation_id>
+    -> revalidate physical containment + bound hashes
     -> fsync generation root
     -> atomically replace CURRENT.json
     -> fsync pointer directory
 
-A crash before the pointer replacement can leave an orphan immutable generation,
-but it cannot change the previously authoritative generation. This is preferred
-to deleting/replacing a mutable report directory because concurrent readers
-resolve one complete old or new generation through the pointer.
+A crash before pointer replacement can leave an orphan generation, but it cannot
+change the previously authoritative pointer. The pointer is content-bound: a
+consumer resolves a logical artifact only after its current bytes reproduce the
+SHA-256 digest committed in the pointer.
 
 The current S00 producer is not wired to this primitive yet. Integration remains
 part of #1110 and must also migrate downstream consumers away from assuming that
@@ -29,6 +32,7 @@ from __future__ import annotations
 
 from contextlib import contextmanager
 from dataclasses import dataclass
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -42,8 +46,9 @@ except ImportError:  # pragma: no cover - exercised only on non-POSIX systems.
     fcntl = None  # type: ignore[assignment]
 
 
-POINTER_SCHEMA = "ccb.s00.publication-pointer.v1"
+POINTER_SCHEMA = "ccb.s00.publication-pointer.v2"
 _GENERATION_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._=-]{0,127}$")
+_SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 
 
 class S00PublicationError(RuntimeError):
@@ -52,10 +57,11 @@ class S00PublicationError(RuntimeError):
 
 @dataclass(frozen=True)
 class S00PublicationPointer:
-    """Authoritative logical mapping to one immutable S00 generation."""
+    """Authoritative logical mapping to one content-bound S00 generation."""
 
     generation_id: str
     artifacts: dict[str, str]
+    artifact_sha256: dict[str, str]
     model_identity: dict[str, object]
 
     def to_json_bytes(self) -> bytes:
@@ -63,6 +69,7 @@ class S00PublicationPointer:
             "schema": POINTER_SCHEMA,
             "generation_id": self.generation_id,
             "artifacts": self.artifacts,
+            "artifact_sha256": self.artifact_sha256,
             "model_identity": self.model_identity,
         }
         return (json.dumps(payload, sort_keys=True, indent=2) + "\n").encode("utf-8")
@@ -101,6 +108,94 @@ def _normalise_artifacts(artifacts: Mapping[str, str]) -> dict[str, str]:
             )
         normalised[logical_name] = _validate_relative_artifact_path(relative_path)
     return dict(sorted(normalised.items()))
+
+
+def _normalise_artifact_sha256(
+    artifact_sha256: Mapping[str, str],
+    *,
+    artifacts: Mapping[str, str],
+) -> dict[str, str]:
+    if not isinstance(artifact_sha256, Mapping):
+        raise S00PublicationError("pointer artifact_sha256 must be a mapping")
+    normalised: dict[str, str] = {}
+    for logical_name, digest in artifact_sha256.items():
+        if not isinstance(logical_name, str) or not logical_name:
+            raise S00PublicationError(
+                "artifact_sha256 logical names must be non-empty strings"
+            )
+        if not isinstance(digest, str) or not _SHA256_RE.fullmatch(digest):
+            raise S00PublicationError(
+                f"invalid SHA-256 digest for {logical_name!r}: {digest!r}"
+            )
+        normalised[logical_name] = digest
+    if set(normalised) != set(artifacts):
+        raise S00PublicationError(
+            "artifact_sha256 keys must exactly match pointer artifact keys"
+        )
+    return dict(sorted(normalised.items()))
+
+
+def _sha256_file(path: Path, block_size: int = 1024 * 1024) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for block in iter(lambda: handle.read(block_size), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def _has_symlink_component(root: Path, relative_path: str) -> bool:
+    current = root
+    for part in Path(relative_path).parts:
+        current = current / part
+        if current.is_symlink():
+            return True
+    return False
+
+
+def _validated_artifact_path(
+    root: Path,
+    relative_path: str,
+    *,
+    logical_name: str,
+) -> Path:
+    """Return a regular artifact proven physically inside ``root``.
+
+    Lexical ``..`` checks are not sufficient because ``Path.is_file()`` follows
+    symbolic links. This helper rejects any symlink component and separately
+    proves that the resolved target is below the resolved generation/staging root.
+    """
+    root = Path(root)
+    candidate = root / relative_path
+    if _has_symlink_component(root, relative_path):
+        raise S00PublicationError(
+            f"artifact {logical_name!r} must not contain symlink components: {candidate}"
+        )
+    try:
+        root_resolved = root.resolve(strict=True)
+        candidate_resolved = candidate.resolve(strict=True)
+    except OSError as exc:
+        raise S00PublicationError(
+            f"required artifact {logical_name!r} cannot be resolved: {candidate}: {exc}"
+        ) from exc
+    try:
+        candidate_resolved.relative_to(root_resolved)
+    except ValueError as exc:
+        raise S00PublicationError(
+            f"artifact {logical_name!r} escapes its immutable generation: {candidate}"
+        ) from exc
+    if not candidate_resolved.is_file():
+        raise S00PublicationError(
+            f"required artifact {logical_name!r} missing from generation: {candidate}"
+        )
+    return candidate
+
+
+def _fsync_file(path: Path) -> None:
+    fd = os.open(path, os.O_RDONLY)
+    try:
+        os.fsync(fd)
+    finally:
+        os.close(fd)
 
 
 def _fsync_directory(path: Path) -> None:
@@ -153,15 +248,21 @@ def _load_pointer_bytes(pointer_path: Path) -> S00PublicationPointer:
         )
     generation_id = _validate_generation_id(payload.get("generation_id"))
     artifacts_payload = payload.get("artifacts")
+    artifact_sha256_payload = payload.get("artifact_sha256")
     model_identity = payload.get("model_identity")
     if not isinstance(artifacts_payload, dict):
         raise S00PublicationError("pointer artifacts must be a mapping")
     if not isinstance(model_identity, dict):
         raise S00PublicationError("pointer model_identity must be a mapping")
     artifacts = _normalise_artifacts(artifacts_payload)
+    artifact_sha256 = _normalise_artifact_sha256(
+        artifact_sha256_payload,
+        artifacts=artifacts,
+    )
     return S00PublicationPointer(
         generation_id=generation_id,
         artifacts=artifacts,
+        artifact_sha256=artifact_sha256,
         model_identity=dict(model_identity),
     )
 
@@ -181,16 +282,22 @@ def resolve_artifact(
     generation_root: Path,
     logical_name: str,
 ) -> Path:
-    """Resolve a logical artifact through the authoritative immutable generation."""
+    """Resolve and content-verify an authoritative immutable-generation artifact."""
     pointer = read_publication_pointer(pointer_path)
     if logical_name not in pointer.artifacts:
         raise S00PublicationError(f"unknown logical artifact {logical_name!r}")
     generation = Path(generation_root) / pointer.generation_id
-    artifact = generation / pointer.artifacts[logical_name]
-    if not artifact.is_file():
+    artifact = _validated_artifact_path(
+        generation,
+        pointer.artifacts[logical_name],
+        logical_name=logical_name,
+    )
+    observed = _sha256_file(artifact)
+    expected = pointer.artifact_sha256[logical_name]
+    if observed != expected:
         raise S00PublicationError(
-            "authoritative artifact missing from generation "
-            f"{pointer.generation_id}: {artifact}"
+            "authoritative artifact content hash mismatch for "
+            f"{logical_name!r}: expected {expected}, observed {observed}"
         )
     return artifact
 
@@ -204,16 +311,16 @@ def publish_generation(
     artifacts: Mapping[str, str],
     model_identity: Mapping[str, object],
 ) -> S00PublicationPointer:
-    """Publish one immutable generation and atomically commit its pointer.
+    """Publish one content-bound immutable generation and atomically commit its pointer.
 
-    All required artifacts and pointer serialization are validated before the
-    staging directory is moved. The staging directory must be a direct child of
-    ``generation_root`` so its rename to the immutable final directory stays on
-    one filesystem.
+    All authoritative artifacts, their physical containment, their SHA-256 identities,
+    and pointer serialization are validated before the staging directory is moved.
+    The staging directory must be a direct child of ``generation_root`` so its rename
+    to the immutable final directory stays on one filesystem.
 
-    If pointer publication fails after the generation move, the previous pointer
-    is unchanged. The new generation can remain as a non-authoritative orphan and
-    may be garbage-collected later; rollback never deletes the previous authority.
+    After the move, the same paths and digests are revalidated before pointer commit.
+    If pointer publication fails, the previous pointer is unchanged. The new generation
+    can remain as a non-authoritative orphan; rollback never deletes prior authority.
     """
     staging_dir = Path(staging_dir)
     generation_root = Path(generation_root)
@@ -235,17 +342,21 @@ def publish_generation(
             f"staging directory does not exist: {staging_dir}"
         )
 
+    artifact_sha256: dict[str, str] = {}
     for logical_name, relative_path in normalised_artifacts.items():
-        candidate = staging_dir / relative_path
-        if not candidate.is_file():
-            raise S00PublicationError(
-                f"required artifact {logical_name!r} missing from staging: {candidate}"
-            )
+        candidate = _validated_artifact_path(
+            staging_dir,
+            relative_path,
+            logical_name=logical_name,
+        )
+        artifact_sha256[logical_name] = _sha256_file(candidate)
+        _fsync_file(candidate)
 
     final_generation = generation_root / generation_id
     pointer = S00PublicationPointer(
         generation_id=generation_id,
         artifacts=normalised_artifacts,
+        artifact_sha256=dict(sorted(artifact_sha256.items())),
         model_identity=dict(model_identity),
     )
     try:
@@ -263,6 +374,22 @@ def publish_generation(
 
         # Commit data first. Until CURRENT.json changes this generation is not authoritative.
         os.replace(staging_dir, final_generation)
+
+        # Revalidate both physical containment and bytes after the move. A concurrent
+        # mutation can at worst cause this publication to fail before authority changes.
+        for logical_name, relative_path in normalised_artifacts.items():
+            candidate = _validated_artifact_path(
+                final_generation,
+                relative_path,
+                logical_name=logical_name,
+            )
+            observed = _sha256_file(candidate)
+            if observed != artifact_sha256[logical_name]:
+                raise S00PublicationError(
+                    "artifact changed between staging validation and generation commit: "
+                    f"{logical_name!r}"
+                )
+
         _fsync_directory(generation_root)
 
         # Publish one small pointer atomically; concurrent readers see old or new bytes.

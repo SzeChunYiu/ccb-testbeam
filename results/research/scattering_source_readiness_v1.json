@@ -1,0 +1,35 @@
+{
+  "audit_id": "ARU-MC-CS-WORKER-INIT-001",
+  "scope": "STATIC_SOURCE_CONTRACT_ONLY_NONAUTHORISING",
+  "source": {
+    "commit": "fa62e8bb6ce7de10f840ebfa016eaa40cd9f74ec",
+    "path": "geant4/src_patch/ScatteringGenerator.cc",
+    "git_blob_sha1": "9b9195b8fa32125adfb8392bd602fcc74f5542fc",
+    "bytes": 13232
+  },
+  "pr1181_reviewed_head": "edf71180b2f622b7cf16a8c1243d2140c2369eb9",
+  "runtime_thread_mode": "UNRESOLVED_REQUIRES_EXACT_EXECUTABLE_PROVENANCE",
+  "required_state_machine": [
+    "UNINITIALIZED",
+    "UNCONFIGURED_UNIFORM",
+    "CONFIGURED_READY",
+    "FATAL"
+  ],
+  "findings": {
+    "event_zero_load_gate": true,
+    "uniform_fallback_on_empty_cdf": true,
+    "success_exit_on_input_open_failure": true,
+    "unchecked_cross_section_sscanf": true,
+    "empty_stopping_table_dereference_pattern": true,
+    "explicit_instance_readiness_state": false
+  },
+  "deterministic_implications": {
+    "sequential_mode": "event-zero may initialize the sole instance, but invalid configured inputs still fail open or report success incorrectly",
+    "event_parallel_mode": "event-zero is not a sufficient per-worker readiness condition; exact hibeam_g4 production mode is not yet established",
+    "configured_source_failure": "must not be observationally collapsed into the explicit no-source uniform proposal"
+  },
+  "verdict": "BLOCK_RUNTIME_AUTHORIZATION",
+  "production_data_or_mc_executed": false,
+  "claim_promotion": false,
+  "issue": 1182
+}

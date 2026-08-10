@@ -1,0 +1,59 @@
+{
+  "status": "RESEARCH_ONLY_NONAUTHORISING",
+  "issue": 1166,
+  "parent_issue": 1049,
+  "base_main_sha": "a1d7afe17e526c0e90761e8d7da4924eea5862e5",
+  "method_scope": "equal-weight synthetic nuisance/topology falsifier; not CCB detector validation",
+  "same_sample_scale_refit": {
+    "target": "DATA = 90 * LogNormal(0,0.5); MC = LogNormal(0,0.5)",
+    "estimator": "median(DATA) / weighted_median(MC); unit MC weights",
+    "n_trials": 200,
+    "n_data": 80,
+    "n_model": 160,
+    "n_bootstrap": 99,
+    "seed": 20260810,
+    "alpha_005_fixed_rejection_fraction": 0.0,
+    "alpha_005_refit_rejection_fraction": 0.06,
+    "alpha_010_fixed_rejection_fraction": 0.015,
+    "alpha_010_refit_rejection_fraction": 0.095,
+    "mean_p_fixed": 0.6777500000000001,
+    "mean_p_refit": 0.5378,
+    "mean_observed_d": 0.09631250000000001,
+    "mean_fixed_null_d": 0.11487342171717171,
+    "mean_refit_null_d": 0.09748358585858587,
+    "mean_scale_hat": 90.94393633812348
+  },
+  "fit_test_overlap_topology": {
+    "design": "MC-I is Bernoulli-0.4 subset of MC-II; DATA-I and DATA-II independent synthetic populations",
+    "n_trials": 2000,
+    "n_sample_ii": 160,
+    "seed": 20260811,
+    "mean_sample_i_n": 64.109,
+    "corr_scale_mci_median_overlap": -0.4358878983227622,
+    "corr_scale_mci_median_broken_independent": 0.0033154082210934467,
+    "mean_d_overlap": 0.14926505317470615,
+    "mean_d_broken_independent": 0.15842257954288547,
+    "q95_d_overlap": 0.24080047789725204,
+    "q95_d_broken_independent": 0.25757575757575757
+  },
+  "repository_contract": {
+    "data_sample_i_analysis_runs": [44,45,46,47,48,49,50,51,52,53,54,55,56,57],
+    "data_sample_ii_analysis_runs": [58,59,60,61,62,63,65],
+    "data_fit_test_relation_for_sample_i": "disjoint_run_families",
+    "mc_sample_ii_definition": "ENTER_B",
+    "mc_sample_i_definition": "ENTER_A_AND_ENTER_B_WITH_COINCIDENCE",
+    "mc_fit_test_relation_for_sample_i": "sample_i_subset_of_sample_ii",
+    "scale_fit_sample": "Sample II",
+    "production_p_value_authorised": false
+  },
+  "literature": [
+    {
+      "doi": "10.1142/S0219525909002131",
+      "claim_use": "estimated nuisance parameters must be represented in EDF GOF Monte-Carlo calibration; supports general principle only"
+    },
+    {
+      "doi": "10.1002/cjs.11135",
+      "claim_use": "GOF empirical processes with estimated parameters are a distinct resampling problem; does not validate CCB design"
+    }
+  ]
+}

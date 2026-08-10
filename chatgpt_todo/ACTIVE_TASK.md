@@ -1,20 +1,24 @@
 # Active Task
 
-- **Task ID:** `ARU-RAW-DIGEST-SAME-STREAM-001`
+- **Task ID:** `ARU-S00-SELECTOR-EQUIVALENCE-CLOSURE`
 - **Owner:** hourly Atomic Research Universe audit session
-- **Session stamp:** `2026-08-10T094900Z`
-- **Initial remote main SHA:** `4fda4b5013a712a329646127140d8a52d322af92`
-- **Parent issue:** `#993`.
-- **Child issue:** `#1155`.
-- **Reviewed PR:** `#1154` at head `e7ab22893ffad0266acb7c4243ebb748a1334ec7`.
-- **Branch:** `audit/raw-digest-same-stream-review`.
-- **Selected atom:** `raw ROOT pathname -> one opened byte stream -> digest + byte count + source identity -> provenance row`.
-- **Verified defect:** PR #1154 repairs the historical three-digest/33-count truncation, but its helper still performs `exists -> hash(path) -> stat(path)` as separate observations, so a mutable/replaced source can produce a mixed-version provenance row.
-- **Invariant:** for one opened stream `B`, require `sha256 = H(B)` and `bytes = |B|`; source identity must come from the same descriptor/snapshot.
-- **Review action:** submitted independent PR review `RP-RAW-DIGEST-001`; opened #1155 with one-open helper design and mutation/path-replacement hostile controls.
-- **CI state:** both checks on PR #1154 exact head are green, but the PR was tested against an older main. Current main has advanced to `4fda4b50...`; fresh current-base CI is required before merge.
-- **Execution boundary:** no beam ROOT files were available, so no real digest manifest or detector quantity was regenerated. Synthetic filesystem tests are sufficient for the #1155 software/provenance atom.
-- **Expert votes:** DAQ/provenance `REVISE`; adversarial filesystem `BLOCK mixed-version row authority`; validation `ACCEPT deterministic child design / require mutation tests`; claims/provenance `ACCEPT child / BLOCK scientific promotion`.
-- **Scientific boundary:** #993 stays open; CL-001 remains GATED; no 8x16<->8x18 lineage is established.
-- **Next acceptance gate:** implement #1155 without conflicting with active #1154 work, then require exact-head/current-base CI and preserve #1154 complete-list/missing-run semantics.
-- **Status:** `REVIEWED / CHILD_ATOM_OPEN / IMPLEMENTATION_REQUIRED / NO_SCIENTIFIC_CLAIM_CHANGE`
+- **Session stamp:** `2026-08-10T040000Z`
+- **Initial remote main SHA:** `f5ad219c03b51cb4a2e84f7620b8d9363a250fd6`
+- **Primary issue:** `#1136`
+- **Parent issue:** `#1109`
+- **Sibling blockers:** `#1135`, `#1137`
+- **Branch:** `fix/s00-selector-equivalence-contract`
+- **PR:** `#1140`
+- **Policy:** `EXACTLY_EQUIVALENT_SCALAR_MAPS_ARE_ONE_MODEL;_VALIDITY_POLICIES_ARE_SEPARATE_LAYERS`.
+- **Selected atom:** `selector method names -> amplitude-map identity -> validity-policy identity -> candidate count -> robustness/multiplicity claims`.
+- **Exact equivalence:** `dynamic_range` and `rolling_min` both compute `b=min(w)` and therefore the same `A=max(w)-min(w)` and threshold membership for every finite waveform when validity is not a veto.
+- **Implemented contract:** `src/ccb_mc_validation/selector_model_contract.py` maps legacy method aliases onto unique `amplitude_map_id` values and separate `validity_policy_id` values.
+- **Unique scalar-map universe:** `first_four_median_v1`, `range_max_minus_min_v1`, `full_window_p10_v1`.
+- **Regression tests:** registry coverage, exact alias collapse, randomized amplitude/selection equality, bipolar diagnostic-policy separation, P10 distinct-map negative control, duplicate-name candidate-count protection.
+- **Search result:** no current repository model-selection/reporting consumer outside selector/tests was found using both aliases as independent scalar models; the new registry is the forward contract for such consumers.
+- **Expert votes:** detector/waveform `ACCEPT local decomposition`; adversarial `ACCEPT equivalence / REVISE downstream usage`; validation/statistics `ACCEPT local contract pending CI`; claims/provenance `ACCEPT local contract`.
+- **Repository actions:** reviewed and merged prior audit PR #1138 to main as `f5ad219c03b51cb4a2e84f7620b8d9363a250fd6`; opened PR #1140; updated #1136 with implementation evidence; added immutable ARU archive.
+- **CI:** exact-head MC Validation CI run `31353910275` is in progress; do not merge/close #1136 before success and final review.
+- **Scientific boundary:** no raw beam data, Geant4, selected-pulse count, timing, PID, penetration, calibration, pile-up, or detector-performance value changed. This is mathematical/model-accounting closure only.
+- **Next:** if #1140 CI passes, merge and close #1136; then return to P0 #1135 for frozen v1 formula/domain/config-preflight enforcement.
+- **Status:** `ACTIVE / PARTIAL`

@@ -1,26 +1,40 @@
 # Latest Handoff
 
-## Selected atom: required PR validation cannot be path-filtered
+## Validated milestone: required PR validation is no longer path-filtered
 
-Protected `main` began this atom at `e4c924b901b37093f7b66eaf8d1d1dad07ea3498`, after coordination-only PR #1193 passed MC Validation run `31437027034` and was squash-merged. The configured-source readiness milestone remains static/software only; #1182/#1178/#1179 and CL-021 are still open/gated.
+Protected `main` now contains PR #1194 as squash commit `0a77369cc39069747db9b91ff06804cb1df35cec`. Exact PR head `9a3f1d98d8cd7e028d6712a90eea6c0da7d05c08` passed MC Validation run `31439792614`: clean ruff, `1470 passed, 1 skipped, 8 xfailed, 1 xpassed`. This closes the bounded `ARU-CI-G4-TRIGGER-001` routing defect only.
 
-### Defect and stronger mechanism
+The merged workflow makes `pull_request` unfiltered, keeps scoped push routing with `geant4/**`, retains required job `test`, and carries `ccb_mc_ci_trigger_scope_v2`, which rejects PR path filters, a missing Geant4 push route, or a missing required job. This prevents a material PR from becoming ineligible to produce the protected required check merely because its files fall outside a finite allow-list.
 
-Protected `main` requires status `test`. Before repair, `.github/workflows/mc_validation_ci.yml` path-filtered both `push` and `pull_request` and omitted `geant4/**`. PR #1192 is the concrete witness: exact head `bef24345e815152e22523a44b708c4359ad2958f` modifies only three `geant4/src_patch/**` files and has no workflow run. The same PR also restores `if(event->GetEventID()==0) EnsureFilesLoaded();`, undoing validated per-instance readiness; it was therefore closed rather than merged.
+### Scientific boundary
 
-Authoritative GitHub Actions documentation states that path filters determine whether a `push`/`pull_request` workflow runs, and that a required workflow skipped by path filtering leaves its check pending and blocks merge. Therefore simply adding one more directory to a finite pull-request allow-list is not the stable fix. PR #1194 now makes `pull_request` **unfiltered**, retains scoped push routing with `geant4/**`, and requires job `test`.
+The required job is still a Python/static validation lane. It does not compile/link/run `geant4/src_patch`, so no source population, detector response, CL-021 state, or DATA↔MC claim is validated by the CI-routing milestone.
 
-`tools/audit/validate_mc_ci_trigger_scope.py` schema `ccb_mc_ci_trigger_scope_v2` fails closed on any required-PR `paths`/`paths-ignore`, a missing Geant4 push route, or a missing `test` job. Supporting deterministic fixture execution: `python -m pytest -q tests/test_mc_ci_trigger_scope.py` -> **4 passed in 0.05s**; CLI -> **PASS** with `pull_request.unfiltered=true`, `push.pattern_present=true`, `required_job=test`. Exact-head repository CI remains required before merge.
+## Resumed atom: compiled/executable/input provenance
+
+Existing issue #1182 remains the parent. Repository inspection refined the remaining contract:
+
+- historical S17a ledgers already retain exact SHA-256 values for geometry, config, macro, Table-VI source, dE/dx table, and geoconf;
+- current `setup_and_run.sh` can silently reuse an arbitrary existing external checkout and does not bind its commit/tree/dirty state before compilation;
+- its historical GitHub bootstrap reference is not a sufficient current source identity; a current source location must never be substituted by floating `main` without exact commit/tree equivalence evidence;
+- `run_krakow.mac` requests 1,000,000 events but does not encode a repository-controlled RNG seed command, while `krakow.config` has the `Threads 9` setting commented, so run-manager/thread/seed state must be measured and serialized rather than inferred;
+- the stopping parser is now fail-closed, but #1058 still owns the scientific meaning of the dE/dx columns/material/source and the `938.28/931.5` plus `×1000` conversions.
+
+A deterministic local H1-vs-H2 sensitivity fixture reproduced the current 100-step 190 MeV beam-loss algorithm over 2.3 mm. Keeping the current `×1000` conversion fixed, removing only the `938.28/931.5` energy-axis factor changes the full-target reaction energy from `189.11967694826052` to `189.12379133383976 MeV`, a difference of about `-4.114 keV`. The 100-step solution is already close to the fine-step fixture limit. This rejects only the hypothesis that the ~0.7% axis factor alone creates a large beam-energy residual; it does not validate either unit convention, stopping-power type, CD2 composition/density, or source table.
+
+### Claims-governance child
+
+Two public documents on main still described the historical HIBEAM sample as “validated” and the truth-level range/PID observations as confirming the data inference. PR #1196 (`ARU-CLAIM-G4-LEGACY-001`) rewrites `geant4/REPRODUCTION_STATUS.md` and `studies/MC_VALIDATION_PROGRAM.md` so those legacy outputs are explicitly historical/nonauthorising diagnostics and the full source→event/weight→detector response→data-like waveform→identical reconstruction→held-out uncertainty chain is required before detector validation. #1196 is open; exact-head CI must pass before merge.
 
 ### Four sequential AI review votes
 
-- **Source/simulation lead — ACCEPT routing repair / BLOCK runtime authorisation:** every PR can now enter static validation, but no external Geant4 compile/link/run is established.
-- **Adversarial CI reviewer — REJECT finite required-PR path allow-lists / ACCEPT unfiltered PR event:** another omitted material directory would otherwise recreate the same skipped-required-check mechanism.
-- **Independent statistics/validation reviewer — ACCEPT deterministic routing gate / BLOCK physics inference:** no generated source or detector observable is tested.
-- **Claims/provenance reviewer — ACCEPT CI precondition / BLOCK CL-021 promotion:** required repository checks cannot substitute for executable/input/seed/thread provenance.
+- **Source/simulation lead — ACCEPT #1194 routing closure / REVISE compiled provenance:** build feasibility and historical input hashes survive, but exact external executable/source-tree identity and runtime state do not.
+- **Adversarial mechanism reviewer — ACCEPT unfiltered required PR routing / BLOCK mutable external checkout:** directory existence, floating remotes, dirty trees, one-byte installed-source mismatches, or staged-input digest mismatches must fail closed.
+- **Independent statistics/validation reviewer — ACCEPT the 4.11 keV local axis-factor falsifier / BLOCK physical beam-loss inference:** the fixture isolates one numerical ambiguity only; material/source/unit uncertainty and an independent stopping reference remain unresolved.
+- **Claims/provenance reviewer — ACCEPT legacy-claim demotion direction / BLOCK CL-021 promotion:** historical truth may support diagnostics but not detector-performance claims until the dependency chain closes.
 
-### Next highest-value child
+### Next highest-value atom
 
-Resume `ARU-MC-CS-COMPILED-PROVENANCE-001`: construct a fail-closed build/run front door that pins or verifies the external hibeam_g4 commit/tree, re-verifies the exact reviewed `ScatteringGenerator.hh/.cc` bytes immediately before compilation, binds Geant4/compiler/CMake/run-manager/thread mode, verifies `dedx_p_in_CD2.txt` SHA-256 `9c2dd0d42473a6ffb96ec317a26d97815699d6b9ced6d3c46e65093d0114cb7b` and Table-VI SHA-256 `0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc`, records seed/event count, and executes compiled hostile source/stopping fixtures. Historical S21 evidence identifies one inspected external source commit as `b73ea2a1bd2419e7c4a25a3bf23a419ad619234c`, but that historical observation is not a production pin for future runs.
+Implement the fail-closed build/run front door under #1182: require an approved exact external generator commit/tree and clean state; verify the reviewed installed source pair immediately before build; bind compiler, Geant4, VGM, CMake, executable, run-manager and effective threads; verify all staged input digests; record random engine/seeds/event count/model IDs/output identity; and execute compiled hostile fixtures for missing/malformed/reconfigured source and stopping inputs plus explicit-uniform controls. If the approved external source tree is inaccessible, preserve that as the precise blocker and move to #1058 source/unit recovery rather than treating a floating replacement checkout as equivalent.
 
-No beam data, production MC, B2/B8, PID, penetration, timing, energy, pile-up, ESS, p-value, rate or detector-performance result changes in this atom.
+No beam ROOT data or production Geant4 campaign was executed in this handoff, and no detector-performance result was promoted.

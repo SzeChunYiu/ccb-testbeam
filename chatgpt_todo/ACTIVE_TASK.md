@@ -21,3 +21,42 @@
 - **Child universes:** new `ARU-MC-G4-LOADER-PREEXEC-ENV-001`; `ARU-MC-G4-LOADER-INITIAL-CWD-001`; `ARU-MC-G4-LOADER-CACHE-CONFIG-001`; `ARU-MC-G4-LOADER-TOKEN-HWCAPS-001`; `ARU-MC-G4-PRELOAD-AUDIT-001`; plus linker-command/static-input, late-dlopen, non-executable relocation, wrapper/descendant, immutable-consumption, runtime-manifest, compiled source/stopping, event-weight and detector-response children.
 - **CI/merge gate:** the earlier queued CI run on superseded PR head `79823035bc244727f9205f5bfdaf7a18d7295121` is non-authorising after the adversarial correction. Require fresh exact-final-head curated ruff + full non-integration pytest and current-main ancestry. No production HIBEAM auxv/runtime receipt exists in this session, so green CI validates only the software primitive.
 - **Status:** `ACTIVE / DRAFT_PR_1210 / ADVERSARIAL_ZERO_CASE_CORRECTED / EXACT_COMMITTED_BLOBS_LOCALLY_FALSIFIED / FRESH_EXACT_HEAD_CI_REQUIRED / PREEXEC_ENV_BLOCKED / REAL_HIBEAM_RUNTIME_BLOCKED / PHYSICS_INFERENCE_BLOCKED`
+
+---
+
+- **Task ID:** `ARU-REPO-CONTENT-TRANSFER-001`
+- **Owner:** hourly Atomic Research Universe audit session
+- **Protected main inspected:** `acd1be85626b5047b434360eb8ce54bea167a139`.
+- **Validated predecessor:** PR #1208 exact head `9f9f061c74c2338d88ffc629897910b1a170bf49` passed MC Validation run `31467815511`; it was independently reviewed, marked ready, and squash-merged as `acd1be85626b5047b434360eb8ce54bea167a139`. #1182 and CL-021 remain gated.
+- **Selected universe:** byte-exact attribution of locally checked authoring bytes to the exact GitHub file blob that is later reviewed/CI-tested. The atom was exposed by #1208's failed earlier head `965ba13719ce711d47f88941be2e8a471837345e`, where a local authoring-copy `py_compile` PASS did not describe the truncated committed Git blob.
+- **Exact contract:** for authoring bytes `A`, repository path `p`, committed/fetched bytes `C`, and optional GitHub Contents API file SHA `g`, require path equality, `len(C)=len(A)`, `SHA256(C)=SHA256(A)`, and `git_blob_sha1(C)=git_blob_sha1(A)`; when `g` is supplied require `g=git_blob_sha1(C)`. Receipt digests must also verify.
+- **Git object relation:** `git_blob_sha1(A)=SHA1(b"blob " || ascii(len(A)) || NUL || A)`. SHA-256 is primary content identity; the Git blob SHA-1 is a repository-object cross-check, not independent statistical evidence.
+- **Mechanisms considered:** filename/intended-edit equivalence rejected; local-check-only attribution rejected; exact-head CI survives as repository validation but cannot retroactively bind a different authoring copy; pre-write receipt + post-write/fetch comparison is the preferred bounded mechanism; silent EOL/Git-filter canonicalization is rejected unless a separate transformation contract is declared.
+- **Executed local falsifiers:** Python 3.13/Linux/no RNG, `python -m pytest -q tests/test_repository_content_transfer.py` -> `9 passed in 0.11 s`; fixtures cover truncation, same-size corruption, CRLF/LF normalization, wrong path, wrong GitHub blob SHA, tampered receipt, binary bytes, nominal transfer, and Git blob-ID construction. Local `ruff` was unavailable and no local ruff PASS is claimed.
+- **Self-application:** measured authoring tool identity = 8927 bytes, SHA-256 `112cf07d252241dd8f705049ec8440a0f0dd0712ae53f53f0a96ae66ab57fd6d`, Git blob SHA-1 `2fbc5347ab1c777fdfbb8972221ee693aa9436ae`; GitHub fetch on the branch reports that same blob SHA. Test identity = 4455 bytes, SHA-256 `40de70883cf63ce2038388ac843a54210b0f10be64c8fd8049dab154897af17f`, Git blob SHA-1 `e78c1ac7bbb96f029a204d7fd7cf03b06b9eac00`; GitHub fetch reports the same blob SHA.
+- **Discarded evidence:** an attempted pre-hash of the workflow edit used a Python string in which backslash-newline sequences collapsed; that expected hash is invalid and is not used as transfer evidence. The actual committed workflow blob and exact-head CI are authoritative.
+- **Repository branch:** `audit/repository-content-transfer` from exact main `acd1be85626b5047b434360eb8ce54bea167a139`; tool commit `ddbd56897769bfb1b2cefd0e53a56ccf1a351f33`; tests `c7124781b40a0c703d760cb16bf2b479aacd7860`; curated CI inclusion `b7cf2f103fe10ce64fdf8796ccb0c169a812edbe`; ARU archive `6dfddbb2f96dfa5dc41e93b35c6c09798dfc178c`.
+- **Four-role state:** provenance lead `ACCEPT bounded mechanism / REVISE adoption`; adversarial reviewer `ACCEPT byte identity / BLOCK undeclared canonicalization`; independent validation reviewer `ACCEPT deterministic oracle / BLOCK merge pending exact-head CI`; claims reviewer `ACCEPT provenance repair / BLOCK detector and CL-021 promotion`.
+- **Parent/related dependencies:** this is a repository-provenance child exposed under #1182/#1208 but is not physics-specific. #1178, #1179, #1058, #1053/#880 and CL-021 remain independently gated.
+- **Child universes:** `ARU-REPO-CONTENT-TRANSFER-ADOPTION-001` and `ARU-REPO-CANONICALIZATION-001`; Geant4 loader-search, linker-command, late-dlopen, non-executable relocation, wrapper/descendant, immutable-consumption, runtime-manifest, compiled source/stopping controls, event-weight and detector-response children remain open.
+- **CI/merge gate:** open a focused PR, require exact-head curated ruff + full non-integration pytest success on the final head, then merge only if current-base ancestry remains valid. No physics result may be promoted from this atom.
+- **Status:** `ACTIVE / IMPLEMENTED_ON_BRANCH / SELF_TRANSFER_CROSSCHECK_PASSED_FOR_TOOL_AND_TEST / EXACT_HEAD_CI_PENDING / PHYSICS_INFERENCE_BLOCKED`
+
+---
+
+- **Task ID:** `ARU-MC01-EVENT-STAVE-001`
+- **Owner:** hourly Atomic Research Universe audit session
+- **Session stamp:** `2026-08-10T140500Z`
+- **Remote main at branch point:** `d088b5a886e0c8891d7926af7015193db7a503b8`
+- **Parent issues:** `#1052`, `#1164`; inferential parent `#1049`; weight dependency `#880`.
+- **Branch / PR:** `feat/mc01-event-stave-truth-contract` / `#1169`.
+- **Selected atom:** legacy MC charged hit/step rows -> generator-event identity + trigger-membership graph -> one event weight -> per-event/per-B-stave deposited-energy intermediate.
+- **Exact measurand:** `E_dep(e,k)=sum_h EDep_h I(event=e, arm=B, layer=k)` in MeV. A separate charged-only sum is retained diagnostically. Statistical unit is one generator event.
+- **Resolved local mechanisms:** raw hit rows are rejected as an invariant DATA-comparison unit; transport-step splitting leaves event/stave EDep unchanged while changing row multiplicity. Sample I is retained as a bit inside the Sample-II event universe rather than duplicated as a second row. The legacy `EDEP_CAP=600000` prefix retention is absent from the replacement product.
+- **Implemented contract:** new `truth/event_stave.py` + `scripts/mc01_event_stave_truth.py` produce schema `mc_event_stave_edep_v1`, stable source-content event IDs, one PrimaryWeight/event, Sample-I/Sample-II bits, eight B-stave all-particle EDep totals, charged-only diagnostics, source SHA/descriptor identity and ESS. Source hashing and Uproot consumption use one opened regular file with a post-consumer stability gate.
+- **Tests/falsifiers:** step splitting, multi-record aggregation, neutral-vs-charged deposit, A-arm exclusion, malformed EDep/layers, invalid weights, duplicate IDs, broken trigger nesting, source mutation, and a mocked Uproot file-like integration. Private isolated aggregation harness: 16 passed with builder integration excluded; this is not repository validation.
+- **Expert votes:** detector/Geant4 `ACCEPT H3 / BLOCK detector closure`; adversarial `ACCEPT bounded contract / REVISE production-scale execution`; statistics `ACCEPT statistical unit / BLOCK p-value`; claims/provenance `ACCEPT nonauthorising provenance / BLOCK promotion`.
+- **Scientific boundary:** schema is `NONAUTHORISING_TRUTH_DIAGNOSTIC`; quenching, optical/WLS, SiPM, electronics, digitizer sampling and identical DATA-like reconstruction are absent. No production ROOT/Geant4 result or detector metric was generated.
+- **Current gate:** require exact-head/current-base MC Validation CI for PR #1169 before merge. #1052/#1164 remain open even after H3 because H4/H5 and real-product validation remain.
+- **Next:** after CI/merge, run the producer on immutable production MC bytes and record exact hashes/counts/weights/ESS/resource use; compare H1 vs H3 only as a mechanism diagnostic; then implement stepwise quenching/visible-energy H4 before optical/digitized H5 and any return to #1049 inference.
+- **Status:** `ACTIVE / PARTIAL`

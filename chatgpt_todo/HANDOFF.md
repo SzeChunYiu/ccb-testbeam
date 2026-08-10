@@ -1,86 +1,45 @@
 # Latest Handoff
 
-## Validated merge: scale-invariant derived event-weight population
+## Active atom: scale-invariant nonnegative weight-helper migration (#1172)
 
-Protected `main` is now `069b1d66f1a775003b284376d71c76673136f60a`. PR #1171 exact head `d6c08aefe8da25c890ec5e797511fa53a53e4802` passed MC Validation CI run `31403740933`: lint, unit tests, diagnostic upload and enforcement all completed successfully. The PR was squash-merged only after that exact-head result.
+Protected `main` inspected for this session is `b12cc42d54cdb649f81f8d9b1001c130f85f9afe`, after PR #1173 finalized the validated #1171 handoff. The package primitive `ccb_mc_validation.truth.event_weight_population` / `nonnegative_event_measure_v2` is already validated on main. This session migrates duplicate nonnegative consumers; it does not change raw generator carrier semantics.
 
-The merged package primitive is `ccb_mc_validation.truth.event_weight_population` policy `nonnegative_event_measure_v2`. It sits **after** a source-specific raw-weight adapter and does not decide the unresolved `PrimaryWeight` carrier under #880/#1053.
+Implementation branch: `fix/weight-diagnostic-scale-invariance`.
 
-## Exact numerical contract
+### Contract
 
-For one already-derived nonnegative event weight `w_i` per immutable generator event,
+For one source-authorized nonnegative event weight `w_i` per generator event,
 
-`F_w(x) = sum_i w_i I(X_i <= x) / sum_i w_i`,
+`m=max(w)>0`, `u_i=w_i/m`, `S1'=fsum(u_i)`, `S2'=fsum(u_i^2)`,
 
-`ESS(w) = (sum_i w_i)^2 / sum_i w_i^2`,
+`ESS=S1'^2/S2'`, `max(w)/sum(w)=1/S1'`.
 
-and `d_max(w)=max(w)/sum(w)`.
+Any normalized probability/shape estimator must be invariant under `w -> c w` for finite `c>0`; raw `sum_w` and `sum_w2` are nonauthorising convenience provenance and may be null when binary64 cannot represent them.
 
-All three normalized quantities are invariant under a common positive factor. The rejected pre-merge mechanism nevertheless required the **raw-unit** binary64 first and second moments to remain finite, making validation depend on weight units/normalization.
+### Repository work in this branch
 
-The merged authorising representation is
+- `tools/audit/audit_mc_weight_usage.py` now delegates its nonnegative event-population diagnostics to `nonnegative_event_measure_v2`, publishes the population policy, scaled moments, ESS and max-weight fraction, and uses JSON `allow_nan=False`. It no longer rejects a valid scale-equivalent measure because raw `sum(w)` or `sum(w^2)` is unrepresentable.
+- `scripts/single_stave/strict_event_weights.py` delegates validation and ESS to the same primitive. Weighted mean, median, fraction and correlation use max-scaled weights so a valid extreme-scale vector is not accepted by one layer and then broken by reopening a raw denominator in the next layer.
+- Focused tests cover `[1,2,7]` at scales `1`, `1e300`, `1e-300`; `[1e154,1e154]`; `[1e308,1e308]`; equal minimum-positive subnormals; ordinary-range backward compatibility; and invalid NaN/negative/all-zero/shape/alignment cases.
+- Full reasoning and four-role audit are in `chatgpt_todo/archive/2026-08-10T155100Z_ARU-MC-WEIGHT-SCALE-MIGRATION.md`.
 
-`m = max(w) > 0`, `u_i = w_i/m`,
+### New child universe
 
-`S1' = math.fsum(u_i)`, `S2' = math.fsum(u_i^2)`,
+Repository search confirmed that `tools/audit/validate_mc_weights.py` intentionally supports signed weights. Negative weights define a signed measure, not the nonnegative probability/CDF contract. Issue #1174 (`ARU-MC-WEIGHT-SIGNED-001`) now owns the signed source/estimand/numerical contract, including cancellation, absolute-vs-signed ESS-like diagnostics and scale stability. Do not silently take absolute values or reuse `nonnegative_event_measure_v2` there.
 
-`ESS = S1'^2/S2'`, `d_max = 1/S1'`.
+Legacy `scripts/mc01_trigger_split_truth.py` also carries raw weight arithmetic, but it still chooses `PrimaryWeight[0]` and falls back to unit weight. That is an upstream #880/#1053 carrier defect; changing only its numerical summation would not make its scientific measure authoritative.
 
-The manifest-ready summary records `weight_scale=m`, `sum_w_over_scale=S1'`, `sum_w2_over_scale2=S2'`, ESS/fraction, zero/positive counts and dominance. Raw `sum_w` and `sum_w2` are convenience provenance only: they are finite values when faithfully representable and explicit null otherwise, never Inf/0 validity sentinels.
+### Four sequential AI reviewer votes
 
-## Executed discriminators
+- **Generator/source-physics lead — REVISE:** common scaling cancels only for normalized shape/probability estimands; absolute yield/rate needs a separate dimensional contract.
+- **Adversarial numerical reviewer — ACCEPT max-scaling / BLOCK raw moments:** `math.fsum` cannot rescue overflowed/underflowed products or an unrepresentable raw total.
+- **Independent statistics reviewer — ACCEPT local deterministic closure / BLOCK inference:** composition requires all normalized downstream estimators to use the same scale-stable weight representation; event clustering, signed weights and null calibration remain open.
+- **Claims/provenance reviewer — REVISE / BLOCK promotion:** software authorisation must not depend on arbitrary weight normalization, but immutable production weight ranges were unavailable and no historical physics result is declared changed or validated.
 
-Deterministic Python 3.13.5 / NumPy 2.3.5 fixtures established the defect before repair:
-
-- `[1,2,7]` accepted by the raw path with ESS `1.8518518518518519`;
-- the same relative weights scaled by `1e300` were rejected because raw `sum(w^2)=inf`, while max-scaling gives ESS `1.8518518518518516`, dominance `0.7`;
-- scaling by `1e-300` was rejected because raw `sum(w^2)=0`, while max-scaling gives ESS `1.851851851851852`, dominance `0.7`;
-- `[1e154,1e154]` overflowed the raw second-moment `fsum`, but scaled moments `(2,2)` give ESS `2`, dominance `0.5`;
-- `[1e308,1e308]` overflowed the raw total, but scaled moments still give ESS `2`, dominance `0.5`;
-- two minimum-positive subnormal equal weights underflowed in raw squares, while the scaled contract again gives ESS `2`, dominance `0.5`.
-
-An isolated focused replica returned `24 passed in 0.09s`; exact-head GitHub CI then supplied the merge-authorising repository validation. No ROOT or Geant4 input was used for this numerical atom.
-
-## Four sequential AI review votes
-
-- **Generator/source-physics lead — REVISE.** Common positive normalization cancels for normalized shape/probability estimands; absolute expected-yield estimands remain a distinct future contract. Raw adapter/source mode remains unresolved.
-- **Adversarial numerical-mechanism reviewer — BLOCK raw-unit moment validity.** Stable summation cannot recover products already overflowed/underflowed, and raw totals can themselves overflow for a finite vector.
-- **Independent statistics/validation reviewer — ACCEPT the local max-scaled nonnegative contract / BLOCK inference.** The hostile scaling fixtures preserve ESS/dominance, but cluster-aware ESS, signed weights and the weighted-null law remain separate universes.
-- **Claims/provenance reviewer — REVISE repository duplicates / no claim promotion.** A pass/fail boundary that changes only with arbitrary weight normalization is a software/provenance defect, but production ranges were not available and no historical physics result is declared numerically changed.
-
-## Open child: #1172
-
-Issue #1172 (`ARU-MC-WEIGHT-SCALE-001`) owns migration of the same rejected raw-moment validity mechanism still present on current main in at least:
-
-- `tools/audit/validate_mc_weights.py`;
-- `tools/audit/audit_mc_weight_usage.py`;
-- `scripts/single_stave/strict_event_weights.py`;
-- additional claim-bearing consumers found by repository search.
-
-The migration must preserve ordinary-range outputs, remain invariant under positive common scaling, never serialize Inf/NaN, and not silently redefine signed-weight generators. A future absolute-rate/yield estimator must declare its own dimensional normalization rather than borrowing this probability-measure contract.
-
-## Cross-atom dependency chain
-
-PR #1169 remains blocked from treating arbitrary `weights[0]` as a validated raw carrier. The required chain remains:
-
-`generator_measure_mode + immutable source provenance`
-
-`-> versioned raw_weight_adapter_id`
-
-`-> one derived event weight / immutable generator event`
-
-`-> nonnegative_event_measure_v2 population validation`
-
-`-> H3 event/stave truth diagnostic`
-
-`-> quenching/optical/WLS/SiPM/electronics/digitizer/reconstruction`
-
-`-> weighted DATA/MC inference only after #1049/#1052/#1164 gates`.
-
-The #880 issue and #1169 PR now both carry the scale-invariance follow-up so their earlier raw-moment notes are not mistaken for current policy.
-
-## Scientific boundary and next work
+### Scientific boundary
 
 No production MC ROOT file, Geant4 campaign, beam ROOT file, real campaign ESS, weighted spectrum, p-value, PID, penetration, timing, calibration, pile-up, expected rate, or detector-performance quantity was regenerated or promoted.
 
-Next highest-value work is source-dependent if immutable production MC bytes become accessible: measure per-event `PrimaryWeight` cardinality, sibling equality, PDG/TrackID order and generator mode under #880/#1053. If those bytes remain unavailable, execute #1172 as the strongest code-only leaf: migrate duplicate nonnegative event-weight diagnostics to the validated package primitive, retain signed-weight semantics separately, add extreme-scale/ordinary-range compatibility tests, and record whether any retained report changes.
+### Next gate
+
+Open a focused PR from the implementation branch and require exact-head protected CI. If green, merge and update #1172; if CI exposes a regression, repair on the same branch and require a new exact-head run. After merge, the highest-information physical task remains immutable generator-mode evidence for #880/#1053. If source bytes remain unavailable, next code-only work is #1174 or the next detector-chain atom, not repeated nonnegative algebra.

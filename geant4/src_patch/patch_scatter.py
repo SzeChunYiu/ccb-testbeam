@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
-"""Transform the HEAD-baseline ScatteringGenerator into the per-instance
-readiness implementation (issue #1182).
+"""Install the reviewed ScatteringGenerator sources or transform a HEAD baseline.
 
-Reads the HEAD baseline from the two files given on the command line (or
-sensible defaults) and writes the patched implementation next to this script.
-The patch is idempotent: re-running on an already-patched file is a no-op.
+This script serves two roles:
+
+1. **Installer** (``--src-root``): install the reviewed ``ScatteringGenerator.cc/.hh``
+   bytes into an external hibeam_g4 tree. Atomic per-file replacement, post-install
+   pair verification. The tracked sources are the authoritative patch payload.
+
+2. **Patch transform** (positional args): read a HEAD-baseline ``ScatteringGenerator.cc``
+   and ``.hh`` and write the per-instance readiness implementation (issue #1182)
+   next to this script. Idempotent: re-running on an already-patched file is a no-op.
 
 Per-instance readiness model
 ----------------------------
@@ -36,14 +41,42 @@ linearly interpolated p(theta)=sigma(theta)*sin(theta) on measured support
 ``cross_section_support_mode = measured_table_support_truncate_v1``).
 """
 
+from __future__ import annotations
+
+import argparse
 import base64
+import hashlib
+import os
 import sys
+import tempfile
 from pathlib import Path
 
 SRC_DIR = Path(__file__).resolve().parent
+HERE = SRC_DIR
+PAYLOADS = {
+    Path("include/ScatteringGenerator.hh"): HERE / "ScatteringGenerator.hh",
+    Path("src/ScatteringGenerator.cc"): HERE / "ScatteringGenerator.cc",
+}
 
 
 def main() -> int:
+    # Dual role: `--src-root` installs the tracked reviewed sources into an
+    # external hibeam_g4 tree (deployment); positional args transform a
+    # HEAD baseline in place (issue #1182 patch authoring).
+    if "--src-root" in sys.argv[1:]:
+        parser = argparse.ArgumentParser(description="Install reviewed ScatteringGenerator sources")
+        parser.add_argument("--src-root", type=Path, required=True,
+                            help="external hibeam_g4 tree root (must contain include/ and src/)")
+        parser.add_argument("--here", type=Path, default=HERE,
+                            help=argparse.SUPPRESS)
+        args = parser.parse_args(["-h"] if False else sys.argv[1:])
+        records = install_reviewed_sources(args.src_root)
+        for record in records:
+            print("OK {path}: bytes={bytes} sha256={sha256}".format(**record))
+        print("DONE: exact tracked ScatteringGenerator source pair verified; "
+              "compile/runtime validation still required")
+        return 0
+
     default_head_cc = Path("/tmp/HEAD_scatter.cc")
     default_head_hh = Path("/tmp/HEAD_scatter.hh")
     out_cc = SRC_DIR / "ScatteringGenerator.cc"
@@ -507,6 +540,50 @@ def patch_hh(hh: str) -> str:
     )
 
     return hh
+
+
+# ---------------------------------------------------------------------------
+# Installer: deploy reviewed sources into an external hibeam_g4 tree
+# ---------------------------------------------------------------------------
+
+def _sha256_bytes(data: bytes) -> str:
+    return hashlib.sha256(data).hexdigest()
+
+
+def _atomic_replace_bytes(destination: Path, data: bytes) -> None:
+    if not destination.parent.is_dir():
+        raise RuntimeError(f"target directory does not exist: {destination.parent}")
+    fd, tmp_name = tempfile.mkstemp(
+        prefix=f".{destination.name}.",
+        suffix=".tmp",
+        dir=destination.parent,
+    )
+    tmp = Path(tmp_name)
+    try:
+        with os.fdopen(fd, "wb") as stream:
+            stream.write(data)
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.replace(tmp, destination)
+    finally:
+        if tmp.exists():
+            tmp.unlink()
+
+
+def install_reviewed_sources(src_root: Path) -> list[dict[str, str | int]]:
+    records: list[dict[str, str | int]] = []
+    for relative, source in PAYLOADS.items():
+        payload = source.read_bytes()
+        destination = src_root / relative
+        _atomic_replace_bytes(destination, payload)
+        installed = destination.read_bytes()
+        if installed != payload:
+            raise RuntimeError(f"post-install byte mismatch: {destination}")
+        records.append({"path": str(relative), "bytes": len(payload), "sha256": _sha256_bytes(payload)})
+    for relative, source in PAYLOADS.items():
+        if (src_root / relative).read_bytes() != source.read_bytes():
+            raise RuntimeError(f"final source-pair byte mismatch: {src_root / relative}")
+    return records
 
 
 if __name__ == "__main__":

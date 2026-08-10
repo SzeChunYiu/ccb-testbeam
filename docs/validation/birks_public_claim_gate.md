@@ -2,10 +2,10 @@
 
 ## Scope
 
-This audit unit addresses issue #1131 only: whether the public numerical statement
-`kB = 0.0156 cm/MeV` is bound to the repository's declared canonical claim system.
-It does **not** validate the physical value of `kB`, the scintillator material, the
-Geant4 production-cut/step world, or the per-track `dE/dx` estimator.
+This audit unit addresses issue #1131 only: whether a public numerical Birks `kB`
+statement is bound to the repository's declared canonical claim system. It does
+**not** validate the physical value of `kB`, the scintillator material, the Geant4
+production-cut/step world, or the per-track `dE/dx` estimator.
 
 Base inspected: `main@cb812b445b778b162ec8cbecde02029c45fc6bfa`.
 
@@ -38,13 +38,14 @@ whether `0.0156` is physically transferable.
 
 Input objects are the controlled public documents, the 43-column canonical claim
 ledger, and the Cluster-E public claim table. The output is a binary authorization
-state for the public numerical Birks headline.
+state for any public numerical Birks headline.
 
 The invariant is:
 
 `public numeric claim -> exactly one ledger row -> exactly one declared source-table row`
 
-with compatible value, units, status and provenance.
+with compatible numerical value after unit normalization, units, status and
+provenance.
 
 A non-authorizing canonical state additionally requires explicit blockers and a
 visible status caveat wherever the number is published.
@@ -66,10 +67,11 @@ binding or complete public withholding.
 
 1. **Scintillator/quenching lead — ACCEPT gate, BLOCK physics promotion.** The gate
    correctly separates claim provenance from the unresolved material/model question.
-2. **Adversarial mechanism reviewer — ACCEPT with negative controls.** It must fail
-   if the public value survives after its ledger/source binding is removed, if `PASS`
-   is stronger than a GATED ledger state, or if a GATED value appears without a status
-   caveat.
+2. **Adversarial mechanism reviewer — ACCEPT after hardening.** The first local draft
+   detected only the literal `0.0156 cm/MeV`. That was itself a bypass: changing the
+   public value to `0.0157` could evade the gate. Version 1.1.0 now detects any numeric
+   Birks value in `cm/MeV` or `mm/MeV`, normalizes units, and compares public, ledger,
+   and source-table values. A mutation regression proves the bypass is closed.
 3. **Statistics/validation reviewer — ACCEPT software fixture validation; BLOCK real
    scientific validation.** The software tests are deterministic. No MC or beam-data
    inference is made by this unit.
@@ -89,19 +91,23 @@ prove the repository-local provenance defect.
 
 ## Implementation
 
-Added `tools/audit/validate_birks_public_claim.py` v1.0.0. It:
+Added `tools/audit/validate_birks_public_claim.py` v1.1.0. It:
 
 - reads README, WIKI, publication narrative, ledger and Cluster-E table once as exact
   UTF-8 byte snapshots and records SHA-256 provenance;
 - requires the canonical 43-column ledger schema and unique claim IDs;
-- detects public `0.0156 cm/MeV` Birks occurrences;
+- detects any numeric Birks `kB` occurrence written in `cm/MeV` or `mm/MeV`;
+- normalizes `mm/MeV` to `cm/MeV` before value comparison, so `0.156 mm/MeV` and
+  `0.0156 cm/MeV` are correctly treated as equivalent descriptions;
 - rejects a numeric public claim with no unique Birks ledger row;
+- rejects public or source-table values that disagree with the canonical ledger value;
 - rejects front-door assertions that the Cluster-E table is the source when it has no
   Birks row;
 - rejects public `PASS` when the canonical row is non-authorizing;
 - requires an explicit status caveat for a non-authorizing published value;
 - requires a GATED/BLOCKED/etc. ledger row to carry explicit blockers;
-- accepts the alternative remediation in which the public numerical value is withheld.
+- accepts the alternative remediation in which all controlled public numerical Birks
+  values are withheld.
 
 ## Validation executed in this session
 
@@ -115,16 +121,17 @@ python -m py_compile \
   tests/test_validate_birks_public_claim.py
 
 pytest -q tests/test_validate_birks_public_claim.py
-..........                                                               [100%]
-10 passed in 0.04s
+..............                                                           [100%]
+14 passed in 0.06s
 ```
 
-The 10 tests cover the current-like unbound state, corrected GATED state, stronger
-public status, missing status caveat, missing Cluster-E source row, missing blockers,
-complete withholding, duplicate Birks ledger rows, invalid UTF-8 and machine-readable
-CLI failure output. Both changed Python files were checked for lines over 100
-characters; none remain. `ruff` was unavailable in the local runtime and is left to
-repository CI.
+The 14 tests cover the current-like unbound state; a `0.0156 -> 0.0157` mutation that
+must not bypass the gate; a corrected GATED state; exact `cm/MeV` ↔ `mm/MeV`
+equivalence; public-value mismatch; source-value mismatch; stronger public status;
+missing status caveat; missing Cluster-E source row; missing blockers; complete
+withholding; duplicate Birks ledger rows; invalid UTF-8; and machine-readable CLI
+failure output. Both changed Python files were checked for lines over 100 characters;
+none remain. `ruff` was unavailable in the local runtime and is left to repository CI.
 
 ## Scientific boundary and next action
 

@@ -55,3 +55,46 @@ New highest-priority child: `ARU-MC-G4-LOADER-PREEXEC-ENV-001` — bind the exac
 Other loader children remain `ARU-MC-G4-LOADER-INITIAL-CWD-001`, `ARU-MC-G4-LOADER-CACHE-CONFIG-001`, `ARU-MC-G4-LOADER-TOKEN-HWCAPS-001`, and `ARU-MC-G4-PRELOAD-AUDIT-001`; linker-command/static-input, late-dlopen, non-executable relocation/GOT/PLT, wrapper/descendant, immutable-consumption, runtime-manifest, compiled source/stopping, event-weight and detector-response atoms remain open.
 
 No production Geant4 campaign was run, no beam or production-MC ROOT bytes were opened, and no angular distribution, event weight, B2/B8, PID, penetration, timing, calibration, pile-up, ESS, p-value, rate, or detector-performance quantity was regenerated or promoted. #1182 and CL-021 remain gated.
+
+---
+
+## Selected atom: MC event/stave deposited-energy statistical unit
+
+PR #1169 on `feat/mc01-event-stave-truth-contract` implements the bounded H3 child of #1052/#1164. Branch point is protected `main@d088b5a886e0c8891d7926af7015193db7a503b8`.
+
+The legacy comparison product is built from charged `Sci_bar_EDep` transport/hit records with a repeated event weight. The replacement contract uses one generator-event row and defines, for B stave `k`,
+
+`E_dep(e,k) = sum_h EDep_h I(event_h=e, arm_h=B, layer_h=k)`.
+
+A charged-only sum is retained separately so trigger-charge semantics cannot silently redefine total deposited energy. The exact transport-step-splitting invariant is: replacing one record `E` by records `E_j` with `sum(E_j)=E` must leave event/stave EDep unchanged even though hit-row multiplicity changes.
+
+## Implemented repository work
+
+- `src/ccb_mc_validation/truth/event_stave.py` aggregates all-particle and charged-only B-stave EDep, validates event identity/topology/matrices, and enforces one nonnegative finite first-primary `PrimaryWeight` per selected generator event.
+- It reuses the existing content-bound `stable_event_id`/`build_event_rows` contract and stores Sample-I membership inside the Sample-II row universe, preserving `Sample I subset Sample II` without physical row duplication.
+- Source SHA-256 and byte count are measured from one opened regular-file descriptor; Uproot receives a duplicate seekable stream from that same open file and descriptor metadata must remain stable through consumer exit.
+- `scripts/mc01_event_stave_truth.py` writes `mc_event_stave_edep_v1.npz` and a manifest only after source consumption succeeds. The manifest records source identity, population scope, weights/ESS and the missing detector-response stages.
+- The new product has no `EDEP_CAP`; the legacy silent `600000` hit-prefix retention cannot truncate its event/stave arrays. `--max-events` is explicit and marked `PREFIX_DIAGNOSTIC`.
+
+## Executed falsifiers
+
+The new tests cover exact step-splitting energy invariance, multi-record event aggregation, neutral-vs-charged deposition, A-arm exclusion, malformed energy/layer input, invalid event weights, duplicate event IDs, broken Sample-I/Sample-II nesting, charged>total corruption, exact opened-source hashing, in-place source mutation, and a mocked Uproot file-like integration. A private isolated aggregation harness using minimal import stubs returned 16 passed with the builder-integration test excluded; only repository CI may authorize merge.
+
+The neutral-deposit fixture is intentionally discriminating: a selected B0 event with proton 2 MeV plus neutron 3 MeV has all-particle `E_dep=5 MeV` and charged-only diagnostic `2 MeV`. Trigger-charge and detector deposited-energy scope are not the same contract.
+
+## Four role-separated review disposition
+
+- **Detector / Geant4 response lead — ACCEPT H3 / BLOCK detector closure.** Event/stave EDep is the correct invariant truth intermediate, but quenching through digitization remains absent.
+- **Adversarial mechanism reviewer — ACCEPT bounded contract / REVISE production-scale execution.** Hit-row inference is representation-dependent; source and identity contracts are now fail-closed. Real ROOT scale/memory and the pre-existing truncated event-ID design remain checks.
+- **Statistics / validation reviewer — ACCEPT event statistical unit / BLOCK authorising p-value.** One weight per event and retained nested-trigger membership repair necessary topology, not null calibration.
+- **Claims / provenance reviewer — ACCEPT nonauthorising provenance / BLOCK promotion.** A scalar MeV-to-ADC gain cannot substitute for quenching, optical/WLS, SiPM, electronics, sampling and identical reconstruction.
+
+## Scientific and claim boundary
+
+`mc_event_stave_edep_v1` is explicitly `NONAUTHORISING_TRUTH_DIAGNOSTIC`. No production ROOT file was available in this runtime, no Geant4 campaign was rerun, and no DATA/MC discrepancy, p-value, ADC/MeV scale, PID, timing, penetration, energy, pile-up or detector-performance quantity changed. #1049, #1052, #1164 and #1166 remain scientifically open.
+
+## Next highest-value work
+
+First require exact-head/current-base MC Validation CI on #1169. If it passes, merge without bypassing protection and execute the producer on the immutable production MC source, recording source/output SHA-256, event counts, Sample-I/Sample-II membership counts, sum of weights, sum of squared weights, ESS, runtime and peak memory. Compare legacy H1 charged-hit and H3 event/stave spectra only as a mechanism diagnostic.
+
+Then implement H4: stepwise quenching/visible energy at the Geant4-step level before event aggregation. The next discriminating controls are step subdivision invariance under the chosen Birks formulation, stopping-power/local-dE/dx definition, material-specific quenching parameters and secondary deposition semantics. H5 still requires optical/WLS transport, direct fibre light, SiPM PDE/microcells/noise/recovery, electronics impulse/saturation, digitizer phase/aperture and identical DATA-like reconstruction before any detector-level comparison or #1049 p-value can become authorising.

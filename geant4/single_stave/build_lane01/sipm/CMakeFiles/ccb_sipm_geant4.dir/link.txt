@@ -1,2 +1,0 @@
-/sw/easybuild_milan/software/binutils/2.40-GCCcore-12.3.0/bin/ar qc libccb_sipm_geant4.a CMakeFiles/ccb_sipm_geant4.dir/adapters/geant4/src/Geant4BoundaryCollector.cc.o
-/sw/easybuild_milan/software/binutils/2.40-GCCcore-12.3.0/bin/ranlib libccb_sipm_geant4.a

@@ -1,9 +1,0 @@
-# vis_vrml2.mac - export the exact Geant4 geometry to a VRML 2.0 (.wrl) file.
-# Headless-safe (writes a file, no display). Output: g4_00.wrl
-/vis/open VRML2FILE
-/vis/viewer/set/autoRefresh false
-/vis/drawVolume
-/vis/viewer/set/viewpointThetaPhi 55 30
-/vis/viewer/set/style surface
-/vis/viewer/set/lineSegmentsPerCircle 80
-/vis/viewer/flush

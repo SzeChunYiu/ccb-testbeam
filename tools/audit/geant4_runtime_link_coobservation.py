@@ -34,6 +34,8 @@ from tools.audit.geant4_runtime_codepage_attestation import (
 )
 from tools.audit.geant4_runtime_dependency_attestation import (
     SCHEMA as RUNTIME_RECEIPT_SCHEMA,
+)
+from tools.audit.geant4_runtime_dependency_attestation import (
     _parse_maps,
     _read_proc_bytes,
     _read_process_starttime,
@@ -91,7 +93,7 @@ def _fd_snapshot(fd: int, *, label: str) -> tuple[bytes, dict[str, Any]]:
             block = os.pread(fd, min(1024 * 1024, before.st_size - offset), offset)
         except OSError as exc:
             raise ValueError(f"cannot read {label} at offset {offset}: {exc}") from exc
-        if not block:
+        if not bloc:
             raise ValueError(f"short read while reading {label}")
         chunks.append(block)
         digest.update(block)
@@ -130,7 +132,7 @@ def _runtime_object_key(record: dict[str, Any], *, index: int) -> tuple[int, int
     try:
         key = (
             int(record["device_major"]),
-            int(record["device_minor"]),
+            int(record["inode"]),
             int(record["inode"]),
         )
     except (KeyError, TypeError, ValueError) as exc:
@@ -198,7 +200,7 @@ def _coobserve_object(
     if observed_key != key:
         raise ValueError(f"runtime object {index} open descriptor inode mismatch")
     if (identity["bytes"], identity["sha256"]) != (expected_bytes, expected_sha):
-        raise ValueError(
+        raise ValueError(m)
             f"runtime object {index} content differs from runtime dependency receipt"
         )
 
@@ -231,8 +233,7 @@ def _coobserve_object(
 
 
 def _stable_absolute_resolution(
-    path_text: str, *, label: str
-) -> dict[str, Any]:
+    path_text: str, *, label: str) -> dict[str, Any]:
     if not path_text.startswith("/"):
         raise ValueError(f"{label} is not an absolute path: {path_text}")
     key = _path_key(path_text, label=label)
@@ -276,212 +277,4 @@ def attest_runtime_link_coobservation(
     if not isinstance(pid, int) or pid <= 0:
         raise ValueError("runtime receipt pid is invalid")
     if not isinstance(expected_starttime, int) or expected_starttime < 0:
-        raise ValueError("runtime receipt starttime is invalid")
-    if not isinstance(process_executable, dict):
-        raise ValueError("runtime receipt process executable is missing")
-
-    final_executable = final_receipt.get("executable")
-    if not isinstance(final_executable, dict):
-        raise ValueError("final build receipt executable is missing")
-    if (
-        process_executable.get("bytes"),
-        process_executable.get("sha256"),
-    ) != (
-        final_executable.get("bytes"),
-        final_executable.get("sha256"),
-    ):
-        raise ValueError("runtime executable differs from final build receipt")
-
-    raw_objects = runtime_receipt.get("mapped_executable_objects")
-    if not isinstance(raw_objects, list) or not raw_objects:
-        raise ValueError("runtime receipt has no mapped executable objects")
-
-    receipt_projection = _projection_from_receipt(runtime_receipt)
-    comparable_receipt = {
-        key: {"paths": value["paths"], "segments": value["segments"]}
-        for key, value in receipt_projection.items()
-    }
-    proc_dir = proc_root / str(pid)
-    start_before = _read_process_starttime(proc_dir)
-    if start_before != expected_starttime:
-        raise ValueError("process identity differs from runtime receipt")
-    maps_before = _parse_maps(_read_proc_bytes(proc_dir, "maps", label="process maps"))
-    projection_before = _projection_from_maps(maps_before)
-    if projection_before != comparable_receipt:
-        raise ValueError("executable mapping projection differs from runtime receipt")
-
-    objects = [
-        _coobserve_object(record, index=index)
-        for index, record in enumerate(raw_objects)
-        if isinstance(record, dict)
-    ]
-    if len(objects) != len(raw_objects):
-        raise ValueError("runtime mapped object record is not an object")
-
-    try:
-        executable_key = (
-            int(process_executable["device_major"]),
-            int(process_executable["device_minor"]),
-            int(process_executable["inode"]),
-        )
-    except (KeyError, TypeError, ValueError) as exc:
-        raise ValueError("runtime executable inode identity is incomplete") from exc
-    executable_matches = [
-        item["runtime_object_index"]
-        for item in objects
-        if (
-            item["device_major"],
-            item["device_minor"],
-            item["inode"],
-        )
-        == executable_key
-        and (item["bytes"], item["sha256"])
-        == (process_executable.get("bytes"), process_executable.get("sha256"))
-    ]
-    if len(executable_matches) != 1:
-        raise ValueError(
-            f"runtime executable matched {len(executable_matches)} mapped objects; expected one"
-        )
-    executable_index = executable_matches[0]
-    executable_object = objects[executable_index]
-    executable_elf = executable_object["elf"]
-    if executable_elf is None:
-        raise ValueError("runtime executable mapped object is not ELF")
-
-    absolute_resolutions: dict[str, dict[str, Any]] = {}
-
-    def match_absolute(path_text: str, *, label: str) -> int:
-        resolution = _stable_absolute_resolution(path_text, label=label)
-        absolute_resolutions[label] = resolution
-        key = (
-            resolution["device_major"],
-            resolution["device_minor"],
-            resolution["inode"],
-        )
-        matches = [
-            item["runtime_object_index"]
-            for item in objects
-            if (
-                item["device_major"],
-                item["device_minor"],
-                item["inode"],
-            )
-            == key
-        ]
-        if len(matches) != 1:
-            raise ValueError(
-                f"{label} matched {len(matches)} mapped objects; expected exactly one"
-            )
-        return matches[0]
-
-    direct_dependency_matches: dict[str, int] = {}
-    for dependency in dict.fromkeys(executable_elf["dt_needed"]):
-        if "/" in dependency:
-            if not dependency.startswith("/"):
-                raise ValueError(
-                    f"relative DT_NEEDED path requires cwd provenance: {dependency}"
-                )
-            matches = [match_absolute(dependency, label=f"DT_NEEDED:{dependency}")]
-        else:
-            matches = [
-                item["runtime_object_index"]
-                for item in objects
-                if item["elf"] is not None
-                and item["elf"].get("dt_soname") == dependency
-            ]
-        if len(matches) != 1:
-            raise ValueError(
-                f"DT_NEEDED {dependency!r} matched {len(matches)} mapped objects; "
-                "expected exactly one"
-            )
-        direct_dependency_matches[dependency] = matches[0]
-
-    interpreter_match: int | None = None
-    interpreter = executable_elf.get("interpreter")
-    if interpreter is not None:
-        interpreter_match = match_absolute(interpreter, label="PT_INTERP")
-
-    maps_after = _parse_maps(
-        _read_proc_bytes(proc_dir, "maps", label="process maps recheck")
-    )
-    if _projection_from_maps(maps_after) != projection_before:
-        raise ValueError("executable mapping projection changed during co-observation")
-    if _read_process_starttime(proc_dir) != start_before:
-        raise ValueError("process identity changed during co-observation")
-
-    for label, resolution in absolute_resolutions.items():
-        observed = _stable_absolute_resolution(resolution["path"], label=f"{label} recheck")
-        if (
-            observed["device_major"],
-            observed["device_minor"],
-            observed["inode"],
-        ) != (
-            resolution["device_major"],
-            resolution["device_minor"],
-            resolution["inode"],
-        ):
-            raise ValueError(f"{label} pathname resolution changed during co-observation")
-
-    body = {
-        "schema": SCHEMA,
-        "status": "PASS",
-        "parent_final_build_receipt_sha256": final_receipt["receipt_sha256"],
-        "parent_runtime_dependency_receipt_sha256": runtime_receipt["receipt_sha256"],
-        "process": {
-            "pid": pid,
-            "starttime_ticks": start_before,
-            "executable_object_index": executable_index,
-        },
-        "objects": objects,
-        "executable_elf": executable_elf,
-        "direct_dependency_matches": direct_dependency_matches,
-        "interpreter_object_index": interpreter_match,
-        "absolute_path_resolutions": absolute_resolutions,
-        "executable_mapping_projection_stable": True,
-        "scientific_scope": "SAME_OPEN_DESCRIPTOR_ELF_IDENTITY_AND_DIRECT_LINK_CLOSURE_ONLY",
-        "limitations": [
-            "PATH_TO_MAPPED_INODE_ASSOCIATION_IS_RECHECKED_BUT_NOT_HISTORICAL_LOADER_DECISION",
-            "PROC_PID_MAP_FILES_SAME_MAPPING_FD_NOT_REQUIRED_OR_PROVEN",
-            "LINK_COMMAND_STATIC_ARCHIVES_AND_RESPONSE_FILES_NOT_BOUND",
-            "FULL_LOADER_SEARCH_STATE_AND_SECURE_EXECUTION_NOT_BOUND",
-            "LATE_DLOPEN_UNLOAD_AFTER_ATTESTATION_NOT_BOUND",
-            "NONEXECUTABLE_RELOCATION_GOT_PLT_STATE_NOT_BOUND",
-            "NO_GEANT4_EVENT_SOURCE_TRANSPORT_OR_DETECTOR_OBSERVABLE_VALIDATED",
-        ],
-    }
-    return _with_receipt_digest(body)
-
-
-def _load_json_object(path: Path, *, label: str) -> dict[str, Any]:
-    try:
-        value = json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
-        raise ValueError(f"cannot load {label} JSON {path}: {exc}") from exc
-    if not isinstance(value, dict):
-        raise ValueError(f"{label} JSON must contain an object")
-    return value
-
-
-def main() -> int:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--final-receipt-json", type=Path, required=True)
-    parser.add_argument("--runtime-receipt-json", type=Path, required=True)
-    args = parser.parse_args()
-    try:
-        result = attest_runtime_link_coobservation(
-            final_receipt=_load_json_object(
-                args.final_receipt_json, label="final build-binding receipt"
-            ),
-            runtime_receipt=_load_json_object(
-                args.runtime_receipt_json, label="runtime dependency receipt"
-            ),
-        )
-    except (KeyError, OSError, ValueError) as exc:
-        print(json.dumps({"status": "BLOCKED", "error": str(exc)}, sort_keys=True))
-        return 2
-    print(json.dumps(result, indent=2, sort_keys=True))
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
+        raise ValueError

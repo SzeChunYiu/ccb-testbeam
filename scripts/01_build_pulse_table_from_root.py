@@ -21,7 +21,6 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import uproot
 import yaml
 
 from ccb_mc_validation.s00_selector_contract import (
@@ -167,75 +166,6 @@ def resolve_ml_bootstrap_reps(config: dict) -> int:
     if value < 1:
         raise ValueError(f"bootstrap_reps must be >= 1, got {value}")
     return value
-
-
-def apply_two_stage_design_weights(
-    ml_rows: "pd.DataFrame",
-    *,
-    max_sample: int,
-    random_seed: int,
-    keep_selected: float,
-    keep_rejected: float,
-) -> tuple["pd.DataFrame", dict]:
-    """Apply per-class Stage-2 caps and recompute two-stage design weights.
-
-    Stage 1 retention probabilities are ``keep_selected`` / ``keep_rejected``.
-    Conditional on the Stage-1 sample of size ``n1_c``, the uniform within-class
-    cap retains each row with ``p2_c = min(1, max_sample / n1_c)``. The design
-    weight that reconstructs the finite population is
-
-        w_c = 1 / (p1_c * p2_c).
-
-    Returns the capped frame plus a provenance dict of pre/post counts.
-    """
-    if ml_rows is None or len(ml_rows) == 0:
-        empty = ml_rows.copy() if ml_rows is not None else pd.DataFrame()
-        return empty, {
-            "max_sample_per_class": int(max_sample),
-            "stage1_counts": {},
-            "stage2_counts": {},
-            "p_cap_conditional": {},
-        }
-
-    capped_parts: list[pd.DataFrame] = []
-    stage1_counts: dict[str, int] = {}
-    stage2_counts: dict[str, int] = {}
-    p_cap: dict[str, float] = {}
-
-    for selected_value, subset in ml_rows.groupby("selected", sort=True):
-        key = str(int(selected_value))
-        n1 = int(len(subset))
-        n_keep = min(n1, int(max_sample))
-        p2 = 1.0 if n1 <= 0 else float(n_keep) / float(n1)
-        drawn = subset.sample(
-            n=n_keep,
-            random_state=int(random_seed) + int(selected_value),
-        ).copy()
-        p1 = float(keep_selected) if int(selected_value) == 1 else float(keep_rejected)
-        # Guard against numerical underflow; p2 is in (0, 1].
-        p2_safe = max(p2, 1e-15)
-        drawn["p_case_control"] = p1
-        drawn["p_cap_conditional"] = p2
-        drawn["pi_total"] = p1 * p2
-        drawn["design_weight"] = 1.0 / (p1 * p2_safe)
-        drawn["sampling_weight"] = drawn["design_weight"].to_numpy(dtype=float)
-        capped_parts.append(drawn)
-        stage1_counts[key] = n1
-        stage2_counts[key] = int(len(drawn))
-        p_cap[key] = float(p2)
-
-    out = pd.concat(capped_parts, ignore_index=True) if capped_parts else ml_rows.iloc[0:0].copy()
-    provenance = {
-        "max_sample_per_class": int(max_sample),
-        "stage1_counts": stage1_counts,
-        "stage2_counts": stage2_counts,
-        "p_cap_conditional": p_cap,
-        "keep_selected": float(keep_selected),
-        "keep_rejected": float(keep_rejected),
-        "weight_definition": "1/(p_case_control * p_cap_conditional)",
-        "estimand_label": "two_stage_design_weighted_population_diagnostic",
-    }
-    return out, provenance
 
 
 def case_control_sampling_weight(
@@ -410,6 +340,8 @@ def resolve_analysis_polarity(n_channels: int, config: dict | None = None) -> tu
 
 
 def iter_raw_events(path: Path, step_size: int = 10000) -> Iterable[dict]:
+    import uproot
+
     tree = uproot.open(path)["h101"]
     branches = ["EVENTNO", "EVT", "HRDv"]
     yield from tree.iterate(branches, step_size=step_size, library="np")
@@ -992,93 +924,18 @@ def run_ml_check(
     return ml_summary
 
 
-def write_checksums(
-    config: dict,
-    out_dir: Path,
-    *,
-    skip_sorted: bool = False,
-) -> pd.DataFrame:
-    """Hash inputs that exist/were consumed; record missing expected inputs (#973).
-
-    ``--skip-sorted`` no longer requires ``--skip-sha256``. Raw hashes are always
-    retained when raw files exist. Sorted files skipped by gate state are recorded
-    with an explicit ``missing_reason`` instead of unconditionally opening them.
-    """
-    rows: List[dict] = []
-
-    def _append(
-        path: Path,
-        *,
-        role: str,
-        expected: bool,
-        consumed: bool,
-        missing_reason: str | None = None,
-    ) -> None:
-        present = path.is_file()
-        if present:
-            rows.append(
-                {
-                    "file": str(path),
-                    "role": role,
-                    "expected_input": bool(expected),
-                    "present": True,
-                    "consumed": bool(consumed),
-                    "sha256": sha256_file(path),
-                    "bytes": int(path.stat().st_size),
-                    "missing_reason": None if consumed else (missing_reason or "not_consumed"),
-                }
-            )
-            return
-        rows.append(
-            {
-                "file": str(path),
-                "role": role,
-                "expected_input": bool(expected),
-                "present": False,
-                "consumed": False,
-                "sha256": None,
-                "bytes": None,
-                "missing_reason": missing_reason or "missing_file",
-            }
-        )
-
+def write_checksums(config: dict, out_dir: Path) -> pd.DataFrame:
+    files = []
     for path in sorted(Path("data/raw").glob("**/*")):
         if path.is_file():
-            _append(path, role="data_raw_tree", expected=False, consumed=True)
-
-    raw_root = Path(config["raw_root_dir"])
-    sorted_b = Path(config.get("sorted_b_dir") or "")
+            files.append(path)
     for run in configured_runs(config):
-        _append(
-            raw_file(raw_root, run),
-            role="raw_root",
-            expected=True,
-            consumed=True,
-            missing_reason="missing_raw_root",
-        )
-        sorted_path = (
-            sorted_file(sorted_b, run)
-            if str(sorted_b)
-            else Path(f"hrdb_run_{run:04d}-sorted.root")
-        )
-        if skip_sorted:
-            reason = "skip_sorted" if not sorted_path.is_file() else "not_consumed_skip_sorted"
-            _append(
-                sorted_path,
-                role="sorted_b",
-                expected=True,
-                consumed=False,
-                missing_reason=reason,
-            )
-        else:
-            _append(
-                sorted_path,
-                role="sorted_b",
-                expected=True,
-                consumed=True,
-                missing_reason="missing_sorted_root",
-            )
+        files.append(raw_file(Path(config["raw_root_dir"]), run))
+        files.append(sorted_file(Path(config["sorted_b_dir"]), run))
 
+    rows = []
+    for path in files:
+        rows.append({"file": str(path), "sha256": sha256_file(path), "bytes": path.stat().st_size})
     df = pd.DataFrame(rows)
     df.to_csv(out_dir / "input_sha256.csv", index=False)
     return df

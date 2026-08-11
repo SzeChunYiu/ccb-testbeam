@@ -21,7 +21,10 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-root = ["uproot>=5.6"]
+# uproot 5.7.x has an RNTuple cascade bug (`WritableDirectory._cascadentuple`
+# returns a SimpleNamespace) that breaks `recreate`/`mktree`+`extend` writes in
+# the test fixtures. Pin to the last 5.6.x release until that is fixed upstream.
+root = ["uproot>=5.6,<5.7"]
 dev = [
     "pytest>=7.0",
     "ruff>=0.1",

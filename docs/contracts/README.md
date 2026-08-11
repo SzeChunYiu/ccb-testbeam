@@ -12,18 +12,6 @@ against it.
 | [../adr/ADR-0002-geometry-kinematics-hypotheses.md](../adr/ADR-0002-geometry-kinematics-hypotheses.md) | #987/#989/#991/#992 | Versioned hypothesis registry; fail-closed when `geometry_profile_id` unset; no silent length/spacing/fibre/KE pick |
 | [../adr/ADR-0003-beam-intersection-preflight.md](../adr/ADR-0003-beam-intersection-preflight.md) | #999 | Geometry-aware primary ray–stave preflight; rejects miss configs unless `allow_miss` |
 | [`configs/geometry/registry_index.yaml`](../../configs/geometry/registry_index.yaml) | Wave A Lane 03 | Machine-readable geometry/mapping/kinematics hypothesis index |
-| [DAQ_EVENT_KEY_CONTRACT.md](DAQ_EVENT_KEY_CONTRACT.md) | #961 | canonical `(run, EVENTNO)`; bans EVT-only joins |
-| [RUN_LEDGER.md](RUN_LEDGER.md) | #962 | Sample II calib = run 64 (not 61) |
-| [RAW_SORTED_WORD_CLOSURE.md](RAW_SORTED_WORD_CLOSURE.md) | #953 | scalar hrdMax proxy is non-authorising |
-| [ADC_SATURATION_WORLD_REGISTRY.md](ADC_SATURATION_WORLD_REGISTRY.md) | #1073 | fail-closed until hardware transform resolved |
-| [ADR-DAQ-HARDWARE-SAMPLING-1014.md](ADR-DAQ-HARDWARE-SAMPLING-1014.md) | #1014 | V1742 vs 100 MS/s **BLOCKED** — do not invent hardware |
-| [S00_VERIFIED_READ_CONTRACT.md](S00_VERIFIED_READ_CONTRACT.md) | #1149 | pathname resolve ≠ same-bytes read |
-
-| [PUBLIC_CLAIM_AUTHORITY.json](PUBLIC_CLAIM_AUTHORITY.json) | #969 | Machine-readable README/WIKI/dashboard claim authority |
-| [SELECTION_FLOW_DAG.json](SELECTION_FLOW_DAG.json) | #970 | Immutable timing selection-flow DAG node IDs |
-| [REVIEW_STATUS_TAXONOMY.json](REVIEW_STATUS_TAXONOMY.json) | #990 | Nature-reviewer badges cannot substitute claim validation |
-| [MV0_DIGITIZER_MODEL_IDENTITY.json](MV0_DIGITIZER_MODEL_IDENTITY.json) | #1078 | Frozen executable MV0 digitizer identity |
-| [SCIENTIFIC_ISSUE_COMPLETION_GATES.json](SCIENTIFIC_ISSUE_COMPLETION_GATES.json) | #1218 | Merge auto-close must not override scientific completion gates |
 
 ## Enforcement (offline, live now)
 
@@ -40,13 +28,13 @@ are recorded machine-readably in
 These are the labels that must appear in any status document; the underlying
 re-runs are `BLOCKED_COMPUTE`/`BLOCKED_EXTERNAL` on LUNARC.
 
-## Lane 10 Wave B fail-closed contracts
+## Lane 10 Wave C contracts
 
-| Contract | Issue | Policy |
-|---|---|---|
-| [TRIGGER_HARDWARE_RESPONSE.json](TRIGGER_HARDWARE_RESPONSE.json) | #1045 | Hardware trigger `UNKNOWN_EXTERNAL` / `BLOCKED`; MC uses `MC_TRIGGER_PROXY` only ([mc_validation ADR-0002](../mc_validation/ADR-0002-trigger-hardware-proxy-blocked.md)). No invented hardware parameters. |
-| [I885_ANGULAR_PHASE_SPACE.json](I885_ANGULAR_PHASE_SPACE.json) | #1093 | I885 campaign is `NORMAL_INCIDENCE_ONLY`; angular/azimuth closure claims blocked. |
-
-Scientific PRs must not auto-close research-universe issues without ledgered
-completion/successor-transfer evidence (#1218 / Wave A `fix/lane10-waveA`). Prefer `Refs`.
-
+| Contract | Issue | Role |
+|----------|-------|------|
+| [CLOSE_INTENT.schema.json](CLOSE_INTENT.schema.json) | #1218 | Versioned close-intent manifest for scientific-universe issues |
+| [SCIENTIFIC_ISSUE_COMPLETION_GATES.json](SCIENTIFIC_ISSUE_COMPLETION_GATES.json) | #1218 | Merge auto-close must not override completion gates |
+| [MERGE_CLOSE_RESIDUAL.md](MERGE_CLOSE_RESIDUAL.md) | #1218 | Documented GitHub merge-message residual + reconciliation |
+| [GEOMETRY_DIGEST_V2.json](GEOMETRY_DIGEST_V2.json) | #986 | Canonical named-field geometry digest (excludes Birks/optics) |
+| [NEUTRON_TRACKING_TIME_CUT.json](NEUTRON_TRACKING_TIME_CUT.json) | #1091 | Implicit QGSP_BIC 10 µs neutron cut must be recorded |
+| [TIMING_METHOD_SELECTION.json](TIMING_METHOD_SELECTION.json) | #1062 | Same-sample min(sigma68) is exploratory only |

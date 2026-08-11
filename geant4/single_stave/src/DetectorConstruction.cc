@@ -26,6 +26,7 @@
 #include <array>
 #include <iostream>
 #include <sstream>
+#include <iomanip>
 #include "Sha256.hh"  // SHA-256 geometry digest (defect #7)
 
 // Coordinate convention: x=length(+-25cm), y=width(+-2.59cm), z=thickness(+-1cm).
@@ -34,18 +35,30 @@
 
 DetectorConstruction::DetectorConstruction(const AppConfig& cfg) : cfg_(cfg) {
   messenger_ = new DetectorMessenger(const_cast<AppConfig*>(&cfg_));
-  // Deterministic geometry hash (constants + Birks) available before
-  // Initialize(), so ActionInitialization can be set in the conventional order.
+  // GEOMETRY_DIGEST_V2 (#986): named-field canonical digest of geometry only.
+  // Birks / optical response knobs are excluded; they remain in the run sidecar.
   const double rCore = kFibreRadius * 0.94, rInner = kFibreRadius * 0.97,
                rOuter = kFibreRadius * 1.00;
+  auto fmt = [](double v) {
+    std::ostringstream o;
+    o << std::setprecision(17) << (v / CLHEP::mm);
+    return o.str();
+  };
   std::ostringstream gs;
-  gs << kStaveHalfX << kStaveHalfY << kStaveHalfZ << kHoleRadius << kFibreRadius
-     << kFibreHalfX << kFibreSep << rCore << rInner << rOuter
-     << cfg_.birks_kB_mm_per_MeV << cfg_.optical_interface_model
-     << cfg_.scintillator_material << cfg_.coating_material
-     << cfg_.wls_mean_number_photons << cfg_.y11_direct_scint_yield_per_MeV
-     << cfg_.tio2_finish << cfg_.tio2_specular_lobe << cfg_.tio2_specular_spike
-     << cfg_.tio2_backscatter << cfg_.y11_attenuation_form;
+  gs << "schema_version=2.0.0"
+     << ";stave_half_x_mm=" << fmt(kStaveHalfX)
+     << ";stave_half_y_mm=" << fmt(kStaveHalfY)
+     << ";stave_half_z_mm=" << fmt(kStaveHalfZ)
+     << ";coating_thk_mm=" << fmt(kCoatingThk)
+     << ";hole_radius_mm=" << fmt(kHoleRadius)
+     << ";fibre_radius_mm=" << fmt(kFibreRadius)
+     << ";fibre_half_x_mm=" << fmt(kFibreHalfX)
+     << ";fibre_sep_mm=" << fmt(kFibreSep)
+     << ";sensor_thk_mm=" << fmt(kSensorThk)
+     << ";fibre_core_radius_mm=" << fmt(rCore)
+     << ";fibre_inner_clad_radius_mm=" << fmt(rInner)
+     << ";fibre_outer_clad_radius_mm=" << fmt(rOuter)
+     << ";far_end_mode=" << cfg_.far_end_mode;
   geometry_hash_ = Sha256::hex(gs.str());
 }
 DetectorConstruction::~DetectorConstruction() { delete messenger_; }

@@ -1,43 +1,39 @@
 # Latest Handoff
 
-## Selected atom: bind the validated Geant4 source/input state to the built executable
+## Validated atom: bind Geant4 source/staged-input state to executable identity
 
-Protected `main` advanced from `774eda1b1180098c7e00757db312ede41491094b` to `17349d0a72a267723b805615480e76519ed7b8a8` after PR #1198 passed exact-head MC Validation and was squash-merged. The merged `ccb_geant4_external_overlay_v1` gate proves only a pre-build external baseline/reviewed-overlay state. #1182 remains open; CL-021 and detector inference remain gated.
+Protected `main` advanced from `17349d0a72a267723b805615480e76519ed7b8a8` to `948ea2885e7c54751f4f4feaa3c1fcfc63fc9e8f` when PR #1199 was squash-merged after exact-head CI. The predecessor #1198 external-overlay gate and the #1199 two-boundary build-binding gate are now repository state. #1182 remains open; CL-021 and detector inference remain gated.
 
-### New atomic contract
+### Atomic contract now validated on main
 
-`ARU-MC-G4-BUILD-BINDING-001` asks whether the source and staged-input bytes observed before compilation can be bound to a resulting executable without pretending that a mutable path is an immutable build snapshot.
+`ARU-MC-G4-BUILD-BINDING-001` implements two content-bound observations around a build:
 
-The implemented two-phase contract is:
+- `begin`: validate the exact external baseline/reviewed overlay and hash each uniquely labelled staged input from one opened regular non-symlink byte stream as `(resolved path, bytes, sha256)`; record explicit build-contract metadata and a canonical JSON receipt digest.
+- `finalize`: verify the begin receipt digest, repeat the external source validation, require source projection equality, re-hash every staged input and require exact identity, then hash the resulting regular non-symlink executable and bind the final receipt to the begin-receipt digest.
 
-- `begin`: re-use the exact #1198 external-overlay validator and record each declared staged input from one opened regular non-symlink stream as `(label, resolved path, bytes, sha256)`; store the explicit build-contract JSON and a canonical receipt digest.
-- `finalize`: verify the begin receipt digest, re-run the external source validator, require the source projection to match the begin state exactly, re-hash all staged inputs and require exact identity, then record the resulting regular non-symlink executable by SHA-256/byte count. The final canonical receipt binds to the begin receipt digest.
+This is an integrity statement about what was observed at the two boundaries. It is not an immutable-build proof: a transient mutation that occurs after `begin` and is restored before `finalize` is not identifiable.
 
-This detects persistent source/input changes between the two build boundaries and creates an exact executable identity. It does **not** prove that no transient mutate-and-restore occurred between observations, nor does declared toolchain metadata constitute independent compiler/Geant4/VGM attestation.
+### Mechanisms and falsifiers
 
-### Competing mechanisms
+Pre-build validation alone was rejected because later persistent changes can alter the build. Executable hash alone was rejected because artifact bytes are not attributed to approved source/input state. The surviving bounded mechanism is pre/post source+input equality plus executable identity. Treating those two observations as equivalent to a frozen build namespace was rejected by the mutate-and-restore counterexample.
 
-- **Pre-build source validation only:** insufficient; a later staged input or source mutation can affect compilation/run.
-- **Executable hash only:** insufficient; it identifies bytes without attributing them to approved source/input state.
-- **Pre/post source+input identity plus executable hash:** survives as the strongest bounded observable contract available without an immutable build sandbox.
-- **Treat two observations as immutable consumption identity:** rejected; transient mutate-and-restore is observationally invisible.
-- **Path/stat-only provenance:** rejected; the implementation hashes byte count and SHA-256 from the same opened file stream and rejects symlinks/non-regular files.
+The repository fixtures now cover unchanged source/input success; persistent reviewed-source mutation failure; staged macro mutation failure; symlink input/executable failure; tampered begin-receipt failure; duplicate semantic label and duplicate physical path failure; empty build-contract failure; and canonical receipt digest generation.
 
-### Implementation and falsifiers
+### Exact validation and failure provenance
 
-Branch `audit/geant4-build-binding-receipt` adds `tools/audit/geant4_build_binding_receipt.py`, `tests/test_geant4_build_binding_receipt.py`, curated ruff coverage, and archive `2026-08-10T235000Z_ARU-MC-G4-BUILD-BINDING-001.md`.
+The first exact head, `cde7b7a4ebe83c3aa4859a8f070ce5190ce59fd3`, ran MC Validation `31444426279`. The full unit-test suite passed (`1486 passed, 1 skipped, 8 xfailed, 1 xpassed`), but workflow enforcement failed because ruff found exactly one `UP035` style error: `Iterable` was imported from `typing` rather than `collections.abc`. The repair changed only that import; no receipt, test-oracle, or scientific semantics changed.
 
-The deterministic fixtures encode unchanged source/input/executable success; source mutation failure; staged macro mutation failure; symlink input/executable failure; begin-receipt tampering failure; duplicate semantic labels/physical paths failure; empty build-contract failure; and canonical receipt digest presence. Exact-head CI is required before this implementation is called validated.
+Final exact head `49431dc9976708251f9b7011b70ab8e2dd3cb9ce` passed MC Validation run `31444712724`: curated ruff reported all checks passed, pytest reported `1486 passed, 1 skipped, 8 xfailed, 1 xpassed`, artifact upload succeeded, and enforcement succeeded. The retained final diagnostic artifact has digest `sha256:7c6e286f630b1738ab2103c015f82048c33402e9f6f376b12744f96443e3631f`. PR #1199 was then squash-merged as `948ea2885e7c54751f4f4feaa3c1fcfc63fc9e8f`.
 
 ### Four sequential AI review passes
 
-- **Build/source provenance lead — REVISE.** Accept the two-boundary primitive; block compiled-physics authorisation. Residual: toolchain identity is declared, not independently measured.
-- **Adversarial mechanism reviewer — ACCEPT bounded detector / BLOCK immutable-build claims.** The strongest counterexample is transient source/input mutation restored before `finalize`.
-- **Independent validation reviewer — ACCEPT deterministic integrity oracle / BLOCK inference.** No generated angles, weights, seeds, event counts or detector observables enter this atom.
-- **Claims/provenance reviewer — BLOCK CL-021 promotion.** Executable identity alone lacks independently attested dependencies, runtime provenance and physics closure.
+- **Build/source provenance lead — REVISE.** Accepts the validated two-boundary primitive; blocks compiled-physics authorisation because toolchain identity is declared but not independently measured and compiler read timing is not observed.
+- **Adversarial mechanism reviewer — ACCEPT bounded detector / BLOCK immutable-build claims.** Persistent visible changes are discriminated; transient mutate-and-restore and dynamic dependency substitution remain live counterexamples.
+- **Independent validation reviewer — ACCEPT deterministic integrity oracle / BLOCK physics inference.** The tests validate exact equality/failure semantics only; they contain no generated angular population, weights, seeds, event counts or detector observables.
+- **Claims/provenance reviewer — BLOCK CL-021 promotion.** Independently attested toolchain/dependency state, runtime provenance, output identity and downstream physics closure remain absent.
 
-### Next child atoms
+### Next highest-value child
 
-After exact-head CI, keep #1182 open and move to an immutable source/input snapshot or build sandbox, independently measured compiler/CMake/Geant4/VGM and linked-library identity, runtime run-manager/thread/random-engine/seeds/event count/model IDs, output file/tree/schema/hash identity, and compiled hostile source/stopping controls. A parent claim cannot be promoted until these material children and downstream detector-response compatibility pass.
+Continue #1182 at the actual consumption boundary: replace mutable source/input path trust with an immutable or content-addressed build namespace (or a sandbox whose compiler inputs are frozen), and independently record compiler, CMake, Geant4, VGM and linked-library identities. Then bind runtime run-manager/thread mode, random engine/seeds, event count, source/support/weight model IDs, all staged runtime inputs, output file/tree/schema/hash, and compiled hostile cross-section/stopping controls. Only after those gates can generated angular/weight closure propagate into the detector-response chain.
 
 No beam ROOT bytes or production Geant4 campaign were executed in this environment, and no angular distribution, event weight, B2/B8, PID, penetration, timing, calibration, pile-up, ESS, p-value, rate or detector-performance result was regenerated or promoted.

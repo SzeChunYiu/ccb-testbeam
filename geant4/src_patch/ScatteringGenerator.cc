@@ -123,11 +123,6 @@ void ScatteringGenerator::GeneratePrimaryVertex(G4Event* event)
 	// It is checked before consuming event RNG or computing any event observable.
 	EnsureSourceReady();
 
-	// Define setup geometry
-	const G4double det_size = 5*cm;
-	const G4double det_distance = 1*m;
-	G4double phi_max = atan2(det_size/2.,det_distance);	// we will only generate particles in covered phi range.
-		
 	// Set random interaction point in target
 	G4double r0=fBeamspot*sqrt(G4UniformRand());
 	G4double ph0=2*pi*G4UniformRand();
@@ -185,8 +180,13 @@ void ScatteringGenerator::GeneratePrimaryVertex(G4Event* event)
 	//theta4 = (theta4<0) ? theta4-pi : theta4;
 	G4double Ekin4 = (gamma-1)*m4+gamma*Ekin4cm+gamma*beta*pcm*cos(pi-theta3cm);
 
-	// Randomly generate phi within covered angular range
-	G4double phi3 = 2*phi_max*G4UniformRand()-phi_max;
+	// Randomly generate phi across the full physical azimuthal range.
+	//   source_phi_measure = uniform_full_2pi_v1
+	// The azimuthal measure is uniform over [0,2*pi) with no detector-surrogate
+	// pre-acceptance: phi3, and hence the coplanar recoil phi4, cover the whole
+	// 2*pi physical range. The 50/50 flip selects which of the two coplanar
+	// particles carries the +pi branch; both remain on the full circle.
+	G4double phi3 = 2*pi*G4UniformRand();
 	G4double phi4 = phi3;
 	G4double fiftyfifty = G4UniformRand();
 	if(fiftyfifty<0.5){ phi3+=pi; }

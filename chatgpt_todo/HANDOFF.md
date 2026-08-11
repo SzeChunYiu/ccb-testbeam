@@ -1,67 +1,80 @@
 # Latest Handoff
 
-## Active atom: current cwd observation; live post-exec falsifier synchronized
+## Active atom: exact source-phi measure and full-2π reference
 
-Protected source of truth is `main@c485d96583df91e90669e402670a3fa102643495`, the squash merge of #1213. That merge was authorized only after both exact-head `test` checks on `85894ad0123ee56dc18da6cc86e0340f9eabb312` were successful. Current work is draft PR #1215 on `audit/geant4-loader-cwd`; unresolved exec-boundary cwd leaf is #1214. CL-021 remains gated.
+Protected source-of-truth at selection was `main@859903ada4a856c998b2bc79298cd4a26c2cb447`, the squash merge of #1215. Current work is draft PR #1216 on `fix/issue-1057-source-phi-full-2pi`, under parent #1057. CL-021 remains gated.
 
-### Parent scientific contract
+### Exact event-measure correction
 
-`ARU-MC-G4-LOADER-INITIAL-CWD-001` addresses the relative-path dependency exposed by:
+The historical generator did more than sample one narrow interval. Let
 
-`./hibeam_g4 -c krakow.config -m run_krakow.mac output_krakow.root`
+`a = atan2(0.025,1) = 0.02499479361892016 rad`.
 
-For a relative pathname `p`, use `Resolved_t(p) = Resolve(CWD_t, Root_t, MountNS_t, p)` as the dependency model. This PR binds only `CWD_t` at a bounded observation window. It does not bind historical exec-time cwd, process root/mount topology, symlink resolution, or the exact bytes HIBEAM later consumes.
+It sampled `phi0 ~ Uniform[-a,a]`, then used a second uniform draw to add `π` to either the proton or deuteron. For either distinguishable particle, modulo `2π`, the normalized marginal is therefore
 
-The new `ccb_geant4_loader_cwd_attestation_v1` composes PASS/digest-valid runtime and argv receipts, requires identical `(pid,starttime_ticks,exe_link)`, observes `/proc/<pid>/cwd` twice, independently opens the cwd directory object twice and requires equal `(st_dev,st_ino,st_mode)`, then rechecks starttime and executable link. Scope is `STABLE_CURRENT_WORKING_DIRECTORY_OBJECT_OBSERVATION_ONLY`.
+`q(phi)=1/(4a)`
 
-### Scientific falsifier and validation-child correction
+on two opposite intervals of width `2a`, with zero density elsewhere. The joint invariant is `phi_d-phi_p=π (mod 2π)`.
 
-The main counter-hypothesis is that because exec preserves cwd, a later procfs cwd may be treated as launch/exec cwd. The live negative control starts a Python child with `cwd=initial`, then the child executes `chdir(later)`. Once successful post-chdir execution is established, the attestor observes `later`, not `initial`; current cwd is therefore not immutable historical cwd evidence.
+For the explicit spin-averaged reference target `p(phi)=1/(2π)`, the exact target/proposal ratio on legacy support is
 
-An independent local rerun after the first publication exposed a fixture defect before merge: the superseded test source produced `1 failed, 8 passed in 11.92 s`. The child stayed alive in its inherited cwd longer than the fixture's three-second polling deadline, so the test had not established that user code reached `chdir`. The production attestor was not the failing mechanism.
+`p/q = 2a/π = 0.015912179824051628`.
 
-`ARU-MC-G4-LOADER-CWD-TEST-READY-001` fixes only that precondition. Commit `198cd5062982947d12410b9371d43ddaa596c4f0` makes the child create an absolute test-owned marker **after** successful `chdir`; the parent waits for that state signal while checking child liveness, then constructs the runtime/argv receipts and runs the unchanged cwd attestor. A longer arbitrary sleep was rejected as non-discriminating.
+That is also the total legacy support fraction. The earlier #1057 shorthand `a/π` missed the 50/50 branch normalization; a common factor is irrelevant to normalized shape-only reweighting but material to absolute rates/efficiencies. More importantly, `98.40878201759484%` of the full-circle reference support has `q=0`, so no weighting can recover those reaction-plane orientations.
 
-### Executed validation and exact identities
+### Bounded implementation on #1216
 
-Environment: Python 3.13.5 / Linux 6.18.35 x86_64 / no RNG.
+The source patch removes `det_size`, `det_distance`, and `phi_max` and samples the base azimuth as `2*pi*G4UniformRand()`. It keeps the existing 50/50 `+π` assignment. Under full-circle generation that branch is distributionally redundant, but retaining it preserves two phi-stage RNG draws per event; this is important for future paired-seed legacy/full-phi tests because removing a draw would shift all subsequent event RNG inputs.
 
-After the repair, the focused suite passed six consecutive times:
+`geant4/src_patch/scattering_source_model_v1.json` now explicitly declares:
 
-- `9 passed in 1.07 s`
-- `9 passed in 1.07 s`
-- `9 passed in 1.14 s`
-- `9 passed in 1.01 s`
-- `9 passed in 1.12 s`
-- `9 passed in 1.05 s`
+- `target_azimuthal_density = p(phi)=1/(2*pi)`;
+- `source_phi_measure = uniform_full_2pi_v1`;
+- full `[0,2π)` support;
+- `detector_surrogate_phi_preselection = false`;
+- remaining compiled, accepted-observable, provenance, and detector-response gates.
 
-`python -m py_compile tools/audit/geant4_loader_cwd_attestation.py tests/test_geant4_loader_cwd_attestation.py` passed. Local ruff is unavailable; no local ruff PASS is claimed.
+Exact published identities:
 
-Exact committed identities:
+- source-model JSON: Git blob `d5cabdb3bb9b01ffd76fe9dd2d3baed18fcdd6a7`, SHA-256 `308c9120a286a19295687d876886d5a616812470007fc92f9c4d6e0eecba6dfc`;
+- strengthened source-phi test: Git blob `2d067b1ecabfac6f53377e40a0bee002c8332290`, SHA-256 `4c9ba2c0c5a2426716f9b763625f18957c961a3644b930617c66864932b43112`.
 
-- tool: 10,190 bytes, SHA-256 `02ed0bb6cd4f53a7e72e59f0147e06eee72e7a7518c0d8de11aa62b856f5e1be`, Git blob `bb71a692732c3f6730b52704bd51ec9506cff7ac`;
-- repaired tests: 10,169 bytes, SHA-256 `a4e8b6e4cabc114034d8ade82103951c91f01d77998b898c604fdefde50446a1`, Git blob `aaf14ee43544fe388ef22692c9f2a5daab4f4ac1`.
+The regression now binds the C++ implementation to the JSON model, rejects reintroduction of the detector surrogate, requires exactly two `G4UniformRand()` calls in the phi stage, and deterministically checks full-circle marginals and coplanarity.
 
-Key branch commits:
+### Deterministic falsifier
 
-- `475d0f886b0257b1cfd905e798254a07ec8a8dd8` — cwd attestor;
-- `c0131e9cc7740303505554266b207fa42567bf70` — initial hostile tests;
-- `7acb18fa686a2456093c61087491c2a7ec2a114d` — curated MC-validation ruff inclusion;
-- `b8d66da03d194040d3bd44bc386aa83098841604` — parent immutable ARU record;
-- `198cd5062982947d12410b9371d43ddaa596c4f0` — explicit post-chdir test synchronization;
-- `162fd90de7869e96934a5f884fbf2ae22ebdef93` — validation-child archive.
+No RNG and no Geant4 transport were used. A 4096-point evenly spaced base-azimuth grid with both branch states produced 8192 proton/deuteron pairs. In 64 equal azimuth bins every proton bin and every deuteron bin contained exactly 128 entries; the maximum numerical residual from `phi_d-phi_p=π (mod 2π)` was `8.881784197001252e-16 rad`.
+
+This validates the mathematical map encoded by the proposed source contract only. It does not establish detector acceptance, transport, rates, or production behavior.
+
+### Primary-literature child: polarization
+
+The repository-bound 190 MeV source is K. Ermisch et al., *Physical Review C* **71**, 064004 (2005), DOI `10.1103/PhysRevC.71.064004`. The primary paper studies elastic scattering of polarized protons from deuterons and reports vector analyzing power together with differential cross section. Therefore `uniform_full_2pi_v1` is presently an explicit spin-averaged / azimuthally symmetric reference assumption unless CCB beam/target polarization and spin-axis provenance demonstrate that no azimuthal modulation is required.
+
+Child `ARU-MC-SOURCE-PHI-POLARIZATION-001` remains open under #1057 rather than creating a duplicate issue.
 
 ### Four sequential AI reviews
 
-- **Runtime/physics integration lead — ACCEPT current-state primitive and fixture repair / BLOCK initial-cwd provenance.** The synchronized post-exec `chdir` control falsifies historical-cwd promotion; no real HIBEAM process is observed.
-- **Adversarial Linux/filesystem reviewer — ACCEPT state predicate / REJECT timing-only repair / BLOCK complete path resolution.** Stable cwd still does not bind root/mount namespace, symlink chain, or ABA transitions.
-- **Independent validation reviewer — ACCEPT repeated deterministic repair / REVISE until exact-head CI.** One demonstrated old failure plus six repaired passes is useful evidence, but repository ruff/full pytest on the final commit remains mandatory.
-- **Claims/provenance reviewer — ACCEPT provenance refinement / BLOCK CL-021 promotion.** No event, transport, detector response or beam estimator participates.
+- **Source/kinematics lead — ACCEPT exact measure correction and H1 reference / REVISE physical-source wording.** Zero-support calculation rejects the historical gate as an unconditional full-physics law. Residual: beam/target polarization, exact geometry/trigger support, compiled execution.
+- **Adversarial mechanism reviewer — REJECT factor-of-two shorthand for absolute normalization / ACCEPT corrected event measure / BLOCK zero-support recovery.** The 50/50 branch changes the normalized distinguishable-particle marginal; weighting cannot fill `q=0` regions.
+- **Independent validation reviewer — ACCEPT deterministic source-contract oracle / REVISE until exact-head CI / BLOCK detector inference.** Static/deterministic tests do not compile or run the Geant4 generator.
+- **Claims/provenance reviewer — ACCEPT bounded implementation / BLOCK #1057 closure and CL-021 promotion.** Runtime serialization, accepted-observable closure, detector-response propagation, and source-model children remain open.
 
-### Children and next gate
+### Repository actions and current gate
 
-#1214 owns `ARU-MC-G4-LOADER-INITIAL-CWD-EXEC-BOUNDARY-001`: prove cwd at the actual exec transition. Other children remain `ARU-MC-G4-LOADER-FS-NAMESPACE-001`, `ARU-MC-G4-RELATIVE-INPUT-CONSUMPTION-001`, and `ARU-MC-G4-OUTPUT-PATH-CREATION-001`, followed by loader cache/config, token/hwcaps, preload/audit, linker/static inputs, late `dlopen`, wrapper/descendant identity, immutable consumption, runtime manifest, compiled source/stopping controls, event weights and detector response.
+PR #1216 was retitled to `mc(source): implement full-2π azimuth reference (partial #1057)`, its `Fixes #1057` auto-close language was removed, and it was converted to draft. #1057 received the exact legacy-measure correction and child-atom review. Immutable record: `chatgpt_todo/archive/2026-08-11T125900Z_ARU-MC-SOURCE-PHI-MEASURE-NORM-001.md`.
 
-PR #1215 must remain draft until fresh push- and pull-request-triggered MC Validation on the final head after `198cd506...` and coordination commits both finish successfully. Any CI result attached only to superseded head `94c3ae9f5673f80bf1cb4339e3dd47866b39f80a` is non-authorising. Recheck base freshness against protected main immediately before ready/merge.
+An earlier superseded #1216 head `cd494ff1...` passed MC Validation run `31492405729` with curated ruff clean and `1616 passed, 1 skipped, 8 xfailed, 1 xpassed`. That result is non-authorising for the current head because the source-model contract, tests, archive, and coordination files changed afterward.
 
-No production Geant4 campaign was run, no beam or production-MC ROOT bytes were opened, and no detector-performance/public physics claim was regenerated or promoted.
+Require fresh exact-final-head MC Validation. Even if Python CI is green, keep the source PR draft until `ARU-MC-SOURCE-PHI-COMPILED-CLOSURE-001` supplies an exact compiled/seeded Geant4 generator-level check or repository policy explicitly authorizes this physics-source change without compilation.
+
+### Child atoms / next work
+
+- `ARU-MC-SOURCE-PHI-POLARIZATION-001` — establish beam/target polarization and spin-axis provenance.
+- `ARU-MC-SOURCE-PHI-COMPILED-CLOSURE-001` — compile the exact patched source; bind executable/source/input hashes, seed, run manager/thread mode, event count; test generated phi marginals/support/coplanarity.
+- `ARU-MC-SOURCE-PHI-ACCEPTANCE-CLOSURE-001` — full-phi versus any importance/conditional proposal through exact geometry/trigger; compare accepted truth distributions, rates, support, event weights, and ESS.
+- `ARU-MC-SOURCE-PHI-PROVENANCE-SERIALIZATION-001` — serialize source phi/model IDs and exact input/source identities into production provenance.
+
+Existing #1053/#1178/#1179, geometry/trigger, runtime-loader/build, event-weight, and detector-response atoms remain upstream/downstream gates.
+
+No production Geant4 campaign was run, no beam or production-MC ROOT bytes were opened, and no angular distribution, B2/B8, PID, penetration, timing, calibration, pile-up, ESS, p-value, rate, or detector-performance quantity was regenerated or promoted.

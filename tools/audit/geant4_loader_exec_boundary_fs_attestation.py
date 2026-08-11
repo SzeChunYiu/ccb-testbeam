@@ -310,7 +310,10 @@ def record_exec_boundary_fs(
             "relative_lookup_start": "CWD_OBJECT_AT_USERSPACE_PRE_EXEC_SNAPSHOT",
             "absolute_and_absolute_symlink_root": "ROOT_OBJECT_AT_USERSPACE_PRE_EXEC_SNAPSHOT",
             "mount_view": "MOUNT_NAMESPACE_HANDLE_PLUS_EXACT_MOUNTINFO_BYTES_AT_PRE_EXEC_SNAPSHOT",
-            "execve_inheritance": "CWD_ROOT_AND_MOUNT_NAMESPACE_ARE_EXPECTED_TO_SURVIVE_SUCCESSFUL_EXECVE",
+            "execve_inheritance": (
+                "CWD_ROOT_AND_MOUNT_NAMESPACE_ARE_EXPECTED_TO_"
+                "SURVIVE_SUCCESSFUL_EXECVE"
+            ),
             "actual_input_open_state": "NOT_PROVEN_TARGET_CAN_CHANGE_FS_STATE_AFTER_EXEC",
         },
         "limitations": [
@@ -444,11 +447,16 @@ def attest_exec_boundary_fs(
         "mountinfo": exec_fs_record["mountinfo"],
         "scientific_scope": "COMPOSED_PRE_EXEC_FILESYSTEM_LOOKUP_STATE_AND_RUNTIME_IDENTITY",
         "interpretation": {
-            "exec_time_lookup_state": "BOUNDED_BY_USERSPACE_PRE_EXEC_SNAPSHOT_AND_SAME_PID_STARTTIME_DIRECT_EXEC_INTENT",
+            "exec_time_lookup_state": (
+                "BOUNDED_BY_USERSPACE_PRE_EXEC_SNAPSHOT_AND_"
+                "SAME_PID_STARTTIME_DIRECT_EXEC_INTENT"
+            ),
             "mount_namespace_identity": "NSFS_DEVICE_AND_INODE_PLUS_MNT_LINK_TEXT",
             "mount_table": "EXACT_PRE_EXEC_PROC_MOUNTINFO_BYTES_DIGEST_AND_CONTENT",
             "root_and_cwd": "OPENED_DIRECTORY_OBJECT_IDENTITIES_NOT_PATH_SPELLINGS",
-            "actual_relative_input_consumption": "NOT_ATTESTED_REQUIRES_OPEN_EVENT_AND_OPENED_BYTES_CHILD",
+            "actual_relative_input_consumption": (
+                "NOT_ATTESTED_REQUIRES_OPEN_EVENT_AND_OPENED_BYTES_CHILD"
+            ),
         },
         "limitations": list(exec_fs_record.get("limitations", [])),
     }

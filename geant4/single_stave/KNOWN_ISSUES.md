@@ -87,3 +87,15 @@ Issue #999 beam/primary intersection preflight is enforced in `main.cc` via
 `ccb_mc_validation.geometry.beam_intersection` (profile extents). Use
 `--allow-miss` / `allow_miss=True` only for intentional miss studies
 (`docs/adr/ADR-0003-beam-intersection-preflight.md`).
+
+## Wave B Lane 05 response hypotheses (2026-08-11)
+
+- **#1008 Birks model form:** nominal `kB=0.126 mm/MeV` is registered as
+  `hyp_geant4_birks_kb_0p126_mm_per_MeV` (HYPOTHESIS). Do not call it validated
+  p/d light-response truth. See `configs/response/` + ADR-0004.
+- **#1094 Fibre outer cladding:** `BuildFibreOuterClad` keeps PMMA density 1.19
+  with n=1.42; competing fluorinated-polymer density 1.43 hypothesis is
+  registered. Transport≠optical identity remains **BLOCKED**.
+- **#1090 Observation window:** all-time SteppingAction counters vs sipm-core
+  `[-20,250] ns` ADC window are separate semantic classes
+  (`FULL_TRANSPORT` / `ACQUISITION_WINDOW`).

@@ -1,0 +1,22 @@
+schema: ccb-response-profile/1
+profile_id: hyp_literature_poschl2021_model_ensemble
+kind: quenching
+status: HYPOTHESIS
+claims_authorized: false
+issues: [1008]
+adr: docs/adr/ADR-0004-quenching-material-obs-window-hypotheses.md
+source_type: LITERATURE
+source_refs:
+  - "Pöschl et al., NIM A 988 (2021) 164865"
+  - "O'Rielly, Kolb & Pywell, NIM A 368 (1996) 745-749"
+contradicts:
+  - hyp_geant4_birks_kb_0p126_mm_per_MeV
+parameters:
+  model_form: literature_ensemble
+  model_form_family: multi_model_comparison
+  candidate_forms: [birks, chou, wright, voltz]
+  ccb_material_transferability: NOT_AUTOMATIC
+  production_validity: CROSS_CHECK_ONLY
+notes: >
+  Literature establishes that a single Birks curve is a model assumption.
+  Measurements are not automatically transferable to the CCB bar batch.

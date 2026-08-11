@@ -26,6 +26,7 @@
 #include <array>
 #include <iostream>
 #include <sstream>
+#include <iomanip>
 #include "Sha256.hh"  // SHA-256 geometry digest (defect #7)
 
 // Coordinate convention: x=length(+-25cm), y=width(+-2.59cm), z=thickness(+-1cm).
@@ -34,52 +35,31 @@
 
 DetectorConstruction::DetectorConstruction(const AppConfig& cfg) : cfg_(cfg) {
   messenger_ = new DetectorMessenger(const_cast<AppConfig*>(&cfg_));
-  // Split provenance digests (#986): geometry must not mix Birks/optics, and
-  // must include coating/sensor thickness + far_end_mode.
+  // GEOMETRY_DIGEST_V2 (#986): named-field canonical digest of geometry only.
+  // Birks / optical response knobs are excluded; they remain in the run sidecar.
   const double rCore = kFibreRadius * 0.94, rInner = kFibreRadius * 0.97,
                rOuter = kFibreRadius * 1.00;
+  auto fmt = [](double v) {
+    std::ostringstream o;
+    o << std::setprecision(17) << (v / CLHEP::mm);
+    return o.str();
+  };
   std::ostringstream gs;
-  gs.setf(std::ios::scientific, std::ios::floatfield);
-  gs.precision(17);
-  gs << "ccb-geometry-config/1\n"
-     << "kStaveHalfX_mm=" << (kStaveHalfX / CLHEP::mm) << '\n'
-     << "kStaveHalfY_mm=" << (kStaveHalfY / CLHEP::mm) << '\n'
-     << "kStaveHalfZ_mm=" << (kStaveHalfZ / CLHEP::mm) << '\n'
-     << "kCoatingThk_mm=" << (kCoatingThk / CLHEP::mm) << '\n'
-     << "kHoleRadius_mm=" << (kHoleRadius / CLHEP::mm) << '\n'
-     << "kFibreRadius_mm=" << (kFibreRadius / CLHEP::mm) << '\n'
-     << "kFibreHalfX_mm=" << (kFibreHalfX / CLHEP::mm) << '\n'
-     << "kFibreSep_mm=" << (kFibreSep / CLHEP::mm) << '\n'
-     << "rCore_mm=" << (rCore / CLHEP::mm) << '\n'
-     << "rInner_mm=" << (rInner / CLHEP::mm) << '\n'
-     << "rOuter_mm=" << (rOuter / CLHEP::mm) << '\n'
-     << "kSensorThk_mm=" << (kSensorThk / CLHEP::mm) << '\n'
-     << "far_end_mode=" << cfg_.far_end_mode << '\n'
-     << "scintillator_material=" << cfg_.scintillator_material << '\n'
-     << "coating_material=" << cfg_.coating_material << '\n';
+  gs << "schema_version=2.0.0"
+     << ";stave_half_x_mm=" << fmt(kStaveHalfX)
+     << ";stave_half_y_mm=" << fmt(kStaveHalfY)
+     << ";stave_half_z_mm=" << fmt(kStaveHalfZ)
+     << ";coating_thk_mm=" << fmt(kCoatingThk)
+     << ";hole_radius_mm=" << fmt(kHoleRadius)
+     << ";fibre_radius_mm=" << fmt(kFibreRadius)
+     << ";fibre_half_x_mm=" << fmt(kFibreHalfX)
+     << ";fibre_sep_mm=" << fmt(kFibreSep)
+     << ";sensor_thk_mm=" << fmt(kSensorThk)
+     << ";fibre_core_radius_mm=" << fmt(rCore)
+     << ";fibre_inner_clad_radius_mm=" << fmt(rInner)
+     << ";fibre_outer_clad_radius_mm=" << fmt(rOuter)
+     << ";far_end_mode=" << cfg_.far_end_mode;
   geometry_hash_ = Sha256::hex(gs.str());
-
-  std::ostringstream ps;
-  ps.setf(std::ios::scientific, std::ios::floatfield);
-  ps.precision(17);
-  ps << "ccb-physics-config/1\n"
-     << "birks_kB_mm_per_MeV=" << cfg_.birks_kB_mm_per_MeV << '\n';
-  physics_hash_ = Sha256::hex(ps.str());
-
-  std::ostringstream os;
-  os.setf(std::ios::scientific, std::ios::floatfield);
-  os.precision(17);
-  os << "ccb-optical-config/1\n"
-     << "optical_interface_model=" << cfg_.optical_interface_model << '\n'
-     << "wls_mean_number_photons=" << cfg_.wls_mean_number_photons << '\n'
-     << "y11_direct_scint_yield_per_MeV=" << cfg_.y11_direct_scint_yield_per_MeV << '\n'
-     << "tio2_finish=" << cfg_.tio2_finish << '\n'
-     << "tio2_specular_lobe=" << cfg_.tio2_specular_lobe << '\n'
-     << "tio2_specular_spike=" << cfg_.tio2_specular_spike << '\n'
-     << "tio2_backscatter=" << cfg_.tio2_backscatter << '\n'
-     << "y11_attenuation_form=" << cfg_.y11_attenuation_form << '\n'
-     << "strict_optical=" << (cfg_.strict_optical ? "true" : "false") << '\n';
-  optical_hash_ = Sha256::hex(os.str());
 }
 DetectorConstruction::~DetectorConstruction() { delete messenger_; }
 
@@ -530,8 +510,6 @@ void DetectorConstruction::PrintGeometryReport() const {
             << "holes_contained_y " << holes_in_y << "\n"
             << "holes_contained_z " << holes_in_z << "\n"
             << "geometry_hash " << geometry_hash_ << "\n"
-            << "physics_hash " << physics_hash_ << "\n"
-            << "optical_hash " << optical_hash_ << "\n"
             << "GEOMETRY_REPORT_END\n";
 
   const bool ok = fibre_within && fibre_protrudes && holes_in_y && holes_in_z &&

@@ -97,8 +97,8 @@ def main(argv: list[str] | None = None) -> int:
     result = validate_manifest(manifest)
     print(result["status"])
     print(json.dumps(result, indent=2))
-    if args.expect is not None:
-        return 0 if result["status"] == args.expect else 2
+    if args.expect and result["status"] != args.expect:
+        return 2
     return 0 if result["status"] == "PASS" else 1
 
 

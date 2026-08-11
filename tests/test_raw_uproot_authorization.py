@@ -37,10 +37,10 @@ def _write_root(path: Path, event: int = 123) -> None:
     waveform[0, 2 * 16 + 5] = 2100
     waveform[0, 4 * 16 + 6] = 2200
     with uproot.recreate(path) as root_file:
-        root_file.mktree("h101", {
+        root_file["h101"] = {
             "EVENTNO": np.dtype("int32"),
             "HRDv": np.dtype(("int16", (128,))),
-        })
+        }
         root_file["h101"].extend({
             "EVENTNO": np.array([event], dtype=np.int32),
             "HRDv": waveform,

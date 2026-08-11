@@ -55,6 +55,11 @@ build/ccb_stave_sim --mode optical --particle proton --energy 100 \
     --optical-dir build/optical --output stave_p100.root
 ```
 
+Optical tables are **strict by default** (#978/#980): missing/malformed/unit-invalid
+CSVs abort before event 0. Development-only permissive fallback is
+`--allow-optical-fallback` (sets `authorising=false`). Production SLURM
+(`slurm/submit_calibration.sh`) also passes `--strict-optical` explicitly.
+
 Grid over many points on SLURM:
 
 ```bash
@@ -104,7 +109,7 @@ closure plus review of all generated diagnostics.
 
 Optical tables and detector parameters are **representative literature/datasheet
 priors**, each labelled in its CSV header (see
-`research/DETECTOR_PARAMETERS.md`). PDE overvoltage, optical coupling, far-end
+`research/DETECTOR_PARAMETERS.md` and `optical/optical_constants_ledger.conf`). PDE overvoltage, optical coupling, far-end
 termination, and the exact TiO2 reflectivity are `UNKNOWN_EXTERNAL` pending the
 run hardware settings — they are exposed as run-time systematics
 (`--pde-scale`, `--coupling`, `--far-end`, `--reflectivity-scale`) so a scan

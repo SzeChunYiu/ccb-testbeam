@@ -260,13 +260,40 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
 	     << "  \"optical_interface_model\": " << j(cfg_.optical_interface_model) << ",\n"
      << "  \"sipm_n_cells\": " << cfg_.sipm_n_cells << ",\n"
      << "  \"far_end_mode\": " << j(cfg_.far_end_mode) << ",\n"
+     << "  \"strict_optical\": " << (cfg_.strict_optical ? "true" : "false") << ",\n"
+     << "  \"allow_optical_fallback\": " << (cfg_.allow_optical_fallback ? "true" : "false") << ",\n"
+     << "  \"authorising\": " << (cfg_.authorising ? "true" : "false") << ",\n"
+     << "  \"optical_fallback_used\": " << (cfg_.optical_fallback_used ? "true" : "false") << ",\n"
+     << "  \"optical_constants_ledger\": " << j(cfg_.optical_constants_ledger) << ",\n"
+     << "  \"scintillator_material\": " << j(cfg_.scintillator_material) << ",\n"
+     << "  \"scintillator_material_status\": " << j(cfg_.scintillator_material_status) << ",\n"
+     << "  \"coating_material\": " << j(cfg_.coating_material) << ",\n"
+     << "  \"coating_material_status\": " << j(cfg_.coating_material_status) << ",\n"
+     << "  \"wls_mean_number_photons\": " << cfg_.wls_mean_number_photons << ",\n"
+     << "  \"wls_fluorescence_model\": " << j(cfg_.wls_fluorescence_model) << ",\n"
+     << "  \"wls_fluorescence_status\": " << j(cfg_.wls_fluorescence_status) << ",\n"
+     << "  \"y11_direct_scint_yield_per_MeV\": " << cfg_.y11_direct_scint_yield_per_MeV << ",\n"
+     << "  \"y11_direct_scint_status\": " << j(cfg_.y11_direct_scint_status) << ",\n"
+     << "  \"y11_attenuation_form\": " << j(cfg_.y11_attenuation_form) << ",\n"
+     << "  \"y11_attenuation_form_status\": " << j(cfg_.y11_attenuation_form_status) << ",\n"
+     << "  \"tio2_finish\": " << j(cfg_.tio2_finish) << ",\n"
+     << "  \"tio2_specular_lobe\": " << cfg_.tio2_specular_lobe << ",\n"
+     << "  \"tio2_specular_spike\": " << cfg_.tio2_specular_spike << ",\n"
+     << "  \"tio2_backscatter\": " << cfg_.tio2_backscatter << ",\n"
+     << "  \"tio2_reflection_model_status\": " << j(cfg_.tio2_reflection_model_status) << ",\n"
      << "  \"optical_tables\": {\n";
-  // Record each optical table path + hash.
+  // Record each optical table path + hash + validation status (#978/#980).
   size_t k = 0, n = tables_.All().size();
   for (const auto& kv : tables_.All()) {
     os << "    " << j(kv.first) << ": {\"path\": " << j(kv.second.path)
-       << ", \"sha256\": " << j(kv.second.sha256) << "}"
+       << ", \"sha256\": " << j(kv.second.sha256)
+       << ", \"units_x\": " << j(kv.second.units_x)
+       << ", \"units_y\": " << j(kv.second.units_y)
+       << ", \"status\": " << j(kv.second.status_note)
+       << ", \"validation_status\": " << j(kv.second.validation_status)
+       << ", \"fallback_used\": false}"
        << (++k < n ? "," : "") << "\n";
   }
   os << "  }\n}\n";
 }
+

@@ -8,7 +8,9 @@
 #include <iomanip>
 #include <iostream>
 #include <sstream>
+#include <cctype>
 #include <stdexcept>
+#include <unordered_map>
 
 namespace fs = std::filesystem;
 
@@ -108,6 +110,135 @@ std::string trim(const std::string& s) {
   size_t b = s.find_last_not_of(" \t\r\n");
   return s.substr(a, b - a + 1);
 }
+
+std::string lower(std::string s) {
+  for (char& c : s) c = static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
+  return s;
+}
+
+enum class YPolicy { NonNegative, UnitInterval, PositiveLength };
+
+struct PropSchema {
+  const char* units_x;   // required exact token after normalize
+  const char* units_y;   // required exact token after normalize
+  YPolicy y_policy;
+};
+
+// Canonical unit tokens consumers assume (FillFromCurve / PdeAt).
+const std::unordered_map<std::string, PropSchema>& Schemas() {
+  static const std::unordered_map<std::string, PropSchema> s = {
+      {"scintillator_emission", {"nm", "rel", YPolicy::NonNegative}},
+      {"scintillator_absorption", {"nm", "cm", YPolicy::PositiveLength}},
+      {"y11_emission", {"nm", "rel", YPolicy::NonNegative}},
+      {"y11_absorption", {"nm", "mm", YPolicy::PositiveLength}},
+      {"y11_bulk_attenuation", {"nm", "cm", YPolicy::PositiveLength}},
+      {"tio2_reflectivity", {"nm", "frac", YPolicy::UnitInterval}},
+      {"sipm_pde", {"nm", "frac", YPolicy::UnitInterval}},
+  };
+  return s;
+}
+
+std::string NormalizeUnit(std::string u) {
+  u = lower(trim(u));
+  // Strip parenthetical notes: "frac  (PDE in [0,1])" -> "frac"
+  auto sp = u.find_first_of(" \t(");
+  if (sp != std::string::npos) u = u.substr(0, sp);
+  if (u == "fraction" || u == "probability") u = "frac";
+  if (u == "relative" || u == "a.u." || u == "au") u = "rel";
+  return u;
+}
+
+std::vector<std::string> CurveSchemaErrors(const OpticalCurve& c,
+                                           const std::string& key) {
+  std::vector<std::string> errs;
+  if (c.Empty()) {
+    errs.push_back("required optical table '" + key +
+                   "' is missing or empty (no usable rows)");
+    return errs;
+  }
+  for (const auto& pe : c.parse_errors) errs.push_back(pe);
+  if (c.skipped_malformed_rows > 0) {
+    errs.push_back("table '" + key + "' silently discarded " +
+                   std::to_string(c.skipped_malformed_rows) +
+                   " malformed row(s); strict mode forbids row dropping");
+  }
+  if (c.units_x.empty())
+    errs.push_back("table '" + key +
+                   "' has no '# units_x:' provenance header (x units ambiguous)");
+  if (c.units_y.empty())
+    errs.push_back("table '" + key +
+                   "' has no '# units_y:' provenance header (y units ambiguous)");
+  if (c.status_note.empty())
+    errs.push_back("table '" + key +
+                   "' has no '# status:' provenance header");
+
+  auto it = Schemas().find(key);
+  if (it != Schemas().end()) {
+    const auto& sch = it->second;
+    const std::string ux = NormalizeUnit(c.units_x);
+    const std::string uy = NormalizeUnit(c.units_y);
+    if (!c.units_x.empty() && ux != sch.units_x) {
+      errs.push_back("table '" + key + "' units_x='" + c.units_x +
+                     "' is not the required '" + sch.units_x +
+                     "' (no silent unit conversion)");
+    }
+    if (!c.units_y.empty() && uy != sch.units_y) {
+      errs.push_back("table '" + key + "' units_y='" + c.units_y +
+                     "' is not the required '" + sch.units_y +
+                     "' (no silent percent/fraction conversion)");
+    }
+    for (size_t i = 0; i < c.y.size(); ++i) {
+      const double yv = c.y[i];
+      if (sch.y_policy == YPolicy::UnitInterval && (yv < 0.0 || yv > 1.0)) {
+        errs.push_back("table '" + key + "' y=" + std::to_string(yv) +
+                       " outside required fraction range [0,1] at row " +
+                       std::to_string(i));
+        break;
+      }
+      if (sch.y_policy == YPolicy::NonNegative && yv < 0.0) {
+        errs.push_back("table '" + key + "' y=" + std::to_string(yv) +
+                       " is negative (relative intensity must be >=0) at row " +
+                       std::to_string(i));
+        break;
+      }
+      if (sch.y_policy == YPolicy::PositiveLength && !(yv > 0.0)) {
+        errs.push_back("table '" + key + "' y=" + std::to_string(yv) +
+                       " is not a strictly positive attenuation/absorption "
+                       "length at row " + std::to_string(i));
+        break;
+      }
+    }
+  }
+
+  for (size_t i = 0; i < c.x.size(); ++i) {
+    if (!std::isfinite(c.x[i]) || !std::isfinite(c.y[i])) {
+      errs.push_back("table '" + key + "' has a non-finite point at row " +
+                     std::to_string(i));
+      break;
+    }
+  }
+  for (double xv : c.x) {
+    if (xv < 100.0 || xv > 2000.0) {
+      errs.push_back("table '" + key + "' x=" + std::to_string(xv) +
+                     " nm is outside the valid wavelength range [100,2000] "
+                     "(unit/range error)");
+      break;
+    }
+  }
+  for (size_t i = 1; i < c.x.size(); ++i) {
+    if (c.x[i] < c.x[i - 1]) {
+      errs.push_back("table '" + key +
+                     "' x is not ascending at row " + std::to_string(i));
+      break;
+    }
+    if (c.x[i] == c.x[i - 1]) {
+      errs.push_back("table '" + key +
+                     "' has duplicate wavelength at row " + std::to_string(i));
+      break;
+    }
+  }
+  return errs;
+}
 }  // namespace
 
 double OpticalCurve::Interp(double xq) const {
@@ -115,7 +246,7 @@ double OpticalCurve::Interp(double xq) const {
   if (xq <= x.front()) return y.front();
   if (xq >= x.back()) return y.back();
   auto it = std::upper_bound(x.begin(), x.end(), xq);
-  size_t hi = it - x.begin();
+  size_t hi = static_cast<size_t>(it - x.begin());
   size_t lo = hi - 1;
   double t = (xq - x[lo]) / (x[hi] - x[lo]);
   return y[lo] + t * (y[hi] - y[lo]);
@@ -127,26 +258,42 @@ OpticalCurve OpticalTables::LoadCsv(const std::string& path) {
   std::ifstream f(path);
   if (!f) return c;  // empty curve; caller decides
   std::string line;
+  size_t line_no = 0;
   while (std::getline(f, line)) {
+    ++line_no;
     std::string t = trim(line);
     if (t.empty()) continue;
     if (t[0] == '#') {
-      // Provenance header lines, e.g. "# units_x: nm" / "# source: <ref>".
       if (t.find("units_x:") != std::string::npos)
         c.units_x = trim(t.substr(t.find("units_x:") + 8));
       else if (t.find("units_y:") != std::string::npos)
         c.units_y = trim(t.substr(t.find("units_y:") + 8));
       else if (t.find("source:") != std::string::npos)
         c.source_note += trim(t.substr(t.find("source:") + 7)) + "; ";
+      else if (t.find("status:") != std::string::npos)
+        c.status_note = trim(t.substr(t.find("status:") + 7));
       continue;
     }
-    // Accept comma or whitespace separated two-column rows.
     for (char& ch : t) if (ch == ',') ch = ' ';
     std::istringstream is(t);
     double xv, yv;
-    if (is >> xv >> yv) { c.x.push_back(xv); c.y.push_back(yv); }
+    std::string extra;
+    if (!(is >> xv >> yv)) {
+      c.skipped_malformed_rows += 1;
+      c.parse_errors.push_back("table '" + path + "' line " +
+                               std::to_string(line_no) +
+                               " is not two numeric columns: '" + t + "'");
+      continue;
+    }
+    if (is >> extra) {
+      c.parse_errors.push_back("table '" + path + "' line " +
+                               std::to_string(line_no) +
+                               " has extra token(s) after two columns: '" + t + "'");
+      continue;
+    }
+    c.x.push_back(xv);
+    c.y.push_back(yv);
   }
-  // Ensure ascending x for interpolation.
   if (c.x.size() > 1 && c.x.front() > c.x.back()) {
     std::reverse(c.x.begin(), c.x.end());
     std::reverse(c.y.begin(), c.y.end());
@@ -158,11 +305,6 @@ OpticalCurve OpticalTables::LoadCsv(const std::string& path) {
 OpticalTables OpticalTables::LoadDir(const std::string& dir, bool strict) {
   OpticalTables t;
   if (!fs::exists(dir)) {
-    // G4-003: do NOT throw here. Returning empty curves lets the caller
-    // (DetectorConstruction::EnforceOpticalTables) convert the resulting
-    // "required table missing" errors into a clean G4Exception(FatalException)
-    // abort in strict mode, or a warning in dev mode. Throwing here would
-    // bypass Geant4 and terminate the process uncleanly.
     std::cerr << (strict ? "error[strict]: " : "warning: ")
               << "optical table directory not found: " << dir << "\n";
     return t;
@@ -170,61 +312,14 @@ OpticalTables OpticalTables::LoadDir(const std::string& dir, bool strict) {
   for (const auto& e : fs::directory_iterator(dir)) {
     if (e.path().extension() == ".csv") {
       std::string key = e.path().stem().string();
-      t.curves_[key] = LoadCsv(e.path().string());
+      OpticalCurve curve = LoadCsv(e.path().string());
+      auto errs = CurveSchemaErrors(curve, key);
+      curve.validation_status = errs.empty() ? "OK" : (curve.Empty() ? "EMPTY" : "FAILED");
+      t.curves_[key] = std::move(curve);
     }
   }
   return t;
 }
-
-namespace {
-// G4-003 schema checks for one loaded curve. x is wavelength [nm] per the
-// documented table contract; catches missing/empty tables, missing unit
-// provenance, non-finite points, gross unit/range errors (table given in
-// meters or Angstrom instead of nm), and non-monotonic x.
-std::vector<std::string> CurveSchemaErrors(const OpticalCurve& c,
-                                           const std::string& key) {
-  std::vector<std::string> errs;
-  if (c.Empty()) {
-    errs.push_back("required optical table '" + key +
-                   "' is missing or empty (no usable rows)");
-    return errs;
-  }
-  if (c.units_x.empty())
-    errs.push_back("table '" + key +
-                   "' has no '# units_x:' provenance header (x units ambiguous)");
-  if (c.units_y.empty())
-    errs.push_back("table '" + key +
-                   "' has no '# units_y:' provenance header (y units ambiguous)");
-  for (size_t i = 0; i < c.x.size(); ++i) {
-    if (!std::isfinite(c.x[i]) || !std::isfinite(c.y[i])) {
-      errs.push_back("table '" + key + "' has a non-finite point at row " +
-                     std::to_string(i));
-      break;
-    }
-  }
-  // Wavelength [nm] physical window. Header documents x as wavelength_nm;
-  // values outside [100, 2000] nm signal a unit/range error (meters ~1e-7,
-  // Angstrom ~1e4, or a stray zero/negative).
-  for (double xv : c.x) {
-    if (xv < 100.0 || xv > 2000.0) {
-      errs.push_back("table '" + key + "' x=" + std::to_string(xv) +
-                     " nm is outside the valid wavelength range [100,2000] "
-                     "(unit/range error)");
-      break;
-    }
-  }
-  // LoadCsv normalizes a descending grid to ascending; non-monotonic x here
-  // is a schema violation that would corrupt interpolation.
-  for (size_t i = 1; i < c.x.size(); ++i) {
-    if (c.x[i] <= c.x[i - 1]) {
-      errs.push_back("table '" + key +
-                     "' x is not strictly ascending at row " + std::to_string(i));
-      break;
-    }
-  }
-  return errs;
-}
-}  // namespace
 
 std::vector<std::string> OpticalTables::ValidateRequired(
     const std::vector<std::string>& required_keys) const {
@@ -240,6 +335,17 @@ std::vector<std::string> OpticalTables::ValidateRequired(
     }
   }
   return errs;
+}
+
+bool OpticalTables::AnyInvalid() const {
+  for (const auto& kv : curves_) {
+    if (kv.second.validation_status == "FAILED" ||
+        !kv.second.parse_errors.empty() ||
+        kv.second.skipped_malformed_rows > 0) {
+      return true;
+    }
+  }
+  return false;
 }
 
 const OpticalCurve& OpticalTables::Get(const std::string& key) const {

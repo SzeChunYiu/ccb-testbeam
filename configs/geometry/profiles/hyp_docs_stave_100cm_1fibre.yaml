@@ -1,0 +1,31 @@
+schema: ccb-geometry-profile/1
+profile_id: hyp_docs_stave_100cm_1fibre
+status: HYPOTHESIS
+claims_authorized: false
+issues: [987, 991]
+adr: docs/adr/ADR-0002-geometry-kinematics-hypotheses.md
+source_type: DOC_CLAIM
+source_refs:
+  - docs/01_setup_and_detector.md
+  - docs/academic_chapters/02_experimental_setup.md
+contradicts:
+  - hyp_mc_single_stave_50cm_2fibre
+parameters:
+  kind: single_stave_optical
+  stave_half_x_cm: 50.0
+  stave_half_y_cm: 2.59
+  stave_half_z_cm: 1.0
+  stave_length_cm: 100.0
+  n_fibres: 1
+  fibre_y_cm: [0.0]
+  fibre_radius_mm: null
+  hole_radius_mm: null
+  fibre_half_x_cm: null
+  physical_readout_channels: ["one_ended_WLS"]
+  control_channels: []
+notes: >
+  Documents the prose/hardware claim of ~1 m stave length with singular
+  "a ... fibre" wording in Chapter 2 / setup docs. NOT implemented in
+  DetectorConstruction. Selecting this profile does not change Geant4
+  constants; it marks analysis assumptions. Hardware/CAD closure required
+  before APPROVED.

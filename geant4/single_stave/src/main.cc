@@ -4,6 +4,7 @@
 // structure"). Batch/headless by default; visualization is an optional CMake
 // target (CCB_ENABLE_VIS) and never a hard dependency of the physics build.
 #include "AppConfig.hh"
+#include "BeamIntersection.hh"
 #include "DetectorConstruction.hh"
 #include "PhysicsList.hh"
 #include "ActionInitialization.hh"
@@ -35,6 +36,22 @@ int main(int argc, char** argv) {
     // --help prints usage and returns false; a parse error also returns false.
     return (argc > 1 && (std::string(argv[1]) == "-h" ||
                          std::string(argv[1]) == "--help")) ? 0 : 2;
+  }
+
+  // Issue #999 / ADR-0003: geometry-aware primary preflight using
+  // DetectorConstruction extents (no duplicate limits in AppConfig).
+  {
+    const auto beam = ccb::ValidatePrimaryAgainstStave(cfg);
+    std::cout << "CCB_BEAM_PREFLIGHT intersects=" << (beam.intersects ? 1 : 0)
+              << " enters_neg_z=" << (beam.enters_neg_z_face ? 1 : 0)
+              << " path_cm=" << beam.path_length_cm
+              << " reason=" << beam.reason << std::endl;
+    if (beam.reason != "ok" && !cfg.allow_miss) {
+      std::cerr << "fatal: primary does not intersect the stave (#999): "
+                << beam.reason
+                << "\n       pass --allow-miss only for intentional miss studies\n";
+      return 4;
+    }
   }
 
   // Seed the master engine before constructing the run manager. In MT builds,

@@ -78,8 +78,8 @@ def test_nominal_stable_cmdline_records_exact_arguments(tmp_path: Path) -> None:
     assert result["status"] == "PASS"
     assert result["process"]["pid"] == 4321
     assert result["cmdline_region"]["trailing_nul_observed"] is True
-    assert result["cmdline_region"]["argument_count_observed"] == 6
-    assert [item["utf8"] for item in result["cmdline_region"]["arguments"]] == [
+    assert result["cmdline_region"]["nul_delimited_slot_count_observed"] == 6
+    assert [item["utf8"] for item in result["cmdline_region"]["nul_delimited_slots"]] == [
         "./hibeam_g4",
         "-c",
         "krakow.config",
@@ -97,7 +97,7 @@ def test_preserves_empty_and_non_utf8_argument_slots(tmp_path: Path) -> None:
     receipt = _runtime_receipt(pid=4321, starttime=987654, exe_link="/opt/hibeam_g4")
     result = MODULE.attest_loader_argv(runtime_receipt=receipt, proc_root=proc_root)
 
-    args = result["cmdline_region"]["arguments"]
+    args = result["cmdline_region"]["nul_delimited_slots"]
     assert len(args) == 3
     assert args[1]["bytes"] == 0
     assert args[1]["utf8"] == ""
@@ -185,8 +185,8 @@ def test_real_linux_child_observation_is_stable() -> None:
             exe_link=exe_link,
         )
         result = MODULE.attest_loader_argv(runtime_receipt=receipt)
-        assert result["cmdline_region"]["arguments"][0]["utf8"] == "/bin/sleep"
-        assert result["cmdline_region"]["arguments"][1]["utf8"] == "5"
+        assert result["cmdline_region"]["nul_delimited_slots"][0]["utf8"] == "/bin/sleep"
+        assert result["cmdline_region"]["nul_delimited_slots"][1]["utf8"] == "5"
     finally:
         process.terminate()
         process.wait(timeout=2)

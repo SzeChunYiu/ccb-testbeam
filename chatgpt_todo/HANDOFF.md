@@ -65,3 +65,15 @@ Existing children remain initial cwd, ld.so cache/config, `$ORIGIN/$LIB/$PLATFOR
 The branch already contains the new tool, hostile tests, curated ruff integration and immutable record `chatgpt_todo/archive/2026-08-11T094700Z_ARU-MC-G4-LOADER-PROC-ENV-001.md`. Open a focused PR and require fresh exact-final-head MC Validation. Merge only if curated ruff, full non-integration pytest, diagnostics/enforcement and current-main ancestry are all successful. Green CI validates the software/provenance primitive only.
 
 No production Geant4 campaign was run, no beam or production-MC ROOT bytes were opened, and no angular distribution, event weight, B2/B8, PID, penetration, timing, calibration, pile-up, ESS, p-value, rate, or detector-performance quantity was regenerated or promoted.
+
+---
+
+## Base-freshness gate (ARU-CI-BASE-FRESHNESS-001, #1188)
+
+Before opening any PR, verify the head contains the exact current protected-base commit. The local Git-graph provenance tool is `tools/audit/validate_pr_base_freshness.py` (schema `pr_base_freshness_v1`); it deliberately does not inspect GitHub status/check APIs (a separate authorization layer).
+
+- `python tools/audit/validate_pr_base_freshness.py --repo . --base-ref origin/main --head-ref HEAD`
+- Exit 0 / `CURRENT_BASE` = authorising; exit 2 / `STALE_OR_DIVERGED_BASE` = rebase onto `origin/main` first; exit 3 / `INSPECTION_FAILED` = fix the refs, not the check.
+- Authorising formula: `base_is_ancestor_of_head AND behind_by == 0 AND merge_base_sha == base_sha`.
+
+This is one of the A/B discriminators the #1188 evidence used (stale #1186 rejected, current-base #1187 merged). Record the protected-base SHA before and the merged result after each scientific PR merge.

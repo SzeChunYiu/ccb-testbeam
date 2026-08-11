@@ -1,28 +1,34 @@
 # Latest Handoff
 
-## Validated atom: exact opened-byte binding for CMake/C++ version probes
+## Active atom: live executable mapping identity
 
-PR #1202 is now on protected `main@6c7a74295d799c9e0a231365d3e5efb690bd25a9`. The predecessor v1 CMake toolchain attestation hashed a resolved tool target but probed the original cache spelling; a mutable alias could therefore separate recorded bytes from the executable entrypoint that produced `--version` output.
+Protected `main@8a0f509f255e5bea5464468b10dd8042dcf5e47b` contains the validated #1198/#1199/#1201/#1202 provenance chain through exact source overlay, build/executable binding, configured CMake tool identity, and same-open-file version-probe binding. None of those receipts proves which shared objects the resulting process actually maps at runtime.
 
-The merged child `ccb_geant4_tool_probe_binding_v1` requires the parent attestation digest and path/target projection to remain unchanged, opens the already-resolved regular executable, hashes that open file description, executes the same inherited object through Linux `/proc/self/fd/{fd}`, re-hashes the same descriptor after the probe, and finally re-resolves/re-hashes the original alias. Linux exposes process file descriptors under `/proc/<pid>/fd`, and Python 3.11 `subprocess.pass_fds` preserves selected POSIX descriptors in the child; these are mechanism facts only, not Geant4 validation.
+PR #1204 implements `ARU-MC-G4-RUNTIME-MAPS-001` as `ccb_geant4_runtime_dependency_attestation_v1`. The tool binds a live Linux process to the exact executable bytes/path in the #1199 final-build receipt, reads `/proc/<pid>/maps`, collapses executable VM segments by `(device-major, device-minor, inode)`, hashes each stable regular file-backed executable object, records the selected initial loader environment, requires discriminating dependency patterns, and self-digests the receipt. It rejects replaced/deleted mapped inodes, unattributed anonymous executable mappings, executable-path relocation, process identity changes, and executable-mapping transitions during collection.
 
-### Executed falsifiers and CI
+### Executed falsifiers
 
-Local deterministic reconstruction, no RNG, returned `6 passed in 0.06s`. Hostile fixtures cover stable direct executables, stable symlink aliases, symlink target transition during probe, executable self-mutation during probe, parent-attested bytes changed before probing, and nonzero probe exit.
+Local deterministic command, no RNG:
 
-The first exact-head CI run `31447800441` on `148bd06266665c2ef597697538d821b9b8752120` was ruff-clean with `1499 passed, 1 skipped, 8 xfailed, 1 xpassed`, but became stale when #1189 advanced main. The attempted normal protected merge was rejected; no bypass or force update was used. The branch was then refreshed by a non-force merge commit onto `main@49797c9f54e889204b4679848ea7bf805184710c`. Compare reported `status=ahead`, `behind_by=0`, merge base exactly current main. Fresh exact-head run `31448197610` was ruff-clean with `1502 passed, 1 skipped, 8 xfailed, 1 xpassed`; only that refreshed evidence authorised the squash merge to `6c7a74295d799c9e0a231365d3e5efb690bd25a9`.
+`python -m pytest -q tests/test_geant4_runtime_dependency_attestation.py`
+
+Result: `8 passed in 0.06s`.
+
+The fixture matrix covers nominal Geant4/ROOT-like mappings, a live executable that differs from the final-build receipt, missing required dependency family, same-path/same-soname atomic replacement, a deleted executable mapping, anonymous executable memory, `LD_LIBRARY_PATH` provenance change, and a real Linux `/proc` round trip against a sleeping Python child process.
+
+Linux `proc_pid_maps(5)` supplies the address/perms/device/inode/path observable. The glibc loader documentation establishes that actual dependency resolution can depend on RPATH/RUNPATH, `LD_LIBRARY_PATH`, cache/default paths and preloads, so configured package roots or nominal version strings are not observationally equivalent to actual mapped code. The implementation intentionally avoids claiming that pathname/hash evidence is an in-memory page hash or a complete event-interval trace.
 
 ### Four sequential AI reviews
 
-- **Build/physics integration lead — ACCEPT bounded entrypoint binding / REVISE build provenance.** The alias race is closed locally; actual compiler/linker invocation remains unobserved.
-- **Adversarial systems reviewer — ACCEPT local mechanism / BLOCK transitive dependency claims.** A bound entrypoint can still be dynamically linked or launch wrapper children. Probe output is checked after capture rather than streaming-bounded; keep that as `ARU-MC-G4-PROBE-OUTPUT-BOUND-001` if hostile tools become part of the threat model.
-- **Independent validation reviewer — ACCEPT repository software closure / BLOCK physics inference.** Both stale-base and refreshed-current-base cases were observed, and only the refreshed green head merged. No generated event entered the tests.
-- **Claims/provenance reviewer — ACCEPT provenance refinement / BLOCK CL-021 promotion.** #1182 still lacks link/runtime-library identity, immutable consumption, run-manager/thread/RNG/input/output provenance and compiled hostile controls.
+- **Build/runtime physics lead — ACCEPT bounded runtime-file identity / REVISE run provenance.** Configured Geant4/VGM/ROOT roots do not determine actual mappings; no real HIBEAM process was available.
+- **Adversarial systems reviewer — ACCEPT device/inode/hash gate / BLOCK stronger executed-page claim.** Same-path replacement is rejected, but backing-file bytes are not a hash of already-faulted memory pages and late `dlopen` remains possible.
+- **Independent validation reviewer — ACCEPT deterministic oracle / BLOCK physics inference.** Eight fixtures pass locally including one live procfs integration; no Geant4 event is generated.
+- **Claims/provenance reviewer — ACCEPT provenance refinement / BLOCK CL-021 promotion.** Run-manager/thread/RNG/event/input/output, link metadata, compiled hostile source/stopping controls, weights, response chain and held-out DATA/MC closure remain open.
 
-### Next highest-value atom
+### Next highest-value child after #1204
 
-`ARU-MC-G4-LINK-RUNTIME-IDENTITY-001`: distinguish configured package labels/roots, link-time dependency inputs, and the shared objects actually mapped at runtime. Start from the exact executable hash already bound by #1199/#1201/#1202; derive and test a contract around linker metadata, `DT_NEEDED`/RPATH/RUNPATH (or platform equivalent), loader search order/environment, resolved library path plus SHA-256, static-link cases, symlink replacement and runtime mappings. Negative controls should preserve nominal version/soname while changing bytes, change loader search order, and separate build-tree link identity from runtime-loaded identity.
+`ARU-MC-G4-LINK-METADATA-001`: bind the exact ELF interpreter and dynamic dependency metadata (`DT_NEEDED`, `DT_RPATH`, `DT_RUNPATH`) from the already-bound executable bytes using a content-bound parser/tool identity, then compare declared direct dependencies with the actual runtime mapping receipt. The child must distinguish loader prediction from observed mappings and record loader search-order inputs rather than assuming configured package roots compose correctly.
 
-Parallel children remain `ARU-MC-G4-IMMUTABLE-CONSUMPTION-001`, `ARU-MC-G4-WRAPPER-CHAIN-001`, `ARU-MC-G4-PROBE-OUTPUT-BOUND-001`, and `ARU-MC-G4-RUNTIME-MANIFEST-001`. Compiled hostile cross-section/stopping-table controls remain under #1182/#1058.
+Parallel children remain `ARU-MC-G4-LATE-DLOPEN-001`, `ARU-MC-G4-MAPPED-PAGE-CONTENT-001`, `ARU-MC-G4-WRAPPER-CHAIN-001`, `ARU-MC-G4-IMMUTABLE-CONSUMPTION-001`, and `ARU-MC-G4-RUNTIME-MANIFEST-001`. Compiled source/stopping hostile controls remain under #1182/#1058.
 
-No production Geant4 campaign, beam ROOT, production MC ROOT, detector response, angular distribution, event weight, B2/B8, PID, penetration, timing, calibration, pile-up, ESS, p-value, rate or detector-performance result was regenerated or promoted.
+PR #1204 is open and exact-head MC Validation CI is required before merge. No production Geant4 campaign, beam ROOT, production MC ROOT, angular distribution, event weight, B2/B8, PID, penetration, timing, calibration, pile-up, ESS, p-value, rate or detector-performance result was regenerated or promoted.

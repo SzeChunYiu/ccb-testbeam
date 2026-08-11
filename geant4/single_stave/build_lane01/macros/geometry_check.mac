@@ -1,0 +1,11 @@
+# geometry_check.mac — headless geometry + overlap smoke.
+# The application prints GEOMETRY_REPORT_* and OVERLAP_CHECK_PASS during
+# /run/initialize (executed by main before this macro runs). This macro then
+# runs Geant4's own overlap test on the constructed geometry.
+/control/verbose 1
+/run/verbose 1
+/event/verbose 0
+/tracking/verbose 0
+# Geometry already initialized by main(); run the boundary/overlap self-test.
+/geometry/test/tolerance 0.01 mm
+/geometry/test/run

@@ -1,0 +1,2 @@
+/sw/easybuild_milan/software/binutils/2.40-GCCcore-12.3.0/bin/ar qc libccb_sipm_core.a CMakeFiles/ccb_sipm_core.dir/src/Config.cc.o CMakeFiles/ccb_sipm_core.dir/src/Digest.cc.o CMakeFiles/ccb_sipm_core.dir/src/Seed.cc.o CMakeFiles/ccb_sipm_core.dir/src/ResponseSimulator.cc.o
+/sw/easybuild_milan/software/binutils/2.40-GCCcore-12.3.0/bin/ranlib libccb_sipm_core.a

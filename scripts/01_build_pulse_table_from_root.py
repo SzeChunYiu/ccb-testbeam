@@ -7,6 +7,7 @@ import argparse
 import hashlib
 import json
 import os
+import sys
 import shutil
 import subprocess
 from collections import defaultdict
@@ -28,6 +29,10 @@ from ccb_mc_validation.s00_selector_contract import (
     validate_s00_selector_contract,
 )
 from ccb_mc_validation.selector import estimate_pedestal_v1_batched
+_SCRIPTS_DIR = Path(__file__).resolve().parent
+if str(_SCRIPTS_DIR) not in sys.path:
+    sys.path.insert(0, str(_SCRIPTS_DIR))
+from channel_polarity import apply_polarity, load_polarity_map  # noqa: E402
 from tools.audit.validate_hrd_waveform_contract import (
     BatchValidation,
     validate_and_reshape_rows,
@@ -261,16 +266,43 @@ def sorted_file(sorted_b_dir: Path, run: int) -> Path:
     return sorted_b_dir / f"hrdb_run_{run:04d}-sorted.root"
 
 
-def pulse_quantities(waveforms: np.ndarray, baseline_indices: List[int]) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+def pulse_quantities(
+    waveforms: np.ndarray,
+    baseline_indices: List[int],
+    polarity: np.ndarray | None = None,
+) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     # Baseline via the versioned S00 selector (v1 = first-four median), so the
     # produced pulse table records the canonical estimator identically instead
     # of an inline np.median call (Issue #1109).
+    # Polarity is applied after baseline subtraction (#954); never use abs().
     baseline = estimate_pedestal_v1_batched(waveforms, baseline_indices)
     corrected = waveforms - baseline[..., None]
+    if polarity is not None:
+        corrected = apply_polarity(corrected, polarity)
     amplitude = corrected.max(axis=-1)
     peak_sample = corrected.argmax(axis=-1)
     area = corrected.sum(axis=-1)
     return baseline, amplitude, peak_sample, area
+
+
+def resolve_analysis_polarity(n_channels: int, config: dict | None = None) -> tuple[np.ndarray, dict]:
+    """Load versioned channel polarity; fail closed if map is incomplete (#954)."""
+    path = Path(os.environ.get(
+        "CCB_CHANNEL_POLARITY_PATH",
+        str(Path(__file__).resolve().parents[1] / "configs" / "channel_polarity_v1.json"),
+    ))
+    polarity_map = load_polarity_map(path)
+    vec = polarity_map.polarity_vector(n_channels)
+    meta = {
+        "path": str(path),
+        "version": polarity_map.version,
+        "status": polarity_map.status,
+        "channel_polarity": {str(i): int(vec[i]) for i in range(n_channels)},
+    }
+    if config is not None:
+        meta["config_hint"] = bool(config.get("channel_polarity_required", True))
+    return vec, meta
+
 
 
 def iter_raw_events(path: Path, step_size: int = 10000) -> Iterable[dict]:
@@ -311,6 +343,9 @@ def scan_raw(config: dict) -> Tuple[pd.DataFrame, pd.DataFrame, Dict[str, dict],
     stave_names = list(staves.keys())
     stave_channels = np.asarray([staves[name] for name in stave_names], dtype=int)
     stave_grid = np.asarray(stave_names)
+    full_polarity, polarity_meta = resolve_analysis_polarity(8, config)
+    stave_polarity = full_polarity[stave_channels]
+    scan_raw.polarity_meta = polarity_meta  # type: ignore[attr-defined]
 
     for run in configured_runs(config):
         path = raw_file(raw_root_dir, run)
@@ -344,7 +379,9 @@ def scan_raw(config: dict) -> Tuple[pd.DataFrame, pd.DataFrame, Dict[str, dict],
                 )
             all_events = waveforms.astype(np.float64)
             waveforms = all_events[:, stave_channels, :]
-            baseline, amplitude, peak_sample, area = pulse_quantities(waveforms, baseline_indices)
+            baseline, amplitude, peak_sample, area = pulse_quantities(
+                waveforms, baseline_indices, polarity=stave_polarity
+            )
 # Absolute peak (raw max) for peak_code_adc and hardware saturation
             # flag (14-bit CAEN V1742, max code = 16383).
             peak_code_adc = waveforms.max(axis=-1)

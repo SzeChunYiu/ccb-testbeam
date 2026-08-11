@@ -26,6 +26,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import uproot
+import sys as _sys
+from pathlib import Path as _Path
+_HERE = _Path(__file__).resolve().parent
+if str(_HERE) not in _sys.path:
+    _sys.path.insert(0, str(_HERE))
+import digital_cfd
 import yaml
 from scipy.optimize import curve_fit
 from sklearn.linear_model import Ridge
@@ -128,40 +134,36 @@ def reproduce_counts(config: dict) -> pd.DataFrame:
     return out[["quantity", "report_value", "reproduced", "delta", "tolerance", "pass"]]
 
 
-def cfd_time_samples(waveforms: np.ndarray, amplitudes: np.ndarray, fraction: float) -> np.ndarray:
-    threshold = amplitudes * float(fraction)
-    ge = waveforms >= threshold[:, None]
-    first = np.argmax(ge, axis=1)
-    valid = ge.any(axis=1)
-    out = np.full(len(waveforms), np.nan, dtype=float)
-    for i in np.where(valid)[0]:
-        j = int(first[i])
-        if j <= 0:
-            out[i] = float(j)
-            continue
-        y0, y1 = waveforms[i, j - 1], waveforms[i, j]
-        denom = y1 - y0
-        if denom <= 0:
-            out[i] = float(j)
-        else:
-            out[i] = (j - 1) + (threshold[i] - y0) / denom
-    return out
+def cfd_time_samples(
+    waveforms: np.ndarray,
+    amplitudes: np.ndarray,
+    fraction: float,
+    *,
+    amplitude_mode: str = "global_max",
+    return_status: bool = False,
+):
+    """Delegate to canonical ``digital_cfd`` (#1063). Left-censor -> nan (#1060)."""
+    return digital_cfd.cfd_time_samples(
+        waveforms,
+        amplitudes,
+        fraction,
+        amplitude_mode=amplitude_mode,  # type: ignore[arg-type]
+        return_status=return_status,
+    )
 
 
-def leading_edge_time_samples(waveforms: np.ndarray, threshold_adc: float) -> np.ndarray:
-    ge = waveforms >= float(threshold_adc)
-    first = np.argmax(ge, axis=1)
-    valid = ge.any(axis=1)
-    out = np.full(len(waveforms), np.nan, dtype=float)
-    for i in np.where(valid)[0]:
-        j = int(first[i])
-        if j <= 0:
-            out[i] = float(j)
-            continue
-        y0, y1 = waveforms[i, j - 1], waveforms[i, j]
-        denom = y1 - y0
-        out[i] = float(j) if denom <= 0 else (j - 1) + (threshold_adc - y0) / denom
-    return out
+def leading_edge_time_samples(
+    waveforms: np.ndarray,
+    threshold_adc: float,
+    *,
+    return_status: bool = False,
+):
+    """Delegate to canonical ``digital_cfd`` leading-edge helper."""
+    return digital_cfd.leading_edge_time_samples(
+        waveforms,
+        threshold_adc,
+        return_status=return_status,
+    )
 
 
 def build_templates(pulses: pd.DataFrame, stave_names: List[str]) -> Dict[str, np.ndarray]:

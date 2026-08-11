@@ -1,58 +1,28 @@
 # Latest Handoff
 
-## Selected atom: exact external source overlay provenance before Geant4 compilation
+## Validated atom: live executable mapping identity
 
-Protected `main` entered this session at `774eda1b1180098c7e00757db312ede41491094b`, after PR #1197 recorded the validated CI-routing milestone and resumed #1182. The static readiness/source-parity repair is already on main through #1183; #1178, #1179, #1058 and CL-021 remain open/gated.
+Protected `main@1b6608b8e106fe8ec1f73f6e40918a8c75d091f9` now contains PR #1204 / `ARU-MC-G4-RUNTIME-MAPS-001` on top of the validated #1198/#1199/#1201/#1202 provenance chain. The exact-head MC Validation run `31450233217` succeeded: curated ruff returned `All checks passed!`; pytest returned `1511 passed, 1 skipped, 8 xfailed, 1 xpassed` with six pre-existing warnings. The validation artifact digest is `sha256:80d0e3a7e41a5f3f64de4795d5c2024ba7b75f288a51751bd6e7c77f3cb89b40`.
 
-### Atomic contract and contradiction resolved
+`ccb_geant4_runtime_dependency_attestation_v1` binds a live Linux process to the exact executable bytes/path in the #1199 final-build receipt, reads `/proc/<pid>/maps`, collapses executable VM segments by `(device-major, device-minor, inode)`, hashes each stable regular file-backed executable object, records selected initial loader-environment controls, requires discriminating dependency patterns, and self-digests the receipt. It rejects wrong live executable bytes, absent required dependency families, same-path atomic replacement, same-inode/same-size post-hash mutation detected through final metadata recheck, deleted executable mappings, unattributed anonymous executable mappings, executable-path relocation, process identity changes, and executable-mapping transitions during collection.
 
-The reviewed deployment helper `geant4/src_patch/patch_scatter.py` intentionally installs the repository-reviewed `ScatteringGenerator.hh/.cc` bytes into an external `hibeam_g4` checkout. Unless the pinned upstream commit already contains identical bytes, a correct installation necessarily makes those tracked external paths differ from `HEAD`. Therefore the shorthand contract “exact upstream commit/tree + clean Git state + reviewed installed pair” is over-constrained: generic cleanliness and a legitimate overlay can be mutually exclusive.
+The focused deterministic runtime-mapping suite was `9 passed in 0.07s`, no RNG, and includes one real Linux `/proc` round trip against a sleeping Python child in addition to synthetic hostile fixtures. This validates software/provenance behavior only; no HIBEAM/Geant4 production process was available to measure actual Geant4/VGM/ROOT mapped-object hashes.
 
-The source identity is instead decomposed into two layers:
+Linux `proc_pid_maps(5)` is the authoritative mapped-region observable; glibc loader semantics make actual resolution dependent on executable dynamic metadata and runtime search inputs such as RPATH/RUNPATH, `LD_LIBRARY_PATH`, cache/default paths and preloads. Therefore configured package roots or nominal version labels are not equivalent to actual mapped code, and observed mappings are not equivalent to declared link metadata.
 
-1. **Pinned baseline:** external `HEAD` and `HEAD^{tree}` must equal exact approved values supplied by the run specification.
-2. **Allowed overlay:** the Git index remains clean; no untracked paths are present; every visible work-tree delta is an unstaged modification of only `include/ScatteringGenerator.hh` or `src/ScatteringGenerator.cc`; both external paths are regular non-symlink files byte-identical to `geant4/src_patch/ScatteringGenerator.hh/.cc`. A zero-delta baseline is allowed only when upstream already contains the reviewed bytes.
+### Four sequential AI reviews
 
-This collapses two observationally equivalent correct states—upstream-already-equal and pinned-baseline-plus-reviewed-overlay—while excluding arbitrary dirty trees.
+- **Build/runtime physics lead — ACCEPT bounded runtime-file identity / REVISE run provenance.** Actual runtime mappings are now a validated repository observable, but no real HIBEAM run receipt was produced.
+- **Adversarial systems reviewer — REVISE first implementation, then ACCEPT hardened device/inode/hash/metadata gate / BLOCK stronger executed-page claim.** Atomic replacement and injected same-inode/same-size mutation are rejected; backing-file bytes are still not a hash of already-faulted memory pages and late `dlopen` remains possible.
+- **Independent validation reviewer — ACCEPT deterministic software oracle / BLOCK physics inference.** Local focused controls plus exact-head repository CI pass; no Geant4 event population was generated.
+- **Claims/provenance reviewer — ACCEPT provenance refinement / BLOCK CL-021 promotion.** Run-manager/thread/RNG/event/input/output state, link metadata, compiled hostile source/stopping controls, event weights, detector response and held-out DATA/MC closure remain open.
 
-### Implementation and discriminating tests
+## Next highest-value atom: ELF link metadata
 
-Branch `audit/geant4-build-frontdoor-provenance` adds schema `ccb_geant4_external_overlay_v1` in `tools/audit/validate_geant4_external_overlay.py` and focused tests in `tests/test_geant4_external_overlay.py`; both are added to the curated ruff lane.
+`ARU-MC-G4-LINK-METADATA-001` should bind the exact already-hashed executable's ELF interpreter and dynamic dependency declarations (`DT_NEEDED`, `DT_RPATH`, `DT_RUNPATH`) using a content-bound parser/tool identity, retain linker/build-system evidence, model loader search-order inputs, and compare declared direct dependencies with #1204's actually mapped runtime objects. The design must keep three distinct objects separate: **configured package identity**, **link-time dependency declaration**, and **observed runtime mapping**.
 
-The deterministic fixture matrix creates temporary Git repositories and tests:
+Hostile controls should include duplicate/malformed dynamic tags, no dynamic section, absolute versus soname dependencies, RPATH/RUNPATH precedence, `$ORIGIN` relocation, `LD_LIBRARY_PATH` override, preloads, missing declared dependencies, mapped-but-not-direct objects, and a parser/tool binary that changes between its byte attestation and metadata extraction. Do not use `ldd` output alone as proof of what a production process mapped.
 
-- exact two-file unstaged reviewed overlay — expected PASS;
-- clean upstream already byte-identical to the reviewed pair — expected PASS;
-- interrupted deployment where only one file is replaced — BLOCK on pair mismatch;
-- extra tracked mutation outside the overlay — BLOCK;
-- untracked source path — BLOCK;
-- staged/index mutation of an overlay file — BLOCK;
-- exact clean baseline with wrong source bytes — BLOCK;
-- wrong expected `HEAD` commit or tree — BLOCK.
+Parallel children remain `ARU-MC-G4-LATE-DLOPEN-001`, `ARU-MC-G4-MAPPED-PAGE-CONTENT-001`, `ARU-MC-G4-WRAPPER-CHAIN-001`, `ARU-MC-G4-IMMUTABLE-CONSUMPTION-001`, and `ARU-MC-G4-RUNTIME-MANIFEST-001`. Compiled source/stopping hostile controls remain under #1182/#1058.
 
-The validator snapshots Git status before and after byte verification and rejects a status transition during inspection. Required source paths are rejected if they are symlinks or non-regular files. This closes the static logical gap only; it does not make mutable path verification equivalent to an immutable compiled-source snapshot.
-
-### Competing mechanisms and eliminations
-
-- **H1: require completely clean external Git state at build time.** Rejected as a universal rule because the approved overlay itself can be the only expected delta.
-- **H2: ignore dirty state once the reviewed pair matches.** Rejected because unrelated tracked/untracked modifications could alter the executable while the pair still matches.
-- **H3: pin upstream commit/tree and permit exactly the reviewed pair as the only unstaged delta.** Survives and is implemented.
-- **H4: permit staged overlay changes as equivalent.** Rejected for this front door because index state becomes an additional mutable provenance layer with no scientific need.
-- **H5: trust the overlay installer’s successful return without pre-build re-verification.** Rejected because the installer explicitly documents that its two-path replacement is not crash-atomic.
-
-### Four sequential AI review passes
-
-- **Source/build lead — ACCEPT static overlay decomposition / BLOCK compiled authorisation.** Evidence: current installer contract, mutable historical setup script, exact baseline/overlay model. Strongest counter-hypothesis: generic `git clean` is sufficient. Falsifier: a correct reviewed overlay on a differing upstream commit is necessarily dirty. Residual: approved upstream commit/tree and actual compiled source snapshot are still absent.
-- **Adversarial mechanism reviewer — ACCEPT exact allow-list / BLOCK mutable post-check build.** Evidence: interrupted-install, staged, untracked and extra-dirty fixtures. Strongest counter-hypothesis: matching the two source files alone is enough. Falsifier: unrelated source mutations remain possible and are rejected. Residual: mutation after the validator returns but before/during compilation.
-- **Independent validation reviewer — ACCEPT deterministic Git/byte-state falsifiers / BLOCK physics inference.** No stochastic or detector model enters this atom. Residual: compiler/toolchain/runtime state and hostile compiled fixtures.
-- **Claims/provenance reviewer — ACCEPT local provenance contract / BLOCK CL-021 promotion.** Passing schema `ccb_geant4_external_overlay_v1` can authorise only the source-identity precondition. It does not validate a generated angular population, event weight, detector response, or DATA↔MC result.
-
-### Repository actions
-
-Stale PR #1195 was independently compared with current main and closed without merge because it reintroduced two already-rejected mechanisms: the event-zero source-loading gate and finite `pull_request.paths` routing. The validated readiness fix remains the main implementation; no scientific result was discarded.
-
-### Remaining child atoms
-
-Even if the overlay PR passes CI, #1182 remains open. The next build/run front-door children are: content-bound staged-input identity at consumption rather than historical pathnames alone; a build source/input snapshot or equivalent re-verification that survives post-check mutation; compiler/Geant4/VGM/CMake/executable identity; run-manager/thread mode; random engine/seeds/event count/model IDs; compiled missing/malformed/reconfigured source and stopping fixtures; explicit `CSFile=null` control; repeated readiness; output hash/manifest binding; and downstream detector-response closure.
-
-No beam ROOT data or production Geant4 campaign was executed, and no B2/B8, PID, penetration, timing, calibration, pile-up, ESS, p-value, rate or detector-performance result was regenerated or promoted.
+No production Geant4 campaign, beam ROOT, production MC ROOT, angular distribution, event weight, B2/B8, PID, penetration, timing, calibration, pile-up, ESS, p-value, rate or detector-performance result was regenerated or promoted. #1182, #1178, #1179, #1058, #1053/#880 and CL-021 remain open/gated.

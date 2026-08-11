@@ -282,11 +282,18 @@ def test_loader_environment_changes_receipt_identity(tmp_path: Path) -> None:
 def test_real_procfs_python_process_round_trip() -> None:
     executable = Path(sys.executable).resolve()
     proc = subprocess.Popen(
-        [str(executable), "-c", "import time; time.sleep(5)"],
-        stdout=subprocess.DEVNULL,
+        [
+            str(executable),
+            "-c",
+            'import time; print("READY", flush=True); time.sleep(5)',
+        ],
+        stdout=subprocess.PIPE,
         stderr=subprocess.DEVNULL,
+        text=True,
     )
     try:
+        assert proc.stdout is not None
+        assert proc.stdout.readline().strip() == "READY"
         result = attest_runtime_dependencies(
             final_receipt=_parent(executable),
             pid=proc.pid,

@@ -1,62 +1,57 @@
 # Latest Handoff
 
-## Active atom: Linux dynamic-loader secure-execution state
+## Active atom: one-sided Linux loader secure-state attestation
 
-Protected `main@4122dc6d71e64fd35697868afa6057e11377138a` is the current parent. It contains the validated repository content-transfer primitive from PR #1209. Exact-head MC Validation run `31471219915` reported curated ruff clean and `1554 passed, 1 skipped, 8 xfailed, 1 xpassed`; #1209 was independently reviewed, marked ready, and squash-merged. That merge changes repository-provenance mechanics only and does not close #1182 or CL-021.
+Protected parent is `main@4122dc6d71e64fd35697868afa6057e11377138a`; draft PR #1210 is on `audit/geant4-loader-secure-state` under #1182 / `ARU-MC-G4-LOADER-SEARCH-001`.
 
-The selected child is `ARU-MC-G4-LOADER-SECURE-STATE-001` on branch `audit/geant4-loader-secure-state`, under the broader `ARU-MC-G4-LOADER-SEARCH-001` dependency.
+The atom composes the PASS runtime-dependency receipt with its PASS same-process runtime/link co-observation child and then measures `/proc/<pid>/auxv` while `(pid,starttime_ticks)` stays stable. For the already-attested ELF64 little-endian x86-64 domain, auxv is parsed as 16-byte `<uint64 type,uint64 value>` records with exact `AT_NULL=(0,0)` termination, no duplicate non-null types, exactly one `AT_SECURE`, and `AT_SECURE in {0,1}`.
 
-### Why this atom exists
+### Adversarial correction that must be preserved
 
-`geant4/setup_and_run.sh` historically builds `LD_LIBRARY_PATH` from VGM and the conda prefix before launching `./hibeam_g4`. The validated runtime-dependency receipt captures loader-control environment values, and the validated runtime/link co-observation binds mapped-object bytes and ELF declarations. Those facts still do not establish whether the loader was in secure-execution mode. In secure mode, loader environment controls are ignored or restricted, so recorded strings cannot automatically be interpreted as effective search inputs.
+The first branch implementation was too strong for `AT_SECURE=0`: it tried to use the existing post-start `GLIBC_TUNABLES` observation to decide whether libc's `glibc.rtld.enable_secure=1` had been requested. GNU libc's own implementation/tests show that this tunable can enable secure-mode behavior while kernel `AT_SECURE` remains zero, and secure processing skips/removes `GLIBC_TUNABLES` from the environment. Therefore a post-start absence cannot establish launch-time absence.
 
-Linux exposes the secure-execution request directly as `AT_SECURE` in the auxiliary vector. Equal real/effective UID/GID is not an equivalent measurement because file capabilities or a Linux Security Module can also trigger secure execution. GNU libc additionally supports `glibc.rtld.enable_secure=1`, so kernel `AT_SECURE=0` plus that tunable is blocked pending exact glibc-version semantics rather than silently called non-secure.
+The implementation is now deliberately one-sided:
 
-### Exact bounded contract
+- `AT_SECURE=1` -> `SECURE_CONFIRMED_BY_KERNEL_AT_SECURE`; captured `LD_LIBRARY_PATH`, `LD_PRELOAD`, `LD_AUDIT` are non-authorising loader-search evidence.
+- `AT_SECURE=0` -> `UNRESOLVED_KERNEL_AT_SECURE_ZERO`; the same post-start environment values remain non-authorising until exact pre-exec environment/loader invocation and exact libc/loader identity are bound.
 
-Inputs are PASS `ccb_geant4_runtime_dependency_attestation_v1` and PASS child `ccb_geant4_runtime_link_coobservation_v1`, both naming the same `(pid,starttime_ticks)`, plus `/proc/<pid>/stat` and `/proc/<pid>/auxv`.
+This preserves a useful direct kernel observable without falsely turning it into a complete effective glibc secure-mode Boolean.
 
-For the already-attested ELF64 little-endian x86-64 execution domain, parse auxv as 16-byte `<uint64 type,uint64 value>` records. Require exact receipt ancestry; equal process identity in both receipts; live start time equal before and after auxv read; `AT_NULL=(0,0)` termination; no duplicate non-null keys; exactly one `AT_SECURE`; and `AT_SECURE in {0,1}`.
+### Exact repository implementation
 
-`AT_SECURE=1` => captured `LD_LIBRARY_PATH`, `LD_PRELOAD`, and `LD_AUDIT` are `RESTRICTED_OR_IGNORED_DO_NOT_USE_AS_LOADER_SEARCH_AUTHORITY`.
+Lineage retained for provenance:
+- initial tool `ae86fd58c81400fe98e6336a6cf4eca0c9e71eef`;
+- initial tests `875ac55234d7c35177109d1379c8df7a58a8ceff`;
+- curated CI inclusion `972e95e1b9a3c2f8d2dc25d1cec913b8416989ea`;
+- first archive `b7d3f511a0c3d06bfed434d64ea1ac6001f069f4`;
+- corrected tool `8dbec7cdc8332d77c232e45a544943052a3fcf36`;
+- corrected tests `5a726711382e4164d52f7897f6a01bc05f469469`;
+- correction archive `8443ac2613963384e42b79ead603d2e12ce15241`;
+- corrected active-task transition `9a8c5c8e0f566e19ce7e3ddc31743a1d0cd207ca`.
 
-`AT_SECURE=0` => those values are only `ELIGIBLE_SEARCH_INPUT_NOT_YET_PROVEN_EFFECTIVE`; RPATH/RUNPATH, cwd, loader cache/config, token/hwcaps expansion, preload/audit content/order and later dynamic loading still need independent evidence.
+Corrected exact GitHub-blob-bound local execution, Python 3.13/Linux/no RNG:
 
-### Implemented evidence
+`PYTHONPATH=/tmp/ccb_loader_exact python -m pytest -q /tmp/ccb_loader_exact/tests/test_geant4_loader_secure_state_attestation.py` -> `10 passed in 0.04s`; `py_compile` passed.
 
-- tool commit `ae86fd58c81400fe98e6336a6cf4eca0c9e71eef`: `tools/audit/geant4_loader_secure_state_attestation.py`;
-- test commit `875ac55234d7c35177109d1379c8df7a58a8ceff`: `tests/test_geant4_loader_secure_state_attestation.py`;
-- curated-CI inclusion `972e95e1b9a3c2f8d2dc25d1cec913b8416989ea`;
-- immutable ARU archive `b7d3f511a0c3d06bfed434d64ea1ac6001f069f4`;
-- active-task transition `e9511d8b74c1e921b00d7364afa8290561de6930`.
+Content identities:
+- tool: 11540 bytes; SHA-256 `b6821361ab5a7e13f71906accecbad3a7e7f9fc130432af262413413e69e7748`; Git blob SHA-1 `3102596db172b9f6f901d6768b7ad16042e7254c`;
+- tests: 7343 bytes; SHA-256 `af65d252ce7a5d57d71651144f60a9098b7c3ce672353a87f75c11b628465257`; Git blob SHA-1 `da51b78d275c4192636e5e4de6c7fece9fedb8b8`.
 
-Python 3.13/Linux/no-RNG exact committed-code reconstruction:
+The hostile matrix covers secure/nonsecure kernel bits, duplicate/missing/nonboolean `AT_SECURE`, malformed auxv, wrong receipt ancestry, process mismatch, invalid data after `AT_NULL`, and the key negative control that a post-start `GLIBC_TUNABLES=glibc.rtld.enable_secure=1` observation does not upgrade the kernel-zero case into a reconstructed effective loader state.
 
-`PYTHONPATH=/tmp/ccb_loader_exact python -m pytest -q /tmp/ccb_loader_exact/tests/test_geant4_loader_secure_state_attestation.py` -> `10 passed in 0.04s`.
+No local ruff executable was available. The earlier PR CI run on head `79823035bc244727f9205f5bfdaf7a18d7295121` is superseded by the correction and must not authorize merge. Require fresh exact-final-head MC Validation.
 
-The hostile matrix covers nonsecure/secure states; duplicate/missing/nonboolean `AT_SECURE`; malformed auxv length; wrong receipt ancestry; process mismatch; `glibc.rtld.enable_secure=1` with `AT_SECURE=0`; and invalid data after `AT_NULL`.
+### Four sequential AI review passes
 
-Repository-content cross-check:
-- tool: 11833 bytes; SHA-256 `fc4802ea4f4e6db7fe50732f772d03f6744f28f1e4fa892012e2693f300c3c64`; Git blob SHA-1 `2aa3e3dfed76204d51dbfd2b718dc4393870a052`;
-- tests: 6996 bytes; SHA-256 `3fe7b3695ee37351dfb95a61fd3d17c61376b39de20a2d2d08ee25db1ceae176`; Git blob SHA-1 `192348cee7c5fcf09209bea42f1778860e6388fc`.
+- **Runtime/physics integration lead — REVISE earlier zero-case / ACCEPT one-sided kernel measurement.** Strongest counter-hypothesis was that post-start environment plus `AT_SECURE=0` proves non-secure loading; glibc environment sanitization falsifies it. Residual: pre-exec state, exact libc/loader build, full search decision and real HIBEAM runtime.
+- **Adversarial systems reviewer — ACCEPT correction / BLOCK effective non-secure claim.** UID/GID equality is also insufficient because capabilities/LSM can set `AT_SECURE`. Residual: explicit-loader invocation and sanitized launch state.
+- **Independent validation reviewer — ACCEPT corrected deterministic oracle / BLOCK runtime generalisation and physics inference.** Ten exact committed-code fixtures pass; no real HIBEAM process or event was exercised.
+- **Claims/provenance reviewer — ACCEPT provenance child / BLOCK CL-021 promotion.** Link command/static archives, full loader decision, immutable consumption, runtime manifest, compiled hostile source/stopping controls, weights and detector response remain separate gates.
 
-Both Git blob IDs match GitHub branch reads. An earlier 6984-byte local test copy used a non-repository import path and is discarded as transfer evidence; the repository-adapted exact bytes were reconstructed and rerun.
+### Spawned children
 
-No local ruff executable was available, so no local ruff PASS is claimed.
+New highest-priority child: `ARU-MC-G4-LOADER-PREEXEC-ENV-001` — bind the exact environment and loader invocation at the exec boundary before dynamic-loader sanitization, together with exact loader/libc identity.
 
-### Four sequential AI reviews
-
-- **Runtime/physics integration lead — ACCEPT bounded mechanism / REVISE full loader provenance.** Strongest counter: assigned `LD_LIBRARY_PATH` already identifies effective library selection. Secure-execution semantics falsify that implication. Residual: no real HIBEAM auxv/runtime receipt, cwd, cache/config or exact glibc build identity.
-- **Adversarial systems reviewer — ACCEPT direct auxv measurement / BLOCK complete loader decision.** Strongest counter: matching real/effective IDs proves non-secure. Capabilities/LSM are counterexamples. Residual: glibc enable-secure tunable, explicit loader invocation, token/hwcaps/cache state, preload/audit content/order, later `dlopen`/unload.
-- **Independent validation reviewer — ACCEPT deterministic oracle / BLOCK physics inference.** Ten exact committed-code fixtures pass, but no event population or detector chain participates.
-- **Claims/provenance reviewer — ACCEPT provenance child / BLOCK CL-021 promotion.** Link command/static archives, remaining loader decision, immutable consumption, runtime manifest, compiled hostile source/stopping controls, weights and detector-response closure remain open.
-
-### Children and next handoff
-
-Stable children: `PROV-G4-LOADER-GLIBC-TUNABLE-001`, `ARU-MC-G4-LOADER-INITIAL-CWD-001`, `ARU-MC-G4-LOADER-CACHE-CONFIG-001`, `ARU-MC-G4-LOADER-TOKEN-HWCAPS-001`, `ARU-MC-G4-PRELOAD-AUDIT-001`. Existing linker-command/static-input, late-dlopen, non-executable relocation/GOT/PLT, wrapper/descendant, immutable-consumption, runtime-manifest, compiled source/stopping, event-weight and detector-response children remain open.
-
-Next repository action: open a focused PR for the branch and require exact-final-head MC Validation. Merge only if curated ruff, full non-integration pytest, and current-base ancestry pass. A green Python CI authorizes only this deterministic provenance primitive.
-
-Next scientific atom after this gate: `ARU-MC-G4-LOADER-INITIAL-CWD-001` is the smallest independent input needed to resolve empty path components and relative slash-containing `DT_NEEDED`; alternatively `ARU-MC-G4-LOADER-CACHE-CONFIG-001` is the next high-value loader-resolution state if cwd is unavailable.
+Other loader children remain `ARU-MC-G4-LOADER-INITIAL-CWD-001`, `ARU-MC-G4-LOADER-CACHE-CONFIG-001`, `ARU-MC-G4-LOADER-TOKEN-HWCAPS-001`, and `ARU-MC-G4-PRELOAD-AUDIT-001`; linker-command/static-input, late-dlopen, non-executable relocation/GOT/PLT, wrapper/descendant, immutable-consumption, runtime-manifest, compiled source/stopping, event-weight and detector-response atoms remain open.
 
 No production Geant4 campaign was run, no beam or production-MC ROOT bytes were opened, and no angular distribution, event weight, B2/B8, PID, penetration, timing, calibration, pile-up, ESS, p-value, rate, or detector-performance quantity was regenerated or promoted. #1182 and CL-021 remain gated.

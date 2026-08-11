@@ -209,29 +209,17 @@ def test_rejects_cwd_object_mutation_between_opens(tmp_path: Path, monkeypatch) 
         )
 
 
-def _wait_for_cwd(
-    process: subprocess.Popen, expected: Path, timeout_s: float = 3.0
-) -> tuple[int, str]:
-    proc_dir = Path("/proc") / str(process.pid)
+def _wait_for_child_marker(
+    process: subprocess.Popen, marker: Path, timeout_s: float = 10.0
+) -> None:
     deadline = time.monotonic() + timeout_s
-    expected = expected.resolve()
-    last = "not observed"
     while time.monotonic() < deadline:
         if process.poll() is not None:
             raise AssertionError(f"child exited early: {process.returncode}")
-        try:
-            cwd = Path(os.readlink(proc_dir / "cwd")).resolve()
-            exe = os.readlink(proc_dir / "exe")
-            starttime = MODULE._read_process_starttime(proc_dir)
-        except (OSError, ValueError) as exc:
-            last = str(exc)
-            time.sleep(0.01)
-            continue
-        if cwd == expected:
-            return starttime, exe
-        last = f"cwd={cwd}"
+        if marker.exists():
+            return
         time.sleep(0.01)
-    raise AssertionError(f"timed out waiting for cwd: {last}")
+    raise AssertionError("timed out waiting for child post-chdir readiness marker")
 
 
 @pytest.mark.skipif(not Path("/proc").is_dir(), reason="Linux procfs required")
@@ -240,12 +228,22 @@ def test_post_exec_chdir_falsifies_initial_cwd_interpretation(tmp_path: Path) ->
     later = tmp_path / "later"
     initial.mkdir()
     later.mkdir()
-    code = "import os,time; os.chdir(os.environ['TARGET_CWD']); time.sleep(5)"
+    marker = tmp_path / "post_chdir.ready"
+    code = (
+        "import os,time; "
+        "os.chdir(os.environ['TARGET_CWD']); "
+        "open(os.environ['READY_FILE'], 'wb').close(); "
+        "time.sleep(5)"
+    )
     env = dict(os.environ)
     env["TARGET_CWD"] = os.fspath(later)
+    env["READY_FILE"] = os.fspath(marker)
     process = subprocess.Popen([sys.executable, "-c", code], cwd=initial, env=env)
     try:
-        starttime, exe = _wait_for_cwd(process, later)
+        _wait_for_child_marker(process, marker)
+        proc_dir = Path("/proc") / str(process.pid)
+        starttime = MODULE._read_process_starttime(proc_dir)
+        exe = os.readlink(proc_dir / "exe")
         runtime = _runtime_receipt(pid=process.pid, starttime=starttime, exe_link=exe)
         argv = _argv_receipt(runtime)
         result = MODULE.attest_loader_cwd(runtime_receipt=runtime, argv_receipt=argv)

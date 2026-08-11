@@ -54,6 +54,7 @@ jobs:
             tools/audit/validate_mc_ci_trigger_scope.py \
             tools/audit/validate_geant4_external_overlay.py \
             tools/audit/geant4_build_binding_receipt.py \
+            tools/audit/geant4_toolchain_attestation.py \
             tests/test_compare_single_stave_mt_reproducibility.py \
             tests/test_compare_single_stave_photon_trees.py \
             tests/test_analyze_single_stave_multiseed_rng.py \
@@ -64,6 +65,7 @@ jobs:
             tests/test_mc_ci_trigger_scope.py \
             tests/test_geant4_external_overlay.py \
             tests/test_geant4_build_binding_receipt.py \
+            tests/test_geant4_toolchain_attestation.py \
             2>&1 | tee ruff.log
           echo "status=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
       - name: Run unit tests

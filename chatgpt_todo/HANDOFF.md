@@ -1,39 +1,60 @@
 # Latest Handoff
 
-## Validated atom: bind Geant4 source/staged-input state to executable identity
+## Selected atom: independently attest the CMake-selected Geant4 build toolchain
 
-Protected `main` advanced from `17349d0a72a267723b805615480e76519ed7b8a8` to `948ea2885e7c54751f4f4feaa3c1fcfc63fc9e8f` when PR #1199 was squash-merged after exact-head CI. The predecessor #1198 external-overlay gate and the #1199 two-boundary build-binding gate are now repository state. #1182 remains open; CL-021 and detector inference remain gated.
+Protected `main` is `dbb57b46f30da6298ce2850571dec3aab4b3674d`. PR #1200 was merged only after exact-head MC Validation run `31445196091` succeeded. It records #1199's two-boundary build-binding milestone and leaves immutable consumption/toolchain/runtime provenance open. Issue #1182 had nevertheless been auto-closed; this run reopened it because its own compiled/runtime acceptance criteria remain unsatisfied.
 
-### Atomic contract now validated on main
+### Why this atom exists
 
-`ARU-MC-G4-BUILD-BINDING-001` implements two content-bound observations around a build:
+#1199's final receipt binds observed source/input state to an executable hash, but `build_contract` is caller-supplied JSON. A declared compiler/version string can therefore be internally consistent while disagreeing with the compiler actually selected in the CMake build tree. The historical `geant4/setup_and_run.sh` additionally states that one conda compiler/ROOT combination was necessary while invoking `cmake`/`make` from a mutable shell environment.
 
-- `begin`: validate the exact external baseline/reviewed overlay and hash each uniquely labelled staged input from one opened regular non-symlink byte stream as `(resolved path, bytes, sha256)`; record explicit build-contract metadata and a canonical JSON receipt digest.
-- `finalize`: verify the begin receipt digest, repeat the external source validation, require source projection equality, re-hash every staged input and require exact identity, then hash the resulting regular non-symlink executable and bind the final receipt to the begin-receipt digest.
+`ARU-MC-G4-CMAKE-TOOLCHAIN-001` therefore measures configured build state from the exact `CMakeCache.txt` and package sentinels instead of treating labels as evidence.
 
-This is an integrity statement about what was observed at the two boundaries. It is not an immutable-build proof: a transient mutation that occurs after `begin` and is restored before `finalize` is not identifiable.
+### Implemented contract on branch
 
-### Mechanisms and falsifiers
+Branch `audit/geant4-cmake-toolchain-attestation` adds schema `ccb_geant4_cmake_toolchain_attestation_v1`:
 
-Pre-build validation alone was rejected because later persistent changes can alter the build. Executable hash alone was rejected because artifact bytes are not attributed to approved source/input state. The surviving bounded mechanism is pre/post source+input equality plus executable identity. Treating those two observations as equivalent to a frozen build namespace was rejected by the mutate-and-restore counterexample.
+1. verify a PASS `ccb_geant4_build_binding_final_v1` receipt and its canonical digest;
+2. re-hash the bound executable and require exact identity with the #1199 receipt;
+3. read one regular non-symlink `CMakeCache.txt` byte stream, record SHA-256/byte count, and parse the exact bytes;
+4. require unique resolved `CMAKE_COMMAND`, `CMAKE_CXX_COMPILER`, and `CMAKE_GENERATOR` plus caller-required cache keys;
+5. resolve/hash the cache-selected CMake and C++ compiler executables and require successful bounded `--version` probes;
+6. derive package sentinel paths from cache-selected absolute package roots and record symlink spelling plus resolved target hash;
+7. emit a canonical self-digested attestation with explicit limitations.
 
-The repository fixtures now cover unchanged source/input success; persistent reviewed-source mutation failure; staged macro mutation failure; symlink input/executable failure; tampered begin-receipt failure; duplicate semantic label and duplicate physical path failure; empty build-contract failure; and canonical receipt digest generation.
+CMake's official documentation supports the distinction: the first configuration selects the C++ compiler and stores it as `CMAKE_CXX_COMPILER`, while `CMAKE_GENERATOR` identifies the native build-system generator. The attestor uses that configured state rather than current-PATH guesses.
 
-### Exact validation and failure provenance
+### Competing mechanisms and eliminations
 
-The first exact head, `cde7b7a4ebe83c3aa4859a8f070ce5190ce59fd3`, ran MC Validation `31444426279`. The full unit-test suite passed (`1486 passed, 1 skipped, 8 xfailed, 1 xpassed`), but workflow enforcement failed because ruff found exactly one `UP035` style error: `Iterable` was imported from `typing` rather than `collections.abc`. The repair changed only that import; no receipt, test-oracle, or scientific semantics changed.
+- **Declared build-contract labels only:** rejected; they are caller assertions.
+- **Probe current PATH `cmake`/`c++`:** rejected as sufficient because current PATH need not equal configure-time selection.
+- **CMake-cache selected compiler/CMake paths plus package sentinels:** survives as a bounded configured-build provenance mechanism.
+- **Treat cache state as proof of every compiler/link/runtime load:** rejected; transient source substitution, per-invocation wrapper/tool substitution, link inputs and runtime loader resolution are not observed.
 
-Final exact head `49431dc9976708251f9b7011b70ab8e2dd3cb9ce` passed MC Validation run `31444712724`: curated ruff reported all checks passed, pytest reported `1486 passed, 1 skipped, 8 xfailed, 1 xpassed`, artifact upload succeeded, and enforcement succeeded. The retained final diagnostic artifact has digest `sha256:7c6e286f630b1738ab2103c015f82048c33402e9f6f376b12744f96443e3631f`. PR #1199 was then squash-merged as `948ea2885e7c54751f4f4feaa3c1fcfc63fc9e8f`.
+Symlink aliases that resolve to the same regular target are collapsed as one byte identity while retaining both spelling and target metadata.
+
+### Executed deterministic falsifiers
+
+Local command: `cd /tmp && python -m pytest -q test_geant4_toolchain_attestation.py`.
+
+Result: `7 passed in 0.05s`, Python 3.13, no RNG.
+
+Fixtures cover a nominal cache-selected CMake/C++ + Geant4/VGM package world; a deliberately false caller-declared compiler string; executable mutation after the final #1199 receipt; duplicate compiler cache keys; missing required cache keys; failing compiler version probe; relative package cache roots; and symlink package sentinels with resolved-target hashing.
+
+Local ruff was unavailable (`ruff: command not found`), so the branch is **not** merge-authorised until exact-head repository CI passes.
 
 ### Four sequential AI review passes
 
-- **Build/source provenance lead — REVISE.** Accepts the validated two-boundary primitive; blocks compiled-physics authorisation because toolchain identity is declared but not independently measured and compiler read timing is not observed.
-- **Adversarial mechanism reviewer — ACCEPT bounded detector / BLOCK immutable-build claims.** Persistent visible changes are discriminated; transient mutate-and-restore and dynamic dependency substitution remain live counterexamples.
-- **Independent validation reviewer — ACCEPT deterministic integrity oracle / BLOCK physics inference.** The tests validate exact equality/failure semantics only; they contain no generated angular population, weights, seeds, event counts or detector observables.
-- **Claims/provenance reviewer — BLOCK CL-021 promotion.** Independently attested toolchain/dependency state, runtime provenance, output identity and downstream physics closure remain absent.
+- **Build/physics integration lead — REVISE:** accepts the configured-state measurement and rejects metadata-only toolchain identity. Strongest counter-hypothesis: build-contract labels are already sufficient. Falsifier: declared fake compiler label versus independently cache-selected path/hash. Residual: no real external HIBEAM build cache in this runtime.
+- **Adversarial mechanism reviewer — ACCEPT bounded detector / BLOCK immutable-consumption claim:** cache state and executable identity are stable observables, but they cannot exclude mutate-and-restore or per-invocation substitution. Residual: frozen build namespace and link provenance.
+- **Independent validation reviewer — ACCEPT deterministic oracle / BLOCK physics inference:** exact hashes and seven hostile fixtures close local software semantics; no event population or detector observable enters the test.
+- **Claims/provenance reviewer — BLOCK CL-021 promotion:** dynamic dependency identity, run manager/thread mode, random engine/seeds, event count, runtime input hashes, output ROOT/tree/schema/hash and downstream detector-response compatibility remain absent.
 
-### Next highest-value child
+### Child atoms
 
-Continue #1182 at the actual consumption boundary: replace mutable source/input path trust with an immutable or content-addressed build namespace (or a sandbox whose compiler inputs are frozen), and independently record compiler, CMake, Geant4, VGM and linked-library identities. Then bind runtime run-manager/thread mode, random engine/seeds, event count, source/support/weight model IDs, all staged runtime inputs, output file/tree/schema/hash, and compiled hostile cross-section/stopping controls. Only after those gates can generated angular/weight closure propagate into the detector-response chain.
+- `ARU-MC-G4-IMMUTABLE-CONSUMPTION-001`: frozen/content-addressed compiler input namespace or equivalent proof at consumption time.
+- `ARU-MC-G4-LINK-RUNTIME-IDENTITY-001`: link-editor inputs and actual runtime-loaded Geant4/VGM/ROOT/system library files/hashes.
+- `ARU-MC-G4-RUNTIME-MANIFEST-001`: run-manager/thread mode, RNG engine/seeds, event count, source/support/weight IDs, runtime inputs, exit status, output file/tree/schema/hash.
+- Compiled hostile cross-section and stopping-table controls remain open under #1182/#1058.
 
-No beam ROOT bytes or production Geant4 campaign were executed in this environment, and no angular distribution, event weight, B2/B8, PID, penetration, timing, calibration, pile-up, ESS, p-value, rate or detector-performance result was regenerated or promoted.
+No production Geant4 executable/build cache, beam ROOT bytes, or detector-chain output was available here. No angular population, weight, B2/B8, PID, penetration, timing, calibration, pile-up, ESS, p-value, rate, or detector-performance quantity was regenerated or promoted.

@@ -128,6 +128,8 @@ def _hash_open_fd(fd: int, *, label: str) -> dict[str, Any]:
         "device_minor": os.minor(before.st_dev),
         "inode": before.st_ino,
         "mode": stat.S_IMODE(before.st_mode),
+        "mtime_ns": before.st_mtime_ns,
+        "ctime_ns": before.st_ctime_ns,
     }
 
 
@@ -362,11 +364,15 @@ def _hash_mapped_group(group: dict[str, Any]) -> dict[str, Any]:
             os.minor(final.st_dev),
             final.st_ino,
             final.st_size,
+            final.st_mtime_ns,
+            final.st_ctime_ns,
         ) != (
             record["device_major"],
             record["device_minor"],
             record["inode"],
             record["bytes"],
+            record["mtime_ns"],
+            record["ctime_ns"],
         ):
             raise ValueError(f"mapped executable object path changed after hashing: {path}")
         if reference is None:

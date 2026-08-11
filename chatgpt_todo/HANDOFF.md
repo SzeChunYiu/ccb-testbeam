@@ -1,79 +1,51 @@
 # Latest Handoff
 
-## Active atom: Linux procfs initial-environment semantics
+## Active atom: Linux process-visible argv region, exact-head CI race repaired
 
-Protected source-of-truth at selection was `main@d6dc5ab29fc0ae6ac9d921a50c08b4554d14902d`, the squash merge of PR #1210. Exact predecessor head `ae6e8506f7caa79c31f211f56c7bb31761007600` passed MC Validation run `31476519812` with curated ruff, full unit tests, diagnostics upload and enforcement all successful. #1182 and CL-021 remain gated.
+Protected source of truth is `main@69678659797d9112a92f911b3011a4411393c1eb` via merged #1212. Current work remains on draft PR #1213, branch `audit/geant4-loader-argv`. #1182 and CL-021 remain gated.
 
-Current branch is `audit/geant4-loader-proc-env`, implementing `ARU-MC-G4-LOADER-PROC-ENV-001` under #1182 / `ARU-MC-G4-LOADER-SEARCH-001`.
+### Parent scientific contract
 
-### Key correction
+`ARU-MC-G4-LOADER-ARGV-001` treats `/proc/<pid>/cmdline` only as a process-visible argument-region observation at a stable attestation boundary. It composes a PASS runtime dependency receipt, verifies exact parent digest and `(pid,starttime_ticks,exe_link)`, reads cmdline twice, requires byte equality, preserves all NUL-delimited slots including empty/non-UTF8 bytes, rereads process identity, and self-digests the result. Linux post-exec argv rewriting and `PR_SET_MM_ARG_START/END` prevent promotion to immutable historical `execve(argv)`. `argv[0]` remains non-authoritative for executable identity.
 
-The predecessor handoff treated the environment captured by `geant4_runtime_dependency_attestation.py` as if it were simply the program's post-start `getenv` state. Linux procfs has a different contract: `/proc/<pid>/environ` exposes the initial environment region associated with the currently executing image, and ordinary later `setenv`/`putenv` changes are not reflected. This means the existing runtime provenance has more launch-region information than previously credited.
+Repository `geant4/setup_and_run.sh` invokes `./hibeam_g4 -c krakow.config -m run_krakow.mac output_krakow.root`, so initial cwd is the next high-information scientific child.
 
-That does **not** turn procfs into an immutable `execve(envp)` trace. The target can overwrite the initial bytes and can relocate the procfs environment region with `PR_SET_MM_ENV_START`. Therefore the new attestor is deliberately one-sided: stable presence is observed evidence at the attestation boundary; absence is not proof of historical launch absence.
+### Exact CI falsifier discovered
 
-### Exact contract
+At exact PR head `efa67b0ea2849ffc3d041e97487f74953e96f340`, the pull-request-triggered MC Validation run `31485819366` completed successfully. A concurrent push-triggered run `31485815692` on the same head failed despite ruff success because full pytest contained one failure: `test_real_linux_child_observation_is_stable`. Its final count was `1 failed, 1604 passed, 1 skipped, 8 xfailed, 1 xpassed`.
 
-Compose PASS `ccb_geant4_runtime_dependency_attestation_v1` and PASS child `ccb_geant4_loader_secure_state_attestation_v1`, require exact parent digest and identical `(pid,starttime_ticks)`, read `/proc/<pid>/environ` twice, require the two byte strings identical and process identity stable, and require every loader key already recorded by the runtime receipt to reproduce exactly from the procfs bytes. Duplicate tracked keys or any receipt/proc mismatch fail closed.
+The failing fixture called `subprocess.Popen(['/bin/sleep','5'])`, then treated existence of `/proc/<pid>/cmdline` as readiness. That procfs path existed while the first cmdline read was still `b''`; the production attestor correctly rejected the empty region. The protected branch then correctly refused merge because a failing exact-head `test` check coexisted with the successful one. PR #1213 was returned to draft.
 
-The output records total procfs environment bytes/SHA-256 and per-key semantics:
+### Repair
 
-- present -> `OBSERVED_AT_ATTESTATION_BOUNDARY`;
-- absent -> `ABSENT_AT_OBSERVATION_NOT_PROOF_OF_EXECVE_ABSENCE`.
+`ARU-MC-G4-LOADER-ARGV-TEST-EXEC-RACE-001` is archived at `chatgpt_todo/archive/2026-08-11T112300Z_ARU-MC-G4-LOADER-ARGV-TEST-EXEC-RACE-001.md`.
 
-`AT_SECURE=1` continues to block `LD_LIBRARY_PATH`/`LD_PRELOAD`/`LD_AUDIT` from loader-search authority. `AT_SECURE=0` remains unresolved for effective glibc secure behavior because `glibc.rtld.enable_secure=1` and exact libc/loader semantics are separate dependencies.
+Commit `52c0496396343613f1833b42e92fa3d0b7f4daec` replaces the path-existence precondition in the two live-process tests with `_wait_for_exec_observation(...)`. The helper polls within a bounded timeout and authorizes the fixture only when:
 
-### Discriminating evidence executed
+- the child is alive;
+- `/proc/<pid>/cmdline` is nonempty;
+- `/proc/<pid>/exe` resolves to the exact intended image;
+- starttime is readable for that PID.
 
-Authoritative references: Linux `proc_pid_environ(5)`, Linux `ld.so(8)`, GNU libc Dynamic Linking Tunables.
+A fixed sleep was rejected because elapsed time does not identify process-image readiness. Weakening the production attestor to accept empty cmdline was also rejected because that would destroy the parent data contract. The production attestor is unchanged. The updated test file is Git blob `d312d54cab63166c5f4b5b958f59c6da015fb4e2`.
 
-Local Linux/glibc negative control used GCC 14.2.0 and glibc 2.41. A tiny C process was launched with `GLIBC_TUNABLES=glibc.rtld.enable_secure=1`, loader-variable marker values and a benign control marker. Inside the program, `getenv` returned NULL for `GLIBC_TUNABLES`, `LD_LIBRARY_PATH`, `LD_PRELOAD`, and `LD_AUDIT`, while `/proc/<pid>/environ` simultaneously retained all exact launch strings. Procfs snapshot: 4584 bytes, SHA-256 `cd79ecfc3819a94132881036be26e4cfbcbd6def4e02224a3388411ee446f4fd`. This falsifies the hypothesis that loader sanitization necessarily erases those launch strings from procfs; it is not a production HIBEAM result.
+### Four sequential AI reviews
 
-Exact authoring-byte deterministic test run, Python 3.13.5/Linux/no RNG:
-
-`PYTHONPATH=/tmp/ccb_new python3 -m pytest -q /tmp/ccb_new/tests/test_geant4_loader_initial_environment_attestation.py` -> `10 passed in 0.54s`; `py_compile` passed.
-
-Hostile matrix: stable exact match, kernel-secure interpretation, absence semantics, proc/runtime mismatch, duplicate key, wrong parent receipt, process mismatch, malformed secure auxv record, mutation between procfs reads, and a real Linux child whose `os.environ` value changes after exec while procfs keeps the launch-region value.
-
-Exact source identities now published on the branch:
-
-- `tools/audit/geant4_loader_initial_environment_attestation.py`: 13024 bytes, SHA-256 `a1d3074fcf998c17abf5d99752f399d98aca491f184cad704224ea08111ab9b3`, Git blob `ab0f087fd2a138101bd269b97afc8b607ccb9036`;
-- `tests/test_geant4_loader_initial_environment_attestation.py`: 9730 bytes, SHA-256 `9a81c81ea51ac27e94d925635b9ba800d6acc1742f9409ca57e3c161f7e41203`, Git blob `f3c79dbf80a064a28885046dcbed08940f2f174f`.
-
-Local ruff is unavailable. The workflow has been extended so repository CI must supply that gate.
-
-### Four sequential AI review passes
-
-- **Runtime/physics integration lead — REVISE prior post-start characterization / ACCEPT bounded initial-region presence.** Strongest counter was that procfs only reflects the post-loader program environment. Post-exec mutation and secure-sanitization controls falsified that. Residual: earlier overwrite/remap and real HIBEAM runtime.
-- **Adversarial Linux/loader reviewer — ACCEPT stable observation / BLOCK immutable execve claim.** Strongest counter was that “initial environment” means immutable syscall log. `PR_SET_MM_ENV_START` and in-place writes eliminate that stronger model. Residual: loader argv, cwd, cache/config, tokens/hwcaps, preloads/audits.
-- **Independent validation reviewer — ACCEPT deterministic mechanism oracle / BLOCK HIBEAM and physics generalisation.** Ten local tests pass, but no production HIBEAM receipt or event exists.
-- **Claims/provenance reviewer — ACCEPT provenance refinement / BLOCK CL-021 promotion.** The entire generator→detector→DATA chain remains gated.
-
-### Dependency refinement
-
-`ARU-MC-G4-LOADER-PREEXEC-ENV-001` is narrowed rather than declared complete. Procfs presence is useful launch-region evidence, but an immutable pre-exec receipt is still needed to prove historical absence or rule out target overwrite/remap.
-
-New children:
-
-- `ARU-MC-G4-LOADER-ENV-REGION-MUTATION-001` — eliminate or bind post-exec overwrite/`PR_SET_MM_ENV_*` ambiguity;
-- `ARU-MC-G4-LOADER-ARGV-001` — bind exact executable/dynamic-loader invocation and explicit loader options.
-
-Existing children remain initial cwd, ld.so cache/config, `$ORIGIN/$LIB/$PLATFORM` and glibc hwcaps, preload/audit sources, linker/static inputs, late `dlopen`, relocation/GOT/PLT, wrapper/descendant identity, immutable consumption, runtime manifest, compiled source/stopping controls, event weights and detector response.
+- **Runtime/physics lead — ACCEPT repair / BLOCK physics inference.** The failure is a real test-harness state-transition race; accepting empty cmdline would be a scientific-contract regression. Real HIBEAM runtime remains unavailable.
+- **Adversarial Linux reviewer — ACCEPT state-based wait / REJECT timing-only workaround.** Path existence and arbitrary delay are not equivalent to intended exec-image readiness. A future timeout must remain visible rather than being hidden by retries without state predicates.
+- **Independent validation reviewer — REVISE until every fresh exact-head workflow context passes.** One green run did not authorize the earlier head because another exact-head check failed. Fresh repaired-head push and pull-request runs are required.
+- **Claims/provenance reviewer — ACCEPT fixture-provenance correction / BLOCK CL-021 promotion.** No beam data, production MC, Geant4 event, detector response or statistical estimator changed.
 
 ### Next gate
 
-The branch already contains the new tool, hostile tests, curated ruff integration and immutable record `chatgpt_todo/archive/2026-08-11T094700Z_ARU-MC-G4-LOADER-PROC-ENV-001.md`. Open a focused PR and require fresh exact-final-head MC Validation. Merge only if curated ruff, full non-integration pytest, diagnostics/enforcement and current-main ancestry are all successful. Green CI validates the software/provenance primitive only.
+Keep PR #1213 draft until its final head retains exact `main@696786...` ancestry and every exact-head MC Validation `test` context is successful, including push and pull-request triggers. Require curated ruff, full non-integration pytest, diagnostics upload and enforcement. Only then mark ready and merge with expected-head protection.
 
-No production Geant4 campaign was run, no beam or production-MC ROOT bytes were opened, and no angular distribution, event weight, B2/B8, PID, penetration, timing, calibration, pile-up, ESS, p-value, rate, or detector-performance quantity was regenerated or promoted.
+After #1213 closes, the next highest-value scientific universe is `ARU-MC-G4-LOADER-INITIAL-CWD-001`, because the historical run front door uses relative executable/config/macro/output paths. The following children remain argv-region mutation, executable redirection, HIBEAM argument semantics, loader cache/config, token/hwcaps, preload/audit, linker/static inputs, late `dlopen`, wrapper/descendant identity, immutable consumption, runtime manifest, compiled source/stopping controls, event weights and detector response.
+
+No production Geant4 campaign was run, no beam or production-MC ROOT bytes were opened, and no detector-performance claim was regenerated or promoted.
 
 ---
 
-## Base-freshness gate (ARU-CI-BASE-FRESHNESS-001, #1188)
+## Base-freshness gate
 
-Before opening any PR, verify the head contains the exact current protected-base commit. The local Git-graph provenance tool is `tools/audit/validate_pr_base_freshness.py` (schema `pr_base_freshness_v1`); it deliberately does not inspect GitHub status/check APIs (a separate authorization layer).
-
-- `python tools/audit/validate_pr_base_freshness.py --repo . --base-ref origin/main --head-ref HEAD`
-- Exit 0 / `CURRENT_BASE` = authorising; exit 2 / `STALE_OR_DIVERGED_BASE` = rebase onto `origin/main` first; exit 3 / `INSPECTION_FAILED` = fix the refs, not the check.
-- Authorising formula: `base_is_ancestor_of_head AND behind_by == 0 AND merge_base_sha == base_sha`.
-
-This is one of the A/B discriminators the #1188 evidence used (stale #1186 rejected, current-base #1187 merged). Record the protected-base SHA before and the merged result after each scientific PR merge.
+Before authorizing a PR, require `base_is_ancestor_of_head AND behind_by == 0 AND merge_base_sha == base_sha` using `tools/audit/validate_pr_base_freshness.py`, and separately inspect GitHub status/check APIs. A current Git graph does not override a failed exact-head required check.

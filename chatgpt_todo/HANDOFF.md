@@ -2,7 +2,7 @@
 
 ## Active atom: Linux process-visible argv region
 
-Protected source-of-truth at selection was `main@41a568a7296ac947e9ecb5baf540b0505c0edad1`, the squash merge of PR #1211. #1182 and CL-021 remain gated.
+Protected source-of-truth at selection was `main@41a568a7296ac947e9ecb5baf540b0505c0edad1`, the squash merge of PR #1211. During this atom, PR #1212 subsequently advanced protected main to `69678659797d9112a92f911b3011a4411393c1eb`; the branch must contain that exact base before authorization. #1182 and CL-021 remain gated.
 
 Current branch is `audit/geant4-loader-argv`, implementing `ARU-MC-G4-LOADER-ARGV-001` under #1182 / `ARU-MC-G4-LOADER-SEARCH-001`.
 
@@ -42,7 +42,7 @@ Hostile matrix covers nominal HIBEAM-style args, empty/non-UTF8 slots, tampered 
 
 - `tools/audit/geant4_loader_argv_attestation.py`: 9263 bytes, SHA-256 `4d1a8a195b10d40303dfab9bf8aac9605969134e65f8c114ea54dddb870cfba3`, Git blob `80e51cfe45037f95cc86039506a7dcee648f4474`, first commit `927bcb2d067cc46acc4a77762d94bd715d9080de`.
 - `tests/test_geant4_loader_argv_attestation.py`: 9259 bytes, SHA-256 `3de0b2d5d736f2e5cb38034a5fbe848ae2790be2382861ae454525c1b85546b0`, Git blob `6d2a962b329cf6df9c2b08f08d22473733dfea1d`, first commit `3aecf750fe492eb03622a914de990ded6e43f5ef`.
-- curated MC-validation ruff inclusion: `3c2d589215621aa1f6747b66bd069f9cee92708c`.
+- curated MC-validation ruff integration initially landed as `3c2d589215621aa1f6747b66bd069f9cee92708c`; after #1212 advanced main, reconciliation must retain both the base-freshness and argv lint paths.
 - immutable ARU record: `chatgpt_todo/archive/2026-08-11T105100Z_ARU-MC-G4-LOADER-ARGV-001.md`.
 
 ### Four sequential AI reviews
@@ -65,8 +65,20 @@ Existing cwd/cache/token-hwcaps/preload-audit and downstream linker/runtime/sour
 
 ### Concurrent repository state
 
-Open PR #1212 is unrelated to this atom. Its MC Validation run `31483436146` completed with full pytest passing (`1594 passed, 1 skipped, 8 xfailed, 1 xpassed`) but enforcement failed because newly exposed base-freshness tool/test contain two ruff `I001` import-order findings. Do not treat that run as authorization for this branch.
+PR #1212 is now merged as protected `main@69678659797d9112a92f911b3011a4411393c1eb` after its two ruff I001 import-order findings were fixed. Its base-freshness tool/test and handoff guidance must be preserved in this branch rather than overwritten.
 
 ### Next gate
 
-Open a focused draft PR for `audit/geant4-loader-argv` and require fresh exact-final-head MC Validation. Merge only if curated ruff, full non-integration pytest, diagnostics/enforcement, and current-main ancestry all pass. Green CI validates only the software/procfs primitive. No production HIBEAM process or event population was produced in this session.
+PR #1213 is draft. Require its head to contain exact current protected main, then require fresh exact-final-head MC Validation. Merge only if curated ruff, full non-integration pytest, diagnostics/enforcement, and base-freshness all pass. Green CI validates only the software/procfs primitive. No production HIBEAM process or event population was produced in this session.
+
+---
+
+## Base-freshness gate (ARU-CI-BASE-FRESHNESS-001, #1188)
+
+Before opening or authorizing any PR, verify the head contains the exact current protected-base commit. The local Git-graph provenance tool is `tools/audit/validate_pr_base_freshness.py` (schema `pr_base_freshness_v1`); it deliberately does not inspect GitHub status/check APIs, which are a separate authorization layer.
+
+- `python tools/audit/validate_pr_base_freshness.py --repo . --base-ref origin/main --head-ref HEAD`
+- Exit 0 / `CURRENT_BASE` = authorising; exit 2 / `STALE_OR_DIVERGED_BASE` = integrate the current protected base first; exit 3 / `INSPECTION_FAILED` = fix the refs, not the check.
+- Authorising formula: `base_is_ancestor_of_head AND behind_by == 0 AND merge_base_sha == base_sha`.
+
+Record the protected-base SHA before and the merged result after each scientific PR merge.

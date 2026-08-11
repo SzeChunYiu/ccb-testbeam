@@ -10,6 +10,7 @@
 #include "globals.hh"
 #include "AppConfig.hh"
 #include "OpticalTables.hh"
+#include "ccb/sipm/Config.hh"
 
 class G4Run;
 struct EventData;
@@ -34,6 +35,14 @@ class RunAction : public G4UserRunAction {
   // parity diagnostic. No-op unless optical_out is set on a CPU run.
   void WriteCpuArrivals(const EventData& e, int event_id);
 
+  // Persist the effective ccb-sipm-core configuration into the run sidecar (#977).
+  void SetSipmDigitizerConfig(const ccb::sipm::ModelConfig& cfg);
+
+  // Runtime digitizer diagnostics (#1069). A limit hit is fatal in EventAction;
+  // these counters are recorded for the sidecar when a run still terminates.
+  void NoteSipmEventDiagnostics(bool candidate_limit_reached,
+                                std::size_t n_candidates_processed);
+
   const AppConfig& Config() const { return cfg_; }
 
  private:
@@ -44,6 +53,11 @@ class RunAction : public G4UserRunAction {
   AppConfig cfg_;
   OpticalTables tables_;
   std::string geometry_hash_;
+
+  bool have_sipm_config_ = false;
+  ccb::sipm::ModelConfig sipm_config_;
+  std::size_t candidate_limit_hits_ = 0;
+  std::size_t max_candidates_processed_ = 0;
 
   int nt_event_ = -1;   // per-event ntuple id
   int nt_photon_ = -1;  // per-photon ntuple id (calibration mode)

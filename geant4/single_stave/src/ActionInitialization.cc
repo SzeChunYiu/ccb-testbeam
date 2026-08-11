@@ -19,7 +19,7 @@ void ActionInitialization::Build() const {
   SetUserAction(new PrimaryGeneratorAction(cfg_));
   auto* run_action = new RunAction(cfg_, tables_, geometry_hash_);
   SetUserAction(run_action);
-  auto* event_action = new EventAction(cfg_, run_action);
+  auto* event_action = new EventAction(cfg_, tables_, run_action);
   SetUserAction(event_action);
   SetUserAction(new TrackingAction(event_action));
   SetUserAction(new SteppingAction(cfg_, tables_, event_action));

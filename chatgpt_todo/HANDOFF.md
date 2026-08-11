@@ -1,61 +1,46 @@
 # Latest Handoff
 
-## Filesystem namespace atom separates pre-exec lookup state from actual input consumption
+## Filesystem namespace atom: implementation survives pytest, CI exposed a bounded lint defect
 
-Protected `main` at selection is `8a064b37245a03dd0258ec20ae73bbc6adc25e2e`, the squash merge of #1220. PR #1220 exact head `43fd82d2fe70d90cea829a28a1e808b2fbf16098` passed MC Validation run `31505415590` and is merged. #1057 remains open/PARTIAL, governance child #1218 remains open, and CL-021 remains gated.
+Protected `main` at selection is `8a064b37245a03dd0258ec20ae73bbc6adc25e2e`, squash merge of #1220. #1057 remains open/PARTIAL, governance child #1218 remains open, and CL-021 remains gated.
 
-The active atom is `ARU-MC-G4-LOADER-FS-NAMESPACE-001`, tracked as #1221 on branch `audit/geant4-loader-fs-namespace`. Draft PR #1222 targets exact base `main@8a064b...`. Parent #1214 is closed for the bounded exec-cwd primitive; this child does not reopen it.
+The active atom is `ARU-MC-G4-LOADER-FS-NAMESPACE-001`, tracked as #1221 on branch `audit/geant4-loader-fs-namespace` and draft PR #1222. Parent #1214 is closed only for the bounded exec-cwd primitive.
 
-The repository run front door still invokes `./hibeam_g4 -c krakow.config -m run_krakow.mac output_krakow.root` with relative config, macro and output spellings. The bounded pre-exec lookup state is now modeled as
+The repository front door still invokes `./hibeam_g4 -c krakow.config -m run_krakow.mac output_krakow.root` with relative config, macro and output spellings. The bounded pre-exec state is
 
 `F_exec = (CWD_obj, Root_obj, MntNS_{st_dev,st_ino}, MountInfo_bytes)`
 
-with exact mountinfo bytes and SHA-256 retained. Runtime composition requires `(PID_pre,starttime_pre)==(PID_runtime,starttime_runtime)` and, for the controlled direct-command route, intended-target path/content equality with the independently content-bound runtime executable.
+with exact mountinfo content and SHA-256. Runtime composition requires `(PID_pre,starttime_pre)==(PID_runtime,starttime_runtime)` plus intended-target path/content equality on the controlled direct-exec route. Mount-namespace identity and mount-table bytes remain separate observables.
 
-### Why namespace identity alone is insufficient
+A real post-exec `chroot` control changed the process root from pre-exec `(st_dev=65024,st_ino=2)` to later `(st_dev=65024,st_ino=1835628)`, so `F_exec` does not prove the state at later HIBEAM input-open time. This leaves `ARU-MC-G4-RELATIVE-INPUT-CONSUMPTION-001` as the mandatory child for exact config/macro/auxiliary bytes. A real Python -> `/bin/sleep` direct-exec control preserved PID/starttime while the executable image changed and the intended target content composed successfully; this is software/provenance evidence only.
 
-The mount namespace object and the mount table are separate state variables. The implementation records `/proc/PID/ns/mnt` link text plus the opened namespace handle `(st_dev,st_ino,st_mode)`, and separately records the exact `/proc/PID/mountinfo` bytes, byte count, line count and SHA-256. Mountinfo is read twice and namespace/root/cwd/process/executable state is re-observed; simple drift during the userspace snapshot fails closed. ABA/shared mutation outside that window remains explicitly unresolved.
+## Exact-head CI result and repair
 
-### Strongest falsifier: pre-exec state is not input-open state
+PR #1222 head `167bae0853bea35ee634125f44e11e302e0cbe55` ran MC Validation `31508268931`. Full non-integration pytest succeeded with `1642 passed, 2 skipped, 8 xfailed, 1 xpassed, 7 warnings in 124.84s`, but enforcement failed because curated ruff returned five `E501` findings: two lines in `tests/test_geant4_loader_exec_boundary_fs_attestation.py` and three in `tools/audit/geant4_loader_exec_boundary_fs_attestation.py`.
 
-A real deterministic post-exec `chroot` control changed the process root from pre-exec `(st_dev=65024,st_ino=2)` to later `(st_dev=65024,st_ino=1835628)`. Therefore even a correct pre-exec cwd/root/namespace/mount-table snapshot does not prove the filesystem state when HIBEAM later opens `krakow.config`, `run_krakow.mac`, or auxiliary inputs. That surviving obligation is `ARU-MC-G4-RELATIVE-INPUT-CONSUMPTION-001` and should observe the real open boundary plus the opened bytes rather than infer them from path spellings.
+The failure was repaired without weakening the lint gate:
 
-A second real control executed a Python launcher directly into `/bin/sleep`: PID/starttime stayed fixed, launcher `/opt/pyvenv/bin/python` changed to runtime `/usr/bin/sleep`, target size was 43432 bytes with SHA-256 `0637e6d47579929cb72efa46f361861b319d62c62fe8a9d10731fd7655eb5936`, mount namespace was `mnt:[4026532185]`, mountinfo SHA-256 was `32176980937a12ebdf9780930025f473f4594b99248e4a6681cb0d1d08221bff`, and the bounded composition returned PASS. `kernel_execve_event_observed=false` remains explicit.
+- `e90a613ff4d7ddd103786f455e0a891f777bd078` wraps the two test lines;
+- `bd8c2b7293aff60772117b8f19a93c1f508917dc` wraps the three production provenance literals using adjacent Python string literals, preserving the exact previous string values;
+- `ebcdc3ae080764b54ccaa2afee64e13d3c3d77fd` updates `ACTIVE_TASK.md` with the failure and repair.
 
-### Repository work
+The diff of the two repair commits is formatting-only: no receipt field name, contract equation, filesystem-state predicate, test assertion, or scientific interpretation was intentionally changed. The previous local authoring-copy focused suite (`8 passed in 1.52s`, Python 3.13.5, no RNG) remains non-authorizing because it did not execute the final committed blobs. Local ruff was unavailable. `unshare -m true` previously failed `Operation not permitted`, so no real mount-namespace-switch PASS exists.
 
-Branch commits through the draft-PR handoff:
+## Four sequential AI reviews
 
-- `07f966fadd056c6368e83ee60c81f05b9165f3c7` — add `tools/audit/geant4_loader_exec_boundary_fs_attestation.py`;
-- `6f2d912875cf49ad79bc3fefc4595774e7ca9c08` — add hostile focused tests;
-- `dbca8873edad0080e7d37339660a54f0a87a2f61` — add tool/test to curated ruff;
-- `8bdb1f6e7439bceba8cf997fd631b108a189830b` — immutable atom archive;
-- `257a817a60ca4ac351deebcb6cbda9f57450afb7` and `e7a81d456840bf09e002106dc337a210de4dd3df` — initial coordination;
-- `1e9566ddf783e81c80c27cd086be2477613611c4` — record draft PR/final-head gate in ACTIVE_TASK.
+- **Runtime/physics integration lead — ACCEPT bounded filesystem-state decomposition / REVISE repository validation.** Evidence: run front door, direct-exec/chroot controls, exact-head pytest pass. Strongest counter-hypothesis is that pre-exec state equals open-time state; chroot falsifies it. Residual uncertainty is actual HIBEAM post-exec behavior.
+- **Adversarial Linux/filesystem reviewer — ACCEPT namespace+mountinfo separation and formatting-only repair / BLOCK input-consumption equivalence.** Strongest counter-hypothesis is namespace identity alone suffices; mutable mount-table semantics reject it. Residual risks are ABA/shared mutation, target TOCTOU and the unobserved kernel exec event.
+- **Independent validation reviewer — BLOCK merge pending exact-head green CI.** The failed run demonstrates that pytest success alone is insufficient because the protected workflow separately enforces ruff. A fresh final-head run must pass curated ruff, full pytest, diagnostics and enforcement.
+- **Claims/provenance reviewer — ACCEPT bounded provenance refinement / BLOCK CL-021 and detector inference.** No beam data, production MC, Geant4 event, reconstruction result or detector observable participates.
 
-Observed GitHub blobs: tool `f173720831c693cf417c1a876626f26da9fc0eca`; focused test `c3777148928cff7fcc9549f1d4dae2e3bd6a6bab`.
+## Stable concerns and children
 
-Local deterministic authoring-copy validation used Python 3.13.5 with no RNG: `python -m py_compile` passed and focused pytest returned `8 passed in 1.52s`. Local `ruff` is unavailable, so no local lint PASS is claimed. The initially authored source bytes were not byte-identical to the published tool blob because a small annotation refinement occurred during publication; therefore the local focused PASS cannot authorize the exact committed tool. Exact-head GitHub CI is mandatory.
+`C-FSNS-001` HIGH: namespace identity alone is insufficient. `C-FSNS-002` HIGH: pre-exec lookup state is not exact input-open state. `C-FSNS-003` MEDIUM-HIGH: repeated equal snapshots do not exclude ABA/shared mutation. `C-FSNS-004` MEDIUM-HIGH: userspace direct-exec intent is not a kernel exec-event log and target-path TOCTOU remains.
 
-A real `unshare -m true` mount-namespace switch control could not run because the environment returned `Operation not permitted`; do not claim such a control passed.
+Surviving children are `ARU-MC-G4-RELATIVE-INPUT-CONSUMPTION-001`, `ARU-MC-G4-OUTPUT-PATH-CREATION-001`, `ARU-MC-G4-LOADER-EXEC-KERNEL-EVENT-001`, and `ARU-MC-G4-LOADER-EXEC-TARGET-TOCTOU-001`. #1057 independently still requires compiled source-phi and accepted-observable closure.
 
-Immutable record: `chatgpt_todo/archive/2026-08-11T153700Z_ARU-MC-G4-LOADER-FS-NAMESPACE-001.md`. Tracking issue: #1221. Draft PR: #1222.
+## Immediate next action
 
-### Four sequential AI reviews
+This HANDOFF update advances the branch again, so any run on `bd8c2b...` is now superseded for merge authorization. Keep PR #1222 draft until every required MC Validation context passes on the exact final head after this commit. If green, mark ready and merge with an expected-head guard only if protected main ancestry is still current. If CI fails, repair only the demonstrated defect.
 
-- **Runtime/physics integration lead — ACCEPT bounded filesystem-state decomposition / REVISE production provenance.** Evidence: #1214/#1220, run front door, direct-exec and chroot controls. Strongest counter-hypothesis `F_exec==F_open` was falsified by post-exec root mutation. No provenance-bound HIBEAM process was run.
-- **Adversarial Linux/filesystem reviewer — ACCEPT namespace+mountinfo separation / BLOCK input-consumption equivalence.** Namespace inode alone cannot represent a mutable mount table. Residual risks: ABA/shared mount mutation, unavailable real unshare/setns control, kernel exec-event gap and target TOCTOU.
-- **Independent validation reviewer — ACCEPT local deterministic falsifiers / BLOCK repository validation pending exact-head CI.** Eight focused authoring-copy tests and py_compile pass with no RNG, but exact published source needs repository CI and local ruff is unavailable.
-- **Claims/provenance reviewer — ACCEPT bounded provenance refinement / BLOCK CL-021 and detector inference.** No beam data, production MC, event, reconstruction result or detector observable participates.
-
-### Stable concerns and surviving children
-
-`C-FSNS-001` HIGH: namespace identity alone is insufficient; exact mount-table state is separately required. `C-FSNS-002` HIGH: pre-exec lookup state is not exact input-open state; require open/openat/openat2 or equivalently strong opened-file-byte evidence. `C-FSNS-003` MEDIUM-HIGH: double-read stability does not exclude ABA/shared mutation. `C-FSNS-004` MEDIUM-HIGH: userspace intent is not a kernel exec-event log and target-path TOCTOU remains.
-
-Surviving children are `ARU-MC-G4-RELATIVE-INPUT-CONSUMPTION-001`, `ARU-MC-G4-OUTPUT-PATH-CREATION-001`, `ARU-MC-G4-LOADER-EXEC-KERNEL-EVENT-001`, and `ARU-MC-G4-LOADER-EXEC-TARGET-TOCTOU-001`. #1057 independently still requires the compiled source-phi and accepted-observable children.
-
-### Immediate gate and next work
-
-PR #1222 must remain draft until the **final branch head after this HANDOFF commit** is current with main and every required MC Validation context passes curated ruff, full non-integration pytest, diagnostics and enforcement. A queued run on the earlier pre-finalization head `e7a81d456840bf09e002106dc337a210de4dd3df` is superseded once coordination advances the branch and must not authorize merge. If a final-head failure appears, repair only the demonstrated defect and rerun.
-
-After this bounded leaf, the next highest-value atom is `ARU-MC-G4-RELATIVE-INPUT-CONSUMPTION-001`: bind actual HIBEAM config/macro/auxiliary open state and exact opened bytes for the same runtime process. No production Geant4 campaign, beam/production-MC ROOT bytes, event-weight result, accepted rate, B2/B8, PID, timing, calibration, pile-up, ESS, p-value, or detector-performance quantity was produced or promoted here.
+After #1222 is bounded and merged, the next highest-information atom is `ARU-MC-G4-RELATIVE-INPUT-CONSUMPTION-001`: observe the actual open boundary and content-bind the opened HIBEAM config/macro/auxiliary file descriptions rather than inferring them from pre-exec pathname state. No production Geant4 campaign, beam/production-MC ROOT bytes, event-weight result, accepted rate, PID, timing, calibration, pile-up, ESS, p-value, or detector-performance quantity was produced or promoted in this handoff.

@@ -1,0 +1,48 @@
+{
+  "schema_version": "ccb_cross_section_table_source_v1",
+  "data_file": "sigma_pd_cm_190.txt",
+  "data_sha256": "0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc",
+  "data_bytes": 640,
+  "data_rows": 28,
+  "reaction": "2H(p,dp) elastic proton-deuteron scattering",
+  "incident_proton_kinetic_energy_MeV": 190.0,
+  "source": {
+    "authors_short": "K. Ermisch et al.",
+    "title": "Systematic investigation of three-nucleon force effects in elastic scattering of polarized protons from deuterons at intermediate energies",
+    "journal": "Physical Review C",
+    "volume": 71,
+    "article": "064004",
+    "year": 2005,
+    "doi": "10.1103/PhysRevC.71.064004",
+    "table": "VI"
+  },
+  "projection_from_source_table": [
+    "theta_cm_deg",
+    "dsigma_domega_mb_per_sr",
+    "statistical_uncertainty_dsigma_domega_mb_per_sr"
+  ],
+  "angle_frame": "center_of_mass",
+  "angle_unit": "degree",
+  "observable": "differential_cross_section_dsigma_domega",
+  "observable_unit": "mb/sr",
+  "support_theta_cm_deg": [
+    26.49,
+    169.78
+  ],
+  "source_uncertainty_note": {
+    "row_third_column": "statistical uncertainty on dσ/dΩ",
+    "point_to_point_systematic_fraction": 0.03,
+    "total_systematic_fraction_bound": "<0.045",
+    "systematics_encoded_in_data_file": false,
+    "point_to_point_source_section": "IV D",
+    "point_to_point_construction": "An extra error was added to each angular cross-section point until a high-order polynomial fit reached chi^2 approximately one; the paper attributes the excess scatter to target-thickness variation across angle/time on top of background-subtraction systematics.",
+    "published_row_covariance_matrix": false,
+    "analysis_boundary": "The quoted 3% point-to-point value does not by itself identify independent Gaussian row nuisances or any other unique covariance model. Treat covariance assumptions as explicit model choices."
+  },
+  "historical_identity": {
+    "s21_external_table_sha256": "0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc",
+    "s21b_external_table_sha256": "0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc",
+    "interpretation": "The repository table bytes are exactly the table bytes recorded by the historical S21/S21b audits."
+  },
+  "scientific_boundary": "This provenance record establishes source/frame/units/support and byte identity only. It does not validate the legacy lab-angle PrimaryWeight assignment, the current interpolation/CDF discretization, source-systematic propagation, detector response, or any detector-level claim."
+}

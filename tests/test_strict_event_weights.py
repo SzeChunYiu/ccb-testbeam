@@ -31,11 +31,15 @@ def test_valid_weighted_statistics_and_provenance() -> None:
 
     summary = strict.summarize_weights(weights, expected_length=3)
     assert summary["policy"] == strict.POLICY
+    assert summary["population_policy_id"] == strict.POPULATION_POLICY
     assert summary["summation_method"] == strict.SUMMATION_METHOD
     assert summary["n_weights"] == 3
     assert summary["n_zero"] == 0
     assert summary["sum_w"] == pytest.approx(4.0)
     assert summary["sum_w2"] == pytest.approx(6.0)
+    assert summary["sum_w_over_scale"] == pytest.approx(2.0)
+    assert summary["sum_w2_over_scale2"] == pytest.approx(1.5)
+    assert summary["max_weight_fraction"] == pytest.approx(0.5)
 
 
 def test_weighted_correlation_matches_perfect_linear_relation() -> None:
@@ -43,6 +47,54 @@ def test_weighted_correlation_matches_perfect_linear_relation() -> None:
     y = 4.0 * x - 7.0
     weights = np.array([0.5, 1.0, 3.0, 2.0])
     assert strict.weighted_correlation(x, y, weights) == pytest.approx(1.0)
+
+
+@pytest.mark.parametrize(
+    "scale",
+    [1.0, 1e300, 1e-300],
+)
+def test_normalized_estimators_are_invariant_to_positive_common_scale(scale: float) -> None:
+    values = np.array([1.0, 2.0, 10.0])
+    weights = scale * np.array([1.0, 2.0, 7.0])
+    x = np.array([0.0, 1.0, 3.0])
+    y = np.array([-1.0, 4.0, 8.0])
+
+    assert strict.weighted_mean(values, weights) == pytest.approx(7.5)
+    assert strict.weighted_median(values, weights) == pytest.approx(4.285714285714286)
+    assert strict.weighted_fraction(values > 1.5, weights) == pytest.approx(0.9)
+    assert strict.effective_sample_size(weights) == pytest.approx(100.0 / 54.0)
+    assert strict.weighted_correlation(x, y, weights) == pytest.approx(
+        strict.weighted_correlation(x, y, np.array([1.0, 2.0, 7.0]))
+    )
+
+    summary = strict.summarize_weights(weights)
+    assert summary["ess"] == pytest.approx(100.0 / 54.0)
+    assert summary["ess_fraction"] == pytest.approx((100.0 / 54.0) / 3.0)
+    assert summary["max_weight_fraction"] == pytest.approx(0.7)
+    assert summary["sum_w_over_scale"] == pytest.approx(10.0 / 7.0)
+    assert summary["sum_w2_over_scale2"] == pytest.approx(54.0 / 49.0)
+
+
+def test_extreme_equal_weights_remain_valid_when_raw_moments_are_unrepresentable() -> None:
+    values = np.array([1.0, 3.0])
+    for weights in (
+        np.array([1e154, 1e154]),
+        np.array([1e308, 1e308]),
+        np.array([np.nextafter(0.0, 1.0), np.nextafter(0.0, 1.0)]),
+    ):
+        assert strict.weighted_mean(values, weights) == pytest.approx(2.0)
+        assert strict.weighted_fraction([False, True], weights) == pytest.approx(0.5)
+        assert strict.effective_sample_size(weights) == pytest.approx(2.0)
+        summary = strict.summarize_weights(weights)
+        assert summary["ess"] == pytest.approx(2.0)
+        assert summary["max_weight_fraction"] == pytest.approx(0.5)
+        assert summary["sum_w_over_scale"] == pytest.approx(2.0)
+        assert summary["sum_w2_over_scale2"] == pytest.approx(2.0)
+        assert summary["sum_w2"] is None
+
+    overflow_summary = strict.summarize_weights(np.array([1e308, 1e308]))
+    assert overflow_summary["sum_w"] is None
+    assert overflow_summary["mean"] is None
 
 
 @pytest.mark.parametrize(

@@ -1,0 +1,234 @@
+{
+  "conclusions": [
+    "raw-unit signed second moments can overflow although dimensionless signed diagnostics remain defined",
+    "legacy 1-S/A is not a bounded cancellation fraction for all-negative orientation",
+    "cancellation severity 1-|S|/A and signed-mass orientation are distinct diagnostics",
+    "the legacy n_positive==0 all-zero predicate misclassifies all-negative vectors",
+    "signed normalized cumulative mass is not a probability ECDF",
+    "no production CCB generator signed-weight use is established by these fixtures"
+  ],
+  "diagnostics": {
+    "all_negative": {
+      "legacy": {
+        "legacy_all_zero_predicate": true,
+        "legacy_cancellation_fraction": 2.0,
+        "sum_abs_w": 3.0,
+        "sum_w": -3.0,
+        "sum_w2": 5.0
+      },
+      "stable": {
+        "absolute_ess": 1.8,
+        "cancellation_severity": 0.0,
+        "max_abs_weight_fraction": 0.6666666666666666,
+        "n": 2,
+        "n_negative": 2,
+        "n_positive": 0,
+        "n_zero": 0,
+        "signed_ess_like": 1.8,
+        "signed_mass_orientation": -1,
+        "signed_mass_over_scale": -1.5,
+        "squared_mass_over_scale2": 1.25,
+        "total_variation_over_scale": 1.5,
+        "weight_scale": 2.0
+      }
+    },
+    "binary64_large": {
+      "legacy": {
+        "legacy_all_zero_predicate": false,
+        "legacy_cancellation_fraction": null,
+        "sum_abs_w": "OVERFLOW:OverflowError",
+        "sum_w": 1.9999999999999997e+307,
+        "sum_w2": "NONFINITE"
+      },
+      "stable": {
+        "absolute_ess": 2.1978021978021975,
+        "cancellation_severity": 0.9,
+        "max_abs_weight_fraction": 0.5,
+        "n": 3,
+        "n_negative": 1,
+        "n_positive": 2,
+        "n_zero": 0,
+        "signed_ess_like": 0.021978021978021966,
+        "signed_mass_orientation": 1,
+        "signed_mass_over_scale": 0.19999999999999996,
+        "squared_mass_over_scale2": 1.82,
+        "total_variation_over_scale": 2.0,
+        "weight_scale": 1e+308
+      }
+    },
+    "binary64_subnormal": {
+      "legacy": {
+        "legacy_all_zero_predicate": false,
+        "legacy_cancellation_fraction": 0.6666666666666667,
+        "sum_abs_w": 1.5e-323,
+        "sum_w": 5e-324,
+        "sum_w2": 0.0
+      },
+      "stable": {
+        "absolute_ess": 3.0,
+        "cancellation_severity": 0.6666666666666667,
+        "max_abs_weight_fraction": 0.3333333333333333,
+        "n": 3,
+        "n_negative": 1,
+        "n_positive": 2,
+        "n_zero": 0,
+        "signed_ess_like": 0.3333333333333333,
+        "signed_mass_orientation": 1,
+        "signed_mass_over_scale": 1.0,
+        "squared_mass_over_scale2": 3.0,
+        "total_variation_over_scale": 3.0,
+        "weight_scale": 5e-324
+      }
+    },
+    "exact_cancellation": {
+      "legacy": {
+        "legacy_all_zero_predicate": false,
+        "legacy_cancellation_fraction": 1.0,
+        "sum_abs_w": 2.0,
+        "sum_w": 0.0,
+        "sum_w2": 2.0
+      },
+      "stable": {
+        "absolute_ess": 2.0,
+        "cancellation_severity": 1.0,
+        "max_abs_weight_fraction": 0.5,
+        "n": 2,
+        "n_negative": 1,
+        "n_positive": 1,
+        "n_zero": 0,
+        "signed_ess_like": 0.0,
+        "signed_mass_orientation": 0,
+        "signed_mass_over_scale": 0.0,
+        "squared_mass_over_scale2": 2.0,
+        "total_variation_over_scale": 2.0,
+        "weight_scale": 1.0
+      }
+    },
+    "mixed_base": {
+      "legacy": {
+        "legacy_all_zero_predicate": false,
+        "legacy_cancellation_fraction": 0.9,
+        "sum_abs_w": 20.0,
+        "sum_w": 2.0,
+        "sum_w2": 182.0
+      },
+      "stable": {
+        "absolute_ess": 2.1978021978021975,
+        "cancellation_severity": 0.9,
+        "max_abs_weight_fraction": 0.5,
+        "n": 3,
+        "n_negative": 1,
+        "n_positive": 2,
+        "n_zero": 0,
+        "signed_ess_like": 0.021978021978021973,
+        "signed_mass_orientation": 1,
+        "signed_mass_over_scale": 0.19999999999999998,
+        "squared_mass_over_scale2": 1.82,
+        "total_variation_over_scale": 2.0,
+        "weight_scale": 10.0
+      }
+    },
+    "mixed_scaled_down": {
+      "legacy": {
+        "legacy_all_zero_predicate": false,
+        "legacy_cancellation_fraction": 0.9,
+        "sum_abs_w": 2e-300,
+        "sum_w": 2e-301,
+        "sum_w2": 0.0
+      },
+      "stable": {
+        "absolute_ess": 2.1978021978021975,
+        "cancellation_severity": 0.9,
+        "max_abs_weight_fraction": 0.5,
+        "n": 3,
+        "n_negative": 1,
+        "n_positive": 2,
+        "n_zero": 0,
+        "signed_ess_like": 0.021978021978021973,
+        "signed_mass_orientation": 1,
+        "signed_mass_over_scale": 0.19999999999999998,
+        "squared_mass_over_scale2": 1.82,
+        "total_variation_over_scale": 2.0,
+        "weight_scale": 1e-300
+      }
+    },
+    "mixed_scaled_up": {
+      "legacy": {
+        "legacy_all_zero_predicate": false,
+        "legacy_cancellation_fraction": 0.9,
+        "sum_abs_w": 2e+300,
+        "sum_w": 2e+299,
+        "sum_w2": "NONFINITE"
+      },
+      "stable": {
+        "absolute_ess": 2.1978021978021975,
+        "cancellation_severity": 0.9,
+        "max_abs_weight_fraction": 0.5,
+        "n": 3,
+        "n_negative": 1,
+        "n_positive": 2,
+        "n_zero": 0,
+        "signed_ess_like": 0.021978021978021973,
+        "signed_mass_orientation": 1,
+        "signed_mass_over_scale": 0.19999999999999998,
+        "squared_mass_over_scale2": 1.82,
+        "total_variation_over_scale": 2.0,
+        "weight_scale": 1e+300
+      }
+    }
+  },
+  "exact_oracle": {
+    "absolute_ess": "200/91",
+    "cancellation_severity": "9/10",
+    "max_abs_weight_fraction": "1/2",
+    "signed_ess_like": "2/91",
+    "signed_mass": "2",
+    "squared_mass": "182",
+    "total_variation": "20",
+    "weights": [
+      10,
+      -9,
+      1
+    ]
+  },
+  "method_id": "max_abs_scaled_signed_diagnostic_v1",
+  "positive_common_scale_invariance_checks": {
+    "mixed_scaled_down": {
+      "absolute_ess": true,
+      "cancellation_severity": true,
+      "max_abs_weight_fraction": true,
+      "signed_ess_like": true,
+      "signed_mass_orientation": true
+    },
+    "mixed_scaled_up": {
+      "absolute_ess": true,
+      "cancellation_severity": true,
+      "max_abs_weight_fraction": true,
+      "signed_ess_like": true,
+      "signed_mass_orientation": true
+    }
+  },
+  "research_id": "ARU-MC-WEIGHT-SIGNED-001",
+  "scientific_status": "NONAUTHORISING_NUMERICAL_RESEARCH",
+  "seed": null,
+  "signed_cdf_counterexample": {
+    "cumulative_normalized_signed_mass": [
+      1.0,
+      -1.0,
+      1.0
+    ],
+    "inside_unit_interval": false,
+    "monotone_non_decreasing": false,
+    "signed_total": 1.0,
+    "weights": [
+      1.0,
+      -2.0,
+      2.0
+    ],
+    "x": [
+      0.0,
+      1.0,
+      2.0
+    ]
+  }
+}

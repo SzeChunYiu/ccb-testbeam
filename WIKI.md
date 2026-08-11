@@ -54,6 +54,80 @@ This section is the controlled front door to the CCB test-beam analysis. Every c
 | **REVIEW** | Source-backed qualitative diagnostic requiring further review; not an accepted production result |
 | **SUPERSEDED** | Retained only as correction history; not an accepted current result |
 
+<!-- BEGIN GENERATED PAPER-GRADE FIGURES -->
+### Paper-grade figure set
+
+These figures are generated from tracked evidence, not hand-entered headline values. Each caption states the applicable evidence class; simulation closure is not presented as a beam-data measurement.
+
+#### Selected-pulse inventory
+
+![Selected-pulse inventory](docs/figures/paper/selected_pulse_inventory.png)
+
+**VALIDATED · DATA_MEASUREMENT.** Exact S00 reproduction. Sample I is dominated by B2; Sample II reaches deeper staves more often. Counts are deterministic for the fixed raw inputs and selection.
+
+#### Claim ledger is mostly gated or blocked
+
+![Claim ledger is mostly gated or blocked](docs/figures/paper/claim_status_overview.png)
+
+**REVIEW · GOVERNANCE_LEDGER.** Status counts from the canonical 26-row claim ledger. Only one row is VALIDATED; visual polish must not promote gated, blocked, flawed or superseded evidence.
+
+#### Timing estimator closure on MC
+
+![Timing estimator closure on MC](docs/figures/paper/timing_mc_method_closure.png)
+
+**MC_METHOD_CLOSURE · MC_METHOD_CLOSURE.** Krakow MC method closure. The combined four-sensor estimator reaches σ68 = 0.089 ns; this is not a detector timing measurement on beam data.
+
+#### Grouped-fold PID stability on MC
+
+![Grouped-fold PID stability on MC](docs/figures/paper/pid_mc_validation.png)
+
+**SIMULATION_RESULT · SIMULATION_RESULT.** Five contiguous event-block folds from the realistic ΔE–E MC chain. Fold ordering is categorical, so points are deliberately not connected. Transfer to beam data remains unvalidated.
+
+#### Gain closure and gated data/MC proxy
+
+![Gain closure and gated data/MC proxy](docs/figures/paper/adc_mc_calibration.png)
+
+**GATED · MC_CLOSURE_PLUS_GATED_DATA_MC_PROXY.** MC fits recover 119.168 ADC/MeV for both species near the configured 120 ADC/MeV. The separate MV0 proxy is 92 ADC/MeV with a 28 ADC/MeV heuristic systematic envelope, not a confidence interval, and remains gated.
+
+#### Birks-model dependence on MC
+
+![Birks-model dependence on MC](docs/figures/paper/birks_mc_comparison.png)
+
+**SIMULATION_RESULT · SIMULATION_RESULT.** The per-track dE/dx fit gives kB = 0.0156 cm/MeV, above both the total-deposit proxy and the digitizer default. The spread is model dependence, not a confidence interval.
+
+#### Digitizer-domain overlap scan
+
+![Digitizer-domain overlap scan](docs/figures/paper/pileup_digitizer_mc.png)
+
+**SIMULATION_RESULT · SIMULATION_RESULT.** Poisson overlap for the 180 ns acquisition window. The stored nearest scan points are 0.289 MHz (5.06%, not exactly 5%) and 0.605 MHz (10.31%, not exactly 10%). These are simulation-domain criteria; canonical detector Rmax remains blocked.
+
+#### B8 stopping assignment disagrees
+
+![B8 stopping assignment disagrees](docs/figures/paper/stopping_b8_tension.png)
+
+**TENSION · LEGACY_DATA_MC_DIAGNOSTIC.** Exact tracked counts give 2.30% in selected data and 22.29% in thresholded MC. Wilson intervals show counting uncertainty only; unresolved geometry, trigger, gain and selection transfer dominate the scientific interpretation.
+
+#### Early-peak morphology in truth MC
+
+![Early-peak morphology in truth MC](docs/figures/paper/anomaly_truth_mc.png)
+
+**TRUTH_LEVEL_MC_ONLY · TRUTH_LEVEL_MC_ONLY.** Truth-labelled MC rates with Wilson 95% intervals: 283/87,555 overall and 156/7,302 within C12. C12 forms 156/283 early-peak tracks, but the separate beam-data anomaly is not identified as C12.
+
+#### Synthetic-waveform PCA compression
+
+![Synthetic-waveform PCA compression](docs/figures/paper/pca_truth_mc.png)
+
+**TRUTH_LEVEL_MC_ONLY · SYNTHETIC_WAVEFORM_MC.** Fixed synthetic-waveform MC output: three components explain 72.5% and eight explain 82.2%. These values supersede stale 0.89/0.997 statements and are not beam-data PCA results.
+
+#### ADC-response sensitivity inputs
+
+![ADC-response sensitivity inputs](docs/figures/paper/systematic_sensitivity_inputs.png)
+
+**REVIEW · SENSITIVITY_INPUTS.** Dimensionless cluster-D ADC-response elasticities only. Mixed-unit rows (gain envelope, kB span and missing material) are excluded rather than combined. This is a sensitivity inventory, not a propagated uncertainty budget.
+
+Source tables, vector files and hashes: [`docs/figures/paper/manifest.json`](docs/figures/paper/manifest.json).
+<!-- END GENERATED PAPER-GRADE FIGURES -->
+
 ### MC method closure — proven on Monte Carlo (clusters A–D + Opticks)
 
 The analysis chain is proven end-to-end on the Krakow 1M-event Geant4 MC. These

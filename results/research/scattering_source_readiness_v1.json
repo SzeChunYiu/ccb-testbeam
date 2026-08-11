@@ -1,0 +1,67 @@
+{
+  "audit_id": "ARU-MC-CS-WORKER-INIT-001",
+  "scope": "STATIC_SOURCE_CONTRACT_ONLY_NONAUTHORISING",
+  "protected_main_base": "f181f91ef8fd5826a4acba4973da2e4eeba6c45c",
+  "branch_reconciliation_commit": "2c0a25165b6e51e1ea1304df5e27b61f848c4b29",
+  "implementation_commit": "e5c299fabf67c33ff983007d6dae17e8cbc7c48c",
+  "implementation_source": {
+    "path": "geant4/src_patch/ScatteringGenerator.cc",
+    "git_blob_sha1": "6e2d886df78176cd59e9e1d5882f38d651397023"
+  },
+  "implementation_header": {
+    "path": "geant4/src_patch/ScatteringGenerator.hh",
+    "git_blob_sha1": "3492d2b61fcc7320070837cff241089f40e4882d"
+  },
+  "external_install_contract": {
+    "path": "geant4/src_patch/patch_scatter.py",
+    "mode": "exact_tracked_source_per_file_atomic_install_v1",
+    "target_root": "EXPLICIT_REQUIRED_ARGUMENT",
+    "post_install_verification": "EXACT_PAIR_BYTE_EQUALITY_ON_SUCCESSFUL_RETURN",
+    "pair_crash_atomicity": "NOT_PROVIDED_REVERIFY_BEFORE_BUILD_REQUIRED",
+    "status": "STATIC_PARITY_IMPLEMENTED_COMPILED_VALIDATION_REQUIRED"
+  },
+  "source_model": {
+    "cross_section_interpolation_mode": "linear_node_pdf_exact_inverse_v1",
+    "cross_section_support_mode": "measured_table_support_truncate_v1",
+    "event_weight_mode": "unit_direct_sampling_v1",
+    "cross_section_table_sha256": "0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc"
+  },
+  "runtime_thread_mode": "UNRESOLVED_REQUIRES_EXACT_EXECUTABLE_PROVENANCE",
+  "required_state_machine": [
+    "UNINITIALIZED",
+    "UNCONFIGURED_UNIFORM",
+    "CONFIGURED_READY",
+    "FATAL"
+  ],
+  "findings_on_implementation_source": {
+    "event_zero_load_gate": false,
+    "per_event_instance_readiness_call": true,
+    "uniform_fallback_on_empty_cdf": false,
+    "uniform_sampling_is_explicit_state": true,
+    "success_exit_on_input_open_failure": false,
+    "fatal_exception_with_abort_fallback": true,
+    "unchecked_cross_section_sscanf": false,
+    "checked_numeric_row_parser": true,
+    "empty_stopping_table_dereference_pattern": true,
+    "stopping_table_cardinality_guard": true,
+    "explicit_instance_readiness_state": true,
+    "configuration_identity_guard": true,
+    "transactional_table_publication": true,
+    "configured_cdf_state_is_fatal_not_uniform": true
+  },
+  "verdict": "STATIC_CONTRACT_IMPLEMENTED_COMPILED_VALIDATION_REQUIRED",
+  "repository_ci_compiles_geant4_src_patch": false,
+  "compiled_geant4_executed": false,
+  "production_data_or_mc_executed": false,
+  "claim_promotion": false,
+  "open_children": [
+    "compiled hostile source/stopping-table controls",
+    "exact hibeam_g4 commit/run-manager/thread-mode provenance",
+    "real dedx_p_in_CD2.txt parser compatibility and digest",
+    "build-front-door re-verification of installed source/header pair after possible interrupted deployment",
+    "production manifest source/readiness/input-hash serialization",
+    "messenger lifecycle and worker configuration propagation"
+  ],
+  "issue": 1182,
+  "pull_request": 1183
+}

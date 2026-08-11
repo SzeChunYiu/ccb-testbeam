@@ -1,0 +1,108 @@
+{
+  "central_model_difference": {
+    "grid_max_abs_cdf_difference": {
+      "theta_cm_deg": 43.942722,
+      "value": 0.001012980056818935
+    },
+    "mean_theta_cm_deg": {
+      "alternative_minus_current": -0.024267831224086885,
+      "linear_cross_section_then_jacobian_v1": 56.759694169292345,
+      "linear_node_pdf_exact_inverse_v1": 56.78396200051643
+    }
+  },
+  "conditional_diagonal_statistical_reference": {
+    "linear_cross_section_then_jacobian_v1": {
+      "max_pointwise_cdf_standard_uncertainty": {
+        "theta_cm_deg": 49.430729,
+        "value": 0.0004435837618530407
+      },
+      "mean_theta_cm_standard_uncertainty_deg": 0.022356857259092505
+    },
+    "linear_node_pdf_exact_inverse_v1": {
+      "max_pointwise_cdf_standard_uncertainty": {
+        "theta_cm_deg": 49.488045,
+        "value": 0.0004453566889758832
+      },
+      "mean_theta_cm_standard_uncertainty_deg": 0.02252797870713097
+    },
+    "status": "DELTA_METHOD_CONDITIONAL_ON_INDEPENDENT_ROW_STATISTICS"
+  },
+  "cross_atom_compatibility": {
+    "alternative_box_max_lower_extension_beyond_current_box": {
+      "theta_cm_deg": 145.879228,
+      "value": 0.0002537872354466675
+    },
+    "alternative_box_max_upper_extension_beyond_current_box": {
+      "theta_cm_deg": 39.586706,
+      "value": 0.0010650343985590949
+    },
+    "alternative_nominal_max_violation_of_current_box": 0.0,
+    "interpretation": "The alternative central interpolation lies inside the current-mode 3% node box on the tested grid, but the alternative mode's own 3% box extends beyond the current-mode box. Therefore the two nuisance universes are not interchangeable: a current-mode node box cannot be declared cross-model closure merely because it covers the alternative central curve.",
+    "union_envelope_relative_to_current_nominal": {
+      "max_downward_cdf_excursion": {
+        "theta_cm_deg": 46.951812,
+        "value": 0.014380572923809676
+      },
+      "max_upward_cdf_excursion": {
+        "theta_cm_deg": 43.168956,
+        "value": 0.015299817076167732
+      },
+      "mean_theta_cm_deg_range": [
+        56.02560085079668,
+        57.5322672970398
+      ]
+    }
+  },
+  "input": {
+    "bytes": 640,
+    "path": "geant4/src_patch/sigma_pd_cm_190.txt",
+    "rows": 28,
+    "sha256": "0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc",
+    "support_theta_cm_deg": [
+      26.49,
+      169.78
+    ]
+  },
+  "models": {
+    "grid_points": 10001,
+    "interpolation_modes": [
+      "linear_node_pdf_exact_inverse_v1",
+      "linear_cross_section_then_jacobian_v1"
+    ],
+    "node_box_fraction": 0.03,
+    "node_box_status": "NONPROBABILISTIC_ENVELOPE",
+    "support_mode": "measured_table_support_truncate_v1"
+  },
+  "node_box_by_interpolation": {
+    "linear_cross_section_then_jacobian_v1": {
+      "max_downward_cdf_excursion_from_own_nominal": {
+        "theta_cm_deg": 47.023457,
+        "value": 0.014374731878122216
+      },
+      "max_upward_cdf_excursion_from_own_nominal": {
+        "theta_cm_deg": 42.997008,
+        "value": 0.014310586515772328
+      },
+      "mean_theta_cm_deg_range": [
+        56.02560085079668,
+        57.50849000593509
+      ]
+    },
+    "linear_node_pdf_exact_inverse_v1": {
+      "max_downward_cdf_excursion_from_own_nominal": {
+        "theta_cm_deg": 46.951812,
+        "value": 0.014380572923809676
+      },
+      "max_upward_cdf_excursion_from_own_nominal": {
+        "theta_cm_deg": 46.951812,
+        "value": 0.01430729974634637
+      },
+      "mean_theta_cm_deg_range": [
+        56.050251002153615,
+        57.5322672970398
+      ]
+    }
+  },
+  "schema_version": "ccb_sigma_cm_uq_interpolation_compatibility_v1",
+  "scientific_boundary": "Deterministic cross-atom source sensitivity only. The interpolation classes carry no probability weights; the 3% node box is not a confidence region; the diagonal statistical reference is conditional. Do not add these quantities in quadrature or promote them as detector uncertainty."
+}

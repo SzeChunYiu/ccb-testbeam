@@ -1,5 +1,7 @@
 # Latest Handoff
 
+# Latest Handoff
+
 ## Selected atom: MC event/stave deposited-energy statistical unit
 
 PR #1169 on `feat/mc01-event-stave-truth-contract` implements the bounded H3 child of #1052/#1164. Branch point is protected `main@d088b5a886e0c8891d7926af7015193db7a503b8`.

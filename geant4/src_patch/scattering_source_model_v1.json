@@ -1,0 +1,20 @@
+{
+  "schema_version": "ccb_scattering_source_model_v1",
+  "reaction": "2H(p,dp) elastic proton-deuteron scattering",
+  "incident_proton_kinetic_energy_MeV": 190.0,
+  "cross_section_table": {
+    "path": "sigma_pd_cm_190.txt",
+    "sha256": "0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc",
+    "source_sidecar": "sigma_pd_cm_190.source.json"
+  },
+  "target_polar_angle_density": "p(theta_cm) proportional to (dσ/dΩ)(theta_cm) * sin(theta_cm)",
+  "cross_section_interpolation_mode": "linear_node_pdf_exact_inverse_v1",
+  "cross_section_support_mode": "measured_table_support_truncate_v1",
+  "support_theta_cm_deg": [26.49, 169.78],
+  "event_weight_mode": "unit_direct_sampling_v1",
+  "event_weight": 1.0,
+  "source_model_status": "NOMINAL_TRUTH_REFERENCE_NONAUTHORISING_FOR_DETECTOR_CLAIMS",
+  "support_policy_note": "The nominal distribution is conditional on measured Table-VI support. Zero probability outside support is a declared reference-model choice, not evidence that the physical cross section vanishes there. Alternate source-bound support/extrapolation models remain a required sensitivity under issue #1178.",
+  "uncertainty_note": "Central values only. Statistical and systematic cross-section nuisance propagation remains issue #1179.",
+  "validation_note": "Deterministic interval inverse and source-byte checks are repository-tested. A compiled Geant4 build, seeded generator-level closure, production run manifest serialization, and detector-response propagation remain required before authorising physical claims."
+}

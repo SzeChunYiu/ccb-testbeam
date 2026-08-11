@@ -1,111 +1,107 @@
 #!/usr/bin/env python3
-"""Patch ScatteringGenerator to sample theta_cm FROM the p+CD2 cross-section
-distribution (inverse-CDF) instead of uniform-in-[0,pi]. CL-021 fix."""
-import sys
-SRC = "/projects/hep/fs10/shared/nnbar/billy/hg4_src_scatter"
-HH  = SRC + "/include/ScatteringGenerator.hh"
-CC  = SRC + "/src/ScatteringGenerator.cc"
+"""Install the reviewed ScatteringGenerator sources into an external hibeam_g4 tree.
 
-def patch(path, pairs):
-    with open(path) as f: s = f.read()
-    for i,(old,new) in enumerate(pairs):
-        n = s.count(old)
-        if n != 1:
-            sys.exit("FAIL %s pair#%d count=%d for %r" % (path, i, n, old[:70]))
-        s = s.replace(old, new, 1)
-    with open(path,"w") as f: f.write(s)
-    print("OK %s: %d replacements" % (path, len(pairs)))
+The tracked ``ScatteringGenerator.cc/.hh`` files are the authoritative patch
+payload. Installing those exact bytes avoids a split-brain state where an
+external text-rewrite helper retains an older sampler/readiness mechanism than
+the reviewed source. The destination root is mandatory so a run cannot silently
+patch a historical checkout chosen by a hard-coded path.
 
-T = "\t"
-hh_pairs = [
-    (T+"G4double EvalWeight(G4double);",
-     T+"G4double EvalWeight(G4double);\n"
-     +T+"G4double SampleThetaCM();\n"
-     +T+"void BuildSigmaCDF();"),
-    (T+"std::vector<G4double> ang, sigma;",
-     T+"std::vector<G4double> ang, sigma;\n"
-     +T+"std::vector<G4double> cdfTheta, cdfVal; // inverse-CDF for CS-weighted CM sampling"),
-]
-patch(HH, hh_pairs)
+Each destination file is replaced atomically and the completed pair is verified
+byte-for-byte. The two-path replacement is not a filesystem transaction: a
+process crash between the two replacements can leave a partial deployment, so a
+future build/run front door must re-verify both identities before compilation.
+A successful install is therefore only a source-deployment step; the external
+Geant4 tree must be provenance-bound, compiled, and runtime-tested separately.
+"""
 
-BUILD_CDF = """void ScatteringGenerator::BuildSigmaCDF()
-{
-\t// Build inverse-CDF to sample theta_cm from p(theta) ~ sigma(theta)*sin(theta).
-\t// sin(theta) is the solid-angle Jacobian (dOmega = sin dtheta dphi); the table
-\t// holds d(sigma)/dOmega per steradian, so the angle PDF weights by sin(theta).
-\t//
-\t// Coverage: the table spans only [ang_front, ang_back] (~26.5-169.8 deg). Outside
-\t// that window the boundary value is held constant -- no fabricated forward peak
-\t// below ang_front (conservative; documented as a possible under-peaking source).
-\t// Endpoints theta=0 and theta=pi carry zero probability (sin=0).
-\tcdfTheta.clear();
-\tcdfVal.clear();
-\tif(ang.size() < 2 || sigma.size() < 2){ return; }
+from __future__ import annotations
 
-\tstd::vector<G4double> nodes, pdf;
-\tnodes.push_back(0.0);
-\tpdf.push_back(sigma.front() * std::sin(0.0));
-\tfor(size_t k = 0; k < ang.size(); k++){
-\t\tnodes.push_back(ang[k]);
-\t\tpdf.push_back(sigma[k] * std::sin(ang[k]));
-\t}
-\tnodes.push_back(pi);
-\tpdf.push_back(sigma.back() * std::sin(pi));
+import argparse
+import hashlib
+import os
+import tempfile
+from pathlib import Path
 
-\tcdfTheta = nodes;
-\tcdfVal.assign(nodes.size(), 0.0);
-\tfor(size_t i = 1; i < nodes.size(); i++){
-\t\tG4double dx  = nodes[i] - nodes[i-1];
-\t\tG4double avg = 0.5 * (pdf[i] + pdf[i-1]);
-\t\tcdfVal[i] = cdfVal[i-1] + avg * dx;
-\t}
-\tG4double norm = cdfVal.back();
-\tif(!(norm > 0.0)){
-\t\tG4cerr << "ScatteringGenerator::BuildSigmaCDF: non-positive CDF norm (" << norm << "); CS sampling disabled." << G4endl;
-\t\tcdfTheta.clear(); cdfVal.clear();
-\t\treturn;
-\t}
-\tfor(size_t i = 0; i < cdfVal.size(); i++) cdfVal[i] /= norm;
-\tG4cout << "ScatteringGenerator: inverse-CDF ready over [0,pi] from " << ang.size()
-\t       << " CS pts (data range [" << (ang.front()/pi)*180. << ","
-\t       << (ang.back()/pi)*180. << "] deg; constant-extrapolated outside)." << G4endl;
+
+HERE = Path(__file__).resolve().parent
+PAYLOADS = {
+    Path("include/ScatteringGenerator.hh"): HERE / "ScatteringGenerator.hh",
+    Path("src/ScatteringGenerator.cc"): HERE / "ScatteringGenerator.cc",
 }
 
-G4double ScatteringGenerator::SampleThetaCM()
-{
-\t// Draw theta_cm from p(theta) ~ sigma(theta)*sin(theta) via inverse-CDF.
-\t// Falls back to uniform in [0,pi] when no CDF is built (no CS file loaded).
-\tif(cdfTheta.empty() || cdfVal.empty()){ return pi * G4UniformRand(); }
 
-\tG4double u = G4UniformRand();
-\tstd::vector<G4double>::iterator it = std::lower_bound(cdfVal.begin(), cdfVal.end(), u);
-\tsize_t i = (size_t)std::distance(cdfVal.begin(), it);
-\tif(i == 0)               return cdfTheta.front();
-\tif(i >= cdfTheta.size()) return cdfTheta.back();
-\tG4double c0 = cdfVal[i-1], c1 = cdfVal[i];
-\tG4double frac = (c1 > c0) ? (u - c0) / (c1 - c0) : 0.0;
-\treturn cdfTheta[i-1] + frac * (cdfTheta[i] - cdfTheta[i-1]);
-}
+def _sha256_bytes(data: bytes) -> str:
+    return hashlib.sha256(data).hexdigest()
 
-G4double ScatteringGenerator::EvalELoss(G4double in)"""
 
-cc_pairs = [
-    (T+"// Random ejectile angle in cm system\n"+T+"G4double theta3cm=pi*G4UniformRand();",
-     T+"// CM ejectile angle -- sampled FROM the p+CD2 differential cross-section\n"
-     +T+"// distribution p(theta) ~ sigma(theta)*sin(theta) (inverse-CDF), fixing the\n"
-     +T+"// MV3 scattering-model residual (CL-021). Falls back to uniform when no CS.\n"
-     +T+"G4double theta3cm = SampleThetaCM();"),
-    (T+"particle1->SetKineticEnergy(Ekin3);\n"+T+"if(haveWeights) particle1->SetWeight(EvalWeight(theta3));",
-     T+"particle1->SetKineticEnergy(Ekin3);\n"
-     +T+"// Direct CS-weighted sampling -> event weight is unity (SampleThetaCM already\n"
-     +T+"// draws from p(theta)~sigma*sin(theta); EvalWeight would double-count). The\n"
-     +T+"// GAP-01 importance-weighting path is retired (analysis is unweighted)."),
-    (T+"particle2->SetKineticEnergy(Ekin4);\n"+T+"if(haveWeights) particle2->SetWeight(EvalWeight(theta3));",
-     T+"particle2->SetKineticEnergy(Ekin4);\n"
-     +T+"// (event weight unity -- see note above)"),
-    (T+"LoadCrossSection();\n"+T+"haveWeights=true;",
-     T+"LoadCrossSection();\n"+T+"BuildSigmaCDF();\n"+T+"haveWeights=true;"),
-    ("G4double ScatteringGenerator::EvalELoss(G4double in)", BUILD_CDF),
-]
-patch(CC, cc_pairs)
-print("DONE")
+def _atomic_replace_bytes(destination: Path, data: bytes) -> None:
+    if not destination.parent.is_dir():
+        raise RuntimeError(f"target directory does not exist: {destination.parent}")
+
+    fd, tmp_name = tempfile.mkstemp(
+        prefix=f".{destination.name}.",
+        suffix=".tmp",
+        dir=destination.parent,
+    )
+    tmp = Path(tmp_name)
+    try:
+        with os.fdopen(fd, "wb") as stream:
+            stream.write(data)
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.replace(tmp, destination)
+    finally:
+        if tmp.exists():
+            tmp.unlink()
+
+
+def install_reviewed_sources(src_root: Path) -> list[dict[str, str | int]]:
+    """Install reviewed bytes with per-file atomic replacement and pair verification."""
+
+    records: list[dict[str, str | int]] = []
+    for relative, source in PAYLOADS.items():
+        payload = source.read_bytes()
+        destination = src_root / relative
+        _atomic_replace_bytes(destination, payload)
+        installed = destination.read_bytes()
+        if installed != payload:
+            raise RuntimeError(f"post-install byte mismatch: {destination}")
+        records.append(
+            {
+                "path": str(relative),
+                "bytes": len(payload),
+                "sha256": _sha256_bytes(payload),
+            }
+        )
+
+    # Re-read the complete pair after all replacements so successful return means
+    # both paths still equal the reviewed payloads. Crash-consistency across the
+    # pair remains a separate build-front-door child and is not claimed here.
+    for relative, source in PAYLOADS.items():
+        if (src_root / relative).read_bytes() != source.read_bytes():
+            raise RuntimeError(f"final source-pair byte mismatch: {src_root / relative}")
+    return records
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--src-root",
+        type=Path,
+        required=True,
+        help="exact external hibeam_g4 source root containing include/ and src/",
+    )
+    args = parser.parse_args()
+
+    records = install_reviewed_sources(args.src_root)
+    for record in records:
+        print("OK {path}: bytes={bytes} sha256={sha256}".format(**record))
+    print(
+        "DONE: exact tracked ScatteringGenerator source pair verified; "
+        "compile/runtime validation still required"
+    )
+
+
+if __name__ == "__main__":
+    main()

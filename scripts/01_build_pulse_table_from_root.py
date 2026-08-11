@@ -45,6 +45,13 @@ def load_config(path: Path) -> dict:
 #: every numeric parameter be config/env/CLI-addressable.
 AMPLITUDE_CUT_ENV = "CCB_AMPLITUDE_CUT_ADC"
 
+# --- Gate-state constants (used by write_manifest and main authorising logic) ---
+GATE_PASS = "PASS"
+GATE_FAIL = "FAIL"
+GATE_NOT_RUN_MISSING_INPUT = "NOT_RUN_MISSING_INPUT"
+GATE_NOT_APPLICABLE = "NOT_APPLICABLE"
+SCHEMA_VERSION = "v1"
+
 
 def resolve_amplitude_cut(config: dict, cli_value: Optional[float]) -> Tuple[float, str]:
     """Resolve the amplitude cut [ADC] with provenance: CLI > env > config.
@@ -338,7 +345,7 @@ def scan_raw(config: dict) -> Tuple[pd.DataFrame, pd.DataFrame, Dict[str, dict],
             all_events = waveforms.astype(np.float64)
             waveforms = all_events[:, stave_channels, :]
             baseline, amplitude, peak_sample, area = pulse_quantities(waveforms, baseline_indices)
-            # Absolute peak (raw max) for peak_code_adc and hardware saturation
+# Absolute peak (raw max) for peak_code_adc and hardware saturation
             # flag (14-bit CAEN V1742, max code = 16383).
             peak_code_adc = waveforms.max(axis=-1)
             saturation = waveforms.max(axis=-1) >= 16383
@@ -753,6 +760,7 @@ def make_figures(counts_by_run: pd.DataFrame, selected: pd.DataFrame, out_dir: P
 SENSITIVITY_SUBDIR = "sensitivity"
 
 
+
 def git_source_commit() -> str:
     """Best-effort source commit hash for model identity (never fails the run)."""
     try:
@@ -828,26 +836,33 @@ def atomic_publish(staging_dir: Path, target_dir: Path) -> None:
 
 def write_manifest(out_dir: Path, config_path: Path, comparison: pd.DataFrame, selected_path: Path,
                    amplitude_cut_adc: float, amplitude_cut_source: str, *,
-                   canonical: bool, model_identity: dict, input_hashes: Optional[dict] = None) -> None:
+canonical: bool, model_identity: dict, gate_states: dict,
+                   input_hashes: Optional[dict] = None) -> None:
     """Write self-describing manifest with model identity + gate state.
 
     Every downstream consumer must resolve artifacts via this model-bound
     manifest rather than assuming a mutable canonical path is authoritative
     (ARU-S00-OVERRIDE-ARTIFACT-001 acceptance: downstream resolves via a
-    model-bound manifest/pointer).
+model-bound manifest/pointer). An authorising run requires every P0 gate
+    to be PASS (issue #972): a skipped or failed gate is recorded as a
+    non-authorising condition, never fabricated as a measured PASS.
     """
     passed = bool(comparison["pass"].all()) if len(comparison) else False
+    authorising = bool(canonical and passed and gate_states.get("sorted_even_channel_crosscheck") == GATE_PASS)
     manifest = {
         "config": str(config_path),
+        "schema_version": SCHEMA_VERSION,
         "model_identity": model_identity,
-        "claim_status": "canonical-authorising" if (canonical and passed) else "sensitivity-only",
+        "claim_status": "canonical-authorising" if authorising else "sensitivity-only",
         "canonical": canonical,
         "count_match_passed": passed,
+        "authorising": authorising,
         "selected_pulse_table": str(selected_path),
         "amplitude_cut_adc": float(amplitude_cut_adc),
         "amplitude_cut_source": amplitude_cut_source,
         "amplitude_cut_env_var": AMPLITUDE_CUT_ENV,
         "input_sha256": input_hashes or {},
+        "gate_states": {k: v for k, v in sorted(gate_states.items())},
         "artifacts": sorted(path.name for path in out_dir.iterdir() if path.is_file()),
     }
     (out_dir / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
@@ -962,7 +977,9 @@ def main() -> int:
         print("[s00] skipping sorted even-channel crosscheck (no sorted_b_dir or --skip-sorted)")
         sorted_counts = counts_by_run[["run", "selected_pulses", "B2", "B4", "B6", "B8"]].copy()
         sorted_compare = sorted_counts.copy()
-        sorted_compare["note"] = "skipped: sorted ROOT not staged on LUNARC"
+        # Issue #972: a skipped sorted crosscheck must be recorded as an explicit
+        # gate state, never fabricated as a raw-as-sorted value or a benign note.
+        sorted_compare["gate_state"] = GATE_NOT_RUN_MISSING_INPUT
         sorted_gate_pass = True
     else:
         sorted_counts = sorted_crosscheck(config)
@@ -973,8 +990,9 @@ def main() -> int:
         )
         sorted_diff = sorted_compare["selected_pulses_raw"] - sorted_compare["selected_pulses_sorted_even"]
         sorted_gate_pass = bool((sorted_diff.abs() <= 0).all())
+        sorted_compare["gate_state"] = GATE_PASS if sorted_gate_pass else GATE_FAIL
 
-    # ---- All gates pass? ----
+# ---- All gates pass? ----
     all_gates_pass = fixed_count_pass and sorted_gate_pass
 
     # ---- Write all artifacts to staging ----
@@ -989,7 +1007,6 @@ def main() -> int:
         run_ml_check(config, ml_rows, staging, population_prevalence=population_prevalence)
     if not args.skip_sha256:
         write_checksums(config, staging)
-
     # ---- Model identity for manifest ----
     input_hashes = None
     if not args.skip_sha256:
@@ -1002,19 +1019,42 @@ def main() -> int:
     model_identity = {
         "effective_amplitude_cut_adc": float(cut),
         "amplitude_cut_source": cut_source,
-"selector": f"ccb_mc_validation.selector {selector_identity['selector_id']}",
+        "selector": f"ccb_mc_validation.selector {selector_identity['selector_id']}",
         "hrd_waveform_schema": f"hrd-8x{int(config['samples_per_channel'])}-v1",
         "config_digest": model_id,
         "source_commit": src_commit,
         **selector_identity,
     }
+    # ---- Gate-state model (issue #972) ----
+    # Every P0 data-integrity gate is recorded with an explicit state. A skipped
+    # or missing sorted crosscheck is NOT_RUN_MISSING_INPUT (never fabricated as
+    # PASS), which is a non-authorising condition. The pulse-schema gate is
+    # structurally PASS here (the selected table is written by this selector).
+    if args.skip_sorted or not Path(config.get("sorted_b_dir", "")).exists():
+        sorted_gate_state = GATE_NOT_RUN_MISSING_INPUT
+    else:
+        sorted_gate_state = GATE_PASS if sorted_gate_pass else GATE_FAIL
+    gate_states = {
+        "count_match": GATE_PASS if fixed_count_pass else GATE_FAIL,
+        "sorted_even_channel_crosscheck": sorted_gate_state,
+        "pulse_schema_v1": GATE_PASS,
+    }
+
+    # An authorising run requires every P0 data-integrity gate to be PASS.
+    # A missing/failed sorted closure or pulse-schema violation is a non-authorising condition.
+    authorising = (
+        bool(comparison["pass"].all())
+        and gate_states["sorted_even_channel_crosscheck"] == GATE_PASS
+        and gate_states["pulse_schema_v1"] == GATE_PASS
+    )
 
     if canonical:
         # ---- Canonical production: authorising transaction ----
-        if all_gates_pass:
+        if authorising:
             # Write manifest, then atomically publish staging -> canonical out_dir
             write_manifest(staging, args.config, comparison, staging_selected, cut, cut_source,
-                           canonical=True, model_identity=model_identity, input_hashes=input_hashes)
+                           canonical=True, model_identity=model_identity, gate_states=gate_states,
+                           input_hashes=input_hashes)
             atomic_publish(staging, out_dir)
             print(f"[s00] canonical artifacts published: {out_dir}")
             print(f"[s00] selected pulse table: {selected_path}")
@@ -1022,7 +1062,8 @@ def main() -> int:
             # Gate failure: write the failure manifest to staging but DO NOT
             # publish. The last authorising artifact set is preserved byte-identical.
             write_manifest(staging, args.config, comparison, staging_selected, cut, cut_source,
-                           canonical=True, model_identity=model_identity, input_hashes=input_hashes)
+                           canonical=True, model_identity=model_identity, gate_states=gate_states,
+                           input_hashes=input_hashes)
             shutil.rmtree(staging)
             print("[s00] CANONICAL RUN FAILED GATES — staging discarded; last authorising artifacts preserved.")
             print(comparison.to_string(index=False))
@@ -1039,7 +1080,8 @@ def main() -> int:
         # Canonical expected counts are retained only as a negative/control reference.
         write_sensitivity_report(staging, cut, cut_source, counts_by_group, comparison)
         write_manifest(staging, args.config, comparison, staging_selected, cut, cut_source,
-                       canonical=False, model_identity=model_identity, input_hashes=input_hashes)
+                       canonical=False, model_identity=model_identity, gate_states=gate_states,
+                       input_hashes=input_hashes)
         # Publish staging to the sensitivity namespace (always — sensitivity runs
         # are self-describing and replace their own namespace, not the canonical one).
         atomic_publish(staging, out_dir)

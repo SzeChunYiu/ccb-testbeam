@@ -18,7 +18,7 @@
 // * This  code  implementation is the result of  the  scientific and *
 // * technical work of the GEANT4 collaboration.                      *
 // * By using,  copying,  modifying or  distributing the software (or *
-// * any work based  on the software)  you  agree  to acknowledge its *
+// * any work based  on the software)  you  agree to acknowledge its *
 // * use  in  resulting  scientific  publications,  and indicate your *
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
@@ -36,6 +36,8 @@
 #include "G4VPrimaryGenerator.hh"
 #include "G4ParticleDefinition.hh"
 #include "G4PrimaryParticle.hh"
+
+#include <vector>
 
 class G4Event;
 class G4GenericMessenger;
@@ -57,8 +59,17 @@ class ScatteringGenerator : public G4VPrimaryGenerator
 	G4ThreeVector GetParticleMomentumDirection2(){return particle2->GetMomentumDirection();}
 	G4double GetParticleEnergy1(){return particle1->GetKineticEnergy();}
 	G4double GetParticleEnergy2(){return particle2->GetKineticEnergy();}
+	G4String GetSourceReadinessMode() const;
   private:
+	enum class SourceState {
+		UNINITIALIZED,
+		UNCONFIGURED_UNIFORM,
+		CONFIGURED_READY,
+		FATAL
+	};
 	void DefineCommands();
+	void EnsureSourceReady();
+	void FatalSourceError(const G4String&, const G4String&);
 	void LoadFiles();
 	void LoadELossTable();
 	void LoadCrossSection();
@@ -75,10 +86,12 @@ class ScatteringGenerator : public G4VPrimaryGenerator
 	G4double fTgtThickness;
 	G4double fBeamspot;
 	G4String fDEdxFile, fCSFile;
+	G4String fLoadedDEdxFile, fLoadedCSFile;
 	G4bool haveWeights;
+	SourceState fSourceState;
 	std::vector<G4double> Ene, dEdx;
 	std::vector<G4double> ang, sigma;
-	std::vector<G4double> cdfTheta, cdfVal; // inverse-CDF for CS-weighted CM sampling
+	std::vector<G4double> cdfTheta, cdfVal, cdfPdf; // exact inverse-CDF node state
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

@@ -818,10 +818,27 @@ def build_all(repo_root: Path, output_dir: Path) -> dict[str, Any]:
             finally:
                 plt.close(fig)
 
+            # Express output/file_check paths relative to repo_root.
+            # output_dir may be a worktree not under repo_root (Mac workflow),
+            # so anchor on output_dir and then express via output_dir's own
+            # repo-relative path.
+            try:
+                output_dir_rel = output_dir.relative_to(repo_root)
+            except ValueError:
+                output_dir_rel = Path(*output_dir.parts)
+
             for output in export["outputs"].values():
                 output_path = Path(str(output["path"]))
-                if output_path.is_relative_to(repo_root):
+                if output_path.is_relative_to(output_dir):
+                    output["path"] = (output_dir_rel / output_path.relative_to(output_dir)).as_posix()
+                elif output_path.is_relative_to(repo_root):
                     output["path"] = output_path.relative_to(repo_root).as_posix()
+            for fc in export.get("file_checks", []):
+                fc_path = Path(str(fc["path"]))
+                if fc_path.is_relative_to(output_dir):
+                    fc["path"] = (output_dir_rel / fc_path.relative_to(output_dir)).as_posix()
+                elif fc_path.is_relative_to(repo_root):
+                    fc["path"] = fc_path.relative_to(repo_root).as_posix()
             records.append(
                 {
                     "figure_id": spec.figure_id,

@@ -1,5 +1,21 @@
 # CL-021: p+CD2 Cross-Section-Weighted CM Scattering — Validation Report
 
+> **2026-08-10 provenance/claim addendum:** This report is retained as the historical
+> central-value comparison record, but its statements that the sampler is
+> “physically correct”, “works correctly”, or “is NOT buggy” are **superseded as
+> authorising conclusions** by `ARU-MC-CS-TABLE-PROVENANCE-001` and #1178/#1179.
+> The exact table is now source-bound to Ermisch et al., *Phys. Rev. C* 71,
+> 064004 (2005), Table VI, CM `dσ/dΩ`. The current implementation's trapezoid CDF
+> plus linear-theta inverse has a deterministic maximum CDF self-discrepancy
+> `0.084865752117123` relative to the linearly varying node PDF implied by its
+> trapezoids, and assigns about `0.34333229332672427` nominal probability outside
+> the measured 26.49–169.78 deg Table-VI support. Source systematic uncertainty
+> is also not propagated. The historical 100k-event B2/B8 numbers below remain
+> useful **nonauthorising mechanism diagnostics** but do not prove that the
+> executed source distribution is the uniquely correct physical p+d source or
+> that the elastic source alone explains the DATA discrepancy. See
+> `docs/validation/CL-021_scattering_model.md`, #1053, #1178 and #1179.
+
 ## Status: IMPLEMENTED + HYPOTHESIS FALSIFIED (honest negative result)
 
 The cross-section `sigma_pd_cm_190.txt` has been correctly wired into

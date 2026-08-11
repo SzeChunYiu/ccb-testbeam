@@ -75,3 +75,15 @@ Photon collection, same-seed 1T/48T event and photon reproducibility, multiseed
 stream independence, and the approximately 178.3 PE/event fixed-configuration
 simulation output are validated in the repository record. This is not a detector calibration. These results must not be cited as a
 stopping-power validation or a peer-reviewed performance result.
+
+## Geometry / kinematics hypothesis registry (Wave A Lane 03)
+
+Issues #987 / #989 / #991 / #992 are **not silently resolved**. Named HYPOTHESIS
+profiles live under `configs/geometry/`; `geometry_profile_id` is mandatory
+(fail-closed). See `docs/adr/ADR-0002-geometry-kinematics-hypotheses.md`.
+
+Issue #999 beam/primary intersection preflight is enforced in `main.cc` via
+`BeamIntersection.hh` (DetectorConstruction extents) and in Python via
+`ccb_mc_validation.geometry.beam_intersection` (profile extents). Use
+`--allow-miss` / `allow_miss=True` only for intentional miss studies
+(`docs/adr/ADR-0003-beam-intersection-preflight.md`).

@@ -25,6 +25,8 @@ def test_unit_weights_have_ess_equal_n():
     assert audit.absolute_effective_sample_size == pytest.approx(10.0)
     assert audit.max_abs_weight_fraction == pytest.approx(0.1)
     assert audit.all_unit_weights is True
+    assert audit.signed_mass_orientation == 1
+    assert audit.cancellation_severity == pytest.approx(0.0)
 
 
 def test_nonuniform_positive_weights_reduce_effective_sample_size():
@@ -42,7 +44,41 @@ def test_signed_weights_report_cancellation_and_two_ess_definitions():
     assert audit.sum_w == pytest.approx(2.0)
     assert audit.sum_abs_w == pytest.approx(20.0)
     assert audit.cancellation_fraction == pytest.approx(0.9)
+    assert audit.cancellation_severity == pytest.approx(0.9)
+    assert audit.signed_mass_orientation == 1
     assert audit.signed_effective_sample_size < audit.absolute_effective_sample_size
+    assert audit.signed_diagnostic_method_id == mod.SIGNED_DIAGNOSTIC_METHOD_ID
+
+
+def test_all_negative_weights_have_bounded_cancellation_and_are_not_all_zero():
+    audit = mod.summarize_weights([-1.0, -2.0])
+    assert audit.n_positive == 0
+    assert audit.n_negative == 2
+    assert audit.cancellation_fraction == pytest.approx(0.0)
+    assert audit.cancellation_severity == pytest.approx(0.0)
+    assert audit.signed_mass_orientation == -1
+    assert audit.sum_abs_w == pytest.approx(3.0)
+
+    passed, findings = mod.validate_audit(audit, require_nonzero_sum=False)
+    assert passed
+    assert not any(item["code"] == "ALL_ZERO_WEIGHTS" for item in findings)
+    assert any(item["code"] == "SIGNED_WEIGHTS_PRESENT" for item in findings)
+
+
+def test_scale_stable_signed_diagnostics_match_across_common_positive_scales():
+    base = mod.summarize_weights([10.0, -9.0, 1.0])
+    for scale in (1e300, 1e-300):
+        got = mod.summarize_weights(scale * np.array([10.0, -9.0, 1.0]))
+        assert got.cancellation_severity == pytest.approx(base.cancellation_severity)
+        assert got.max_abs_weight_fraction == pytest.approx(base.max_abs_weight_fraction)
+        assert got.signed_mass_orientation == base.signed_mass_orientation
+        assert got.signed_mass_over_scale == pytest.approx(base.signed_mass_over_scale)
+        assert got.total_variation_over_scale == pytest.approx(base.total_variation_over_scale)
+
+
+def test_policy_text_matches_signed_capable_default_semantics():
+    assert "SIGNED_WEIGHTS_REQUIRE_EXPLICIT_POLICY" in mod.POLICY
+    assert "NONNEGATIVE" not in mod.POLICY.split(";")[0]
 
 
 def test_nonfinite_weight_is_blocking():

@@ -135,6 +135,10 @@ def _receipt_environment_values(runtime_receipt: dict[str, Any]) -> dict[str, by
     for key, record in env.items():
         if not isinstance(key, str) or not key:
             raise ValueError("runtime receipt has invalid loader environment key")
+        try:
+            key.encode("ascii")
+        except UnicodeEncodeError as exc:
+            raise ValueError("runtime loader environment key must be ASCII") from exc
         if not isinstance(record, dict):
             raise ValueError(f"runtime loader environment key {key} has invalid record")
         present = record.get("present")
@@ -216,7 +220,10 @@ def attest_loader_initial_environment(
     if start_after != start_before:
         raise ValueError("process identity changed during initial-environment attestation")
 
-    at_secure = secure_receipt.get("auxv", {}).get("at_secure")
+    auxv = secure_receipt.get("auxv")
+    if not isinstance(auxv, dict):
+        raise ValueError("secure-state receipt has no auxv record")
+    at_secure = auxv.get("at_secure")
     if at_secure not in (0, 1):
         raise ValueError("secure-state receipt has invalid AT_SECURE")
 

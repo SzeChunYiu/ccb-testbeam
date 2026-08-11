@@ -1,60 +1,50 @@
 # Latest Handoff
 
-## Selected atom: independently attest the CMake-selected Geant4 build toolchain
+## Selected atom: bind CMake/C++ version probes to the exact opened executable bytes
 
-Protected `main` is `dbb57b46f30da6298ce2850571dec3aab4b3674d`. PR #1200 was merged only after exact-head MC Validation run `31445196091` succeeded. It records #1199's two-boundary build-binding milestone and leaves immutable consumption/toolchain/runtime provenance open. Issue #1182 had nevertheless been auto-closed; this run reopened it because its own compiled/runtime acceptance criteria remain unsatisfied.
+Protected `main` is `1968f7352436a74b411db153b47419f2c6cb4a0f`. PR #1201 has now merged; its exact-head MC Validation run `31446858035` succeeded with curated ruff clean and `1493 passed, 1 skipped, 8 xfailed, 1 xpassed`. The v1 CMake toolchain attestation is therefore validated repository state, but its own PR discussion recorded follow-up concern `PROV-G4-CMAKE-002`: it hashes a resolved target, then invokes the original cache path spelling for `--version`.
 
-### Why this atom exists
+### Why this child exists
 
-#1199's final receipt binds observed source/input state to an executable hash, but `build_contract` is caller-supplied JSON. A declared compiler/version string can therefore be internally consistent while disagreeing with the compiler actually selected in the CMake build tree. The historical `geant4/setup_and_run.sh` additionally states that one conda compiler/ROOT combination was necessary while invoking `cmake`/`make` from a mutable shell environment.
+For a mutable alias `p` and resolved target `r`, the v1 sequence is approximately `hash(r)` then `exec(p)`. A symlink/path transition between those observations can make the stored SHA-256 and version output refer to different executable entrypoints. The new atom is `ARU-MC-G4-TOOL-PROBE-BINDING-001`.
 
-`ARU-MC-G4-CMAKE-TOOLCHAIN-001` therefore measures configured build state from the exact `CMakeCache.txt` and package sentinels instead of treating labels as evidence.
+### Implemented branch contract
 
-### Implemented contract on branch
+Branch `fix/geant4-tool-probe-binding` adds `ccb_geant4_tool_probe_binding_v1`:
 
-Branch `audit/geant4-cmake-toolchain-attestation` adds schema `ccb_geant4_cmake_toolchain_attestation_v1`:
+1. require a PASS, self-digested `ccb_geant4_cmake_toolchain_attestation_v1` parent;
+2. require the current CMake/C++ alias, resolved path, size, SHA-256 and symlink projection to equal the parent observation;
+3. open the already-resolved regular executable once and hash that open descriptor;
+4. execute `/proc/self/fd/{fd} --version` with that descriptor inherited, so the probe entrypoint is the same opened object rather than a fresh resolution of the cache alias;
+5. re-hash the same descriptor after the probe and require identical device/inode/mode/size/SHA-256;
+6. re-resolve/re-hash the original alias and require an unchanged path/target projection;
+7. self-digest the child receipt with exact stdout/stderr hashes and explicit non-authorising limitations.
 
-1. verify a PASS `ccb_geant4_build_binding_final_v1` receipt and its canonical digest;
-2. re-hash the bound executable and require exact identity with the #1199 receipt;
-3. read one regular non-symlink `CMakeCache.txt` byte stream, record SHA-256/byte count, and parse the exact bytes;
-4. require unique resolved `CMAKE_COMMAND`, `CMAKE_CXX_COMPILER`, and `CMAKE_GENERATOR` plus caller-required cache keys;
-5. resolve/hash the cache-selected CMake and C++ compiler executables and require successful bounded `--version` probes;
-6. derive package sentinel paths from cache-selected absolute package roots and record symlink spelling plus resolved target hash;
-7. emit a canonical self-digested attestation with explicit limitations.
+### Competing mechanisms
 
-CMake's official documentation supports the distinction: the first configuration selects the C++ compiler and stores it as `CMAKE_CXX_COMPILER`, while `CMAKE_GENERATOR` identifies the native build-system generator. The attestor uses that configured state rather than current-PATH guesses.
+- Hash target then probe original alias: rejected by path-transition counterexample.
+- Hash target then probe resolved pathname with only post-check: bounded improvement, but still reopens by pathname.
+- Hash/open once and execute the same open file through Linux procfs: survives for this local entrypoint-binding atom.
+- Treat the bound entrypoint as evidence for dynamic libraries, wrapper child compilers, actual build invocations or Geant4 events: rejected; those are separate children.
 
-### Competing mechanisms and eliminations
+### Executed deterministic evidence
 
-- **Declared build-contract labels only:** rejected; they are caller assertions.
-- **Probe current PATH `cmake`/`c++`:** rejected as sufficient because current PATH need not equal configure-time selection.
-- **CMake-cache selected compiler/CMake paths plus package sentinels:** survives as a bounded configured-build provenance mechanism.
-- **Treat cache state as proof of every compiler/link/runtime load:** rejected; transient source substitution, per-invocation wrapper/tool substitution, link inputs and runtime loader resolution are not observed.
+A standalone reconstruction of the committed implementation and fixtures on Linux/Python returned `6 passed in 0.06s`, no RNG. Fixtures cover stable direct tools, stable symlink aliases, a symlink target transition during the probe, executable self-mutation during the probe, parent-attested bytes changed before probing, and nonzero probe exit.
 
-Symlink aliases that resolve to the same regular target are collapsed as one byte identity while retaining both spelling and target metadata.
+The repository branch also adds both the tool and tests to the curated ruff lane. Exact-head GitHub CI has not yet been observed for this branch, so it is not merge-authorised yet.
 
-### Executed deterministic falsifiers
+### Four sequential AI reviews
 
-Local command: `cd /tmp && python -m pytest -q test_geant4_toolchain_attestation.py`.
-
-Result: `7 passed in 0.05s`, Python 3.13, no RNG.
-
-Fixtures cover a nominal cache-selected CMake/C++ + Geant4/VGM package world; a deliberately false caller-declared compiler string; executable mutation after the final #1199 receipt; duplicate compiler cache keys; missing required cache keys; failing compiler version probe; relative package cache roots; and symlink package sentinels with resolved-target hashing.
-
-Local ruff was unavailable (`ruff: command not found`), so the branch is **not** merge-authorised until exact-head repository CI passes.
-
-### Four sequential AI review passes
-
-- **Build/physics integration lead — REVISE:** accepts the configured-state measurement and rejects metadata-only toolchain identity. Strongest counter-hypothesis: build-contract labels are already sufficient. Falsifier: declared fake compiler label versus independently cache-selected path/hash. Residual: no real external HIBEAM build cache in this runtime.
-- **Adversarial mechanism reviewer — ACCEPT bounded detector / BLOCK immutable-consumption claim:** cache state and executable identity are stable observables, but they cannot exclude mutate-and-restore or per-invocation substitution. Residual: frozen build namespace and link provenance.
-- **Independent validation reviewer — ACCEPT deterministic oracle / BLOCK physics inference:** exact hashes and seven hostile fixtures close local software semantics; no event population or detector observable enters the test.
-- **Claims/provenance reviewer — BLOCK CL-021 promotion:** dynamic dependency identity, run manager/thread mode, random engine/seeds, event count, runtime input hashes, output ROOT/tree/schema/hash and downstream detector-response compatibility remain absent.
+- **Build/physics integration lead — ACCEPT bounded entrypoint binding / REVISE build provenance.** The alias race is real; the new open-file mechanism closes it locally. Actual compiler/linker invocation remains unobserved.
+- **Adversarial mechanism reviewer — ACCEPT local mechanism / BLOCK transitive dependency claims.** A bound executable can still be dynamically linked or launch wrapper children whose bytes are not bound.
+- **Independent validation reviewer — ACCEPT deterministic software oracle / BLOCK physics inference.** No generated event or detector observable enters these tests.
+- **Claims/provenance reviewer — ACCEPT provenance refinement / BLOCK CL-021 promotion.** #1182 runtime/thread/input/output and compiled hostile controls remain unmet.
 
 ### Child atoms
 
-- `ARU-MC-G4-IMMUTABLE-CONSUMPTION-001`: frozen/content-addressed compiler input namespace or equivalent proof at consumption time.
-- `ARU-MC-G4-LINK-RUNTIME-IDENTITY-001`: link-editor inputs and actual runtime-loaded Geant4/VGM/ROOT/system library files/hashes.
-- `ARU-MC-G4-RUNTIME-MANIFEST-001`: run-manager/thread mode, RNG engine/seeds, event count, source/support/weight IDs, runtime inputs, exit status, output file/tree/schema/hash.
-- Compiled hostile cross-section and stopping-table controls remain open under #1182/#1058.
+- `ARU-MC-G4-LINK-RUNTIME-IDENTITY-001`: link inputs and actually loaded Geant4/VGM/ROOT/system library bytes.
+- `ARU-MC-G4-IMMUTABLE-CONSUMPTION-001`: bytes actually consumed by compiler/linker invocations.
+- `ARU-MC-G4-WRAPPER-CHAIN-001`: identify/bind child compiler processes when the CMake-selected compiler is a launcher/wrapper.
+- `ARU-MC-G4-RUNTIME-MANIFEST-001`: run-manager/thread mode, RNG engine/seeds, event count, model IDs, runtime input hashes, exit status, output ROOT/tree/schema/hash.
 
-No production Geant4 executable/build cache, beam ROOT bytes, or detector-chain output was available here. No angular population, weight, B2/B8, PID, penetration, timing, calibration, pile-up, ESS, p-value, rate, or detector-performance quantity was regenerated or promoted.
+No production Geant4 executable/build tree, beam ROOT, production MC ROOT or detector-chain output was used. No angular distribution, event weight, B2/B8, PID, penetration, timing, calibration, pile-up, ESS, p-value, rate or detector-performance result was regenerated or promoted.

@@ -41,6 +41,8 @@ import sys
 
 import numpy as np
 
+from ccb_mc_validation.truth.stop_depth import summarize_stop_depth_h3
+
 from ccb_mc_validation.truth.pdg import (
     DEFAULT_MOMENTUM_UNIT,
     is_charged,
@@ -493,35 +495,61 @@ def main():
                     "median_edep_MeV_weighted": _wmedian(arr, warr),
                 }
 
+    # Issue #1047 / ADR H3: weighted stop-depth is conditional on termination==stop.
+    # Unconditional stop/escape/censored probabilities are reported separately.
     stopping_summary = {}
     for s in ("I", "II"):
         stopping_summary[s] = {}
         T = samples[s]["tracks"]
         tpdg = np.asarray(T["pdg"], dtype=float)
         tstop = np.asarray(T["stop_layer"], dtype=float)
+        tterm = np.asarray(T["termination"], dtype=object)
         tw = np.asarray(T["weight"], dtype=float)
         for sp_name, stop_layers in stopping_depth[s].items():
             arr = np.asarray(stop_layers, dtype=int)
-            # weighted counterpart from the track table (carries event weight)
             sp_pdg = {"p": 2212, "d": 1000010020}.get(sp_name)
             if sp_pdg is not None:
                 wmask = tpdg == sp_pdg
-                warr = tstop[wmask]; ww = tw[wmask]
+                h3 = summarize_stop_depth_h3(
+                    termination=tterm[wmask],
+                    stop_layer=tstop[wmask],
+                    weights=tw[wmask],
+                    n_layers=NB_LAYERS,
+                    species=sp_name,
+                )
             else:
-                warr = np.empty(0); ww = np.empty(0)
-            stop_dist_w = {}
-            if warr.size:
-                sw = ww.sum()
-                for ll in range(NB_LAYERS):
-                    stop_dist_w[int(ll)] = float(np.sum(ww[warr == ll]) / sw) if sw > 0 else 0.0
+                h3 = summarize_stop_depth_h3(
+                    termination=[],
+                    stop_layer=[],
+                    weights=[],
+                    n_layers=NB_LAYERS,
+                    species=sp_name,
+                )
+            mean_w = h3["mean_stop_layer_weighted"]
             stopping_summary[s][sp_name] = {
                 "count": int(len(arr)),
                 "mean_stop_layer": float(arr.mean()) if len(arr) > 0 else 0.0,
                 "median_stop_layer": float(np.median(arr)) if len(arr) > 0 else 0.0,
                 "stop_distribution": {int(l): int((arr == l).sum())
                                       for l in range(NB_LAYERS)},
-                "mean_stop_layer_weighted": _wmean(warr, ww),
-                "stop_distribution_weighted": stop_dist_w,
+                # H3 fields (issue #1047)
+                "estimand": h3["estimand"],
+                "conditioning": h3["conditioning"],
+                "termination_count": h3["termination_count"],
+                "termination_prob_weighted": h3["termination_prob_weighted"],
+                "termination_prob_unweighted": h3["termination_prob_unweighted"],
+                "weight_sum_all": h3["weight_sum_all"],
+                "weight_sum_stop": h3["weight_sum_stop"],
+                "sum_w2_stop": h3["sum_w2_stop"],
+                "n_stop": h3["n_stop"],
+                "mean_stop_layer_weighted": mean_w,
+                "mean_stop_layer_weighted_status": h3["mean_stop_layer_weighted_status"],
+                "mean_stop_layer_weighted_reason": h3.get(
+                    "mean_stop_layer_weighted_reason"),
+                "stop_distribution_weighted": {
+                    int(k): float(v)
+                    for k, v in h3["stop_distribution_weighted"].items()
+                },
             }
 
     for s in ("I", "II"):

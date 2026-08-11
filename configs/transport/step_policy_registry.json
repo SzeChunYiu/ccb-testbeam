@@ -1,0 +1,39 @@
+{
+  "policy_version": "2026.0-waveB-lane06",
+  "default_policy_id": null,
+  "fail_closed_when_unset": true,
+  "policies": {
+    "pin_qgsp_bic_inherited_em_stepfunction": {
+      "status": "PINNED_REFERENCE_DEFAULT",
+      "claims_authorized": false,
+      "physics_list": "QGSP_BIC",
+      "em_constructor": "inherited_reference_list_default",
+      "step_function": {
+        "source": "Geant4_reference_physics_list_default",
+        "light_ion_override": null,
+        "user_max_step_mm": null
+      },
+      "convergence_study": {
+        "digest": null,
+        "domain": null
+      },
+      "notes": "Pins inherited QGSP_BIC EM StepFunction without claiming Bragg-region convergence."
+    },
+    "diagnostic_stricter_light_ion_stepfunction": {
+      "status": "HYPOTHESIS",
+      "claims_authorized": false,
+      "physics_list": "QGSP_BIC",
+      "em_constructor": "inherited_reference_list_default",
+      "step_function": {
+        "source": "diagnostic_override_not_production",
+        "light_ion_override": "stricter_than_reference_default",
+        "user_max_step_mm": null
+      },
+      "convergence_study": {
+        "digest": null,
+        "domain": null
+      },
+      "notes": "Diagnostic-only policy for future StepFunction ladder runs."
+    }
+  }
+}

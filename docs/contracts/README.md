@@ -10,6 +10,12 @@ against it.
 | [GEOMETRY_READOUT_MAPPING_CONTRACT.md](GEOMETRY_READOUT_MAPPING_CONTRACT.md) | P0 A-004 | one canonical layer→stave map from deployed-ROOT coordinates, not fit-to-stopping; ships `geometry_contract.template.json` |
 | [MC_WEIGHT_POLICY.md](MC_WEIGHT_POLICY.md) | P0 A-003 | MC readers must consume `PrimaryWeight` or explicitly declare it irrelevant; fail-fast + ESS reporting |
 
+| [PUBLIC_CLAIM_AUTHORITY.json](PUBLIC_CLAIM_AUTHORITY.json) | #969 | Machine-readable README/WIKI/dashboard claim authority |
+| [SELECTION_FLOW_DAG.json](SELECTION_FLOW_DAG.json) | #970 | Immutable timing selection-flow DAG node IDs |
+| [REVIEW_STATUS_TAXONOMY.json](REVIEW_STATUS_TAXONOMY.json) | #990 | Nature-reviewer badges cannot substitute claim validation |
+| [MV0_DIGITIZER_MODEL_IDENTITY.json](MV0_DIGITIZER_MODEL_IDENTITY.json) | #1078 | Frozen executable MV0 digitizer identity |
+| [SCIENTIFIC_ISSUE_COMPLETION_GATES.json](SCIENTIFIC_ISSUE_COMPLETION_GATES.json) | #1218 | Merge auto-close must not override scientific completion gates |
+
 ## Enforcement (offline, live now)
 
 - `tools/audit/validate_pulse_schema.py` → flags `AMBIGUOUS_AMPLITUDE_ADC`, `MISSING_REQUIRED_COLUMNS`, `DUPLICATE_PULSE_KEY`.

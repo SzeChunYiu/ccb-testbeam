@@ -147,6 +147,22 @@ def test_partial_final_page_zero_fill_is_compared(tmp_path: Path) -> None:
     assert segment["zero_fill_bytes"] == 0x800
 
 
+def test_whole_page_beyond_eof_is_not_synthesized_as_zero(tmp_path: Path) -> None:
+    receipt, proc_root, _mem, _record = _fixture(
+        tmp_path,
+        file_size=0x1800,
+        start=0x5000,
+        end=0x7000,
+        offset=0x1000,
+    )
+
+    with pytest.raises(ValueError, match="whole page beyond backing EOF"):
+        attest_runtime_codepages(
+            runtime_receipt=receipt,
+            proc_root=proc_root,
+        )
+
+
 def test_live_memory_mutation_blocks(tmp_path: Path) -> None:
     receipt, proc_root, mem, _record = _fixture(tmp_path)
     fd = os.open(mem, os.O_RDWR)

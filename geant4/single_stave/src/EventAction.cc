@@ -141,11 +141,11 @@ void EventAction::EndOfEventAction(const G4Event* event) {
   const std::uint64_t event_id = static_cast<std::uint64_t>(event->GetEventID());
   bool has_adc = false;
   for (int sid = 0; sid < kNSensors; ++sid) {
-    if (data_.sipm_arrivals[sid].empty()) {
-      data_.adc[sid] = 0.0;
-      continue;
-    }
     // Copy base config and set sensor_id so simulate() filters correctly.
+    // NOTE: we always invoke the ResponseSimulator even when the arrival list
+    // is empty, so that dark counts (DCR), crosstalk, and electronics noise
+    // are simulated for every sensor (issue #1087).  The core handles empty
+    // arrivals correctly: it produces a baseline+noise waveform.
     auto cfg = sipm_config_;
     cfg.sensor_id = sid;
     ccb::sipm::ResponseSimulator sipm(cfg);

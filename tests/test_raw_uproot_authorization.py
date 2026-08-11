@@ -37,10 +37,15 @@ def _write_root(path: Path, event: int = 123) -> None:
     waveform[0, 2 * 16 + 5] = 2100
     waveform[0, 4 * 16 + 6] = 2200
     with uproot.recreate(path) as root_file:
-        root_file["h101"] = {
+        # Explicit TTree path: dict-assignment (`root_file["h101"] = {...}`)
+        # forces the RNTuple write path, which in uproot 5.6.9 hits a circular
+        # self-import (`_cascade.add_rntuple -> _cascadentuple -> import uproot`)
+        # that leaves a SimpleNamespace in sys.modules and then
+        # `AttributeError: no attribute 'writing'`. mktree + extend avoids it.
+        root_file.mktree("h101", {
             "EVENTNO": np.dtype("int32"),
             "HRDv": np.dtype(("int16", (128,))),
-        }
+        })
         root_file["h101"].extend({
             "EVENTNO": np.array([event], dtype=np.int32),
             "HRDv": waveform,

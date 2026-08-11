@@ -162,9 +162,9 @@ def record_exec_boundary_cwd(
 ) -> dict[str, Any]:
     """Record cwd and launcher state immediately before a direct ``os.execv``.
 
-    ``exec_argv`` is optional for backwards-compatible fixture construction.  A
-    production direct-exec record should supply it so the launcher executable and
-    intended target executable are not conflated.
+    ``exec_argv`` is optional for backwards-compatible fixture construction. A
+    production direct-exec record should supply it so the launcher executable
+    and intended target executable are not conflated.
     """
     pid = os.getpid()
     proc_dir = proc_root / str(pid)
@@ -195,7 +195,7 @@ def record_exec_boundary_cwd(
     body: dict[str, Any] = {
         "schema": EXEC_BOUNDARY_CWD_SCHEMA,
         "status": "RECORDED",
-        "boundary": "IMMEDIATELY_BEFORE_DIRECT_EXECV_NO_INTERVENING_CHDIR",
+        "boundary": "IMMEDIATELY_BEFORE_DIRECT_EXECVE_NO_INTERVENING_CHDIR",
         "process": {
             "pid": pid,
             "starttime_ticks": starttime,
@@ -327,6 +327,11 @@ def attest_exec_boundary_cwd(
         raise ValueError("exec-boundary record has no cwd object")
     cwd_spelling = exec_receipt.get("cwd_spelling")
 
+    historical_cwd = (
+        "PROVEN_SAME_PROCESS_DIRECT_EXEC_PRESERVES_CWD"
+        if intent is None
+        else "DIRECT_EXECV_LAUNCHER_INTENT_NOT_KERNEL_EXEC_EVENT"
+    )
     body = {
         "schema": SCHEMA,
         "status": "PASS",
@@ -349,11 +354,11 @@ def attest_exec_boundary_cwd(
         "scientific_scope": "COMPOSED_PRE_EXEC_CWD_AND_POST_EXEC_RUNTIME_IDENTITY",
         "interpretation": {
             "cwd_observation_boundary": "PRE_EXEC_RECORD_COMPOSED_WITH_SAME_PID_STARTTIME_RUNTIME",
-            "historical_execve_cwd": "DIRECT_EXECV_LAUNCHER_INTENT_NOT_KERNEL_EXEC_EVENT",
+            "historical_execve_cwd": historical_cwd,
             "process_identity_composition": "PID_AND_STARTTIME_STABLE_ACROSS_IMAGE_REPLACEMENT",
             "launcher_vs_runtime_executable": "EXPECTED_TO_DIFFER_AFTER_SUCCESSFUL_EXEC",
             "later_procfs_cwd": "NOT_RELIED_UPON_POST_EXEC_CHDIR_DISCRIMINATED",
-            "parent_shell_or_wrapper_cwd": "NOT_AUTHORITATIVE_LAUNCHER_RECORD_IS_THE_BOUNDARY",
+            "parent_shell_or_wrapper_cwd": "NOT_AUTHORITATIVE_WRAPPER_CHDIR_DISCRIMINATED",
             "path_spelling": "AUXILIARY_OBJECT_IDENTITY_IS_AUTHORITATIVE",
         },
         "limitations": [

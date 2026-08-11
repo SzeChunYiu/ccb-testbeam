@@ -1,56 +1,49 @@
 # Latest Handoff
 
-## Pre-window SiPM history: #1096 was closed too early
+## DCR explicit-history support is repaired and compiled; #1096 remains partial
 
-Protected `main` at selection is `fcb246a1442d8ab9aa5fee8bce2337f46749dd06`, merge of #1223. That merge updates `geant4/single_stave/sipm` from `ccb-sipm-core@b38e3d...` to `ccb-sipm-core@2027b06e0fb47b26da1b89e95b6901a5f8e6c200` and closed #1096.
+Protected `ccb-testbeam` main at this integration step is `0a2e46355c5c5060bbbcad9347b525857fdf40da`, the squash merge of #1224. #1096 is open/reopened. The integrated gitlink on that main still points to pre-repair `ccb-sipm-core@2027b06e0fb47b26da1b89e95b6901a5f8e6c200`.
 
-The new core commit genuinely fixes one bounded mechanism: `schedule()` now accepts avalanche candidates from `history_start_ns` (default `-200 ns`) rather than starting at the sample window (`-20 ns`), so a supplied pre-window photon can produce an in-window analog tail. The core PR reports `ccb_sipm_tests` passed and adds C1-C5 for the photon/history boundary and metadata/env override.
+The selected child is `ARU-SIPM-PREWINDOW-DARK-HISTORY-001`. The old core scheduler accepted candidates from `history_start_ns`, but spontaneous dark counts still used `window_start_ns` as both the Poisson-exposure and uniform-time lower bound. Under the explicit-history model this made dark-primary support inconsistent with photon/correlated-candidate support.
 
-A deeper source inspection shows the spontaneous dark-count process still starts at `window_start_ns`. `ResponseSimulator::simulate()` computes the Poisson duration from `window_end_ns-window_start_ns` and samples `dark_time` only on `[window_start_ns,window_end_ns]`. Thus the model has two incompatible history supports: supplied photons/correlated descendants may begin at `history_start_ns`, while dark primaries cannot exist before the sample boundary.
+For a homogeneous DCR model with rate `R`, the repaired contract is
 
-This is tracked as continuation atom `ARU-SIPM-PREWINDOW-DARK-HISTORY-001` under the same parent rather than as a duplicate issue. #1096 has been reopened. Archive: `chatgpt_todo/archive/2026-08-11T165700Z_ARU-SIPM-PREWINDOW-DARK-HISTORY-001.md`.
+`N_dark ~ Poisson(R * (window_end_ns-history_start_ns) * 1e-9)`
 
-## Exact model scale
+with conditional dark times uniform on `[history_start_ns,window_end_ns]`. If `history_start_ns == window_start_ns`, this reduces exactly to the legacy sample-only support.
 
-For current defaults `history_start=-200 ns`, `window_start=-20 ns`, `window_end=250 ns`, DCR `500000 Hz`, the omitted explicit-history interval is 180 ns. Under the simulator's own homogeneous Poisson model:
+At the testbeam defaults (`history=-200 ns`, sample window `[-20,250] ns`, DCR `500000 Hz`), the old implementation omitted 180 ns of declared history: model expectation `E[N_missing]=0.09`, `P(N_missing>=1)=0.08606881472877181`, and 40% of the history-inclusive primary measure. These are consequences of the simulator law, not measurements of the detector or a calibrated sensor.
 
-- missing expected dark primaries: `0.09` per sensor/event;
-- probability of at least one missing pre-window dark primary: `0.08606881472877181`;
-- sample-only expected count: `0.135`;
-- history-inclusive expected count: `0.225`;
-- omitted fraction of the history-inclusive primary measure: `40%`.
+## Core engineering and exact execution
 
-These are exact consequences of the declared simulator law, not measurements of the CCB detector. The integrated device profile is manufacturer-representative/not calibrated and the generic electronics response is unmeasured.
+`SzeChunYiu/ccb-sipm-core` PR #4, `fix(sipm): extend dark-count process through explicit history`, was developed from exact parent `2027b06e...`. The production source change is intentionally small: the DCR exposure and uniform-time lower bounds are changed from `window_start_ns` to `history_start_ns`.
 
-For the default peak-normalized CR-RC kernel (`tau_rise=1 ns`, `tau_decay=25 ns`), the expected model-internal signal at the sample boundary from omitted stationary dark primaries over the 180 ns prehistory is about `0.014283 PE`. That number must not be used as a detector baseline prediction.
+A dedicated C++ regression uses fixed run seed `0x5a17d4c3` and 4000 deterministic event IDs in each of two configurations. The history-inclusive fixture covers `[-200,100] ns` at 5 MHz (`mu=1.5` per event); the control has `history_start=window_start=0 ns` and `window_end=100 ns` (`mu=0.5`). Expected aggregate candidate-count ratio is exactly 3. The test requires `2 < ratio < 4`, at least one accepted pre-window dark avalanche, and no dark avalanche outside declared support. Prompt/delayed crosstalk, afterpulsing and waveform generation are disabled; 10,000 cells and negligible recovery time minimize collision/recovery confounding.
 
-## Why existing tests do not close the child
+A local clone/build attempt could not start because the execution container failed DNS resolution for `github.com`; no local build result is claimed. Instead, the exact repository bytes were compiled and tested through newly added Core CI:
 
-The Task-C fixture starts from `UnitConfig()`, which disables dark counts, prompt/delayed crosstalk, afterpulsing and electronics noise. C1/C2 therefore validate a supplied photon at `-21 ns`; they do not test the DCR support.
+- PR head `22d5122a28cebd94e5981c9b31eeb74689978c41`: Core CI run `31517705149`, job `93866882189`, checkout/configure/build/test all PASS.
+- Squash-merged core main `f009b0d6d0ccdcd4f54ef9be62b793934a56e518`: push Core CI run `31517804015`, job `93867201585`, configure/build/test all PASS again.
 
-The ccb-testbeam protected MC Validation workflow triggers on `geant4/**`, but its checkout does not initialize submodules and the job runs Python ruff/pytest only. The successful #1223 run is repository integration/static evidence, not an independent compile/test of `ccb-sipm-core@2027b06...`.
+The second run is the authoritative exact-merged-commit C++ execution. Core PR #4 is merged.
 
-## Four sequential AI reviews
+## Testbeam integration
 
-- **SiPM/electronics lead — REVISE parent closure.** The waveform boundary is not represented as a physical DCR gate; admitting photon history while excluding spontaneous dark history is internally inconsistent under the explicit-history interpretation.
-- **Adversarial stochastic-process/recovery reviewer — BLOCK COMPLETE.** Pre-window avalanches can change per-cell `last_fire` and seed delayed descendants, so direct analog-tail truncation is not the only memory mechanism.
-- **Independent validation reviewer — ACCEPT code diagnosis / BLOCK patched-core validation.** The Poisson calculations and interval mismatch are exact, but no C++ build/test was rerun in this session.
-- **Claims/provenance reviewer — BLOCK #1096 completion.** #1096 itself requires recovery/correlated-noise memory and history-length convergence. No baseline, timing, pile-up, rate or detector-performance claim advances.
+Branch `fix/sipm-dcr-history-integration` was created from exact `main@0a2e463...`. Commit `4186b9a3c569fc33d8b46180de66883b3b4c646f` updates only the `geant4/single_stave/sipm` gitlink to `ccb-sipm-core@f009b0d6d0ccdcd4f54ef9be62b793934a56e518`. The execution record is `chatgpt_todo/archive/2026-08-11T172900Z_ARU-SIPM-PREWINDOW-DARK-HISTORY-001_EXECUTION.md`.
 
-## Implementation-ready repair
+The bounded child may be marked `VALIDATED` as software/stochastic-process semantics. #1096 must **not** be closed: its own acceptance criteria still require cross-window recovery/correlated-noise memory and history-length convergence, and source inspection exposed a separate convolution-support child.
 
-In `ccb-sipm-core/src/ResponseSimulator.cc`, if explicit stationary history remains the model, change the DCR Poisson duration and uniform dark-time support to `[history_start_ns,window_end_ns]`. Add a deterministic interval/helper regression where possible, plus a high-rate stochastic sanity control. Require `history_start==window_start` to reduce exactly to the legacy sample-only model and keep candidates before history rejected.
+## Four role-separated review state
 
-Do not merge an updated ccb-testbeam gitlink until the exact core commit compiles and its core tests run. There is no new core code/test PASS claimed here.
+- **SiPM/electronics lead — ACCEPT bounded DCR-history repair / REVISE #1096.** Strongest counter-hypothesis was a physical DCR gate at the sample boundary; no such gate exists in the encoded model, while other candidates already use explicit prehistory. Real DCR and acquisition timing remain uncalibrated.
+- **Adversarial stochastic-process reviewer — ACCEPT explicit-history support / BLOCK sufficiency/full-history claims.** Window-only generation plus reweighting cannot create histories with zero proposal probability or recover their nonlinear cell-state/correlated-noise effects. A separately validated sufficient-state representation remains possible.
+- **Independent validation reviewer — ACCEPT software/statistical oracle / BLOCK detector inference.** The law-based 3:1 exposure discriminator and support assertion passed on exact PR and merged-main C++ builds. No beam sample or measured DCR distribution participates.
+- **Claims/provenance reviewer — ACCEPT child VALIDATED / BLOCK #1096 COMPLETE and claim promotion.** No downstream waveform/timing/baseline/pile-up/PID/performance study has been regenerated under a converged history model.
 
-## Child atom: history-horizon convergence
+## Next atomic universe: convolution support
 
-Spawn `ARU-SIPM-HISTORY-HORIZON-CONVERGENCE-001`. The explicit prehistory from `-200` to the sample start `-20 ns` is 180 ns = 7.2 default decay constants, not eight relative to the actual sample boundary. More importantly, recovery is 30 ns and the configured slow-afterpulse branch has `tau=80 ns`; exponential delayed-state laws have no finite exact memory cutoff. Measured impulse responses or extra shaper stages can also lengthen the analog memory.
+`ARU-SIPM-PREWINDOW-KERNEL-COVERAGE-001` is now the highest-value child. `make_waveform()` sets `n_samples` from the sample window and passes exactly that length to `make_impulse_kernel(n_samples,dt)`. The convolution then loops only over those kernel samples. At defaults the recorded window spans 270 ns, but an admitted avalanche at `history_start=-200 ns` is 450 ns old at the final `+250 ns` sample. Therefore the current numerical representation can stop propagating an early avalanche around output time `+70 ns` even if the configured analytical/extra-stage/measured impulse remains nonzero at larger relative time.
 
-The correct horizon is therefore the smallest tested history length for which declared in-window observables/state converge under every enabled mechanism to a preregistered tolerance. Scan analog-only, recovery, prompt/delayed crosstalk, fast/slow afterpulse and measured/generic impulse variants separately before composing them.
+The child contract should require, for every admitted avalanche `t_a` and recorded sample `t_i`, that whenever `t_i>=t_a` and the declared impulse is nonzero at `tau=t_i-t_a`, the waveform includes `A*h(tau)`. Either the relative kernel must cover at least `window_end_ns-history_start_ns`, or a finite-support/truncation rule must be explicit and validated. This is separate from `ARU-SIPM-HISTORY-HORIZON-CONVERGENCE-001`, which chooses how far back physical history needs to begin.
 
-## Immediate next action
-
-First patch and execute the DCR-history support regression in `ccb-sipm-core`. If that passes, open/merge a focused core PR and then update the testbeam gitlink through normal protected CI. Afterward run the history-length convergence child rather than re-closing #1096 from a single near-boundary fixture.
-
-The Geant4 provenance lane from merged #1222 remains separately unfinished at actual relative-input file-open/content binding. #1057 remains open/PARTIAL for compiled source-phi and accepted-observable closure. No production Geant4, beam/production-MC ROOT, event-weight, detector-response, ESS, p-value or performance result was generated in this session.
+No production Geant4 campaign, beam/production-MC ROOT data, measured DCR calibration, detector baseline, timing, pile-up, PID, event-weight, ESS, p-value, rate, or detector-performance result was produced or promoted. The Geant4 provenance lane also remains independently open at actual relative-input file-open/content binding, and #1057 remains partial for compiled source-phi and accepted-observable closure.

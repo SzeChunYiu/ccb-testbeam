@@ -1,67 +1,54 @@
 # Latest Handoff
 
-## Active atom: current cwd observation; live post-exec falsifier synchronized
+## Merged bounded cwd primitive; next atom is exec-boundary cwd #1214
 
-Protected source of truth is `main@c485d96583df91e90669e402670a3fa102643495`, the squash merge of #1213. That merge was authorized only after both exact-head `test` checks on `85894ad0123ee56dc18da6cc86e0340f9eabb312` were successful. Current work is draft PR #1215 on `audit/geant4-loader-cwd`; unresolved exec-boundary cwd leaf is #1214. CL-021 remains gated.
+Protected `main` is now `859903ada4a856c998b2bc79298cd4a26c2cb447`, the squash merge of #1215. The merged tree contains `ccb_geant4_loader_cwd_attestation_v1`, its hostile fixtures, curated MC Validation coverage, the parent ARU archive, and the validation-readiness continuation. The bounded current-cwd primitive is repository-validated; the broader initial-cwd universe remains **PARTIAL** because #1214 is unresolved. CL-021 remains gated.
 
-### Parent scientific contract
+### What #1215 established
 
-`ARU-MC-G4-LOADER-INITIAL-CWD-001` addresses the relative-path dependency exposed by:
+The run front door uses:
 
 `./hibeam_g4 -c krakow.config -m run_krakow.mac output_krakow.root`
 
-For a relative pathname `p`, use `Resolved_t(p) = Resolve(CWD_t, Root_t, MountNS_t, p)` as the dependency model. This PR binds only `CWD_t` at a bounded observation window. It does not bind historical exec-time cwd, process root/mount topology, symlink resolution, or the exact bytes HIBEAM later consumes.
+For a relative path `p`, path resolution depends on more than argv; a useful dependency abstraction is `Resolved_t(p) = Resolve(CWD_t, Root_t, MountNS_t, p)`.
 
-The new `ccb_geant4_loader_cwd_attestation_v1` composes PASS/digest-valid runtime and argv receipts, requires identical `(pid,starttime_ticks,exe_link)`, observes `/proc/<pid>/cwd` twice, independently opens the cwd directory object twice and requires equal `(st_dev,st_ino,st_mode)`, then rechecks starttime and executable link. Scope is `STABLE_CURRENT_WORKING_DIRECTORY_OBJECT_OBSERVATION_ONLY`.
+The merged cwd receipt verifies exact PASS/digests of runtime and argv predecessors, requires the same `(pid,starttime_ticks,exe_link)`, reads `/proc/<pid>/cwd` twice, independently opens that directory object twice and requires equal `(st_dev,st_ino,st_mode)`, then rechecks process identity. Its scientific scope is deliberately only `STABLE_CURRENT_WORKING_DIRECTORY_OBJECT_OBSERVATION_ONLY`.
 
-### Scientific falsifier and validation-child correction
+A live negative control proves why that scope matters: a Python child launched with `cwd=initial` can call `chdir(later)` after exec, after which procfs and the attestor observe `later`. A later current cwd therefore cannot be promoted to historical launch/exec cwd simply because `execve` itself preserves cwd.
 
-The main counter-hypothesis is that because exec preserves cwd, a later procfs cwd may be treated as launch/exec cwd. The live negative control starts a Python child with `cwd=initial`, then the child executes `chdir(later)`. Once successful post-chdir execution is established, the attestor observes `later`, not `initial`; current cwd is therefore not immutable historical cwd evidence.
+### Validation child that was found before merge
 
-An independent local rerun after the first publication exposed a fixture defect before merge: the superseded test source produced `1 failed, 8 passed in 11.92 s`. The child stayed alive in its inherited cwd longer than the fixture's three-second polling deadline, so the test had not established that user code reached `chdir`. The production attestor was not the failing mechanism.
+A later independent local rerun of the first published live fixture produced `1 failed, 8 passed in 11.92 s`. The child remained in its inherited cwd beyond a three-second polling deadline; that failure showed the fixture had not proved that user code reached `chdir`. It did not falsify the production attestor.
 
-`ARU-MC-G4-LOADER-CWD-TEST-READY-001` fixes only that precondition. Commit `198cd5062982947d12410b9371d43ddaa596c4f0` makes the child create an absolute test-owned marker **after** successful `chdir`; the parent waits for that state signal while checking child liveness, then constructs the runtime/argv receipts and runs the unchanged cwd attestor. A longer arbitrary sleep was rejected as non-discriminating.
+`ARU-MC-G4-LOADER-CWD-TEST-READY-001` repaired the test at commit `198cd5062982947d12410b9371d43ddaa596c4f0`: the child emits an absolute test-owned marker only after successful `chdir`, the parent waits for that state signal while requiring child liveness, and only then invokes the unchanged attestor. A longer fixed sleep was rejected as non-discriminating.
 
-### Executed validation and exact identities
+Local repaired evidence: Python 3.13.5 / Linux 6.18.35 x86_64 / no RNG; six consecutive focused runs each returned `9 passed` (1.01–1.14 s), and `py_compile` passed. Local ruff was unavailable.
 
-Environment: Python 3.13.5 / Linux 6.18.35 x86_64 / no RNG.
+Final exact PR head `5f251aa10aabaddfadcee7f7f9e77b021ce98998` then received two independent required `test` contexts:
 
-After the repair, the focused suite passed six consecutive times:
+- push-triggered MC Validation run `31489962787`: **success**; curated ruff, full unit tests, diagnostics upload and enforcement all succeeded;
+- pull-request-triggered MC Validation run `31489967793`: **success**; the same stages all succeeded.
 
-- `9 passed in 1.07 s`
-- `9 passed in 1.07 s`
-- `9 passed in 1.14 s`
-- `9 passed in 1.01 s`
-- `9 passed in 1.12 s`
-- `9 passed in 1.05 s`
+Base freshness immediately before merge was exact: base/merge-base `c485d96583df91e90669e402670a3fa102643495`, `behind_by=0`. #1215 was marked ready and squash-merged with expected-head protection to `main@859903ada4a856c998b2bc79298cd4a26c2cb447`.
 
-`python -m py_compile tools/audit/geant4_loader_cwd_attestation.py tests/test_geant4_loader_cwd_attestation.py` passed. Local ruff is unavailable; no local ruff PASS is claimed.
-
-Exact committed identities:
+Exact source identities retained on main:
 
 - tool: 10,190 bytes, SHA-256 `02ed0bb6cd4f53a7e72e59f0147e06eee72e7a7518c0d8de11aa62b856f5e1be`, Git blob `bb71a692732c3f6730b52704bd51ec9506cff7ac`;
 - repaired tests: 10,169 bytes, SHA-256 `a4e8b6e4cabc114034d8ade82103951c91f01d77998b898c604fdefde50446a1`, Git blob `aaf14ee43544fe388ef22692c9f2a5daab4f4ac1`.
 
-Key branch commits:
-
-- `475d0f886b0257b1cfd905e798254a07ec8a8dd8` — cwd attestor;
-- `c0131e9cc7740303505554266b207fa42567bf70` — initial hostile tests;
-- `7acb18fa686a2456093c61087491c2a7ec2a114d` — curated MC-validation ruff inclusion;
-- `b8d66da03d194040d3bd44bc386aa83098841604` — parent immutable ARU record;
-- `198cd5062982947d12410b9371d43ddaa596c4f0` — explicit post-chdir test synchronization;
-- `162fd90de7869e96934a5f884fbf2ae22ebdef93` — validation-child archive.
-
 ### Four sequential AI reviews
 
-- **Runtime/physics integration lead — ACCEPT current-state primitive and fixture repair / BLOCK initial-cwd provenance.** The synchronized post-exec `chdir` control falsifies historical-cwd promotion; no real HIBEAM process is observed.
-- **Adversarial Linux/filesystem reviewer — ACCEPT state predicate / REJECT timing-only repair / BLOCK complete path resolution.** Stable cwd still does not bind root/mount namespace, symlink chain, or ABA transitions.
-- **Independent validation reviewer — ACCEPT repeated deterministic repair / REVISE until exact-head CI.** One demonstrated old failure plus six repaired passes is useful evidence, but repository ruff/full pytest on the final commit remains mandatory.
-- **Claims/provenance reviewer — ACCEPT provenance refinement / BLOCK CL-021 promotion.** No event, transport, detector response or beam estimator participates.
+- **Runtime/physics integration lead — ACCEPT bounded current-state primitive / BLOCK initial-cwd provenance.** Evidence: merged runtime+argv composition, synchronized live post-exec `chdir` falsifier, exact-head CI. Counter-hypothesis: later procfs cwd equals launch cwd. Falsified by the live transition. Residual: no real HIBEAM exec-boundary observation.
+- **Adversarial Linux/filesystem reviewer — ACCEPT state-discriminating current-cwd evidence / BLOCK complete pathname resolution.** Evidence: two link/object observations and process identity rechecks. Counter-hypothesis: stable cwd is sufficient for relative input identity. Falsified by root/mount namespace/symlink dependencies and actual file-open timing. Residual: ABA cwd, namespaces, wrapper chain.
+- **Independent validation reviewer — ACCEPT repository software oracle / BLOCK physics inference.** Evidence: one exposed fixture failure, explicit repair, six local repaired passes, two green exact-head full-CI contexts. Counter-hypothesis: fixture closure validates HIBEAM. Rejected because no Geant4 event, detector response, weights or beam data participate.
+- **Claims/provenance reviewer — ACCEPT provenance refinement / BLOCK CL-021 promotion.** Evidence: current CL-021 validation document remains explicitly GATED; exec-time cwd, exact input consumption and other runtime/physics children remain open.
 
-### Children and next gate
+### Next highest-value atom: #1214
 
-#1214 owns `ARU-MC-G4-LOADER-INITIAL-CWD-EXEC-BOUNDARY-001`: prove cwd at the actual exec transition. Other children remain `ARU-MC-G4-LOADER-FS-NAMESPACE-001`, `ARU-MC-G4-RELATIVE-INPUT-CONSUMPTION-001`, and `ARU-MC-G4-OUTPUT-PATH-CREATION-001`, followed by loader cache/config, token/hwcaps, preload/audit, linker/static inputs, late `dlopen`, wrapper/descendant identity, immutable consumption, runtime manifest, compiled source/stopping controls, event weights and detector response.
+Issue #1214 is `ARU-MC-G4-LOADER-INITIAL-CWD-EXEC-BOUNDARY-001`. It must bind the cwd directory object at the actual exec transition, not a later current state. Candidate mechanisms are a minimal direct-exec launcher that opens/records `.` immediately before exec, a kernel tracing mechanism that captures cwd at exec, or an equivalently strong process-identifiable proof.
 
-PR #1215 must remain draft until fresh push- and pull-request-triggered MC Validation on the final head after `198cd506...` and coordination commits both finish successfully. Any CI result attached only to superseded head `94c3ae9f5673f80bf1cb4339e3dd47866b39f80a` is non-authorising. Recheck base freshness against protected main immediately before ready/merge.
+Required discriminators include: wrapper `chdir` before final exec, target `chdir` and `fchdir` after exec, PID/starttime reuse, executable/dynamic-loader mismatch, directory rename/unlink, and namespace/root mismatch. A parent-shell cwd, fixed delay, or delayed `/proc/<pid>/cwd` observation is non-authorising.
 
-No production Geant4 campaign was run, no beam or production-MC ROOT bytes were opened, and no detector-performance/public physics claim was regenerated or promoted.
+After #1214, continue with `ARU-MC-G4-LOADER-FS-NAMESPACE-001`, `ARU-MC-G4-RELATIVE-INPUT-CONSUMPTION-001`, and `ARU-MC-G4-OUTPUT-PATH-CREATION-001`. The broader loader cache/config, token/hwcaps, preload/audit, linker/static-input, late-`dlopen`, wrapper/descendant, immutable-consumption, runtime-manifest, compiled source/stopping, event-weight and detector-response children also remain.
+
+No production HIBEAM/Geant4 campaign was run, no beam or production-MC ROOT bytes were opened, and no B2/B8, PID, timing, calibration, pile-up, ESS, p-value, rate, angular distribution or detector-performance result was regenerated or promoted.

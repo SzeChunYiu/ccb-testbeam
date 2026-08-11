@@ -6,9 +6,9 @@ The selected work began as `ARU-SIPM-PREWINDOW-KERNEL-COVERAGE-001` under open/P
 
 Protected testbeam main moved during the session from `a83d3b64b87d3781211a2db42d5375bea8d4ae41` to `0800a0cece4dff733c82e024b4c764e85ce947d9` via #1226. That merge changed the SiPM gitlink to `ccb-sipm-core@5c6bb0278be4246f3da9007b71a5d13024b968ca`, a non-descendant of validated DCR-history core `f009b0d...` and kernel-history core `68eadf3...`. It therefore temporarily regressed validated pre-window history semantics while adding a separate measured-impulse fail-closed candidate.
 
-The safe repair was a descendant composition rather than choosing either side of that conflict. Core PR #7 was built from exact history-complete `main@68eadf3f6ac3a95b37e0d8c86843573736a5ea97`, and testbeam PR #1228 subsequently integrated the composed descendant.
+The safe repair was a descendant composition rather than choosing either side. Core PR #7 was built from exact history-complete `main@68eadf3f6ac3a95b37e0d8c86843573736a5ea97`, and testbeam PR #1228 subsequently integrated the composed descendant.
 
-## Exact local contracts
+## Exact contracts and discriminators
 
 For admitted avalanche `t_a` and recorded sample `t_i`, the encoded analog law is `V_i = sum_a A_a h(t_i-t_a)` for `t_i >= t_a`. With `N_out=floor((window_end-window_start)/dt)+1` and `H=max(0,window_start-history_start)`, the conservative uniform-grid elapsed-time kernel is `N_kernel=N_out+ceil(H/dt)`.
 
@@ -16,9 +16,9 @@ At default history `-200 ns`, output window `[-20,250] ns`, and `dt=0.5 ns`, `N_
 
 The deterministic kernel discriminator uses history `-20 ns`, output `[0,10] ns`, `dt=1 ns`, one history-boundary avalanche, and generic `h_raw(t)=exp(-t/25)-exp(-t/1)` with stochastic detector/electronics mechanisms disabled. Old code is identically zero because its 11-point kernel cannot reach required ages 20--30 ns. The repaired 31-point grid closes every output sample to the analytic peak-normalised reference at `1e-12`; first/last expected values are approximately 0.536747 and 0.359792. Collapsed-history and finite measured-support controls prevent over-fixing.
 
-Measured-impulse semantics are fail-closed: matched lengths, at least two finite strictly increasing times, nonzero peak, positive trapezoidal integral, and no silent unit-delta fallback. `IDEAL_DELTA_TEST_ONLY` is separately gated by `authorising=true`. Crucially, measured-support overlap is evaluated against the history-complete elapsed-time domain, not merely the recorded waveform duration.
+Measured-impulse numerical semantics are fail-closed: matched lengths, at least two finite strictly increasing times, nonzero peak, positive trapezoidal integral, and no silent unit-delta fallback. `IDEAL_DELTA_TEST_ONLY` is separately gated by `authorising=true`. Measured-support overlap is evaluated against the history-complete elapsed-time domain, not merely the recorded waveform duration.
 
-A joint fixture uses history `-20 ns`, output `[0,10] ns`, `dt=1 ns`, and measured support `[20,22,25] ns` with amplitudes `{0,1,0}`. That response lies beyond the 10 ns output duration but inside the 30 ns history-to-output domain and must contribute in-window. Support `[40,42,45] ns` lies outside the history-complete domain and must fail.
+A joint fixture uses history `-20 ns`, output `[0,10] ns`, `dt=1 ns`, and sampled support `[20,22,25] ns` with amplitudes `{0,1,0}`. That response lies beyond the 10 ns output duration but inside the 30 ns history-to-output domain and must contribute in-window. Support `[40,42,45] ns` lies outside the history-complete domain and must fail.
 
 ## Exact execution and integration
 
@@ -32,28 +32,36 @@ Main-push testbeam MC Validation run `31523505058` was triggered for exact merge
 
 The immutable detailed record is `chatgpt_todo/archive/2026-08-11T182700Z_ARU-SIPM-KERNEL-MEASURED-COMPOSITION-001.md`.
 
-## Provenance and issue governance
+## Provenance governance and newly isolated child
 
-#1067 is reopened. The #1226 target had fields named as source/effective-kernel hashes populated by `LEN-<size>` placeholders, which are not cryptographic content provenance. The composed core removes that false implication by leaving those fields blank unless exact provenance is supplied. This is a safer state, but it intentionally leaves #1067 incomplete until true content-derived source/effective-kernel digests, canonical serialization/tamper tests, and remaining acceptance leaves are validated.
+#1067 is reopened. The #1226 target had fields named as source/effective-kernel hashes populated by `LEN-<size>` placeholders, which are not cryptographic content provenance. The composed core removes that false implication by leaving those fields blank unless exact provenance is supplied. This is safer, but it intentionally leaves #1067 incomplete until true content-derived source/effective-kernel digests, canonical serialization/tamper tests, and remaining acceptance leaves are validated.
 
-#1096 remains PARTIAL. The composed implementation closes the DCR-history and numerical kernel-support compatibility gaps but does not establish how far physical history must extend, does not calibrate the real CCB impulse response, and does not validate downstream detector observables.
+A second, distinct authority-state gap is now isolated by core draft PR #8, `ARU-ELEC-IMPULSE-PROVENANCE-STATE-001`, based exactly on `e71fd26c...`. Its invariant is
 
-The provisional sampling child created during the kernel audit is collapsed into existing #1065 `ARU-SIPM-SUBGRID-001` for internal continuous avalanche phase versus `lround` placement. Real DAQ sampling aperture/clock semantics remain #1009/#1014, and #1010 remains the measured/generic electronics calibration universe.
+`MEASURED_authorized => source_bound && source_digest_bound && effective_kernel_digest_bound && calibration_validation_passed`.
 
-Kernel-only testbeam PR #1227 and conflicting core probe PR #6 are closed unmerged and superseded by the descendant composition. Do not resurrect either branch as an integration path.
+Current composed core still reconciles any numerically valid sampled vector to `impulse_model=MEASURED` and emits `impulse_response_status=MEASURED` even when exact source/effective-kernel digests are blank. PR #8 head `b0305fa0f1f5b22729ac944ea8f1def7b95ce5d6` supplies synthetic valid sampled kernels with no authoritative provenance and requires metadata not to claim `MEASURED`. Exact Core CI `31522917984` / job `93884187652` configured and built successfully but failed at the Test step, as the discriminator was designed to do. Do not merge the red PR; repair the state model on a descendant, distinguish non-authoritative custom sampled input from authoritative `MEASURED`, then make the discriminator green.
+
+#1096 remains PARTIAL. The composed implementation closes DCR-history and numerical kernel-support compatibility gaps but does not establish how far physical history must extend, calibrate the real CCB impulse response, or validate downstream detector observables.
+
+The provisional sampling child from the kernel audit is collapsed into existing #1065 `ARU-SIPM-SUBGRID-001` for continuous avalanche phase versus `lround` placement. Real DAQ sampling aperture/clock semantics remain #1009/#1014, and #1010 remains the measured/generic electronics calibration universe. Concurrent core PR #9 is a separate #1065 implementation candidate and must preserve the history-complete regressions.
+
+Kernel-only testbeam PR #1227, duplicate integration PR #1229, and conflicting core probe PR #6 are closed unmerged and superseded by the descendant composition. Do not resurrect them as integration paths.
 
 ## Four sequential AI review passes
 
-**SiPM/electronics lead — ACCEPT bounded history-complete composition / REVISE physical response+horizon.** Evidence: exact source lineage, time-domain contracts, analytic CR-RC fixture, measured-support fixture, exact Core C++ CI, duplicate exact-head testbeam CI. Strongest counter-hypothesis: recorded waveform duration defines all electronics memory. Falsifier: admitted older avalanches have nonzero configured response at later in-window samples beyond that duration. Residual: real CCB electronics response and sufficient physical prehistory.
+**SiPM/electronics lead — ACCEPT bounded history-complete composition / REVISE physical response+horizon.** Evidence: exact source lineage, time-domain contracts, analytic CR-RC fixture, sampled-support fixture, exact Core C++ CI, duplicate exact-head testbeam CI. Strongest counter-hypothesis: recorded waveform duration defines all electronics memory. Falsifier: admitted older avalanches have nonzero configured response at later in-window samples beyond that duration. Residual: real CCB electronics response and sufficient physical prehistory.
 
-**Adversarial mechanism reviewer — ACCEPT descendant composition / BLOCK #1065 sub-grid timing and exact-digest claims.** Evidence: non-descendant git history, finite-support controls, support-beyond-output fixture, placeholder digest implementation. Strongest counter-hypothesis: either conflicting git branch can be selected without loss. Falsifier: each independent side drops one validated semantic family. Residual: continuous phase rounding and exact digest provenance.
+**Adversarial mechanism reviewer — ACCEPT descendant composition / BLOCK #1065 sub-grid timing and provenance authority.** Evidence: non-descendant git history, finite-support controls, support-beyond-output fixture, placeholder digest implementation, PR #8 red discriminator. Strongest counter-hypothesis: numerically valid sampled response is observationally equivalent to an authoritative measured response. Falsifier: identical vectors can be synthetic or measured; without source/digest/calibration state the numerical observable cannot identify provenance. Residual: continuous phase rounding and exact provenance state/digests.
 
-**Independent statistics/validation reviewer — ACCEPT deterministic software oracle / BLOCK detector inference.** Evidence: independently derived analytic known answer, deterministic support controls, exact-head and merged-main Core CI, duplicate exact-head testbeam CI. Strongest counter-hypothesis: tests only restate implementation. Falsifier: expected CR-RC values are independently derived and the measured-support case specifically distinguishes recorded-duration from history-domain validation. Residual: no measured waveform population or production detector sample.
+**Independent statistics/validation reviewer — ACCEPT deterministic software oracle / BLOCK detector inference.** Evidence: independently derived analytic known answer, deterministic support controls, exact-head and merged-main Core CI, duplicate exact-head testbeam CI, deliberate PR #8 failing fixture. Strongest counter-hypothesis: tests only restate implementation. Falsifier: expected CR-RC values are independently derived, support fixtures distinguish two domains, and the provenance fixture changes only authorization evidence while holding sampled numerical content valid. Residual: no measured waveform population or production detector sample.
 
-**Claims/provenance reviewer — ACCEPT bounded repair / BLOCK #1096 COMPLETE, #1067 COMPLETE and public detector claims.** Evidence: issue acceptance states, live gitlink transitions, CI identities and metadata semantics. Strongest counter-hypothesis: #1226 completed #1067 and monotonically improved main. Falsifier: non-descendant lineage lost validated history semantics and `LEN-*` values did not satisfy exact hash provenance. Residual: digest closure, history convergence, calibration and downstream DATA/MC compatibility.
+**Claims/provenance reviewer — ACCEPT bounded composition repair / BLOCK #1096 COMPLETE, #1067 COMPLETE and public detector claims.** Evidence: issue acceptance states, live gitlink transitions, CI identities, metadata semantics and PR #8 failure. Strongest counter-hypothesis: valid sampled vectors plus blank digests can still be publicly called `MEASURED`. Falsifier: the source/calibration origin is not identifiable from numerical samples alone, and #1067 explicitly requires exact bound provenance. Residual: provenance-state repair, digest closure, history convergence, calibration and downstream DATA/MC compatibility.
 
 ## Next atom
 
-Continue with `ARU-SIPM-HISTORY-HORIZON-CONVERGENCE-001`. Vary `history_start_ns` farther into prehistory and require convergence of in-window observables under further extension. Treat DCR rate, recovery time, fast/slow afterpulse time constants, delayed-crosstalk time scale, impulse tails, finite candidate cap and any initial-state assumption as explicit nuisance/dependency variables. Use paired deterministic seeds where valid, record event counts and statistical units, and do not mistake simulator convergence for detector validation.
+The highest-value next atom is now `ARU-ELEC-IMPULSE-PROVENANCE-STATE-001` because its exact red discriminator is already dependency-ready on the integrated core. Define a non-authoritative custom-sampled state distinct from `MEASURED`; authorize `MEASURED` only when source identity, exact source digest, exact effective-kernel digest and calibration/resampling validation are bound; preserve DCR/kernel-history semantics; then rerun exact-head Core CI and testbeam integration if the gitlink moves.
+
+After that, continue `ARU-SIPM-HISTORY-HORIZON-CONVERGENCE-001`: vary `history_start_ns` farther into prehistory and require convergence of in-window observables under further extension, treating DCR, recovery, afterpulse fast/slow, delayed crosstalk, impulse tails, finite candidate cap and initial-state assumptions as explicit nuisance/dependency variables.
 
 No production Geant4 campaign, beam/production-MC ROOT bytes, measured CCB impulse, calibrated DCR, detector baseline, timing, pile-up, PID, event weights, ESS, p-value, rate, efficiency or detector-performance result was regenerated or promoted.

@@ -70,6 +70,46 @@ def _fake_proc(
     return proc_root
 
 
+def _wait_for_exec_observation(
+    process: subprocess.Popen,
+    *,
+    expected_exe: Path,
+    timeout_s: float = 2.0,
+) -> tuple[Path, int, str]:
+    proc_dir = Path("/proc") / str(process.pid)
+    deadline = time.monotonic() + timeout_s
+    last_state = "not observed"
+    while time.monotonic() < deadline:
+        if process.poll() is not None:
+            raise AssertionError(
+                f"child exited before procfs exec observation: returncode={process.returncode}"
+            )
+        try:
+            cmdline = (proc_dir / "cmdline").read_bytes()
+            exe_link = os.readlink(proc_dir / "exe")
+            starttime = MODULE._read_process_starttime(proc_dir)
+        except (OSError, ValueError) as exc:
+            last_state = str(exc)
+            time.sleep(0.01)
+            continue
+        if not cmdline:
+            last_state = "empty cmdline"
+            time.sleep(0.01)
+            continue
+        try:
+            observed_exe = Path(exe_link).resolve(strict=True)
+        except OSError as exc:
+            last_state = str(exc)
+            time.sleep(0.01)
+            continue
+        if observed_exe != expected_exe.resolve(strict=True):
+            last_state = f"unexpected exe {observed_exe}"
+            time.sleep(0.01)
+            continue
+        return proc_dir, starttime, exe_link
+    raise AssertionError(f"timed out waiting for stable child exec observation: {last_state}")
+
+
 def test_nominal_stable_cmdline_records_exact_arguments(tmp_path: Path) -> None:
     proc_root = _fake_proc(tmp_path)
     receipt = _runtime_receipt(pid=4321, starttime=987654, exe_link="/opt/hibeam_g4")
@@ -173,12 +213,10 @@ def test_rejects_empty_cmdline_region(tmp_path: Path) -> None:
 def test_real_linux_child_observation_is_stable() -> None:
     process = subprocess.Popen(["/bin/sleep", "5"])
     try:
-        proc_dir = Path("/proc") / str(process.pid)
-        deadline = time.time() + 1.0
-        while not (proc_dir / "cmdline").exists() and time.time() < deadline:
-            time.sleep(0.01)
-        starttime = MODULE._read_process_starttime(proc_dir)
-        exe_link = os.readlink(proc_dir / "exe")
+        _, starttime, exe_link = _wait_for_exec_observation(
+            process,
+            expected_exe=Path("/bin/sleep"),
+        )
         receipt = _runtime_receipt(
             pid=process.pid,
             starttime=starttime,
@@ -208,9 +246,10 @@ def test_explicit_dynamic_loader_is_distinguishable_from_final_executable() -> N
         pytest.skip("glibc x86-64 dynamic loader not found")
     process = subprocess.Popen([str(loader), "/bin/sleep", "5"])
     try:
-        proc_dir = Path("/proc") / str(process.pid)
-        starttime = MODULE._read_process_starttime(proc_dir)
-        live_exe = os.readlink(proc_dir / "exe")
+        _, starttime, live_exe = _wait_for_exec_observation(
+            process,
+            expected_exe=loader,
+        )
         assert Path(live_exe).resolve() == loader
         receipt = _runtime_receipt(
             pid=process.pid,

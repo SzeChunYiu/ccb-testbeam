@@ -75,7 +75,7 @@ def test_primary_event_weight_is_one_per_event_and_fails_closed():
             primary_event_weight(bad)
 
 
-def test_primary_event_weight_cardinality_permutation_falsifier(tmp_path):
+def test_primary_event_weight_cardinality_permutation_falsifier(tmp_path, monkeypatch):
     """Inject a multi-element PrimaryWeight row among valid single-element rows.
 
     The builder must reject the event even when other events in the same batch
@@ -108,7 +108,6 @@ def test_primary_event_weight_cardinality_permutation_falsifier(tmp_path):
     def fake_open(stream):
         return FakeRoot()
 
-    monkeypatch = pytest.MonkeyPatch()
     monkeypatch.setitem(sys.modules, "uproot", SimpleNamespace(open=fake_open))
     source = Path(tmp_path) / "mc.root"
     source.write_bytes(b"fake-root-bytes")

@@ -9,6 +9,9 @@ against it.
 | [PULSE_TABLE_CONTRACT.md](PULSE_TABLE_CONTRACT.md) | P0 A-001 | amplitude is `peak_height_adc = max(waveform-baseline)`, already baseline-subtracted — forbids the MV0/MV3 double subtraction; deprecates ambiguous `amplitude_adc` |
 | [GEOMETRY_READOUT_MAPPING_CONTRACT.md](GEOMETRY_READOUT_MAPPING_CONTRACT.md) | P0 A-004 | one canonical layer→stave map from deployed-ROOT coordinates, not fit-to-stopping; ships `geometry_contract.template.json` |
 | [MC_WEIGHT_POLICY.md](MC_WEIGHT_POLICY.md) | P0 A-003 | MC readers must consume `PrimaryWeight` or explicitly declare it irrelevant; fail-fast + ESS reporting |
+| [../adr/ADR-0002-geometry-kinematics-hypotheses.md](../adr/ADR-0002-geometry-kinematics-hypotheses.md) | #987/#989/#991/#992 | Versioned hypothesis registry; fail-closed when `geometry_profile_id` unset; no silent length/spacing/fibre/KE pick |
+| [../adr/ADR-0003-beam-intersection-preflight.md](../adr/ADR-0003-beam-intersection-preflight.md) | #999 | Geometry-aware primary ray–stave preflight; rejects miss configs unless `allow_miss` |
+| [`configs/geometry/registry_index.yaml`](../../configs/geometry/registry_index.yaml) | Wave A Lane 03 | Machine-readable geometry/mapping/kinematics hypothesis index |
 
 | [PUBLIC_CLAIM_AUTHORITY.json](PUBLIC_CLAIM_AUTHORITY.json) | #969 | Machine-readable README/WIKI/dashboard claim authority |
 | [SELECTION_FLOW_DAG.json](SELECTION_FLOW_DAG.json) | #970 | Immutable timing selection-flow DAG node IDs |

@@ -36,6 +36,8 @@ struct AppConfig {
   double hit_y_cm = 0.0;   // impact point along width y
   double theta_deg = 0.0;  // polar tilt from +z
   double phi_deg   = 0.0;  // azimuth of the tilt
+  // Issue #999 / ADR-0003: intentional miss studies only.
+  bool allow_miss = false;  // --allow-miss; default rejects non-intersecting primaries
 
   // --- Detector / optical systematics knobs (multiplicative unless noted) ---
   double birks_kB_mm_per_MeV = 0.126; // Birks constant kB [mm/MeV] (Edep scan var)

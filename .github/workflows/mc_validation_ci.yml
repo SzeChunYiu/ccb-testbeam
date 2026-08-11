@@ -73,6 +73,7 @@ jobs:
             tests/test_gitlink_submodule_contract.py \
             tests/test_mc_ci_trigger_scope.py \
             tests/test_pr_base_freshness.py \
+            tests/test_scattering_source_phi_measure.py \
             tests/test_geant4_external_overlay.py \
             tests/test_geant4_build_binding_receipt.py \
             tests/test_geant4_toolchain_attestation.py \

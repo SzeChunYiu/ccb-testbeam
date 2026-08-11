@@ -1,72 +1,57 @@
 # Latest Handoff
 
-## Active atom: byte-exact authoring → committed GitHub content transfer
+## Active atom: one-sided Linux loader secure-state attestation
 
-Protected `main@acd1be85626b5047b434360eb8ce54bea167a139` was inspected after #1208 merged. #1208 exact head `9f9f061c74c2338d88ffc629897910b1a170bf49` passed MC Validation run `31467815511`; the same-descriptor runtime ELF/link co-observation was independently reviewed, marked ready, and squash-merged as `acd1be85626b5047b434360eb8ce54bea167a139`. That software/runtime provenance refinement does not close #1182 or CL-021.
+Protected parent is `main@4122dc6d71e64fd35697868afa6057e11377138a`; draft PR #1210 is on `audit/geant4-loader-secure-state` under #1182 / `ARU-MC-G4-LOADER-SEARCH-001`.
 
-The selected new child is `ARU-REPO-CONTENT-TRANSFER-001`, branch `audit/repository-content-transfer`.
+The atom composes the PASS runtime-dependency receipt with its PASS same-process runtime/link co-observation child and then measures `/proc/<pid>/auxv` while `(pid,starttime_ticks)` stays stable. For the already-attested ELF64 little-endian x86-64 domain, auxv is parsed as 16-byte `<uint64 type,uint64 value>` records with exact `AT_NULL=(0,0)` termination, no duplicate non-null types, exactly one `AT_SECURE`, and `AT_SECURE in {0,1}`.
 
-### Why this atom exists
+### Adversarial correction that must be preserved
 
-PR #1208 preserved a failed exact head, `965ba13719ce711d47f88941be2e8a471837345e`, whose GitHub source was truncated and contained additional defects even though a separate local authoring copy had passed `py_compile`. Therefore filename/path/intended-edit identity is not sufficient to attribute a local validation result to repository bytes. Exact-head CI caught the problem, but the local evidence itself had been mis-scoped.
+The first branch implementation was too strong for `AT_SECURE=0`: it tried to use the existing post-start `GLIBC_TUNABLES` observation to decide whether libc's `glibc.rtld.enable_secure=1` had been requested. GNU libc's own implementation/tests show that this tunable can enable secure-mode behavior while kernel `AT_SECURE` remains zero, and secure processing skips/removes `GLIBC_TUNABLES` from the environment. Therefore a post-start absence cannot establish launch-time absence.
 
-### Exact contract
+The implementation is now deliberately one-sided:
 
-For authoring bytes `A`, intended repository path `p`, post-write/fetched committed bytes `C`, and optional GitHub Contents API file SHA `g`:
+- `AT_SECURE=1` -> `SECURE_CONFIRMED_BY_KERNEL_AT_SECURE`; captured `LD_LIBRARY_PATH`, `LD_PRELOAD`, `LD_AUDIT` are non-authorising loader-search evidence.
+- `AT_SECURE=0` -> `UNRESOLVED_KERNEL_AT_SECURE_ZERO`; the same post-start environment values remain non-authorising until exact pre-exec environment/loader invocation and exact libc/loader identity are bound.
 
-- require exact path equality;
-- require `len(C)=len(A)`;
-- require `SHA256(C)=SHA256(A)`;
-- derive `git_blob_sha1(X)=SHA1(b"blob " || ascii(len(X)) || NUL || X)` and require equality for `A` and `C`;
-- if `g` is supplied, require `g=git_blob_sha1(C)`;
-- require the authoring receipt self-digest to verify.
+This preserves a useful direct kernel observable without falsely turning it into a complete effective glibc secure-mode Boolean.
 
-SHA-256 is the primary content identity. Git blob SHA-1 is retained only to cross-bind the byte string to the Git/GitHub file object. Byte count and both hashes are correlated deterministic descriptions, not independent statistical evidence.
+### Exact repository implementation
 
-Git's authoritative documentation states that `git hash-object` computes object IDs from content, defaults to blob type, and that `--no-filters` suppresses attribute/EOL transformations. Git object documentation specifies the type/size/NUL header preceding data for the object hash. GitHub's Repository Contents API exposes each file `sha` and the corresponding Git blob URL. Any intentional Git clean/EOL transform is therefore a separate authoring→canonical representation contract rather than silently equivalent under this byte-exact atom.
+Lineage retained for provenance:
+- initial tool `ae86fd58c81400fe98e6336a6cf4eca0c9e71eef`;
+- initial tests `875ac55234d7c35177109d1379c8df7a58a8ceff`;
+- curated CI inclusion `972e95e1b9a3c2f8d2dc25d1cec913b8416989ea`;
+- first archive `b7d3f511a0c3d06bfed434d64ea1ac6001f069f4`;
+- corrected tool `8dbec7cdc8332d77c232e45a544943052a3fcf36`;
+- corrected tests `5a726711382e4164d52f7897f6a01bc05f469469`;
+- correction archive `8443ac2613963384e42b79ead603d2e12ce15241`;
+- corrected active-task transition `9a8c5c8e0f566e19ce7e3ddc31743a1d0cd207ca`.
 
-### Implemented evidence
+Corrected exact GitHub-blob-bound local execution, Python 3.13/Linux/no RNG:
 
-New code: `tools/audit/repository_content_transfer.py`.
+`PYTHONPATH=/tmp/ccb_loader_exact python -m pytest -q /tmp/ccb_loader_exact/tests/test_geant4_loader_secure_state_attestation.py` -> `10 passed in 0.04s`; `py_compile` passed.
 
-New tests: `tests/test_repository_content_transfer.py`.
+Content identities:
+- tool: 11540 bytes; SHA-256 `b6821361ab5a7e13f71906accecbad3a7e7f9fc130432af262413413e69e7748`; Git blob SHA-1 `3102596db172b9f6f901d6768b7ad16042e7254c`;
+- tests: 7343 bytes; SHA-256 `af65d252ce7a5d57d71651144f60a9098b7c3ce672353a87f75c11b628465257`; Git blob SHA-1 `da51b78d275c4192636e5e4de6c7fece9fedb8b8`.
 
-Local Python 3.13/Linux/no-RNG execution on the measured authoring files:
+The hostile matrix covers secure/nonsecure kernel bits, duplicate/missing/nonboolean `AT_SECURE`, malformed auxv, wrong receipt ancestry, process mismatch, invalid data after `AT_NULL`, and the key negative control that a post-start `GLIBC_TUNABLES=glibc.rtld.enable_secure=1` observation does not upgrade the kernel-zero case into a reconstructed effective loader state.
 
-`python -m pytest -q tests/test_repository_content_transfer.py` → `9 passed in 0.11 s`.
+No local ruff executable was available. The earlier PR CI run on head `79823035bc244727f9205f5bfdaf7a18d7295121` is superseded by the correction and must not authorize merge. Require fresh exact-final-head MC Validation.
 
-Hostile controls cover truncation, same-size one-byte corruption, CRLF→LF normalization, wrong repository path, wrong GitHub blob SHA, tampered receipt, binary content, nominal identity, and explicit Git blob object-ID construction. The local environment did not provide `ruff`, so no local ruff PASS is claimed.
+### Four sequential AI review passes
 
-The mechanism was self-applied before publication for the two new source files:
+- **Runtime/physics integration lead — REVISE earlier zero-case / ACCEPT one-sided kernel measurement.** Strongest counter-hypothesis was that post-start environment plus `AT_SECURE=0` proves non-secure loading; glibc environment sanitization falsifies it. Residual: pre-exec state, exact libc/loader build, full search decision and real HIBEAM runtime.
+- **Adversarial systems reviewer — ACCEPT correction / BLOCK effective non-secure claim.** UID/GID equality is also insufficient because capabilities/LSM can set `AT_SECURE`. Residual: explicit-loader invocation and sanitized launch state.
+- **Independent validation reviewer — ACCEPT corrected deterministic oracle / BLOCK runtime generalisation and physics inference.** Ten exact committed-code fixtures pass; no real HIBEAM process or event was exercised.
+- **Claims/provenance reviewer — ACCEPT provenance child / BLOCK CL-021 promotion.** Link command/static archives, full loader decision, immutable consumption, runtime manifest, compiled hostile source/stopping controls, weights and detector response remain separate gates.
 
-- tool: 8927 bytes; SHA-256 `112cf07d252241dd8f705049ec8440a0f0dd0712ae53f53f0a96ae66ab57fd6d`; expected Git blob SHA-1 `2fbc5347ab1c777fdfbb8972221ee693aa9436ae`; branch `fetch_file` reports exactly `2fbc5347ab1c777fdfbb8972221ee693aa9436ae`.
-- tests: 4455 bytes; SHA-256 `40de70883cf63ce2038388ac843a54210b0f10be64c8fd8049dab154897af17f`; expected Git blob SHA-1 `e78c1ac7bbb96f029a204d7fd7cf03b06b9eac00`; branch `fetch_file` reports exactly `e78c1ac7bbb96f029a204d7fd7cf03b06b9eac00`.
+### Spawned children
 
-An attempted pre-hash of the workflow edit is explicitly **not evidence**: its locally constructed Python string collapsed shell backslash-newline continuations, so the expected hash described different bytes. The actual committed workflow blob and exact-head repository CI are authoritative for that file.
+New highest-priority child: `ARU-MC-G4-LOADER-PREEXEC-ENV-001` — bind the exact environment and loader invocation at the exec boundary before dynamic-loader sanitization, together with exact loader/libc identity.
 
-### Four sequential AI reviews
+Other loader children remain `ARU-MC-G4-LOADER-INITIAL-CWD-001`, `ARU-MC-G4-LOADER-CACHE-CONFIG-001`, `ARU-MC-G4-LOADER-TOKEN-HWCAPS-001`, and `ARU-MC-G4-PRELOAD-AUDIT-001`; linker-command/static-input, late-dlopen, non-executable relocation/GOT/PLT, wrapper/descendant, immutable-consumption, runtime-manifest, compiled source/stopping, event-weight and detector-response atoms remain open.
 
-- **Scientific software/provenance lead — ACCEPT bounded mechanism / REVISE adoption.** Strongest counter-hypothesis: exact-head CI makes authoring-transfer binding unnecessary. Falsifier: CI can catch a bad commit, but a pre-transfer local check still cannot be attributed to that commit without a byte binding. Residual uncertainty: future write paths must actually invoke this discipline.
-- **Adversarial mechanism reviewer — ACCEPT fail-closed byte identity / BLOCK undeclared canonicalization.** CRLF/LF is intentionally non-equivalent here. Git clean filters or canonicalization need their own transformation contract.
-- **Independent validation reviewer — ACCEPT deterministic oracle / BLOCK merge pending exact-head CI.** Nine local hostile fixtures pass; curated ruff and full repository pytest must still succeed on the final branch head.
-- **Claims/provenance reviewer — ACCEPT evidence-attribution repair / BLOCK physics promotion.** No Geant4 event, beam data, detector response, event weight, B2/B8, PID, timing, calibration, pile-up, ESS, p-value, rate or public detector claim is validated by this atom.
-
-### Repository state
-
-Branch `audit/repository-content-transfer` is based on exact main `acd1be85626b5047b434360eb8ce54bea167a139`.
-
-Commits so far:
-- `ddbd56897769bfb1b2cefd0e53a56ccf1a351f33` — provenance tool;
-- `c7124781b40a0c703d760cb16bf2b479aacd7860` — hostile tests;
-- `b7cf2f103fe10ce64fdf8796ccb0c169a812edbe` — curated ruff/CI inclusion;
-- `6dfddbb2f96dfa5dc41e93b35c6c09798dfc178c` — immutable ARU archive;
-- `1addcf01d91cda970659561633ed7f571aebe3c7` — active-task transition.
-
-### Next actions
-
-1. Open one focused PR for `ARU-REPO-CONTENT-TRANSFER-001` and run exact-head MC Validation.
-2. If ruff/full pytest fail, preserve that head and repair only demonstrated failures; do not reuse local evidence across different bytes.
-3. If the exact final head is green and main ancestry remains valid, merge normally.
-4. Then return to the higher-level Geant4 provenance graph: loader-search decision or linker-command/static-input provenance are higher-value scientific children. Keep `ARU-REPO-CONTENT-TRANSFER-ADOPTION-001` open until future write workflows consistently bind pre-write authoring bytes to post-write exact blobs or validate only exact committed checkouts.
-
-No production Geant4 campaign, beam ROOT, production-MC ROOT, angular distribution, event weight, B2/B8, PID, penetration, timing, calibration, pile-up, ESS, p-value, rate or detector-performance result was regenerated or promoted. #1182, #1178, #1179, #1058, #1053/#880 and CL-021 remain gated.
+No production Geant4 campaign was run, no beam or production-MC ROOT bytes were opened, and no angular distribution, event weight, B2/B8, PID, penetration, timing, calibration, pile-up, ESS, p-value, rate, or detector-performance quantity was regenerated or promoted. #1182 and CL-021 remain gated.

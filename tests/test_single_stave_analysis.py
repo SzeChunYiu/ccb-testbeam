@@ -215,14 +215,14 @@ def _build_root_fixture(path: Path) -> None:
         add([5, 9], [1, 1], [0, 0], [1000010020, 2112], [20.0, 21.0], [kd, 0.0])
 
     with uproot.recreate(path) as f:
-        f.mktree("hibeam", {
+        f["hibeam"] = {
             "Sci_bar_TrackID": "var * int64",
             "Sci_bar_LayerID1": "var * int64",
             "Sci_bar_LayerID": "var * int64",
             "Sci_bar_PDG": "var * int64",
             "Sci_bar_Time": "var * float64",
             "Sci_bar_EKin": "var * float64",
-        })
+        }
         f["hibeam"].extend({
             "Sci_bar_TrackID": ak.Array(track),
             "Sci_bar_LayerID1": ak.Array(arm),

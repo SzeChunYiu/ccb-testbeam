@@ -63,6 +63,8 @@ jobs:
             tools/audit/geant4_runtime_link_coobservation.py \
             tools/audit/geant4_loader_secure_state_attestation.py \
             tools/audit/geant4_loader_initial_environment_attestation.py \
+            tools/audit/geant4_loader_argv_attestation.py \
+            tools/audit/geant4_loader_cwd_attestation.py \
             tools/audit/repository_content_transfer.py \
             tests/test_compare_single_stave_mt_reproducibility.py \
             tests/test_compare_single_stave_photon_trees.py \
@@ -84,6 +86,8 @@ jobs:
             tests/test_geant4_runtime_link_coobservation.py \
             tests/test_geant4_loader_secure_state_attestation.py \
             tests/test_geant4_loader_initial_environment_attestation.py \
+            tests/test_geant4_loader_argv_attestation.py \
+            tests/test_geant4_loader_cwd_attestation.py \
             tests/test_repository_content_transfer.py \
             2>&1 | tee ruff.log
           echo "status=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"

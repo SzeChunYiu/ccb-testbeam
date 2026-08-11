@@ -13,7 +13,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-
 SCHEMA = "pr_base_freshness_v1"
 
 

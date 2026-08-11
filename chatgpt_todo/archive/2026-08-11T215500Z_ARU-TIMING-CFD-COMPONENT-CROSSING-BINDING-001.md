@@ -68,7 +68,22 @@ Implementation lineage:
 
 Draft PR: #1250. Stable concern/comment added to existing #1059 as `CCB-1059-COMPONENT-CROSSING-BINDING-001`; no duplicate issue opened.
 
-At archive authoring time, exact-head protected CI for `5bf05d4...` had been triggered but was queued. No CI PASS is claimed here until an exact final head completes all required contexts.
+## Executed exact-blob local discriminator
+
+The final implementation/test blobs were fetched from GitHub and reconstructed byte-for-byte in an isolated execution directory. Before running the tests, `git hash-object` was required to reproduce the repository blob identities exactly:
+
+- `scripts/digital_cfd.py` expected and observed Git blob SHA-1: `4aa845e2cb41c96cf70f010f135758e8fb94f5ae`;
+- `tests/test_cfd_component_binding.py` expected and observed Git blob SHA-1: `00a686df5a83690caabb51751bd8ace9d72d0c50`.
+
+Execution environment: Python `3.13.5`, NumPy `2.3.5`, pytest `9.0.2`, Linux `6.18.35-x86_64-with-glibc2.41`. Exact focused command:
+
+`python -m pytest -q /tmp/ccb_exact/tests/test_cfd_component_binding.py`
+
+Result: `5 passed in 0.07s`.
+
+This validates only the deterministic component-binding software oracle on the exact two repository blobs. It is not a replacement for protected repository CI and is not detector/beam validation.
+
+Protected exact-final-head CI is still required before merge; no CI PASS is claimed unless the final PR head completes every required context.
 
 ## Four sequential review passes
 
@@ -87,7 +102,7 @@ Residual uncertainty: overlapping components without a below-threshold valley ar
 Vote: first draft `REVISE`; corrected component-relative draft `ACCEPT` bounded algorithm semantics conditional on CI.
 
 ### 3. Independent statistics/validation reviewer — estimator identifiability and held-out validation
-Evidence: deterministic equations and negative controls; no real-data population or detector simulation involved.
+Evidence: deterministic equations, exact-blob five-test execution, and negative controls; no real-data population or detector simulation involved.
 Strongest counter-hypothesis: synthetic closure is sufficient to validate precision timing.
 Falsifier: synthetic fixtures establish software semantics only; they contain no run clustering, waveform-domain transfer, or detector truth.
 Residual uncertainty: real-data component-transition prevalence and timing bias, plus held-out MC/injection transfer.

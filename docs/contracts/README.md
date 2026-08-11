@@ -12,6 +12,12 @@ against it.
 | [../adr/ADR-0002-geometry-kinematics-hypotheses.md](../adr/ADR-0002-geometry-kinematics-hypotheses.md) | #987/#989/#991/#992 | Versioned hypothesis registry; fail-closed when `geometry_profile_id` unset; no silent length/spacing/fibre/KE pick |
 | [../adr/ADR-0003-beam-intersection-preflight.md](../adr/ADR-0003-beam-intersection-preflight.md) | #999 | Geometry-aware primary ray–stave preflight; rejects miss configs unless `allow_miss` |
 | [`configs/geometry/registry_index.yaml`](../../configs/geometry/registry_index.yaml) | Wave A Lane 03 | Machine-readable geometry/mapping/kinematics hypothesis index |
+| [DAQ_EVENT_KEY_CONTRACT.md](DAQ_EVENT_KEY_CONTRACT.md) | #961 | canonical `(run, EVENTNO)`; bans EVT-only joins |
+| [RUN_LEDGER.md](RUN_LEDGER.md) | #962 | Sample II calib = run 64 (not 61) |
+| [RAW_SORTED_WORD_CLOSURE.md](RAW_SORTED_WORD_CLOSURE.md) | #953 | scalar hrdMax proxy is non-authorising |
+| [ADC_SATURATION_WORLD_REGISTRY.md](ADC_SATURATION_WORLD_REGISTRY.md) | #1073 | fail-closed until hardware transform resolved |
+| [ADR-DAQ-HARDWARE-SAMPLING-1014.md](ADR-DAQ-HARDWARE-SAMPLING-1014.md) | #1014 | V1742 vs 100 MS/s **BLOCKED** — do not invent hardware |
+| [S00_VERIFIED_READ_CONTRACT.md](S00_VERIFIED_READ_CONTRACT.md) | #1149 | pathname resolve ≠ same-bytes read |
 
 | [PUBLIC_CLAIM_AUTHORITY.json](PUBLIC_CLAIM_AUTHORITY.json) | #969 | Machine-readable README/WIKI/dashboard claim authority |
 | [SELECTION_FLOW_DAG.json](SELECTION_FLOW_DAG.json) | #970 | Immutable timing selection-flow DAG node IDs |

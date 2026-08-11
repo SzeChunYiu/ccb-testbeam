@@ -15,6 +15,7 @@
 #include "G4MTRunManager.hh"
 #endif
 #include "G4UImanager.hh"
+#include "G4Run.hh"
 #include "G4TransportationManager.hh"
 #include "G4VPhysicalVolume.hh"
 #include "G4GDMLParser.hh"
@@ -188,6 +189,14 @@ int main(int argc, char** argv) {
       return 4;
     }
     runManager->BeamOn(cfg.n_events);
+    const G4Run* current = runManager->GetCurrentRun();
+    const int done = current ? current->GetNumberOfEvent() : -1;
+    if (done != cfg.n_events) {
+      std::cerr << "fatal: processed event count " << done
+                << " != requested " << cfg.n_events << '\n';
+      delete runManager;
+      return 5;
+    }
   }
 
   delete runManager;

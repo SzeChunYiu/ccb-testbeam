@@ -123,7 +123,7 @@ The SiPM is mounted on a custom printed circuit board (PCB) that provides the bi
 
 ### 2.5 Flash ADC digitizer
 
-The SiPM output — the transimpedance amplifier voltage — is digitised by a CAEN V1742 flash analogue-to-digital converter (ADC) operating at 100 megasamples per second (MSPS). The V1742 is a 32-channel, 12-bit digitiser based on the DRS4 (Domino Ring Sampler) switched-capacitor array ASIC. The key specifications are:
+The SiPM output — the transimpedance amplifier voltage — is digitised by a waveform ADC described in legacy prose as a CAEN V1742 operating at 100 megasamples per second (MSPS). **BLOCKED (#1014):** CAEN's catalogue lists V1742 as a 12-bit DRS4 device (up to 5 GS/s), while 100 MS/s matches the 724 family. This chapter does **not** invent a hardware identity; authorising DAQ claims await crate/firmware/unpacker evidence (see `docs/contracts/ADR-DAQ-HARDWARE-SAMPLING-1014.md`). The V1742 is a 32-channel, 12-bit digitiser based on the DRS4 (Domino Ring Sampler) switched-capacitor array ASIC. The key specifications are:
 
 - **Resolution:** 12 bits (4096 channels), providing a theoretical dynamic range of 72 dB.
 - **Sampling rate:** 100 MSPS (10 ns sampling period), determined by the DRS4 internal clock. The sampling clock is derived from a 50 MHz reference oscillator with a phase-locked loop multiplier, giving a clock jitter of less than 10 ps RMS.

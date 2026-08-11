@@ -1,6 +1,6 @@
 # Chapter 2: Experimental Setup and Detector
 
-> **ACCEPTED by nature-reviewer (3/3).** 7,700 words, 10 figures, 17 references. All reviewer fixes implemented: figure references added, equations numbered, chapter summary added, ESS section relocated, Table 2.2 resolved.
+> **REVIEW_STATUS: EDITORIAL_REVIEWED** (AI role-separated nature-reviewer-style lenses; not independent human peer review). Scope: readability/structure only. Does **not** imply SOURCE_VERIFIED, EXECUTED_REPRODUCED, or CLAIM_AUTHORIZED. Open factual blockers remain tracked in GitHub issues / claim ledger. Contract: `docs/contracts/REVIEW_STATUS_TAXONOMY.json` / `chatgpt_todo/ATOMIC_RESEARCH_PROTOCOL.md`.
 
 ## Abstract
 

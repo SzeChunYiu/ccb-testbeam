@@ -245,6 +245,55 @@ def _weight_diagnostics(audit):
     }
 
 
+
+def _build_deltaE_E_narrative(comp_fields: dict) -> dict:
+    """Derive ΔE–E narrative from machine-readable fields (#1002).
+
+    Causal wording such as "physics effect, not an analysis artifact" is withheld
+    while alternative mechanisms remain open (#956 and related mapping/geometry gates).
+    """
+    d_frac_I = float(comp_fields.get("sampleI_d_fraction", float("nan")))
+    d_frac_II = float(comp_fields.get("sampleII_d_fraction", float("nan")))
+    mean_stop_I = comp_fields.get("sampleI_mean_stop_layer")
+    mean_stop_II = comp_fields.get("sampleII_mean_stop_layer")
+    r_I = comp_fields.get("sampleI_pearson_r")
+    r_II = comp_fields.get("sampleII_pearson_r")
+    open_blockers = list(comp_fields.get("open_blockers", ["#956", "#1002"]))
+
+    def fmt(x, nd=3):
+        if x is None:
+            return "unavailable"
+        try:
+            return f"{float(x):.{nd}f}"
+        except (TypeError, ValueError):
+            return "unavailable"
+
+    prose = (
+        "MC ΔE–E Pearson correlation (derived from loaded summary fields): "
+        f"Sample I r={fmt(r_I)}, deuteron fraction at first B layer={fmt(d_frac_I*100,1)}%, "
+        f"mean stop layer={fmt(mean_stop_I,1)}; "
+        f"Sample II r={fmt(r_II)}, deuteron fraction={fmt(d_frac_II*100,1)}%, "
+        f"mean stop layer={fmt(mean_stop_II,1)}. "
+        "Narrative status: DIAGNOSTIC_ONLY while alternative mechanisms "
+        f"({', '.join(open_blockers)}) remain open; no causal claim that the "
+        "correlation pattern is a physics effect rather than an analysis artifact is authorised."
+    )
+    return {
+        "status": "DIAGNOSTIC_ONLY",
+        "open_blockers": open_blockers,
+        "fields": {
+            "sampleI_d_fraction": d_frac_I,
+            "sampleII_d_fraction": d_frac_II,
+            "sampleI_mean_stop_layer": mean_stop_I,
+            "sampleII_mean_stop_layer": mean_stop_II,
+            "sampleI_pearson_r": r_I,
+            "sampleII_pearson_r": r_II,
+        },
+        "prose": prose,
+        "causal_claim_authorised": False,
+    }
+
+
 def main(argv: list[str] | None = None) -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--mc-dir", required=True)
@@ -336,17 +385,29 @@ def main(argv: list[str] | None = None) -> None:
         f"excluding B2 amplitudes above the saturation ceiling."
     )
 
-    # ── ΔE-E explanation ─────────────────────────────────────────────────────
-    deltaE_E_note = (
-        "The MC ΔE-E Pearson r for Sample I is low (r≈0.07) because it requires hits "
-        "in BOTH layer 0 (B2) AND layer 1 (B4). In Sample I, 73.5% of B-entry particles "
-        "are deuterons, which stop at mean layer 0.8 — most never reach layer 1. "
-        "The subset that reaches both layers is a narrow punch-through population "
-        "(high-energy deuterons and protons), whose EDep in B2 is near minimum-ionizing "
-        "and uncorrelated with B4 EDep. For Sample II, the proton-dominated sample has "
-        "mean stop layer 4.3, with many through-going particles in both layers 0 and 1, "
-        "giving a sensible r≈0.50. This is a physics effect, not an analysis artifact."
-    )
+    # ── ΔE-E explanation (derived from outputs; no hard-coded physics prose) ─
+    stop_I = None
+    stop_II = None
+    r_I = None
+    r_II = None
+    if "stopping_depth" in mc["samples"]["I"]:
+        stop_I = mc["samples"]["I"]["stopping_depth"].get("mean_stop_layer")
+    if "stopping_depth" in mc["samples"]["II"]:
+        stop_II = mc["samples"]["II"]["stopping_depth"].get("mean_stop_layer")
+    if "deltaE_E" in mc["samples"]["I"]:
+        r_I = mc["samples"]["I"]["deltaE_E"].get("pearson_r")
+    if "deltaE_E" in mc["samples"]["II"]:
+        r_II = mc["samples"]["II"]["deltaE_E"].get("pearson_r")
+    deltaE_E_narrative = _build_deltaE_E_narrative({
+        "sampleI_d_fraction": mc["samples"]["I"]["B_layers"][0]["pid_fraction"].get("d", 0.0),
+        "sampleII_d_fraction": mc["samples"]["II"]["B_layers"][0]["pid_fraction"].get("d", 0.0),
+        "sampleI_mean_stop_layer": stop_I,
+        "sampleII_mean_stop_layer": stop_II,
+        "sampleI_pearson_r": r_I,
+        "sampleII_pearson_r": r_II,
+        "open_blockers": ["#956", "#1002"],
+    })
+    deltaE_E_note = deltaE_E_narrative["prose"]
 
     # ── Build comprehensive comparison dict ──────────────────────────────────
     comp = {
@@ -387,6 +448,7 @@ def main(argv: list[str] | None = None) -> None:
         "saturation_warning": saturation_warning,
         "counterfactual_no_trigger_mimicry": counterfactual,
         "deltaE_E_correlation_note": deltaE_E_note,
+        "deltaE_E_narrative": deltaE_E_narrative,
         "depth_profile": {
             "DATA_sampleI": da["per_sample"]["I"]["depth_fraction"],
             "DATA_sampleII": da["per_sample"]["II"]["depth_fraction"],

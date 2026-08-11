@@ -29,7 +29,7 @@ def _first_local_peak_selection(
     The selection rule intentionally preserves the existing #1059 reduced
     model: choose the first interior local maximum above
     ``min_prominence_frac * global_max`` and fall back to the global maximum
-    if no such interior peak exists.  Returning the peak index as well as its
+    if no such interior peak exists. Returning the peak index as well as its
     amplitude lets the CFD crossing be bound to the same pulse component
     rather than scanning an earlier, rejected bump against the selected
     component's threshold.
@@ -98,16 +98,16 @@ def cfd_time_samples(
 ):
     """Linear-interpolated constant-fraction crossing times in sample units.
 
-    Left-censored crossings (sample 0 already at/above threshold) are reported
-    as ``NO_CROSSING_IN_WINDOW`` with time ``nan`` (#1060). They are never
-    coerced to ``t=0``.
+    Left-censored crossings are reported as ``NO_CROSSING_IN_WINDOW`` with
+    time ``nan`` (#1060); they are never coerced to ``t=0``.
 
-    For ``first_local_peak`` the threshold and crossing are now bound to the
-    same selected pulse component (#1059): starting from that peak, the
-    algorithm uses the nearest earlier below-threshold sample and interpolates
-    the following bracket.  This prevents an earlier rejected bump from being
-    timed merely because it exceeds a fraction of the selected peak height.
-    ``global_max`` retains the historical first-crossing semantics.
+    For ``first_local_peak`` the threshold and crossing are bound to the same
+    selected pulse component (#1059): starting from that peak, the algorithm
+    uses the nearest earlier below-threshold sample and interpolates the
+    following bracket. Earlier above-threshold activity does not itself imply
+    left-censoring if the waveform subsequently drops below threshold before
+    the selected peak. ``global_max`` retains the historical first-crossing
+    semantics.
     """
     wave = np.asarray(waveforms, dtype=float)
     if wave.ndim != 2:
@@ -141,12 +141,11 @@ def cfd_time_samples(
             if peak_index < 0:
                 statuses[i] = INVALID_AMPLITUDE
                 continue
-            if y[0] >= thr:
-                statuses[i] = NO_CROSSING_IN_WINDOW
-                continue
             # Bind the crossing to the selected component: among samples before
-            # its peak, take the last point below threshold.  The following
+            # its peak, take the last point below threshold. The following
             # sample is therefore the rising bracket nearest that selected peak.
+            # If no such below-threshold sample exists, the selected component's
+            # threshold crossing is genuinely left-censored by the window.
             below = np.flatnonzero(y[:peak_index] < thr)
             if below.size == 0:
                 statuses[i] = NO_CROSSING_IN_WINDOW
@@ -167,7 +166,7 @@ def cfd_time_samples(
             continue
 
         # Historical global-max semantics: first threshold crossing anywhere in
-        # the waveform.  This is intentionally retained as a separate explicit
+        # the waveform. This is intentionally retained as a separate explicit
         # estimator rather than silently redefining it.
         if y[0] >= thr:
             statuses[i] = NO_CROSSING_IN_WINDOW

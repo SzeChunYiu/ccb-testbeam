@@ -6,9 +6,9 @@ Selected atom: `ARU-TIMING-CFD-COMPONENT-CROSSING-BINDING-001`, child of #1059 a
 
 ### Live repository state
 
-Protected testbeam `main` inspected at `ed1cea48e3b68bad8c30b7970cb2355cef94d02d`, the merge of Lane05 Wave-A PR #1239. That merge changed the canonical CFD default in production timing toward `first_local_peak`, but #1059 is still open and its real-data/mechanism acceptance criteria remain unmet.
+The atom was selected from protected `main@ed1cea48e3b68bad8c30b7970cb2355cef94d02d`, the merge of Lane05 Wave-A PR #1239. During this review, main advanced independently to `f350ad9ed824fff7c5cd9500d7c592f6a287fb21` via optical PR #1246. Draft PR #1250 incorporated that exact main without force-push by moving the audit branch forward to GitHub-signed merge commit `0fe20aab80932783c1bf945a4b01e393602dc0e6`; its parents are current-main `f350ad9...` and audit head `982899c...`.
 
-Draft PR #1250 is based on that exact main and carries the bounded estimator repair plus archive/coordination. Do not mark it ready or merge until every required exact-final-head CI context is green; use an expected-head guard if it reaches merge readiness.
+#1059 remains open and its real-data/mechanism acceptance criteria remain unmet. Do not mark #1250 ready or merge until every required protected context on its exact final head is green; use an expected-head guard if it reaches merge readiness.
 
 ### Atomic contract
 
@@ -38,16 +38,18 @@ Adversarial fixture B forced a revision of the first repair draft:
 
 Sample 0 is above the selected peak's CFD20 threshold, but the waveform returns below threshold at sample 1 before the selected rise. The selected-component crossing is therefore observed at `t=1.4`; reusing the global sample-0 left-censor rule was rejected.
 
-### Implementation and tests
+### Implementation and executed tests
 
 Branch: `audit/cfd-component-bound-crossing`.
 
 - `scripts/digital_cfd.py`: internal peak selection now returns both amplitude and peak index; `first_local_peak` searches backward from that peak for the nearest below-threshold sample and interpolates the following bracket. Public amplitude helper and `global_max` semantics are retained.
 - `tests/test_cfd_component_binding.py`: five deterministic controls for rejected-bump binding, component-relative censoring recovery, clean single-pulse equivalence, genuine selected-component left-censoring, and global estimator non-regression.
+- Exact repository blob identities were re-established before isolated execution: source `4aa845e2cb41c96cf70f010f135758e8fb94f5ae`, tests `00a686df5a83690caabb51751bd8ace9d72d0c50`.
+- Environment: Python 3.13.5, NumPy 2.3.5, pytest 9.0.2, Linux 6.18.35 x86_64. Focused exact-blob command `python -m pytest -q /tmp/ccb_exact/tests/test_cfd_component_binding.py` returned `5 passed in 0.07s`.
 - Stable concern `CCB-1059-COMPONENT-CROSSING-BINDING-001` added to existing #1059; no duplicate issue.
 - Immutable record: `chatgpt_todo/archive/2026-08-11T215500Z_ARU-TIMING-CFD-COMPONENT-CROSSING-BINDING-001.md`.
 
-No random seed is involved in these deterministic fixtures. They are algorithmic/software falsifiers, not detector measurements.
+No random seed is involved in these deterministic fixtures. The focused execution is a software/estimator oracle, not detector measurement or a substitute for protected CI.
 
 ### Four sequential AI reviews
 
@@ -55,7 +57,7 @@ No random seed is involved in these deterministic fixtures. They are algorithmic
 
 **Adversarial waveform reviewer — multipulse/noise/pile-up stress tests: first draft REVISE; corrected draft ACCEPT bounded semantics conditional on CI.** Fixture B falsified global sample-0 censoring in a component-bound estimator. Overlap without a below-threshold valley remains unresolved.
 
-**Independent validation reviewer — estimator identifiability and held-out validation: ACCEPT deterministic oracle / BLOCK timing-resolution inference.** Synthetic fixtures test exact software semantics only; they do not establish component-assignment accuracy or run/stave transfer on CCB data.
+**Independent validation reviewer — estimator identifiability and held-out validation: ACCEPT exact-blob deterministic oracle / BLOCK timing-resolution inference.** Five exact-blob tests passed, but synthetic fixtures do not establish component-assignment accuracy or run/stave transfer on CCB data.
 
 **Claims/provenance reviewer — traceability and claim-ledger governance: ACCEPT bounded repair / BLOCK #1059 completion and timing-claim promotion.** The parent still requires real-data fraction/component transition decomposition, stable-component validation and ambiguous-pulse governance.
 

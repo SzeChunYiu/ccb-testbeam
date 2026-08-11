@@ -1,65 +1,71 @@
 # Latest Handoff
 
-## Runtime impulse identity now binds the exact kernel consumed by waveform synthesis
+## Trigger/gain recovery separation exposed an independent correlated-noise recovery law
 
-Selected atom: `ARU-ELEC-IMPULSE-DIGEST-RUNTIME-BINDING-001`, child of P0 #1067. The predecessor canonicalization atom supplied deterministic SHA-256 functions for parsed sample payloads and effective kernels but left a provenance gap: metadata could in principle hash a separately reconstructed kernel rather than the exact numerical object used by convolution.
+Selected atom: `ARU-SIPM-RECOVERY-CORRELATED-NOISE-COUPLING-001`, child of #1066 and #1071.
 
-That gap is now repaired in `ccb-sipm-core` PR #12. Exact core base was `8ecf6037de9f14cc073f5ed99299a8e78a5fadb3`; exact final PR head was `e50ead854430a41c02bf40c1bf1db8955a9fe10a`; exact merged core main is `66cc250f837be5bd30f8bec9bd67b8ec9ca9e7ed`.
+### Live repository state
 
-### Contract
+Protected testbeam `main` advanced from `e25d59be37f59b8fddf7dd897295bcaa7bee14d0` to `d9992a48d86a34f03f18a1e4f9426c97f6cf399b` when PR #1235 integrated `ccb-sipm-core@692857bde0c1c6c2ed59aac5a56c94740da31354`. #1066 remains OPEN; this integration is PARTIAL and must not be interpreted as recovery-model validation.
 
-For validated waveform configuration,
+Core PR #13 exact head `c2b79d83642852b458299b181d50dd94b733bdb7` passed Core CI run `31533574607`; merged core main `692857b...` passed independent push Core CI run `31533753427`. Testbeam PR #1235 exact head `4cb06465c2aaf30b4319e43f003578b18c953d8c` passed MC Validation run `31534733706`, job `93923024769`: ruff clean and pytest `1642 passed, 2 skipped, 8 xfailed, 1 xpassed, 7 warnings in 124.43 s`. The merged testbeam commit `d9992a48...` then independently passed main-push MC Validation run `31535409449` / job `93925207048`, including checkout, curated ruff, unit tests, diagnostics upload, and enforcement. The testbeam workflow is Python/static and does not compile the C++ submodule; the upstream Core CI is the C++ execution evidence.
 
-`N_out = floor((window_end_ns-window_start_ns)/sample_dt_ns)+1`
+### Atomic contract
 
-`N_hist = ceil(max(0,window_start_ns-history_start_ns)/sample_dt_ns)`
+For a previously fired cell, the core forms
 
-`N_kernel = N_out + N_hist`.
+`r(dt)=1-exp(-dt/tau_recovery)`.
 
-A waveform-producing `ResponseSimulator` creates one private peak-normalised, history-complete kernel object `K`. Waveform convolution consumes `K` by const reference and `run_metadata()` hashes that same object with `CanonicalEffectiveKernelHash(sample_dt_ns,K)`. Caller-supplied effective-kernel hashes are overwritten. If waveform generation is disabled, no runtime waveform kernel is consumed and the field is empty.
+PR #13 made two accepted-parent response quantities explicit:
 
-The numerical waveform law remains `V_i=sum_a A_a h(t_i-t_a)` for causal `t_i>=t_a`, with the existing continuous fractional-delay interpolation. This change is object/provenance binding, not a new detector-response model.
+- `P_fire/P_full = F_trigger(r)`;
+- `Q/Q_full = F_gain(r)`.
 
-Positive global scaling of a sampled source is intentionally collapsed after peak normalisation when it yields the same effective kernel; that source can still have a different source/sample identity. Shape, sampling interval and exact history-complete support length remain effective-identity variables.
+Current selectors are `trigger_recovery_model=EXPONENTIAL`, `gain_recovery_model=EXPONENTIAL_H1_SHARED`, and gain alternative `FULL_RECOVERY`.
 
-### Exact execution
+The cross-atom contradiction is that correlated-noise generation from the accepted parent avalanche is still anonymous and hard-wired to raw `r`:
 
-New C++ discriminator `tests/test_impulse_runtime_binding.cc` uses fixed run seed `0x72756e74696d65`; DCR, crosstalk, afterpulsing and electronics noise are disabled, PDE=1, gain=1 pe with zero spread, and SPTR=0. Controls bind known canonical hashes to exact unit-response waveform samples for `{0,1,0}` and history-extended `{0,1,0,0}`, inject a forged caller digest, collapse a positive global amplitude scale, detect a shape mutation, and require empty effective identity in no-waveform mode.
+- prompt crosstalk `N ~ Poisson((-ln(1-p_prompt))*r)`;
+- delayed crosstalk Bernoulli(`p_delayed*r`);
+- fast/slow afterpulse scheduling Bernoulli(`p_after*r`).
 
-The first exact-head CI run `31530401219` / job `93908776119` exposed two stale predecessor oracles that still required an empty effective-kernel digest. The new runtime-binding test itself passed. Those older tests were repaired to distinguish **numerical runtime identity** from **measured-calibration authority**: an unbound sampled response can and should have an exact effective numerical hash while remaining `CUSTOM_UNVALIDATED` with no source-byte digest.
+The scheduled child is later subjected to its own target/same-cell recovery gate. Parent secondary generation and child triggering are therefore separate physical state transitions.
 
-Final exact-head Core CI `31530628915` / job `93909520107` used Ubuntu 24.04 / GCC 13.3.0 and passed configure, build and all seven CTest targets (`7/7`, `0` failed, 0.25 s). PR #12 was then squash-merged with expected-head guard as `66cc250f...`. A local clone/build attempt was not evidence because the execution container could not resolve `github.com`; no local PASS is claimed.
+At `dt=tau`, `r=0.6321205588285577`. With `gain_recovery_model=FULL_RECOVERY`, the modeled accepted parent has full gain while secondary generation remains at 63.212% of the fully recovered nominal multiplier. For the representative uncalibrated profile, prompt `p=0.03` gives `lambda=0.030459207484708546` and current `lambda*r=0.01925389125670895`; fast/slow afterpulse scheduling becomes `0.006321205588285576` / `0.003160602794142788`. These are simulator-law calculations, not CCB measurements.
 
-### Four sequential AI reviews
+### Equivalence and mechanism review
 
-**Electronics/calibration lead — ACCEPT bounded runtime-object binding / REVISE measured calibration.** Same-object hashing removes metadata/convolution drift, but no real CCB impulse source bytes or calibration observables are bound.
+The crucial identifiability result is that raw-recharge coupling `C=r` and parent-gain coupling `C=g` collapse to the same observable model under default `EXPONENTIAL_H1_SHARED`, because `g=r`. Existing H1-only tests therefore cannot validate which correlated-noise coupling is intended. `FULL_RECOVERY` (`g=1`) breaks that degeneracy.
 
-**Adversarial provenance reviewer — ACCEPT fail-closed binding / REJECT caller-hash authority.** A SHA-looking caller string is not content provenance; the hostile control verifies it is overwritten by the exact runtime object's digest.
+Surviving hypotheses are: named legacy `C=r`; gain/charge-coupled parent generation; mechanism-specific prompt/delayed/afterpulse recovery surfaces; and an explicit `C=1` negative-control family with child recovery retained downstream. No physical winner is selected without actual secondary-pulse delay×amplitude calibration at the relevant device, overvoltage and temperature.
 
-**Independent validation reviewer — ACCEPT deterministic C++ oracle / BLOCK detector inference.** The final exact-head C++ suite is green after preserving and resolving the initial oracle contradiction. No detector sample or production MC participated.
+Hamamatsu guidance and primary Hamamatsu-SiPM correlated-noise studies motivate keeping avalanche amplitude, delay, crosstalk and afterpulse observables explicit; they do not authorize a CCB-specific `C=r` or `C=g` law from manufacturer defaults.
 
-**Claims/provenance reviewer — ACCEPT bounded provenance advance / BLOCK #1067 completion and measured-electronics/public claims.** An exact hash can identify a synthetic kernel perfectly; it cannot prove the kernel is a measured/calibrated electronics response.
+### Repository actions
 
-### Testbeam integration and governance
+- Added stable concern `CCB-1071-RECOVERY-COUPLING-001` to existing #1071 instead of creating a duplicate issue.
+- Added cross-atom partial-completion evidence and four-role review to #1066; issue remains OPEN.
+- Reframed PR #1235 before integration as `fix(sipm): integrate partial trigger/gain recovery separation (#1066)` with exact upstream/testbeam CI and claim boundary.
+- PR #1235 merged as testbeam main `d9992a48d86a34f03f18a1e4f9426c97f6cf399b`; post-merge MC Validation run `31535409449` / job `93925207048` completed successfully.
+- Coordination-only draft PR #1236 carries this archive and refreshed active/handoff state; merge only after its final exact-head protected CI passes.
+- Immutable record: `chatgpt_todo/archive/2026-08-11T205700Z_ARU-SIPM-RECOVERY-CORRELATED-NOISE-COUPLING-001.md`.
 
-Protected testbeam main at selection was `594bea0807e53d5f3e55a2b2e29bd85f82aa1f3e`; its SiPM gitlink was still `f0258f5020ba9c8b6b44b284bfcafaeb27528a2c`. Fresh branch `audit/impulse-runtime-binding-integration` was created from that exact main and advances only the gitlink to descendant core `66cc250f...` before coordination updates. Protected testbeam CI and final current-main ancestry are still required before integration can merge.
+### Four sequential AI votes
 
-Existing draft #1233 integrates only predecessor canonicalization (`8ecf6037...`) from stale base `cf3106...`; do not merge it over the new descendant path. Close it as superseded once the descendant testbeam PR is established.
+**SiPM/device lead — ACCEPT bounded trigger/gain refactor / REVISE physical recovery model.** Exact code separates trigger/gain but leaves correlated-noise generation coupled to raw `r`. Actual CCB delay×amplitude calibration is absent.
 
-P0 #1067 was found auto-closed again after current-main #1087 carried historical squash-message text `fixes #1067`, despite explicit PARTIAL state and unresolved children. This session reopened #1067 and added the recurrence to open governance #1218 as a second live regression witness. Issue closure remains an administrative/platform state, not a sufficient scientific completion predicate.
+**Adversarial mechanism reviewer — BLOCK implicit coupling.** `C=r` and `C=g` are only indistinguishable under H1; `FULL_RECOVERY` produces a 36.8% separation at `dt=tau`.
 
-### Surviving children / blockers
+**Independent statistics/validation reviewer — ACCEPT software/source diagnosis / BLOCK detector inference.** Green H1 tests cannot discriminate collapsed parameterizations; held-out two-pulse/secondary-pulse data are required for physical model selection.
 
-- `ARU-ELEC-IMPULSE-SOURCE-BYTE-BINDING-001`: exact external calibration bytes, byte digest, parser/version/locale grammar, bytes→sample closure and canonical sample identity.
-- `ARU-ELEC-IMPULSE-CALIBRATION-CLOSURE-001`: physical units, polarity, baseline, time-zero, normalisation, bandwidth and resampling closure against a real CCB calibration object.
-- typed positive `CUSTOM_UNVALIDATED -> MEASURED` promotion only after source, runtime and calibration gates pass.
-- `ARU-ELEC-IMPULSE-HISTORICAL-OUTPUT-AUDIT-001` for outputs produced under older unbound provenance semantics.
-- `ARU-SIPM-HISTORY-HORIZON-CONVERGENCE-001` under #1096 remains independent: runtime binding is complete only relative to the declared history interval, not proof that the declared history is physically sufficient.
+**Claims/provenance reviewer — BLOCK #1066/#1071 completion and saturation/pile-up/late-component promotion.** The representative profile is explicitly not a CCB calibration, and downstream physics studies have not been re-evaluated over the surviving model family.
 
-Detailed immutable record: `chatgpt_todo/archive/2026-08-11T200100Z_ARU-ELEC-IMPULSE-DIGEST-RUNTIME-BINDING-001.md`.
+### Child atoms / next work
 
-### Next highest-value atom
+Highest-value next atom: `ARU-SIPM-CORRELATED-NOISE-GENERATION-MODEL-001`. Make the currently hidden parent-generation recovery law explicit and serializable per mechanism, retain raw-`r` as a named legacy hypothesis, add `C=1` and gain-coupled test hypotheses where appropriate, and construct paired fixed-seed controls that break the H1 degeneracy. This is a software-model interface atom; it must not choose detector truth in the absence of calibration.
 
-After descendant testbeam integration passes protected CI and lands, take `ARU-ELEC-IMPULSE-SOURCE-BYTE-BINDING-001`. Treat external bytes, parsed numerical samples and effective runtime kernel as three different objects. Bind exact source bytes and parser behavior to the sample digest with malformed/ambiguous-input controls. If an immutable real CCB impulse calibration artifact is unavailable, record that dependency blocker and keep positive `MEASURED` authorization closed rather than substituting a synthetic fixture.
+Physical child: `ARU-SIPM-CORRELATED-NOISE-TWO-PULSE-CALIBRATION-001`, requiring source-bound secondary-pulse delay×amplitude data and held-out validation at the actual device operating point.
 
-No beam data, production Geant4/MC population, measured CCB impulse, calibrated DCR, DATA/MC comparison, detector timing/baseline/pile-up/PID, rate, efficiency, ESS or p-value was generated or promoted by this atom.
+Other independent dependencies remain: `ARU-SIPM-RECOVERY-DISTINCT-TAU-001` because trigger/gain selectors still consume one shared raw `r`/`tau`; #1072 operating-point response surfaces; #1096 physical history-horizon convergence; #1067 measured-impulse source/calibration authorization.
+
+No beam data, production Geant4 sample, detector calibration, pile-up efficiency, saturation closure, timing/PID result, rate, ESS, p-value or public detector-performance quantity was generated or promoted.

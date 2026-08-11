@@ -57,6 +57,7 @@ jobs:
             tools/audit/geant4_toolchain_attestation.py \
             tools/audit/geant4_tool_probe_binding.py \
             tools/audit/geant4_runtime_dependency_attestation.py \
+            tools/audit/geant4_elf_link_attestation.py \
             tests/test_compare_single_stave_mt_reproducibility.py \
             tests/test_compare_single_stave_photon_trees.py \
             tests/test_analyze_single_stave_multiseed_rng.py \
@@ -70,6 +71,7 @@ jobs:
             tests/test_geant4_toolchain_attestation.py \
             tests/test_geant4_tool_probe_binding.py \
             tests/test_geant4_runtime_dependency_attestation.py \
+            tests/test_geant4_elf_link_attestation.py \
             2>&1 | tee ruff.log
           echo "status=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
       - name: Run unit tests

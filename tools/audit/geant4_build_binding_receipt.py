@@ -25,8 +25,9 @@ import hashlib
 import json
 import os
 import stat
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 from tools.audit.validate_geant4_external_overlay import validate_external_overlay
 

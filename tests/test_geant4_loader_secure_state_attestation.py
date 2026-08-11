@@ -94,9 +94,10 @@ def test_nonsecure_state_marks_loader_env_eligible_not_proven(tmp_path: Path) ->
     )
     assert result["status"] == "PASS"
     assert result["auxv"]["at_secure"] == 0
+    assert result["effective_loader_secure_state"] == "UNRESOLVED_KERNEL_AT_SECURE_ZERO"
     assert (
         result["loader_environment_semantics"]["LD_LIBRARY_PATH"]["interpretation"]
-        == "ELIGIBLE_SEARCH_INPUT_NOT_YET_PROVEN_EFFECTIVE"
+        == "UNRESOLVED_DO_NOT_USE_AS_LOADER_SEARCH_AUTHORITY_UNTIL_PRE_EXEC_STATE_IS_BOUND"
     )
 
 
@@ -108,6 +109,7 @@ def test_secure_state_blocks_loader_env_as_search_authority(tmp_path: Path) -> N
         proc_root=_proc(tmp_path, auxv=_nominal_auxv(1)),
     )
     assert result["auxv"]["at_secure"] == 1
+    assert result["effective_loader_secure_state"] == "SECURE_CONFIRMED_BY_KERNEL_AT_SECURE"
     assert "DO_NOT_USE_AS_LOADER_SEARCH_AUTHORITY" in result[
         "loader_environment_semantics"
     ]["LD_LIBRARY_PATH"]["interpretation"]
@@ -186,14 +188,17 @@ def test_process_identity_mismatch_fails(tmp_path: Path) -> None:
         )
 
 
-def test_glibc_enable_secure_tunable_with_at_secure_zero_blocks(tmp_path: Path) -> None:
+def test_post_start_tunable_observation_cannot_upgrade_at_secure_zero(tmp_path: Path) -> None:
     runtime = _runtime(tunables="glibc.rtld.enable_secure=1")
-    with pytest.raises(ValueError, match="glibc-version-specific"):
-        loader.attest_loader_secure_state(
-            runtime_receipt=runtime,
-            coobservation_receipt=_coobs(runtime),
-            proc_root=_proc(tmp_path, auxv=_nominal_auxv(0)),
-        )
+    result = loader.attest_loader_secure_state(
+        runtime_receipt=runtime,
+        coobservation_receipt=_coobs(runtime),
+        proc_root=_proc(tmp_path, auxv=_nominal_auxv(0)),
+    )
+    assert result["effective_loader_secure_state"] == "UNRESOLVED_KERNEL_AT_SECURE_ZERO"
+    assert "UNRESOLVED" in result["loader_environment_semantics"]["LD_LIBRARY_PATH"][
+        "interpretation"
+    ]
 
 
 def test_at_null_must_terminate_auxv(tmp_path: Path) -> None:

@@ -94,6 +94,7 @@ def build_tables(n_per_run: int, seed: int) -> tuple[pd.DataFrame, pd.DataFrame]
                 "sample": sample,
                 "trigger_definition": "beam_coincidence_v1",
             })
+            # Unit PrimaryWeight by default; unequal-weight tests override (#1022).
             mc_rows.append({
                 "source_file_id": SOURCE_FILE_ID,
                 "run_id": run,
@@ -101,6 +102,7 @@ def build_tables(n_per_run: int, seed: int) -> tuple[pd.DataFrame, pd.DataFrame]
                 "edep_B2": edep_b2,
                 "edep_B4": edeps["B4"], "edep_B6": edeps["B6"], "edep_B8": edeps["B8"],
                 "edep_B10": edeps["B10"], "edep_B12": edeps["B12"],
+                "PrimaryWeight": 1.0,
                 "sample": sample,
                 "trigger_definition": "beam_coincidence_v1",
             })

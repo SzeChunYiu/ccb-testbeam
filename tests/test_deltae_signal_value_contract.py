@@ -49,6 +49,8 @@ def _mc(**updates):
         "edep_B6": 0.2,
         "edep_B8": 0.1,
         "edep_B10": 0.05,
+        # Unit PrimaryWeight required by ΔE–E MC weight contract (#880/#1022).
+        "PrimaryWeight": 1.0,
     }
     row.update(updates)
     return pd.DataFrame([row])

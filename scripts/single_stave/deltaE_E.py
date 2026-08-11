@@ -193,6 +193,7 @@ def prepare_mc_side(raw: pd.DataFrame) -> pd.DataFrame:
     missing = [column for column in REQUIRED_MC if column not in raw.columns]
     if missing:
         raise SystemExit(f"MC table missing required columns: {missing}")
+    resolve_mc_weight_column(raw)
     validate_event_keys(raw, "MC")
     validated = _coerce_present_finite_signals(
         raw,
@@ -200,7 +201,8 @@ def prepare_mc_side(raw: pd.DataFrame) -> pd.DataFrame:
         table_name="MC",
     )
     mc = fill_missing_layers(validated, FILLABLE_MC_LAYERS)
-    return derive_mc_columns(mc)
+    mc = derive_mc_columns(mc)
+    return attach_mc_weights(mc)
 
 
 def _event_table_output_contract() -> dict[str, str]:

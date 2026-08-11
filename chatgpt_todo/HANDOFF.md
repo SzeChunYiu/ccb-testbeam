@@ -28,7 +28,7 @@ Composed core PR #7 exact head `0b18bc08c9e077eebe3e20c8bfd5005085de09f3` passed
 
 Testbeam PR #1228 exact head `1eeca19ef51ecc63cfb2a7d3935f6cacce436b59` passed both exact-head protected contexts before merge: push MC Validation `31523046059` / job `93884607919` and pull-request MC Validation `31523087756` / job `93884744722`. Both completed checkout, package setup, ruff, unit tests, diagnostics upload and enforcement successfully. PR #1228 then squash-merged with expected-head guard as protected `main@a00dd8a80510b52380a76dd8fe7a5d4556b1c846`. Commit inspection confirms the gitlink transition `5c6bb027... -> e71fd26c...`, so the temporary live-main history regression is repaired on remote main.
 
-Main-push testbeam MC Validation run `31523505058` was triggered for exact merged commit `a00dd8a...`. It is supplementary evidence; consume its final state before citing it as a post-merge PASS if it is not yet final when this handoff lands.
+Exact merged-main testbeam MC Validation run `31523505058`, job `93886095185`, then completed SUCCESS on `a00dd8a...`: checkout, setup, package install, ruff, unit tests, diagnostics upload, and enforcement all passed.
 
 The immutable detailed record is `chatgpt_todo/archive/2026-08-11T182700Z_ARU-SIPM-KERNEL-MEASURED-COMPOSITION-001.md`.
 

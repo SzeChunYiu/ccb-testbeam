@@ -287,7 +287,7 @@ def main() -> int:
     record_p = sub.add_parser("record", help="write exec-boundary cwd record")
     record_p.add_argument("--receipt-out", type=Path, required=True)
     record_p.add_argument("--proc-root", type=Path, default=Path("/proc"))
-    record_p.add_argument("--command", nargs=argparse.REMAINDER, default=[])
+    record_p.add_argument("--command", dest="exec_argv", nargs=argparse.REMAINDER, default=[])
 
     attest_p = sub.add_parser("attest", help="compose record with runtime receipt")
     attest_p.add_argument("--runtime-receipt-json", type=Path, required=True)
@@ -310,8 +310,8 @@ def main() -> int:
             print(json.dumps({"status": "BLOCKED", "error": str(exc)}, sort_keys=True))
             return 2
         print(json.dumps(record, indent=2, sort_keys=True))
-        if args.command:
-            argv = list(args.command)
+        if args.exec_argv:
+            argv = list(args.exec_argv)
             if argv:
                 os.execv(argv[0], argv)
         return 0

@@ -1,1 +1,0 @@
-/sw/easybuild_milan/software/GCCcore/12.3.0/bin/c++ CMakeFiles/ccb_sipm_tests.dir/tests/test_core.cc.o -o ccb_sipm_tests  libccb_sipm_core.a

@@ -244,9 +244,20 @@ def rmax_table() -> pd.DataFrame:
     return pd.DataFrame(out)
 
 
-def selected_pulses(data: dict) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+def selected_pulses(data: dict) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """Return selected waveforms plus source identity keys (event, stave).
+
+    Identity is required so train/validation splits can be assigned at the
+    physical-source level before injection descendants are created (#1117).
+    """
     event_idx, stave_idx = np.where(data["selected"])
-    return data["waveforms"][event_idx, stave_idx], data["amp"][event_idx, stave_idx], data["peak"][event_idx, stave_idx]
+    return (
+        data["waveforms"][event_idx, stave_idx],
+        data["amp"][event_idx, stave_idx],
+        data["peak"][event_idx, stave_idx],
+        event_idx.astype(int),
+        stave_idx.astype(int),
+    )
 
 
 def pulse_shape_features(waveforms: np.ndarray, amp: np.ndarray) -> pd.DataFrame:
@@ -297,7 +308,7 @@ def tau_handle(runs: dict[int, dict]) -> pd.DataFrame:
     rows = []
     for group, info in RUN_GROUPS.items():
         data = combine_runs(info["runs"], runs)
-        wave, amp, _peak = selected_pulses(data)
+        wave, amp, _peak, _e, _s = selected_pulses(data)
         for frac in [0.10, 0.20]:
             width_ns = contiguous_width_samples(wave, amp, frac) * 10.0
             rows.append(
@@ -317,9 +328,28 @@ def tau_handle(runs: dict[int, dict]) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
-def inject_pileup(clean_waveforms: np.ndarray, clean_amp: np.ndarray, n: int) -> tuple[np.ndarray, np.ndarray]:
+def inject_pileup(
+    clean_waveforms: np.ndarray,
+    clean_amp: np.ndarray,
+    n: int,
+    *,
+    source_ids: np.ndarray | None = None,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Build clean/injected descendants with explicit source-identity provenance.
+
+    This remains a *post-digitization diagnostic waveform-addition proxy*
+    (ARU-S10-PILEUP-INJECTION-001 / #1116). It is intentionally labelled as a
+    non-physical electronics-sum benchmark until a detector-state-aware
+    two-arrival response exists. Secondary waveforms are drawn from the same
+    pooled library without claiming same-channel analog fidelity.
+
+    Returns ``(clean_base, injected, primary_source_id)``.
+    """
     if len(clean_waveforms) < 2:
         raise ValueError("need at least two clean pulses for injection")
+    if source_ids is None:
+        source_ids = np.arange(len(clean_waveforms), dtype=int)
+    source_ids = np.asarray(source_ids)
     primary_idx = RNG.integers(0, len(clean_waveforms), size=n)
     secondary_idx = RNG.integers(0, len(clean_waveforms), size=n)
     delays = RNG.integers(2, 10, size=n)
@@ -331,7 +361,7 @@ def inject_pileup(clean_waveforms: np.ndarray, clean_amp: np.ndarray, n: int) ->
     injected = primary.copy()
     for i, delay in enumerate(delays):
         injected[i, delay:] += secondary[i, : NSAMPLES - delay]
-    return primary, injected
+    return primary, injected, source_ids[primary_idx].astype(int)
 
 
 def ml_pileup_model(runs: dict[int, dict]) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
@@ -355,22 +385,36 @@ def ml_pileup_model(runs: dict[int, dict]) -> tuple[pd.DataFrame, pd.DataFrame, 
 
     for group, info in RUN_GROUPS.items():
         data = combine_runs(info["runs"], runs)
-        wave, amp, peak = selected_pulses(data)
+        wave, amp, peak, event_idx, stave_idx = selected_pulses(data)
         clean = (amp > 1500) & (amp < 6500) & (peak >= 4) & (peak <= 12)
         clean_wave = wave[clean]
         clean_amp = amp[clean]
+        # Physical source identity for split assignment (#1117): (event, stave).
+        clean_source = (
+            event_idx[clean].astype(np.int64) * 1000 + stave_idx[clean].astype(np.int64)
+        )
         n_inject = min(3000, len(clean_wave))
         if n_inject < 100:
             continue
-        clean_base, injected = inject_pileup(clean_wave, clean_amp, n_inject)
+        clean_base, injected, primary_source = inject_pileup(
+            clean_wave, clean_amp, n_inject, source_ids=clean_source
+        )
         x_clean = pulse_shape_features(clean_base, clean_base.max(axis=1))
         x_inj = pulse_shape_features(injected, injected.max(axis=1))
         x = pd.concat([x_clean, x_inj], ignore_index=True)[feature_cols]
         y = np.r_[np.zeros(len(x_clean), dtype=int), np.ones(len(x_inj), dtype=int)]
-        order = RNG.permutation(len(y))
+        # Both descendants of the same primary source inherit one split (#1117).
+        row_source = np.r_[primary_source, primary_source]
+        unique_sources = np.unique(row_source)
+        RNG.shuffle(unique_sources)
+        n_train_src = max(1, len(unique_sources) // 2)
+        train_sources = set(unique_sources[:n_train_src].tolist())
+        train_mask = np.array([s in train_sources for s in row_source], dtype=bool)
+        # Keep a contiguous train-then-test layout for downstream indexing.
+        order = np.r_[np.flatnonzero(train_mask), np.flatnonzero(~train_mask)]
         x = x.iloc[order].reset_index(drop=True)
         y = y[order]
-        split = len(y) // 2
+        split = int(train_mask.sum())
         scaler = StandardScaler().fit(x.iloc[:split])
         best_c = None
         best_ap = -np.inf
@@ -431,7 +475,7 @@ def ml_pileup_model(runs: dict[int, dict]) -> tuple[pd.DataFrame, pd.DataFrame, 
     scaler, clf = models["low_2nA"]
     for group, info in RUN_GROUPS.items():
         data = combine_runs(info["runs"], runs)
-        wave, amp, _peak = selected_pulses(data)
+        wave, amp, _peak, _e, _s = selected_pulses(data)
         feats = pulse_shape_features(wave, amp)
         score = clf.predict_proba(scaler.transform(feats[feature_cols]))[:, 1]
         trad_score = feats["late_fraction"].to_numpy() + 0.05 * feats["width_10_samples"].to_numpy()

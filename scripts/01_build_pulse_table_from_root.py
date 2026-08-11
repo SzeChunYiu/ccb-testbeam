@@ -173,14 +173,85 @@ def resolve_ml_bootstrap_reps(config: dict) -> int:
 def case_control_sampling_weight(
     selected_mask: np.ndarray, keep_selected: float, keep_rejected: float
 ) -> np.ndarray:
-    """Inverse-probability-of-inclusion weight for the case-control design.
+    """Inverse-probability-of-inclusion weight for Stage-1 case-control design.
 
-    Each kept row represents ``1 / p(class)`` population rows, so multiplying
-    any held-out evaluation by these weights restores population prevalence
-    (audit S00-002). ``selected_mask`` is the boolean label of the KEPT sample.
+    Each kept row represents ``1 / p1(class)`` population rows under Stage 1
+    alone (audit S00-002). When a Stage-2 per-class cap also binds, callers must
+    apply :func:`apply_two_stage_design_weights` so the final ``sampling_weight``
+    accounts for both inclusion stages (audit ARU-S00-ML-TWOSTAGE-SAMPLING-001 /
+    #1112). ``selected_mask`` is the boolean label of the KEPT sample.
     """
     sel = np.asarray(selected_mask, dtype=bool)
     return np.where(sel, 1.0 / float(keep_selected), 1.0 / float(keep_rejected))
+
+
+def apply_two_stage_design_weights(
+    ml_rows: "pd.DataFrame",
+    *,
+    max_sample: int,
+    random_seed: int,
+    keep_selected: float,
+    keep_rejected: float,
+) -> tuple["pd.DataFrame", dict]:
+    """Apply per-class Stage-2 caps and recompute two-stage design weights.
+
+    Stage 1 retention probabilities are ``keep_selected`` / ``keep_rejected``.
+    Conditional on the Stage-1 sample of size ``n1_c``, the uniform within-class
+    cap retains each row with ``p2_c = min(1, max_sample / n1_c)``. The design
+    weight that reconstructs the finite population is
+
+        w_c = 1 / (p1_c * p2_c).
+
+    Returns the capped frame plus a provenance dict of pre/post counts.
+    """
+    if ml_rows is None or len(ml_rows) == 0:
+        empty = ml_rows.copy() if ml_rows is not None else pd.DataFrame()
+        return empty, {
+            "max_sample_per_class": int(max_sample),
+            "stage1_counts": {},
+            "stage2_counts": {},
+            "p_cap_conditional": {},
+        }
+
+    capped_parts: list[pd.DataFrame] = []
+    stage1_counts: dict[str, int] = {}
+    stage2_counts: dict[str, int] = {}
+    p_cap: dict[str, float] = {}
+
+    for selected_value, subset in ml_rows.groupby("selected", sort=True):
+        key = str(int(selected_value))
+        n1 = int(len(subset))
+        n_keep = min(n1, int(max_sample))
+        p2 = 1.0 if n1 <= 0 else float(n_keep) / float(n1)
+        drawn = subset.sample(
+            n=n_keep,
+            random_state=int(random_seed) + int(selected_value),
+        ).copy()
+        p1 = float(keep_selected) if int(selected_value) == 1 else float(keep_rejected)
+        # Guard against numerical underflow; p2 is in (0, 1].
+        p2_safe = max(p2, 1e-15)
+        drawn["p_case_control"] = p1
+        drawn["p_cap_conditional"] = p2
+        drawn["pi_total"] = p1 * p2
+        drawn["design_weight"] = 1.0 / (p1 * p2_safe)
+        drawn["sampling_weight"] = drawn["design_weight"].to_numpy(dtype=float)
+        capped_parts.append(drawn)
+        stage1_counts[key] = n1
+        stage2_counts[key] = int(len(drawn))
+        p_cap[key] = float(p2)
+
+    out = pd.concat(capped_parts, ignore_index=True) if capped_parts else ml_rows.iloc[0:0].copy()
+    provenance = {
+        "max_sample_per_class": int(max_sample),
+        "stage1_counts": stage1_counts,
+        "stage2_counts": stage2_counts,
+        "p_cap_conditional": p_cap,
+        "keep_selected": float(keep_selected),
+        "keep_rejected": float(keep_rejected),
+        "weight_definition": "1/(p_case_control * p_cap_conditional)",
+        "estimand_label": "two_stage_design_weighted_population_diagnostic",
+    }
+    return out, provenance
 
 
 def make_run_event_clusters(runs: np.ndarray, eventnos: np.ndarray) -> np.ndarray:
@@ -503,16 +574,18 @@ def scan_raw(config: dict) -> Tuple[pd.DataFrame, pd.DataFrame, Dict[str, dict],
 
     selected = pd.concat(selected_frames, ignore_index=True) if selected_frames else pd.DataFrame()
     ml_rows = pd.concat(ml_frames, ignore_index=True) if ml_frames else pd.DataFrame()
-    capped = []
-    for selected_value, subset in ml_rows.groupby("selected"):
-        n = min(len(subset), max_sample)
-        capped.append(subset.sample(n=n, random_state=int(config["ml_check"]["random_seed"]) + int(selected_value)))
-    if capped:
-        ml_rows = pd.concat(capped, ignore_index=True)
+    ml_rows, two_stage_sampling = apply_two_stage_design_weights(
+        ml_rows,
+        max_sample=max_sample,
+        random_seed=int(config["ml_check"]["random_seed"]),
+        keep_selected=keep_selected,
+        keep_rejected=keep_rejected,
+    )
     population_prevalence = {
         "selected": int(pop_selected),
         "total": int(pop_total),
         "prevalence": float(pop_selected / pop_total) if pop_total else float("nan"),
+        "two_stage_sampling": two_stage_sampling,
     }
     return (
         pd.DataFrame(counts_by_run),

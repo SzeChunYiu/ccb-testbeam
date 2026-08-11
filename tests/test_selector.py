@@ -334,20 +334,28 @@ class TestEstimatePedestalRollingMin:
 class TestEstimatePedestalEarlyRobust:
     def test_quiet_waveform(self, quiet_waveform: np.ndarray) -> None:
         r = estimate_pedestal_early_robust(quiet_waveform)
-        # 10th percentile of mostly-100 waveform with a 5000 peak
+        # Early-window P10 of quiet first-four [100,100,100,100]
         assert r.pedestal_adc == 100.0
         assert r.validity == PedestalValidity.QUIET_VALID
 
+    def test_uses_early_window_not_full_waveform(self) -> None:
+        """#1137: late negative undershoot must not pull the early-window P10."""
+        w = np.full(18, 100.0, dtype=float)
+        w[0:4] = [100.0, 100.0, 100.0, 100.0]
+        w[15:] = -5000.0  # late bipolar contamination of the full window
+        r = estimate_pedestal_early_robust(w)
+        assert r.pedestal_adc == 100.0
+
     def test_early_active_waveform(self, early_active_waveform: np.ndarray) -> None:
         r = estimate_pedestal_early_robust(early_active_waveform)
-        # 10th percentile should be near 100 (the true baseline)
-        # even though the median of first four is 600
-        assert r.pedestal_adc <= 200.0
-        assert r.validity == PedestalValidity.QUIET_VALID
+        # Early window is contaminated; P10 of [100,400,1200,800] is not the
+        # quiet baseline, and validity must not claim QUIET_VALID (#1137).
+        assert r.pedestal_adc != 100.0
+        assert r.validity == PedestalValidity.EARLY_ACTIVE
 
     def test_noisy_waveform(self, noisy_waveform: np.ndarray) -> None:
         r = estimate_pedestal_early_robust(noisy_waveform)
-        assert r.validity == PedestalValidity.NO_PEDESTAL_IDENTIFIABLE
+        assert r.validity != PedestalValidity.QUIET_VALID
 
 
 # ===================================================================

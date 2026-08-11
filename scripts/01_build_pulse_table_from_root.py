@@ -22,6 +22,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import yaml
+import uproot
 
 from ccb_mc_validation.s00_selector_contract import (
     S00SelectorConfigError,
@@ -340,8 +341,6 @@ def resolve_analysis_polarity(n_channels: int, config: dict | None = None) -> tu
 
 
 def iter_raw_events(path: Path, step_size: int = 10000) -> Iterable[dict]:
-    import uproot
-
     tree = uproot.open(path)["h101"]
     branches = ["EVENTNO", "EVT", "HRDv"]
     yield from tree.iterate(branches, step_size=step_size, library="np")

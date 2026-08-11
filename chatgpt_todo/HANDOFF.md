@@ -1,32 +1,42 @@
 # Latest Handoff
 
-## Active atom: ELF link metadata composed with runtime mappings
+## Active atom: ELF link declarations composed with runtime mappings
 
-Protected `main@2db54689253ac993d2cf430ebc7ee7e8173ec7c7` was inspected after the validated #1204 runtime-mapping predecessor and #1205 handoff. `ARU-MC-G4-LINK-METADATA-001` is now **PARTIAL**: its mathematical/software contract and hostile fixtures have been executed locally, and the immutable review is committed on branch `audit/geant4-elf-link-metadata`, but the bounded implementation/test files could not be written through the connected GitHub tool because its safety classifier blocked both code-write methods as indeterminate. No PR CI pass or merge is claimed.
+Protected `main@2db54689253ac993d2cf430ebc7ee7e8173ec7c7` was inspected after validated #1204/#1205. `ARU-MC-G4-LINK-METADATA-001` has advanced from documentation-only PARTIAL to an **implemented draft PR**: the transient GitHub code-write block cleared, so existing PR #1206 now contains the bounded parser, hostile tests, curated ruff coverage, and continuation provenance record. It remains unmerged until fresh exact-head MC Validation succeeds.
 
-The local implementation parses the exact already-hashed ELF64 little-endian x86-64 bytes directly, records `PT_INTERP`, ordered `DT_NEEDED`, collapsed unique dependencies, `DT_SONAME`, `DT_RPATH`, `DT_RUNPATH`, and the dynamic string-table identity fields. It verifies parent final-build/runtime-receipt digests and executable identity, rebinds each runtime-mapped object's bytes to the predecessor receipt, parses content-identical ELF metadata, matches non-path direct dependencies by `DT_SONAME`, and matches absolute-path dependencies/interpreter by content identity. Relative dependency paths are blocked until runtime cwd provenance exists.
+The implementation parses exact already-content-bound ELF64 little-endian x86-64 bytes directly and records `PT_INTERP`, ordered `DT_NEEDED`, `DT_SONAME`, `DT_RPATH`, and `DT_RUNPATH`. It verifies final-build/runtime receipt digests and their parent relation, rebinds every currently named runtime object to the predecessor byte/inode identity, and then composes declarations with observed mappings. Non-path direct dependencies close only through exactly one parsed `DT_SONAME`; absolute-path dependencies and `PT_INTERP` close by byte identity. A dependency containing `/` but not rooted at `/` is blocked because the predecessor runtime receipt does not bind cwd.
 
-The mechanism intentionally does **not** equate mapped pathnames with `DT_NEEDED`: a dependency can be declared by SONAME while `/proc/<pid>/maps` shows a versioned implementation filename. It also does not reject extra mapped objects merely because the main executable did not declare them directly; they may be transitive dependencies, preloads, or later loads. RPATH and RUNPATH are retained separately and are not treated as proof of actual resolution.
+The mechanism deliberately keeps declaration, loader policy, and observation distinct. A `DT_NEEDED=libG4fixture.so.1` declaration can be satisfied by a mapped `libG4fixture.so.1.2.3` only if the mapped object's parsed SONAME is `libG4fixture.so.1`. Extra mapped executable objects are retained because they may be the main executable, transitive dependencies, preloads, or later loads. RPATH/RUNPATH text is recorded but is not treated as proof of the resolution path actually used.
 
 ### Executed deterministic evidence
 
-Local environment: Python 3.13.5 on Linux, no RNG. `PYTHONPATH=. python -m pytest -q tests/test_geant4_elf_link_attestation.py` returned `11 passed in 0.08s`; `python -m py_compile tools/audit/geant4_elf_link_attestation.py` passed. The direct parser also successfully measured interpreter and `DT_NEEDED` metadata from local `/bin/ls` and `/usr/bin/python3`. These checks validate only the parser/contract mechanics; no HIBEAM/Geant4 binary or event population was exercised.
+Local environment: Python 3.13.5 on Linux, no RNG. On the implementation now committed to #1206, `python -m pytest -q tests/test_geant4_elf_link_attestation.py` returned `11 passed in 0.07s`; `python -m py_compile tools/audit/geant4_elf_link_attestation.py tests/test_geant4_elf_link_attestation.py` passed. Earlier direct parser smokes on local `/bin/ls` and `/usr/bin/python3` recovered interpreter/direct-dependency metadata without external ELF tooling. These checks validate only parser/provenance mechanics; no HIBEAM or Geant4 event population was exercised.
 
-Hostile fixtures discriminate versioned pathname versus SONAME matching, RPATH/RUNPATH retention, duplicate declarations, malformed string offsets, post-runtime-receipt mapped-file mutation, wrong parent receipt, absent interpreter mapping, wrong SONAME, absolute versus relative path dependencies, and extra non-ELF executable mappings.
+Hostile fixtures discriminate versioned pathname versus SONAME matching, duplicate dependency declarations, malformed dynamic-string offsets, post-runtime-receipt mapped-object mutation, wrong parent receipt, absent interpreter mapping, wrong SONAME, absolute versus relative path dependencies, extra non-ELF executable mappings, and duplicate-SONAME ambiguity.
 
 ### Four sequential AI reviews
 
-- **Build/runtime physics lead — ACCEPT bounded static-link decomposition / REVISE run provenance.** Evidence: #1199/#1204 schemas plus System V ELF definitions. Strongest counter-hypothesis: observed mappings already identify declared linkage. Falsifier: extra mapped objects and versioned implementation paths separate these observables. Residual: no real immutable HIBEAM executable/runtime receipt.
-- **Adversarial systems reviewer — ACCEPT direct byte parser / BLOCK basename-only and external-tool authority.** Strongest counter-hypothesis: matching dependency basenames is enough. Falsifier: `DT_NEEDED=libG4fixture.so.1` against mapped `libG4fixture.so.1.2.3` closes only through `DT_SONAME`. Residual: post-runtime content rebind is not same-instant co-observation; late load/unload remains open.
-- **Independent validation reviewer — ACCEPT deterministic software oracle / BLOCK physics inference.** Eleven deterministic fixtures plus two real local ELF parser smokes passed; no Geant4 transport, source sample, detector response, or statistical estimator was exercised.
-- **Claims/provenance reviewer — ACCEPT provenance refinement / BLOCK CL-021 promotion.** Link metadata does not bind linker command/static archives, runtime RNG/thread/event/input/output state, compiled source/stopping hostile controls, mapped in-memory page contents, weights, or detector DATA/MC closure.
+- **Build/runtime physics lead — ACCEPT bounded static-link decomposition / REVISE run provenance.** Evidence: final-build/runtime schemas and ELF declarations. Strongest counter-hypothesis: runtime mappings alone identify declared linkage. Versioned implementation paths and extra mapped objects falsify that equivalence. Residual: no immutable real HIBEAM executable/runtime receipt exercised.
+- **Adversarial systems reviewer — ACCEPT parser mechanism / BLOCK broader authorisation.** Strongest counter-hypothesis: basename matching and one post-runtime pathname observation suffice. Wrong-SONAME, duplicate-SONAME, mutation, and relative-path controls falsify that. Residual: same-boundary link/runtime co-observation, late load/unload, loader-search state.
+- **Independent validation reviewer — ACCEPT deterministic software oracle / BLOCK physics inference.** Eleven deterministic tests and compile checks pass; no Geant4 transport/source/detector/statistical estimator is involved.
+- **Claims/provenance reviewer — ACCEPT provenance refinement / BLOCK CL-021 promotion.** Link metadata does not bind linker command/static archives, immutable compiler consumption, loader cache/config, runtime RNG/thread/event/input/output state, compiled source/stopping hostile controls, mapped-page contents, weights, or detector DATA/MC closure.
 
-## Repository state and next work
+## Repository state
 
-The immutable atom record is `chatgpt_todo/archive/2026-08-11T035000Z_ARU-MC-G4-LINK-METADATA-001.md` on branch commit `d49e34f0dbfb9e5f24e035b2a5740ed9950327a6`; `ACTIVE_TASK.md` was updated afterward. Parent #1182 should remain open. New children are `ARU-MC-G4-RUNTIME-LINK-COOBSERVATION-001`, `ARU-MC-G4-LINK-COMMAND-001`, and `ARU-MC-G4-LOADER-SEARCH-001`, alongside the existing late-`dlopen`, mapped-page, wrapper-chain, immutable-consumption, and runtime-manifest children.
+Draft PR #1206 now carries:
 
-The next session should first land the already-executed parser/tests if the code-write surface permits it, add them to curated ruff, run exact-head repository CI, and only then consider the atom software-validated. If the same write blocker persists, move to a different executable provenance child rather than marking completion.
+- `f293b4e01404cc2959c41578a658747347a52377` — `tools/audit/geant4_elf_link_attestation.py`
+- `e2081c8a3a5114967df6035c21e8036a3680226f` — hostile regression fixtures
+- `34035f10b192de727b3eaaccaaa9f1f7d68d5a31` — curated ruff inclusion
+- `b88e5627d3b049ddfcd9281c2d64aeca7eefac07` — continuation ARU record
+- subsequent coordination commits update this handoff/active state.
 
-A separate current-main hygiene defect is visible: the newest merge introduced many tracked Python 3.13 `__pycache__/*.pyc` artifacts. That requires its own solve-first provenance cleanup and should not be conflated with the ELF atom.
+The original archive `2026-08-11T035000Z_ARU-MC-G4-LINK-METADATA-001.md` must remain read as historical provenance: at that moment code writes were blocked. The continuation archive `2026-08-11T045000Z_ARU-MC-G4-LINK-METADATA-001-continuation.md` records that the block cleared and the implementation landed.
 
-No production Geant4 campaign, beam ROOT, production MC ROOT, angular distribution, event weight, B2/B8, PID, penetration, timing, calibration, pile-up, ESS, p-value, rate, or detector-performance result was regenerated or promoted. #1182, #1178, #1179, #1058, #1053/#880 and CL-021 remain open/gated.
+Parent #1182 remains open. Child universes are `ARU-MC-G4-RUNTIME-LINK-COOBSERVATION-001`, `ARU-MC-G4-LINK-COMMAND-001`, and `ARU-MC-G4-LOADER-SEARCH-001`, alongside late-`dlopen`, mapped-page, wrapper-chain, immutable-consumption, runtime-manifest, compiled source/stopping controls, and detector-response atoms.
+
+Fresh exact-head MC Validation is the immediate merge gate. If it passes, #1206 may be marked ready and squash-merged with the exact head SHA; then a coordination-only follow-up should record the validated main merge without pretending that ELF closure validates physics. If CI fails, fix only demonstrated defects and rerun; do not bypass it.
+
+A separate current-main provenance defect remains visible: tracked Python 3.13 `__pycache__/*.pyc` artifacts. Keep that as its own solve-first repository-hygiene atom rather than conflating it with Geant4 linkage.
+
+No production Geant4 campaign, beam ROOT, production-MC ROOT, angular distribution, event weight, B2/B8, PID, penetration, timing, calibration, pile-up, ESS, p-value, rate, or detector-performance result was regenerated or promoted. #1182, #1178, #1179, #1058, #1053/#880 and CL-021 remain gated.

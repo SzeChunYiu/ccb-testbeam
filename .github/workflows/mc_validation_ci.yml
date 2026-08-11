@@ -52,6 +52,7 @@ jobs:
             src/ccb_figures/figures/fig20_key_results.py \
             tools/audit/validate_gitlink_submodule_contract.py \
             tools/audit/validate_mc_ci_trigger_scope.py \
+            tools/audit/validate_pr_base_freshness.py \
             tools/audit/validate_geant4_external_overlay.py \
             tools/audit/geant4_build_binding_receipt.py \
             tools/audit/geant4_toolchain_attestation.py \
@@ -71,6 +72,7 @@ jobs:
             tests/test_fig20_no_quantitative_literals.py \
             tests/test_gitlink_submodule_contract.py \
             tests/test_mc_ci_trigger_scope.py \
+            tests/test_pr_base_freshness.py \
             tests/test_geant4_external_overlay.py \
             tests/test_geant4_build_binding_receipt.py \
             tests/test_geant4_toolchain_attestation.py \

@@ -21,8 +21,8 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import yaml
 import uproot
+import yaml
 
 from ccb_mc_validation.s00_selector_contract import (
     S00SelectorConfigError,

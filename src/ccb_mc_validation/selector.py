@@ -317,29 +317,38 @@ def estimate_pedestal_rolling_min(waveform: np.ndarray) -> PedestalResult:
 
 
 def estimate_pedestal_early_robust(waveform: np.ndarray) -> PedestalResult:
-    """Candidate: robust low-percentile pedestal over the early window.
+    """Candidate: robust low-percentile pedestal over the *early* window.
 
-    Uses the 10th-percentile of the full waveform as a baseline estimate,
-    tolerating a sparse early pulse without tracking the noise floor to the
-    extreme minimum. Declared validity domain: clean-to-moderately-contaminated
-    waveforms; flagged ``NO_PEDESTAL_IDENTIFIABLE`` when the waveform is too
-    noisy (spread comparable to the dynamic range).
+    Contract (ARU-S00-P10-PEDESTAL-001 / #1137):
+    - Estimation window is the first four samples (same indices as v1), **not**
+      the full acquisition window.
+    - Estimator is ``P10(early_window)``.
+    - Validity uses :func:`classify_pedestal_validity` so early-active /
+      recovery / bipolar contamination is not silently treated as a quiet
+      baseline. Translation equivariance alone does not identify an electronic
+      pedestal when the early window is pulse-dominated.
+
+    Historical bug: this function previously computed ``percentile(full_wave, 10)``
+    while advertising an early-window estimator.
     """
     wave = np.asarray(waveform, dtype=float)
-    pedestal = float(np.percentile(wave, 10))
-    dyn = float(np.max(wave) - np.min(wave))
-    if (
-        dyn > 0
-        and (np.percentile(wave, 90) - np.percentile(wave, 10)) / dyn > 0.9
-    ):
+    if wave.ndim != 1:
+        raise SelectorInputError("estimate_pedestal_early_robust expects a 1-D waveform")
+    if wave.size < 4:
+        raise SelectorInputError("estimate_pedestal_early_robust requires >= 4 samples")
+    early = wave[list(S00_SELECTOR_V1_BASELINE_INDICES)]
+    pedestal = float(np.percentile(early, 10))
+    validity = classify_pedestal_validity(wave, early, pedestal)
+    # Additional quiet-noise identifiability: if the early-window IQR spans most
+    # of the early dynamic range, the P10 is a noise quantile, not a location.
+    early_dyn = float(np.max(early) - np.min(early))
+    if early_dyn > 0 and (np.percentile(early, 90) - np.percentile(early, 10)) / early_dyn > 0.9:
         validity = PedestalValidity.NO_PEDESTAL_IDENTIFIABLE
-    else:
-        validity = PedestalValidity.QUIET_VALID
     return PedestalResult(
         method="early_robust_p10",
         validity=validity,
         pedestal_adc=pedestal,
-        first_four_samples=wave[0:4].copy(),
+        first_four_samples=early.copy(),
         full_waveform=wave,
     )
 

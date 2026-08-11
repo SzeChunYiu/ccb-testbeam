@@ -296,44 +296,60 @@ def sigmoid(x: np.ndarray) -> np.ndarray:
     return 1.0 / (1.0 + np.exp(-np.clip(x, -40.0, 40.0)))
 
 
-class CNNClassifier(nn.Module):
-    def __init__(self, n_tab: int):
-        super().__init__()
-        self.conv = nn.Sequential(
-            nn.Conv1d(1, 12, kernel_size=3, padding=1),
-            nn.ReLU(),
-            nn.Conv1d(12, 16, kernel_size=3, padding=1),
-            nn.ReLU(),
-            nn.AdaptiveAvgPool1d(1),
-        )
-        self.head = nn.Sequential(nn.Linear(16 + n_tab, 32), nn.ReLU(), nn.Dropout(0.10), nn.Linear(32, 1))
+# Torch nn.Module subclasses are import-time fatal when torch is absent (CI).
+# Guard definitions so optional-torch study scripts remain importable for
+# non-torch unit tests (#1124–#1126).
+if nn is not None:  # pragma: no branch - exercised when torch is installed
 
-    def forward(self, wave: torch.Tensor, tab: torch.Tensor) -> torch.Tensor:
-        z = self.conv(wave[:, None, :]).squeeze(-1)
-        return self.head(torch.cat([z, tab], dim=1)).squeeze(1)
+    class CNNClassifier(nn.Module):
+        def __init__(self, n_tab: int):
+            super().__init__()
+            self.conv = nn.Sequential(
+                nn.Conv1d(1, 12, kernel_size=3, padding=1),
+                nn.ReLU(),
+                nn.Conv1d(12, 16, kernel_size=3, padding=1),
+                nn.ReLU(),
+                nn.AdaptiveAvgPool1d(1),
+            )
+            self.head = nn.Sequential(nn.Linear(16 + n_tab, 32), nn.ReLU(), nn.Dropout(0.10), nn.Linear(32, 1))
+
+        def forward(self, wave: "torch.Tensor", tab: "torch.Tensor") -> "torch.Tensor":
+            z = self.conv(wave[:, None, :]).squeeze(-1)
+            return self.head(torch.cat([z, tab], dim=1)).squeeze(1)
 
 
-class WaveGateNet(nn.Module):
-    """Small waveform-plus-tabular gated residual classifier for harm vetoes."""
+    class WaveGateNet(nn.Module):
+        """Small waveform-plus-tabular gated residual classifier for harm vetoes."""
 
-    def __init__(self, n_tab: int):
-        super().__init__()
-        self.conv = nn.Sequential(
-            nn.Conv1d(1, 16, kernel_size=5, padding=2),
-            nn.GELU(),
-            nn.Conv1d(16, 16, kernel_size=3, padding=1),
-            nn.GELU(),
-            nn.AdaptiveMaxPool1d(1),
-        )
-        self.tab = nn.Sequential(nn.Linear(n_tab, 32), nn.GELU(), nn.Linear(32, 16), nn.GELU())
-        self.gate = nn.Sequential(nn.Linear(n_tab, 16), nn.Sigmoid())
-        self.head = nn.Sequential(nn.Linear(32, 32), nn.GELU(), nn.Dropout(0.12), nn.Linear(32, 1))
+        def __init__(self, n_tab: int):
+            super().__init__()
+            self.conv = nn.Sequential(
+                nn.Conv1d(1, 16, kernel_size=5, padding=2),
+                nn.GELU(),
+                nn.Conv1d(16, 16, kernel_size=3, padding=1),
+                nn.GELU(),
+                nn.AdaptiveMaxPool1d(1),
+            )
+            self.tab = nn.Sequential(nn.Linear(n_tab, 32), nn.GELU(), nn.Linear(32, 16), nn.GELU())
+            self.gate = nn.Sequential(nn.Linear(n_tab, 16), nn.Sigmoid())
+            self.head = nn.Sequential(nn.Linear(32, 32), nn.GELU(), nn.Dropout(0.12), nn.Linear(32, 1))
 
-    def forward(self, wave: torch.Tensor, tab: torch.Tensor) -> torch.Tensor:
-        wz = self.conv(wave[:, None, :]).squeeze(-1)
-        tz = self.tab(tab)
-        gz = self.gate(tab)
-        return self.head(torch.cat([wz * gz, tz], dim=1)).squeeze(1)
+        def forward(self, wave: "torch.Tensor", tab: "torch.Tensor") -> "torch.Tensor":
+            wz = self.conv(wave[:, None, :]).squeeze(-1)
+            tz = self.tab(tab)
+            gz = self.gate(tab)
+            return self.head(torch.cat([wz * gz, tz], dim=1)).squeeze(1)
+
+else:  # pragma: no cover - CI / torch-less environments
+
+    class CNNClassifier:  # type: ignore[no-redef]
+        def __init__(self, *args, **kwargs):
+            raise RuntimeError("torch is not available")
+
+
+    class WaveGateNet:  # type: ignore[no-redef]
+        def __init__(self, *args, **kwargs):
+            raise RuntimeError("torch is not available")
 
 
 def fit_torch_classifier(

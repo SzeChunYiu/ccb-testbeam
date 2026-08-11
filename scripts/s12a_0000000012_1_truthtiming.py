@@ -392,32 +392,46 @@ def torch_available() -> bool:
     return torch is not None and nn is not None and DataLoader is not None and TensorDataset is not None
 
 
-class MLP(nn.Module):
-    def __init__(self, n_in: int):
-        super().__init__()
-        self.net = nn.Sequential(
-            nn.Linear(n_in, 64),
-            nn.ReLU(),
-            nn.Dropout(0.05),
-            nn.Linear(64, 64),
-            nn.ReLU(),
-            nn.Linear(64, 1),
-        )
+# Guard torch model classes so the module imports without torch (GitHub CI).
+if nn is not None:  # pragma: no branch
 
-    def forward(self, x):
-        return self.net(x).squeeze(-1)
+    class MLP(nn.Module):
+        def __init__(self, n_in: int):
+            super().__init__()
+            self.net = nn.Sequential(
+                nn.Linear(n_in, 64),
+                nn.ReLU(),
+                nn.Dropout(0.05),
+                nn.Linear(64, 64),
+                nn.ReLU(),
+                nn.Linear(64, 1),
+            )
+
+        def forward(self, x):
+            return self.net(x).squeeze(-1)
 
 
-class PairCNN(nn.Module):
-    def __init__(self, n_feat: int):
-        super().__init__()
-        self.conv = nn.Sequential(nn.Conv1d(n_feat, 32, kernel_size=1), nn.ReLU(), nn.Conv1d(32, 32, kernel_size=2), nn.ReLU())
-        self.head = nn.Sequential(nn.Linear(32, 32), nn.ReLU(), nn.Linear(32, 1))
+    class PairCNN(nn.Module):
+        def __init__(self, n_feat: int):
+            super().__init__()
+            self.conv = nn.Sequential(nn.Conv1d(n_feat, 32, kernel_size=1), nn.ReLU(), nn.Conv1d(32, 32, kernel_size=2), nn.ReLU())
+            self.head = nn.Sequential(nn.Linear(32, 32), nn.ReLU(), nn.Linear(32, 1))
 
-    def forward(self, x):
-        x = x.transpose(1, 2)
-        x = self.conv(x).squeeze(-1)
-        return self.head(x).squeeze(-1)
+        def forward(self, x):
+            x = x.transpose(1, 2)
+            x = self.conv(x).squeeze(-1)
+            return self.head(x).squeeze(-1)
+
+else:  # pragma: no cover
+
+    class MLP:  # type: ignore[no-redef]
+        def __init__(self, *args, **kwargs):
+            raise RuntimeError("torch is not available")
+
+
+    class PairCNN:  # type: ignore[no-redef]
+        def __init__(self, *args, **kwargs):
+            raise RuntimeError("torch is not available")
 
 
 def train_torch_model(model, X_train, y_train, X_val, y_val, config: dict) -> Tuple[object, float]:

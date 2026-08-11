@@ -1,44 +1,60 @@
 # Latest Handoff
 
-## Exec-boundary cwd review exposed an executable-image composition defect
+## Filesystem namespace atom separates pre-exec lookup state from actual input consumption
 
-Protected `main` is `5c1e2ecafa792e07f785781a55f25ffdf3180eb9`, the validated squash merge of coordination PR #1219. #1057 remains open/PARTIAL, governance child #1218 remains open, and CL-021 remains gated.
+Protected `main` at selection is `8a064b37245a03dd0258ec20ae73bbc6adc25e2e`, the squash merge of #1220. PR #1220 exact head `43fd82d2fe70d90cea829a28a1e808b2fbf16098` passed MC Validation run `31505415590` and is merged. #1057 remains open/PARTIAL, governance child #1218 remains open, and CL-021 remains gated.
 
-The active implementation is draft PR #1220 under parent issue #1214. The initial design correctly recognized that a later `/proc/<pid>/cwd` cannot by itself prove the cwd at exec, but it incorrectly treated `(pid,starttime,exe_link)` as unchanged across direct exec. That collapses the pre-exec launcher image with the post-exec HIBEAM image.
+The active atom is `ARU-MC-G4-LOADER-FS-NAMESPACE-001`, tracked as #1221 on branch `audit/geant4-loader-fs-namespace`. Parent #1214 is closed for the bounded exec-cwd primitive; this child does not reopen it.
 
-A real deterministic Linux falsifier established the correct transition: a Python launcher recorded its process state and then `execv('/bin/sleep', ...)`; PID and `/proc/<pid>/stat` starttime stayed fixed while `/proc/<pid>/exe` changed from the Python executable to `/usr/bin/sleep`. Therefore the executable link is not part of the invariant that composes the two observations.
+The repository run front door still invokes `./hibeam_g4 -c krakow.config -m run_krakow.mac output_krakow.root` with relative config, macro and output spellings. The bounded pre-exec lookup state is now modeled as
 
-The repaired bounded contract is:
+`F_exec = (CWD_obj, Root_obj, MntNS_{st_dev,st_ino}, MountInfo_bytes)`
 
-`(PID_pre, starttime_pre) == (PID_post, starttime_post)`
+with exact mountinfo bytes and SHA-256 retained. Runtime composition requires `(PID_pre,starttime_pre)==(PID_runtime,starttime_runtime)` and, for the controlled direct-command route, intended-target path/content equality with the independently content-bound runtime executable.
 
-while launcher and runtime executable identities remain distinct state variables. For the repository's direct `record --command ...` route, the pre-exec record now includes the intended target path and exact `(bytes,SHA-256)`; the attestor requires those target bytes/path to equal the independently content-bound runtime executable. The result explicitly records `kernel_execve_event_observed=false`: userspace launcher intent is not silently promoted to a kernel event log.
+### Why namespace identity alone is insufficient
 
-### Exact repository evidence
+The mount namespace object and the mount table are separate state variables. The implementation records `/proc/PID/ns/mnt` link text plus the opened namespace handle `(st_dev,st_ino,st_mode)`, and separately records the exact `/proc/PID/mountinfo` bytes, byte count, line count and SHA-256. Mountinfo is read twice and namespace/root/cwd/process/executable state is re-observed; simple drift during the userspace snapshot fails closed. ABA/shared mutation outside that window remains explicitly unresolved.
 
-The earlier #1220 exact-head run `31501093188` on `cbc8a97002f9cc0bbd46c86c302be11ec635556b` had curated ruff PASS but full pytest `1 failed, 1632 passed, 1 skipped, 8 xfailed, 1 xpassed`. The only failure, `test_cli_record_creates_file`, exposed a separate argparse defect: `--command` reused the same `dest='command'` as the subparser selector. Commit `b196482c321c819105ebb8d47fb7d9c838a18ac7` fixed that namespace collision.
+### Strongest falsifier: pre-exec state is not input-open state
 
-This session then committed the scientific/provenance repair on the same PR: `677497e3f841dda1f7f80493fcfc05a06b0b3ba2` separates launcher and intended-target state; `67113fdbc24dadb12c911772de187d5da4f39b7c` preserves the legacy fixture surface while keeping real exec transitions explicit; `7c8ba682e35aac53a6a6df4625c955784d34d4d6` adds a real Python→`/bin/sleep` direct-exec regression plus target-content mismatch control; `71bb6775963af8c2b5c399de8655100773b2c97f` adds the tool and both focused tests to curated ruff.
+A real deterministic post-exec `chroot` control changed the process root from pre-exec `(st_dev=65024,st_ino=2)` to later `(st_dev=65024,st_ino=1835628)`. Therefore even a correct pre-exec cwd/root/namespace/mount-table snapshot does not prove the filesystem state when HIBEAM later opens `krakow.config`, `run_krakow.mac`, or auxiliary inputs. That surviving obligation is `ARU-MC-G4-RELATIVE-INPUT-CONSUMPTION-001` and should observe the real open boundary plus the opened bytes rather than infer them from path spellings.
 
-Authoring-copy validation, no RNG: `python -m py_compile` succeeded; a real CLI transition observed PID `550`, starttime `193606`, launcher `/opt/pyvenv/bin/python`, runtime `/usr/bin/sleep`, composed status `PASS`; `python -m pytest -q /tmp/test_exec_transition.py` returned `2 passed in 0.48s`. These results do not substitute for exact committed CI or HIBEAM execution.
+A second real control executed a Python launcher directly into `/bin/sleep`: PID/starttime stayed fixed, launcher `/opt/pyvenv/bin/python` changed to runtime `/usr/bin/sleep`, target size was 43432 bytes with SHA-256 `0637e6d47579929cb72efa46f361861b319d62c62fe8a9d10731fd7655eb5936`, mount namespace was `mnt:[4026532185]`, mountinfo SHA-256 was `32176980937a12ebdf9780930025f473f4594b99248e4a6681cb0d1d08221bff`, and the bounded composition returned PASS. `kernel_execve_event_observed=false` remains explicit.
 
-Immutable atom record: `chatgpt_todo/archive/2026-08-11T151000Z_ARU-MC-G4-LOADER-EXEC-IMAGE-TRANSITION-001.md`.
+### Repository work
+
+Branch commits so far:
+
+- `07f966fadd056c6368e83ee60c81f05b9165f3c7` — add `tools/audit/geant4_loader_exec_boundary_fs_attestation.py`;
+- `6f2d912875cf49ad79bc3fefc4595774e7ca9c08` — add hostile focused tests;
+- `dbca8873edad0080e7d37339660a54f0a87a2f61` — add tool/test to curated ruff;
+- `8bdb1f6e7439bceba8cf997fd631b108a189830b` — immutable atom archive;
+- `257a817a60ca4ac351deebcb6cbda9f57450afb7` — activate coordination.
+
+Observed GitHub blobs: tool `f173720831c693cf417c1a876626f26da9fc0eca`; focused test `c3777148928cff7fcc9549f1d4dae2e3bd6a6bab`.
+
+Local deterministic authoring-copy validation used Python 3.13.5 with no RNG: `python -m py_compile` passed and focused pytest returned `8 passed in 1.52s`. Local `ruff` is unavailable, so no local lint PASS is claimed. The initially authored source bytes were not byte-identical to the published tool blob because a small annotation refinement occurred during publication; therefore the local focused PASS cannot authorize the exact committed tool. Exact-head GitHub CI is mandatory.
+
+A real `unshare -m true` mount-namespace switch control could not run because the environment returned `Operation not permitted`; do not claim such a control passed.
+
+Immutable record: `chatgpt_todo/archive/2026-08-11T153700Z_ARU-MC-G4-LOADER-FS-NAMESPACE-001.md`. Tracking issue: #1221.
 
 ### Four sequential AI reviews
 
-- **Runtime/physics integration lead — ACCEPT image-replacement model / REVISE parent completion.** The real exec control falsifies pre/post executable equality. No provenance-bound HIBEAM process was run.
-- **Adversarial Linux/process reviewer — ACCEPT bounded intent/runtime composition / BLOCK kernel-event equivalence.** The original post-exec fixture manually assigned the post-exec executable to the pre-exec record and skipped the transition under test. Target-path TOCTOU and intermediate exec chains survive.
-- **Independent validation reviewer — ACCEPT defect and deterministic local falsifier / BLOCK merge pending exact-head repository CI.** No statistical estimator or event weight applies to this atom.
-- **Claims/provenance reviewer — ACCEPT bounded process-state repair / BLOCK #1214 completion and CL-021 promotion.** Namespace, exact relative-input consumption, output path creation, RNG/thread/event/output identity, compiled source controls and detector response remain independent gates.
+- **Runtime/physics integration lead — ACCEPT bounded filesystem-state decomposition / REVISE production provenance.** Evidence: #1214/#1220, run front door, direct-exec and chroot controls. Strongest counter-hypothesis `F_exec==F_open` was falsified by post-exec root mutation. No provenance-bound HIBEAM process was run.
+- **Adversarial Linux/filesystem reviewer — ACCEPT namespace+mountinfo separation / BLOCK input-consumption equivalence.** Namespace inode alone cannot represent a mutable mount table. Residual risks: ABA/shared mount mutation, unavailable real unshare/setns control, kernel exec-event gap and target TOCTOU.
+- **Independent validation reviewer — ACCEPT local deterministic falsifiers / BLOCK repository validation pending exact-head CI.** Eight focused authoring-copy tests and py_compile pass with no RNG, but exact published source needs repository CI and local ruff is unavailable.
+- **Claims/provenance reviewer — ACCEPT bounded provenance refinement / BLOCK CL-021 and detector inference.** No beam data, production MC, event, reconstruction result or detector observable participates.
 
-### Surviving children
+### Stable concerns and surviving children
 
-`ARU-MC-G4-LOADER-EXEC-KERNEL-EVENT-001` must bind the actual kernel exec event, or establish an equivalently strong single-transition contract, before launcher intent is described as kernel-observed history. `ARU-MC-G4-LOADER-EXEC-TARGET-TOCTOU-001` must close the replacement window between pre-exec target hashing and path-based `execv`. Existing #1214 children `ARU-MC-G4-LOADER-FS-NAMESPACE-001`, `ARU-MC-G4-RELATIVE-INPUT-CONSUMPTION-001`, and `ARU-MC-G4-OUTPUT-PATH-CREATION-001` remain open.
+`C-FSNS-001` HIGH: namespace identity alone is insufficient; exact mount-table state is separately required. `C-FSNS-002` HIGH: pre-exec lookup state is not exact input-open state; require open/openat/openat2 or equivalently strong opened-file-byte evidence. `C-FSNS-003` MEDIUM-HIGH: double-read stability does not exclude ABA/shared mutation. `C-FSNS-004` MEDIUM-HIGH: userspace intent is not a kernel exec-event log and target-path TOCTOU remains.
 
-### Immediate gate and next scientific work
+Surviving children are `ARU-MC-G4-RELATIVE-INPUT-CONSUMPTION-001`, `ARU-MC-G4-OUTPUT-PATH-CREATION-001`, `ARU-MC-G4-LOADER-EXEC-KERNEL-EVENT-001`, and `ARU-MC-G4-LOADER-EXEC-TARGET-TOCTOU-001`. #1057 independently still requires the compiled source-phi and accepted-observable children.
 
-PR #1220 is draft. Require the final committed head to be based on current main and require every required MC Validation context to pass curated ruff, full non-integration pytest, diagnostics and enforcement. If a final-head failure appears, repair only the demonstrated failure and rerun. Do not merge based on the local controls or a superseded green context.
+### Immediate gate and next work
 
-After this bounded leaf, the highest-value ready provenance step is filesystem namespace plus exact relative-input consumption. Independently, #1057 still requires `ARU-MC-SOURCE-PHI-COMPILED-CLOSURE-001` once a provenance-bound external HIBEAM build/run environment is available; current Python/static CI must not be treated as compiled Geant4 evidence.
+Open a draft PR from `audit/geant4-loader-fs-namespace`. Require the final exact head to be current with main and to pass every required MC Validation context: curated ruff, full non-integration pytest, diagnostics and enforcement. If a failure appears, repair only the demonstrated defect and rerun. Do not merge from authoring-copy evidence or a superseded green head.
 
-No production Geant4 campaign, beam or production-MC ROOT bytes, event-weight result, accepted rate, B2/B8, PID, timing, calibration, pile-up, ESS, p-value, or detector-performance quantity was produced or promoted in this run.
+After this bounded leaf, the next highest-value atom is `ARU-MC-G4-RELATIVE-INPUT-CONSUMPTION-001`: bind actual HIBEAM config/macro/auxiliary open state and exact opened bytes for the same runtime process. No production Geant4 campaign, beam/production-MC ROOT bytes, event-weight result, accepted rate, B2/B8, PID, timing, calibration, pile-up, ESS, p-value, or detector-performance quantity was produced or promoted here.

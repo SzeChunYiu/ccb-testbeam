@@ -1,5 +1,6 @@
 import hashlib
 import sys
+from pathlib import Path
 from types import SimpleNamespace
 
 import numpy as np
@@ -68,11 +69,51 @@ def test_aggregation_fails_closed_on_malformed_event(layer, layer1, pdg, edep):
 
 
 def test_primary_event_weight_is_one_per_event_and_fails_closed():
-    assert primary_event_weight([2.5, 9.0]) == pytest.approx(2.5)
     assert primary_event_weight([], apply_weight=False) == pytest.approx(1.0)
-    for bad in ([], [np.nan], [-0.1]):
+    for bad in ([], [np.nan], [-0.1], [2.5, 9.0]):
         with pytest.raises(DataContractError):
             primary_event_weight(bad)
+
+
+def test_primary_event_weight_cardinality_permutation_falsifier(tmp_path):
+    """Inject a multi-element PrimaryWeight row among valid single-element rows.
+
+    The builder must reject the event even when other events in the same batch
+    have correct cardinality-1 weights. This falsifies a naive "first entry
+    passes" implementation that only checks the first event.
+    """
+    chunk = {
+        "Sci_bar_LayerID": _obj([[0], [0]]),
+        "Sci_bar_LayerID1": _obj([[1], [1]]),
+        "Sci_bar_PDG": _obj([[2212], [2212]]),
+        "Sci_bar_EDep": _obj([[2.0], [3.0]]),
+        "Sci_bar_Time": _obj([[10.0], [10.0]]),
+        "PrimaryWeight": _obj([[2.0], [1.0, 3.0]]),  # second event has 2 entries
+    }
+
+    class FakeTree:
+        def iterate(self, branches, **kwargs):
+            yield chunk
+
+    class FakeRoot:
+        def __enter__(self):
+            return self
+        def __exit__(self, *_args):
+            return False
+        def __contains__(self, key):
+            return key == "hibeam"
+        def __getitem__(self, key):
+            return FakeTree()
+
+    def fake_open(stream):
+        return FakeRoot()
+
+    monkeypatch = pytest.MonkeyPatch()
+    monkeypatch.setitem(sys.modules, "uproot", SimpleNamespace(open=fake_open))
+    source = Path(tmp_path) / "mc.root"
+    source.write_bytes(b"fake-root-bytes")
+    with pytest.raises(DataContractError, match="cardinality"):
+        build_event_stave_product(source, coinc_ns=15.0)
 
 
 def _valid_product():

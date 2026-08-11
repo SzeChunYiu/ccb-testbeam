@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import errno
 import hashlib
+import math
 import os
 import stat
 from collections.abc import Iterator
@@ -258,6 +259,11 @@ def primary_event_weight(primary_weights: Any, *, apply_weight: bool = True) -> 
     weights = _as_1d("PrimaryWeight", primary_weights, dtype=float)
     if weights.size == 0:
         raise DataContractError("PrimaryWeight is empty in weighted mode")
+    if weights.size != 1:
+        raise DataContractError(
+            "PrimaryWeight must have cardinality exactly 1 per generator event; "
+            f"got {weights.size} entries"
+        )
     weight = float(weights[0])
     if not np.isfinite(weight):
         raise DataContractError("first PrimaryWeight is non-finite")
@@ -485,9 +491,13 @@ def build_event_stave_product(
     )
 
     w = payload["event_weight"]
-    sum_w = float(np.sum(w, dtype=np.float64))
-    sum_w2 = float(np.sum(w * w, dtype=np.float64))
-    ess = float(sum_w * sum_w / sum_w2) if sum_w2 > 0.0 else 0.0
+    sum_w = float(math.fsum(w))
+    sum_w2 = float(math.fsum(w * w))
+    if sum_w == 0.0:
+        raise DataContractError("total event weight is zero in weighted mode")
+    if sum_w2 <= 0.0:
+        raise DataContractError("sum of squared event weights is non-positive")
+    ess = float(sum_w * sum_w / sum_w2)
     metadata: dict[str, Any] = {
         "schema_id": EVENT_STAVE_SCHEMA_ID,
         "statistical_unit": STATISTICAL_UNIT,

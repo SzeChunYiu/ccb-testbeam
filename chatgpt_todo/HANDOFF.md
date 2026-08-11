@@ -1,51 +1,64 @@
 # Latest Handoff
 
-## Active atom: Linux process-visible argv region, exact-head CI race repaired
+## Active atom: current cwd observation versus historical exec-time cwd
 
-Protected source of truth is `main@69678659797d9112a92f911b3011a4411393c1eb` via merged #1212. Current work remains on draft PR #1213, branch `audit/geant4-loader-argv`. #1182 and CL-021 remain gated.
+Protected source of truth advanced to `main@c485d96583df91e90669e402670a3fa102643495` after #1213 was marked ready only once both exact-head `test` checks on `85894ad0123ee56dc18da6cc86e0340f9eabb312` were successful, then squash-merged with expected-head protection. The new work is on branch `audit/geant4-loader-cwd`. CL-021 remains gated.
 
-### Parent scientific contract
+### Selected scientific contract
 
-`ARU-MC-G4-LOADER-ARGV-001` treats `/proc/<pid>/cmdline` only as a process-visible argument-region observation at a stable attestation boundary. It composes a PASS runtime dependency receipt, verifies exact parent digest and `(pid,starttime_ticks,exe_link)`, reads cmdline twice, requires byte equality, preserves all NUL-delimited slots including empty/non-UTF8 bytes, rereads process identity, and self-digests the result. Linux post-exec argv rewriting and `PR_SET_MM_ARG_START/END` prevent promotion to immutable historical `execve(argv)`. `argv[0]` remains non-authoritative for executable identity.
+`ARU-MC-G4-LOADER-INITIAL-CWD-001` addresses the relative-path dependency exposed by `geant4/setup_and_run.sh`:
 
-Repository `geant4/setup_and_run.sh` invokes `./hibeam_g4 -c krakow.config -m run_krakow.mac output_krakow.root`, so initial cwd is the next high-information scientific child.
+`./hibeam_g4 -c krakow.config -m run_krakow.mac output_krakow.root`
 
-### Exact CI falsifier discovered
+For a relative pathname `p`, a useful local abstraction is `Resolved_t(p) = Resolve(CWD_t, Root_t, MountNS_t, p)`. This atom binds only `CWD_t` at one observation window. It does not yet bind the historical cwd at exec, process root, mount namespace, symlink chain, or exact bytes later consumed by HIBEAM.
 
-At exact PR head `efa67b0ea2849ffc3d041e97487f74953e96f340`, the pull-request-triggered MC Validation run `31485819366` completed successfully. A concurrent push-triggered run `31485815692` on the same head failed despite ruff success because full pytest contained one failure: `test_real_linux_child_observation_is_stable`. Its final count was `1 failed, 1604 passed, 1 skipped, 8 xfailed, 1 xpassed`.
+The implemented `ccb_geant4_loader_cwd_attestation_v1` composes PASS/digest-valid runtime and argv receipts, requires the same `(pid,starttime_ticks,exe_link)`, observes `/proc/<pid>/cwd` twice, opens that cwd directory object twice and requires equal `(st_dev,st_ino,st_mode)`, then rechecks process starttime and executable link. The receipt means only `STABLE_CURRENT_WORKING_DIRECTORY_OBJECT_OBSERVATION_ONLY`.
 
-The failing fixture called `subprocess.Popen(['/bin/sleep','5'])`, then treated existence of `/proc/<pid>/cmdline` as readiness. That procfs path existed while the first cmdline read was still `b''`; the production attestor correctly rejected the empty region. The protected branch then correctly refused merge because a failing exact-head `test` check coexisted with the successful one. PR #1213 was returned to draft.
+### Discriminating evidence
 
-### Repair
+The strongest counter-hypothesis was that because exec preserves cwd, a later procfs cwd can be treated as the launch/exec cwd. A real Linux child falsified that inference: it was launched with `cwd=initial`, executed Python, then called `chdir(later)`. The bounded attestor correctly observed `later`, not `initial`. Current cwd therefore cannot be promoted to immutable historical cwd without an exec-boundary proof.
 
-`ARU-MC-G4-LOADER-ARGV-TEST-EXEC-RACE-001` is archived at `chatgpt_todo/archive/2026-08-11T112300Z_ARU-MC-G4-LOADER-ARGV-TEST-EXEC-RACE-001.md`.
+Hostile tests also cover wrong parent receipts, PID/starttime mismatch, executable mismatch, cwd-link mutation, and opened-directory-object mutation.
 
-Commit `52c0496396343613f1833b42e92fa3d0b7f4daec` replaces the path-existence precondition in the two live-process tests with `_wait_for_exec_observation(...)`. The helper polls within a bounded timeout and authorizes the fixture only when:
+### Exact implementation and validation
 
-- the child is alive;
-- `/proc/<pid>/cmdline` is nonempty;
-- `/proc/<pid>/exe` resolves to the exact intended image;
-- starttime is readable for that PID.
+Branch commits:
 
-A fixed sleep was rejected because elapsed time does not identify process-image readiness. Weakening the production attestor to accept empty cmdline was also rejected because that would destroy the parent data contract. The production attestor is unchanged. The updated test file is Git blob `d312d54cab63166c5f4b5b958f59c6da015fb4e2`.
+- `475d0f886b0257b1cfd905e798254a07ec8a8dd8` — `tools/audit/geant4_loader_cwd_attestation.py`;
+- `c0131e9cc7740303505554266b207fa42567bf70` — `tests/test_geant4_loader_cwd_attestation.py`;
+- `7acb18fa686a2456093c61087491c2a7ec2a114d` — curated MC-validation ruff inclusion;
+- `b8d66da03d194040d3bd44bc386aa83098841604` — immutable ARU record;
+- `619fc7d0e192baa1142cc466ecd1c7091b117245` — active-task coordination.
+
+Exact committed identities:
+
+- tool: 10,190 bytes, SHA-256 `02ed0bb6cd4f53a7e72e59f0147e06eee72e7a7518c0d8de11aa62b856f5e1be`, Git blob `bb71a692732c3f6730b52704bd51ec9506cff7ac`;
+- tests: 10,285 bytes, SHA-256 `5d77e26e8233d8693af19d93bbf4bff4b6fbe45a68f8f91d19e95ec6862ffa28`, Git blob `c1f9ffb43856aa17435e931194a94a1df68486c2`.
+
+Local deterministic run, Python 3.13.5 / Linux 6.18.35 x86_64 / no RNG:
+
+`python -m pytest -q tests/test_geant4_loader_cwd_attestation.py` -> `9 passed in 1.17 s`.
+
+`python -m py_compile tools/audit/geant4_loader_cwd_attestation.py tests/test_geant4_loader_cwd_attestation.py` -> PASS.
+
+Local ruff was unavailable. An install attempt failed because the package index could not be resolved, so no local ruff PASS is claimed; exact-head repository CI remains mandatory.
 
 ### Four sequential AI reviews
 
-- **Runtime/physics lead — ACCEPT repair / BLOCK physics inference.** The failure is a real test-harness state-transition race; accepting empty cmdline would be a scientific-contract regression. Real HIBEAM runtime remains unavailable.
-- **Adversarial Linux reviewer — ACCEPT state-based wait / REJECT timing-only workaround.** Path existence and arbitrary delay are not equivalent to intended exec-image readiness. A future timeout must remain visible rather than being hidden by retries without state predicates.
-- **Independent validation reviewer — REVISE until every fresh exact-head workflow context passes.** One green run did not authorize the earlier head because another exact-head check failed. Fresh repaired-head push and pull-request runs are required.
-- **Claims/provenance reviewer — ACCEPT fixture-provenance correction / BLOCK CL-021 promotion.** No beam data, production MC, Geant4 event, detector response or statistical estimator changed.
+- **Runtime/physics integration lead — ACCEPT current-state primitive / BLOCK initial-cwd provenance.** The post-exec chdir control falsifies promotion of a later procfs observation to historical launch state. Real HIBEAM behavior remains unobserved.
+- **Adversarial Linux/filesystem reviewer — ACCEPT fail-closed transition checks / BLOCK complete path resolution.** Stable cwd alone does not bind root, mount namespace, symlink resolution, or an ABA cwd transition.
+- **Independent validation reviewer — ACCEPT deterministic oracle / BLOCK physics inference.** Nine deterministic tests exercise software/OS provenance only; no Geant4 event or detector observable participates.
+- **Claims/provenance reviewer — ACCEPT provenance refinement / BLOCK CL-021 promotion.** Cwd plus argv is still insufficient to bind the exact historical inputs consumed by a production run.
 
-### Next gate
+### Children and next gate
 
-Keep PR #1213 draft until its final head retains exact `main@696786...` ancestry and every exact-head MC Validation `test` context is successful, including push and pull-request triggers. Require curated ruff, full non-integration pytest, diagnostics upload and enforcement. Only then mark ready and merge with expected-head protection.
+Material child leaves:
 
-After #1213 closes, the next highest-value scientific universe is `ARU-MC-G4-LOADER-INITIAL-CWD-001`, because the historical run front door uses relative executable/config/macro/output paths. The following children remain argv-region mutation, executable redirection, HIBEAM argument semantics, loader cache/config, token/hwcaps, preload/audit, linker/static inputs, late `dlopen`, wrapper/descendant identity, immutable consumption, runtime manifest, compiled source/stopping controls, event weights and detector response.
+- `ARU-MC-G4-LOADER-INITIAL-CWD-EXEC-BOUNDARY-001` — prove cwd at the exec boundary rather than later current state;
+- `ARU-MC-G4-LOADER-FS-NAMESPACE-001` — process root, mount namespace, relevant mount topology;
+- `ARU-MC-G4-RELATIVE-INPUT-CONSUMPTION-001` — exact config/macro/support bytes actually opened/consumed;
+- `ARU-MC-G4-OUTPUT-PATH-CREATION-001` — cwd/path state at output creation plus final output identity.
 
-No production Geant4 campaign was run, no beam or production-MC ROOT bytes were opened, and no detector-performance claim was regenerated or promoted.
+Open a draft PR for the current-cwd primitive, require fresh exact-final-head push and pull-request MC Validation, and require base freshness against current protected main. The next scientific atom after this bounded merge gate is the exec-boundary cwd leaf, followed by filesystem namespace and exact input-consumption closure.
 
----
-
-## Base-freshness gate
-
-Before authorizing a PR, require `base_is_ancestor_of_head AND behind_by == 0 AND merge_base_sha == base_sha` using `tools/audit/validate_pr_base_freshness.py`, and separately inspect GitHub status/check APIs. A current Git graph does not override a failed exact-head required check.
+No production Geant4 campaign was run, no beam or production-MC ROOT bytes were opened, and no detector-performance or public physics claim was regenerated or promoted.

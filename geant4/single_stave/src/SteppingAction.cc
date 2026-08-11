@@ -1,5 +1,4 @@
 #include "SteppingAction.hh"
-#include "G4Exception.hh"
 #include "EventAction.hh"
 #include "DetectorConstruction.hh"
 #include "SimData.hh"
@@ -19,6 +18,7 @@
 #include "Randomize.hh"
 
 #include <cmath>
+#include <stdexcept>
 
 SteppingAction::SteppingAction(const AppConfig& cfg, const OpticalTables& tables,
                                EventAction* event_action)
@@ -32,19 +32,19 @@ int SteppingAction::SensorIndexForVolume(const G4String& name) const {
 }
 
 double SteppingAction::PdeAt(double wavelength_nm) const {
+  // #981: match ccb-sipm-core extrapolation — zero outside the tabulated range
+  // (OpticalCurve::Interp clamps; that must not diverge from the ADC path).
   const OpticalCurve& pde = tables_.Get("sipm_pde");
-  double p = 0.0;
   if (pde.Empty()) {
-    // Issue #996: never silently substitute 40% PDE in a strict/authorising run.
-    if (cfg_.strict_optical || cfg_.authorising) {
-      G4Exception("SteppingAction::PdeAt", "OPT_PDE_001", FatalException,
-                  "sipm_pde table empty while strict/authorising optical mode "
-                  "is active; refusing 40% fallback");
-    }
-    p = 0.40;  // explicit non-authorising development fallback only
-  } else {
-    p = pde.Interp(wavelength_nm);
+    // Prefer fail-closed SiPM PDE contract (lane01/#981): never substitute 40%.
+    // Empty table is fatal in all modes (stricter than lane02 development fallback).
+    throw std::runtime_error("sipm_pde optical table empty in SteppingAction::PdeAt");
   }
+  if (!std::isfinite(wavelength_nm) ||
+      wavelength_nm < pde.x.front() || wavelength_nm > pde.x.back()) {
+    return 0.0;
+  }
+  double p = pde.Interp(wavelength_nm);
   p *= cfg_.pde_scale;
   if (p < 0) p = 0;
   if (p > 1) p = 1;

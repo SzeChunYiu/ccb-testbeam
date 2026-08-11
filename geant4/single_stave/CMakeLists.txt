@@ -208,6 +208,31 @@ set_tests_properties(ccb_stave_sipm_adc PROPERTIES
   FAIL_REGULAR_EXPRESSION "G4Exception.*Fatal;segmentation")
 
 
+# 9) SiPM env fail-closed + zero-control effectiveness (#975/#976).
+if(CCB_PYTHON3)
+  add_test(
+    NAME ccb_stave_sipm_env_fail_closed
+    COMMAND ${CCB_PYTHON3}
+            "${PROJECT_SOURCE_DIR}/tests/test_sipm_env_fail_closed.py"
+            --exe "$<TARGET_FILE:ccb_stave_sim>"
+            --optical-dir "${CMAKE_BINARY_DIR}/optical")
+  set_tests_properties(ccb_stave_sipm_env_fail_closed PROPERTIES
+    TIMEOUT 300
+    PASS_REGULAR_EXPRESSION "SIPM_ENV_FAIL_CLOSED_PASS")
+endif()
+
+# 10) Non-square --sipm-n-cells must abort before authorising output (#974).
+add_test(
+  NAME ccb_stave_sipm_n_cells_nonsquare_fail
+  COMMAND ccb_stave_sim
+          --particle proton --energy 100 --nevents 1 --seed 1
+          --sipm-n-cells 1800
+          --optical-dir "${CMAKE_BINARY_DIR}/optical"
+          --output "${CMAKE_BINARY_DIR}/sipm_nonsquare.root")
+set_tests_properties(ccb_stave_sipm_n_cells_nonsquare_fail PROPERTIES
+  TIMEOUT 120
+  WILL_FAIL TRUE)
+
 # Wave A / Lane 02: semantic optical-table schema (#978/#980) — no Geant4 needed.
 if(CCB_PYTHON3)
   add_test(

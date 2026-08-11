@@ -34,6 +34,10 @@ def test_phi_measure_is_declared_in_source_model() -> None:
     assert model["source_phi_measure"] == "uniform_full_2pi_v1"
     assert model["support_phi_rad"] == [0.0, math.tau]
     assert model["detector_surrogate_phi_preselection"] is False
+    retired = model["hard_coded_detector_surrogate_phi_preacceptance"]
+    assert retired["present"] is False
+    assert retired["authorising_for_detector_claims"] is False
+    assert retired["issue"] == 1057
 
 
 def test_phi_code_implements_full_2pi_without_detector_surrogate() -> None:

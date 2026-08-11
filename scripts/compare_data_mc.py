@@ -237,6 +237,10 @@ def _weight_diagnostics(audit):
         "all_unit_weights": audit.all_unit_weights,
         "signed_weights_present": audit.signed_weights_present,
         "cancellation_fraction": audit.cancellation_fraction,
+        "cancellation_severity": getattr(audit, "cancellation_severity", audit.cancellation_fraction),
+        "signed_mass_orientation": getattr(audit, "signed_mass_orientation", 0),
+        "weight_scale": getattr(audit, "weight_scale", None),
+        "signed_diagnostic_method_id": getattr(audit, "signed_diagnostic_method_id", None),
         "coefficient_of_variation_abs": audit.coefficient_of_variation_abs,
     }
 
@@ -368,6 +372,8 @@ def main(argv: list[str] | None = None) -> None:
         },
         "first_B_layer": {
             "MC": {
+                "measure": mc.get("mc_measure", mc.get("headline_first_B_layer", {}).get("measure")),
+                "measure_status": mc.get("mc_measure_status", mc.get("headline_first_B_layer", {}).get("measure_status")),
                 "sampleI_d_fraction": mc["samples"]["I"]["B_layers"][0]["pid_fraction"].get("d", 0.0),
                 "sampleII_d_fraction": mc["samples"]["II"]["B_layers"][0]["pid_fraction"].get("d", 0.0),
                 "sampleI_frac_large": mc["samples"]["I"]["B_layers"][0]["frac_large"],

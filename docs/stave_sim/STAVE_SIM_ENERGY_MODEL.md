@@ -6,7 +6,7 @@
 
 | Parameter | Value |
 |---|---|
-| Scintillator | Extruded polystyrene (BC-408 equivalent) |
+| Scintillator | Historic MC host: polystyrene_legacy; BC-408-class PVT is a named hypothesis only (issue #1000; see ADR-OPT-WAVEA-BLOCKED) |
 | Length | 50 cm |
 | Width | 5.18 cm |
 | Thickness (along particle path) | **2.0 cm** |
@@ -18,7 +18,7 @@
 
 ## Energy Loss Model (NIST PSTAR + Bethe-Bloch)
 
-### Proton dE/dx in 2 cm polystyrene
+### Proton dE/dx in 2 cm polystyrene_legacy host (not verified BC-408 transport)
 | Beam energy (MeV) | dE/dx (MeV/cm) | edep in 2cm (MeV) | Typical stave |
 |---|---|---|---|
 | 180 | 4.0 | 8.0 | B2 (first stave) |

@@ -78,12 +78,56 @@ struct AppConfig {
   // --- Optical input tables (versioned CSV, path recorded + hashed) ---
   std::string optical_dir = "optical";
 
-  // --- Optical validation mode (G4-003) ---
-  // false (default, dev): missing/malformed optical tables warn and fall back
-  // to built-in constants (historic fail-open). true (production): missing
-  // required tables or schema/unit/range violations abort the run BEFORE the
-  // event loop. Enabled by --strict-optical or env CCB_STRICT_OPTICAL=1.
-  bool strict_optical = false;
+  // --- Optical validation mode (issues #978/#980, G4-003) ---
+  // Production default is STRICT (true): missing/malformed tables or unit/range
+  // violations abort BEFORE event 0. Permissive fallback requires an explicit
+  // --allow-optical-fallback (or CCB_ALLOW_OPTICAL_FALLBACK=1) and forces
+  // authorising=false in run metadata.
+  bool strict_optical = true;
+  bool allow_optical_fallback = false;
+  // authorising=false when fallback is enabled or any optical input fell back.
+  bool authorising = true;
+  bool optical_fallback_used = false;
+
+  // Versioned constants ledger (#979) — path relative to CWD or absolute.
+  std::string optical_constants_ledger = "optical/optical_constants_ledger.conf";
+
+  // Material / coupling / WLS hypotheses (BLOCKED until hardware-sourced).
+  // polystyrene_legacy = historic G4_POLYSTYRENE host (NOT verified BC-408).
+  // vinyltoluene_pvt_hypothesis = G4_PLASTIC_SC_VINYLTOLUENE prior for BC-408 class.
+  std::string scintillator_material = "polystyrene_legacy";
+  std::string scintillator_material_status = "BLOCKED_UNVERIFIED_HARDWARE";
+  // air_massless_placeholder | tio2_paint_hypothesis (#1005)
+  std::string coating_material = "air_massless_placeholder";
+  std::string coating_material_status = "BLOCKED_UNVERIFIED_HARDWARE";
+  // WLS fluorescence multiplicity (#1088)
+  double wls_mean_number_photons = 1.0;
+  std::string wls_fluorescence_model = "geant4_default_one_secondary";
+  std::string wls_fluorescence_status = "ASSUMPTION_UNIT_YIELD";
+  // Direct Y-11 charged-particle light (#1035); 0 keeps current omission.
+  double y11_direct_scint_yield_per_MeV = 0.0;
+  std::string y11_direct_scint_status = "OMISSION_UNKNOWN_EXTERNAL";
+  // Attenuation model-form tag (#1085)
+  std::string y11_attenuation_form = "long_component_single_exponential";
+  std::string y11_attenuation_form_status = "MANUFACTURER_LONG_COMPONENT_PRIOR";
+  // TiO2 UNIFIED surface (#1086)
+  std::string tio2_finish = "ground";
+  double tio2_sigma_alpha = 0.1;
+  double tio2_specular_lobe = 0.0;
+  double tio2_specular_spike = 0.0;
+  double tio2_backscatter = 0.0;
+  std::string tio2_reflection_model_status = "EXPLICIT_LAMBERTIAN_HYPOTHESIS";
+  // Scalar optical priors formerly hard-coded (#979)
+  double scintillator_rindex = 1.59;
+  double scintillation_yield_per_MeV = 10000.0;
+  double scintillation_time_ns = 2.4;
+  double y11_core_rindex = 1.59;
+  double wls_time_constant_ns = 8.5;
+  double clad_inner_rindex = 1.49;
+  double clad_outer_rindex = 1.42;
+  double coupling_grease_rindex = 1.46;
+  double coupling_epoxy_rindex = 1.50;
+  double tio2_paint_density_g_cm3 = 1.5;
 
   // --- I/O ---
   std::string output = "ccb_stave.root"; // ntuple output (ROOT via g4tools)

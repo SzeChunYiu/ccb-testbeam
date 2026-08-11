@@ -1,67 +1,72 @@
 # Latest Handoff
 
-## Active atom: Linux procfs initial-environment semantics
+## Active atom: Linux process-visible argv region
 
-Protected source-of-truth at selection was `main@d6dc5ab29fc0ae6ac9d921a50c08b4554d14902d`, the squash merge of PR #1210. Exact predecessor head `ae6e8506f7caa79c31f211f56c7bb31761007600` passed MC Validation run `31476519812` with curated ruff, full unit tests, diagnostics upload and enforcement all successful. #1182 and CL-021 remain gated.
+Protected source-of-truth at selection was `main@41a568a7296ac947e9ecb5baf540b0505c0edad1`, the squash merge of PR #1211. #1182 and CL-021 remain gated.
 
-Current branch is `audit/geant4-loader-proc-env`, implementing `ARU-MC-G4-LOADER-PROC-ENV-001` under #1182 / `ARU-MC-G4-LOADER-SEARCH-001`.
+Current branch is `audit/geant4-loader-argv`, implementing `ARU-MC-G4-LOADER-ARGV-001` under #1182 / `ARU-MC-G4-LOADER-SEARCH-001`.
 
-### Key correction
+### Exact scientific boundary
 
-The predecessor handoff treated the environment captured by `geant4_runtime_dependency_attestation.py` as if it were simply the program's post-start `getenv` state. Linux procfs has a different contract: `/proc/<pid>/environ` exposes the initial environment region associated with the currently executing image, and ordinary later `setenv`/`putenv` changes are not reflected. This means the existing runtime provenance has more launch-region information than previously credited.
-
-That does **not** turn procfs into an immutable `execve(envp)` trace. The target can overwrite the initial bytes and can relocate the procfs environment region with `PR_SET_MM_ENV_START`. Therefore the new attestor is deliberately one-sided: stable presence is observed evidence at the attestation boundary; absence is not proof of historical launch absence.
+`/proc/<pid>/cmdline` is treated only as a process-visible argument-region observation at one stable boundary. It is not promoted to an immutable historical `execve(argv)` trace. Linux permits a process to overwrite argv string bytes and to move the region exposed through procfs with `PR_SET_MM_ARG_START/END`. `argv[0]` is not executable identity; the parent runtime receipt's content-bound `/proc/<pid>/exe` measurement remains the separate executable-identity primitive.
 
 ### Exact contract
 
-Compose PASS `ccb_geant4_runtime_dependency_attestation_v1` and PASS child `ccb_geant4_loader_secure_state_attestation_v1`, require exact parent digest and identical `(pid,starttime_ticks)`, read `/proc/<pid>/environ` twice, require the two byte strings identical and process identity stable, and require every loader key already recorded by the runtime receipt to reproduce exactly from the procfs bytes. Duplicate tracked keys or any receipt/proc mismatch fail closed.
+Compose a PASS `ccb_geant4_runtime_dependency_attestation_v1`; verify its self-digest; take parent `(pid,starttime_ticks,exe_link)`; require matching live starttime and executable link; read `/proc/<pid>/cmdline` twice; require exact byte equality; preserve every observed NUL-delimited slot without text normalization; reread starttime and executable link; serialize raw/per-slot byte counts, SHA-256, base64 and optional UTF-8; self-digest the result as `ccb_geant4_loader_argv_attestation_v1`.
 
-The output records total procfs environment bytes/SHA-256 and per-key semantics:
+The stable observation means `OBSERVED_STABLE_AT_ATTESTATION_BOUNDARY` only. Historical `execve(argv)` remains unresolved because the argument region is mutable.
 
-- present -> `OBSERVED_AT_ATTESTATION_BOUNDARY`;
-- absent -> `ABSENT_AT_OBSERVATION_NOT_PROOF_OF_EXECVE_ABSENCE`.
+### Mechanisms and discriminators
 
-`AT_SECURE=1` continues to block `LD_LIBRARY_PATH`/`LD_PRELOAD`/`LD_AUDIT` from loader-search authority. `AT_SECURE=0` remains unresolved for effective glibc secure behavior because `glibc.rtld.enable_secure=1` and exact libc/loader semantics are separate dependencies.
+Competing mechanisms were direct target exec, arbitrary or rewritten argv0, explicit glibc dynamic-loader invocation, post-exec string mutation, `PR_SET_MM_ARG_START/END`, and separate `/proc/<pid>/exe` redirection through `PR_SET_MM_EXE_FILE`.
 
-### Discriminating evidence executed
+A local C process was launched with `alpha beta`, rewrote its argv0 bytes to `MUTATED_ARGV0`, then slept. `/proc/<pid>/exe` still named the program while `/proc/<pid>/cmdline` exposed `MUTATED_ARGV0\0alpha\0beta\0`. That falsifies immutable launch-argv semantics.
 
-Authoritative references: Linux `proc_pid_environ(5)`, Linux `ld.so(8)`, GNU libc Dynamic Linking Tunables.
+A second Linux control explicitly launched the glibc dynamic loader with `/bin/sleep 3`. `/proc/<pid>/exe` identified the loader and cmdline exposed loader+target+argument. This discriminates ordinary explicit-loader invocation from a parent runtime receipt that identifies the final HIBEAM executable, while leaving `PR_SET_MM_EXE_FILE` as its own unresolved child.
 
-Local Linux/glibc negative control used GCC 14.2.0 and glibc 2.41. A tiny C process was launched with `GLIBC_TUNABLES=glibc.rtld.enable_secure=1`, loader-variable marker values and a benign control marker. Inside the program, `getenv` returned NULL for `GLIBC_TUNABLES`, `LD_LIBRARY_PATH`, `LD_PRELOAD`, and `LD_AUDIT`, while `/proc/<pid>/environ` simultaneously retained all exact launch strings. Procfs snapshot: 4584 bytes, SHA-256 `cd79ecfc3819a94132881036be26e4cfbcbd6def4e02224a3388411ee446f4fd`. This falsifies the hypothesis that loader sanitization necessarily erases those launch strings from procfs; it is not a production HIBEAM result.
+Repository `geant4/setup_and_run.sh` directly invokes `./hibeam_g4 -c krakow.config -m run_krakow.mac output_krakow.root`. Because config, macro and output spellings are relative, initial cwd is immediately material to their scientific identity.
 
-Exact authoring-byte deterministic test run, Python 3.13.5/Linux/no RNG:
+### Deterministic validation executed
 
-`PYTHONPATH=/tmp/ccb_new python3 -m pytest -q /tmp/ccb_new/tests/test_geant4_loader_initial_environment_attestation.py` -> `10 passed in 0.54s`; `py_compile` passed.
+Exact authoring-copy run, Python 3.13.5/Linux/no RNG:
 
-Hostile matrix: stable exact match, kernel-secure interpretation, absence semantics, proc/runtime mismatch, duplicate key, wrong parent receipt, process mismatch, malformed secure auxv record, mutation between procfs reads, and a real Linux child whose `os.environ` value changes after exec while procfs keeps the launch-region value.
+`python3 -m pytest -q tests/test_geant4_loader_argv_attestation.py` -> `11 passed in 1.40s`.
 
-Exact source identities now published on the branch:
+`python3 -m py_compile tools/audit/geant4_loader_argv_attestation.py tests/test_geant4_loader_argv_attestation.py` -> PASS.
 
-- `tools/audit/geant4_loader_initial_environment_attestation.py`: 13024 bytes, SHA-256 `a1d3074fcf998c17abf5d99752f399d98aca491f184cad704224ea08111ab9b3`, Git blob `ab0f087fd2a138101bd269b97afc8b607ccb9036`;
-- `tests/test_geant4_loader_initial_environment_attestation.py`: 9730 bytes, SHA-256 `9a81c81ea51ac27e94d925635b9ba800d6acc1742f9409ca57e3c161f7e41203`, Git blob `f3c79dbf80a064a28885046dcbed08940f2f174f`.
+Local ruff is unavailable; no local ruff PASS is claimed.
 
-Local ruff is unavailable. The workflow has been extended so repository CI must supply that gate.
+Hostile matrix covers nominal HIBEAM-style args, empty/non-UTF8 slots, tampered parent receipt, process mismatch, executable-link mismatch, cmdline mutation between reads, process identity mutation after read, empty cmdline, a real `/bin/sleep` child, explicit glibc-loader launch, and CLI wrong-digest fail-closed behavior.
 
-### Four sequential AI review passes
+### Exact content publication
 
-- **Runtime/physics integration lead — REVISE prior post-start characterization / ACCEPT bounded initial-region presence.** Strongest counter was that procfs only reflects the post-loader program environment. Post-exec mutation and secure-sanitization controls falsified that. Residual: earlier overwrite/remap and real HIBEAM runtime.
-- **Adversarial Linux/loader reviewer — ACCEPT stable observation / BLOCK immutable execve claim.** Strongest counter was that “initial environment” means immutable syscall log. `PR_SET_MM_ENV_START` and in-place writes eliminate that stronger model. Residual: loader argv, cwd, cache/config, tokens/hwcaps, preloads/audits.
-- **Independent validation reviewer — ACCEPT deterministic mechanism oracle / BLOCK HIBEAM and physics generalisation.** Ten local tests pass, but no production HIBEAM receipt or event exists.
-- **Claims/provenance reviewer — ACCEPT provenance refinement / BLOCK CL-021 promotion.** The entire generator→detector→DATA chain remains gated.
+- `tools/audit/geant4_loader_argv_attestation.py`: 9263 bytes, SHA-256 `4d1a8a195b10d40303dfab9bf8aac9605969134e65f8c114ea54dddb870cfba3`, Git blob `80e51cfe45037f95cc86039506a7dcee648f4474`, first commit `927bcb2d067cc46acc4a77762d94bd715d9080de`.
+- `tests/test_geant4_loader_argv_attestation.py`: 9259 bytes, SHA-256 `3de0b2d5d736f2e5cb38034a5fbe848ae2790be2382861ae454525c1b85546b0`, Git blob `6d2a962b329cf6df9c2b08f08d22473733dfea1d`, first commit `3aecf750fe492eb03622a914de990ded6e43f5ef`.
+- curated MC-validation ruff inclusion: `3c2d589215621aa1f6747b66bd069f9cee92708c`.
+- immutable ARU record: `chatgpt_todo/archive/2026-08-11T105100Z_ARU-MC-G4-LOADER-ARGV-001.md`.
 
-### Dependency refinement
+### Four sequential AI reviews
 
-`ARU-MC-G4-LOADER-PREEXEC-ENV-001` is narrowed rather than declared complete. Procfs presence is useful launch-region evidence, but an immutable pre-exec receipt is still needed to prove historical absence or rule out target overwrite/remap.
+- **Runtime/physics integration lead — ACCEPT bounded observation / REVISE historical invocation.** Strongest counter: stable procfs cmdline is exact launch argv. The argv-rewrite control falsified it. Residual: pre-exec argv, initial cwd, real HIBEAM runtime and exact input consumption.
+- **Adversarial Linux/loader reviewer — ACCEPT discriminator / BLOCK historical direct-exec claim.** Strongest counter: argv0/cmdline first slot identifies the executed program. Explicit-loader and argv-rewrite controls falsified it. Residual: `PR_SET_MM_EXE_FILE`, argument-region relocation, wrappers/descendants and later exec boundaries.
+- **Independent validation reviewer — ACCEPT deterministic oracle / BLOCK HIBEAM and physics inference.** Eleven deterministic tests pass; no Geant4 event or detector observable participates. Exact-head repository lint/full pytest remain required.
+- **Claims/provenance reviewer — ACCEPT provenance refinement / BLOCK CL-021 promotion.** Relative input paths, cwd, input-byte consumption, RNG/thread/event state, output identity, compiled source/stopping controls, event weights and detector response remain open.
 
-New children:
+### Children and next scientific atom
 
-- `ARU-MC-G4-LOADER-ENV-REGION-MUTATION-001` — eliminate or bind post-exec overwrite/`PR_SET_MM_ENV_*` ambiguity;
-- `ARU-MC-G4-LOADER-ARGV-001` — bind exact executable/dynamic-loader invocation and explicit loader options.
+New/refined children:
 
-Existing children remain initial cwd, ld.so cache/config, `$ORIGIN/$LIB/$PLATFORM` and glibc hwcaps, preload/audit sources, linker/static inputs, late `dlopen`, relocation/GOT/PLT, wrapper/descendant identity, immutable consumption, runtime manifest, compiled source/stopping controls, event weights and detector response.
+- `ARU-MC-G4-LOADER-INITIAL-CWD-001` — highest-value next child because the historical run front door uses relative config/macro/output paths;
+- `ARU-MC-G4-LOADER-ARGV-REGION-MUTATION-001` — pre-exec/no-overwrite evidence for historical argv claims;
+- `ARU-MC-G4-LOADER-EXE-REDIRECTION-001` — bind or eliminate `PR_SET_MM_EXE_FILE`;
+- `ARU-MC-G4-RUNTIME-ARGUMENT-SEMANTICS-001` — versioned HIBEAM option parsing and exact config/macro/output consumption.
+
+Existing cwd/cache/token-hwcaps/preload-audit and downstream linker/runtime/source/weight/detector gates remain open.
+
+### Concurrent repository state
+
+Open PR #1212 is unrelated to this atom. Its MC Validation run `31483436146` completed with full pytest passing (`1594 passed, 1 skipped, 8 xfailed, 1 xpassed`) but enforcement failed because newly exposed base-freshness tool/test contain two ruff `I001` import-order findings. Do not treat that run as authorization for this branch.
 
 ### Next gate
 
-The branch already contains the new tool, hostile tests, curated ruff integration and immutable record `chatgpt_todo/archive/2026-08-11T094700Z_ARU-MC-G4-LOADER-PROC-ENV-001.md`. Open a focused PR and require fresh exact-final-head MC Validation. Merge only if curated ruff, full non-integration pytest, diagnostics/enforcement and current-main ancestry are all successful. Green CI validates the software/provenance primitive only.
-
-No production Geant4 campaign was run, no beam or production-MC ROOT bytes were opened, and no angular distribution, event weight, B2/B8, PID, penetration, timing, calibration, pile-up, ESS, p-value, rate, or detector-performance quantity was regenerated or promoted.
+Open a focused draft PR for `audit/geant4-loader-argv` and require fresh exact-final-head MC Validation. Merge only if curated ruff, full non-integration pytest, diagnostics/enforcement, and current-main ancestry all pass. Green CI validates only the software/procfs primitive. No production HIBEAM process or event population was produced in this session.

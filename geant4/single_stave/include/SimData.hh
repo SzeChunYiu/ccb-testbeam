@@ -32,14 +32,15 @@ struct EventData {
   long n_cerenkov_generated = 0;
 
   // Per-sensor: photons reaching the end, and detected PE after PDE+coupling.
+  // n_detected is an INDEPENDENT_DIAGNOSTIC_DRAW (#1084), not the core ADC latent state.
   std::array<long, kNSensors> n_end_arrival{{0, 0, 0, 0}};
   std::array<long, kNSensors> n_detected{{0, 0, 0, 0}};
 
-  // SiPM saturation-corrected detected PE per sensor (occupancy model).
+  // Legacy analytic occupancy saturation of n_detected (diagnostic only, #1084).
   std::array<double, kNSensors> pe_saturated{{0, 0, 0, 0}};
 
   // Peak ADC above baseline from the ccb-sipm-core ResponseSimulator
-  // (SIPM-P1-002). One value per sensor channel.
+  // (SIPM-P1-002). Canonical production detector-response path.
   std::array<double, kNSensors> adc{{0, 0, 0, 0}};
 
   // Per-sensor photon arrivals for the ccb-sipm-core ResponseSimulator

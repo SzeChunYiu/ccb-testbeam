@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0.0",
+  "contract_id": "SELECTION_FLOW_DAG",
+  "issue": "#970",
+  "audit_id": "AF-TIM-POP-001",
+  "description": "Immutable selection-flow DAG for B-stack timing analyses.",
+  "input_product_note": "Canonical run split and 16- vs 18-sample input product remain gated by #952/#962.",
+  "nodes": [
+    {
+      "node_id": "raw_event",
+      "parent": null,
+      "description": "Raw HRD ROOT events for declared run list"
+    },
+    {
+      "node_id": "waveform_contract_pass",
+      "parent": "raw_event",
+      "description": "Waveforms satisfying sample-count/channel contract"
+    },
+    {
+      "node_id": "polarity_known",
+      "parent": "waveform_contract_pass",
+      "description": "Polarity identified"
+    },
+    {
+      "node_id": "baseline_identifiable",
+      "parent": "polarity_known",
+      "description": "Baseline window usable"
+    },
+    {
+      "node_id": "A_gt_threshold",
+      "parent": "baseline_identifiable",
+      "description": "Amplitude above analysis threshold"
+    },
+    {
+      "node_id": "calibration_analysis_split",
+      "parent": "A_gt_threshold",
+      "description": "Calibration vs analysis split"
+    },
+    {
+      "node_id": "topology_quality",
+      "parent": "calibration_analysis_split",
+      "description": "Topology/quality filters for timing pairs"
+    },
+    {
+      "node_id": "timing_pair",
+      "parent": "topology_quality",
+      "description": "Final timing-pair population"
+    }
+  ],
+  "required_table_fields": [
+    "node_id",
+    "input_artifact_hash",
+    "run_list",
+    "counts_by_sample_stave",
+    "code_commit",
+    "config_digest",
+    "additional_local_filters"
+  ],
+  "known_inconsistencies": [
+    {
+      "id": "TIMING-NOTE-TAB3-TAB4",
+      "status": "OPEN",
+      "detail": "Historical timing note Table 3 vs Table 4 population disagreement",
+      "blocking_issues": [
+        "#970",
+        "#952",
+        "#962"
+      ]
+    }
+  ],
+  "forbidden_report_artifacts": [
+    "<bound method"
+  ]
+}

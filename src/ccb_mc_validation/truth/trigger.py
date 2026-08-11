@@ -11,6 +11,42 @@ from ccb_mc_validation.exceptions import ConfigurationError, DataContractError
 from ccb_mc_validation.truth.pdg import is_charged
 
 
+# Fail-closed evidence labelling for #1045 / ADR-0002.
+# The classifier below implements the HRD first-stack-layer charged-hit proxy
+# only. It is NOT a validated hardware-trigger response model.
+TRIGGER_EVIDENCE_STATE = "BLOCKED"
+TRIGGER_LABEL = "MC_TRIGGER_PROXY"
+TRIGGER_HARDWARE_DEFINITION_STATUS = "UNKNOWN_EXTERNAL"
+_FORBIDDEN_HARDWARE_CLAIM_TOKENS = (
+    "hardware-trigger reproduction",
+    "hardware_trigger_validated",
+    "validated hardware trigger",
+)
+
+
+def trigger_provenance() -> dict[str, str]:
+    """Machine-readable provenance for Sample I/II MC membership."""
+    return {
+        "evidence_state": TRIGGER_EVIDENCE_STATE,
+        "label": TRIGGER_LABEL,
+        "hardware_definition_status": TRIGGER_HARDWARE_DEFINITION_STATUS,
+        "proxy_id": "HRD_FIRST_STACK_LAYER_CHARGED_HIT",
+        "contract": "docs/contracts/TRIGGER_HARDWARE_RESPONSE.json",
+        "adr": "docs/mc_validation/ADR-0002-trigger-hardware-proxy-blocked.md",
+    }
+
+
+def assert_not_hardware_trigger_claim(text: str) -> None:
+    """Fail closed if narrative text asserts a validated hardware trigger."""
+    lowered = str(text).lower()
+    for token in _FORBIDDEN_HARDWARE_CLAIM_TOKENS:
+        if token in lowered:
+            raise DataContractError(
+                f"forbidden hardware-trigger claim while evidence_state=BLOCKED: {token!r}"
+            )
+
+
+
 def _validate_coinc_ns(coinc_ns: float) -> float:
     """Coincidence window must be a finite, strictly-positive number of ns."""
     c = float(coinc_ns)
@@ -51,7 +87,10 @@ def classify_event(
     tB: float,
     coinc_ns: float,
 ) -> dict[str, bool]:
-    """Classify one event into Sample I and/or Sample II.
+    """Classify one event into Sample I and/or Sample II (HRD proxy only).
+
+    Evidence state is ``MC_TRIGGER_PROXY`` / ``BLOCKED`` until #1045 closes
+    (see :func:`trigger_provenance`). This is not a hardware-trigger model.
 
     Semantics (legacy ``mc01_trigger_split_truth.py`` line 127):
 

@@ -1,5 +1,6 @@
 # Chapter 10: Monte Carlo Validation Programme — MV0 through MV6 and MV9 Synthesis
-> **ACCEPTED by nature-reviewer (3/3).** All standard fixes applied.
+> **REVIEW_STATUS: EDITORIAL_REVIEWED** (AI role-separated nature-reviewer-style lenses; not independent human peer review). Scope: readability/structure only. Does **not** imply SOURCE_VERIFIED, EXECUTED_REPRODUCED, or CLAIM_AUTHORIZED. Open factual blockers remain tracked in GitHub issues / claim ledger. Contract: `docs/contracts/REVIEW_STATUS_TAXONOMY.json` / `chatgpt_todo/ATOMIC_RESEARCH_PROTOCOL.md`.
+> **MV0_MODEL_IDENTITY: DIVERGENT_FROM_EXECUTABLE** — Chapter prose describing WLS attenuation, gain 245.6±73.7 ADC/MeV, or noise=50 ADC is **not** the frozen executable identity `MV0_EXECUTABLE_DEFAULT_V1` (`docs/contracts/MV0_DIGITIZER_MODEL_IDENTITY.json`). Authorising MV0 claims must bind to the executable defaults (gain=120, noise=8, Gaussian time smear only).
 
 
 ## Abstract

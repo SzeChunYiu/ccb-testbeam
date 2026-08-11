@@ -76,6 +76,35 @@ class DigitizerPipeline:
         default_factory=lambda: ["birks", "scintillation", "transport", "sampling"]
     )
 
+
+    def model_identity(self) -> dict[str, Any]:
+        """Return the frozen executable MV0 model identity (#1078)."""
+        return {
+            "model_id": "MV0_EXECUTABLE_DEFAULT_V1",
+            "authority": "EXECUTABLE",
+            "n_samples": int(self.n_samples),
+            "sample_spacing_ns": float(self.sample_spacing_ns),
+            "tau_rise_ns": float(self.tau_rise_ns),
+            "tau_decay_ns": float(self.tau_decay_ns),
+            "transport": {
+                "model": "zero_mean_gaussian_time_smear",
+                "sigma_ns": float(self.transport_sigma_ns),
+                "position_attenuation": False,
+                "lambda_att_cm": None,
+            },
+            "electronics": {
+                "gain_adc_per_mev": float(self.electronics.gain_adc_per_mev),
+                "gain_sigma_adc_per_mev": None,
+                "noise_adc_rms": float(self.electronics.noise_adc_rms),
+                "pedestal_adc": float(self.electronics.pedestal_adc),
+                "adc_bits": int(self.electronics.adc_bits),
+                "adc_ceiling": int(self.electronics.adc_ceiling),
+            },
+            "apply_birks": bool(self.apply_birks),
+            "stages": list(self.stages),
+            "contract": "docs/contracts/MV0_DIGITIZER_MODEL_IDENTITY.json",
+        }
+
     # ------------------------------------------------------------------
     # schema validation
     # ------------------------------------------------------------------

@@ -96,6 +96,8 @@ def main() -> int:
     assert_rejected(args.exe, args.optical_dir, "CCB_SIPM_CROSSTALK_PROB", "1")
     assert_rejected(args.exe, args.optical_dir, "CCB_SIPM_ADC_BITS", "0")
     assert_rejected(args.exe, args.optical_dir, "CCB_SIPM_SAMPLE_DT_NS", "nan")
+    assert_rejected(args.exe, args.optical_dir, "CCB_SIPM_OVERVOLTAGE_V", "5")
+    assert_rejected(args.exe, args.optical_dir, "CCB_SIPM_TEMPERATURE_C", "0")
     print("SIPM_ENV_FAIL_CLOSED_PASS")
     return 0
 

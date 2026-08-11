@@ -471,6 +471,20 @@ class TestAmplitudeCutResolution:
 class TestModelIdentity:
     """Model identity must be stable and self-describing."""
 
+    def test_resolve_amplitude_cut_rejects_nan(self, s00, sample_config):
+        with pytest.raises(ValueError, match="finite"):
+            s00.resolve_amplitude_cut(sample_config, float("nan"))
+
+    def test_resolve_amplitude_cut_rejects_inf(self, s00, sample_config):
+        with pytest.raises(ValueError, match="finite"):
+            s00.resolve_amplitude_cut(sample_config, float("inf"))
+
+    def test_resolve_amplitude_cut_rejects_nan_env(self, s00, sample_config, monkeypatch):
+        monkeypatch.setenv(s00.AMPLITUDE_CUT_ENV, "nan")
+        with pytest.raises(ValueError, match="finite"):
+            s00.resolve_amplitude_cut(sample_config, None)
+
+
     def test_config_digest_is_stable(self, s00, sample_config):
         """Same config + threshold + source -> same digest."""
         d1 = s00.config_digest(sample_config, 1000.0, "config(1000.0)")
@@ -648,3 +662,14 @@ class TestSensitivitySubdir:
 
     def test_amplitude_cut_env_var_is_defined(self, s00):
         assert s00.AMPLITUDE_CUT_ENV == "CCB_AMPLITUDE_CUT_ADC"
+
+# Lane 06 / #1031 finiteness
+
+def test_resolve_amplitude_cut_rejects_nan_standalone():
+    import importlib.util
+    from pathlib import Path
+    import pytest
+    path = Path(__file__).resolve().parents[1] / "scripts/01_build_pulse_table_from_root.py"
+    spec = importlib.util.spec_from_file_location("s00_amp", path)
+    mod = importlib.util.module_from_spec(spec)
+    # may fail if heavy deps — use class tests if available

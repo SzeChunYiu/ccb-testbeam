@@ -296,44 +296,60 @@ def sigmoid(x: np.ndarray) -> np.ndarray:
     return 1.0 / (1.0 + np.exp(-np.clip(x, -40.0, 40.0)))
 
 
-class CNNClassifier(nn.Module):
-    def __init__(self, n_tab: int):
-        super().__init__()
-        self.conv = nn.Sequential(
-            nn.Conv1d(1, 12, kernel_size=3, padding=1),
-            nn.ReLU(),
-            nn.Conv1d(12, 16, kernel_size=3, padding=1),
-            nn.ReLU(),
-            nn.AdaptiveAvgPool1d(1),
-        )
-        self.head = nn.Sequential(nn.Linear(16 + n_tab, 32), nn.ReLU(), nn.Dropout(0.10), nn.Linear(32, 1))
+# Torch nn.Module subclasses are import-time fatal when torch is absent (CI).
+# Guard definitions so optional-torch study scripts remain importable for
+# non-torch unit tests (#1124–#1126).
+if nn is not None:  # pragma: no branch - exercised when torch is installed
 
-    def forward(self, wave: torch.Tensor, tab: torch.Tensor) -> torch.Tensor:
-        z = self.conv(wave[:, None, :]).squeeze(-1)
-        return self.head(torch.cat([z, tab], dim=1)).squeeze(1)
+    class CNNClassifier(nn.Module):
+        def __init__(self, n_tab: int):
+            super().__init__()
+            self.conv = nn.Sequential(
+                nn.Conv1d(1, 12, kernel_size=3, padding=1),
+                nn.ReLU(),
+                nn.Conv1d(12, 16, kernel_size=3, padding=1),
+                nn.ReLU(),
+                nn.AdaptiveAvgPool1d(1),
+            )
+            self.head = nn.Sequential(nn.Linear(16 + n_tab, 32), nn.ReLU(), nn.Dropout(0.10), nn.Linear(32, 1))
+
+        def forward(self, wave: "torch.Tensor", tab: "torch.Tensor") -> "torch.Tensor":
+            z = self.conv(wave[:, None, :]).squeeze(-1)
+            return self.head(torch.cat([z, tab], dim=1)).squeeze(1)
 
 
-class WaveGateNet(nn.Module):
-    """Small waveform-plus-tabular gated residual classifier for harm vetoes."""
+    class WaveGateNet(nn.Module):
+        """Small waveform-plus-tabular gated residual classifier for harm vetoes."""
 
-    def __init__(self, n_tab: int):
-        super().__init__()
-        self.conv = nn.Sequential(
-            nn.Conv1d(1, 16, kernel_size=5, padding=2),
-            nn.GELU(),
-            nn.Conv1d(16, 16, kernel_size=3, padding=1),
-            nn.GELU(),
-            nn.AdaptiveMaxPool1d(1),
-        )
-        self.tab = nn.Sequential(nn.Linear(n_tab, 32), nn.GELU(), nn.Linear(32, 16), nn.GELU())
-        self.gate = nn.Sequential(nn.Linear(n_tab, 16), nn.Sigmoid())
-        self.head = nn.Sequential(nn.Linear(32, 32), nn.GELU(), nn.Dropout(0.12), nn.Linear(32, 1))
+        def __init__(self, n_tab: int):
+            super().__init__()
+            self.conv = nn.Sequential(
+                nn.Conv1d(1, 16, kernel_size=5, padding=2),
+                nn.GELU(),
+                nn.Conv1d(16, 16, kernel_size=3, padding=1),
+                nn.GELU(),
+                nn.AdaptiveMaxPool1d(1),
+            )
+            self.tab = nn.Sequential(nn.Linear(n_tab, 32), nn.GELU(), nn.Linear(32, 16), nn.GELU())
+            self.gate = nn.Sequential(nn.Linear(n_tab, 16), nn.Sigmoid())
+            self.head = nn.Sequential(nn.Linear(32, 32), nn.GELU(), nn.Dropout(0.12), nn.Linear(32, 1))
 
-    def forward(self, wave: torch.Tensor, tab: torch.Tensor) -> torch.Tensor:
-        wz = self.conv(wave[:, None, :]).squeeze(-1)
-        tz = self.tab(tab)
-        gz = self.gate(tab)
-        return self.head(torch.cat([wz * gz, tz], dim=1)).squeeze(1)
+        def forward(self, wave: "torch.Tensor", tab: "torch.Tensor") -> "torch.Tensor":
+            wz = self.conv(wave[:, None, :]).squeeze(-1)
+            tz = self.tab(tab)
+            gz = self.gate(tab)
+            return self.head(torch.cat([wz * gz, tz], dim=1)).squeeze(1)
+
+else:  # pragma: no cover - CI / torch-less environments
+
+    class CNNClassifier:  # type: ignore[no-redef]
+        def __init__(self, *args, **kwargs):
+            raise RuntimeError("torch is not available")
+
+
+    class WaveGateNet:  # type: ignore[no-redef]
+        def __init__(self, *args, **kwargs):
+            raise RuntimeError("torch is not available")
 
 
 def fit_torch_classifier(
@@ -414,6 +430,26 @@ def summarize_method(frame: pd.DataFrame, method: str, reps: int, rng: np.random
     y = frame["harm_label"].to_numpy(dtype=int)
     flag = frame[f"flag_{method}"].to_numpy(dtype=bool)
     prob = frame[f"prob_{method}"].to_numpy(dtype=float)
+    if method in {"cnn_1d", "wavegate_resnet"} and not np.isfinite(prob).any():
+        return {
+            "method": method,
+            "n": int(len(frame)),
+            "execution_state": "FAILED_MODEL_EXECUTION",
+            "requested_model": method,
+            "effective_model": None,
+            "harm_rate": float(y.mean()) if len(y) else float("nan"),
+            "flag_rate": float("nan"),
+            "precision": float("nan"),
+            "recall": float("nan"),
+            "f1": float("nan"),
+            "accepted_coverage": float("nan"),
+            "accepted_charge_bias_frac": float("nan"),
+            "accepted_charge_res68_frac": float("nan"),
+            "accepted_timing_abs68_ns": float("nan"),
+            "accepted_timing_tail_frac_gt5ns": float("nan"),
+            "calibration_ece": float("nan"),
+            "eligible_for_ranking": False,
+        }
     precision, recall, f1, _ = precision_recall_fscore_support(y, flag.astype(int), average="binary", zero_division=0)
     accepted = ~flag
     charge = frame.loc[accepted, "prod_charge_frac_error"].to_numpy()
@@ -468,16 +504,24 @@ def correction_metrics(frame: pd.DataFrame, charge_cols: Dict[str, str], time_co
         tcol = time_cols[method]
         c = frame[ccol].to_numpy()
         t = frame[tcol].to_numpy()
+        finite = np.isfinite(t)
+        n_finite = int(finite.sum())
+        t_finite = t[finite]
+        # Tail fraction uses the finite-crossing denominator only (#1124).
+        tail = float(np.mean(np.abs(t_finite) > 5.0)) if n_finite else float("nan")
         rows.append(
             {
                 "method": method,
                 "n": int(len(frame)),
+                "n_timing_finite": n_finite,
+                "timing_threshold_definition": "peak_adc_cfd",
                 "charge_bias_median_frac": float(np.median(c)),
                 "charge_res68_abs_frac": float(np.percentile(np.abs(c), 68)),
                 "charge_full_rms_frac": float(np.sqrt(np.mean(c * c))),
                 "timing_bias_median_ns": float(np.nanmedian(t)),
-                "timing_abs68_ns": float(np.nanpercentile(np.abs(t), 68)),
-                "timing_tail_frac_gt5ns": float(np.nanmean(np.abs(t) > 5.0)),
+                "timing_abs68_ns": float(np.nanpercentile(np.abs(t), 68)) if n_finite else float("nan"),
+                "timing_tail_frac_gt5ns": tail,
+                "timing_no_crossing_frac": float(1.0 - n_finite / len(frame)) if len(frame) else float("nan"),
             }
         )
     return pd.DataFrame(rows)
@@ -684,12 +728,23 @@ def main() -> int:
         }
         charge_pred: Dict[str, np.ndarray] = {}
         time_resid: Dict[str, np.ndarray] = {}
+        # CFD threshold reference must be amplitude-like (ADC), not charge
+        # (ADC-samples). raw_integral misuse of Q as CFD amplitude is #1124.
+        peak_amp_for_cfd = np.maximum(meta["b2_amp"].to_numpy(dtype=float), 1.0)
         for name, est in estimators.items():
             cal = fit_charge_calibrator(est, odd, train_mask)
             pred_charge = predict_charge(cal, est)
             charge_pred[name] = (pred_charge - odd) / np.maximum(odd, 1.0)
-            even_time = float(config["sample_period_ns"]) * cfd_time_samples(wave, np.maximum(est, 1.0), float(config["cfd_fraction"]))
-            offset = float(np.nanmedian(even_time[train_mask] - meta.loc[train_mask, "odd_time_ns"].to_numpy()))
+            cfd_amp = peak_amp_for_cfd  # always peak-ADC CFD20 (#1124)
+            even_time = float(config["sample_period_ns"]) * cfd_time_samples(
+                wave, cfd_amp, float(config["cfd_fraction"])
+            )
+            finite = np.isfinite(even_time)
+            offset = float(
+                np.nanmedian(
+                    even_time[train_mask & finite] - meta.loc[train_mask & finite, "odd_time_ns"].to_numpy()
+                )
+            ) if np.any(train_mask & finite) else 0.0
             time_resid[name] = even_time - meta["odd_time_ns"].to_numpy() - offset
 
         prod_charge = charge_pred["template_saturation"]
@@ -797,19 +852,41 @@ def main() -> int:
 
         x_wave = (wave / np.maximum(meta["b2_amp"].to_numpy()[:, None], 1.0)).astype(np.float32)
         x_tab = X[:, 18:].astype(np.float32)
+        # Fail-closed model identity (#1126): never alias MLP/GBT predictions as CNN/ResNet.
+        torch_exec = {
+            "cnn_1d": {"requested_model": "cnn_1d", "effective_model": None, "status": "PENDING", "error": None},
+            "wavegate_resnet": {
+                "requested_model": "wavegate_resnet",
+                "effective_model": None,
+                "status": "PENDING",
+                "error": None,
+            },
+        }
         try:
             fold["prob_cnn_1d"] = fit_torch_classifier(
                 "cnn_1d", x_wave, x_tab, y, train_eligible, held_idx, config, int(config["random_seed"]) + 10 * held_run
             )
+            torch_exec["cnn_1d"].update(effective_model="cnn_1d", status="SUCCESS")
+        except Exception as exc:
+            print(f"cnn_1d failed for run {held_run}: {exc}", flush=True)
+            fold["prob_cnn_1d"] = np.full(len(fold), np.nan, dtype=float)
+            torch_exec["cnn_1d"].update(status="FAILED_MODEL_EXECUTION", error=type(exc).__name__)
+        try:
             fold["prob_wavegate_resnet"] = fit_torch_classifier(
                 "wavegate_resnet", x_wave, x_tab, y, train_eligible, held_idx, config, int(config["random_seed"]) + 20 * held_run
             )
+            torch_exec["wavegate_resnet"].update(effective_model="wavegate_resnet", status="SUCCESS")
         except Exception as exc:
-            print(f"torch classifiers failed for run {held_run}: {exc}", flush=True)
-            fold["prob_cnn_1d"] = fold["prob_mlp"]
-            fold["prob_wavegate_resnet"] = fold["prob_gradient_boosted_trees"]
-        fold["flag_cnn_1d"] = fold["prob_cnn_1d"].to_numpy() >= 0.5
-        fold["flag_wavegate_resnet"] = fold["prob_wavegate_resnet"].to_numpy() >= 0.5
+            print(f"wavegate_resnet failed for run {held_run}: {exc}", flush=True)
+            fold["prob_wavegate_resnet"] = np.full(len(fold), np.nan, dtype=float)
+            torch_exec["wavegate_resnet"].update(status="FAILED_MODEL_EXECUTION", error=type(exc).__name__)
+        fold["torch_execution_json"] = json.dumps(torch_exec)
+        fold["flag_cnn_1d"] = np.where(np.isfinite(fold["prob_cnn_1d"].to_numpy(dtype=float)), fold["prob_cnn_1d"].to_numpy(dtype=float) >= 0.5, False)
+        fold["flag_wavegate_resnet"] = np.where(
+            np.isfinite(fold["prob_wavegate_resnet"].to_numpy(dtype=float)),
+            fold["prob_wavegate_resnet"].to_numpy(dtype=float) >= 0.5,
+            False,
+        )
 
         rows.append(fold)
         correction_frames.append(
@@ -871,6 +948,9 @@ def main() -> int:
     harm_rows = [summarize_method(pred, method, int(config["bootstrap_reps"]), rng) for method in method_names]
     harm_summary = pd.DataFrame(harm_rows)
     eligible = harm_summary["accepted_coverage"] >= 0.50
+    if "execution_state" in harm_summary.columns:
+        failed = harm_summary["execution_state"].fillna("SUCCESS").astype(str).str.startswith(("FAILED", "UNAVAILABLE"))
+        eligible = eligible & ~failed
     rank_source = harm_summary.copy()
     rank_source["_bad"] = ~eligible
     rank_source = rank_source.sort_values(

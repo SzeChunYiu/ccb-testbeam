@@ -1,24 +1,52 @@
 #include "RunAction.hh"
 #include "SimData.hh"
 #include "NpyWriter.hh"
+#include "SipmDigitizerConfig.hh"
 
 #include "G4Run.hh"
 #include "G4AnalysisManager.hh"
 #include "G4SystemOfUnits.hh"
 
+#include "ccb/sipm/Digest.hh"
+#include "ccb/sipm/ResponseSimulator.hh"
+
+#include <cstdint>
 #include <cstdlib>
 #include <fstream>
+#include <stdexcept>
 #include <iostream>
 #include <ctime>
 #include <cstdio>
+#include <sstream>
 #include <string>
 #include <sys/stat.h>
+#include <vector>
 
 RunAction::RunAction(const AppConfig& cfg, const OpticalTables& tables,
                      const std::string& geometry_hash)
-    : cfg_(cfg), tables_(tables), geometry_hash_(geometry_hash) {}
+    : cfg_(cfg), tables_(tables), geometry_hash_(geometry_hash) {
+  // Master and worker both materialise the effective digitizer config so the
+  // metadata sidecar written on the master thread cannot miss #977 fields.
+  SetSipmDigitizerConfig(BuildSipmDigitizerConfig(cfg_, tables_));
+}
 
 RunAction::~RunAction() = default;
+
+void RunAction::SetSipmDigitizerConfig(const ccb::sipm::ModelConfig& cfg) {
+  sipm_config_ = cfg;
+  have_sipm_config_ = true;
+}
+
+void RunAction::NoteSipmEventDiagnostics(bool candidate_limit_reached,
+                                         std::size_t n_candidates_processed) {
+  if (candidate_limit_reached) {
+    ++candidate_limit_hits_;
+  }
+  if (n_candidates_processed > max_candidates_processed_) {
+    max_candidates_processed_ = n_candidates_processed;
+  }
+}
+
 
 void RunAction::DefineNtuples() {
   auto* am = G4AnalysisManager::Instance();
@@ -204,7 +232,10 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
   // <output>.meta.json — provenance the analysis + manifest validators consume.
   const std::string meta = cfg_.output + ".meta.json";
   std::ofstream os(meta);
-  if (!os) { std::cerr << "warning: cannot write " << meta << "\n"; return; }
+  if (!os) {
+    std::cerr << "fatal: cannot write provenance sidecar " << meta << "\n";
+    throw std::runtime_error("failed to write run metadata sidecar: " + meta);
+  }
   auto j = [](const std::string& s) -> std::string {
     // Fully robust JSON string escaping (RFC 8259).  Escapes \" \\ and all
     // control characters (< 0x20), using short forms for the common ones
@@ -236,7 +267,7 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
   };
   const char* git = std::getenv("CCB_GIT_COMMIT");
   os << "{\n"
-     << "  \"schema\": \"ccb-stave-run-meta/1\",\n"
+     << "  \"schema\": \"ccb-stave-run-meta/2\",\n"
      << "  \"git_commit\": " << j(git ? git : "unknown") << ",\n"
      << "  \"geometry_hash\": " << j(geometry_hash_) << ",\n"
      << "  \"seed\": " << cfg_.seed << ",\n"
@@ -247,7 +278,12 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
               ? "unset" : cfg_.g4_force_number_of_threads) << ",\n"
      << "  \"particle\": " << j(cfg_.particle) << ",\n"
      << "  \"kinetic_energy_MeV\": " << cfg_.kinetic_energy_MeV << ",\n"
+     << "  \"n_events_requested\": " << cfg_.n_events << ",\n"
      << "  \"n_events\": " << run->GetNumberOfEvent() << ",\n"
+     << "  \"hit_x_cm\": " << cfg_.hit_x_cm << ",\n"
+     << "  \"hit_y_cm\": " << cfg_.hit_y_cm << ",\n"
+     << "  \"theta_deg\": " << cfg_.theta_deg << ",\n"
+     << "  \"phi_deg\": " << cfg_.phi_deg << ",\n"
      << "  \"mode\": " << j(cfg_.mode == SimMode::kOpticalCalibration ? "optical" : "fast") << ",\n"
      << "  \"birks_kB_mm_per_MeV\": " << cfg_.birks_kB_mm_per_MeV << ",\n"
      << "  \"production_cut_mm\": " << cfg_.production_cut_mm << ",\n"
@@ -259,14 +295,104 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
      << "  \"collection_efficiency\": " << cfg_.collection_efficiency << ",\n"
 	     << "  \"optical_interface_model\": " << j(cfg_.optical_interface_model) << ",\n"
      << "  \"sipm_n_cells\": " << cfg_.sipm_n_cells << ",\n"
+     << "  \"sipm_overvoltage_V\": " << cfg_.sipm_overvoltage_V << ",\n"
+     << "  \"wls_time_profile\": " << j(cfg_.wls_time_profile) << ",\n"
+     << "  \"strict_optical\": " << (cfg_.strict_optical ? "true" : "false") << ",\n"
      << "  \"far_end_mode\": " << j(cfg_.far_end_mode) << ",\n"
+     << "  \"allow_optical_fallback\": " << (cfg_.allow_optical_fallback ? "true" : "false") << ",\n"
+     << "  \"authorising\": " << (cfg_.authorising ? "true" : "false") << ",\n"
+     << "  \"optical_fallback_used\": " << (cfg_.optical_fallback_used ? "true" : "false") << ",\n"
+     << "  \"optical_constants_ledger\": " << j(cfg_.optical_constants_ledger) << ",\n"
+     << "  \"scintillator_material\": " << j(cfg_.scintillator_material) << ",\n"
+     << "  \"scintillator_material_status\": " << j(cfg_.scintillator_material_status) << ",\n"
+     << "  \"coating_material\": " << j(cfg_.coating_material) << ",\n"
+     << "  \"coating_material_status\": " << j(cfg_.coating_material_status) << ",\n"
+     << "  \"wls_mean_number_photons\": " << cfg_.wls_mean_number_photons << ",\n"
+     << "  \"wls_fluorescence_model\": " << j(cfg_.wls_fluorescence_model) << ",\n"
+     << "  \"wls_fluorescence_status\": " << j(cfg_.wls_fluorescence_status) << ",\n"
+     << "  \"y11_direct_scint_yield_per_MeV\": " << cfg_.y11_direct_scint_yield_per_MeV << ",\n"
+     << "  \"y11_direct_scint_status\": " << j(cfg_.y11_direct_scint_status) << ",\n"
+     << "  \"y11_attenuation_form\": " << j(cfg_.y11_attenuation_form) << ",\n"
+     << "  \"y11_attenuation_form_status\": " << j(cfg_.y11_attenuation_form_status) << ",\n"
+     << "  \"tio2_finish\": " << j(cfg_.tio2_finish) << ",\n"
+     << "  \"tio2_specular_lobe\": " << cfg_.tio2_specular_lobe << ",\n"
+     << "  \"tio2_specular_spike\": " << cfg_.tio2_specular_spike << ",\n"
+     << "  \"tio2_backscatter\": " << cfg_.tio2_backscatter << ",\n"
+     << "  \"tio2_reflection_model_status\": " << j(cfg_.tio2_reflection_model_status) << ",\n"
+     << "  \"gpu_optical\": " << (cfg_.gpu_optical ? "true" : "false") << ",\n"
+     << "  \"optical_out\": " << j(cfg_.optical_out) << ",\n"
+     << "  \"macro\": " << j(cfg_.macro) << ",\n"
+     << "  \"output\": " << j(cfg_.output) << ",\n"
+     << "  \"detector_response\": {\n"
+     << "    \"adc_path\": \"ccb-sipm-core\",\n"
+     << "    \"legacy_pe_path\": \"INDEPENDENT_DIAGNOSTIC_DRAW\",\n"
+     << "    \"legacy_pe_note\": \"detected_*/pe_sat_* use a separate Bernoulli+analytic occupancy draw; not the latent state of adc_* (issue #1084)\"\n"
+     << "  },\n"
      << "  \"optical_tables\": {\n";
-  // Record each optical table path + hash.
+  // Record each optical table path + hash + validation status (#978/#980).
   size_t k = 0, n = tables_.All().size();
   for (const auto& kv : tables_.All()) {
     os << "    " << j(kv.first) << ": {\"path\": " << j(kv.second.path)
-       << ", \"sha256\": " << j(kv.second.sha256) << "}"
+       << ", \"sha256\": " << j(kv.second.sha256)
+       << ", \"units_x\": " << j(kv.second.units_x)
+       << ", \"units_y\": " << j(kv.second.units_y)
+       << ", \"status\": " << j(kv.second.status_note)
+       << ", \"validation_status\": " << j(kv.second.validation_status)
+       << ", \"fallback_used\": false}"
        << (++k < n ? "," : "") << "\n";
   }
-  os << "  }\n}\n";
+  os << "  }";
+
+  // #977: persist effective ccb-sipm-core configuration + digest.
+  if (have_sipm_config_) {
+    ccb::sipm::ResponseSimulator probe(sipm_config_);
+    const auto meta = probe.run_metadata();
+    const std::string meta_json = meta.render_json();
+    const std::vector<std::uint8_t> bytes(meta_json.begin(), meta_json.end());
+    const std::string digest = ccb::sipm::Sha256Hex(bytes);
+    const char* sipm_git = std::getenv("CCB_SIPM_CORE_COMMIT");
+    os << ",\n"
+       << "  \"digitizer\": {\n"
+       << "    \"validation_status\": \"OK\",\n"
+       << "    \"ccb_sipm_core_commit\": " << j(sipm_git ? sipm_git : "unspecified") << ",\n"
+       << "    \"digitizer_config_sha256\": " << j(digest) << ",\n"
+       << "    \"cells_x\": " << sipm_config_.cells_x << ",\n"
+       << "    \"cells_y\": " << sipm_config_.cells_y << ",\n"
+       << "    \"active_width_mm\": " << sipm_config_.active_width_mm << ",\n"
+       << "    \"active_height_mm\": " << sipm_config_.active_height_mm << ",\n"
+       << "    \"number_of_cells\": " << sipm_config_.number_of_cells() << ",\n"
+       << "    \"requested_sipm_n_cells\": " << cfg_.sipm_n_cells << ",\n"
+       << "    \"pde_scale\": " << sipm_config_.pde_scale << ",\n"
+       << "    \"coupling_efficiency\": " << sipm_config_.coupling_efficiency << ",\n"
+       << "    \"recovery_time_ns\": " << sipm_config_.recovery_time_ns << ",\n"
+       << "    \"dark_count_rate_hz\": " << sipm_config_.dark_count_rate_hz << ",\n"
+       << "    \"enable_dark_counts\": " << (sipm_config_.enable_dark_counts ? "true" : "false") << ",\n"
+       << "    \"prompt_crosstalk_probability\": " << sipm_config_.prompt_crosstalk_probability << ",\n"
+       << "    \"afterpulse_fast_probability\": " << sipm_config_.afterpulse_fast_probability << ",\n"
+       << "    \"afterpulse_slow_probability\": " << sipm_config_.afterpulse_slow_probability << ",\n"
+       << "    \"adc_bits\": " << sipm_config_.adc_bits << ",\n"
+       << "    \"adc_lsb_pe\": " << sipm_config_.adc_lsb_pe << ",\n"
+       << "    \"baseline_adc\": " << sipm_config_.baseline_adc << ",\n"
+       << "    \"sample_dt_ns\": " << sipm_config_.sample_dt_ns << ",\n"
+       << "    \"window_start_ns\": " << sipm_config_.window_start_ns << ",\n"
+       << "    \"window_end_ns\": " << sipm_config_.window_end_ns << ",\n"
+       << "    \"history_start_ns\": " << sipm_config_.history_start_ns << ",\n"
+       << "    \"max_candidates\": " << sipm_config_.max_candidates << ",\n"
+       << "    \"candidate_limit_hits\": " << candidate_limit_hits_ << ",\n"
+       << "    \"max_candidates_processed\": " << max_candidates_processed_ << ",\n"
+       << "    \"overvoltage_V\": " << sipm_config_.device_provenance.overvoltage_V << ",\n"
+       << "    \"temperature_C\": " << sipm_config_.device_provenance.temperature_C << ",\n"
+       << "    \"device_name\": " << j(sipm_config_.device_provenance.device_name) << ",\n"
+       << "    \"calibration_status\": " << j(sipm_config_.device_provenance.calibration_status) << ",\n"
+       << "    \"impulse_model\": " << j(sipm_config_.impulse_model) << ",\n"
+       << "    \"trigger_recovery_model\": " << j(sipm_config_.trigger_recovery_model) << ",\n"
+       << "    \"gain_recovery_model\": " << j(sipm_config_.gain_recovery_model) << ",\n"
+       << "    \"core_run_metadata_json\": " << j(meta_json) << "\n"
+       << "  }";
+  } else {
+    os << ",\n"
+       << "  \"digitizer\": {\"validation_status\": \"MISSING\"}";
+  }
+  os << "\n}\n";
 }
+

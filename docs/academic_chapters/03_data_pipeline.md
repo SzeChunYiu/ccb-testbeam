@@ -1,6 +1,6 @@
 # §3 — Data Pipeline: From Raw Waveforms to Truth-Bridged Analysis
 
-> **ACCEPTED by nature-reviewer (3/3).** 5,900 words, 8 figures. All 6 reviewer fixes implemented: Data Availability and Code Availability statements added, Reporting Summary compatibility noted, figure count verified, MC calibration/validation split declared, dead-channel claim caveated.
+> **REVIEW_STATUS: EDITORIAL_REVIEWED** (AI role-separated nature-reviewer-style lenses; not independent human peer review). Scope: readability/structure only. Does **not** imply SOURCE_VERIFIED, EXECUTED_REPRODUCED, or CLAIM_AUTHORIZED. Open factual blockers remain tracked in GitHub issues / claim ledger. Contract: `docs/contracts/REVIEW_STATUS_TAXONOMY.json` / `chatgpt_todo/ATOMIC_RESEARCH_PROTOCOL.md`.
 
 The analysis of the CCB test-beam data proceeds through a three-stage pipeline that reduces 110 raw ROOT files to a unified selected-pulse table, distributes the reduced data into parallel analysis branches, and cross-validates every result against a GEANT4 Monte Carlo simulation equipped with a custom digitizer that converts truth-level energy depositions into synthetic ADC waveforms. This pipeline architecture ensures that every physics result — timing resolution, pile-up tolerance, particle identification — is assessed against a truth-labelled reference obtained by running the identical analysis code on digitised Monte Carlo events.
 

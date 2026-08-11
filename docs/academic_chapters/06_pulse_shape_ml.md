@@ -1,6 +1,6 @@
 # Chapter 6: Pulse Shape Representation and Machine Learning
 
-> **ACCEPTED by nature-reviewer (3/3).** 12,500 words, 8 figures, 15 references. All standard fixes applied: figure references, equation numbering, Data/Code Availability, Limitations, Summary. No outstanding reviewer requests.
+> **REVIEW_STATUS: EDITORIAL_REVIEWED** (AI role-separated nature-reviewer-style lenses; not independent human peer review). Scope: readability/structure only. Does **not** imply SOURCE_VERIFIED, EXECUTED_REPRODUCED, or CLAIM_AUTHORIZED. Open factual blockers remain tracked in GitHub issues / claim ledger. Contract: `docs/contracts/REVIEW_STATUS_TAXONOMY.json` / `chatgpt_todo/ATOMIC_RESEARCH_PROTOCOL.md`.
 
 ## Source-Binding and Claim Matrix
 

@@ -50,12 +50,13 @@ def _data_row(run, eid, amps, sample="II", sat=None):
     }
 
 
-def _mc_row(run, eid, edeps):
+def _mc_row(run, eid, edeps, weight=1.0):
     e2, e4, e6, e8 = edeps
     return {
         "source_file_id": "sf0", "run_id": run, "event_id": eid,
         "edep_B2": e2, "edep_B4": e4, "edep_B6": e6, "edep_B8": e8,
         "edep_B10": 0.0, "edep_B12": 0.0,
+        "PrimaryWeight": weight,
         "sample": "II", "trigger_definition": "beam_v1",
     }
 
@@ -332,7 +333,7 @@ def test_analyze_end_to_end_invariants():
     assert r["saturation"]["any_saturation_events"] >= 1
     # all-zero downstream event resolves to explicit no-reach category
     assert r["stopping"]["data_adc"]["distributions"][0]["n_no_layer_passes"] >= 1
-    assert de.NO_REACH_CATEGORY in bundle["data"]["stop_layer"].values
+    assert de.NO_REACH_CATEGORY in bundle["data"]["deepest_active_stave"].values
 
 
 def test_cli_full_run(tmp_path):
@@ -405,3 +406,113 @@ def test_cli_help_runs():
     assert proc.returncode == 0
     assert "--stop-thresholds" in proc.stdout
     assert "--data-thresholds" in proc.stdout
+
+
+
+# --------------------------------------------------------------------------- #
+# Wave A / Lane 06: #1022 #1024 #1025 #1028 #1030 #1048
+# --------------------------------------------------------------------------- #
+
+def test_sample_tokens_rejects_lstrip_charset_false_positives():
+    # Former bug: lstrip("SAMPLE") turned P1/L2 into I/II.
+    assert de.sample_tokens("P1") == set()
+    assert de.sample_tokens("L2") == set()
+    assert de.sample_tokens("SAMPLE3") == set()
+    assert de.sample_tokens("I") == {"I"}
+    assert de.sample_tokens("II") == {"II"}
+    assert de.sample_tokens("Sample I") == {"I"}
+    assert de.sample_tokens("sample-II") == {"II"}
+    assert de.sample_tokens("1") == {"I"}
+    assert de.sample_tokens("2") == {"II"}
+    assert de.sample_tokens("I;II") == {"I", "II"}
+
+
+def test_parse_bool_flag_rejects_truthiness_trap():
+    assert de.parse_bool_flag(False) is False
+    assert de.parse_bool_flag("False") is False
+    assert de.parse_bool_flag("false") is False
+    assert de.parse_bool_flag("0") is False
+    assert de.parse_bool_flag(True) is True
+    assert de.parse_bool_flag("true") is True
+    assert de.parse_bool_flag(1) is True
+    assert de.parse_bool_flag(0) is False
+    with pytest.raises(ValueError):
+        de.parse_bool_flag("maybe")
+    with pytest.raises(ValueError):
+        de.parse_bool_flag("anything")
+    df = pd.DataFrame({"saturation_B2": ["False", "true", 0, 1]})
+    out = de.fill_missing_flags(df, ["saturation_B2"])
+    assert out["saturation_B2"].tolist() == [False, True, False, True]
+
+
+def test_parse_thresholds_rejects_nonfinite():
+    with pytest.raises(ValueError, match="finite"):
+        de.parse_thresholds("nan")
+    with pytest.raises(ValueError, match="finite"):
+        de.parse_thresholds("inf")
+    with pytest.raises(ValueError, match="finite"):
+        de.parse_thresholds("1,inf,2")
+    with pytest.raises(ValueError, match="finite"):
+        de.parse_thresholds("1e309")  # overflows to inf
+    assert de.parse_thresholds("0,20,40") == (0.0, 20.0, 40.0)
+
+
+def test_threshold_comparison_is_strict_greater():
+    values = np.array([[20.0, 0.0, 0.0, 0.0]])
+    # Exact equality must NOT pass under unified ">" rule (#1048).
+    assert de.stopping_layers(values, 20.0)[0] == -1
+    assert de.stopping_layers(values, 19.0)[0] == 0
+    assert de.passes_threshold(20.0, 20.0) == False
+    assert bool(de.passes_threshold(20.1, 20.0)) is True
+
+
+def test_deepest_active_stave_naming():
+    data = pd.DataFrame([_data_row("runA", 1, (500, 0, 0, 0))])
+    mc = pd.DataFrame([_mc_row("runA", 1, (1.0, 0.0, 0.0, 0.0))])
+    bundle = de.analyze(data, mc, (0.05,), (20.0,), "all", 1)
+    assert "deepest_active_stave" in bundle["data"].columns
+    assert "deepest_edep_layer" in bundle["mc"].columns
+    assert "stop_layer" not in bundle["data"].columns
+    assert "stop_layer" not in bundle["mc"].columns
+    assert bundle["result"]["measurand_names"]["data_deepest_proxy"] == "deepest_active_stave"
+
+
+def test_mc_weights_change_reach_fractions():
+    # Two events: only the second reaches B8. Heavy weight on the second must
+    # dominate weighted reach (#1022).
+    data = pd.DataFrame([
+        _data_row("runA", 1, (500, 0, 0, 0)),
+        _data_row("runA", 2, (500, 300, 200, 100)),
+    ])
+    mc = pd.DataFrame([
+        _mc_row("runA", 1, (1.0, 0.0, 0.0, 0.0), weight=1.0),
+        _mc_row("runA", 2, (1.0, 0.5, 0.4, 0.3), weight=100.0),
+    ])
+    bundle = de.analyze(data, mc, (0.05,), (20.0,), "all", 1)
+    wdiag = bundle["result"]["mc_weights"]
+    assert wdiag["sum_w"] == pytest.approx(101.0)
+    assert wdiag["weight_variable"] == "PrimaryWeight"
+    reach_b8 = bundle["result"]["stopping"]["mc_mev"]["distributions"][0]["reach_by_layer"]["B8"]
+    # Unweighted would be 0.5; weighted ≈ 100/101.
+    assert reach_b8 == pytest.approx(100.0 / 101.0)
+    # Equal weights recover the unweighted fraction.
+    mc2 = mc.copy()
+    mc2["PrimaryWeight"] = 1.0
+    bundle2 = de.analyze(data, mc2, (0.05,), (20.0,), "all", 1)
+    reach2 = bundle2["result"]["stopping"]["mc_mev"]["distributions"][0]["reach_by_layer"]["B8"]
+    assert reach2 == pytest.approx(0.5)
+
+
+def test_mc_negative_weight_rejected():
+    data = pd.DataFrame([_data_row("runA", 1, (500, 0, 0, 0))])
+    mc = pd.DataFrame([_mc_row("runA", 1, (1.0, 0.0, 0.0, 0.0), weight=-1.0)])
+    with pytest.raises(SystemExit, match="negative"):
+        de.prepare_mc_side(mc)
+
+
+def test_mc_missing_weight_rejected():
+    data = pd.DataFrame([_data_row("runA", 1, (500, 0, 0, 0))])
+    mc = pd.DataFrame([_mc_row("runA", 1, (1.0, 0.0, 0.0, 0.0))])
+    mc = mc.drop(columns=["PrimaryWeight"])
+    with pytest.raises(SystemExit, match="weight"):
+        de.prepare_mc_side(mc)

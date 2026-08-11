@@ -1,0 +1,65 @@
+schema: ccb-run-ledger/1
+issue: 962
+title: Canonical CCB beam-run ledger (Sample I/II roles)
+status: ACCEPTED_FOR_SAMPLE_II_CALIBRATION_SPLIT
+notes: >
+  Resolves the Sample II calibration contradiction between the older 54-page
+  B-stack timing note (run 61) and the newer report / configs/s00_reproduction.yaml
+  (run 64). Evidence preference follows docs/02_data_and_runs.md: the repository
+  adopts the newer report. Run 61 remains an analysis run, not calibration.
+
+samples:
+  sample_i:
+    trigger: coincidence_A_and_B
+    calibration_runs: [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42]
+    analysis_runs: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+    excluded_runs:
+      38: absent_A_stack_or_missing_file
+      43: removed_from_analysis_set
+  sample_ii:
+    trigger: single_B
+    calibration_runs: [64]
+    analysis_runs: [58, 59, 60, 61, 62, 63, 65]
+    light_collection_dedicated_runs: [59, 60, 61, 62, 63, 64, 65]
+
+runs:
+  58: {sample: sample_ii, purpose: analysis, beam_notes: p_enriched}
+  59: {sample: sample_ii, purpose: analysis, acquisition_purpose: light_collection_candidate}
+  60: {sample: sample_ii, purpose: analysis, acquisition_purpose: light_collection_candidate}
+  61:
+    sample: sample_ii
+    purpose: analysis
+    acquisition_purpose: light_collection_candidate
+    superseded_roles:
+      - {source: older_v41_bstack_timing_note, role: sample_ii_calibration, status: SUPERSEDED}
+  62: {sample: sample_ii, purpose: analysis, acquisition_purpose: light_collection_candidate}
+  63: {sample: sample_ii, purpose: analysis, acquisition_purpose: light_collection_candidate}
+  64:
+    sample: sample_ii
+    purpose: calibration
+    acquisition_purpose: sample_ii_calibration_canonical
+    evidence:
+      - docs/02_data_and_runs.md
+      - configs/s00_reproduction.yaml
+  65: {sample: sample_ii, purpose: analysis, acquisition_purpose: light_collection_candidate}
+
+decisions:
+  sample_ii_calibration_run:
+    canonical_run: 64
+    rejected_run: 61
+    evidence_rank:
+      - newer_report_and_s00_config
+      - docs/02_data_and_runs.md discrepancy note
+    regeneration_required:
+      - timing_templates
+      - timewalk
+      - qtemplate
+    status: RESOLVED_WITH_EVIDENCE
+
+study_roles:
+  s00_reproduction:
+    calibration: [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42, 64]
+    independent_validation: [57, 65]
+  timing_templates_sample_ii:
+    calibration: [64]
+    independent_validation: [58, 59, 60, 61, 62, 63, 65]

@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import os
 import sys
 import shutil
@@ -58,23 +59,42 @@ GATE_NOT_APPLICABLE = "NOT_APPLICABLE"
 SCHEMA_VERSION = "v1"
 
 
+def _require_finite_nonnegative_cut(value: float, *, label: str) -> float:
+    """Reject NaN/Inf/overflow before any waveform scan (issue #1031)."""
+    try:
+        v = float(value)
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f"{label} must be a finite non-negative float, got {value!r}") from exc
+    if not math.isfinite(v):
+        raise ValueError(f"{label} must be finite, got {value!r}")
+    if v < 0:
+        raise ValueError(f"{label} must be non-negative, got {v}")
+    return v
+
+
 def resolve_amplitude_cut(config: dict, cli_value: Optional[float]) -> Tuple[float, str]:
     """Resolve the amplitude cut [ADC] with provenance: CLI > env > config.
 
     Returns (effective_cut, source) so the manifest records where the value
     came from. The YAML config remains the single documented default.
+    Domain: finite non-negative ADC (issue #1031).
     """
-    cfg_val = float(config["amplitude_cut_adc"])
+    cfg_val = _require_finite_nonnegative_cut(
+        config["amplitude_cut_adc"], label="config amplitude_cut_adc"
+    )
     env_raw = os.environ.get(AMPLITUDE_CUT_ENV)
     if cli_value is not None:
-        if cli_value < 0:
-            raise ValueError(f"amplitude cut must be non-negative, got {cli_value}")
-        return float(cli_value), f"cli(--amplitude-cut-adc={cli_value})"
+        v = _require_finite_nonnegative_cut(cli_value, label="amplitude cut")
+        return v, f"cli(--amplitude-cut-adc={cli_value})"
     if env_raw is not None and env_raw.strip() != "":
-        env_val = float(env_raw)
-        if env_val < 0:
-            raise ValueError(f"{AMPLITUDE_CUT_ENV} must be non-negative, got {env_raw}")
-        return env_val, f"env({AMPLITUDE_CUT_ENV}={env_raw})"
+        try:
+            env_val = float(env_raw)
+        except ValueError as exc:
+            raise ValueError(
+                f"{AMPLITUDE_CUT_ENV} must be a finite non-negative float, got {env_raw!r}"
+            ) from exc
+        v = _require_finite_nonnegative_cut(env_val, label=AMPLITUDE_CUT_ENV)
+        return v, f"env({AMPLITUDE_CUT_ENV}={env_raw})"
     return cfg_val, f"config({cfg_val})"
 
 # --- S00 implementation-consistency check (audit S00-001 / S00-002 / STAT-002) ------------

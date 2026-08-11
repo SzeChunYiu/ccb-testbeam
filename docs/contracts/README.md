@@ -13,6 +13,12 @@ against it.
 | [../adr/ADR-0003-beam-intersection-preflight.md](../adr/ADR-0003-beam-intersection-preflight.md) | #999 | Geometry-aware primary ray–stave preflight; rejects miss configs unless `allow_miss` |
 | [`configs/geometry/registry_index.yaml`](../../configs/geometry/registry_index.yaml) | Wave A Lane 03 | Machine-readable geometry/mapping/kinematics hypothesis index |
 
+| [PUBLIC_CLAIM_AUTHORITY.json](PUBLIC_CLAIM_AUTHORITY.json) | #969 | Machine-readable README/WIKI/dashboard claim authority |
+| [SELECTION_FLOW_DAG.json](SELECTION_FLOW_DAG.json) | #970 | Immutable timing selection-flow DAG node IDs |
+| [REVIEW_STATUS_TAXONOMY.json](REVIEW_STATUS_TAXONOMY.json) | #990 | Nature-reviewer badges cannot substitute claim validation |
+| [MV0_DIGITIZER_MODEL_IDENTITY.json](MV0_DIGITIZER_MODEL_IDENTITY.json) | #1078 | Frozen executable MV0 digitizer identity |
+| [SCIENTIFIC_ISSUE_COMPLETION_GATES.json](SCIENTIFIC_ISSUE_COMPLETION_GATES.json) | #1218 | Merge auto-close must not override scientific completion gates |
+
 ## Enforcement (offline, live now)
 
 - `tools/audit/validate_pulse_schema.py` → flags `AMBIGUOUS_AMPLITUDE_ADC`, `MISSING_REQUIRED_COLUMNS`, `DUPLICATE_PULSE_KEY`.

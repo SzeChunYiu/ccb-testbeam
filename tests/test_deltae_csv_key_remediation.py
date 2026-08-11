@@ -105,7 +105,7 @@ def test_direct_cli_preserves_distinct_exact_keys(tmp_path):
         for event in range(12)
     ]
     mc_rows = [
-        f"1,7,{event},1.5,0.6,0.3,0.1"
+        f"1,7,{event},1.5,0.6,0.3,0.1,1.0"
         for event in range(12)
     ]
     data_raw = _write_csv(
@@ -116,7 +116,7 @@ def test_direct_cli_preserves_distinct_exact_keys(tmp_path):
     )
     mc_raw = _write_csv(
         mc_path,
-        "source_file_id,run_id,event_id,edep_B2,edep_B4,edep_B6,edep_B8",
+        "source_file_id,run_id,event_id,edep_B2,edep_B4,edep_B6,edep_B8,PrimaryWeight",
         mc_rows,
     )
     out = tmp_path / "out"

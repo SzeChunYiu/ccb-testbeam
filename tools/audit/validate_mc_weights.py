@@ -5,6 +5,12 @@ Provides ``summarize_weights`` for weight-distribution diagnostics and
 ``validate_audit`` for fail-closed policy gates.  Used by
 ``compare_data_mc`` and the MC validation pipeline to reject degraded or
 invalid weight vectors before they enter physics inference.
+
+Issue #1174: signed weights define a different measure from the nonnegative
+probability contract (``nonnegative_event_measure_v2``). This module may
+*diagnose* signed vectors, but probability-ECDF consumers must keep
+``require_nonnegative=True``. Scale-stable signed diagnostics use
+``m = max|w|`` so common positive rescaling cannot overflow raw moments.
 """
 from __future__ import annotations
 
@@ -14,15 +20,12 @@ from typing import Any
 
 import numpy as np
 
-VERSION = "1.0.0"
+VERSION = "1.1.0"
 POLICY = (
-    "WEIGHT_VECTOR_MUST_CONTAIN_FINITE_NONNEGATIVE_VALUES_WITHIN"
-    "_DOMINANCE_AND_ESS_LIMITS"
+    "WEIGHT_VECTOR_MUST_CONTAIN_FINITE_VALUES_WITHIN_DOMINANCE_AND_ESS_LIMITS;"
+    "SIGNED_WEIGHTS_REQUIRE_EXPLICIT_POLICY_AND_ARE_NONAUTHORISING_FOR_PROBABILITY_ECDF"
 )
-
-# ---------------------------------------------------------------------------
-# Audit result
-# ---------------------------------------------------------------------------
+SIGNED_DIAGNOSTIC_METHOD_ID = "max_abs_scaled_signed_diagnostic_v1"
 
 
 @dataclass(frozen=True)
@@ -42,31 +45,19 @@ class WeightAudit:
     signed_weights_present: bool
     cancellation_fraction: float
     coefficient_of_variation_abs: float
-
-
-# ---------------------------------------------------------------------------
-# summarise_weights
-# ---------------------------------------------------------------------------
+    # Scale-stable signed diagnostics (#1174). Raw-unit moments above remain
+    # convenience provenance; dimensionless fields use max-|w| scaling.
+    weight_scale: float
+    signed_mass_over_scale: float
+    total_variation_over_scale: float
+    squared_mass_over_scale2: float
+    cancellation_severity: float
+    signed_mass_orientation: int
+    signed_diagnostic_method_id: str
 
 
 def summarise_weights(weights: Any) -> WeightAudit:
-    """Analyse a 1-D weight vector and return a ``WeightAudit``.
-
-    Parameters
-    ----------
-    weights : array-like
-        1-D numeric weight vector.
-
-    Returns
-    -------
-    WeightAudit
-        Frozen dataclass with all summary fields.
-
-    Raises
-    ------
-    ValueError
-        If the input is empty, not 1-D, or contains no finite values.
-    """
+    """Analyse a 1-D weight vector and return a ``WeightAudit``."""
     arr = np.asarray(weights, dtype=np.float64)
     if arr.ndim != 1:
         raise ValueError(f"weights must be 1-D, got shape {arr.shape}")
@@ -97,9 +88,7 @@ def _summarize(arr: np.ndarray) -> WeightAudit:
     n_positive = n_finite - n_negative - n_zero
 
     abs_ess = sum_abs_w * sum_abs_w / sum_abs_w2 if sum_abs_w2 > 0.0 else 0.0
-    signed_ess = (
-        sum_w * sum_w / sum_w2 if sum_w2 > 0.0 else 0.0
-    )
+    signed_ess = sum_w * sum_w / sum_w2 if sum_w2 > 0.0 else 0.0
 
     max_abs = float(np.max(np.abs(finite_arr))) if n_finite > 0 else 0.0
     max_abs_fraction = max_abs / sum_abs_w if sum_abs_w > 0.0 else 0.0
@@ -111,9 +100,24 @@ def _summarize(arr: np.ndarray) -> WeightAudit:
         and bool(np.allclose(finite_arr, 1.0))
     )
 
-    cancellation = 1.0 - sum_w / sum_abs_w if sum_abs_w > 0.0 else 0.0
+    # Bounded cancellation severity: 1 - |S|/A in [0, 1]. Legacy 1-S/A is not a
+    # fraction under all-negative orientation (#1174).
+    cancellation = (
+        1.0 - abs(sum_w) / sum_abs_w if sum_abs_w > 0.0 else 0.0
+    )
+    cancellation = min(1.0, max(0.0, float(cancellation)))
+    orientation = 1 if sum_w > 0.0 else -1 if sum_w < 0.0 else 0
 
-    # coefficient of variation of |w|
+    if max_abs > 0.0:
+        scaled = finite_arr / max_abs
+        signed_mass_over_scale = math.fsum(float(v) for v in scaled)
+        total_variation_over_scale = math.fsum(abs(float(v)) for v in scaled)
+        squared_mass_over_scale2 = math.fsum(float(v) * float(v) for v in scaled)
+    else:
+        signed_mass_over_scale = 0.0
+        total_variation_over_scale = 0.0
+        squared_mass_over_scale2 = 0.0
+
     mean_abs = sum_abs_w / n_finite if n_finite > 0 else 0.0
     cv = float(np.std(np.abs(finite_arr)) / mean_abs) if mean_abs > 0.0 else 0.0
 
@@ -133,12 +137,15 @@ def _summarize(arr: np.ndarray) -> WeightAudit:
         signed_weights_present=n_negative > 0,
         cancellation_fraction=cancellation,
         coefficient_of_variation_abs=cv,
+        weight_scale=max_abs,
+        signed_mass_over_scale=float(signed_mass_over_scale),
+        total_variation_over_scale=float(total_variation_over_scale),
+        squared_mass_over_scale2=float(squared_mass_over_scale2),
+        cancellation_severity=cancellation,
+        signed_mass_orientation=orientation,
+        signed_diagnostic_method_id=SIGNED_DIAGNOSTIC_METHOD_ID,
     )
 
-
-# ---------------------------------------------------------------------------
-# validate_audit
-# ---------------------------------------------------------------------------
 
 Finding = dict[str, Any]
 
@@ -157,26 +164,8 @@ def validate_audit(
 ) -> tuple[bool, list[Finding]]:
     """Apply policy gates to a ``WeightAudit``.
 
-    Parameters
-    ----------
-    audit : WeightAudit
-        The weight audit to evaluate.
-    require_nonnegative : bool
-        If True, any negative weight is a blocking failure.
-    require_nonzero_sum : bool
-        If True, zero signed sum is a blocking failure.
-    max_abs_weight_fraction : float or None
-        If set, a single weight exceeding this fraction of total absolute
-        weight is a blocking failure.
-    min_absolute_ess : float or None
-        If set, absolute ESS below this threshold is a blocking failure.
-
-    Returns
-    -------
-    (passed, findings)
-        ``passed`` is True when no blocking findings exist.
-        ``findings`` is a list of dicts, each with at least ``code`` and
-        ``blocking`` keys.
+    Default gates allow signed weights with a non-blocking finding. Probability
+    consumers (for example DATA↔MC ECDFs) must pass ``require_nonnegative=True``.
     """
     findings: list[Finding] = []
 
@@ -199,6 +188,8 @@ def validate_audit(
                 "SIGNED_WEIGHTS_PRESENT",
                 blocking=False,
                 n_negative=audit.n_negative,
+                scientific_status="NONAUTHORISING_FOR_PROBABILITY_ECDF",
+                signed_diagnostic_method_id=audit.signed_diagnostic_method_id,
             )
         )
         if require_nonnegative:
@@ -210,7 +201,9 @@ def validate_audit(
                 )
             )
 
-    if audit.n_positive == 0 and audit.n_finite > 0:
+    # All-zero means zero total variation. All-negative vectors have nonzero
+    # absolute mass and must not be misclassified as ALL_ZERO (#1174).
+    if audit.sum_abs_w == 0.0 and audit.n_finite > 0:
         findings.append(
             _finding(
                 "ALL_ZERO_WEIGHTS",

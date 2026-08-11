@@ -130,3 +130,18 @@ After resolving an issue, recurse into its assumptions. Ask:
 Create child issues only when they are independently actionable. Preserve negative results and superseded hypotheses so later AI sessions do not repeatedly rediscover them.
 
 The review is complete only when all remaining leaves are either validated, explicitly blocked with an external dependency, or documented negative results with no untested material alternative under the stated scope, **and** the required micro→meso→event→study→claim interfaces have explicit compatibility closure.
+
+## Review-status taxonomy contract (#990)
+
+AI sessions must use `docs/contracts/REVIEW_STATUS_TAXONOMY.json` when emitting chapter/report badges.
+
+Allowed levels only:
+
+- `EDITORIAL_REVIEWED`
+- `METHOD_REVIEWED`
+- `SOURCE_VERIFIED`
+- `EXECUTED_REPRODUCED`
+- `CLAIM_AUTHORIZED`
+
+Unqualified badges such as `ACCEPTED by nature-reviewer (3/3)` are forbidden. A chapter with open blocking claim IDs must not display `CLAIM_AUTHORIZED`. Nature-reviewer-style roles emit stable concern IDs and unresolved objections; they never silently promote claim status. Unless genuinely independent human/blinded reviewers are documented, badges must disclose AI role-separated review.
+

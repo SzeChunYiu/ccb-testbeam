@@ -18,6 +18,7 @@
 #include "Randomize.hh"
 
 #include <cmath>
+#include <stdexcept>
 
 SteppingAction::SteppingAction(const AppConfig& cfg, const OpticalTables& tables,
                                EventAction* event_action)
@@ -31,8 +32,19 @@ int SteppingAction::SensorIndexForVolume(const G4String& name) const {
 }
 
 double SteppingAction::PdeAt(double wavelength_nm) const {
+  // #981: match ccb-sipm-core extrapolation — zero outside the tabulated range
+  // (OpticalCurve::Interp clamps; that must not diverge from the ADC path).
   const OpticalCurve& pde = tables_.Get("sipm_pde");
-  double p = pde.Empty() ? 0.40 : pde.Interp(wavelength_nm);  // 40% fallback
+  if (pde.Empty()) {
+    // Prefer fail-closed SiPM PDE contract (lane01/#981): never substitute 40%.
+    // Empty table is fatal in all modes (stricter than lane02 development fallback).
+    throw std::runtime_error("sipm_pde optical table empty in SteppingAction::PdeAt");
+  }
+  if (!std::isfinite(wavelength_nm) ||
+      wavelength_nm < pde.x.front() || wavelength_nm > pde.x.back()) {
+    return 0.0;
+  }
+  double p = pde.Interp(wavelength_nm);
   p *= cfg_.pde_scale;
   if (p < 0) p = 0;
   if (p > 1) p = 1;

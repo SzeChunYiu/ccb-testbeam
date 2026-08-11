@@ -29,17 +29,18 @@
 
 > **All results are preliminary and study-scoped, not peer-reviewed.**
 > Canonical entry point: [`reports/PROJECT_DASHBOARD.md`](reports/PROJECT_DASHBOARD.md).
-> The row-by-row authority is [`docs/claim_ledger.csv`](docs/claim_ledger.csv); this
+> Machine-readable public authority: [`docs/contracts/PUBLIC_CLAIM_AUTHORITY.json`](docs/contracts/PUBLIC_CLAIM_AUTHORITY.json).
+> The row-by-row claim ledger is [`docs/claim_ledger.csv`](docs/claim_ledger.csv); this
 > section mirrors [`reports/studies/clusterE/claims_table.csv`](reports/studies/clusterE/claims_table.csv)
 > and must not advertise a stronger status than the ledger.
 
-**MC method closure proven; detector-performance on beam data pending raw-data
-staging + bench calibration.** The full analysis chain — timing, ΔE-E PID, ADC/Birks
-energy calibration, and pile-up — is demonstrated end-to-end on the Krakow 1M-event
-Geant4 Monte Carlo (clusters A–D + Opticks, all merged on `origin/main`). The
-detector-performance claims that would transfer those MC results onto beam data are
-**BLOCKED_DATA**: the raw beam ROOT (`hrdb_run_*.root`) is not staged on LUNARC, and
-device/electronics calibration is an operator-bench item.
+**MC method closure proven; detector-performance transfer to beam data remains gated.**
+The full analysis chain — timing, ΔE-E PID, ADC/Birks energy calibration, and pile-up —
+is demonstrated end-to-end on the Krakow 1M-event Geant4 Monte Carlo (clusters A–D +
+Opticks, all merged on `origin/main`). Raw beam ROOT files are **located on LUNARC at `/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/`** (2026-07-25; see `reports/studies/data_side/REPORT.md`), but the **canonical archive not yet populated** at `/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam-data/` (`DATA.md`). Located
+waveforms are 16-sample; detector-resolution claims remain gated by format/lineage
+(#952/#962) and bench calibration. Public headlines are governed by
+`docs/contracts/PUBLIC_CLAIM_AUTHORITY.json` + `docs/claim_ledger.csv`.
 
 | Claim | Value | Evidence class | Status | Source |
 |---|---|---|---|---|
@@ -53,8 +54,8 @@ device/electronics calibration is an operator-bench item.
 | Detector timing resolution (data) | withheld | BLOCKED_DATA | ⛔ BLOCKED | CL-002..006 |
 | Canonical pile-up Rmax | withheld | BLOCKED | ⛔ BLOCKED | CL-010 (S-STAT-003) |
 | Legacy Rmax = 3.044 MHz | SUPERSEDED | SUPERSEDED | 🚫 SUPERSEDED | CL-012 (do not use) |
-| ADC gain (data/MC proxy, MV0) | 110 ADC/MeV (±30%) | DATA_MC_PROXY | 🟡 GATED | CL-013 |
-| PID on beam data | deferred | BLOCKED_DATA | ⛔ BLOCKED | raw ROOT not staged |
+| ADC gain (data/MC proxy, MV0) | **92 ADC/MeV** (heuristic ±30% envelope) | DATA_MC_PROXY | 🟡 GATED | CL-013 |
+| PID on beam data | deferred | BLOCKED_DATA | ⛔ BLOCKED | format/lineage gates #952/#962 |
 | Stopping-depth data/MC | χ²/ndf ≈ 6.8e4 — FAIL | MC_DIAGNOSTIC | 🟠 TENSION | CL-021 |
 
 **Read the statuses literally.** The ±30% MV0 envelope is a heuristic, **not a

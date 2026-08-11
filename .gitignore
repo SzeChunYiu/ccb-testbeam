@@ -4,3 +4,4 @@ geant4/results/*.err
 __pycache__/
 .mplconfig/
 .claude/worktrees/
+reports/mc_validation/runs/

@@ -1,44 +1,47 @@
 # Latest Handoff
 
-## Exec-boundary cwd review exposed an executable-image composition defect
+## Filesystem namespace atom: same-head duplicate CI exposed a live-process startup race
 
-Protected `main` is `5c1e2ecafa792e07f785781a55f25ffdf3180eb9`, the validated squash merge of coordination PR #1219. #1057 remains open/PARTIAL, governance child #1218 remains open, and CL-021 remains gated.
+Protected `main` at selection remains `8a064b37245a03dd0258ec20ae73bbc6adc25e2e`, squash merge of #1220. #1057 remains open/PARTIAL, governance child #1218 remains open, and CL-021 remains gated.
 
-The active implementation is draft PR #1220 under parent issue #1214. The initial design correctly recognized that a later `/proc/<pid>/cwd` cannot by itself prove the cwd at exec, but it incorrectly treated `(pid,starttime,exe_link)` as unchanged across direct exec. That collapses the pre-exec launcher image with the post-exec HIBEAM image.
+The active parent is `ARU-MC-G4-LOADER-FS-NAMESPACE-001`, tracked as #1221 on branch `audit/geant4-loader-fs-namespace` and PR #1222. Parent #1214 is closed only for the bounded exec-cwd primitive. The repository front door still invokes `./hibeam_g4 -c krakow.config -m run_krakow.mac output_krakow.root` with relative config, macro and output spellings.
 
-A real deterministic Linux falsifier established the correct transition: a Python launcher recorded its process state and then `execv('/bin/sleep', ...)`; PID and `/proc/<pid>/stat` starttime stayed fixed while `/proc/<pid>/exe` changed from the Python executable to `/usr/bin/sleep`. Therefore the executable link is not part of the invariant that composes the two observations.
+The bounded pre-exec state is `F_exec=(CWD_obj,Root_obj,MntNS_{st_dev,st_ino},MountInfo_bytes)`, with exact mountinfo content/SHA-256. Runtime composition requires `(PID_pre,starttime_pre)==(PID_runtime,starttime_runtime)` plus intended-target path/content equality on the controlled direct-exec route. A real post-exec `chroot` control changed the root object, so this does not prove HIBEAM input-open state; `ARU-MC-G4-RELATIVE-INPUT-CONSUMPTION-001` remains mandatory.
 
-The repaired bounded contract is:
+## CI chronology
 
-`(PID_pre, starttime_pre) == (PID_post, starttime_post)`
+An earlier head `167bae0853bea35ee634125f44e11e302e0cbe55` failed only curated ruff with five E501 findings while full pytest passed. Formatting-only commits `e90a613ff4d7ddd103786f455e0a891f777bd078` and `bd8c2b7293aff60772117b8f19a93c1f508917dc` repaired those findings without weakening the gate.
 
-while launcher and runtime executable identities remain distinct state variables. For the repository's direct `record --command ...` route, the pre-exec record now includes the intended target path and exact `(bytes,SHA-256)`; the attestor requires those target bytes/path to equal the independently content-bound runtime executable. The result explicitly records `kernel_execve_event_observed=false`: userspace launcher intent is not silently promoted to a kernel event log.
+The next exact head `d264153a943af9d4d486ce4404d05e74569b0d0f` then produced two contradictory required workflow results:
 
-### Exact repository evidence
+- pull-request run `31509591783`: PASS; curated ruff `All checks passed!`; pytest `1642 passed, 2 skipped, 8 xfailed, 1 xpassed, 7 warnings in 142.59s`; diagnostics and enforcement succeeded;
+- push run `31509587074`: FAIL; ruff passed, but `test_real_procfs_python_process_round_trip` alone raised `ValueError: executable mapping set changed during runtime attestation`; totals `1 failed, 1641 passed, 2 skipped, 8 xfailed, 1 xpassed, 7 warnings in 107.40s`; enforcement failed because `PYTEST_STATUS=1`.
 
-The earlier #1220 exact-head run `31501093188` on `cbc8a97002f9cc0bbd46c86c302be11ec635556b` had curated ruff PASS but full pytest `1 failed, 1632 passed, 1 skipped, 8 xfailed, 1 xpassed`. The only failure, `test_cli_record_creates_file`, exposed a separate argparse defect: `--command` reused the same `dest='command'` as the subparser selector. Commit `b196482c321c819105ebb8d47fb7d9c838a18ac7` fixed that namespace collision.
+A merge was attempted only after the pull-request run appeared green, but branch protection rejected it with `Required status check "test" is failing.` The second run was then inspected and the PR was returned to draft. This is preserved as evidence that one green duplicate context is not merge authorization.
 
-This session then committed the scientific/provenance repair on the same PR: `677497e3f841dda1f7f80493fcfc05a06b0b3ba2` separates launcher and intended-target state; `67113fdbc24dadb12c911772de187d5da4f39b7c` preserves the legacy fixture surface while keeping real exec transitions explicit; `7c8ba682e35aac53a6a6df4625c955784d34d4d6` adds a real Python→`/bin/sleep` direct-exec regression plus target-content mismatch control; `71bb6775963af8c2b5c399de8655100773b2c97f` adds the tool and both focused tests to curated ruff.
+## Validation child and solve-first repair
 
-Authoring-copy validation, no RNG: `python -m py_compile` succeeded; a real CLI transition observed PID `550`, starttime `193606`, launcher `/opt/pyvenv/bin/python`, runtime `/usr/bin/sleep`, composed status `PASS`; `python -m pytest -q /tmp/test_exec_transition.py` returned `2 passed in 0.48s`. These results do not substitute for exact committed CI or HIBEAM execution.
+The new child is `ARU-MC-G4-RUNTIME-MAPS-TEST-STARTUP-RACE-001`, archived at `chatgpt_todo/archive/2026-08-11T160400Z_ARU-MC-G4-RUNTIME-MAPS-TEST-STARTUP-RACE-001.md`. No duplicate issue was found; because the bounded repair is implemented in the current PR, #1221 remains the coordination parent rather than opening a new issue.
 
-Immutable atom record: `chatgpt_todo/archive/2026-08-11T151000Z_ARU-MC-G4-LOADER-EXEC-IMAGE-TRANSITION-001.md`.
+The production runtime attestor intentionally requires `M_exec(t_before)==M_exec(t_after)` and remains unchanged. The failing live regression spawned Python and immediately entered the attestor with no target-code readiness boundary. The strongest current hypothesis is therefore startup/readiness timing; a later legitimate mapping mutation remains a surviving counter-hypothesis.
 
-### Four sequential AI reviews
+Commit `33669aa324b148f9408b2785be785f8fca02db00` changes only the live Python fixture. The child now emits `READY` from its `python -c` target code using a flushed stdout pipe, and the parent begins attestation only after receiving that token. This is a state discriminator, not a fixed-delay workaround. Retrying the production attestor until it happens to see a stable mapping set is explicitly rejected because it would erase evidence of real mutation during an authoritative receipt.
 
-- **Runtime/physics integration lead — ACCEPT image-replacement model / REVISE parent completion.** The real exec control falsifies pre/post executable equality. No provenance-bound HIBEAM process was run.
-- **Adversarial Linux/process reviewer — ACCEPT bounded intent/runtime composition / BLOCK kernel-event equivalence.** The original post-exec fixture manually assigned the post-exec executable to the pre-exec record and skipped the transition under test. Target-path TOCTOU and intermediate exec chains survive.
-- **Independent validation reviewer — ACCEPT defect and deterministic local falsifier / BLOCK merge pending exact-head repository CI.** No statistical estimator or event weight applies to this atom.
-- **Claims/provenance reviewer — ACCEPT bounded process-state repair / BLOCK #1214 completion and CL-021 promotion.** Namespace, exact relative-input consumption, output path creation, RNG/thread/event/output identity, compiled source controls and detector response remain independent gates.
+## Four sequential AI reviews
 
-### Surviving children
+- **Runtime/provenance integration lead — ACCEPT filesystem decomposition / REVISE fixture validation.** Evidence: same-head green/fail pair and exact failure location. Strongest counter-hypothesis is an over-strict production predicate; it survives only if mapping drift recurs after explicit target-code readiness. Residual uncertainty: later lazy mapping activity.
+- **Adversarial Linux/process reviewer — ACCEPT target-code readiness discriminator / BLOCK retry-until-pass and input-consumption equivalence.** A fixed sleep does not identify process state. READY is stronger but does not guarantee future mapping immutability.
+- **Independent validation reviewer — BLOCK merge pending every duplicate exact-final-head context.** The same SHA generated opposite workflow outcomes, and branch protection correctly refused merge. One repaired green run is not enough if another required context fails.
+- **Claims/provenance reviewer — ACCEPT bounded software-provenance repair / BLOCK CL-021 and detector inference.** No HIBEAM executable, Geant4 event, beam data, detector response, event weight, or public detector estimator participates.
 
-`ARU-MC-G4-LOADER-EXEC-KERNEL-EVENT-001` must bind the actual kernel exec event, or establish an equivalently strong single-transition contract, before launcher intent is described as kernel-observed history. `ARU-MC-G4-LOADER-EXEC-TARGET-TOCTOU-001` must close the replacement window between pre-exec target hashing and path-based `execv`. Existing #1214 children `ARU-MC-G4-LOADER-FS-NAMESPACE-001`, `ARU-MC-G4-RELATIVE-INPUT-CONSUMPTION-001`, and `ARU-MC-G4-OUTPUT-PATH-CREATION-001` remain open.
+## Stable concerns and children
 
-### Immediate gate and next scientific work
+`C-FSNS-001` HIGH: namespace identity alone insufficient. `C-FSNS-002` HIGH: pre-exec lookup state is not exact input-open state. `C-FSNS-003` MEDIUM-HIGH: equal repeated snapshots do not exclude ABA/shared mutation. `C-FSNS-004` MEDIUM-HIGH: kernel exec event and target TOCTOU remain unresolved. `C-MAPS-RACE-001` MEDIUM-HIGH: even target-code readiness may precede later executable mapping changes; recurrence must spawn `ARU-MC-G4-RUNTIME-MAPS-POSTREADY-MUTATION-001` rather than trigger retries.
 
-PR #1220 is draft. Require the final committed head to be based on current main and require every required MC Validation context to pass curated ruff, full non-integration pytest, diagnostics and enforcement. If a final-head failure appears, repair only the demonstrated failure and rerun. Do not merge based on the local controls or a superseded green context.
+Parent children remain `ARU-MC-G4-RELATIVE-INPUT-CONSUMPTION-001`, `ARU-MC-G4-OUTPUT-PATH-CREATION-001`, `ARU-MC-G4-LOADER-EXEC-KERNEL-EVENT-001`, and `ARU-MC-G4-LOADER-EXEC-TARGET-TOCTOU-001`. #1057 independently still requires compiled source-phi and accepted-observable closure.
 
-After this bounded leaf, the highest-value ready provenance step is filesystem namespace plus exact relative-input consumption. Independently, #1057 still requires `ARU-MC-SOURCE-PHI-COMPILED-CLOSURE-001` once a provenance-bound external HIBEAM build/run environment is available; current Python/static CI must not be treated as compiled Geant4 evidence.
+## Immediate next action
 
-No production Geant4 campaign, beam or production-MC ROOT bytes, event-weight result, accepted rate, B2/B8, PID, timing, calibration, pile-up, ESS, p-value, or detector-performance quantity was produced or promoted in this run.
+This handoff update creates another final branch head. Keep #1222 draft until both push and pull-request MC Validation contexts on that exact final head pass curated ruff, full non-integration pytest, diagnostics and enforcement. If the READY fixture still produces mapping drift, do not retry to green; investigate post-readiness mapping mechanisms. If both contexts are green and protected main ancestry remains current, mark ready and merge with an expected-head guard.
+
+After the bounded PR lands, the highest-information scientific child is `ARU-MC-G4-RELATIVE-INPUT-CONSUMPTION-001`: observe actual file-open state and content-bind the opened HIBEAM config/macro/auxiliary file descriptions rather than inferring them from pre-exec pathname state. No production Geant4 campaign, beam/production-MC ROOT bytes, event-weight result, accepted rate, PID, timing, calibration, pile-up, ESS, p-value, or detector-performance quantity was produced or promoted here.

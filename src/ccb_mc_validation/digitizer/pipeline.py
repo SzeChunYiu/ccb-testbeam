@@ -9,6 +9,8 @@ from typing import Any
 
 import numpy as np
 
+from ccb_mc_validation.strict_bool import PARSER_VERSION, resolve_bool_field
+
 from ccb_mc_validation.digitizer.birks import birks_quench
 from ccb_mc_validation.digitizer.electronics import (
     ElectronicsConfig,
@@ -81,35 +83,6 @@ class DigitizerPipeline:
     stages: list[str] = field(
         default_factory=lambda: ["birks", "scintillation", "transport", "sampling"]
     )
-
-
-    def model_identity(self) -> dict[str, Any]:
-        """Return the frozen executable MV0 model identity (#1078)."""
-        return {
-            "model_id": "MV0_EXECUTABLE_DEFAULT_V1",
-            "authority": "EXECUTABLE",
-            "n_samples": int(self.n_samples),
-            "sample_spacing_ns": float(self.sample_spacing_ns),
-            "tau_rise_ns": float(self.tau_rise_ns),
-            "tau_decay_ns": float(self.tau_decay_ns),
-            "transport": {
-                "model": "zero_mean_gaussian_time_smear",
-                "sigma_ns": float(self.transport_sigma_ns),
-                "position_attenuation": False,
-                "lambda_att_cm": None,
-            },
-            "electronics": {
-                "gain_adc_per_mev": float(self.electronics.gain_adc_per_mev),
-                "gain_sigma_adc_per_mev": None,
-                "noise_adc_rms": float(self.electronics.noise_adc_rms),
-                "pedestal_adc": float(self.electronics.pedestal_adc),
-                "adc_bits": int(self.electronics.adc_bits),
-                "adc_ceiling": int(self.electronics.adc_ceiling),
-            },
-            "apply_birks": bool(self.apply_birks),
-            "stages": list(self.stages),
-            "contract": "docs/contracts/MV0_DIGITIZER_MODEL_IDENTITY.json",
-        }
 
     # ------------------------------------------------------------------
     # schema validation
@@ -470,29 +443,48 @@ class DigitizerPipeline:
 
     @classmethod
     def from_config(cls, config: Mapping[str, Any]) -> DigitizerPipeline:
-        # #1080: validate scalar domains before constructing RNG/event pipelines.
-        from ccb_mc_validation.response.digitizer_domains import (
-            preflight_digitizer_config,
-        )
-
-        resolved = preflight_digitizer_config(config)
-        effective = resolved["effective"]
-        elec_cfg = effective["electronics"]
         elec = ElectronicsConfig(
-            gain_adc_per_mev=float(elec_cfg["gain_adc_per_mev"]),
-            noise_adc_rms=float(elec_cfg["noise_adc_rms"]),
-            adc_bits=int(elec_cfg["adc_bits"]),
-            adc_ceiling=int(elec_cfg["adc_ceiling"]),
-            pedestal_adc=float(elec_cfg["pedestal_adc"]),
+            gain_adc_per_mev=float(config.get("gain_adc_per_mev", 120.0)),
+            noise_adc_rms=float(config.get("noise_adc_rms", 8.0)),
+            adc_bits=int(config.get("adc_bits", 14)),
+            adc_ceiling=int(config.get("adc_ceiling", 7000)),
+            pedestal_adc=float(config.get("pedestal_adc", 300.0)),
         )
-        return cls(
-            n_samples=int(effective["n_samples"]),
-            sample_spacing_ns=float(effective["sample_spacing_ns"]),
+        stages = list(config.get("stages", ["birks", "scintillation", "transport", "sampling"]))
+        # #1076: never use Python truthiness — bool("false") is True.
+        birks_prov = resolve_bool_field(config, "apply_birks", default=False)
+        pipe = cls(
+            n_samples=int(config.get("n_samples", DEFAULT_N_SAMPLES)),
+            sample_spacing_ns=float(config.get("sample_spacing_ns", DEFAULT_SAMPLE_SPACING_NS)),
             electronics=elec,
-            tau_rise_ns=float(effective["tau_rise_ns"]),
-            tau_decay_ns=float(effective["tau_decay_ns"]),
-            transport_sigma_ns=float(effective["transport_sigma_ns"]),
-            apply_birks=bool(effective["apply_birks"]),
-            global_seed=int(effective["global_seed"]),
-            stages=list(effective["stages"]),
+            tau_rise_ns=float(config.get("tau_rise_ns", 2.0)),
+            tau_decay_ns=float(config.get("tau_decay_ns", 35.0)),
+            transport_sigma_ns=float(config.get("transport_sigma_ns", 0.5)),
+            apply_birks=bool(birks_prov["effective"]),
+            global_seed=int(config.get("global_seed", 0)),
+            stages=stages,
+        )
+        # Provenance: requested vs effective boolean state (issue #1076).
+        pipe._bool_provenance = {  # type: ignore[attr-defined]
+            "apply_birks": birks_prov,
+            "parser_version": PARSER_VERSION,
+        }
+        return pipe
+
+    def bool_provenance(self) -> Mapping[str, Any]:
+        """Requested/effective boolean config provenance (#1076)."""
+        return getattr(
+            self,
+            "_bool_provenance",
+            {
+                "apply_birks": {
+                    "key": "apply_birks",
+                    "requested": None,
+                    "requested_present": False,
+                    "effective": bool(self.apply_birks),
+                    "parser_version": PARSER_VERSION,
+                    "default_applied": False,
+                },
+                "parser_version": PARSER_VERSION,
+            },
         )

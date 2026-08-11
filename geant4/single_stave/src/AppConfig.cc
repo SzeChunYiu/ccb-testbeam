@@ -1,12 +1,10 @@
 #include "AppConfig.hh"
-#include "OpticalConstantsLedger.hh"
 
 #include <cerrno>
 #include <climits>
 #include <cmath>
 #include <cstdlib>
 #include <cstring>
-#include <fstream>
 #include <iostream>
 #include <sstream>
 
@@ -76,6 +74,8 @@ void AppConfig::PrintUsage(const char* prog) {
     "  --birks-kB VAL           Birks kB [mm/MeV]           (default 0.126)\n"
     "  --production-cut MM      secondary-production range threshold [mm]\n"
     "                           (default 0.1; gamma/e-/e+/p, NOT optical tracking)\n"
+    "  --physics-list NAME     Geant4 reference physics list (REQUIRED;\n"
+    "                           e.g. QGSP_BIC). No silent default (#1006)\n"
     "  --reflectivity-scale V   TiO2 reflectivity scale     (default 1.0)\n"
     "  --attenuation-scale V    DEPRECATED — use --scintillator-absorption-scale\n"
     "                           and --y11-bulk-attenuation-scale instead.\n"
@@ -89,13 +89,7 @@ void AppConfig::PrintUsage(const char* prog) {
     "  --wls-time-profile P     exponential|delta           (default exponential)\n"
     "  --mode MODE              optical                     (default; fast kernel not yet implemented)\n"
     "  --optical-dir DIR        optical CSV table directory (default optical)\n"
-    "  --strict-optical         fail-closed optical tables (DEFAULT)\n"
-    "  --allow-optical-fallback  permissive tables; authorising=false\n"
-    "  --optical-constants-ledger PATH  versioned constants ledger (#979)\n"
-    "  --scintillator-material M polystyrene_legacy|vinyltoluene_pvt_hypothesis\n"
-    "  --coating-material M     air_massless_placeholder|tio2_paint_hypothesis\n"
-    "  --wls-mean-number-photons MU  Geant4 WLSMEANNUMBERPHOTONS (#1088)\n"
-    "  --y11-direct-scint-yield Y  direct Y-11 scintillation yield/MeV (#1035)\n"
+    "  --strict-optical         abort if required optical tables are missing/malformed (or CCB_STRICT_OPTICAL=1)\n"
     "  --output FILE            ntuple output (.root)       (default ccb_stave.root)\n"
     "  --macro FILE             run a macro then exit\n"
     "  --gpu-optical            GPU optical path: emit Opticks input photons,\n"
@@ -123,6 +117,7 @@ std::string AppConfig::Describe() const {
      << " allow_miss=" << (allow_miss ? 1 : 0)
      << " birks_kB=" << birks_kB_mm_per_MeV
      << " production_cut_mm=" << production_cut_mm
+     << " physics_list=" << (physics_list.empty() ? "UNSET" : physics_list)
      << " reflectivity_scale=" << reflectivity_scale
      << " attenuation_scale(deprecated)=" << attenuation_scale
      << " scintillator_absorption_scale=" << scintillator_absorption_scale
@@ -135,14 +130,6 @@ std::string AppConfig::Describe() const {
      << " mode=" << (mode == SimMode::kOpticalCalibration ? "optical" : "fast")
      << " optical_dir=" << optical_dir
      << " strict_optical=" << (strict_optical ? 1 : 0)
-     << " allow_optical_fallback=" << (allow_optical_fallback ? 1 : 0)
-     << " authorising=" << (authorising ? 1 : 0)
-     << " scintillator_material=" << scintillator_material
-     << " coating_material=" << coating_material
-     << " wls_fluorescence_model=" << wls_fluorescence_model
-     << " wls_mean_number_photons=" << wls_mean_number_photons
-     << " y11_attenuation_form=" << y11_attenuation_form
-     << " tio2_finish=" << tio2_finish
      << " output=" << output
      << " gpu_optical=" << (gpu_optical ? 1 : 0)
      << " optical_out=" << optical_out
@@ -175,6 +162,7 @@ bool AppConfig::ParseArgs(int argc, char** argv) {
     else if (eq(a, "--allow-miss"))        { allow_miss = true; }
     else if (eq(a, "--birks-kB"))          { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --birks-kB requires a finite number, got '"<<v<<"'\n";return false;} birks_kB_mm_per_MeV = t; }
     else if (eq(a, "--production-cut"))    { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --production-cut requires a finite number, got '"<<v<<"'\n";return false;} production_cut_mm = t; }
+    else if (eq(a, "--physics-list"))     { if(!(v=need(i)))return false; physics_list = v; }
     else if (eq(a, "--reflectivity-scale")){ if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --reflectivity-scale requires a finite number, got '"<<v<<"'\n";return false;} reflectivity_scale = t; }
     else if (eq(a, "--attenuation-scale")) { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --attenuation-scale requires a finite number, got '"<<v<<"'\n";return false;} attenuation_scale = t; scintillator_absorption_scale = t; y11_bulk_attenuation_scale = t; }
     else if (eq(a, "--scintillator-absorption-scale")) { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --scintillator-absorption-scale requires a finite number, got '"<<v<<"'\n";return false;} scintillator_absorption_scale = t; }
@@ -205,46 +193,7 @@ bool AppConfig::ParseArgs(int argc, char** argv) {
       else { std::cerr << "error: --mode must be optical|fast\n"; return false; }
     }
     else if (eq(a, "--optical-dir")) { if(!(v=need(i)))return false; optical_dir = v; }
-    else if (eq(a, "--strict-optical")) { strict_optical = true; allow_optical_fallback = false; }
-    else if (eq(a, "--allow-optical-fallback")) {
-      allow_optical_fallback = true;
-      strict_optical = false;
-      authorising = false;
-    }
-    else if (eq(a, "--optical-constants-ledger")) { if(!(v=need(i)))return false; optical_constants_ledger = v; }
-    else if (eq(a, "--scintillator-material")) {
-      if(!(v=need(i)))return false;
-      if (eq(v, "polystyrene_legacy") || eq(v, "vinyltoluene_pvt_hypothesis"))
-        scintillator_material = v;
-      else {
-        std::cerr << "error: --scintillator-material must be "
-                     "polystyrene_legacy|vinyltoluene_pvt_hypothesis\n";
-        return false;
-      }
-    }
-    else if (eq(a, "--coating-material")) {
-      if(!(v=need(i)))return false;
-      if (eq(v, "air_massless_placeholder") || eq(v, "tio2_paint_hypothesis"))
-        coating_material = v;
-      else {
-        std::cerr << "error: --coating-material must be "
-                     "air_massless_placeholder|tio2_paint_hypothesis\n";
-        return false;
-      }
-    }
-    else if (eq(a, "--wls-mean-number-photons")) {
-      if(!(v=need(i)))return false; double t;
-      if(!parse_double(v,t)){std::cerr<<"error: --wls-mean-number-photons requires a finite number\n";return false;}
-      wls_mean_number_photons = t;
-      wls_fluorescence_model = "geant4_poisson_mean";
-      wls_fluorescence_status = "CONFIGURED_POISSON_MEAN";
-    }
-    else if (eq(a, "--y11-direct-scint-yield")) {
-      if(!(v=need(i)))return false; double t;
-      if(!parse_double(v,t)){std::cerr<<"error: --y11-direct-scint-yield requires a finite number\n";return false;}
-      y11_direct_scint_yield_per_MeV = t;
-      y11_direct_scint_status = (t == 0.0) ? "OMISSION_UNKNOWN_EXTERNAL" : "HYPOTHESIS_NONZERO_DIRECT_YIELD";
-    }
+    else if (eq(a, "--strict-optical")) { strict_optical = true; }
     else if (eq(a, "--output"))      { if(!(v=need(i)))return false; output = v; }
     else if (eq(a, "--macro"))       { if(!(v=need(i)))return false; macro = v; }
     else if (eq(a, "--gpu-optical")) { gpu_optical = true; }
@@ -277,83 +226,17 @@ bool AppConfig::ParseArgs(int argc, char** argv) {
     std::cerr << "error: scale factors must be >= 0\n"; return false;
   }
   if (production_cut_mm <= 0) { std::cerr << "error: --production-cut must be > 0\n"; return false; }
-  // Explicit permissive opt-in (#978). Env CCB_ALLOW_OPTICAL_FALLBACK=1 forces
-  // non-authorising fallback mode. CCB_STRICT_OPTICAL=0 also selects fallback.
-  if (const char* e = std::getenv("CCB_ALLOW_OPTICAL_FALLBACK")) {
-    if (std::strcmp(e, "1") == 0 || std::strcmp(e, "true") == 0 ||
-        std::strcmp(e, "TRUE") == 0 || std::strcmp(e, "yes") == 0) {
-      allow_optical_fallback = true;
-      strict_optical = false;
-      authorising = false;
+  if (physics_list.empty()) {
+    std::cerr << "error: --physics-list is required (issue #1006 fail-closed; "
+                 "no silent QGSP_BIC default)\n";
+    return false;
+  }
+  // G4-003: env override for strict optical-table validation (production).
+  if (!strict_optical) {
+    if (const char* e = std::getenv("CCB_STRICT_OPTICAL")) {
+      strict_optical = (std::strcmp(e, "1") == 0 || std::strcmp(e, "true") == 0 ||
+                        std::strcmp(e, "TRUE") == 0 || std::strcmp(e, "yes") == 0);
     }
-  }
-  if (const char* e = std::getenv("CCB_STRICT_OPTICAL")) {
-    if (std::strcmp(e, "0") == 0 || std::strcmp(e, "false") == 0 ||
-        std::strcmp(e, "FALSE") == 0 || std::strcmp(e, "no") == 0) {
-      allow_optical_fallback = true;
-      strict_optical = false;
-      authorising = false;
-    } else if (std::strcmp(e, "1") == 0 || std::strcmp(e, "true") == 0 ||
-               std::strcmp(e, "TRUE") == 0 || std::strcmp(e, "yes") == 0) {
-      strict_optical = true;
-      allow_optical_fallback = false;
-    }
-  }
-  if (allow_optical_fallback) {
-    strict_optical = false;
-    authorising = false;
-  }
-
-  // Load versioned optical-constants ledger (#979) when present.
-  {
-    std::string ledger_path = optical_constants_ledger;
-    // Prefer ledger inside optical_dir when the relative default is used.
-    if (ledger_path == "optical/optical_constants_ledger.conf") {
-      const std::string cand = optical_dir + "/optical_constants_ledger.conf";
-      std::ifstream probe(cand);
-      if (probe) ledger_path = cand;
-    }
-    OpticalConstantsLedger led = OpticalConstantsLedger::LoadFile(ledger_path);
-    if (!led.load_errors.empty()) {
-      for (const auto& err : led.load_errors) {
-        std::cerr << (strict_optical ? "error[strict]: " : "warning: ") << err << "\n";
-      }
-      if (strict_optical && led.values.empty()) {
-        std::cerr << "fatal: optical constants ledger required in strict mode\n";
-        return false;
-      }
-    } else {
-      optical_constants_ledger = ledger_path;
-      scintillator_rindex = led.GetDouble("scintillator_rindex", scintillator_rindex);
-      scintillation_yield_per_MeV = led.GetDouble("scintillation_yield_per_MeV", scintillation_yield_per_MeV);
-      scintillation_time_ns = led.GetDouble("scintillation_time_ns", scintillation_time_ns);
-      y11_core_rindex = led.GetDouble("y11_core_rindex", y11_core_rindex);
-      wls_time_constant_ns = led.GetDouble("wls_time_constant_ns", wls_time_constant_ns);
-      clad_inner_rindex = led.GetDouble("clad_inner_rindex", clad_inner_rindex);
-      clad_outer_rindex = led.GetDouble("clad_outer_rindex", clad_outer_rindex);
-      wls_mean_number_photons = led.GetDouble("wls_mean_number_photons", wls_mean_number_photons);
-      wls_fluorescence_model = led.GetString("wls_fluorescence_model", wls_fluorescence_model);
-      wls_fluorescence_status = led.GetString("wls_fluorescence_status", wls_fluorescence_status);
-      y11_direct_scint_yield_per_MeV = led.GetDouble("y11_direct_scint_yield_per_MeV", y11_direct_scint_yield_per_MeV);
-      y11_direct_scint_status = led.GetString("y11_direct_scint_status", y11_direct_scint_status);
-      y11_attenuation_form = led.GetString("y11_attenuation_form", y11_attenuation_form);
-      y11_attenuation_form_status = led.GetString("y11_attenuation_form_status", y11_attenuation_form_status);
-      tio2_finish = led.GetString("tio2_finish", tio2_finish);
-      tio2_sigma_alpha = led.GetDouble("tio2_sigma_alpha", tio2_sigma_alpha);
-      tio2_specular_lobe = led.GetDouble("tio2_specular_lobe", tio2_specular_lobe);
-      tio2_specular_spike = led.GetDouble("tio2_specular_spike", tio2_specular_spike);
-      tio2_backscatter = led.GetDouble("tio2_backscatter", tio2_backscatter);
-      tio2_reflection_model_status = led.GetString("tio2_reflection_model_status", tio2_reflection_model_status);
-      coupling_grease_rindex = led.GetDouble("coupling_grease_rindex", coupling_grease_rindex);
-      coupling_epoxy_rindex = led.GetDouble("coupling_epoxy_rindex", coupling_epoxy_rindex);
-      tio2_paint_density_g_cm3 = led.GetDouble("tio2_paint_density_g_cm3", tio2_paint_density_g_cm3);
-    }
-  }
-  if (wls_mean_number_photons < 0) {
-    std::cerr << "error: wls_mean_number_photons must be >= 0\n"; return false;
-  }
-  if (y11_direct_scint_yield_per_MeV < 0) {
-    std::cerr << "error: y11_direct_scint_yield_per_MeV must be >= 0\n"; return false;
   }
   return true;
 }

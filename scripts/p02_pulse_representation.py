@@ -12,6 +12,12 @@ B6=ch4,B8=ch6; baseline=median samples 0-3; amplitude=max(corrected); cut A>1000
 import json, hashlib, glob, time
 from pathlib import Path
 import numpy as np
+
+from ccb_mc_validation.waveform_ratios import (
+    AREA_EPS as SHARED_AREA_EPS,
+    CONTRACT_VERSION as WAVEFORM_RATIO_CONTRACT,
+    late_and_peak_ratios,
+)
 import uproot
 import matplotlib
 matplotlib.use("Agg")
@@ -38,7 +44,7 @@ MAXPULSE = 60000
 RNG = np.random.default_rng(0)
 # Relative threshold for a physically meaningful signed area denominator: a row
 # is censored (NaN) when |area| <= AREA_EPS * typical_area, never epsilon-projected.
-AREA_EPS = 1e-3
+AREA_EPS = SHARED_AREA_EPS  # shared #1100 contract
 # Seed ensemble quantifies AE stochastic training uncertainty.
 AE_SEEDS = [0, 1, 42, 123, 999]
 # Cluster-stability study parameters (#1102).
@@ -99,56 +105,30 @@ def load_waveforms():
     return wfs, amps, staves, runs, run_counts, stave_counts
 
 def shape_features(wfs, amps):
-    """Compute versioned, domain-checked pulse-shape features on the
-    amplitude-normalised waveform ``norm = wfs / amps``.
+    """Compute versioned, domain-checked pulse-shape features via the shared
+    #1100 waveform-ratio contract (``ccb_mc_validation.waveform_ratios``).
 
-    The former implementation projected every nonpositive ``area`` to ``+1e-6``
-    via ``np.maximum(area, 1e-6)``, turning ordinary negative tails into
-    O(10^6) pseudo-values (see #1100).  Instead we:
-
-    * keep the *signed* area as-is (``area_signed``) and never substitute a
-      small positive denominator;
-    * define a validity mask ``ok`` for a physically meaningful signed area,
-      ``|area| > AREA_EPS * max(1, area_scale)``;
-    * set the ratio features to NaN (typed invalid, not a fabricated number)
-      wherever the denominator is invalid;
-    * expose the positive-charge and absolute-area fractions as separate,
-      versioned features so the measurand is explicit.
-
-    Column layout of the returned feature matrix (kept backward-compatible):
+    Column layout (backward-compatible):
     [0]=peak_sample, [1]=area_signed, [2]=late_signed_fraction_v1,
     [3]=aop signed peak/area v1, [4]=late_positive_fraction_v1,
     [5]=late_abs_fraction_v1, [6]=area_positive, [7]=area_abs.
     """
+    amps = np.asarray(amps, dtype=np.float64)
+    ratios = late_and_peak_ratios(wfs, late_start=12, normalize_by=amps)
     norm = wfs / amps[:, None]
-    peak = norm.argmax(axis=1)
-    area_signed = norm.sum(axis=1)
-    area_positive = np.maximum(norm, 0.0).sum(axis=1)
-    area_abs = np.abs(norm).sum(axis=1)
-    tail_signed = norm[:, 12:].sum(axis=1)
-    tail_positive = np.maximum(norm[:, 12:], 0.0).sum(axis=1)
-    tail_abs = np.abs(norm[:, 12:]).sum(axis=1)
-
-    # Valid signed-area denominator: magnitude well above floating-point noise,
-    # scaled relative to the typical per-pulse area. Rows failing this are
-    # censored (NaN) rather than epsilon-projected.
-    area_scale = np.median(np.abs(area_signed))
-    ok = np.abs(area_signed) > AREA_EPS * max(1.0, float(area_scale))
-
-    late_signed = np.full(len(norm), np.nan, dtype=np.float64)
-    aop = np.full(len(norm), np.nan, dtype=np.float64)
-    late_signed[ok] = tail_signed[ok] / area_signed[ok]
-    # peak/area: peak-normed waveform has peak==1, so aop = 1/area_signed.
-    aop[ok] = 1.0 / area_signed[ok]
-    # Measurand-explict secondary fractions, valid for any area_positive>0.
-    late_positive = tail_positive / np.maximum(area_positive, np.finfo(np.float64).eps)
-    late_abs = tail_abs / np.maximum(area_abs, np.finfo(np.float64).eps)
-
+    peak = norm.argmax(axis=1).astype(np.float64)
     feats = np.column_stack([
-        peak.astype(np.float64), area_signed, late_signed, aop,
-        late_positive, late_abs, area_positive, area_abs,
+        peak,
+        ratios["area_signed"],
+        ratios["late_signed_fraction_v1"],
+        ratios["peak_to_area_signed_v1"],
+        ratios["late_positive_fraction_v1"],
+        ratios["late_abs_fraction_v1"],
+        ratios["area_positive"],
+        ratios["area_abs"],
     ])
     return feats, norm
+
 
 def ae_reconstruct(X_train, X_eval, latent_dims, seed=0, epochs=60, batch_size=2048):
     """Train AEs on X_train only; evaluate reconstruction on X_train (in-sample) and X_eval.

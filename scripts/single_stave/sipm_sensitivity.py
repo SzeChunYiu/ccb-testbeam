@@ -2,138 +2,46 @@
 """SiPM sensitivity campaign analyzer (SIPM-P2-001).
 
 For each knob swept by the campaign, reads every per-point .root under
-<OUTDIR>/<knob>/, joins the immutable ``*.meta.json`` sidecar (#977/#982),
-computes the mean (+ standard error) of the ADC and PE channels, and emits:
+<OUTDIR>/<knob>/, computes the mean (+ standard error) of the ADC and PE
+channels, and emits:
   * <OUTDIR>/<knob>/<knob>_sensitivity.png   adc & PE vs knob
   * <OUTDIR>/<knob>/SUMMARY.md                per-knob table + findings
-  * <OUTDIR>/<knob>/PROVENANCE.json           per-point requested vs effective
   * <OUTDIR>/SUMMARY.md                       global summary across all knobs
 
-Filename labels are *requests*, never truth. A point is rejected unless the
-effective digitizer metadata matches the requested knob within policy.
+The knob value is recovered from the output filename (<knob>=<value>.root) so
+no separate manifest join is required. Categorical knobs (e.g. far_end) are
+plotted as a bar chart.
 
 Channels (single-stave events ntuple):
-  adc_*        canonical ccb-sipm-core production path
-  pe_sat_* / detected_*   INDEPENDENT_DIAGNOSTIC_DRAW (#1084) — not upstream of ADC
+  adc_readout / adc_f1far / adc_f2near / adc_f2far  (peak ADC above baseline)
+  pe_sat_readout / pe_sat_f2near / ...               (occupancy-saturated PE)
+  detected_readout / detected_f2near / ...           (raw detected PE)
+  edep_scint_MeV                                     (visible energy, control)
 
-ADC clip ceiling is derived from effective digitizer metadata
-(adc_bits, baseline_adc), not a hard-coded 12-bit/200 default.
+The ADC clips at (2^adc_bits - 1) - baseline = 3895 for the default 12-bit /
+baseline-200 electronics; a clipped point is flagged so saturation is visible
+rather than mistaken for a flat response.
 """
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import math
 import re
 import sys
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple
 
 import numpy as np
 
-# Fallback only when metadata lacks ADC fields (should not happen after #977).
-ADC_CLIP_FALLBACK = 3895.0
+from ccb_mc_validation.response_surface import summarize_nuisance_sweep
 
+ADC_CLIP_DEFAULT = 3895.0  # 2**12 - 1 - baseline(200); points at this are saturated
+
+# Channels we extract. "readout" is the primary near sensor.
 ADC_CH = ["adc_readout", "adc_f2near", "adc_f2far"]
 PE_CH = ["pe_sat_readout", "detected_readout"]
 CTRL_CH = ["edep_scint_MeV"]
-
-# Map filename knob names -> digitizer metadata keys (effective truth).
-KNOB_TO_EFFECTIVE: Dict[str, str] = {
-    "sipm_n_cells": "number_of_cells",
-    "crosstalk": "prompt_crosstalk_probability",
-    "afterpulse": "afterpulse_fast_probability",
-    "afterpulse_fast": "afterpulse_fast_probability",
-    "dark_count": "dark_count_rate_hz",
-    "dark_count_rate_hz": "dark_count_rate_hz",
-    "recovery": "recovery_time_ns",
-    "recovery_time_ns": "recovery_time_ns",
-    "pde_scale": "pde_scale",
-    "collection_efficiency": "coupling_efficiency",
-}
-
-
-class ProvenanceError(RuntimeError):
-    """Requested filename label disagrees with effective digitizer metadata."""
-
-
-def adc_clip_from_digitizer(digitizer: Dict[str, Any]) -> float:
-    bits = int(digitizer.get("adc_bits", 12))
-    baseline = float(digitizer.get("baseline_adc", 200.0))
-    return float((2**bits) - 1) - baseline
-
-
-def load_sidecar(root_path: Path) -> Dict[str, Any]:
-    meta_path = Path(str(root_path) + ".meta.json")
-    if not meta_path.is_file():
-        # Also accept stem.meta.json next to foo.root
-        alt = root_path.with_suffix(root_path.suffix + ".meta.json")
-        if alt.is_file():
-            meta_path = alt
-        else:
-            raise ProvenanceError(f"missing sidecar for {root_path}: {meta_path}")
-    data = json.loads(meta_path.read_text())
-    dig = data.get("digitizer")
-    if not isinstance(dig, dict):
-        raise ProvenanceError(f"{meta_path}: digitizer block missing")
-    if dig.get("validation_status") != "OK":
-        raise ProvenanceError(
-            f"{meta_path}: digitizer.validation_status="
-            f"{dig.get('validation_status')!r} (non-authorising)"
-        )
-    if not dig.get("digitizer_config_sha256"):
-        raise ProvenanceError(f"{meta_path}: digitizer_config_sha256 missing")
-    return data
-
-
-def effective_knob_value(digitizer: Dict[str, Any], knob: str) -> Any:
-    key = KNOB_TO_EFFECTIVE.get(knob, knob)
-    if key not in digitizer:
-        raise ProvenanceError(
-            f"digitizer metadata lacks effective key {key!r} for knob {knob!r}"
-        )
-    return digitizer[key]
-
-
-def values_match(requested: str, effective: Any, *, rtol: float = 0.0, atol: float = 0.0) -> bool:
-    """Exact match for ints/strings; float compare with optional tolerance."""
-    if isinstance(effective, bool):
-        return requested.lower() in ("1", "true", "yes") if effective else requested.lower() in (
-            "0",
-            "false",
-            "no",
-        )
-    try:
-        req_f = float(requested)
-        eff_f = float(effective)
-        return abs(req_f - eff_f) <= atol + rtol * abs(eff_f)
-    except (TypeError, ValueError):
-        return str(requested) == str(effective)
-
-
-def assert_requested_matches_effective(
-    knob: str,
-    requested: str,
-    meta: Dict[str, Any],
-) -> Dict[str, Any]:
-    dig = meta["digitizer"]
-    effective = effective_knob_value(dig, knob)
-    if not values_match(requested, effective):
-        raise ProvenanceError(
-            f"requested {knob}={requested!r} != effective {effective!r} "
-            f"(digitizer_config_sha256={dig.get('digitizer_config_sha256')})"
-        )
-    return {
-        "knob": knob,
-        "requested": requested,
-        "effective": effective,
-        "digitizer_config_sha256": dig.get("digitizer_config_sha256"),
-        "ccb_sipm_core_commit": dig.get("ccb_sipm_core_commit"),
-        "adc_bits": dig.get("adc_bits"),
-        "baseline_adc": dig.get("baseline_adc"),
-        "adc_clip": adc_clip_from_digitizer(dig),
-    }
 
 
 def _stderr(x: np.ndarray) -> float:
@@ -151,7 +59,7 @@ def _mean(x: np.ndarray) -> float:
     return float(np.mean(x))
 
 
-def read_point(root_path: Path, adc_clip: float) -> Dict[str, float]:
+def read_point(root_path: Path) -> Dict[str, float]:
     """Return per-point means for the channels of interest + n_events."""
     import uproot
 
@@ -163,17 +71,18 @@ def read_point(root_path: Path, adc_clip: float) -> Dict[str, float]:
             out[f"mean_{c}"] = _mean(df[c].to_numpy())
             out[f"sem_{c}"] = _stderr(df[c].to_numpy())
     out["n_events"] = int(len(df))
+    # Fraction of events where the readout ADC is at the clip ceiling.
     if "adc_readout" in df.columns:
         out["frac_clipped_readout"] = float(
-            np.mean(df["adc_readout"].to_numpy() >= adc_clip - 0.5)
+            np.mean(df["adc_readout"].to_numpy() >= ADC_CLIP_DEFAULT - 0.5)
         )
     else:
         out["frac_clipped_readout"] = float("nan")
-    out["adc_clip"] = float(adc_clip)
     return out
 
 
 def _parse_label(label: str) -> Tuple[str, str]:
+    """'knob=value' -> (knob, value_str)."""
     if "=" not in label:
         return label, label
     knob, val = label.split("=", 1)
@@ -189,34 +98,25 @@ def _is_numeric_column(vals: List[str]) -> bool:
         return False
 
 
-def collect_knob(
-    knob_dir: Path,
-) -> Tuple[List[str], List[Dict[str, float]], List[str], List[Dict[str, Any]]]:
-    """Return (values, stats, labels, provenance_rows). Fail-closed on mismatch."""
+def collect_knob(knob_dir: Path) -> Tuple[List[str], List[Dict[str, float]], List[str]]:
+    """Return (values_in_order, per_point_stats, labels)."""
     files = sorted(knob_dir.glob("*.root"))
     if not files:
-        return [], [], [], []
+        return [], [], []
     values: List[str] = []
     stats: List[Dict[str, float]] = []
     labels: List[str] = []
-    prov_rows: List[Dict[str, Any]] = []
-    digests: set[str] = set()
     for fp in files:
         knob, val = _parse_label(fp.stem)
-        meta = load_sidecar(fp)
-        row = assert_requested_matches_effective(knob, val, meta)
-        digests.add(str(row["digitizer_config_sha256"]))
-        # Refuse mixed profile digests within one knob dir unless values differ
-        # only by the scanned knob (digest is allowed to change with the knob).
-        st = read_point(fp, float(row["adc_clip"]))
-        st["digitizer_config_sha256_hash"] = float(
-            int(hashlib.sha256(str(row["digitizer_config_sha256"]).encode()).hexdigest()[:8], 16)
-        )
+        try:
+            st = read_point(fp)
+        except Exception as e:  # pragma: no cover - corrupt run
+            print(f"warn: failed to read {fp}: {e}", file=sys.stderr)
+            continue
         values.append(val)
         stats.append(st)
         labels.append(fp.stem)
-        prov_rows.append({**row, "root": str(fp), "meta": str(fp) + ".meta.json"})
-    return values, stats, labels, prov_rows
+    return values, stats, labels
 
 
 def _safe_float(v: str) -> float:
@@ -232,40 +132,33 @@ def plot_knob(
     values: List[str],
     stats: List[Dict[str, float]],
     out_png: Path,
-    adc_clip: float,
 ) -> None:
     import matplotlib
-
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
 
     numeric = _is_numeric_column(values)
     x = [_safe_float(v) for v in values] if numeric else range(len(values))
+    xlabels = values if not numeric else None
 
     fig, (ax_adc, ax_pe) = plt.subplots(2, 1, figsize=(7, 7), sharex=numeric)
+    # ADC panel.
     for ch, marker in zip(ADC_CH, ["o", "s", "^"]):
         ys = [s.get(f"mean_{ch}", float("nan")) for s in stats]
         es = [s.get(f"sem_{ch}", 0.0) for s in stats]
         ax_adc.errorbar(x, ys, yerr=es, marker=marker, capsize=3, label=ch)
-    ax_adc.axhline(
-        adc_clip, color="red", ls="--", lw=1, label=f"ADC clip ({adc_clip:.0f})"
-    )
+    ax_adc.axhline(ADC_CLIP_DEFAULT, color="red", ls="--", lw=1,
+                   label=f"ADC clip ({ADC_CLIP_DEFAULT:.0f})")
     ax_adc.set_ylabel("peak ADC above baseline")
     ax_adc.set_title(f"SiPM sensitivity: {knob}  [{unit}]")
     ax_adc.legend(fontsize=8)
     ax_adc.grid(alpha=0.3)
+    # PE panel.
     for ch, marker in zip(PE_CH, ["o", "s"]):
         ys = [s.get(f"mean_{ch}", float("nan")) for s in stats]
         es = [s.get(f"sem_{ch}", 0.0) for s in stats]
-        ax_pe.errorbar(
-            x,
-            ys,
-            yerr=es,
-            marker=marker,
-            capsize=3,
-            label=f"{ch} (independent diagnostic)",
-        )
-    ax_pe.set_ylabel("photo-electrons / event (diagnostic)")
+        ax_pe.errorbar(x, ys, yerr=es, marker=marker, capsize=3, label=ch)
+    ax_pe.set_ylabel("photo-electrons / event")
     if numeric:
         ax_pe.set_xlabel(f"{knob}  [{unit}]")
     else:
@@ -288,15 +181,13 @@ def summarize_knob(
 ) -> str:
     lines = [
         f"# {knob}",
-        "",
+        f"",
         f"- **unit**: {unit}",
         f"- **rationale**: {rationale}",
         f"- **points**: {len(values)}",
-        "- **note**: `pe_sat_*` / `detected_*` are independent diagnostic draws "
-        "(#1084); causal calibration must use `adc_*` only.",
         "",
-        "| value | n_events | adc_readout | pe_sat_readout (diag) | detected_readout (diag) | edep_scint_MeV | frac_clipped |",
-        "|-------|----------|-------------|----------------------|-------------------------|----------------|--------------|",
+        "| value | n_events | adc_readout | pe_sat_readout | detected_readout | edep_scint_MeV | frac_clipped |",
+        "|-------|----------|-------------|----------------|------------------|----------------|--------------|",
     ]
     for v, s in zip(values, stats):
         lines.append(
@@ -307,37 +198,50 @@ def summarize_knob(
             f"{s.get('mean_edep_scint_MeV', float('nan')):.3f} | "
             f"{s.get('frac_clipped_readout', float('nan')):.2f} |"
         )
+    # #985: local/asymmetric response near nominal — not a forced global line.
     if _is_numeric_column(values) and len(values) >= 2:
         xs = np.array([_safe_float(v) for v in values], dtype=float)
-        # Causal slope only for ADC; PE slopes labelled diagnostic.
-        for obs, label, causal in [
-            ("mean_adc_readout", "adc_readout", True),
-            ("mean_pe_sat_readout", "pe_sat_readout", False),
-            ("mean_detected_readout", "detected_readout", False),
-        ]:
+        clips = np.array(
+            [s.get("frac_clipped_readout", 0.0) for s in stats], dtype=float
+        )
+        for obs, label in [("mean_adc_readout", "adc_readout"),
+                           ("mean_pe_sat_readout", "pe_sat_readout"),
+                           ("mean_detected_readout", "detected_readout")]:
             ys = np.array([s.get(obs, float("nan")) for s in stats], dtype=float)
-            m = np.isfinite(xs) & np.isfinite(ys)
-            if m.sum() >= 2 and np.ptp(xs[m]) > 0:
-                slope, _ = np.polyfit(xs[m], ys[m], 1)
-                x0, y0 = float(np.median(xs[m])), float(np.median(ys[m]))
-                elast = (slope * x0 / y0) if abs(y0) > 1e-9 else float("nan")
-                tag = "causal" if causal else "diagnostic-only"
+            summary = summarize_nuisance_sweep(xs, ys, frac_clipped=clips)
+            slope = summary.get("recommended_slope", float("nan"))
+            elast = summary.get("recommended_elasticity", float("nan"))
+            lines.append(
+                f"  - `{label}` local d(obs)/d({knob}) near nominal = "
+                f"{slope:.4g} per {unit}; local elasticity = {elast:.3f}"
+            )
+            if summary.get("global_linear_misleading"):
+                reasons = ",".join(summary.get("misleading_reasons") or [])
                 lines.append(
-                    f"  - `{label}` [{tag}] d(obs)/d({knob}) = {slope:.4g} per {unit}; "
-                    f"elasticity = {elast:.3f}"
+                    f"  - `{label}` **global linear slope MISLEADING** "
+                    f"({reasons}); use local/asymmetric response (#985)."
                 )
+            asym = summary.get("asymmetric_excursion") or {}
+            lines.append(
+                f"  - `{label}` asymmetric unsaturated Δy: "
+                f"below={asym.get('delta_y_min_below', float('nan')):.4g}, "
+                f"above={asym.get('delta_y_max_above', float('nan')):.4g}"
+            )
+    # Saturation flag.
     frac_clip = [s.get("frac_clipped_readout", 0.0) for s in stats]
     if any(f > 0.5 for f in frac_clip):
         lines.append("")
         lines.append(
-            "> **ADC saturation**: >=1 point has >50% of events at the clip "
-            "ceiling; the ADC response is uninformative there."
+            f"> **ADC saturation**: >=1 point has >50% of events at the clip "
+            f"ceiling; the ADC response is uninformative there. See the PE "
+            f"panel for the underlying optical sensitivity."
         )
     lines.append("")
     return "\n".join(lines)
 
 
 def load_grid_meta(grids_dir: Path, knob: str) -> Tuple[str, str]:
+    """Read unit + rationale from the points_<knob>.csv header comments."""
     csv = grids_dir / f"points_{knob}.csv"
     unit, rationale = "?", ""
     if csv.exists():
@@ -360,9 +264,7 @@ def main() -> int:
         help="points_<knob>.csv dir for unit/rationale (default: infer from repo)",
     )
     ap.add_argument(
-        "--knob",
-        action="append",
-        default=None,
+        "--knob", action="append", default=None,
         help="specific knob(s) to analyze (default: every <knob>/ subdir)",
     )
     args = ap.parse_args()
@@ -372,9 +274,11 @@ def main() -> int:
         print(f"error: {outdir} is not a directory", file=sys.stderr)
         return 2
 
+    # Locate grids dir for metadata (unit/rationale).
     grids_dir = Path(args.grids_dir) if args.grids_dir else None
     if grids_dir is None:
         here = Path(__file__).resolve()
+        # scripts/single_stave/ -> ../../geant4/single_stave/slurm/grids
         cand = here.parents[2] / "geant4" / "single_stave" / "slurm" / "grids"
         if cand.is_dir():
             grids_dir = cand
@@ -391,17 +295,15 @@ def main() -> int:
         "",
         f"Output root: `{outdir}`",
         "",
-        "Filename labels are requests; points are admitted only when effective "
-        "digitizer metadata matches (#982). `adc_*` is the production path; "
-        "`pe_sat_*`/`detected_*` are independent diagnostics (#1084).",
+        "One-knob-at-a-time sweeps. ADC = peak above baseline (12-bit electronics, "
+        f"clip ceiling = {ADC_CLIP_DEFAULT:.0f}). PE = occupancy-saturated / raw detected "
+        "photo-electrons. Elasticity = local d(ln obs)/d(ln knob) near nominal unsaturated points (#985; global linear slopes flagged when misleading).",
         "",
     ]
     n_total_points = 0
     n_clipped_points = 0
-    per_knob_rows = [
-        "| knob | unit | npoints | adc_readout range | clipped pts | elasticity(adc) |",
-        "|------|------|---------|--------------------|-------------|------------------|",
-    ]
+    per_knob_rows = ["| knob | unit | npoints | adc_readout range | clipped pts | elasticity(adc) |",
+                     "|------|------|---------|--------------------|-------------|------------------|"]
 
     for knob in knobs:
         kdir = outdir / knob
@@ -411,53 +313,48 @@ def main() -> int:
         unit, rationale = ("?", "")
         if grids_dir:
             unit, rationale = load_grid_meta(grids_dir, knob)
-        try:
-            values, stats, labels, prov_rows = collect_knob(kdir)
-        except ProvenanceError as e:
-            print(f"error: provenance gate failed for {knob}: {e}", file=sys.stderr)
-            return 3
+        values, stats, labels = collect_knob(kdir)
         if not stats:
             print(f"warn: no readable .root for knob {knob}", file=sys.stderr)
             continue
-        (kdir / "PROVENANCE.json").write_text(json.dumps(prov_rows, indent=2) + "\n")
-        adc_clip = float(stats[0].get("adc_clip", ADC_CLIP_FALLBACK))
         n_total_points += len(stats)
         n_clipped_points += sum(
             1 for s in stats if s.get("frac_clipped_readout", 0.0) > 0.5
         )
+        # Per-knob plot + summary.
         out_png = kdir / f"{knob}_sensitivity.png"
         try:
-            plot_knob(knob, unit, values, stats, out_png, adc_clip)
+            plot_knob(knob, unit, values, stats, out_png)
             print(f"  wrote {out_png}")
         except Exception as e:  # pragma: no cover
             print(f"warn: plot failed for {knob}: {e}", file=sys.stderr)
-        (kdir / "SUMMARY.md").write_text(
-            summarize_knob(knob, unit, rationale, values, stats)
-        )
+        per_knob_md = kdir / "SUMMARY.md"
+        per_knob_md.write_text(summarize_knob(knob, unit, rationale, values, stats))
+        # Global table row.
         adcs = [s.get("mean_adc_readout", float("nan")) for s in stats]
         clipped = sum(1 for s in stats if s.get("frac_clipped_readout", 0.0) > 0.5)
         elast_str = "n/a"
         if _is_numeric_column(values) and len(values) >= 2:
             xs = np.array([_safe_float(v) for v in values], dtype=float)
             ys = np.array(adcs, dtype=float)
-            m = np.isfinite(xs) & np.isfinite(ys)
-            if m.sum() >= 2 and np.ptp(xs[m]) > 0:
-                slope, _ = np.polyfit(xs[m], ys[m], 1)
-                x0 = float(np.median(xs[m]))
-                y0 = float(np.median(ys[m]))
-                if abs(y0) > 1e-9:
-                    elast_str = f"{slope * x0 / y0:.3f}"
-        finite_adcs = [v for v in adcs if math.isfinite(v)]
-        rng = (
-            f"{min(finite_adcs):.0f}..{max(finite_adcs):.0f}" if finite_adcs else "n/a"
-        )
+            clips = np.array(
+                [s.get("frac_clipped_readout", 0.0) for s in stats], dtype=float
+            )
+            summary = summarize_nuisance_sweep(xs, ys, frac_clipped=clips)
+            elast = summary.get("recommended_elasticity", float("nan"))
+            if np.isfinite(elast):
+                elast_str = f"{elast:.3f}"
+                if summary.get("global_linear_misleading"):
+                    elast_str += " (local; global-linear misleading)"
         per_knob_rows.append(
-            f"| {knob} | {unit} | {len(stats)} | {rng} | {clipped} | {elast_str} |"
+            f"| {knob} | {unit} | {len(stats)} | "
+            f"{min(v for v in adcs if math.isfinite(v)):.0f}..{max(v for v in adcs if math.isfinite(v)):.0f} | "
+            f"{clipped} | {elast_str} |"
         )
         global_sections.append(f"## {knob}")
         global_sections.append(f"![{knob}]({knob}/{knob}_sensitivity.png)")
         global_sections.append("")
-        global_sections.append(f"see `{knob}/SUMMARY.md` / `{knob}/PROVENANCE.json`.")
+        global_sections.append(f"see `{knob}/SUMMARY.md` for the table.")
 
     global_sections += ["", "## Cross-knob sensitivity", ""]
     global_sections += per_knob_rows

@@ -1,71 +1,70 @@
 # Latest Handoff
 
-## Trigger/gain recovery separation exposed an independent correlated-noise recovery law
+## Upstream SiPM core main contains unresolved merge markers; bounded repair is open
 
-Selected atom: `ARU-SIPM-RECOVERY-CORRELATED-NOISE-COUPLING-001`, child of #1066 and #1071.
+Selected atom: `ARU-SIPM-CORE-MERGE-CONFLICT-CLOSURE-001`.
 
-### Live repository state
+### Live state
 
-Protected testbeam `main` advanced from `e25d59be37f59b8fddf7dd897295bcaa7bee14d0` to `d9992a48d86a34f03f18a1e4f9426c97f6cf399b` when PR #1235 integrated `ccb-sipm-core@692857bde0c1c6c2ed59aac5a56c94740da31354`. #1066 remains OPEN; this integration is PARTIAL and must not be interpreted as recovery-model validation.
+Protected root `ccb-testbeam/main` was inspected at exact `5a020b61cbdea6cfda0aeba7a1f6d92442a369e9`; required status context remains `test`. The root's SiPM gitlink lineage remains on the earlier conflict-free `cf12c6b...` core family, so the upstream incident described below has **not** yet contaminated the root runtime dependency.
 
-Core PR #13 exact head `c2b79d83642852b458299b181d50dd94b733bdb7` passed Core CI run `31533574607`; merged core main `692857b...` passed independent push Core CI run `31533753427`. Testbeam PR #1235 exact head `4cb06465c2aaf30b4319e43f003578b18c953d8c` passed MC Validation run `31534733706`, job `93923024769`: ruff clean and pytest `1642 passed, 2 skipped, 8 xfailed, 1 xpassed, 7 warnings in 124.43 s`. The merged testbeam commit `d9992a48...` then independently passed main-push MC Validation run `31535409449` / job `93925207048`, including checkout, curated ruff, unit tests, diagnostics upload, and enforcement. The testbeam workflow is Python/static and does not compile the C++ submodule; the upstream Core CI is the C++ execution evidence.
+Live `ccb-sipm-core/main` is `0fc78af6679c421f7a01a85f421170bbb92cce82`, the merge of core PR #15. That commit is not a valid executable source state: exact reads of `src/Config.cc`, `src/ResponseSimulator.cc`, and `tests/test_core.cc` show literal unresolved `<<<<<<<`, `=======`, and `>>>>>>>` merge delimiters. PR #15's own automated review had explicitly warned that those conflicts remained before merge.
 
-### Atomic contract
+### Atomic contract and mechanism result
 
-For a previously fired cell, the core forms
+For a calibrated sampled impulse `(t_i,a_i)`, the preserved parent implementation requires a nonzero norm and positive trapezoidal integral under the current polarity convention,
 
-`r(dt)=1-exp(-dt/tau_recovery)`.
+`max |a_i| > 0`,
 
-PR #13 made two accepted-parent response quantities explicit:
+`Q = Σ 0.5(a_i+a_{i-1})(t_i-t_{i-1}) > 0`,
 
-- `P_fire/P_full = F_trigger(r)`;
-- `Q/Q_full = F_gain(r)`.
+plus overlap with the history-complete runtime grid
 
-Current selectors are `trigger_recovery_model=EXPONENTIAL`, `gain_recovery_model=EXPONENTIAL_H1_SHARED`, and gain alternative `FULL_RECOVERY`.
+`N_kernel = N_output + ceil(max(0, window_start-history_start)/dt)`.
 
-The cross-atom contradiction is that correlated-noise generation from the accepted parent avalanche is still anonymous and hard-wired to raw `r`:
+The conflict-side implementation is not merely a textual alternative. It duplicates the integral accumulation in `Config.cc`, shortens measured-impulse support validation to the output window, and conflicts with the already-reviewed provenance state: one side keeps arbitrary sampled vectors `CUSTOM_UNVALIDATED` and hashes the exact cached history-complete runtime kernel, while the incoming side labels them `MEASURED` and manufactures `LEN-*` placeholders.
 
-- prompt crosstalk `N ~ Poisson((-ln(1-p_prompt))*r)`;
-- delayed crosstalk Bernoulli(`p_delayed*r`);
-- fast/slow afterpulse scheduling Bernoulli(`p_after*r`).
+The strongest repair candidates were compared. Keeping broken main is impossible. Favoring the incoming side is rejected as a semantic/provenance regression. Reverting all of PR #15 is unnecessarily broad. The surviving bounded repair is to restore only the three contaminated executable/test blobs from immediate parent `cf12c6b8955c48590bda858477f8dc4ebd67251b`, because that parent already contains the substantive fail-closed measured-impulse behavior claimed by #15.
 
-The scheduled child is later subjected to its own target/same-cell recovery gate. Parent secondary generation and child triggering are therefore separate physical state transitions.
+### Work performed
 
-At `dt=tau`, `r=0.6321205588285577`. With `gain_recovery_model=FULL_RECOVERY`, the modeled accepted parent has full gain while secondary generation remains at 63.212% of the fully recovered nominal multiplier. For the representative uncalibrated profile, prompt `p=0.03` gives `lambda=0.030459207484708546` and current `lambda*r=0.01925389125670895`; fast/slow afterpulse scheduling becomes `0.006321205588285576` / `0.003160602794142788`. These are simulator-law calculations, not CCB measurements.
+Upstream branch `audit/repair-main-conflict-markers` was created from exact bad main. A three-file tree was constructed with:
 
-### Equivalence and mechanism review
+- `src/Config.cc` -> `7e4d84ec684d3b11eb3a7e1c6012fe22edfb53ba`;
+- `src/ResponseSimulator.cc` -> `51d5e74863d8075235fa27d4ad93f19c9a7565a7`;
+- `tests/test_core.cc` -> `3df1ea0d20bf93fbd10245791fb216ba1581f7ec`.
 
-The crucial identifiability result is that raw-recharge coupling `C=r` and parent-gain coupling `C=g` collapse to the same observable model under default `EXPONENTIAL_H1_SHARED`, because `g=r`. Existing H1-only tests therefore cannot validate which correlated-noise coupling is intended. `FULL_RECOVERY` (`g=1`) breaks that degeneracy.
+Tree: `23beb8a7e1df3fc5d2bebc1e1c21e54c29d4ae2d`.
+Repair commit: `98be281d3b48d4fe2fc2e00f985ec62374f07766`.
 
-Surviving hypotheses are: named legacy `C=r`; gain/charge-coupled parent generation; mechanism-specific prompt/delayed/afterpulse recovery surfaces; and an explicit `C=1` negative-control family with child recovery retained downstream. No physical winner is selected without actual secondary-pulse delay×amplitude calibration at the relevant device, overvoltage and temperature.
+Draft upstream PR #16, `fix(core): remove unresolved conflict markers from main after #15`, has exact base `0fc78af...`, exact head `98be281d...`, and exactly three changed files. Core CI run `31544391525`, job `93953654545`, was still queued at last inspection. Do **not** mark it ready or merge until exact-head configure/build/CTest succeeds.
 
-Hamamatsu guidance and primary Hamamatsu-SiPM correlated-noise studies motivate keeping avalanche amplitude, delay, crosstalk and afterpulse observables explicit; they do not authorize a CCB-specific `C=r` or `C=g` law from manufacturer defaults.
+The post-merge Core CI run for broken main, `31544089787`, was also only queued when inspected. Core main is currently unprotected; a bad merge therefore became main without successful CI being a precondition.
 
-### Repository actions
+### Preventive child and issue governance
 
-- Added stable concern `CCB-1071-RECOVERY-COUPLING-001` to existing #1071 instead of creating a duplicate issue.
-- Added cross-atom partial-completion evidence and four-role review to #1066; issue remains OPEN.
-- Reframed PR #1235 before integration as `fix(sipm): integrate partial trigger/gain recovery separation (#1066)` with exact upstream/testbeam CI and claim boundary.
-- PR #1235 merged as testbeam main `d9992a48d86a34f03f18a1e4f9426c97f6cf399b`; post-merge MC Validation run `31535409449` / job `93925207048` completed successfully.
-- Coordination-only draft PR #1236 carries this archive and refreshed active/handoff state; merge only after its final exact-head protected CI passes.
-- Immutable record: `chatgpt_todo/archive/2026-08-11T205700Z_ARU-SIPM-RECOVERY-CORRELATED-NOISE-COUPLING-001.md`.
+No duplicate upstream branch-protection issue existed. Opened core issue #17, stable ID `ARU-CORE-MAIN-PROTECTION-001`, requiring exact-head Core CI plus a deterministic conflict-marker scanner and verified branch/ruleset protection. PR #15 is the historical failure fixture; PR #16 is the immediate repair control.
 
-### Four sequential AI votes
+Root #1066 was found incorrectly `closed/completed` despite its own unresolved acceptance criteria and an existing issue-thread correction saying to keep it OPEN/PARTIAL. It was reopened and a completion-state repair comment was added. The integrated trigger/gain selector refactor is unchanged; two-pulse calibration, correlated-noise coupling, operating-point/source provenance and high-occupancy model-form uncertainty remain open.
 
-**SiPM/device lead — ACCEPT bounded trigger/gain refactor / REVISE physical recovery model.** Exact code separates trigger/gain but leaves correlated-noise generation coupled to raw `r`. Actual CCB delay×amplitude calibration is absent.
+Root #1067 remains OPEN/reopened. A PR title saying `fixes #1067` cannot establish its scientific acceptance: source/calibration authorization, resampling closure and historical measured-output audit remain unresolved.
 
-**Adversarial mechanism reviewer — BLOCK implicit coupling.** `C=r` and `C=g` are only indistinguishable under H1; `FULL_RECOVERY` produces a 36.8% separation at `dt=tau`.
+### Four sequential AI review votes
 
-**Independent statistics/validation reviewer — ACCEPT software/source diagnosis / BLOCK detector inference.** Green H1 tests cannot discriminate collapsed parameterizations; held-out two-pulse/secondary-pulse data are required for physical model selection.
+**Build/reproducibility lead — ACCEPT targeted repair / BLOCK merge until exact-head Core CI succeeds.** Raw conflict delimiters occur in compiled/test source, not comments or dedicated fixtures.
 
-**Claims/provenance reviewer — BLOCK #1066/#1071 completion and saturation/pile-up/late-component promotion.** The representative profile is explicitly not a CCB calibration, and downstream physics studies have not been re-evaluated over the surviving model family.
+**Adversarial mechanism/provenance reviewer — REJECT incoming conflict side / ACCEPT parent-blob restoration.** Immediate parent already contains the desired fail-closed numerical checks; incoming conflict text weakens history support and provenance semantics.
 
-### Child atoms / next work
+**Independent validation reviewer — ACCEPT deterministic source diagnosis / BLOCK VALIDATED until Core CI / BLOCK detector inference.** The exact repair has not yet compiled in CI; repository inspection is not a substitute for executable closure.
 
-Highest-value next atom: `ARU-SIPM-CORRELATED-NOISE-GENERATION-MODEL-001`. Make the currently hidden parent-generation recovery law explicit and serializable per mechanism, retain raw-`r` as a named legacy hypothesis, add `C=1` and gain-coupled test hypotheses where appropriate, and construct paired fixed-seed controls that break the H1 degeneracy. This is a software-model interface atom; it must not choose detector truth in the absence of calibration.
+**Claims/provenance reviewer — ACCEPT quarantine/repair / BLOCK #1067 COMPLETE and measured-electronics promotion.** Root has not integrated the bad core SHA, and no calibration object or detector data participates here.
 
-Physical child: `ARU-SIPM-CORRELATED-NOISE-TWO-PULSE-CALIBRATION-001`, requiring source-bound secondary-pulse delay×amplitude data and held-out validation at the actual device operating point.
+### Next work
 
-Other independent dependencies remain: `ARU-SIPM-RECOVERY-DISTINCT-TAU-001` because trigger/gain selectors still consume one shared raw `r`/`tau`; #1072 operating-point response surfaces; #1096 physical history-horizon convergence; #1067 measured-impulse source/calibration authorization.
+Immediate: recheck Core CI run `31544391525`. If and only if it succeeds on exact `98be281d...`, mark #16 ready and merge with an expected-head guard; then require the resulting core-main push CI and record the final upstream main SHA. Do not point root to `0fc78af...`.
 
-No beam data, production Geant4 sample, detector calibration, pile-up efficiency, saturation closure, timing/PID result, rate, ESS, p-value or public detector-performance quantity was generated or promoted.
+Once upstream integrity is restored, the next highest-value scientific atom remains `ARU-SIPM-CORRELATED-NOISE-GENERATION-MODEL-001`: make prompt/delayed/afterpulse parent-generation recovery semantics explicit and serializable, preserve raw-`r` as a named legacy hypothesis, add discriminating alternatives/controls, and do not choose detector truth without source-bound two-pulse calibration.
+
+Immutable record: `chatgpt_todo/archive/2026-08-11T225800Z_ARU-SIPM-CORE-MERGE-CONFLICT-CLOSURE-001.md`.
+
+No beam data, production Geant4 population, measured electronics impulse, SiPM two-pulse calibration, waveform closure, pile-up/saturation efficiency, timing/PID metric, event weights, ESS, p-value, rate, or detector-performance result was generated or promoted.

@@ -42,7 +42,7 @@ Equivalent source attributions to the earlier rapid communication are not treate
 
 For a CM differential cross section, the nominal polar target density after azimuthal integration is
 
-`p(theta_cm) ∝ [dσ/dΩ](theta_cm) sin(theta_cm)`.
+`p(theta_cm) ∝ \[dσ/dΩ\](theta_cm) sin(theta_cm)`.
 
 For legacy uniform-theta proposal `q(theta_cm)=1/pi`, a correct normalized-shape importance factor must be proportional to the target/proposal Radon–Nikodym ratio, hence to `sigma_cm(theta_cm) sin(theta_cm)` up to a positive common constant.
 

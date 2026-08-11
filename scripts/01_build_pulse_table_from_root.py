@@ -1007,7 +1007,7 @@ def main() -> int:
         run_ml_check(config, ml_rows, staging, population_prevalence=population_prevalence)
     if not args.skip_sha256:
         write_checksums(config, staging)
-# ---- Model identity for manifest ----
+    # ---- Model identity for manifest ----
     input_hashes = None
     if not args.skip_sha256:
         try:
@@ -1015,7 +1015,7 @@ def main() -> int:
             input_hashes = dict(zip(checksums["file"], checksums["sha256"]))
         except Exception:
             input_hashes = {}
-selector_identity = s00_selector_model_identity()
+    selector_identity = s00_selector_model_identity()
     model_identity = {
         "effective_amplitude_cut_adc": float(cut),
         "amplitude_cut_source": cut_source,
@@ -1025,7 +1025,7 @@ selector_identity = s00_selector_model_identity()
         "source_commit": src_commit,
         **selector_identity,
     }
-# ---- Gate-state model (issue #972) ----
+    # ---- Gate-state model (issue #972) ----
     # Every P0 data-integrity gate is recorded with an explicit state. A skipped
     # or missing sorted crosscheck is NOT_RUN_MISSING_INPUT (never fabricated as
     # PASS), which is a non-authorising condition. The pulse-schema gate is

@@ -12,9 +12,10 @@ concrete defects that motivated the re-audit:
     reuse the same event number must never merge into a single row.
   * ``--stop-thresholds`` / ``--data-thresholds`` are actually USED to define the
     stored stopping distributions (the old code declared them and ignored them).
-  * The stopping layer is the DEEPEST layer whose signal passes the threshold,
-    not "the deepest layer with any deposit" (which is noise / secondary
-    sensitive).
+  * Deepest-active / deepest-edep proxies use the DEEPEST layer whose signal
+    passes the threshold (strict ``>``), not "any deposit". DATA reports
+    ``deepest_active_stave``; MC deposit proxy reports ``deepest_edep_layer``
+    (not primary-stop truth).
   * Missing downstream bars are mapped to zero ONLY AFTER event-key validation.
   * Units are kept strictly distinct: data ADC amplitudes are never relabeled as
     MeV; MC energy deposits are never relabeled as ADC.
@@ -69,6 +70,22 @@ E_LAYERS_4: tuple[str, ...] = ("B4", "B6", "B8")
 REQUIRED_DATA: tuple[str, ...] = KEY_COLS + ("amp_B2", "sample", "trigger_definition")
 REQUIRED_MC: tuple[str, ...] = KEY_COLS + ("edep_B2",)
 
+#: Per-event MC generator/importance weight (issue #880 / #1022).
+MC_WEIGHT_COL: str = "PrimaryWeight"
+#: Accepted aliases for the MC weight column (first present wins after PrimaryWeight).
+MC_WEIGHT_ALIASES: tuple[str, ...] = ("PrimaryWeight", "event_weight", "weight")
+
+#: Shared hit/reach comparison rule for DATA+MC (issue #1048).
+#: Supervisor wording is "Edep > threshold"; canonical path must match.
+THRESHOLD_COMPARISON_RULE: str = ">"
+THRESHOLD_COMPARISON_SCHEMA_VERSION: str = "dee-threshold-cmp-v1"
+
+#: Sample-label grammar schema version (issue #1024).
+SAMPLE_LABEL_SCHEMA_VERSION: str = "dee-sample-label-v1"
+
+#: Boolean flag schema version (issue #1025).
+FLAG_SCHEMA_VERSION: str = "dee-bool-flag-v1"
+
 #: Downstream bars that are FILLED WITH ZERO only *after* key validation.
 FILLABLE_DATA_LAYERS: tuple[str, ...] = ("amp_B4", "amp_B6", "amp_B8")
 FILLABLE_MC_LAYERS: tuple[str, ...] = ("edep_B4", "edep_B6", "edep_B8")
@@ -81,11 +98,11 @@ DATA_THRPASS_COLS: tuple[str, ...] = tuple(f"threshold_pass_{b}" for b in DATA_L
 #: Default stopping thresholds. Both are CLI-overridable; the defaults are
 #: documented, not arbitrary:
 #:   MC edep threshold 0.05 MeV ~ a conservative plastic-scintillator hit floor;
-#:   data ADC threshold 20 counts ~ pedestal + a few sigma of electronics noise.
+#:   data ADC thresholds 500–1500 (#618/#887/#1026 physics scan; S00 cut is 1000).
 #: The multi-value default lets result.json store a stopping distribution at
 #: several thresholds so the monotonic-reach guarantee is exercised.
 DEFAULT_STOP_THRESHOLDS_MEV: tuple[float, ...] = (0.05, 0.15, 0.30)
-DEFAULT_DATA_THRESHOLDS_ADC: tuple[float, ...] = (20.0, 40.0, 80.0)
+DEFAULT_DATA_THRESHOLDS_ADC: tuple[float, ...] = (500.0, 750.0, 1000.0, 1500.0)  # #618/#887/#1026
 
 #: Explicit category label for events where no layer passes the threshold
 #: (all-zero / all-subthreshold / missing-downstream reduced to zero).
@@ -112,13 +129,19 @@ class EventKeyError(ValueError):
 # --------------------------------------------------------------------------- #
 
 def parse_thresholds(text: str | Sequence[float]) -> tuple[float, ...]:
-    """Parse a comma-separated threshold string into a sorted tuple of floats."""
+    """Parse a comma-separated threshold string into a sorted tuple of floats.
+
+    Rejects NaN/Inf/overflow-to-Inf (issue #1030): a nonfinite threshold makes
+    every comparison false and can still pass structural invariants.
+    """
     if isinstance(text, (list, tuple)):
         vals = [float(v) for v in text]
     else:
         vals = [float(tok) for tok in str(text).split(",") if tok.strip() != ""]
     if not vals:
         raise ValueError("empty threshold list")
+    if any(not np.isfinite(v) for v in vals):
+        raise ValueError(f"thresholds must be finite: {vals}")
     if any(v < 0 for v in vals):
         raise ValueError(f"thresholds must be non-negative: {vals}")
     return tuple(sorted(dict.fromkeys(vals)))
@@ -227,13 +250,69 @@ def fill_missing_layers(df: pd.DataFrame, cols: Sequence[str]) -> pd.DataFrame:
     return df
 
 
+_TRUE_TOKENS = frozenset({"1", "TRUE", "T", "YES", "Y"})
+_FALSE_TOKENS = frozenset({"0", "FALSE", "F", "NO", "N"})
+
+
+def parse_bool_flag(value) -> bool:
+    """Parse one saturation/threshold flag under a finite schema (issue #1025).
+
+    Accepted: native bool, integer/float 0/1, and exact lexical tokens
+    true/false/t/f/yes/no/y/n (case-insensitive). Rejects truthiness traps
+    such as the string ``"False"`` being coerced via ``astype(bool)``.
+    """
+    if value is None or (isinstance(value, float) and not np.isfinite(value)):
+        return False
+    if isinstance(value, (bool, np.bool_)):
+        return bool(value)
+    if isinstance(value, (int, np.integer)) and not isinstance(value, (bool, np.bool_)):
+        if int(value) in (0, 1):
+            return bool(int(value))
+        raise ValueError(f"invalid boolean flag integer: {value!r}")
+    if isinstance(value, (float, np.floating)):
+        if float(value) in (0.0, 1.0):
+            return bool(int(value))
+        raise ValueError(f"invalid boolean flag float: {value!r}")
+    tok = str(value).strip().upper()
+    if tok == "":
+        return False
+    if tok in _TRUE_TOKENS:
+        return True
+    if tok in _FALSE_TOKENS:
+        return False
+    raise ValueError(f"invalid boolean flag token: {value!r}")
+
+
 def fill_missing_flags(df: pd.DataFrame, cols: Sequence[str]) -> pd.DataFrame:
-    """Ensure boolean flag columns exist (default False). POST-validation only."""
+    """Ensure boolean flag columns exist (default False). POST-validation only.
+
+    Missing whole columns default to False under the current producer contract
+    (absence means not flagged). Present cells are parsed by ``parse_bool_flag``.
+    """
     df = df.copy()
     for c in cols:
         if c not in df.columns:
             df[c] = False
-        df[c] = df[c].fillna(False).astype(bool)
+            continue
+        parsed = []
+        for idx, raw in enumerate(df[c].tolist()):
+            try:
+                if raw is None or (isinstance(raw, float) and not np.isfinite(raw)):
+                    parsed.append(False)
+                elif isinstance(raw, str) and raw.strip() == "":
+                    parsed.append(False)
+                else:
+                    # pandas NA
+                    try:
+                        if pd.isna(raw):
+                            parsed.append(False)
+                            continue
+                    except (TypeError, ValueError):
+                        pass
+                    parsed.append(parse_bool_flag(raw))
+            except ValueError as exc:
+                raise ValueError(f"column {c!r} row {idx}: {exc}") from exc
+        df[c] = np.asarray(parsed, dtype=bool)
     return df
 
 
@@ -277,43 +356,95 @@ def derive_mc_columns(df: pd.DataFrame) -> pd.DataFrame:
 # Stopping layer / reach  (threshold-defined, monotone by construction)
 # --------------------------------------------------------------------------- #
 
+def passes_threshold(value, threshold: float) -> bool | np.ndarray:
+    """Shared hit/reach comparator (issue #1048). Rule: strict ``>``."""
+    if THRESHOLD_COMPARISON_RULE != ">":
+        raise ValueError(
+            f"unsupported THRESHOLD_COMPARISON_RULE={THRESHOLD_COMPARISON_RULE!r}"
+        )
+    return np.asarray(value) > threshold
+
+
 def stopping_layers(values: np.ndarray, threshold: float) -> np.ndarray:
     """Deepest passing-layer index per event (-1 = no layer passes).
 
     ``values`` is (n_events, n_layers) ordered shallow->deep. Passing means
-    ``value >= threshold``. Because raising the threshold can only turn
-    ``passing`` from True to False, the deepest passing index is non-increasing
-    in the threshold -- this is what makes cumulative reach monotone.
+    ``value > threshold`` (strict; matches supervisor / issue #1048). Raising
+    the threshold can only turn ``passing`` from True to False, so the deepest
+    passing index is non-increasing in the threshold -- cumulative reach is
+    monotone.
     """
     values = np.asarray(values, dtype=float)
-    passing = values >= threshold
+    passing = passes_threshold(values, threshold)
     n_layers = values.shape[1]
     idx_grid = np.broadcast_to(np.arange(n_layers), values.shape)
     return np.where(passing, idx_grid, -1).max(axis=1)
 
 
+def _normalized_weights(weights: np.ndarray | None, n: int) -> np.ndarray:
+    if weights is None:
+        return np.ones(n, dtype=float)
+    w = np.asarray(weights, dtype=float)
+    if w.shape != (n,):
+        raise ValueError(f"weight length {w.shape} != n_events {n}")
+    return w
+
+
+def weighted_mean_indicator(mask: np.ndarray, weights: np.ndarray) -> float:
+    """Weighted fraction ``sum(w I) / sum(w)`` for nonnegative finite weights."""
+    w = np.asarray(weights, dtype=float)
+    m = np.asarray(mask, dtype=bool)
+    denom = float(w.sum())
+    if denom <= 0.0:
+        return 0.0
+    return float(w[m].sum() / denom)
+
+
 def stopping_distribution(
-    df: pd.DataFrame, value_cols: Sequence[str], layers: Sequence[str], threshold: float
+    df: pd.DataFrame,
+    value_cols: Sequence[str],
+    layers: Sequence[str],
+    threshold: float,
+    weights: np.ndarray | Sequence[float] | None = None,
 ) -> dict:
-    """Cumulative reach + stop-category fractions at one threshold."""
+    """Cumulative reach + category fractions at one threshold.
+
+    When ``weights`` is provided (MC measure, issue #1022), fractions are
+    ``sum(w I)/sum(w)``. Unweighted DATA paths leave ``weights=None``.
+    """
     layers = list(layers)
     values = df[list(value_cols)].to_numpy(dtype=float)
     deepest = stopping_layers(values, threshold)
     n = len(df)
-    # Cumulative reach: fraction of events with a passing layer at depth >= j.
-    reach = {layers[j]: float((deepest >= j).mean()) if n else 0.0
-             for j in range(len(layers))}
-    cats = np.where(deepest >= 0, np.array(layers + [NO_REACH_CATEGORY])[deepest], NO_REACH_CATEGORY)
-    cat_series = pd.Series(cats)
-    frac = {c: float((cat_series == c).mean()) if n else 0.0
-            for c in list(layers) + [NO_REACH_CATEGORY]}
-    return {
+    w = _normalized_weights(None if weights is None else np.asarray(weights, dtype=float), n)
+    reach = {
+        layers[j]: weighted_mean_indicator(deepest >= j, w) if n else 0.0
+        for j in range(len(layers))
+    }
+    cats = np.where(
+        deepest >= 0,
+        np.array(layers + [NO_REACH_CATEGORY])[deepest],
+        NO_REACH_CATEGORY,
+    )
+    frac = {
+        c: weighted_mean_indicator(cats == c, w) if n else 0.0
+        for c in list(layers) + [NO_REACH_CATEGORY]
+    }
+    n_no = int((deepest < 0).sum())
+    w_no = float(w[deepest < 0].sum()) if n else 0.0
+    out = {
         "threshold": float(threshold),
         "n_events": int(n),
         "reach_by_layer": reach,
         "stop_category_fractions": frac,
-        "n_no_layer_passes": int((deepest < 0).sum()),
+        "n_no_layer_passes": n_no,
+        "comparison_rule": THRESHOLD_COMPARISON_RULE,
+        "comparison_rule_schema": THRESHOLD_COMPARISON_SCHEMA_VERSION,
     }
+    if weights is not None:
+        out["weighted_no_layer_passes_mass"] = w_no
+        out["sum_w"] = float(w.sum())
+    return out
 
 
 def assign_stop_category(
@@ -342,20 +473,82 @@ def check_monotonic_reach(dists: Sequence[dict]) -> bool:
 # --------------------------------------------------------------------------- #
 
 _SAMPLE_TOKEN = re.compile(r"[,;/\s]+")
+# Finite authorised grammar only (issue #1024). No character-set lstrip.
+_SAMPLE_EXACT = {
+    "I": "I",
+    "1": "I",
+    "SAMPLEI": "I",
+    "SAMPLE-I": "I",
+    "SAMPLE_I": "I",
+    "II": "II",
+    "2": "II",
+    "SAMPLEII": "II",
+    "SAMPLE-II": "II",
+    "SAMPLE_II": "II",
+}
 
 
 def sample_tokens(value) -> set[str]:
-    """Normalize a ``sample`` cell into the set of sample tags it belongs to."""
+    """Normalize a ``sample`` cell into ``{I, II}`` under a finite grammar.
+
+    Authorised forms (case-insensitive, optional surrounding whitespace):
+    ``I``, ``II``, ``1``, ``2``, ``Sample I``, ``Sample-II``, ``SAMPLE_I``, …
+    Malformed tokens such as ``P1`` / ``L2`` (formerly accepted via
+    ``lstrip("SAMPLE")`` charset stripping) are ignored / invalid.
+    """
     if value is None or (isinstance(value, float) and not np.isfinite(value)):
         return set()
     out = set()
     for tok in _SAMPLE_TOKEN.split(str(value).strip()):
-        t = tok.strip().upper().lstrip("SAMPLE").strip().lstrip("-_ ").strip()
-        if t in {"I", "1"}:
-            out.add("I")
-        elif t in {"II", "2"}:
-            out.add("II")
+        raw = tok.strip()
+        if not raw:
+            continue
+        key = re.sub(r"[\s]+", "", raw.upper())
+        # Allow a single hyphen/underscore between SAMPLE and roman/digit only
+        # via the explicit map keys; do not strip arbitrary SAMPLE charset chars.
+        mapped = _SAMPLE_EXACT.get(key)
+        if mapped is None:
+            # Also accept "SAMPLE I" after removing internal spaces already done;
+            # reject everything else (no fuzzy repair).
+            continue
+        out.add(mapped)
     return out
+
+
+def sample_token_census(df: pd.DataFrame) -> dict:
+    """Count valid/invalid sample labels for provenance (issue #1024)."""
+    n_invalid = 0
+    examples: list[str] = []
+    if "sample" not in df.columns:
+        return {
+            "schema_version": SAMPLE_LABEL_SCHEMA_VERSION,
+            "n_invalid_labels": 0,
+            "invalid_examples": [],
+        }
+    for raw in df["sample"].tolist():
+        if raw is None or (isinstance(raw, float) and not np.isfinite(raw)):
+            continue
+        text_v = str(raw).strip()
+        if text_v == "":
+            continue
+        parts = [p for p in _SAMPLE_TOKEN.split(text_v) if p.strip()]
+        if not parts:
+            continue
+        ok = True
+        for part in parts:
+            key = re.sub(r"[\s]+", "", part.strip().upper())
+            if key not in _SAMPLE_EXACT:
+                ok = False
+                break
+        if not ok:
+            n_invalid += 1
+            if len(examples) < 5:
+                examples.append(text_v)
+    return {
+        "schema_version": SAMPLE_LABEL_SCHEMA_VERSION,
+        "n_invalid_labels": int(n_invalid),
+        "invalid_examples": examples,
+    }
 
 
 def sample_membership(df: pd.DataFrame) -> tuple[set, set]:
@@ -476,9 +669,22 @@ def _panel(df, xcol, ycol, xlabel, ylabel, title, bins, fig_base, tab_path,
     prof = conditional_profile(df.loc[ok if len(df) == len(ok) else df.index], xcol, ycol, bins) \
         if len(df) == ok.size else conditional_profile(df, xcol, ycol, bins)
 
+    weights = None
+    if "weights" in df.columns and x.size:
+        # Align weights to finite (x,y) mask used above.
+        w_all = df["weights"].to_numpy(dtype=float)
+        if w_all.shape[0] == ok.shape[0]:
+            weights = w_all[ok]
     if x.size:
-        hb = ax.hexbin(x, y, gridsize=45, mincnt=1, bins="log", cmap="viridis")
-        fig.colorbar(hb, ax=ax_right, label="log10(events / bin)", fraction=0.15, pad=0.02)
+        if weights is not None and np.all(np.isfinite(weights)) and float(np.sum(weights)) > 0:
+            hb = ax.hexbin(
+                x, y, C=weights, reduce_C_function=np.sum,
+                gridsize=45, mincnt=1, bins="log", cmap="viridis",
+            )
+            fig.colorbar(hb, ax=ax_right, label="log10(Σ weight / bin)", fraction=0.15, pad=0.02)
+        else:
+            hb = ax.hexbin(x, y, gridsize=45, mincnt=1, bins="log", cmap="viridis")
+            fig.colorbar(hb, ax=ax_right, label="log10(events / bin)", fraction=0.15, pad=0.02)
     if not prof.empty:
         ax.plot(prof["x_median"], prof["y_median"], color="white", lw=2.2, label="median")
         ax.fill_between(prof["x_median"], prof["y_p16"], prof["y_p84"],
@@ -518,10 +724,12 @@ def make_figures(data: pd.DataFrame, mc: pd.DataFrame, out: Path, bins: int) -> 
     tabdir.mkdir(parents=True, exist_ok=True)
     records: list[dict] = []
 
-    # Data-side (ADC). Saturation onset = smallest amplitude among flagged events.
-    sat = data.loc[data["saturated_any"]]
-    y_sat = float(sat["deltaE_data_adc"].min()) if len(sat) else None
-    x_sat = float(sat["E_data_adc"].min()) if len(sat) else None
+    # Data-side (ADC). Axis-specific saturation onset (issue #1027):
+    # Y(dE) from saturation_B2; X(E) from any of B4/B6/B8 saturated.
+    sat_y = data.loc[data["saturation_B2"]]
+    sat_x = data.loc[data[["saturation_B4", "saturation_B6", "saturation_B8"]].any(axis=1)]
+    y_sat = float(sat_y["deltaE_data_adc"].min()) if len(sat_y) else None
+    x_sat = float(sat_x["E_data_adc"].min()) if len(sat_x) else None
     _panel(
         data, "E_data_adc", "deltaE_data_adc",
         "E = amp_B4 + amp_B6 + amp_B8  [ADC]", "dE = amp_B2  [ADC]",
@@ -533,11 +741,14 @@ def make_figures(data: pd.DataFrame, mc: pd.DataFrame, out: Path, bins: int) -> 
                     "units": "ADC",
                     "source_data": "tables/deltaE_E_data_adc_profile.csv"})
 
-    # MC-side (MeV, 4-layer E). Truth energy: no saturation lines.
+    # MC-side (MeV, 4-layer E). Weighted density when PrimaryWeight present (#1022).
+    mc_plot = mc.copy()
+    if MC_WEIGHT_COL in mc_plot.columns:
+        mc_plot["weights"] = mc_plot[MC_WEIGHT_COL]
     _panel(
-        mc, "E_mc_4layer_mev", "deltaE_mc_mev",
+        mc_plot, "E_mc_4layer_mev", "deltaE_mc_mev",
         "E = edep_B4 + edep_B6 + edep_B8  [MeV]", "dE = edep_B2  [MeV]",
-        "CCB dE-E : MC (MeV, truth energy)", bins,
+        "CCB dE-E : MC (MeV, PrimaryWeight-weighted)", bins,
         figdir / "deltaE_E_mc_mev", tabdir / "deltaE_E_mc_mev_profile.csv",
     )
     records.append({"plot_id": "deltaE_E_mc_mev",
@@ -545,6 +756,59 @@ def make_figures(data: pd.DataFrame, mc: pd.DataFrame, out: Path, bins: int) -> 
                     "source_data": "tables/deltaE_E_mc_mev_profile.csv"})
     return records
 
+
+
+
+def resolve_mc_weight_column(df: pd.DataFrame) -> str:
+    """Return the declared MC weight column name or raise (issue #1022)."""
+    for name in MC_WEIGHT_ALIASES:
+        if name in df.columns:
+            return name
+    raise SystemExit(
+        f"MC table missing required weight column; expected one of {MC_WEIGHT_ALIASES} "
+        f"(issue #880/#1022). Unweighted MC is not authorising for ΔE–E."
+    )
+
+
+def attach_mc_weights(df: pd.DataFrame) -> pd.DataFrame:
+    """Validate and canonicalise ``PrimaryWeight`` on the prepared MC table."""
+    df = df.copy()
+    src = resolve_mc_weight_column(df)
+    raw = pd.to_numeric(df[src], errors="coerce").to_numpy(dtype=float)
+    if raw.size == 0:
+        raise SystemExit("MC weight vector is empty")
+    if not np.all(np.isfinite(raw)):
+        bad = np.flatnonzero(~np.isfinite(raw))[:5].tolist()
+        raise SystemExit(f"MC weights contain nonfinite values at rows {bad}")
+    if np.any(raw < 0.0):
+        raise SystemExit(
+            "MC weights contain negative values; ordinary probability estimators "
+            "are rejected for signed weights (issue #1022)"
+        )
+    if float(raw.sum()) <= 0.0:
+        raise SystemExit("MC weights have non-positive total mass")
+    df[MC_WEIGHT_COL] = raw
+    return df
+
+
+def mc_weight_diagnostics(weights: np.ndarray) -> dict:
+    """Machine-readable weight census: sum(w), sum(w²), ESS (issue #1022)."""
+    w = np.asarray(weights, dtype=float)
+    sum_w = float(w.sum())
+    sum_w2 = float(np.dot(w, w))
+    ess = float(sum_w * sum_w / sum_w2) if sum_w2 > 0 else 0.0
+    return {
+        "weight_variable": MC_WEIGHT_COL,
+        "weight_semantics": "per-event generator/importance weight (PrimaryWeight)",
+        "n_events": int(w.size),
+        "sum_w": sum_w,
+        "sum_w2": sum_w2,
+        "ess": ess,
+        "n_zero": int((w == 0.0).sum()),
+        "min_w": float(w.min()) if w.size else None,
+        "max_w": float(w.max()) if w.size else None,
+        "all_unit_weights": bool(w.size > 0 and np.allclose(w, 1.0)),
+    }
 
 # --------------------------------------------------------------------------- #
 # Orchestration
@@ -566,10 +830,14 @@ def prepare_mc_side(raw: pd.DataFrame) -> pd.DataFrame:
     missing = [c for c in REQUIRED_MC if c not in raw.columns]
     if missing:
         raise SystemExit(f"MC table missing required columns: {missing}")
+    # Weight required for authorising MC measure (issue #1022); checked explicitly
+    # so the error names the weight contract even when REQUIRED_MC is extended.
+    resolve_mc_weight_column(raw)
     validate_event_keys(raw, "MC")                       # 1. validate keys FIRST
     df = fill_missing_layers(raw, FILLABLE_MC_LAYERS)    # 2. then fill bars -> 0
     df["edep_B2"] = pd.to_numeric(df["edep_B2"], errors="coerce").fillna(0.0)
-    return derive_mc_columns(df)
+    df = derive_mc_columns(df)
+    return attach_mc_weights(df)
 
 
 def analyze(
@@ -591,21 +859,35 @@ def analyze(
 
     primary_data_t = float(sorted(data_thresholds)[0])
     primary_mc_t = float(sorted(stop_thresholds)[0])
-    data["stop_layer"] = assign_stop_category(data, data_layers_cols, DATA_LAYERS, primary_data_t)
+    # DATA: deepest active readout is not a measured physical stop (#1028).
+    data["deepest_active_stave"] = assign_stop_category(
+        data, data_layers_cols, DATA_LAYERS, primary_data_t
+    )
     data["stop_threshold_adc"] = primary_data_t
-    mc["stop_layer"] = assign_stop_category(mc, mc_layers_cols, mc_layer_names, primary_mc_t)
+    # MC: deposit-threshold proxy (not primary-stop truth; #1028/#1029).
+    mc["deepest_edep_layer"] = assign_stop_category(
+        mc, mc_layers_cols, mc_layer_names, primary_mc_t
+    )
     mc["stop_threshold_mev"] = primary_mc_t
 
-    # Full stopping distributions across all thresholds -> monotonicity check.
-    data_dists = [stopping_distribution(data, data_layers_cols, DATA_LAYERS, t)
-                  for t in sorted(data_thresholds)]
-    mc_dists = [stopping_distribution(mc, mc_layers_cols, mc_layer_names, t)
-                for t in sorted(stop_thresholds)]
+    mc_w = mc[MC_WEIGHT_COL].to_numpy(dtype=float)
+    wdiag = mc_weight_diagnostics(mc_w)
+
+    # Full distributions across all thresholds -> monotonicity check.
+    data_dists = [
+        stopping_distribution(data, data_layers_cols, DATA_LAYERS, t)
+        for t in sorted(data_thresholds)
+    ]
+    mc_dists = [
+        stopping_distribution(mc, mc_layers_cols, mc_layer_names, t, weights=mc_w)
+        for t in sorted(stop_thresholds)
+    ]
 
     merged = composite_merge(data, mc)
     jreport = join_report(data, mc, merged)
 
     scounts = sample_counts(data)
+    sample_census = sample_token_census(data)
 
     result = {
         "study_id": "CCB-DELTAE-E",
@@ -616,6 +898,22 @@ def analyze(
         "n_data_events": int(len(data)),
         "n_mc_events": int(len(mc)),
         "sample_counts": scounts,
+        "sample_label_census": sample_census,
+        "mc_weights": wdiag,
+        "threshold_comparison": {
+            "rule": THRESHOLD_COMPARISON_RULE,
+            "schema_version": THRESHOLD_COMPARISON_SCHEMA_VERSION,
+        },
+        "measurand_names": {
+            "data_deepest_proxy": "deepest_active_stave",
+            "mc_deposit_proxy": "deepest_edep_layer",
+            "mc_primary_stop_truth": None,
+            "note": (
+                "DATA deepest_active_stave is the deepest readout above threshold; "
+                "MC deepest_edep_layer is event-level deposit proxy, not primary stop."
+            ),
+        },
+        "flag_schema_version": FLAG_SCHEMA_VERSION,
         "thresholds": {
             "data_thresholds_adc": [float(t) for t in sorted(data_thresholds)],
             "stop_thresholds_mev": [float(t) for t in sorted(stop_thresholds)],
@@ -625,11 +923,13 @@ def analyze(
         "stopping": {
             "data_adc": {
                 "layers": list(DATA_LAYERS),
+                "proxy_name": "deepest_active_stave",
                 "distributions": data_dists,
                 "monotonic_reach": check_monotonic_reach(data_dists),
             },
             "mc_mev": {
                 "layers": mc_layer_names,
+                "proxy_name": "deepest_edep_layer",
                 "distributions": mc_dists,
                 "monotonic_reach": check_monotonic_reach(mc_dists),
             },
@@ -728,13 +1028,13 @@ def main(argv: Sequence[str] | None = None) -> int:
     dp = _write_table(
         data_sel[[*KEY_COLS, "sample", "trigger_definition",
                   "deltaE_data_adc", "E_data_adc", *[f"amp_{b}" for b in DATA_LAYERS],
-                  *DATA_SAT_COLS, "saturated_any", "stop_layer", "stop_threshold_adc"]],
+                  *DATA_SAT_COLS, "saturated_any", "deepest_active_stave", "stop_threshold_adc"]],
         args.out / "deltaE_E_events_data",
     )
     mp = _write_table(
         mc_sel[[*KEY_COLS,
                 "deltaE_mc_mev", "E_mc_4layer_mev", "E_mc_full_mev",
-                *mc_layer_columns(mc_sel), "stop_layer", "stop_threshold_mev"]],
+                *mc_layer_columns(mc_sel), MC_WEIGHT_COL, "deepest_edep_layer", "stop_threshold_mev"]],
         args.out / "deltaE_E_events_mc",
     )
     result["event_tables"] = {"data": dp.name, "mc": mp.name}

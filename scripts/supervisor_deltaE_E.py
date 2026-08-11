@@ -289,6 +289,7 @@ def main():
             deepest[no_pass] = -1
             per_threshold_reach[str(th)] = {
                 "threshold_ADC": float(th),
+                "comparison_rule": ">",
                 "frac_reach_B4": float((deepest >= 1).mean()),
                 "frac_reach_B6": float((deepest >= 2).mean()),
                 "frac_reach_B8": float((deepest >= 3).mean()),
@@ -333,184 +334,196 @@ def main():
     # Same filesystem as args.out (tempfile.mkdtemp dir=...) so the final
     # os.replace() is atomic. A failure anywhere above leaves the previous
     # args.out content untouched.
+    # Fail-closed: plot exceptions propagate (issue #1042); no broad except.
     pub_dir = tempfile.mkdtemp(prefix=".supervisor_deltaE_E_stage_", dir=args.out)
-    # Every artifact this pipeline can produce. Used to sweep stale files
-    # out of a reused output directory before publishing (issue #1042).
-    ARTIFACT_NAMES = {
-        "supervisor_deltaE_E_summary.json", "manifest.json",
-        *(f"mc_{s}_deltaE_E_{sp}.png" for s in ("I", "II") for sp in ("p", "d", "all")),
-        *(f"data_{s}_deltaE_E_proxy.png" for s in ("I", "II")),
-        *(f"mc_{s}_penetration_p_d.png" for s in ("I", "II")),
-        *(f"mc_{s}_cumulative_penetration.png" for s in ("I", "II")),
-        "data_penetration_overlay.png",
-    }
+    try:
+        # Every artifact this pipeline can produce. Used to sweep stale files
+        # out of a reused output directory before publishing (issue #1042).
+        ARTIFACT_NAMES = {
+            "supervisor_deltaE_E_summary.json", "manifest.json",
+            *(f"mc_{s}_deltaE_E_{sp}.png" for s in ("I", "II") for sp in ("p", "d", "all")),
+            *(f"data_{s}_deltaE_E_proxy.png" for s in ("I", "II")),
+            *(f"mc_{s}_penetration_p_d.png" for s in ("I", "II")),
+            *(f"mc_{s}_cumulative_penetration.png" for s in ("I", "II")),
+            "data_penetration_overlay.png",
+        }
 
-    # ── MC Delta E vs E per sample, per species ───────────────────
-    for s, slabel in (("I","Sample I"), ("II","Sample II")):
-        D = mc_data[s]
-        sp_labels = np.array([species_label(p) for p in D["pdg"]])
-        for sp, sp_label, color in (("p","Proton truth only",CAT[0]),
-                                     ("d","Deuteron truth only",CAT[5]),
-                                     ("all","All species (color-coded)","multi")):
-            fig, ax = plt.subplots(figsize=(8, 7))
-            if sp == "all":
-                for species, c, lbl in (("p",CAT[0],"proton"),("d",CAT[5],"deuteron"),
-                                         ("alpha",CAT[1],"alpha"),("heavy",CAT[3],"heavy/C12"),
-                                         ("other",CAT[2],"other")):
-                    m = sp_labels == species
-                    if m.sum() > 10:
-                        n_pts = min(5000, m.sum())
+        # ── MC Delta E vs E per sample, per species ───────────────────
+        for s, slabel in (("I","Sample I"), ("II","Sample II")):
+            D = mc_data[s]
+            sp_labels = np.array([species_label(p) for p in D["pdg"]])
+            for sp, sp_label, color in (("p","Proton truth only",CAT[0]),
+                                         ("d","Deuteron truth only",CAT[5]),
+                                         ("all","All species (color-coded)","multi")):
+                fig, ax = plt.subplots(figsize=(8, 7))
+                if sp == "all":
+                    for species, c, lbl in (("p",CAT[0],"proton"),("d",CAT[5],"deuteron"),
+                                             ("alpha",CAT[1],"alpha"),("heavy",CAT[3],"heavy/C12"),
+                                             ("other",CAT[2],"other")):
+                        m = sp_labels == species
+                        if m.sum() > 10:
+                            n_pts = min(5000, m.sum())
+                            idx = np.random.choice(np.where(m)[0], n_pts, replace=False)
+                            ax.scatter(D["deltaE"][idx], D["E_4layer"][idx], s=2, alpha=0.35,
+                                      color=c, label=lbl, rasterized=True)
+                    ax.legend(fontsize=8, markerscale=3)
+                else:
+                    m = sp_labels == sp
+                    n_pts = min(5000, m.sum())
+                    if n_pts > 0:
                         idx = np.random.choice(np.where(m)[0], n_pts, replace=False)
-                        ax.scatter(D["deltaE"][idx], D["E_4layer"][idx], s=2, alpha=0.35,
-                                  color=c, label=lbl, rasterized=True)
-                ax.legend(fontsize=8, markerscale=3)
+                        ax.scatter(D["deltaE"][idx], D["E_4layer"][idx], s=3, alpha=0.4,
+                                  color=color, rasterized=True)
+                ax.set_xlabel("Delta E = Edep(B2) [MeV]", fontsize=11)
+                ax.set_ylabel("Residual E = Edep(B4+B6+B8) [MeV]", fontsize=11)
+                ax.set_title(f"MC {slabel} — Delta E vs Residual E\n{sp_label} (n={m.sum() if sp!='all' else len(D['pdg']):,})",
+                            fontsize=12, fontweight="bold")
+                fig.tight_layout()
+                fig.savefig(f"{pub_dir}/mc_{s}_deltaE_E_{sp}.png", dpi=300)
+                plt.close(fig)
+
+        # ── Data Delta E vs E amplitude proxies ────────────────────────
+        for s, slabel in (("I","Sample I"), ("II","Sample II")):
+            sub = df[df["sample"]==s]
+            # Same event-set anchor as data analysis above (issue #1040)
+            if args.require_b2:
+                anchor_ev = set(sub[sub["stave"]=="B2"]["eventno"].unique())
             else:
-                m = sp_labels == sp
-                n_pts = min(5000, m.sum())
-                if n_pts > 0:
-                    idx = np.random.choice(np.where(m)[0], n_pts, replace=False)
-                    ax.scatter(D["deltaE"][idx], D["E_4layer"][idx], s=3, alpha=0.4,
-                              color=color, rasterized=True)
-            ax.set_xlabel("Delta E = Edep(B2) [MeV]", fontsize=11)
-            ax.set_ylabel("Residual E = Edep(B4+B6+B8) [MeV]", fontsize=11)
-            ax.set_title(f"MC {slabel} — Delta E vs Residual E\n{sp_label} (n={m.sum() if sp!='all' else len(D['pdg']):,})",
-                        fontsize=12, fontweight="bold")
+                anchor_ev = set(sub["eventno"].unique())
+
+            def _amp_col(ev: set, stave: str) -> pd.DataFrame:
+                grp = sub[sub["stave"]==stave][["eventno","amplitude_adc"]]
+                grp = grp[grp["eventno"].isin(ev)]
+                return grp.rename(columns={"amplitude_adc": f"amp_{stave}"})
+
+            b2 = _amp_col(anchor_ev, "B2")
+            b4 = _amp_col(anchor_ev, "B4")
+            b6 = _amp_col(anchor_ev, "B6")
+            b8 = _amp_col(anchor_ev, "B8")
+            merged = b2.merge(b4,on="eventno",how="outer").merge(b6,on="eventno",how="outer").merge(b8,on="eventno",how="outer").fillna(0)
+            de = merged["amp_B2"].values
+            er = merged["amp_B4"].values + merged["amp_B6"].values + merged["amp_B8"].values
+
+            fig, ax = plt.subplots(figsize=(8, 7))
+            n_pts = min(8000, len(de))
+            idx = np.random.choice(len(de), n_pts, replace=False)
+            ax.scatter(de[idx], er[idx], s=2, alpha=0.3, color=CAT[0], rasterized=True)
+            ax.axvline(7000, color="gray", linestyle=":", linewidth=1.2, alpha=0.6)
+            ax.text(7200, ax.get_ylim()[1]*0.85, "B2 saturation\n(7000 ADC)", fontsize=8, color="gray")
+            ax.set_xlabel("Delta E proxy = amplitude(B2) [ADC]", fontsize=11)
+            ax.set_ylabel("Residual E proxy = amplitude(B4+B6+B8) [ADC]", fontsize=11)
+            ax.set_title(f"DATA {slabel} — Delta E vs Residual E\n(amplitude proxies, NOT calibrated energy)\nn={len(merged):,} events", fontsize=12, fontweight="bold")
+            ax.set_xlim(0, 14000); ax.set_ylim(0, max(er.max(), 8000))
             fig.tight_layout()
-            fig.savefig(f"{pub_dir}/mc_{s}_deltaE_E_{sp}.png", dpi=300)
+            fig.savefig(f"{pub_dir}/data_{s}_deltaE_E_proxy.png", dpi=300)
             plt.close(fig)
 
-    # ── Data Delta E vs E amplitude proxies ────────────────────────
-    for s, slabel in (("I","Sample I"), ("II","Sample II")):
-        sub = df[df["sample"]==s]
-        # Same event-set anchor as data analysis above (issue #1040)
-        if args.require_b2:
-            anchor_ev = set(sub[sub["stave"]=="B2"]["eventno"].unique())
-        else:
-            anchor_ev = set(sub["eventno"].unique())
+        # ── MC Penetration plots (default threshold = args.stop_thresholds[0]) ──
+        default_mc_th = args.stop_thresholds[0]
+        for s, slabel in (("I","Sample I"), ("II","Sample II")):
+            D = mc_data[s]; sp_labels = np.array([species_label(p) for p in D["pdg"]])
+            sl_pen = mc_stop_layers[s][default_mc_th]
+            # Proton + deuteron overlaid, normalized
+            fig, ax = plt.subplots(figsize=(8, 5))
+            for sp, color, label in (("p",CAT[0],"proton"),("d",CAT[5],"deuteron")):
+                m = sp_labels == sp
+                if m.sum() > 10:
+                    sl = sl_pen[m]
+                    layers = np.arange(8)
+                    frac = [(sl == l).sum()/m.sum() for l in layers]
+                    ax.plot(layers, frac, "o-", color=color, linewidth=2, markersize=6, label=label)
+            ax.set_xlabel("Stopping layer (0=B2, 1=B4, 2=B6, 3=B8, ...)", fontsize=11)
+            ax.set_ylabel("Fraction of tracks", fontsize=11)
+            ax.set_title(f"MC {slabel} — Penetration Depth: Proton vs Deuteron\n(threshold={default_mc_th} MeV)", fontsize=12, fontweight="bold")
+            ax.legend(); ax.grid(True, alpha=0.3)
+            fig.tight_layout(); fig.savefig(f"{pub_dir}/mc_{s}_penetration_p_d.png", dpi=300); plt.close(fig)
 
-        def _amp_col(ev: set, stave: str) -> pd.DataFrame:
-            grp = sub[sub["stave"]==stave][["eventno","amplitude_adc"]]
-            grp = grp[grp["eventno"].isin(ev)]
-            return grp.rename(columns={"amplitude_adc": f"amp_{stave}"})
+            # Cumulative P(reaches layer)
+            fig, ax = plt.subplots(figsize=(8, 5))
+            for sp, color, label in (("p",CAT[0],"proton"),("d",CAT[5],"deuteron"),("all","#333","all particles")):
+                m = sp_labels == sp if sp != "all" else np.ones(len(D["pdg"]),dtype=bool)
+                if m.sum() > 10:
+                    sl = sl_pen[m] if sp != "all" else sl_pen
+                    layers = np.arange(8)
+                    cumul = [(sl >= l).sum()/m.sum() for l in layers]
+                    ax.plot(layers, cumul, "o-", color=color, linewidth=2, markersize=6, label=label)
+            ax.set_xlabel("Layer L", fontsize=11)
+            ax.set_ylabel("P(reaches layer L)", fontsize=11)
+            ax.set_title(f"MC {slabel} — Cumulative Penetration Probability\n(threshold={default_mc_th} MeV)", fontsize=12, fontweight="bold")
+            ax.legend(); ax.grid(True, alpha=0.3)
+            fig.tight_layout(); fig.savefig(f"{pub_dir}/mc_{s}_cumulative_penetration.png", dpi=300); plt.close(fig)
 
-        b2 = _amp_col(anchor_ev, "B2")
-        b4 = _amp_col(anchor_ev, "B4")
-        b6 = _amp_col(anchor_ev, "B6")
-        b8 = _amp_col(anchor_ev, "B8")
-        merged = b2.merge(b4,on="eventno",how="outer").merge(b6,on="eventno",how="outer").merge(b8,on="eventno",how="outer").fillna(0)
-        de = merged["amp_B2"].values
-        er = merged["amp_B4"].values + merged["amp_B6"].values + merged["amp_B8"].values
-
-        fig, ax = plt.subplots(figsize=(8, 7))
-        n_pts = min(8000, len(de))
-        idx = np.random.choice(len(de), n_pts, replace=False)
-        ax.scatter(de[idx], er[idx], s=2, alpha=0.3, color=CAT[0], rasterized=True)
-        ax.axvline(7000, color="gray", linestyle=":", linewidth=1.2, alpha=0.6)
-        ax.text(7200, ax.get_ylim()[1]*0.85, "B2 saturation\n(7000 ADC)", fontsize=8, color="gray")
-        ax.set_xlabel("Delta E proxy = amplitude(B2) [ADC]", fontsize=11)
-        ax.set_ylabel("Residual E proxy = amplitude(B4+B6+B8) [ADC]", fontsize=11)
-        ax.set_title(f"DATA {slabel} — Delta E vs Residual E\n(amplitude proxies, NOT calibrated energy)\nn={len(merged):,} events", fontsize=12, fontweight="bold")
-        ax.set_xlim(0, 14000); ax.set_ylim(0, max(er.max(), 8000))
-        fig.tight_layout()
-        fig.savefig(f"{pub_dir}/data_{s}_deltaE_E_proxy.png", dpi=300)
-        plt.close(fig)
-
-    # ── MC Penetration plots (default threshold = args.stop_thresholds[0]) ──
-    default_mc_th = args.stop_thresholds[0]
-    for s, slabel in (("I","Sample I"), ("II","Sample II")):
-        D = mc_data[s]; sp_labels = np.array([species_label(p) for p in D["pdg"]])
-        sl_pen = mc_stop_layers[s][default_mc_th]
-        # Proton + deuteron overlaid, normalized
+        # ── Data penetration overlay ────────────────────────────────────
         fig, ax = plt.subplots(figsize=(8, 5))
-        for sp, color, label in (("p",CAT[0],"proton"),("d",CAT[5],"deuteron")):
-            m = sp_labels == sp
-            if m.sum() > 10:
-                sl = sl_pen[m]
-                layers = np.arange(8)
-                frac = [(sl == l).sum()/m.sum() for l in layers]
-                ax.plot(layers, frac, "o-", color=color, linewidth=2, markersize=6, label=label)
-        ax.set_xlabel("Stopping layer (0=B2, 1=B4, 2=B6, 3=B8, ...)", fontsize=11)
-        ax.set_ylabel("Fraction of tracks", fontsize=11)
-        ax.set_title(f"MC {slabel} — Penetration Depth: Proton vs Deuteron\n(threshold={default_mc_th} MeV)", fontsize=12, fontweight="bold")
+        for s, color, label in (("I",CAT[0],"Sample I"),("II",CAT[5],"Sample II")):
+            ds = data_summary[s]
+            fracs = [ds["deepest_stave_fracs"][st] for st in ["B2","B4","B6","B8"]]
+            ax.plot(range(4), fracs, "o-", color=color, linewidth=2, markersize=8, label=label)
+        ax.set_xticks(range(4)); ax.set_xticklabels(["B2","B4","B6","B8"])
+        ax.set_xlabel("Deepest active stave"); ax.set_ylabel("Fraction of events")
+        ax.set_title("DATA — Deepest Active Stave Distribution\nSample I vs Sample II (normalized)", fontsize=12, fontweight="bold")
         ax.legend(); ax.grid(True, alpha=0.3)
-        fig.tight_layout(); fig.savefig(f"{pub_dir}/mc_{s}_penetration_p_d.png", dpi=300); plt.close(fig)
+        fig.tight_layout(); fig.savefig(f"{pub_dir}/data_penetration_overlay.png", dpi=300); plt.close(fig)
 
-        # Cumulative P(reaches layer)
-        fig, ax = plt.subplots(figsize=(8, 5))
-        for sp, color, label in (("p",CAT[0],"proton"),("d",CAT[5],"deuteron"),("all","#333","all particles")):
-            m = sp_labels == sp if sp != "all" else np.ones(len(D["pdg"]),dtype=bool)
-            if m.sum() > 10:
-                sl = sl_pen[m] if sp != "all" else sl_pen
-                layers = np.arange(8)
-                cumul = [(sl >= l).sum()/m.sum() for l in layers]
-                ax.plot(layers, cumul, "o-", color=color, linewidth=2, markersize=6, label=label)
-        ax.set_xlabel("Layer L", fontsize=11)
-        ax.set_ylabel("P(reaches layer L)", fontsize=11)
-        ax.set_title(f"MC {slabel} — Cumulative Penetration Probability\n(threshold={default_mc_th} MeV)", fontsize=12, fontweight="bold")
-        ax.legend(); ax.grid(True, alpha=0.3)
-        fig.tight_layout(); fig.savefig(f"{pub_dir}/mc_{s}_cumulative_penetration.png", dpi=300); plt.close(fig)
+        # ── Save all results ───────────────────────────────────────────────
+        out_data = {
+            "mc_file": os.path.abspath(args.mc),
+            "data_table": os.path.abspath(args.data_table),
+            "trigger_counts": {"enter_B": n_enterB, "enter_A": n_enterA, "coincidence_AB": n_coinc},
+            "mc_summary": mc_summary,
+            "data_summary": data_summary,
+            "note": "MC: Delta E = Edep(B2), Residual E = Edep(B4+B6+B8). Data: amplitude proxies, NOT calibrated energy. Per Dave's spec (Issue #618).",
+        }
+        # Write summary JSON to staging directory
+        with open(f"{pub_dir}/supervisor_deltaE_E_summary.json", "w") as f:
+            json.dump(out_data, f, indent=2, default=str)
 
-    # ── Data penetration overlay ────────────────────────────────────
-    fig, ax = plt.subplots(figsize=(8, 5))
-    for s, color, label in (("I",CAT[0],"Sample I"),("II",CAT[5],"Sample II")):
-        ds = data_summary[s]
-        fracs = [ds["deepest_stave_fracs"][st] for st in ["B2","B4","B6","B8"]]
-        ax.plot(range(4), fracs, "o-", color=color, linewidth=2, markersize=8, label=label)
-    ax.set_xticks(range(4)); ax.set_xticklabels(["B2","B4","B6","B8"])
-    ax.set_xlabel("Deepest active stave"); ax.set_ylabel("Fraction of events")
-    ax.set_title("DATA — Deepest Active Stave Distribution\nSample I vs Sample II (normalized)", fontsize=12, fontweight="bold")
-    ax.legend(); ax.grid(True, alpha=0.3)
-    fig.tight_layout(); fig.savefig(f"{pub_dir}/data_penetration_overlay.png", dpi=300); plt.close(fig)
+        # Generate manifest.json with SHA-256 checksums (issue #1042)
+        manifest = {}
+        for name in sorted(ARTIFACT_NAMES):
+            path = os.path.join(pub_dir, name)
+            if os.path.isfile(path):
+                with open(path, "rb") as f:
+                    manifest[name] = hashlib.sha256(f.read()).hexdigest()
+            else:
+                manifest[name] = None  # missing artifact — will be caught below
+        with open(f"{pub_dir}/manifest.json", "w") as f:
+            json.dump(manifest, f, indent=2, sort_keys=True)
 
-    # ── Save all results ───────────────────────────────────────────────
-    out_data = {
-        "mc_file": os.path.abspath(args.mc),
-        "data_table": os.path.abspath(args.data_table),
-        "trigger_counts": {"enter_B": n_enterB, "enter_A": n_enterA, "coincidence_AB": n_coinc},
-        "mc_summary": mc_summary,
-        "data_summary": data_summary,
-        "note": "MC: Delta E = Edep(B2), Residual E = Edep(B4+B6+B8). Data: amplitude proxies, NOT calibrated energy. Per Dave's spec (Issue #618).",
-    }
-    # Write summary JSON to staging directory
-    with open(f"{pub_dir}/supervisor_deltaE_E_summary.json", "w") as f:
-        json.dump(out_data, f, indent=2, default=str)
+        # Validate every expected artifact exists (issue #1042: fail-closed)
+        missing = [n for n, h in manifest.items() if h is None]
+        if missing:
+            for m in missing:
+                print(f"[error] missing artifact: {m}", file=sys.stderr)
+            sys.exit(1)
 
-    # Generate manifest.json with SHA-256 checksums (issue #1042)
-    manifest = {}
-    for name in sorted(ARTIFACT_NAMES):
-        path = os.path.join(pub_dir, name)
-        if os.path.isfile(path):
-            with open(path, "rb") as f:
-                manifest[name] = hashlib.sha256(f.read()).hexdigest()
-        else:
-            manifest[name] = None  # missing artifact — will be caught below
-    with open(f"{pub_dir}/manifest.json", "w") as f:
-        json.dump(manifest, f, indent=2, sort_keys=True)
+        # Atomically publish each artifact from staging to output (issue #1042)
+        for name in ARTIFACT_NAMES:
+            src = os.path.join(pub_dir, name)
+            dst = os.path.join(args.out, name)
+            os.replace(src, dst)
 
-    # Validate every expected artifact exists (issue #1042: fail-closed)
-    missing = [n for n, h in manifest.items() if h is None]
-    if missing:
-        for m in missing:
-            print(f"[error] missing artifact: {m}", file=sys.stderr)
-        sys.exit(1)
+        # Remove stale tool-owned artifacts not in this run's set (issue #1042).
+        expected = set(ARTIFACT_NAMES)
+        for fname in os.listdir(args.out):
+            fpath = os.path.join(args.out, fname)
+            if not os.path.isfile(fpath):
+                continue
+            if fname in expected:
+                continue
+            tool_owned = (
+                fname.endswith(".png")
+                and (fname.startswith("mc_") or fname.startswith("data_"))
+            ) or fname in {
+                "supervisor_deltaE_E_summary.json",
+                "manifest.json",
+            }
+            if tool_owned:
+                os.remove(fpath)
 
-    # Atomically publish each artifact from staging to output (issue #1042)
-    for name in ARTIFACT_NAMES:
-        src = os.path.join(pub_dir, name)
-        dst = os.path.join(args.out, name)
-        os.replace(src, dst)
-
-    # Clear stale artifacts from the output directory (issue #1042)
-    for fname in os.listdir(args.out):
-        fpath = os.path.join(args.out, fname)
-        if os.path.isfile(fpath) and fname in ARTIFACT_NAMES and fname != "manifest.json":
-            # manifest.json is always re-published, so it's covered by the
-            # ARTIFACT_NAMES loop above.  Other old artifacts that are NOT
-            # in ARTIFACT_NAMES (e.g. user-generated files) are left alone.
-            pass
-
-    # Remove staging directory
-    shutil.rmtree(pub_dir, ignore_errors=True)
+        # Remove staging directory
+    finally:
+        shutil.rmtree(pub_dir, ignore_errors=True)
 
     print(f"[ok] {args.out}/supervisor_deltaE_E_summary.json")
     for s in ("I","II"):

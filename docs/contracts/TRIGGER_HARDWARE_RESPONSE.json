@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0.0",
+  "contract_id": "TRIGGER_HARDWARE_RESPONSE",
+  "issue": "#1045",
+  "audit_id": "ARU-TRIGGER-MIMIC-001",
+  "evidence_state": "BLOCKED",
+  "hardware_definition_status": "UNKNOWN_EXTERNAL",
+  "admissible_labels": [
+    "MC_TRIGGER_PROXY",
+    "DIAGNOSTIC_ONLY",
+    "BLOCKED"
+  ],
+  "forbidden_labels_until_validated": [
+    "hardware-trigger reproduction",
+    "hardware_trigger",
+    "validated hardware trigger",
+    "confirmed against real data via hardware trigger"
+  ],
+  "current_proxy": {
+    "id": "HRD_FIRST_STACK_LAYER_CHARGED_HIT",
+    "definition": "ENTER B = any charged hit in first B-stack layer; ENTER A = any charged hit in first A-stack layer; Sample I additionally requires |min(t_A)-min(t_B)| < coinc_ns",
+    "code_surfaces": [
+      "src/ccb_mc_validation/truth/trigger.py",
+      "scripts/mc01_trigger_split_truth.py",
+      "scripts/supervisor_deltaE_E.py"
+    ],
+    "status": "diagnostic_hypothesis_only"
+  },
+  "missing_physical_object": "Real CCB trigger scintillators/electronics are not represented in the MC geometry; no source-bound threshold/discriminator/coincidence model exists.",
+  "closure_requires": [
+    "source-bound versioned trigger_hardware_schema with geometry/material/threshold/time response",
+    "OR held-out quantitative proxy closure versus real-trigger acceptance with preregistered tolerance",
+    "migration matrices vs species/energy/angle/multiplicity under validated event weights"
+  ],
+  "fail_closed_policy": "Do not invent hardware trigger parameters. Until validated, all Sample I/II MC membership derived from the HRD first-layer proxy MUST be labelled MC_TRIGGER_PROXY / BLOCKED for quantitative hardware-trigger claims.",
+  "related_issues": [
+    "#618",
+    "#844",
+    "#962",
+    "#989",
+    "#1023"
+  ],
+  "wave_a_preservation": "fix/lane10-waveA (PR #1241) ownership of #1218 completion-gate remains intact"
+}

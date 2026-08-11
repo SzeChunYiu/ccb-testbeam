@@ -27,3 +27,14 @@ are recorded machine-readably in
 `reports/reaudit_20260720/status_corrections/` (schema-valid closure records).
 These are the labels that must appear in any status document; the underlying
 re-runs are `BLOCKED_COMPUTE`/`BLOCKED_EXTERNAL` on LUNARC.
+
+## Lane 10 Wave B fail-closed contracts
+
+| Contract | Issue | Policy |
+|---|---|---|
+| [TRIGGER_HARDWARE_RESPONSE.json](TRIGGER_HARDWARE_RESPONSE.json) | #1045 | Hardware trigger `UNKNOWN_EXTERNAL` / `BLOCKED`; MC uses `MC_TRIGGER_PROXY` only ([mc_validation ADR-0002](../mc_validation/ADR-0002-trigger-hardware-proxy-blocked.md)). No invented hardware parameters. |
+| [I885_ANGULAR_PHASE_SPACE.json](I885_ANGULAR_PHASE_SPACE.json) | #1093 | I885 campaign is `NORMAL_INCIDENCE_ONLY`; angular/azimuth closure claims blocked. |
+
+Scientific PRs must not auto-close research-universe issues without ledgered
+completion/successor-transfer evidence (#1218 / Wave A `fix/lane10-waveA`). Prefer `Refs`.
+

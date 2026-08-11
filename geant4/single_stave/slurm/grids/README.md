@@ -45,3 +45,11 @@ python3 generate_points.py                       # all knobs, default ranges
 CCB_GRID_CROSSTALK="0 0.05 0.1 0.2" \
   python3 generate_points.py --knobs crosstalk     # custom crosstalk grid
 ```
+
+## Paired multi-seed design (#984 / AF-036)
+
+`generate_points.py` emits a **common-random-number** grid: each replicate seed
+is reused at every knob value. Labels encode `knob=value__rep=<seed>`. See
+`PAIRED_SEED_DESIGN.json` for the explicit `(knob, value, replicate_seed)`
+triples. Analyzers must estimate nuisance-response uncertainty from seed-level
+paired effects, not only per-event SEM.

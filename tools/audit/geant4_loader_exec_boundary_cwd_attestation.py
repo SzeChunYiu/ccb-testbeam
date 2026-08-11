@@ -1,25 +1,17 @@
 #!/usr/bin/env python3
-"""Record and attest the working directory at the HIBEAM exec boundary.
+"""Record and attest the working-directory object around a direct exec transition.
 
-This bounded provenance primitive addresses the gap left by the later procfs
-current-cwd observation: ``/proc/<pid>/cwd`` reflects the *current* directory,
-which the target may change after exec with ``chdir``/``fchdir``.  Here the
-working-directory object is recorded by the launcher process itself immediately
-before a direct ``execve`` of the target image.
+The pre-exec record binds an opened cwd directory object to a Linux process
+identity immediately before a launcher calls ``os.execv``.  A later runtime
+receipt is composed using the invariant that exec preserves PID/starttime and
+cwd while replacing the process image.  The launcher executable is therefore
+not required to equal the post-exec executable; when an exec command is
+provided, the intended target bytes/path are recorded separately and compared
+with the runtime receipt.
 
-Because ``execve`` preserves both the process identity (PID, start-time) and the
-current working directory, and because the launcher performs no ``chdir``
-between recording the opened ``.`` object and the exec transition, the recorded
-object is the cwd at the actual exec boundary for the exact process that later
-carries the runtime dependency receipt.  This is the positive direct-exec case;
-wrapper/pre-exec and target/post-exec ``chdir`` are discriminated by the hostile
-fixtures in the test module.
-
-The receipt is a *record*, not a kernel log: it binds one opened directory
-object identity and the process that opens it immediately before exec.  It does
-not by itself prove filesystem root/mount namespace equivalence, symlink
-resolution, or that any relative input bytes were actually consumed; those
-remain explicit downstream gates.
+This is bounded provenance.  It does not itself observe the kernel execve event,
+exclude an intermediate exec chain, bind filesystem namespaces, resolve relative
+input bytes, or validate Geant4 physics.
 """
 from __future__ import annotations
 
@@ -112,53 +104,117 @@ def _open_directory_identity(path: Path) -> dict[str, int]:
     }
 
 
+def _hash_regular_file(path: Path) -> dict[str, Any]:
+    flags = os.O_RDONLY | getattr(os, "O_CLOEXEC", 0)
+    try:
+        fd = os.open(path, flags)
+    except OSError as exc:
+        raise ValueError(f"cannot open intended exec target {path}: {exc}") from exc
+    try:
+        before = os.fstat(fd)
+        if not stat.S_ISREG(before.st_mode):
+            raise ValueError(f"intended exec target {path} is not a regular file")
+        digest = hashlib.sha256()
+        total = 0
+        while True:
+            block = os.read(fd, 1024 * 1024)
+            if not block:
+                break
+            digest.update(block)
+            total += len(block)
+        after = os.fstat(fd)
+    finally:
+        os.close(fd)
+    before_id = (
+        before.st_dev,
+        before.st_ino,
+        before.st_size,
+        before.st_mtime_ns,
+        before.st_ctime_ns,
+    )
+    after_id = (
+        after.st_dev,
+        after.st_ino,
+        after.st_size,
+        after.st_mtime_ns,
+        after.st_ctime_ns,
+    )
+    if before_id != after_id or total != before.st_size:
+        raise ValueError(f"intended exec target {path} changed while being hashed")
+    return {
+        "path": os.fspath(path),
+        "resolved_path": os.path.realpath(path),
+        "bytes": total,
+        "sha256": digest.hexdigest(),
+        "st_dev": int(before.st_dev),
+        "st_ino": int(before.st_ino),
+        "st_mode": int(before.st_mode),
+        "mtime_ns": int(before.st_mtime_ns),
+        "ctime_ns": int(before.st_ctime_ns),
+    }
+
+
 def record_exec_boundary_cwd(
     *,
     proc_root: Path = Path("/proc"),
     cwd: Path | None = None,
+    exec_argv: list[str] | None = None,
 ) -> dict[str, Any]:
-    """Record the opened cwd object for the process about to exec.
+    """Record cwd and launcher state immediately before a direct ``os.execv``.
 
-    Call this *immediately before* ``os.execv`` and perform no ``chdir``/``fchdir``
-    in between, so the recorded object is the exec-boundary cwd of the same,
-    unchanged process.  The process identity (pid, starttime, exe link) is
-    preserved by ``execve`` and therefore binds this record to the exec'd image's
-    runtime identity.
+    ``exec_argv`` is optional for backwards-compatible fixture construction.  A
+    production direct-exec record should supply it so the launcher executable and
+    intended target executable are not conflated.
     """
     pid = os.getpid()
     proc_dir = proc_root / str(pid)
     starttime = _read_process_starttime(proc_dir)
-    exe_link = _read_exe_link(proc_dir)
-    if exe_link.endswith(" (deleted)"):
+    launcher_exe_link = _read_exe_link(proc_dir)
+    if launcher_exe_link.endswith(" (deleted)"):
         raise ValueError("launcher executable is deleted")
 
     target = cwd if cwd is not None else Path(".")
     cwd_object = _open_directory_identity(target)
     try:
         spelling = os.getcwd()
-    except OSError as exc:
+    except OSError:
         spelling = None
 
-    body = {
+    intent = None
+    if exec_argv:
+        argv = list(exec_argv)
+        if not argv or not argv[0]:
+            raise ValueError("direct exec argv must contain a non-empty argv[0]")
+        target_record = _hash_regular_file(Path(argv[0]))
+        intent = {
+            "mode": "DIRECT_OS_EXECV",
+            "argv": argv,
+            "target": target_record,
+        }
+
+    body: dict[str, Any] = {
         "schema": EXEC_BOUNDARY_CWD_SCHEMA,
         "status": "RECORDED",
-        "boundary": "IMMEDIATELY_BEFORE_DIRECT_EXECVE_NO_INTERVENING_CHDIR",
+        "boundary": "IMMEDIATELY_BEFORE_DIRECT_EXECV_NO_INTERVENING_CHDIR",
         "process": {
             "pid": pid,
             "starttime_ticks": starttime,
-            "exe_link": exe_link,
+            "exe_link": launcher_exe_link,
         },
         "cwd_object": cwd_object,
         "cwd_spelling": spelling,
-        "scientific_scope": "EXEC_BOUNDARY_CWD_OBJECT_RECORD_ONLY",
+        "scientific_scope": "PRE_EXEC_CWD_OBJECT_AND_DIRECT_EXECV_INTENT",
         "interpretation": {
-            "observation": "OPENED_DIRECTORY_OBJECT_BEFORE_EXECVE",
-            "historical_execve_cwd": "PROVEN_SAME_PROCESS_DIRECT_EXEC_PRESERVES_CWD",
-            "later_procfs_cwd": "NOT_RELIED_UPON_RECORD_BINDS_EXEC_BOUNDARY",
+            "observation": "OPENED_DIRECTORY_OBJECT_BEFORE_DIRECT_EXECV",
+            "launcher_executable": "PRE_EXEC_PROCESS_IMAGE_EXPECTED_TO_BE_REPLACED",
+            "historical_execve_cwd": "BOUND_IF_LAUNCHER_EXEC_INTENT_COMPOSES_WITH_RUNTIME",
+            "later_procfs_cwd": "NOT_RELIED_UPON_RECORD_BINDS_PRE_EXEC_CWD",
             "parent_shell_cwd": "NOT_AUTHORITATIVE_LAUNCHER_RECORD_IS_THE_BOUNDARY",
             "path_spelling": "AUXILIARY_OBJECT_IDENTITY_IS_AUTHORITATIVE",
         },
         "limitations": [
+            "KERNEL_EXECVE_EVENT_NOT_OBSERVED_INTERMEDIATE_EXEC_CHAIN_NOT_EXCLUDED",
+            "INTENDED_EXEC_TARGET_PATH_CAN_CHANGE_AFTER_PRE_EXEC_HASH_BEFORE_EXECV",
             "RENAME_OR_UNLINK_AFTER_EXEC_CHANGES_SPELLING_NOT_OBJECT_IDENTITY",
             "FILESYSTEM_ROOT_AND_MOUNT_NAMESPACE_NOT_BOUND_BY_THIS_RECORD",
             "SYMLINK_RESOLUTION_OF_RELATIVE_ARGUMENT_BYTES_NOT_BOUND",
@@ -167,6 +223,8 @@ def record_exec_boundary_cwd(
             "NO_GEANT4_EVENT_SOURCE_TRANSPORT_OR_DETECTOR_OBSERVABLE_VALIDATED",
         ],
     }
+    if intent is not None:
+        body["exec_intent"] = intent
     return _with_digest(body)
 
 
@@ -200,13 +258,40 @@ def _process_identity(receipt: dict[str, Any], *, label: str) -> tuple[int, int,
     return pid, starttime, exe_link
 
 
+def _verify_exec_intent_against_runtime(
+    *, exec_receipt: dict[str, Any], runtime_receipt: dict[str, Any], runtime_exe: str
+) -> dict[str, Any] | None:
+    intent = exec_receipt.get("exec_intent")
+    if intent is None:
+        return None
+    if not isinstance(intent, dict) or intent.get("mode") != "DIRECT_OS_EXECV":
+        raise ValueError("exec-boundary record has unsupported exec intent")
+    target = intent.get("target")
+    if not isinstance(target, dict):
+        raise ValueError("exec-boundary record has no intended target identity")
+    process = runtime_receipt.get("process")
+    runtime_binary = process.get("executable") if isinstance(process, dict) else None
+    if not isinstance(runtime_binary, dict):
+        raise ValueError("runtime receipt has no executable content identity")
+    for field in ("bytes", "sha256"):
+        if target.get(field) != runtime_binary.get(field):
+            raise ValueError("runtime executable bytes differ from pre-exec intended target")
+    target_resolved = target.get("resolved_path")
+    if not isinstance(target_resolved, str) or not target_resolved:
+        raise ValueError("pre-exec intended target resolved path is missing")
+    if os.path.realpath(runtime_exe) != target_resolved:
+        raise ValueError("runtime executable path differs from pre-exec intended target")
+    return intent
+
+
 def attest_exec_boundary_cwd(
     *,
     runtime_receipt: dict[str, Any],
     exec_receipt: dict[str, Any],
     proc_root: Path = Path("/proc"),
 ) -> dict[str, Any]:
-    """Compose the exec-boundary cwd record with the runtime dependency receipt."""
+    """Compose a pre-exec cwd record with a post-exec runtime receipt."""
+    del proc_root  # retained for API compatibility; runtime receipt already binds live procfs.
     _verify_receipt(
         runtime_receipt,
         schema=RUNTIME_RECEIPT_SCHEMA,
@@ -221,15 +306,21 @@ def attest_exec_boundary_cwd(
     runtime_pid, runtime_starttime, runtime_exe = _process_identity(
         runtime_receipt, label="runtime receipt"
     )
-    exec_pid, exec_starttime, exec_exe = _process_identity(
+    exec_pid, exec_starttime, launcher_exe = _process_identity(
         exec_receipt, label="exec-boundary record"
     )
-    if (exec_pid, exec_starttime, exec_exe) != (
-        runtime_pid,
-        runtime_starttime,
-        runtime_exe,
-    ):
+    if (exec_pid, exec_starttime) != (runtime_pid, runtime_starttime):
         raise ValueError("exec-boundary record and runtime receipt identify different processes")
+
+    intent = _verify_exec_intent_against_runtime(
+        exec_receipt=exec_receipt,
+        runtime_receipt=runtime_receipt,
+        runtime_exe=runtime_exe,
+    )
+    if intent is None and launcher_exe != runtime_exe:
+        raise ValueError(
+            "exec-boundary record lacks exec intent and executable links differ"
+        )
 
     cwd_object = exec_receipt.get("cwd_object")
     if not isinstance(cwd_object, dict):
@@ -246,18 +337,28 @@ def attest_exec_boundary_cwd(
             "starttime_ticks": runtime_starttime,
             "exe_link": runtime_exe,
         },
+        "exec_transition": {
+            "launcher_exe_link": launcher_exe,
+            "runtime_exe_link": runtime_exe,
+            "same_pid_starttime": True,
+            "exec_intent_bound": intent is not None,
+            "kernel_execve_event_observed": False,
+        },
         "cwd_object": cwd_object,
         "cwd_spelling": cwd_spelling,
-        "scientific_scope": "COMPOSED_EXEC_BOUNDARY_CWD_OBJECT",
+        "scientific_scope": "COMPOSED_PRE_EXEC_CWD_AND_POST_EXEC_RUNTIME_IDENTITY",
         "interpretation": {
-            "cwd_observation_boundary": "EXEC_BOUNDARY_RECORDED_BEFORE_EXECVE",
-            "historical_execve_cwd": "PROVEN_SAME_PROCESS_DIRECT_EXEC_PRESERVES_CWD",
-            "process_identity_composition": "EXEC_RECORD_EQUALS_RUNTIME_RECEIPT",
+            "cwd_observation_boundary": "PRE_EXEC_RECORD_COMPOSED_WITH_SAME_PID_STARTTIME_RUNTIME",
+            "historical_execve_cwd": "DIRECT_EXECV_LAUNCHER_INTENT_NOT_KERNEL_EXEC_EVENT",
+            "process_identity_composition": "PID_AND_STARTTIME_STABLE_ACROSS_IMAGE_REPLACEMENT",
+            "launcher_vs_runtime_executable": "EXPECTED_TO_DIFFER_AFTER_SUCCESSFUL_EXEC",
             "later_procfs_cwd": "NOT_RELIED_UPON_POST_EXEC_CHDIR_DISCRIMINATED",
-            "parent_shell_or_wrapper_cwd": "NOT_AUTHORITATIVE_WRAPPER_CHDIR_DISCRIMINATED",
+            "parent_shell_or_wrapper_cwd": "NOT_AUTHORITATIVE_LAUNCHER_RECORD_IS_THE_BOUNDARY",
             "path_spelling": "AUXILIARY_OBJECT_IDENTITY_IS_AUTHORITATIVE",
         },
         "limitations": [
+            "KERNEL_EXECVE_EVENT_NOT_OBSERVED_INTERMEDIATE_EXEC_CHAIN_NOT_EXCLUDED",
+            "INTENDED_EXEC_TARGET_PATH_CAN_CHANGE_AFTER_PRE_EXEC_HASH_BEFORE_EXECV",
             "RENAME_OR_UNLINK_AFTER_EXEC_CHANGES_SPELLING_NOT_OBJECT_IDENTITY",
             "FILESYSTEM_ROOT_AND_MOUNT_NAMESPACE_NOT_BOUND_THIS_LEAF_PASSES_OBJECT_ONLY",
             "SYMLINK_RESOLUTION_OF_RELATIVE_ARGUMENT_BYTES_NOT_BOUND",
@@ -284,10 +385,12 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     sub = parser.add_subparsers(dest="command", required=True)
 
-    record_p = sub.add_parser("record", help="write exec-boundary cwd record")
+    record_p = sub.add_parser("record", help="write pre-exec cwd record")
     record_p.add_argument("--receipt-out", type=Path, required=True)
     record_p.add_argument("--proc-root", type=Path, default=Path("/proc"))
-    record_p.add_argument("--command", dest="exec_argv", nargs=argparse.REMAINDER, default=[])
+    record_p.add_argument(
+        "--command", dest="exec_argv", nargs=argparse.REMAINDER, default=[]
+    )
 
     attest_p = sub.add_parser("attest", help="compose record with runtime receipt")
     attest_p.add_argument("--runtime-receipt-json", type=Path, required=True)
@@ -298,7 +401,10 @@ def main() -> int:
 
     if args.command == "record":
         try:
-            record = record_exec_boundary_cwd(proc_root=args.proc_root)
+            record = record_exec_boundary_cwd(
+                proc_root=args.proc_root,
+                exec_argv=list(args.exec_argv) if args.exec_argv else None,
+            )
         except (KeyError, OSError, ValueError) as exc:
             print(json.dumps({"status": "BLOCKED", "error": str(exc)}, sort_keys=True))
             return 2
@@ -309,11 +415,10 @@ def main() -> int:
         except OSError as exc:
             print(json.dumps({"status": "BLOCKED", "error": str(exc)}, sort_keys=True))
             return 2
-        print(json.dumps(record, indent=2, sort_keys=True))
+        print(json.dumps(record, indent=2, sort_keys=True), flush=True)
         if args.exec_argv:
             argv = list(args.exec_argv)
-            if argv:
-                os.execv(argv[0], argv)
+            os.execv(argv[0], argv)
         return 0
 
     if args.command == "attest":

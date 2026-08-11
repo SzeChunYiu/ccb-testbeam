@@ -154,14 +154,6 @@ def _env_utf8(runtime_receipt: dict[str, Any], key: str) -> str | None:
     return value
 
 
-def _glibc_enable_secure_requested(runtime_receipt: dict[str, Any]) -> bool:
-    tunables = _env_utf8(runtime_receipt, "GLIBC_TUNABLES")
-    if tunables is None:
-        return False
-    fields = [field.strip() for field in tunables.split(":") if field.strip()]
-    return "glibc.rtld.enable_secure=1" in fields
-
-
 def attest_loader_secure_state(
     *,
     runtime_receipt: dict[str, Any],
@@ -208,13 +200,6 @@ def attest_loader_secure_state(
     if at_secure not in (0, 1):
         raise ValueError(f"AT_SECURE is not boolean: {at_secure}")
 
-    glibc_enable_secure = _glibc_enable_secure_requested(runtime_receipt)
-    if at_secure == 0 and glibc_enable_secure:
-        raise ValueError(
-            "GLIBC_TUNABLES requests glibc.rtld.enable_secure=1 while AT_SECURE=0; "
-            "effective secure-mode semantics require glibc-version-specific binding"
-        )
-
     launch_ids = {
         "uid": auxv.get(AT_UID),
         "euid": auxv.get(AT_EUID),
@@ -226,13 +211,22 @@ def attest_loader_secure_state(
         value = _env_utf8(runtime_receipt, key)
         environment_semantics[key] = {
             "present_in_runtime_receipt": value is not None,
-            "secure_execution": bool(at_secure),
+            "kernel_at_secure": at_secure,
             "interpretation": (
                 "RESTRICTED_OR_IGNORED_DO_NOT_USE_AS_LOADER_SEARCH_AUTHORITY"
                 if at_secure
-                else "ELIGIBLE_SEARCH_INPUT_NOT_YET_PROVEN_EFFECTIVE"
+                else (
+                    "UNRESOLVED_DO_NOT_USE_AS_LOADER_SEARCH_AUTHORITY_"
+                    "UNTIL_PRE_EXEC_STATE_IS_BOUND"
+                )
             ),
         }
+
+    effective_state = (
+        "SECURE_CONFIRMED_BY_KERNEL_AT_SECURE"
+        if at_secure
+        else "UNRESOLVED_KERNEL_AT_SECURE_ZERO"
+    )
 
     body = {
         "schema": SCHEMA,
@@ -252,11 +246,13 @@ def attest_loader_secure_state(
             "at_secure": at_secure,
             "launch_ids": launch_ids,
         },
-        "glibc_enable_secure_tunable_requested": glibc_enable_secure,
+        "effective_loader_secure_state": effective_state,
         "loader_environment_semantics": environment_semantics,
         "scientific_scope": "LINUX_DYNAMIC_LOADER_SECURE_EXECUTION_STATE_ONLY",
         "limitations": [
-            "AT_SECURE_BINDS_KERNEL_SECURE_EXECUTION_REQUEST_NOT_COMPLETE_GLIBC_SEARCH_DECISION",
+            "AT_SECURE_ONE_CONFIRMS_KERNEL_SECURE_EXECUTION_BUT_ZERO_DOES_NOT_"
+            "EXCLUDE_LIBC_ENABLE_SECURE",
+            "POST_START_ENVIRONMENT_CANNOT_PROVE_PRE_EXEC_GLIBC_TUNABLES_AFTER_LOADER_SANITIZATION",
             "INITIAL_WORKING_DIRECTORY_NOT_BOUND",
             "LD_SO_CACHE_AND_CONFIGURATION_NOT_BOUND",
             "ORIGIN_LIB_PLATFORM_TOKEN_EXPANSION_NOT_BOUND",

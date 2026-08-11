@@ -1,47 +1,56 @@
 # Latest Handoff
 
-## Filesystem namespace atom: same-head duplicate CI exposed a live-process startup race
+## Pre-window SiPM history: #1096 was closed too early
 
-Protected `main` at selection remains `8a064b37245a03dd0258ec20ae73bbc6adc25e2e`, squash merge of #1220. #1057 remains open/PARTIAL, governance child #1218 remains open, and CL-021 remains gated.
+Protected `main` at selection is `fcb246a1442d8ab9aa5fee8bce2337f46749dd06`, merge of #1223. That merge updates `geant4/single_stave/sipm` from `ccb-sipm-core@b38e3d...` to `ccb-sipm-core@2027b06e0fb47b26da1b89e95b6901a5f8e6c200` and closed #1096.
 
-The active parent is `ARU-MC-G4-LOADER-FS-NAMESPACE-001`, tracked as #1221 on branch `audit/geant4-loader-fs-namespace` and PR #1222. Parent #1214 is closed only for the bounded exec-cwd primitive. The repository front door still invokes `./hibeam_g4 -c krakow.config -m run_krakow.mac output_krakow.root` with relative config, macro and output spellings.
+The new core commit genuinely fixes one bounded mechanism: `schedule()` now accepts avalanche candidates from `history_start_ns` (default `-200 ns`) rather than starting at the sample window (`-20 ns`), so a supplied pre-window photon can produce an in-window analog tail. The core PR reports `ccb_sipm_tests` passed and adds C1-C5 for the photon/history boundary and metadata/env override.
 
-The bounded pre-exec state is `F_exec=(CWD_obj,Root_obj,MntNS_{st_dev,st_ino},MountInfo_bytes)`, with exact mountinfo content/SHA-256. Runtime composition requires `(PID_pre,starttime_pre)==(PID_runtime,starttime_runtime)` plus intended-target path/content equality on the controlled direct-exec route. A real post-exec `chroot` control changed the root object, so this does not prove HIBEAM input-open state; `ARU-MC-G4-RELATIVE-INPUT-CONSUMPTION-001` remains mandatory.
+A deeper source inspection shows the spontaneous dark-count process still starts at `window_start_ns`. `ResponseSimulator::simulate()` computes the Poisson duration from `window_end_ns-window_start_ns` and samples `dark_time` only on `[window_start_ns,window_end_ns]`. Thus the model has two incompatible history supports: supplied photons/correlated descendants may begin at `history_start_ns`, while dark primaries cannot exist before the sample boundary.
 
-## CI chronology
+This is tracked as continuation atom `ARU-SIPM-PREWINDOW-DARK-HISTORY-001` under the same parent rather than as a duplicate issue. #1096 has been reopened. Archive: `chatgpt_todo/archive/2026-08-11T165700Z_ARU-SIPM-PREWINDOW-DARK-HISTORY-001.md`.
 
-An earlier head `167bae0853bea35ee634125f44e11e302e0cbe55` failed only curated ruff with five E501 findings while full pytest passed. Formatting-only commits `e90a613ff4d7ddd103786f455e0a891f777bd078` and `bd8c2b7293aff60772117b8f19a93c1f508917dc` repaired those findings without weakening the gate.
+## Exact model scale
 
-The next exact head `d264153a943af9d4d486ce4404d05e74569b0d0f` then produced two contradictory required workflow results:
+For current defaults `history_start=-200 ns`, `window_start=-20 ns`, `window_end=250 ns`, DCR `500000 Hz`, the omitted explicit-history interval is 180 ns. Under the simulator's own homogeneous Poisson model:
 
-- pull-request run `31509591783`: PASS; curated ruff `All checks passed!`; pytest `1642 passed, 2 skipped, 8 xfailed, 1 xpassed, 7 warnings in 142.59s`; diagnostics and enforcement succeeded;
-- push run `31509587074`: FAIL; ruff passed, but `test_real_procfs_python_process_round_trip` alone raised `ValueError: executable mapping set changed during runtime attestation`; totals `1 failed, 1641 passed, 2 skipped, 8 xfailed, 1 xpassed, 7 warnings in 107.40s`; enforcement failed because `PYTEST_STATUS=1`.
+- missing expected dark primaries: `0.09` per sensor/event;
+- probability of at least one missing pre-window dark primary: `0.08606881472877181`;
+- sample-only expected count: `0.135`;
+- history-inclusive expected count: `0.225`;
+- omitted fraction of the history-inclusive primary measure: `40%`.
 
-A merge was attempted only after the pull-request run appeared green, but branch protection rejected it with `Required status check "test" is failing.` The second run was then inspected and the PR was returned to draft. This is preserved as evidence that one green duplicate context is not merge authorization.
+These are exact consequences of the declared simulator law, not measurements of the CCB detector. The integrated device profile is manufacturer-representative/not calibrated and the generic electronics response is unmeasured.
 
-## Validation child and solve-first repair
+For the default peak-normalized CR-RC kernel (`tau_rise=1 ns`, `tau_decay=25 ns`), the expected model-internal signal at the sample boundary from omitted stationary dark primaries over the 180 ns prehistory is about `0.014283 PE`. That number must not be used as a detector baseline prediction.
 
-The new child is `ARU-MC-G4-RUNTIME-MAPS-TEST-STARTUP-RACE-001`, archived at `chatgpt_todo/archive/2026-08-11T160400Z_ARU-MC-G4-RUNTIME-MAPS-TEST-STARTUP-RACE-001.md`. No duplicate issue was found; because the bounded repair is implemented in the current PR, #1221 remains the coordination parent rather than opening a new issue.
+## Why existing tests do not close the child
 
-The production runtime attestor intentionally requires `M_exec(t_before)==M_exec(t_after)` and remains unchanged. The failing live regression spawned Python and immediately entered the attestor with no target-code readiness boundary. The strongest current hypothesis is therefore startup/readiness timing; a later legitimate mapping mutation remains a surviving counter-hypothesis.
+The Task-C fixture starts from `UnitConfig()`, which disables dark counts, prompt/delayed crosstalk, afterpulsing and electronics noise. C1/C2 therefore validate a supplied photon at `-21 ns`; they do not test the DCR support.
 
-Commit `33669aa324b148f9408b2785be785f8fca02db00` changes only the live Python fixture. The child now emits `READY` from its `python -c` target code using a flushed stdout pipe, and the parent begins attestation only after receiving that token. This is a state discriminator, not a fixed-delay workaround. Retrying the production attestor until it happens to see a stable mapping set is explicitly rejected because it would erase evidence of real mutation during an authoritative receipt.
+The ccb-testbeam protected MC Validation workflow triggers on `geant4/**`, but its checkout does not initialize submodules and the job runs Python ruff/pytest only. The successful #1223 run is repository integration/static evidence, not an independent compile/test of `ccb-sipm-core@2027b06...`.
 
 ## Four sequential AI reviews
 
-- **Runtime/provenance integration lead — ACCEPT filesystem decomposition / REVISE fixture validation.** Evidence: same-head green/fail pair and exact failure location. Strongest counter-hypothesis is an over-strict production predicate; it survives only if mapping drift recurs after explicit target-code readiness. Residual uncertainty: later lazy mapping activity.
-- **Adversarial Linux/process reviewer — ACCEPT target-code readiness discriminator / BLOCK retry-until-pass and input-consumption equivalence.** A fixed sleep does not identify process state. READY is stronger but does not guarantee future mapping immutability.
-- **Independent validation reviewer — BLOCK merge pending every duplicate exact-final-head context.** The same SHA generated opposite workflow outcomes, and branch protection correctly refused merge. One repaired green run is not enough if another required context fails.
-- **Claims/provenance reviewer — ACCEPT bounded software-provenance repair / BLOCK CL-021 and detector inference.** No HIBEAM executable, Geant4 event, beam data, detector response, event weight, or public detector estimator participates.
+- **SiPM/electronics lead — REVISE parent closure.** The waveform boundary is not represented as a physical DCR gate; admitting photon history while excluding spontaneous dark history is internally inconsistent under the explicit-history interpretation.
+- **Adversarial stochastic-process/recovery reviewer — BLOCK COMPLETE.** Pre-window avalanches can change per-cell `last_fire` and seed delayed descendants, so direct analog-tail truncation is not the only memory mechanism.
+- **Independent validation reviewer — ACCEPT code diagnosis / BLOCK patched-core validation.** The Poisson calculations and interval mismatch are exact, but no C++ build/test was rerun in this session.
+- **Claims/provenance reviewer — BLOCK #1096 completion.** #1096 itself requires recovery/correlated-noise memory and history-length convergence. No baseline, timing, pile-up, rate or detector-performance claim advances.
 
-## Stable concerns and children
+## Implementation-ready repair
 
-`C-FSNS-001` HIGH: namespace identity alone insufficient. `C-FSNS-002` HIGH: pre-exec lookup state is not exact input-open state. `C-FSNS-003` MEDIUM-HIGH: equal repeated snapshots do not exclude ABA/shared mutation. `C-FSNS-004` MEDIUM-HIGH: kernel exec event and target TOCTOU remain unresolved. `C-MAPS-RACE-001` MEDIUM-HIGH: even target-code readiness may precede later executable mapping changes; recurrence must spawn `ARU-MC-G4-RUNTIME-MAPS-POSTREADY-MUTATION-001` rather than trigger retries.
+In `ccb-sipm-core/src/ResponseSimulator.cc`, if explicit stationary history remains the model, change the DCR Poisson duration and uniform dark-time support to `[history_start_ns,window_end_ns]`. Add a deterministic interval/helper regression where possible, plus a high-rate stochastic sanity control. Require `history_start==window_start` to reduce exactly to the legacy sample-only model and keep candidates before history rejected.
 
-Parent children remain `ARU-MC-G4-RELATIVE-INPUT-CONSUMPTION-001`, `ARU-MC-G4-OUTPUT-PATH-CREATION-001`, `ARU-MC-G4-LOADER-EXEC-KERNEL-EVENT-001`, and `ARU-MC-G4-LOADER-EXEC-TARGET-TOCTOU-001`. #1057 independently still requires compiled source-phi and accepted-observable closure.
+Do not merge an updated ccb-testbeam gitlink until the exact core commit compiles and its core tests run. There is no new core code/test PASS claimed here.
+
+## Child atom: history-horizon convergence
+
+Spawn `ARU-SIPM-HISTORY-HORIZON-CONVERGENCE-001`. The explicit prehistory from `-200` to the sample start `-20 ns` is 180 ns = 7.2 default decay constants, not eight relative to the actual sample boundary. More importantly, recovery is 30 ns and the configured slow-afterpulse branch has `tau=80 ns`; exponential delayed-state laws have no finite exact memory cutoff. Measured impulse responses or extra shaper stages can also lengthen the analog memory.
+
+The correct horizon is therefore the smallest tested history length for which declared in-window observables/state converge under every enabled mechanism to a preregistered tolerance. Scan analog-only, recovery, prompt/delayed crosstalk, fast/slow afterpulse and measured/generic impulse variants separately before composing them.
 
 ## Immediate next action
 
-This handoff update creates another final branch head. Keep #1222 draft until both push and pull-request MC Validation contexts on that exact final head pass curated ruff, full non-integration pytest, diagnostics and enforcement. If the READY fixture still produces mapping drift, do not retry to green; investigate post-readiness mapping mechanisms. If both contexts are green and protected main ancestry remains current, mark ready and merge with an expected-head guard.
+First patch and execute the DCR-history support regression in `ccb-sipm-core`. If that passes, open/merge a focused core PR and then update the testbeam gitlink through normal protected CI. Afterward run the history-length convergence child rather than re-closing #1096 from a single near-boundary fixture.
 
-After the bounded PR lands, the highest-information scientific child is `ARU-MC-G4-RELATIVE-INPUT-CONSUMPTION-001`: observe actual file-open state and content-bind the opened HIBEAM config/macro/auxiliary file descriptions rather than inferring them from pre-exec pathname state. No production Geant4 campaign, beam/production-MC ROOT bytes, event-weight result, accepted rate, PID, timing, calibration, pile-up, ESS, p-value, or detector-performance quantity was produced or promoted here.
+The Geant4 provenance lane from merged #1222 remains separately unfinished at actual relative-input file-open/content binding. #1057 remains open/PARTIAL for compiled source-phi and accepted-observable closure. No production Geant4, beam/production-MC ROOT, event-weight, detector-response, ESS, p-value or performance result was generated in this session.

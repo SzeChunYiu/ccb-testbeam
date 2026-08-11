@@ -16,6 +16,7 @@ from ccb_mc_validation.geometry.registry import (
     list_profile_ids,
     load_registry_index,
     require_geometry_profile,
+    require_spacing_hypothesis_for_tof,
 )
 
 __all__ = [

@@ -21,13 +21,15 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-# uproot 5.7.x has an RNTuple cascade bug (`WritableDirectory._cascadentuple`
-# returns a SimpleNamespace) that breaks `recreate`/`mktree`+`extend` writes in
-# the test fixtures. Pin to the last 5.6.x release until that is fixed upstream.
-# awkward is a required transitive dependency of uproot's write path: uproot's
-# `ensure_numpy` does a re-import of `uproot` which triggers `extras.awkward()`,
-# and without it the re-import leaves a `SimpleNamespace` placeholder in
-# `sys.modules['uproot']`, breaking all subsequent uproot usage.
+# uproot 5.6.9's RNTuple write path has a circular self-import bug:
+# `_cascade.add_rntuple` imports `_cascadentuple`, whose top-level `import
+# uproot` finds a half-initialized `SimpleNamespace` placeholder in
+# `sys.modules['uproot']` and raises `AttributeError: no attribute 'writing'`.
+# The test fixtures therefore use the explicit TTree path (`mktree` + `extend`)
+# instead of dict-assignment, which avoids the RNTuple cascade entirely.
+# uproot 5.7.x is not a drop-in fix: it has a different cascade bug
+# (`_cascadentuple._regularize_input_type_to_awkward` chokes on `np.dtype`),
+# so pin to the last 5.6.x release until that is fixed upstream.
 root = ["uproot>=5.6,<5.7", "awkward>=2.6,<3.0"]
 dev = [
     "pytest>=7.0",

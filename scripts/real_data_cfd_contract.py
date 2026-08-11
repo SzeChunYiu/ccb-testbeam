@@ -181,3 +181,101 @@ def pair_only_inference_contract() -> dict[str, object]:
             "closure or injection-recovery validation",
         ],
     }
+
+
+@dataclass(frozen=True)
+class RunPopulationReport:
+    requested_runs: tuple[int, ...]
+    resolved_runs: tuple[int, ...]
+    missing_runs: tuple[int, ...]
+    empty_runs: tuple[int, ...]
+    failed_runs: tuple[int, ...]
+    excluded_by_policy: tuple[int, ...]
+    events_per_run: dict[int, int]
+    pulses_per_run: dict[int, int]
+    authorising: bool
+    mode: str
+
+    def to_dict(self) -> dict[str, object]:
+        payload = asdict(self)
+        # JSON-friendly keys
+        payload["events_per_run"] = {str(k): int(v) for k, v in self.events_per_run.items()}
+        payload["pulses_per_run"] = {str(k): int(v) for k, v in self.pulses_per_run.items()}
+        return payload
+
+
+def assert_run_population_complete(report: RunPopulationReport) -> None:
+    """Fail closed for authorising mode when requested runs are incomplete (#1004)."""
+    if not report.authorising:
+        return
+    problems = []
+    if report.missing_runs:
+        problems.append(f"missing_runs={list(report.missing_runs)}")
+    if report.empty_runs:
+        problems.append(f"empty_runs={list(report.empty_runs)}")
+    if report.failed_runs:
+        problems.append(f"failed_runs={list(report.failed_runs)}")
+    if problems:
+        raise RuntimeError(
+            "authorising CFD timing requires exact requested run completeness; "
+            + "; ".join(problems)
+        )
+
+
+def select_complete_pair_rows(
+    df: pd.DataFrame,
+    staves: Sequence[str],
+) -> tuple[pd.DataFrame, int]:
+    """Keep events that have all requested staves, without peak-time conditioning (#1003)."""
+    if not staves:
+        raise ValueError("at least one stave is required")
+    require_event_columns(df)
+    selected = df[df["stave"].isin(staves)].copy()
+    pivot = pivot_by_event(selected, "peak_sample")
+    pivot = pivot.reindex(columns=list(staves))
+    complete = pivot.notna().all(axis=1)
+    keep_index = pivot.index[complete]
+    keys = keep_index.to_frame(index=False)
+    kept = selected.merge(keys, on=list(EVENT_KEY_COLUMNS), how="inner", validate="many_to_one")
+    return kept, int(len(keep_index))
+
+
+def peak_offset_dictionary(
+    df: pd.DataFrame,
+    staves: Sequence[str],
+    *,
+    calibration_df: pd.DataFrame | None = None,
+) -> dict[str, float]:
+    """Derive per-stave median peak offsets, optionally from a calibration population (#1003)."""
+    source = calibration_df if calibration_df is not None else df
+    require_event_columns(source)
+    offsets: dict[str, float] = {}
+    for stave in staves:
+        values = source.loc[source["stave"] == stave, "peak_sample"].to_numpy(dtype=float)
+        if values.size == 0 or not np.isfinite(values).all():
+            raise ValueError(f"missing or nonfinite peak samples for stave {stave}")
+        offsets[stave] = float(np.median(values))
+    return offsets
+
+
+def apply_intime_mask(
+    df: pd.DataFrame,
+    staves: Sequence[str],
+    offsets: Mapping[str, float],
+    tolerance_samples: float,
+) -> tuple[pd.DataFrame, int]:
+    """Apply a frozen peak-time tolerance using externally supplied offsets."""
+    if not np.isfinite(tolerance_samples) or tolerance_samples < 0:
+        raise ValueError("tolerance_samples must be finite and nonnegative")
+    require_event_columns(df)
+    work = df.copy()
+    work["peak_al"] = work["peak_sample"] - work["stave"].map(dict(offsets))
+    selected = work[work["stave"].isin(staves)]
+    pivot = pivot_by_event(selected, "peak_al")
+    pivot = pivot.reindex(columns=list(staves))
+    complete = pivot.notna().all(axis=1)
+    spread = pivot.max(axis=1) - pivot.min(axis=1)
+    keep_index = pivot.index[complete & (spread <= tolerance_samples)]
+    keys = keep_index.to_frame(index=False)
+    kept = work.merge(keys, on=list(EVENT_KEY_COLUMNS), how="inner", validate="many_to_one")
+    return kept, int(len(keep_index))

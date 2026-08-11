@@ -8,7 +8,7 @@ Selected atom: `ARU-SIPM-RECOVERY-CORRELATED-NOISE-COUPLING-001`, child of #1066
 
 Protected testbeam `main` advanced from `e25d59be37f59b8fddf7dd897295bcaa7bee14d0` to `d9992a48d86a34f03f18a1e4f9426c97f6cf399b` when PR #1235 integrated `ccb-sipm-core@692857bde0c1c6c2ed59aac5a56c94740da31354`. #1066 remains OPEN; this integration is PARTIAL and must not be interpreted as recovery-model validation.
 
-Core PR #13 exact head `c2b79d83642852b458299b181d50dd94b733bdb7` passed Core CI run `31533574607`; merged core main `692857b...` passed independent push Core CI run `31533753427`. Testbeam PR #1235 exact head `4cb06465c2aaf30b4319e43f003578b18c953d8c` passed MC Validation run `31534733706`, job `93923024769`: ruff clean and pytest `1642 passed, 2 skipped, 8 xfailed, 1 xpassed, 7 warnings in 124.43 s`. The testbeam CI is Python/static and does not compile the C++ submodule; the upstream Core CI is the C++ execution evidence.
+Core PR #13 exact head `c2b79d83642852b458299b181d50dd94b733bdb7` passed Core CI run `31533574607`; merged core main `692857b...` passed independent push Core CI run `31533753427`. Testbeam PR #1235 exact head `4cb06465c2aaf30b4319e43f003578b18c953d8c` passed MC Validation run `31534733706`, job `93923024769`: ruff clean and pytest `1642 passed, 2 skipped, 8 xfailed, 1 xpassed, 7 warnings in 124.43 s`. The merged testbeam commit `d9992a48...` then independently passed main-push MC Validation run `31535409449` / job `93925207048`, including checkout, curated ruff, unit tests, diagnostics upload, and enforcement. The testbeam workflow is Python/static and does not compile the C++ submodule; the upstream Core CI is the C++ execution evidence.
 
 ### Atomic contract
 
@@ -46,7 +46,8 @@ Hamamatsu guidance and primary Hamamatsu-SiPM correlated-noise studies motivate 
 - Added stable concern `CCB-1071-RECOVERY-COUPLING-001` to existing #1071 instead of creating a duplicate issue.
 - Added cross-atom partial-completion evidence and four-role review to #1066; issue remains OPEN.
 - Reframed PR #1235 before integration as `fix(sipm): integrate partial trigger/gain recovery separation (#1066)` with exact upstream/testbeam CI and claim boundary.
-- PR #1235 merged as testbeam main `d9992a48d86a34f03f18a1e4f9426c97f6cf399b`. Main-push MC Validation run `31535409449` was in progress when this handoff was written; do not claim a post-merge PASS until its conclusion is inspected.
+- PR #1235 merged as testbeam main `d9992a48d86a34f03f18a1e4f9426c97f6cf399b`; post-merge MC Validation run `31535409449` / job `93925207048` completed successfully.
+- Coordination-only draft PR #1236 carries this archive and refreshed active/handoff state; merge only after its final exact-head protected CI passes.
 - Immutable record: `chatgpt_todo/archive/2026-08-11T205700Z_ARU-SIPM-RECOVERY-CORRELATED-NOISE-COUPLING-001.md`.
 
 ### Four sequential AI votes

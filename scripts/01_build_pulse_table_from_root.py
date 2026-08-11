@@ -21,7 +21,6 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import uproot
 import yaml
 
 from ccb_mc_validation.s00_selector_contract import (
@@ -56,7 +55,6 @@ GATE_PASS = "PASS"
 GATE_FAIL = "FAIL"
 GATE_NOT_RUN_MISSING_INPUT = "NOT_RUN_MISSING_INPUT"
 GATE_NOT_APPLICABLE = "NOT_APPLICABLE"
-GATE_INCOMPLETE_SCALAR_PROXY = "INCOMPLETE_SCALAR_PROXY"  # issue #953
 SCHEMA_VERSION = "v1"
 
 
@@ -173,85 +171,14 @@ def resolve_ml_bootstrap_reps(config: dict) -> int:
 def case_control_sampling_weight(
     selected_mask: np.ndarray, keep_selected: float, keep_rejected: float
 ) -> np.ndarray:
-    """Inverse-probability-of-inclusion weight for Stage-1 case-control design.
+    """Inverse-probability-of-inclusion weight for the case-control design.
 
-    Each kept row represents ``1 / p1(class)`` population rows under Stage 1
-    alone (audit S00-002). When a Stage-2 per-class cap also binds, callers must
-    apply :func:`apply_two_stage_design_weights` so the final ``sampling_weight``
-    accounts for both inclusion stages (audit ARU-S00-ML-TWOSTAGE-SAMPLING-001 /
-    #1112). ``selected_mask`` is the boolean label of the KEPT sample.
+    Each kept row represents ``1 / p(class)`` population rows, so multiplying
+    any held-out evaluation by these weights restores population prevalence
+    (audit S00-002). ``selected_mask`` is the boolean label of the KEPT sample.
     """
     sel = np.asarray(selected_mask, dtype=bool)
     return np.where(sel, 1.0 / float(keep_selected), 1.0 / float(keep_rejected))
-
-
-def apply_two_stage_design_weights(
-    ml_rows: "pd.DataFrame",
-    *,
-    max_sample: int,
-    random_seed: int,
-    keep_selected: float,
-    keep_rejected: float,
-) -> tuple["pd.DataFrame", dict]:
-    """Apply per-class Stage-2 caps and recompute two-stage design weights.
-
-    Stage 1 retention probabilities are ``keep_selected`` / ``keep_rejected``.
-    Conditional on the Stage-1 sample of size ``n1_c``, the uniform within-class
-    cap retains each row with ``p2_c = min(1, max_sample / n1_c)``. The design
-    weight that reconstructs the finite population is
-
-        w_c = 1 / (p1_c * p2_c).
-
-    Returns the capped frame plus a provenance dict of pre/post counts.
-    """
-    if ml_rows is None or len(ml_rows) == 0:
-        empty = ml_rows.copy() if ml_rows is not None else pd.DataFrame()
-        return empty, {
-            "max_sample_per_class": int(max_sample),
-            "stage1_counts": {},
-            "stage2_counts": {},
-            "p_cap_conditional": {},
-        }
-
-    capped_parts: list[pd.DataFrame] = []
-    stage1_counts: dict[str, int] = {}
-    stage2_counts: dict[str, int] = {}
-    p_cap: dict[str, float] = {}
-
-    for selected_value, subset in ml_rows.groupby("selected", sort=True):
-        key = str(int(selected_value))
-        n1 = int(len(subset))
-        n_keep = min(n1, int(max_sample))
-        p2 = 1.0 if n1 <= 0 else float(n_keep) / float(n1)
-        drawn = subset.sample(
-            n=n_keep,
-            random_state=int(random_seed) + int(selected_value),
-        ).copy()
-        p1 = float(keep_selected) if int(selected_value) == 1 else float(keep_rejected)
-        # Guard against numerical underflow; p2 is in (0, 1].
-        p2_safe = max(p2, 1e-15)
-        drawn["p_case_control"] = p1
-        drawn["p_cap_conditional"] = p2
-        drawn["pi_total"] = p1 * p2
-        drawn["design_weight"] = 1.0 / (p1 * p2_safe)
-        drawn["sampling_weight"] = drawn["design_weight"].to_numpy(dtype=float)
-        capped_parts.append(drawn)
-        stage1_counts[key] = n1
-        stage2_counts[key] = int(len(drawn))
-        p_cap[key] = float(p2)
-
-    out = pd.concat(capped_parts, ignore_index=True) if capped_parts else ml_rows.iloc[0:0].copy()
-    provenance = {
-        "max_sample_per_class": int(max_sample),
-        "stage1_counts": stage1_counts,
-        "stage2_counts": stage2_counts,
-        "p_cap_conditional": p_cap,
-        "keep_selected": float(keep_selected),
-        "keep_rejected": float(keep_rejected),
-        "weight_definition": "1/(p_case_control * p_cap_conditional)",
-        "estimand_label": "two_stage_design_weighted_population_diagnostic",
-    }
-    return out, provenance
 
 
 def make_run_event_clusters(runs: np.ndarray, eventnos: np.ndarray) -> np.ndarray:
@@ -413,6 +340,8 @@ def resolve_analysis_polarity(n_channels: int, config: dict | None = None) -> tu
 
 
 def iter_raw_events(path: Path, step_size: int = 10000) -> Iterable[dict]:
+    import uproot
+
     tree = uproot.open(path)["h101"]
     branches = ["EVENTNO", "EVT", "HRDv"]
     yield from tree.iterate(branches, step_size=step_size, library="np")
@@ -489,16 +418,10 @@ def scan_raw(config: dict) -> Tuple[pd.DataFrame, pd.DataFrame, Dict[str, dict],
             baseline, amplitude, peak_sample, area = pulse_quantities(
                 waveforms, baseline_indices, polarity=stave_polarity
             )
-            # Absolute peak (raw max) for peak_code_adc. Saturation is a
-            # NON-AUTHORISING diagnostic under unresolved ADC world A (#1073/#1014);
-            # do not treat max-code=16383 as authorising while Worlds A/B/C disagree.
-            from ccb_mc_validation.daq.adc_saturation_registry import (
-                diagnostic_saturation_flag,
-            )
+# Absolute peak (raw max) for peak_code_adc and hardware saturation
+            # flag (14-bit CAEN V1742, max code = 16383).
             peak_code_adc = waveforms.max(axis=-1)
-            saturation, _saturation_meta = diagnostic_saturation_flag(
-                peak_code_adc, world_id="A"
-            )
+            saturation = waveforms.max(axis=-1) >= 16383
             selected_mask = amplitude > cut
             event_selected = selected_mask.any(axis=1)
 
@@ -589,18 +512,26 @@ def scan_raw(config: dict) -> Tuple[pd.DataFrame, pd.DataFrame, Dict[str, dict],
 
     selected = pd.concat(selected_frames, ignore_index=True) if selected_frames else pd.DataFrame()
     ml_rows = pd.concat(ml_frames, ignore_index=True) if ml_frames else pd.DataFrame()
-    ml_rows, two_stage_sampling = apply_two_stage_design_weights(
-        ml_rows,
-        max_sample=max_sample,
-        random_seed=int(config["ml_check"]["random_seed"]),
-        keep_selected=keep_selected,
-        keep_rejected=keep_rejected,
-    )
+    from ccb_mc_validation.statistics.case_control import apply_second_stage_class_cap
+
+    sampling_design_manifest = {
+        "stages": ["case_control_bernoulli"],
+        "keep_selected": float(keep_selected),
+        "keep_rejected": float(keep_rejected),
+        "max_sample_per_class": int(max_sample),
+    }
+    if not ml_rows.empty:
+        ml_rows, cap_manifest = apply_second_stage_class_cap(
+            ml_rows,
+            max_sample=max_sample,
+            random_seed=int(config["ml_check"]["random_seed"]),
+        )
+        sampling_design_manifest.update(cap_manifest)
     population_prevalence = {
         "selected": int(pop_selected),
         "total": int(pop_total),
         "prevalence": float(pop_selected / pop_total) if pop_total else float("nan"),
-        "two_stage_sampling": two_stage_sampling,
+        "sampling_design": sampling_design_manifest,
     }
     return (
         pd.DataFrame(counts_by_run),
@@ -705,14 +636,13 @@ def run_ml_check(
     accuracy interval uses a ``(run, event)`` cluster bootstrap so pulses from
     one DAQ event move together (audit STAT-002).
     """
-    from sklearn.calibration import CalibratedClassifierCV, calibration_curve
+    from sklearn.calibration import calibration_curve
     from sklearn.linear_model import LogisticRegression
     from sklearn.metrics import average_precision_score, brier_score_loss, roc_auc_score
-    from sklearn.model_selection import StratifiedKFold, cross_val_score
-    from sklearn.pipeline import make_pipeline
+    from sklearn.model_selection import StratifiedGroupKFold
     from sklearn.preprocessing import StandardScaler
 
-    from ccb_mc_validation.statistics.bootstrap import cluster_bootstrap
+    from ccb_mc_validation.statistics.bootstrap import weighted_cluster_bootstrap, weighted_mean
 
     # S00-001 leakage guard: raises if amplitude_adc (target-defining) is a feature.
     features = resolve_ml_features(config)
@@ -721,27 +651,131 @@ def run_ml_check(
     train = ml_rows[~ml_rows["run"].isin(heldout)].copy()
     test = ml_rows[ml_rows["run"].isin(heldout)].copy()
     c_values = [float(value) for value in config["ml_check"]["regularization_c"]]
-    cv = StratifiedKFold(n_splits=int(config["ml_check"]["cv_folds"]), shuffle=True, random_state=int(config["ml_check"]["random_seed"]))
-
-    w_train = train["sampling_weight"].to_numpy(dtype=float) if "sampling_weight" in train else None
-    w_test = test["sampling_weight"].to_numpy(dtype=float) if "sampling_weight" in test else None
+    if "sampling_weight" not in train.columns or "sampling_weight" not in test.columns:
+        raise ValueError(
+            "sampling_weight is required for group-aware weighted ML selection "
+            "(issue #959); refusing silent unweighted fallback"
+        )
+    if "eventno" not in train.columns or "eventno" not in test.columns:
+        raise ValueError(
+            "eventno is required for group-aware folds (issue #959); "
+            "refusing row-wise StratifiedKFold leakage"
+        )
+    w_train = train["sampling_weight"].to_numpy(dtype=float)
+    w_test = test["sampling_weight"].to_numpy(dtype=float)
     sw = w_test
+    if np.any(w_train < 0) or np.any(w_test < 0) or not np.all(np.isfinite(w_train)) or not np.all(np.isfinite(w_test)):
+        raise ValueError("sampling_weight must be finite and nonnegative")
+    if float(np.sum(w_train)) <= 0 or float(np.sum(w_test)) <= 0:
+        raise ValueError("sampling_weight sums must be positive")
+    train_groups = make_run_event_clusters(train["run"].to_numpy(), train["eventno"].to_numpy())
+    n_groups = int(len(set(train_groups.tolist())))
+    n_splits = int(config["ml_check"]["cv_folds"])
+    if n_groups < n_splits:
+        raise ValueError(
+            f"group-aware CV requires >= n_splits groups; got {n_groups} < {n_splits}"
+        )
+    cv = StratifiedGroupKFold(
+        n_splits=n_splits,
+        shuffle=True,
+        random_state=int(config["ml_check"]["random_seed"]),
+    )
+
+    def _fit_scaled_logistic(X, y, weights, C):
+        scaler = StandardScaler()
+        Xs = scaler.fit_transform(X)
+        clf = LogisticRegression(C=float(C), max_iter=1000, solver="lbfgs")
+        try:
+            clf.fit(Xs, y, sample_weight=weights)
+        except TypeError as exc:
+            raise RuntimeError(
+                "LogisticRegression rejected sample_weight; refusing silent "
+                f"unweighted fallback (issue #959). sklearn error: {exc}"
+            ) from exc
+        return scaler, clf
+
+    def _weighted_group_roc_auc(X, y, groups, weights, C):
+        scores = []
+        fold_rows = []
+        X_arr = np.asarray(X, dtype=float)
+        y_arr = np.asarray(y)
+        for fold_id, (tr_idx, te_idx) in enumerate(cv.split(X_arr, y_arr, groups)):
+            if set(groups[tr_idx]).intersection(groups[te_idx]):
+                raise ValueError("group leakage detected in StratifiedGroupKFold split")
+            scaler, clf = _fit_scaled_logistic(X_arr[tr_idx], y_arr[tr_idx], weights[tr_idx], C)
+            proba = clf.predict_proba(scaler.transform(X_arr[te_idx]))[:, 1]
+            score = float(roc_auc_score(y_arr[te_idx], proba, sample_weight=weights[te_idx]))
+            scores.append(score)
+            fold_rows.append(
+                {
+                    "fold": int(fold_id),
+                    "n_train": int(len(tr_idx)),
+                    "n_test": int(len(te_idx)),
+                    "n_train_groups": int(len(set(groups[tr_idx].tolist()))),
+                    "n_test_groups": int(len(set(groups[te_idx].tolist()))),
+                    "roc_auc_weighted": score,
+                }
+            )
+        return scores, fold_rows
 
     cv_rows = []
+    fold_assignment_rows = []
+    X_train = train[features]
+    y_train = train["selected"]
     for c_value in c_values:
-        model = make_pipeline(StandardScaler(), LogisticRegression(C=c_value, max_iter=1000, solver="lbfgs"))
-        scores = cross_val_score(model, train[features], train["selected"], cv=cv, scoring="roc_auc")
-        cv_rows.append({"C": c_value, "cv_roc_auc_mean": float(scores.mean()), "cv_roc_auc_std": float(scores.std(ddof=1))})
+        scores, fold_rows = _weighted_group_roc_auc(
+            X_train, y_train, train_groups, w_train, c_value
+        )
+        for row in fold_rows:
+            fold_assignment_rows.append({"C": float(c_value), **row})
+        cv_rows.append(
+            {
+                "C": c_value,
+                "cv_roc_auc_mean": float(np.mean(scores)),
+                "cv_roc_auc_std": float(np.std(scores, ddof=1)) if len(scores) > 1 else 0.0,
+                "grouping_key": "(run,event)",
+                "scoring": "roc_auc_sample_weight",
+                "sklearn_version": __import__("sklearn").__version__,
+            }
+        )
     best_c = max(cv_rows, key=lambda row: row["cv_roc_auc_mean"])["C"]
 
-    base = make_pipeline(StandardScaler(), LogisticRegression(C=best_c, max_iter=1000, solver="lbfgs"))
-    calibrated = CalibratedClassifierCV(base, cv=3, method="isotonic")
+    # Group-aware isotonic calibration with sample weights; no Pipeline/sample_weight
+    # API gap and no silent unweighted fallback (issue #959).
+    from sklearn.isotonic import IsotonicRegression
+
+    cal_splits = min(3, n_groups)
+    if cal_splits < 2:
+        raise ValueError("calibration requires >=2 train groups")
+    cal_cv = StratifiedGroupKFold(
+        n_splits=cal_splits,
+        shuffle=True,
+        random_state=int(config["ml_check"]["random_seed"]) + 1,
+    )
+    X_train_arr = np.asarray(train[features], dtype=float)
+    y_train_arr = np.asarray(train["selected"])
+    oof = np.full(len(train), np.nan, dtype=float)
+    for tr_idx, te_idx in cal_cv.split(X_train_arr, y_train_arr, train_groups):
+        if set(train_groups[tr_idx]).intersection(train_groups[te_idx]):
+            raise ValueError("group leakage detected in calibration folds")
+        scaler, clf = _fit_scaled_logistic(
+            X_train_arr[tr_idx], y_train_arr[tr_idx], w_train[tr_idx], best_c
+        )
+        oof[te_idx] = clf.predict_proba(scaler.transform(X_train_arr[te_idx]))[:, 1]
+    if not np.all(np.isfinite(oof)):
+        raise RuntimeError("calibration OOF probabilities incomplete; refuse unweighted fallback")
     try:
-        calibrated.fit(train[features], train["selected"], sample_weight=w_train)
-    except TypeError:
-        # Older sklearn: CalibratedClassifierCV.fit has no sample_weight kwarg.
-        calibrated.fit(train[features], train["selected"])
-    probability = calibrated.predict_proba(test[features])[:, 1]
+        calibrator = IsotonicRegression(out_of_bounds="clip")
+        calibrator.fit(oof, y_train_arr, sample_weight=w_train)
+    except TypeError as exc:
+        raise RuntimeError(
+            "IsotonicRegression rejected sample_weight; refusing silent unweighted "
+            f"fallback (issue #959). sklearn error: {exc}"
+        ) from exc
+    # Final base model on all train rows; apply OOF-fit calibrator to held-out runs.
+    final_scaler, final_clf = _fit_scaled_logistic(X_train_arr, y_train_arr, w_train, best_c)
+    raw_test = final_clf.predict_proba(final_scaler.transform(np.asarray(test[features], dtype=float)))[:, 1]
+    probability = calibrator.transform(raw_test)
     predicted = probability >= 0.5
     y_test = test["selected"].to_numpy()
 
@@ -763,19 +797,46 @@ def run_ml_check(
     weighted_roc_auc = float(roc_auc_score(y_test, probability, **kw))
     weighted_ap = float(average_precision_score(y_test, probability, **kw))
 
-    # ---- (run, event) cluster bootstrap of accuracy (audit STAT-002) ----
+    # ---- (run, event) cluster bootstrap of WEIGHTED accuracy (issues #960) ----
     rng = np.random.default_rng(int(config["ml_check"]["random_seed"]))
     correctness = (predicted == y_test).astype(float)
+    bootstrap_status = "NOT_ESTIMABLE"
+    bootstrap_meta = {
+        "n_boot_requested": int(n_boot),
+        "n_boot_success": 0,
+        "n_boot_failure": 0,
+        "n_clusters": 0,
+        "effective_sample_size": float("nan"),
+        "estimand": "pulse_ipw_accuracy",
+        "resampling_unit": "(run,event)_cluster",
+    }
     if len(correctness) and len(test):
         clusters = make_run_event_clusters(test["run"].to_numpy(), test["eventno"].to_numpy())
         try:
-            lo, hi = cluster_bootstrap(
-                correctness, clusters, np.mean, rng, n_boot=n_boot, alpha=0.05
+            boot = weighted_cluster_bootstrap(
+                correctness, sw, clusters, rng, n_boot=n_boot, alpha=0.05
             )
+            lo = float(boot["ci_low"])
+            hi = float(boot["ci_high"])
+            bootstrap_status = str(boot["status"])
+            bootstrap_meta.update(
+                {
+                    "n_boot_success": int(boot["n_boot_success"]),
+                    "n_boot_failure": int(boot["n_boot_failure"]),
+                    "n_clusters": int(boot["n_clusters"]),
+                    "effective_sample_size": float(boot["effective_sample_size"]),
+                }
+            )
+            # Point estimate must match the same estimand as the CI.
+            weighted_accuracy = float(boot["point"])
         except ValueError:
-            lo = hi = weighted_accuracy  # degenerate test set; fall back to point
+            # Fail closed: never emit a falsely precise zero-width interval (#960).
+            lo = float("nan")
+            hi = float("nan")
+            bootstrap_status = "NOT_ESTIMABLE"
     else:
-        lo = hi = float("nan")
+        lo = float("nan")
+        hi = float("nan")
 
     # ---- Reference rule (label = rule; trivially perfect by construction) ----
     deterministic = test["amplitude_adc"].to_numpy() > float(config["amplitude_cut_adc"])
@@ -813,28 +874,40 @@ def run_ml_check(
                 "features": ",".join(features),
                 "n_boot": int(n_boot),
                 "cluster_unit": "(run,event)",
+                "bootstrap_status": bootstrap_status,
+                "bootstrap_n_success": int(bootstrap_meta["n_boot_success"]),
+                "bootstrap_n_failure": int(bootstrap_meta["n_boot_failure"]),
+                "bootstrap_n_clusters": int(bootstrap_meta["n_clusters"]),
+                "bootstrap_ess": float(bootstrap_meta["effective_sample_size"]),
+                "estimand": "pulse_ipw_accuracy",
                 "cc_prevalence": cc_prevalence,
                 "weighted_prevalence": weighted_prevalence,
                 "population_prevalence": float(pop.get("prevalence", float("nan"))),
                 "notes": (
                     "Implementation-consistency check, NOT a scientific benchmark. "
                     "Features exclude the target-defining column (amplitude_adc). "
-                    "Metrics are inverse-probability weighted to restore population "
-                    f"prevalence (case-control design); CI uses a (run,event) cluster "
-                    f"bootstrap with n_boot={n_boot}."
+                    "Metrics are inverse-probability weighted (two-stage HT when the "
+                    "per-class cap binds; issue #958). Model selection uses "
+                    "StratifiedGroupKFold + weighted ROC-AUC with no unweighted "
+                    f"fallback (#959). CI uses weighted (run,event) cluster bootstrap "
+                    f"(#960); status={bootstrap_status}."
                 ),
             },
         ]
     )
     pd.DataFrame(cv_rows).to_csv(out_dir / "ml_cv_scan.csv", index=False)
+    pd.DataFrame(fold_assignment_rows).to_csv(out_dir / "ml_cv_fold_assignments.csv", index=False)
     ml_summary.to_csv(out_dir / "implementation_consistency.csv", index=False)
 
     try:
         frac_pos, mean_pred = calibration_curve(
-            y_test, probability, n_bins=10, strategy="quantile", **kw
+            y_test, probability, n_bins=10, strategy="quantile", sample_weight=sw
         )
-    except TypeError:
-        frac_pos, mean_pred = calibration_curve(y_test, probability, n_bins=10, strategy="quantile")
+    except TypeError as exc:
+        raise RuntimeError(
+            "calibration_curve rejected sample_weight; refusing silent unweighted "
+            f"fallback (issue #959). sklearn error: {exc}"
+        ) from exc
     fig, ax = plt.subplots(figsize=(5, 4))
     ax.plot([0, 1], [0, 1], color="black", lw=1, linestyle="--")
     ax.plot(mean_pred, frac_pos, marker="o")
@@ -851,97 +924,21 @@ def run_ml_check(
     return ml_summary
 
 
-def write_checksums(
-    config: dict,
-    out_dir: Path,
-    *,
-    skip_sorted: bool = False,
-) -> pd.DataFrame:
-    """Hash inputs that exist/were consumed; record missing expected inputs (#973).
-
-    ``--skip-sorted`` no longer requires ``--skip-sha256``. Raw hashes are always
-    retained when raw files exist. Sorted files skipped by gate state are recorded
-    with an explicit ``missing_reason`` instead of unconditionally opening them.
-    """
-    rows: List[dict] = []
-
-    def _append(
-        path: Path,
-        *,
-        role: str,
-        expected: bool,
-        consumed: bool,
-        missing_reason: str | None = None,
-    ) -> None:
-        present = path.is_file()
-        if present:
-            rows.append(
-                {
-                    "file": str(path),
-                    "role": role,
-                    "expected_input": bool(expected),
-                    "present": True,
-                    "consumed": bool(consumed),
-                    "sha256": sha256_file(path),
-                    "bytes": int(path.stat().st_size),
-                    "missing_reason": None if consumed else (missing_reason or "not_consumed"),
-                }
-            )
-            return
-        rows.append(
-            {
-                "file": str(path),
-                "role": role,
-                "expected_input": bool(expected),
-                "present": False,
-                "consumed": False,
-                "sha256": None,
-                "bytes": None,
-                "missing_reason": missing_reason or "missing_file",
-            }
-        )
-
+def write_checksums(config: dict, out_dir: Path) -> pd.DataFrame:
+    files = []
     for path in sorted(Path("data/raw").glob("**/*")):
         if path.is_file():
-            _append(path, role="data_raw_tree", expected=False, consumed=True)
-
-    raw_root = Path(config["raw_root_dir"])
-    sorted_b = Path(config.get("sorted_b_dir") or "")
+            files.append(path)
     for run in configured_runs(config):
-        _append(
-            raw_file(raw_root, run),
-            role="raw_root",
-            expected=True,
-            consumed=True,
-            missing_reason="missing_raw_root",
-        )
-        sorted_path = (
-            sorted_file(sorted_b, run)
-            if str(sorted_b)
-            else Path(f"hrdb_run_{run:04d}-sorted.root")
-        )
-        if skip_sorted:
-            reason = "skip_sorted" if not sorted_path.is_file() else "not_consumed_skip_sorted"
-            _append(
-                sorted_path,
-                role="sorted_b",
-                expected=True,
-                consumed=False,
-                missing_reason=reason,
-            )
-        else:
-            _append(
-                sorted_path,
-                role="sorted_b",
-                expected=True,
-                consumed=True,
-                missing_reason="missing_sorted_root",
-            )
+        files.append(raw_file(Path(config["raw_root_dir"]), run))
+        files.append(sorted_file(Path(config["sorted_b_dir"]), run))
 
+    rows = []
+    for path in files:
+        rows.append({"file": str(path), "sha256": sha256_file(path), "bytes": path.stat().st_size})
     df = pd.DataFrame(rows)
     df.to_csv(out_dir / "input_sha256.csv", index=False)
     return df
-
 
 
 def make_figures(counts_by_run: pd.DataFrame, selected: pd.DataFrame, out_dir: Path) -> None:
@@ -1217,16 +1214,8 @@ def main() -> int:
             suffixes=("_raw", "_sorted_even"),
         )
         sorted_diff = sorted_compare["selected_pulses_raw"] - sorted_compare["selected_pulses_sorted_even"]
-        scalar_match = bool((sorted_diff.abs() <= 0).all())
-        # Issue #953: scalar hrdMax/selected-count agreement is an incomplete proxy.
-        from ccb_mc_validation.daq.raw_sorted_closure import closure_report
-        closure = closure_report(word_closure=None, scalar_proxy_used=True)
-        sorted_gate_pass = False
-        sorted_compare["gate_state"] = (
-            GATE_INCOMPLETE_SCALAR_PROXY if scalar_match else GATE_FAIL
-        )
-        sorted_compare["scalar_selected_match"] = scalar_match
-        sorted_compare["closure_reason"] = closure["reason"]
+        sorted_gate_pass = bool((sorted_diff.abs() <= 0).all())
+        sorted_compare["gate_state"] = GATE_PASS if sorted_gate_pass else GATE_FAIL
 
 # ---- All gates pass? ----
     all_gates_pass = fixed_count_pass and sorted_gate_pass
@@ -1242,7 +1231,7 @@ def main() -> int:
     if not args.skip_ml:
         run_ml_check(config, ml_rows, staging, population_prevalence=population_prevalence)
     if not args.skip_sha256:
-        write_checksums(config, staging, skip_sorted=bool(args.skip_sorted))
+        write_checksums(config, staging)
     # ---- Model identity for manifest ----
     input_hashes = None
     if not args.skip_sha256:
@@ -1269,11 +1258,7 @@ def main() -> int:
     if args.skip_sorted or not Path(config.get("sorted_b_dir", "")).exists():
         sorted_gate_state = GATE_NOT_RUN_MISSING_INPUT
     else:
-        sorted_gate_state = (
-            sorted_compare["gate_state"].iloc[0]
-            if len(sorted_compare) and "gate_state" in sorted_compare
-            else GATE_FAIL
-        )
+        sorted_gate_state = GATE_PASS if sorted_gate_pass else GATE_FAIL
     gate_states = {
         "count_match": GATE_PASS if fixed_count_pass else GATE_FAIL,
         "sorted_even_channel_crosscheck": sorted_gate_state,

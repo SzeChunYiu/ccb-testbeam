@@ -244,7 +244,9 @@ def test_run_ml_check_uses_cluster_bootstrap_and_features_guard(s00):
 
     body = inspect.getsource(s00.run_ml_check)
     assert "resolve_ml_features" in body
-    assert "cluster_bootstrap" in body
+    assert "weighted_cluster_bootstrap" in body
+    assert "StratifiedGroupKFold" in body
+    assert "unweighted fallback" in body
     assert "make_run_event_clusters" in body
     assert "implementation_consistency" in body
     # The amplitude-leakage feature list must be gone.

@@ -8,10 +8,11 @@ bytes an immutable historical ``execve(argv)`` log: a process can rewrite the
 argument strings and, with ``PR_SET_MM_ARG_START/END``, can relocate the region
 that procfs exposes.
 
-The receipt therefore means only that one command-line byte sequence was
-stable at the attestation boundary.  ``argv[0]`` is not used as executable
-identity; the parent runtime receipt's content-bound ``/proc/<pid>/exe``
-observation remains authoritative for that separate question.
+The receipt therefore means only that two consecutive command-line reads were
+byte-equal at the attestation boundary; an ABA mutation between reads is not
+excluded.  ``argv[0]`` is not used as executable identity; the parent runtime
+receipt's content-bound ``/proc/<pid>/exe`` observation remains authoritative
+for that separate question.
 """
 from __future__ import annotations
 
@@ -128,12 +129,12 @@ def _byte_record(raw: bytes) -> dict[str, Any]:
 def _parse_argument_region(payload: bytes) -> list[bytes]:
     if not payload:
         raise ValueError("process command-line region is empty")
-    arguments = payload.split(b"\0")
+    slots = payload.split(b"\0")
     if payload.endswith(b"\0"):
-        arguments = arguments[:-1]
-    if not arguments:
-        raise ValueError("process command-line region contains no argument slots")
-    return arguments
+        slots = slots[:-1]
+    if not slots:
+        raise ValueError("process command-line region contains no NUL-delimited slots")
+    return slots
 
 
 def attest_loader_argv(
@@ -154,7 +155,7 @@ def attest_loader_argv(
         raise ValueError("process executable link differs from runtime dependency receipt")
 
     cmdline_before = _read_proc_bytes(proc_dir, "cmdline", label="process command line")
-    arguments = _parse_argument_region(cmdline_before)
+    slots = _parse_argument_region(cmdline_before)
     cmdline_after = _read_proc_bytes(
         proc_dir, "cmdline", label="process command line recheck"
     )
@@ -180,15 +181,16 @@ def attest_loader_argv(
         "cmdline_region": {
             **_byte_record(cmdline_before),
             "trailing_nul_observed": cmdline_before.endswith(b"\0"),
-            "argument_count_observed": len(arguments),
-            "arguments": [
-                {"index": index, **_byte_record(argument)}
-                for index, argument in enumerate(arguments)
+            "nul_delimited_slot_count_observed": len(slots),
+            "nul_delimited_slots": [
+                {"index": index, **_byte_record(slot)}
+                for index, slot in enumerate(slots)
             ],
         },
         "scientific_scope": "STABLE_PROCFS_ARGUMENT_REGION_OBSERVATION_ONLY",
         "interpretation": {
-            "observation": "OBSERVED_STABLE_AT_ATTESTATION_BOUNDARY",
+            "observation": "TWO_CONSECUTIVE_READS_BYTE_EQUAL_NOT_CONTINUOUS_STABILITY",
+            "slot_semantics": "NUL_DELIMITER_INTERPRETATION_NOT_PROVEN_ARGV",
             "historical_execve_argv": "NOT_PROVEN_ARGUMENT_REGION_IS_MUTABLE",
             "argv0_executable_identity": (
                 "NOT_AUTHORITATIVE_PARENT_PROC_EXE_CONTENT_IDENTITY_IS_SEPARATE"
@@ -199,6 +201,8 @@ def attest_loader_argv(
         },
         "limitations": [
             "ARGV_STRINGS_CAN_BE_REWRITTEN_AFTER_EXECVE",
+            "ABA_MUTATION_BETWEEN_EQUAL_READS_NOT_EXCLUDED",
+            "PROCFS_CMDLINE_FORMAT_CAN_BE_OVERWRITTEN_SLOT_COUNT_IS_NOT_PROVEN_ARGC",
             "PR_SET_MM_ARG_START_END_CAN_RELOCATE_PROCFS_ARGUMENT_REGION",
             "PR_SET_MM_EXE_FILE_MUTATION_NOT_EXCLUDED_BY_THIS_CHILD",
             "RELATIVE_ARGUMENT_PATHS_REQUIRE_INITIAL_CWD_ATTESTATION",

@@ -1,50 +1,28 @@
 # Latest Handoff
 
-## Selected atom: bind CMake/C++ version probes to the exact opened executable bytes
+## Validated atom: exact opened-byte binding for CMake/C++ version probes
 
-Protected main is now `49797c9f54e889204b4679848ea7bf805184710c`. PR #1201 is validated on main, and concurrent PR #1189 subsequently merged the repository's current-base ancestry guard. That concurrent change is directly relevant here: #1202's first exact-head MC Validation run was green, but main advanced before merge, so its first green head is now intentionally non-authorising until the branch is refreshed and retested.
+PR #1202 is now on protected `main@6c7a74295d799c9e0a231365d3e5efb690bd25a9`. The predecessor v1 CMake toolchain attestation hashed a resolved tool target but probed the original cache spelling; a mutable alias could therefore separate recorded bytes from the executable entrypoint that produced `--version` output.
 
-### Why this child exists
+The merged child `ccb_geant4_tool_probe_binding_v1` requires the parent attestation digest and path/target projection to remain unchanged, opens the already-resolved regular executable, hashes that open file description, executes the same inherited object through Linux `/proc/self/fd/{fd}`, re-hashes the same descriptor after the probe, and finally re-resolves/re-hashes the original alias. Linux exposes process file descriptors under `/proc/<pid>/fd`, and Python 3.11 `subprocess.pass_fds` preserves selected POSIX descriptors in the child; these are mechanism facts only, not Geant4 validation.
 
-For a mutable alias `p` and resolved target `r`, the v1 toolchain attestation sequence is approximately `hash(r)` then `exec(p)`. A symlink/path transition between those observations can make the stored SHA-256 and version output refer to different executable entrypoints. The selected atom is `ARU-MC-G4-TOOL-PROBE-BINDING-001` / `PROV-G4-CMAKE-002` under #1182.
+### Executed falsifiers and CI
 
-### Implemented contract
+Local deterministic reconstruction, no RNG, returned `6 passed in 0.06s`. Hostile fixtures cover stable direct executables, stable symlink aliases, symlink target transition during probe, executable self-mutation during probe, parent-attested bytes changed before probing, and nonzero probe exit.
 
-PR #1202 / branch `fix/geant4-tool-probe-binding` adds `ccb_geant4_tool_probe_binding_v1`:
-
-1. require a PASS, self-digested `ccb_geant4_cmake_toolchain_attestation_v1` parent;
-2. require the current CMake/C++ alias, resolved path, size, SHA-256 and symlink projection to equal the parent observation;
-3. open the already-resolved regular executable once and hash that open descriptor;
-4. execute `/proc/self/fd/{fd} --version` with that descriptor inherited, so the probe entrypoint is the same opened object rather than a fresh resolution of the cache alias;
-5. re-hash the same descriptor after the probe and require identical device/inode/mode/size/SHA-256;
-6. re-resolve/re-hash the original alias and require an unchanged path/target projection;
-7. self-digest the child receipt with exact stdout/stderr hashes and explicit non-authorising limitations.
-
-### Competing mechanisms and falsifiers
-
-Hash-target/probe-original-alias is rejected by an injected alias transition. Hash-target/probe-resolved-path/post-check is a bounded improvement but still reopens by pathname. Open-once/hash/execute-that-open-object/re-hash/recheck-alias survives for this local Linux entrypoint-binding atom. Treating the bound entrypoint as evidence for dynamic libraries, wrapper child compilers, actual build invocations or generated physics remains rejected.
-
-Local deterministic reconstruction, no RNG, returned `6 passed in 0.06s`. Fixtures cover stable direct tools, stable symlink aliases, symlink target transition during the probe, executable self-mutation during the probe, parent-attested bytes changed before probing, and nonzero probe exit.
-
-First GitHub exact-head MC Validation run `31447800441` on `148bd06266665c2ef597697538d821b9b8752120` completed with curated ruff clean and `1499 passed, 1 skipped, 8 xfailed, 1 xpassed`. During that run protected main advanced from `1968f735...` to `49797c9f...` via #1189. The subsequent normal protected squash attempt on #1202 was rejected; no bypass or force update was attempted. This is now a positive real-world application of #1189's rule: stale green CI is evidence about the old integration base, not the current one.
+The first exact-head CI run `31447800441` on `148bd06266665c2ef597697538d821b9b8752120` was ruff-clean with `1499 passed, 1 skipped, 8 xfailed, 1 xpassed`, but became stale when #1189 advanced main. The attempted normal protected merge was rejected; no bypass or force update was used. The branch was then refreshed by a non-force merge commit onto `main@49797c9f54e889204b4679848ea7bf805184710c`. Compare reported `status=ahead`, `behind_by=0`, merge base exactly current main. Fresh exact-head run `31448197610` was ruff-clean with `1502 passed, 1 skipped, 8 xfailed, 1 xpassed`; only that refreshed evidence authorised the squash merge to `6c7a74295d799c9e0a231365d3e5efb690bd25a9`.
 
 ### Four sequential AI reviews
 
-- **Build/physics integration lead — ACCEPT bounded entrypoint binding / REVISE build provenance.** The alias race is real and the open-file mechanism closes it locally. Actual compiler/linker invocation remains unobserved.
-- **Adversarial mechanism reviewer — ACCEPT local mechanism / BLOCK transitive dependency claims.** A bound executable can still be dynamically linked or launch wrapper children whose bytes are not bound. Probe output is also only bounded after capture in v1 of this child, so streaming/output-resource bounds remain a non-physics implementation child if hostile tools are in scope.
-- **Independent validation reviewer — ACCEPT first deterministic CI / REQUIRE fresh current-base rerun.** The first exact-head CI is green, but it predates current main ancestry and cannot authorise merge after #1189.
-- **Claims/provenance reviewer — ACCEPT provenance refinement / BLOCK CL-021 promotion.** #1182 runtime/thread/input/output, link/runtime-library identity and compiled hostile controls remain unmet.
+- **Build/physics integration lead — ACCEPT bounded entrypoint binding / REVISE build provenance.** The alias race is closed locally; actual compiler/linker invocation remains unobserved.
+- **Adversarial systems reviewer — ACCEPT local mechanism / BLOCK transitive dependency claims.** A bound entrypoint can still be dynamically linked or launch wrapper children. Probe output is checked after capture rather than streaming-bounded; keep that as `ARU-MC-G4-PROBE-OUTPUT-BOUND-001` if hostile tools become part of the threat model.
+- **Independent validation reviewer — ACCEPT repository software closure / BLOCK physics inference.** Both stale-base and refreshed-current-base cases were observed, and only the refreshed green head merged. No generated event entered the tests.
+- **Claims/provenance reviewer — ACCEPT provenance refinement / BLOCK CL-021 promotion.** #1182 still lacks link/runtime-library identity, immutable consumption, run-manager/thread/RNG/input/output provenance and compiled hostile controls.
 
-### Current repository action
+### Next highest-value atom
 
-Refresh #1202 onto `main@49797c9f54e889204b4679848ea7bf805184710c` through a normal non-force merge commit that preserves #1189's files and resolves only the competing `ACTIVE_TASK.md`/`HANDOFF.md` coordination edits. Require a fresh exact-head `test` CI on the refreshed head before retrying the protected merge.
+`ARU-MC-G4-LINK-RUNTIME-IDENTITY-001`: distinguish configured package labels/roots, link-time dependency inputs, and the shared objects actually mapped at runtime. Start from the exact executable hash already bound by #1199/#1201/#1202; derive and test a contract around linker metadata, `DT_NEEDED`/RPATH/RUNPATH (or platform equivalent), loader search order/environment, resolved library path plus SHA-256, static-link cases, symlink replacement and runtime mappings. Negative controls should preserve nominal version/soname while changing bytes, change loader search order, and separate build-tree link identity from runtime-loaded identity.
 
-### Child atoms
+Parallel children remain `ARU-MC-G4-IMMUTABLE-CONSUMPTION-001`, `ARU-MC-G4-WRAPPER-CHAIN-001`, `ARU-MC-G4-PROBE-OUTPUT-BOUND-001`, and `ARU-MC-G4-RUNTIME-MANIFEST-001`. Compiled hostile cross-section/stopping-table controls remain under #1182/#1058.
 
-- `ARU-MC-G4-LINK-RUNTIME-IDENTITY-001`: link inputs and actually loaded Geant4/VGM/ROOT/system library bytes.
-- `ARU-MC-G4-IMMUTABLE-CONSUMPTION-001`: bytes actually consumed by compiler/linker invocations.
-- `ARU-MC-G4-WRAPPER-CHAIN-001`: identify/bind child compiler processes when the CMake-selected compiler is a launcher/wrapper.
-- `ARU-MC-G4-PROBE-OUTPUT-BOUND-001`: if hostile/untrusted tools are considered, make probe-output memory bounds operational rather than post-capture only.
-- `ARU-MC-G4-RUNTIME-MANIFEST-001`: run-manager/thread mode, RNG engine/seeds, event count, model IDs, runtime input hashes, exit status, output ROOT/tree/schema/hash.
-
-No production Geant4 executable/build tree, beam ROOT, production MC ROOT or detector-chain output was used. No angular distribution, event weight, B2/B8, PID, penetration, timing, calibration, pile-up, ESS, p-value, rate or detector-performance result was regenerated or promoted.
+No production Geant4 campaign, beam ROOT, production MC ROOT, detector response, angular distribution, event weight, B2/B8, PID, penetration, timing, calibration, pile-up, ESS, p-value, rate or detector-performance result was regenerated or promoted.

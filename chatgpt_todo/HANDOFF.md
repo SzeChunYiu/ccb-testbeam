@@ -1,80 +1,53 @@
 # Latest Handoff
 
-## Active atom: exact source-phi measure and full-2π reference
+## Governance repair after the full-2π source merge
 
-Protected source-of-truth at selection was `main@859903ada4a856c998b2bc79298cd4a26c2cb447`, the squash merge of #1215. Current work is draft PR #1216 on `fix/issue-1057-source-phi-full-2pi`, under parent #1057. CL-021 remains gated.
+Protected `main` is `e76482cf03fd15838a8e098b8c2d9ae43ab3b364`, the squash merge of #1216. The merged source change remains a bounded H1 spin-averaged/full-azimuth reference implementation. It does not establish compiled HIBEAM execution, detector acceptance closure, actual CCB polarization, production source-mode serialization, or CL-021 detector validation.
 
-### Exact event-measure correction
+### Scientific issue-state defect found and repaired
 
-The historical generator did more than sample one narrow interval. Let
+The merged #1216 PR explicitly said **“does not close #1057”**, preserved four material child atoms, and stated that its green CI was Python/static only. The preceding #1057 atomic review likewise voted `BLOCK issue closure`.
 
-`a = atan2(0.025,1) = 0.02499479361892016 rad`.
+The squash merge commit nevertheless contained `Closes #1057`, which caused GitHub to mark the P0 parent `closed/completed`. That repository state contradicted both the PR scope and #1057's own unresolved acceptance criteria.
 
-It sampled `phi0 ~ Uniform[-a,a]`, then used a second uniform draw to add `π` to either the proton or deuteron. For either distinguishable particle, modulo `2π`, the normalized marginal is therefore
+This run reopened #1057 with state reason `reopened` and added a provenance comment listing the surviving children. No source code was reverted: the full-2π implementation remains on main. The corrected distinction is
 
-`q(phi)=1/(4a)`
+`MERGED(implementation) != COMPLETE(research_universe)`.
 
-on two opposite intervals of width `2a`, with zero density elsewhere. The joint invariant is `phi_d-phi_p=π (mod 2π)`.
+For a scientific-universe issue `I`, completion requires
 
-For the explicit spin-averaged reference target `p(phi)=1/(2π)`, the exact target/proposal ratio on legacy support is
+`COMPLETE(I) => (AND material acceptance gates are ACCEPTED) AND cross-scale compatibility PASS`,
 
-`p/q = 2a/π = 0.015912179824051628`.
+unless every unresolved condition has been explicitly transferred to named successor atoms without loss of blockers or claim gates.
 
-That is also the total legacy support fraction. The earlier #1057 shorthand `a/π` missed the 50/50 branch normalization; a common factor is irrelevant to normalized shape-only reweighting but material to absolute rates/efficiencies. More importantly, `98.40878201759484%` of the full-circle reference support has `q=0`, so no weighting can recover those reaction-plane orientations.
+### Important counterexample: do not over-generalize the reopening rule
 
-### Bounded implementation on #1216
+#1182 is currently closed, but its later coordination explicitly states that it may remain closed as the completed **source-readiness implementation** issue while separately named runtime/path/provenance children own the remaining generator-authorisation work. Therefore this governance atom does **not** assert that every parent with downstream dependencies must stay open. The defect is specifically a completion state that contradicts the issue/PR's declared scope and acceptance contract.
 
-The source patch removes `det_size`, `det_distance`, and `phi_max` and samples the base azimuth as `2*pi*G4UniformRand()`. It keeps the existing 50/50 `+π` assignment. Under full-circle generation that branch is distributionally redundant, but retaining it preserves two phi-stage RNG draws per event; this is important for future paired-seed legacy/full-phi tests because removing a draw would shift all subsequent event RNG inputs.
+### Evidence boundary
 
-`geant4/src_patch/scattering_source_model_v1.json` now explicitly declares:
+Current `.github/workflows/mc_validation_ci.yml` runs Python 3.11, curated ruff, and the full non-integration pytest suite. It routes `geant4/**` changes but does **not** build or run the external HIBEAM Geant4 application. `geant4/REPRODUCTION_STATUS.md` and `docs/validation/CL-021_scattering_model.md` both keep compiled/runtime/source/response provenance as explicit gates.
 
-- `target_azimuthal_density = p(phi)=1/(2*pi)`;
-- `source_phi_measure = uniform_full_2pi_v1`;
-- full `[0,2π)` support;
-- `detector_surrogate_phi_preselection = false`;
-- remaining compiled, accepted-observable, provenance, and detector-response gates.
-
-Exact published identities:
-
-- source-model JSON: Git blob `d5cabdb3bb9b01ffd76fe9dd2d3baed18fcdd6a7`, SHA-256 `308c9120a286a19295687d876886d5a616812470007fc92f9c4d6e0eecba6dfc`;
-- strengthened source-phi test: Git blob `2d067b1ecabfac6f53377e40a0bee002c8332290`, SHA-256 `4c9ba2c0c5a2426716f9b763625f18957c961a3644b930617c66864932b43112`.
-
-The regression now binds the C++ implementation to the JSON model, rejects reintroduction of the detector surrogate, requires exactly two `G4UniformRand()` calls in the phi stage, and deterministically checks full-circle marginals and coplanarity.
-
-### Deterministic falsifier
-
-No RNG and no Geant4 transport were used. A 4096-point evenly spaced base-azimuth grid with both branch states produced 8192 proton/deuteron pairs. In 64 equal azimuth bins every proton bin and every deuteron bin contained exactly 128 entries; the maximum numerical residual from `phi_d-phi_p=π (mod 2π)` was `8.881784197001252e-16 rad`.
-
-This validates the mathematical map encoded by the proposed source contract only. It does not establish detector acceptance, transport, rates, or production behavior.
-
-### Primary-literature child: polarization
-
-The repository-bound 190 MeV source is K. Ermisch et al., *Physical Review C* **71**, 064004 (2005), DOI `10.1103/PhysRevC.71.064004`. The primary paper studies elastic scattering of polarized protons from deuterons and reports vector analyzing power together with differential cross section. Therefore `uniform_full_2pi_v1` is presently an explicit spin-averaged / azimuthally symmetric reference assumption unless CCB beam/target polarization and spin-axis provenance demonstrate that no azimuthal modulation is required.
-
-Child `ARU-MC-SOURCE-PHI-POLARIZATION-001` remains open under #1057 rather than creating a duplicate issue.
+`geant4/setup_and_run.sh` remains a historical host-local front door: it depends on `nnbar_env`, local Geant4 11.2.2/VGM paths, an external HIBEAM checkout, mutable local staged inputs, then calls CMake/make and `./hibeam_g4`. The tracked `patch_scatter.py` is stronger than that historical script because it installs and verifies the exact reviewed source pair, but successful installation alone is still not compilation or seeded generator validation.
 
 ### Four sequential AI reviews
 
-- **Source/kinematics lead — ACCEPT exact measure correction and H1 reference / REVISE physical-source wording.** Zero-support calculation rejects the historical gate as an unconditional full-physics law. Residual: beam/target polarization, exact geometry/trigger support, compiled execution.
-- **Adversarial mechanism reviewer — REJECT factor-of-two shorthand for absolute normalization / ACCEPT corrected event measure / BLOCK zero-support recovery.** The 50/50 branch changes the normalized distinguishable-particle marginal; weighting cannot fill `q=0` regions.
-- **Independent validation reviewer — ACCEPT deterministic source-contract oracle / REVISE until exact-head CI / BLOCK detector inference.** Static/deterministic tests do not compile or run the Geant4 generator.
-- **Claims/provenance reviewer — ACCEPT bounded implementation / BLOCK #1057 closure and CL-021 promotion.** Runtime serialization, accepted-observable closure, detector-response propagation, and source-model children remain open.
+- **Source/physics lead — ACCEPT issue-state repair / BLOCK #1057 scientific completion.** Strongest counter-hypothesis: the full-2π source edit is the decisive scientific fix. Falsifier: no compiled/seeded generator population or accepted-observable geometry/trigger comparison was produced by #1216.
+- **Adversarial mechanism reviewer — REJECT accidental merge-equals-complete semantics / ACCEPT repaired open state.** Strongest counter-hypothesis: issue closure is harmless administration. Falsifier: #1057 is itself a P0 atomic-universe coordination object with unresolved acceptance leaves and later automation can treat `closed/completed` as evidence.
+- **Independent validation reviewer — ACCEPT deterministic governance finding / BLOCK Geant4 and detector inference.** Strongest counter-hypothesis: green exact-head CI validates the source. Falsifier: the required workflow contains no HIBEAM/Geant4 compile or event generation stage.
+- **Claims/provenance reviewer — ACCEPT provenance repair / BLOCK CL-021 promotion.** The source implementation may remain merged while claim status stays gated.
 
-### Repository actions and current gate
+Immutable record: `chatgpt_todo/archive/2026-08-11T135200Z_ARU-GOV-SCIENTIFIC-ISSUE-CLOSURE-001.md` on branch `audit/issue-closure-governance`.
 
-PR #1216 was retitled to `mc(source): implement full-2π azimuth reference (partial #1057)`, its `Fixes #1057` auto-close language was removed, and it was converted to draft. #1057 received the exact legacy-measure correction and child-atom review. Immutable record: `chatgpt_todo/archive/2026-08-11T125900Z_ARU-MC-SOURCE-PHI-MEASURE-NORM-001.md`.
+### Surviving children and next scientific step
 
-An earlier superseded #1216 head `cd494ff1...` passed MC Validation run `31492405729` with curated ruff clean and `1616 passed, 1 skipped, 8 xfailed, 1 xpassed`. That result is non-authorising for the current head because the source-model contract, tests, archive, and coordination files changed afterward.
+#1057 remains open for:
 
-Require fresh exact-final-head MC Validation. Even if Python CI is green, keep the source PR draft until `ARU-MC-SOURCE-PHI-COMPILED-CLOSURE-001` supplies an exact compiled/seeded Geant4 generator-level check or repository policy explicitly authorizes this physics-source change without compilation.
+- `ARU-MC-SOURCE-PHI-COMPILED-CLOSURE-001` — exact reviewed source installed into a provenance-bound HIBEAM tree, exact build/executable/toolchain/runtime identities, explicit seed/run-manager/thread/event count, and seeded generator-level full-azimuth/coplanarity closure;
+- `ARU-MC-SOURCE-PHI-ACCEPTANCE-CLOSURE-001` — reference full-phi versus any conditional/importance proposal through exact geometry/trigger with correct support, weights, statistical unit, and ESS;
+- `ARU-MC-SOURCE-PHI-POLARIZATION-001` — actual CCB beam/target polarization and spin-axis provenance;
+- `ARU-MC-SOURCE-PHI-PROVENANCE-SERIALIZATION-001` — source mode and exact identities carried into production output provenance.
 
-### Child atoms / next work
+The next highest-value scientific atom is `ARU-MC-SOURCE-PHI-COMPILED-CLOSURE-001`. If the exact HIBEAM/Geant4 execution environment is unavailable to the connected session, record that precise dependency blocker and execute the strongest valid non-detector falsifier; do not substitute Python/static CI for compiled validation.
 
-- `ARU-MC-SOURCE-PHI-POLARIZATION-001` — establish beam/target polarization and spin-axis provenance.
-- `ARU-MC-SOURCE-PHI-COMPILED-CLOSURE-001` — compile the exact patched source; bind executable/source/input hashes, seed, run manager/thread mode, event count; test generated phi marginals/support/coplanarity.
-- `ARU-MC-SOURCE-PHI-ACCEPTANCE-CLOSURE-001` — full-phi versus any importance/conditional proposal through exact geometry/trigger; compare accepted truth distributions, rates, support, event weights, and ESS.
-- `ARU-MC-SOURCE-PHI-PROVENANCE-SERIALIZATION-001` — serialize source phi/model IDs and exact input/source identities into production provenance.
-
-Existing #1053/#1178/#1179, geometry/trigger, runtime-loader/build, event-weight, and detector-response atoms remain upstream/downstream gates.
-
-No production Geant4 campaign was run, no beam or production-MC ROOT bytes were opened, and no angular distribution, B2/B8, PID, penetration, timing, calibration, pile-up, ESS, p-value, rate, or detector-performance quantity was regenerated or promoted.
+No production Geant4 campaign, beam ROOT read, detector-response sample, rate, B2/B8 result, PID, timing, calibration, pile-up, ESS, p-value, or DATA/MC claim was produced or promoted in this governance repair.

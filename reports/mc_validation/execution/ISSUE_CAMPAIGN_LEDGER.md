@@ -7,16 +7,16 @@ MC ROOT: `geant4/data/output_krakow_1M.root` (present)
 
 | Lane | Worktree | Branch | Theme | Issues | Status | PR |
 |------|----------|--------|-------|--------|--------|-----|
-| 01 | ccb-wt-lane01 | fix/lane01-waveA | SiPM/digitizer fail-closed | #974-#977 #981-#982 #1065-#1072 #1084 #1096 | IN_PROGRESS | |
-| 02 | ccb-wt-lane02 | fix/lane02-waveA | Optical/WLS/material | #978-#980 #996 #1000 #1005 #1035-#1036 #1085-#1088 | IN_PROGRESS | |
-| 03 | ccb-wt-lane03 | fix/lane03-waveA | Geometry/kinematics | #987 #989 #991-#992 #999 | IN_PROGRESS | |
-| 04 | ccb-wt-lane04 | fix/lane04-waveA | Source/weights | #1050-#1058 #1174 #1179 | IN_PROGRESS | |
-| 05 | ccb-wt-lane05 | fix/lane05-waveA | Timing CFD/template | #954 #964-#968 #1003-#1004 #1032-#1033 #1059-#1064 | IN_PROGRESS | |
-| 06 | ccb-wt-lane06 | fix/lane06-waveA | PID ΔE-E | #956 #1022-#1031 #1042 #1048 | IN_PROGRESS | |
-| 07 | ccb-wt-lane07 | fix/lane07-waveA | Stats/bootstrap | #958-#960 #1049 #1052 #1097 #1164 #1166 | IN_PROGRESS | |
-| 08 | ccb-wt-lane08 | fix/lane08-waveA | DAQ/S00 provenance | #953 #961-#962 #973 #997-#998 #1014 #1073 #1149 | IN_PROGRESS | |
-| 09 | ccb-wt-lane09 | fix/lane09-waveA | ARU study scripts | #1112-#1129 #1137 | IN_PROGRESS | |
-| 10 | ccb-wt-lane10 | fix/lane10-waveA | Docs/gov/orchestrator | #969-#970 #990 #1002 #1078 #1218 + run_pipeline | READY_FOR_PR | pending |
+| 01 | ccb-wt-lane01 | fix/lane01-waveA | SiPM/digitizer fail-closed | #974-#977 #981-#982 #1065-#1072 #1084 #1096 | PR_OPEN | https://github.com/SzeChunYiu/ccb-testbeam/pull/1241 |
+| 02 | ccb-wt-lane02 | fix/lane02-waveA | Optical/WLS/material | #978-#980 #996 #1000 #1005 #1035-#1036 #1085-#1088 | PR_OPEN | https://github.com/SzeChunYiu/ccb-testbeam/pull/1241 |
+| 03 | ccb-wt-lane03 | fix/lane03-waveA | Geometry/kinematics | #987 #989 #991-#992 #999 | PR_OPEN | https://github.com/SzeChunYiu/ccb-testbeam/pull/1241 |
+| 04 | ccb-wt-lane04 | fix/lane04-waveA | Source/weights | #1050-#1058 #1174 #1179 | PR_OPEN | https://github.com/SzeChunYiu/ccb-testbeam/pull/1241 |
+| 05 | ccb-wt-lane05 | fix/lane05-waveA | Timing CFD/template | #954 #964-#968 #1003-#1004 #1032-#1033 #1059-#1064 | PR_OPEN | https://github.com/SzeChunYiu/ccb-testbeam/pull/1241 |
+| 06 | ccb-wt-lane06 | fix/lane06-waveA | PID ΔE-E | #956 #1022-#1031 #1042 #1048 | PR_OPEN | https://github.com/SzeChunYiu/ccb-testbeam/pull/1241 |
+| 07 | ccb-wt-lane07 | fix/lane07-waveA | Stats/bootstrap | #958-#960 #1049 #1052 #1097 #1164 #1166 | PR_OPEN | https://github.com/SzeChunYiu/ccb-testbeam/pull/1241 |
+| 08 | ccb-wt-lane08 | fix/lane08-waveA | DAQ/S00 provenance | #953 #961-#962 #973 #997-#998 #1014 #1073 #1149 | PR_OPEN | https://github.com/SzeChunYiu/ccb-testbeam/pull/1241 |
+| 09 | ccb-wt-lane09 | fix/lane09-waveA | ARU study scripts | #1112-#1129 #1137 | PR_OPEN | https://github.com/SzeChunYiu/ccb-testbeam/pull/1241 |
+| 10 | ccb-wt-lane10 | fix/lane10-waveA | Docs/gov/orchestrator | #969-#970 #990 #1002 #1078 #1218 + run_pipeline | PR_OPEN | https://github.com/SzeChunYiu/ccb-testbeam/pull/1241 |
 
 ## Rules
 - Edit only on LUNARC worktrees. Push branches; open PRs to main.

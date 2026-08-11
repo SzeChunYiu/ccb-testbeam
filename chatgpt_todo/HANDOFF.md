@@ -1,79 +1,80 @@
 # Latest Handoff
 
-## Active atom: Linux procfs initial-environment semantics
+## Active atom: exact source-phi measure and full-2π reference
 
-Protected source-of-truth at selection was `main@d6dc5ab29fc0ae6ac9d921a50c08b4554d14902d`, the squash merge of PR #1210. Exact predecessor head `ae6e8506f7caa79c31f211f56c7bb31761007600` passed MC Validation run `31476519812` with curated ruff, full unit tests, diagnostics upload and enforcement all successful. #1182 and CL-021 remain gated.
+Protected source-of-truth at selection was `main@859903ada4a856c998b2bc79298cd4a26c2cb447`, the squash merge of #1215. Current work is draft PR #1216 on `fix/issue-1057-source-phi-full-2pi`, under parent #1057. CL-021 remains gated.
 
-Current branch is `audit/geant4-loader-proc-env`, implementing `ARU-MC-G4-LOADER-PROC-ENV-001` under #1182 / `ARU-MC-G4-LOADER-SEARCH-001`.
+### Exact event-measure correction
 
-### Key correction
+The historical generator did more than sample one narrow interval. Let
 
-The predecessor handoff treated the environment captured by `geant4_runtime_dependency_attestation.py` as if it were simply the program's post-start `getenv` state. Linux procfs has a different contract: `/proc/<pid>/environ` exposes the initial environment region associated with the currently executing image, and ordinary later `setenv`/`putenv` changes are not reflected. This means the existing runtime provenance has more launch-region information than previously credited.
+`a = atan2(0.025,1) = 0.02499479361892016 rad`.
 
-That does **not** turn procfs into an immutable `execve(envp)` trace. The target can overwrite the initial bytes and can relocate the procfs environment region with `PR_SET_MM_ENV_START`. Therefore the new attestor is deliberately one-sided: stable presence is observed evidence at the attestation boundary; absence is not proof of historical launch absence.
+It sampled `phi0 ~ Uniform[-a,a]`, then used a second uniform draw to add `π` to either the proton or deuteron. For either distinguishable particle, modulo `2π`, the normalized marginal is therefore
 
-### Exact contract
+`q(phi)=1/(4a)`
 
-Compose PASS `ccb_geant4_runtime_dependency_attestation_v1` and PASS child `ccb_geant4_loader_secure_state_attestation_v1`, require exact parent digest and identical `(pid,starttime_ticks)`, read `/proc/<pid>/environ` twice, require the two byte strings identical and process identity stable, and require every loader key already recorded by the runtime receipt to reproduce exactly from the procfs bytes. Duplicate tracked keys or any receipt/proc mismatch fail closed.
+on two opposite intervals of width `2a`, with zero density elsewhere. The joint invariant is `phi_d-phi_p=π (mod 2π)`.
 
-The output records total procfs environment bytes/SHA-256 and per-key semantics:
+For the explicit spin-averaged reference target `p(phi)=1/(2π)`, the exact target/proposal ratio on legacy support is
 
-- present -> `OBSERVED_AT_ATTESTATION_BOUNDARY`;
-- absent -> `ABSENT_AT_OBSERVATION_NOT_PROOF_OF_EXECVE_ABSENCE`.
+`p/q = 2a/π = 0.015912179824051628`.
 
-`AT_SECURE=1` continues to block `LD_LIBRARY_PATH`/`LD_PRELOAD`/`LD_AUDIT` from loader-search authority. `AT_SECURE=0` remains unresolved for effective glibc secure behavior because `glibc.rtld.enable_secure=1` and exact libc/loader semantics are separate dependencies.
+That is also the total legacy support fraction. The earlier #1057 shorthand `a/π` missed the 50/50 branch normalization; a common factor is irrelevant to normalized shape-only reweighting but material to absolute rates/efficiencies. More importantly, `98.40878201759484%` of the full-circle reference support has `q=0`, so no weighting can recover those reaction-plane orientations.
 
-### Discriminating evidence executed
+### Bounded implementation on #1216
 
-Authoritative references: Linux `proc_pid_environ(5)`, Linux `ld.so(8)`, GNU libc Dynamic Linking Tunables.
+The source patch removes `det_size`, `det_distance`, and `phi_max` and samples the base azimuth as `2*pi*G4UniformRand()`. It keeps the existing 50/50 `+π` assignment. Under full-circle generation that branch is distributionally redundant, but retaining it preserves two phi-stage RNG draws per event; this is important for future paired-seed legacy/full-phi tests because removing a draw would shift all subsequent event RNG inputs.
 
-Local Linux/glibc negative control used GCC 14.2.0 and glibc 2.41. A tiny C process was launched with `GLIBC_TUNABLES=glibc.rtld.enable_secure=1`, loader-variable marker values and a benign control marker. Inside the program, `getenv` returned NULL for `GLIBC_TUNABLES`, `LD_LIBRARY_PATH`, `LD_PRELOAD`, and `LD_AUDIT`, while `/proc/<pid>/environ` simultaneously retained all exact launch strings. Procfs snapshot: 4584 bytes, SHA-256 `cd79ecfc3819a94132881036be26e4cfbcbd6def4e02224a3388411ee446f4fd`. This falsifies the hypothesis that loader sanitization necessarily erases those launch strings from procfs; it is not a production HIBEAM result.
+`geant4/src_patch/scattering_source_model_v1.json` now explicitly declares:
 
-Exact authoring-byte deterministic test run, Python 3.13.5/Linux/no RNG:
+- `target_azimuthal_density = p(phi)=1/(2*pi)`;
+- `source_phi_measure = uniform_full_2pi_v1`;
+- full `[0,2π)` support;
+- `detector_surrogate_phi_preselection = false`;
+- remaining compiled, accepted-observable, provenance, and detector-response gates.
 
-`PYTHONPATH=/tmp/ccb_new python3 -m pytest -q /tmp/ccb_new/tests/test_geant4_loader_initial_environment_attestation.py` -> `10 passed in 0.54s`; `py_compile` passed.
+Exact published identities:
 
-Hostile matrix: stable exact match, kernel-secure interpretation, absence semantics, proc/runtime mismatch, duplicate key, wrong parent receipt, process mismatch, malformed secure auxv record, mutation between procfs reads, and a real Linux child whose `os.environ` value changes after exec while procfs keeps the launch-region value.
+- source-model JSON: Git blob `d5cabdb3bb9b01ffd76fe9dd2d3baed18fcdd6a7`, SHA-256 `308c9120a286a19295687d876886d5a616812470007fc92f9c4d6e0eecba6dfc`;
+- strengthened source-phi test: Git blob `2d067b1ecabfac6f53377e40a0bee002c8332290`, SHA-256 `4c9ba2c0c5a2426716f9b763625f18957c961a3644b930617c66864932b43112`.
 
-Exact source identities now published on the branch:
+The regression now binds the C++ implementation to the JSON model, rejects reintroduction of the detector surrogate, requires exactly two `G4UniformRand()` calls in the phi stage, and deterministically checks full-circle marginals and coplanarity.
 
-- `tools/audit/geant4_loader_initial_environment_attestation.py`: 13024 bytes, SHA-256 `a1d3074fcf998c17abf5d99752f399d98aca491f184cad704224ea08111ab9b3`, Git blob `ab0f087fd2a138101bd269b97afc8b607ccb9036`;
-- `tests/test_geant4_loader_initial_environment_attestation.py`: 9730 bytes, SHA-256 `9a81c81ea51ac27e94d925635b9ba800d6acc1742f9409ca57e3c161f7e41203`, Git blob `f3c79dbf80a064a28885046dcbed08940f2f174f`.
+### Deterministic falsifier
 
-Local ruff is unavailable. The workflow has been extended so repository CI must supply that gate.
+No RNG and no Geant4 transport were used. A 4096-point evenly spaced base-azimuth grid with both branch states produced 8192 proton/deuteron pairs. In 64 equal azimuth bins every proton bin and every deuteron bin contained exactly 128 entries; the maximum numerical residual from `phi_d-phi_p=π (mod 2π)` was `8.881784197001252e-16 rad`.
 
-### Four sequential AI review passes
+This validates the mathematical map encoded by the proposed source contract only. It does not establish detector acceptance, transport, rates, or production behavior.
 
-- **Runtime/physics integration lead — REVISE prior post-start characterization / ACCEPT bounded initial-region presence.** Strongest counter was that procfs only reflects the post-loader program environment. Post-exec mutation and secure-sanitization controls falsified that. Residual: earlier overwrite/remap and real HIBEAM runtime.
-- **Adversarial Linux/loader reviewer — ACCEPT stable observation / BLOCK immutable execve claim.** Strongest counter was that “initial environment” means immutable syscall log. `PR_SET_MM_ENV_START` and in-place writes eliminate that stronger model. Residual: loader argv, cwd, cache/config, tokens/hwcaps, preloads/audits.
-- **Independent validation reviewer — ACCEPT deterministic mechanism oracle / BLOCK HIBEAM and physics generalisation.** Ten local tests pass, but no production HIBEAM receipt or event exists.
-- **Claims/provenance reviewer — ACCEPT provenance refinement / BLOCK CL-021 promotion.** The entire generator→detector→DATA chain remains gated.
+### Primary-literature child: polarization
 
-### Dependency refinement
+The repository-bound 190 MeV source is K. Ermisch et al., *Physical Review C* **71**, 064004 (2005), DOI `10.1103/PhysRevC.71.064004`. The primary paper studies elastic scattering of polarized protons from deuterons and reports vector analyzing power together with differential cross section. Therefore `uniform_full_2pi_v1` is presently an explicit spin-averaged / azimuthally symmetric reference assumption unless CCB beam/target polarization and spin-axis provenance demonstrate that no azimuthal modulation is required.
 
-`ARU-MC-G4-LOADER-PREEXEC-ENV-001` is narrowed rather than declared complete. Procfs presence is useful launch-region evidence, but an immutable pre-exec receipt is still needed to prove historical absence or rule out target overwrite/remap.
+Child `ARU-MC-SOURCE-PHI-POLARIZATION-001` remains open under #1057 rather than creating a duplicate issue.
 
-New children:
+### Four sequential AI reviews
 
-- `ARU-MC-G4-LOADER-ENV-REGION-MUTATION-001` — eliminate or bind post-exec overwrite/`PR_SET_MM_ENV_*` ambiguity;
-- `ARU-MC-G4-LOADER-ARGV-001` — bind exact executable/dynamic-loader invocation and explicit loader options.
+- **Source/kinematics lead — ACCEPT exact measure correction and H1 reference / REVISE physical-source wording.** Zero-support calculation rejects the historical gate as an unconditional full-physics law. Residual: beam/target polarization, exact geometry/trigger support, compiled execution.
+- **Adversarial mechanism reviewer — REJECT factor-of-two shorthand for absolute normalization / ACCEPT corrected event measure / BLOCK zero-support recovery.** The 50/50 branch changes the normalized distinguishable-particle marginal; weighting cannot fill `q=0` regions.
+- **Independent validation reviewer — ACCEPT deterministic source-contract oracle / REVISE until exact-head CI / BLOCK detector inference.** Static/deterministic tests do not compile or run the Geant4 generator.
+- **Claims/provenance reviewer — ACCEPT bounded implementation / BLOCK #1057 closure and CL-021 promotion.** Runtime serialization, accepted-observable closure, detector-response propagation, and source-model children remain open.
 
-Existing children remain initial cwd, ld.so cache/config, `$ORIGIN/$LIB/$PLATFORM` and glibc hwcaps, preload/audit sources, linker/static inputs, late `dlopen`, relocation/GOT/PLT, wrapper/descendant identity, immutable consumption, runtime manifest, compiled source/stopping controls, event weights and detector response.
+### Repository actions and current gate
 
-### Next gate
+PR #1216 was retitled to `mc(source): implement full-2π azimuth reference (partial #1057)`, its `Fixes #1057` auto-close language was removed, and it was converted to draft. #1057 received the exact legacy-measure correction and child-atom review. Immutable record: `chatgpt_todo/archive/2026-08-11T125900Z_ARU-MC-SOURCE-PHI-MEASURE-NORM-001.md`.
 
-The branch already contains the new tool, hostile tests, curated ruff integration and immutable record `chatgpt_todo/archive/2026-08-11T094700Z_ARU-MC-G4-LOADER-PROC-ENV-001.md`. Open a focused PR and require fresh exact-final-head MC Validation. Merge only if curated ruff, full non-integration pytest, diagnostics/enforcement and current-main ancestry are all successful. Green CI validates the software/provenance primitive only.
+An earlier superseded #1216 head `cd494ff1...` passed MC Validation run `31492405729` with curated ruff clean and `1616 passed, 1 skipped, 8 xfailed, 1 xpassed`. That result is non-authorising for the current head because the source-model contract, tests, archive, and coordination files changed afterward.
 
-No production Geant4 campaign was run, no beam or production-MC ROOT bytes were opened, and no angular distribution, event weight, B2/B8, PID, penetration, timing, calibration, pile-up, ESS, p-value, rate, or detector-performance quantity was regenerated or promoted.
+Require fresh exact-final-head MC Validation. Even if Python CI is green, keep the source PR draft until `ARU-MC-SOURCE-PHI-COMPILED-CLOSURE-001` supplies an exact compiled/seeded Geant4 generator-level check or repository policy explicitly authorizes this physics-source change without compilation.
 
----
+### Child atoms / next work
 
-## Base-freshness gate (ARU-CI-BASE-FRESHNESS-001, #1188)
+- `ARU-MC-SOURCE-PHI-POLARIZATION-001` — establish beam/target polarization and spin-axis provenance.
+- `ARU-MC-SOURCE-PHI-COMPILED-CLOSURE-001` — compile the exact patched source; bind executable/source/input hashes, seed, run manager/thread mode, event count; test generated phi marginals/support/coplanarity.
+- `ARU-MC-SOURCE-PHI-ACCEPTANCE-CLOSURE-001` — full-phi versus any importance/conditional proposal through exact geometry/trigger; compare accepted truth distributions, rates, support, event weights, and ESS.
+- `ARU-MC-SOURCE-PHI-PROVENANCE-SERIALIZATION-001` — serialize source phi/model IDs and exact input/source identities into production provenance.
 
-Before opening any PR, verify the head contains the exact current protected-base commit. The local Git-graph provenance tool is `tools/audit/validate_pr_base_freshness.py` (schema `pr_base_freshness_v1`); it deliberately does not inspect GitHub status/check APIs (a separate authorization layer).
+Existing #1053/#1178/#1179, geometry/trigger, runtime-loader/build, event-weight, and detector-response atoms remain upstream/downstream gates.
 
-- `python tools/audit/validate_pr_base_freshness.py --repo . --base-ref origin/main --head-ref HEAD`
-- Exit 0 / `CURRENT_BASE` = authorising; exit 2 / `STALE_OR_DIVERGED_BASE` = rebase onto `origin/main` first; exit 3 / `INSPECTION_FAILED` = fix the refs, not the check.
-- Authorising formula: `base_is_ancestor_of_head AND behind_by == 0 AND merge_base_sha == base_sha`.
-
-This is one of the A/B discriminators the #1188 evidence used (stale #1186 rejected, current-base #1187 merged). Record the protected-base SHA before and the merged result after each scientific PR merge.
+No production Geant4 campaign was run, no beam or production-MC ROOT bytes were opened, and no angular distribution, B2/B8, PID, penetration, timing, calibration, pile-up, ESS, p-value, rate, or detector-performance quantity was regenerated or promoted.

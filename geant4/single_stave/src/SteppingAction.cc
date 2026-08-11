@@ -1,4 +1,5 @@
 #include "SteppingAction.hh"
+#include "G4Exception.hh"
 #include "EventAction.hh"
 #include "DetectorConstruction.hh"
 #include "SimData.hh"
@@ -32,7 +33,18 @@ int SteppingAction::SensorIndexForVolume(const G4String& name) const {
 
 double SteppingAction::PdeAt(double wavelength_nm) const {
   const OpticalCurve& pde = tables_.Get("sipm_pde");
-  double p = pde.Empty() ? 0.40 : pde.Interp(wavelength_nm);  // 40% fallback
+  double p = 0.0;
+  if (pde.Empty()) {
+    // Issue #996: never silently substitute 40% PDE in a strict/authorising run.
+    if (cfg_.strict_optical || cfg_.authorising) {
+      G4Exception("SteppingAction::PdeAt", "OPT_PDE_001", FatalException,
+                  "sipm_pde table empty while strict/authorising optical mode "
+                  "is active; refusing 40% fallback");
+    }
+    p = 0.40;  // explicit non-authorising development fallback only
+  } else {
+    p = pde.Interp(wavelength_nm);
+  }
   p *= cfg_.pde_scale;
   if (p < 0) p = 0;
   if (p > 1) p = 1;

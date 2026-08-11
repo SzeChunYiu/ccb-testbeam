@@ -29,6 +29,7 @@
 #include <exception>
 #include <iostream>
 #include <string>
+#include <vector>
 
 int main(int argc, char** argv) {
   AppConfig cfg;
@@ -66,14 +67,26 @@ int main(int argc, char** argv) {
   OpticalTables tables;
   try {
     tables = OpticalTables::LoadDir(cfg.optical_dir, cfg.strict_optical);
-    if (cfg.strict_optical) {
-      const auto errors = tables.ValidateRequired({"sipm_pde"});
-      if (!errors.empty()) {
-        std::cerr << "fatal: strict action-level optical-table validation failed:\n";
+    const std::vector<std::string> required_all = {
+        "scintillator_emission", "scintillator_absorption",
+        "y11_absorption", "y11_emission", "y11_bulk_attenuation",
+        "tio2_reflectivity", "sipm_pde"};
+    const auto errors = tables.ValidateRequired(required_all);
+    if (!errors.empty()) {
+      if (cfg.strict_optical) {
+        std::cerr << "fatal: strict optical-table validation failed:\n";
         for (const auto& error : errors) {
           std::cerr << "  - " << error << '\n';
         }
         return 3;
+      }
+      // Permissive development path (#978): record non-authorising fallback.
+      cfg.optical_fallback_used = true;
+      cfg.authorising = false;
+      std::cerr << "warning: optical-table validation failed; continuing with "
+                   "allow-optical-fallback (authorising=false):\n";
+      for (const auto& error : errors) {
+        std::cerr << "  - " << error << '\n';
       }
     }
   } catch (const std::exception& exc) {

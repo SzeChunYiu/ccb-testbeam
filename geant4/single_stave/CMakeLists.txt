@@ -206,3 +206,31 @@ set_tests_properties(ccb_stave_sipm_adc PROPERTIES
   TIMEOUT 300
   PASS_REGULAR_EXPRESSION "SIPM_ADC.*readout=[1-9]"
   FAIL_REGULAR_EXPRESSION "G4Exception.*Fatal;segmentation")
+
+
+# Wave A / Lane 02: semantic optical-table schema (#978/#980) — no Geant4 needed.
+if(CCB_PYTHON3)
+  add_test(
+    NAME ccb_stave_optical_schema
+    COMMAND ${CCB_PYTHON3}
+            "${PROJECT_SOURCE_DIR}/tests/test_optical_table_schema.py"
+            --optical-dir "${CMAKE_BINARY_DIR}/optical")
+  set_tests_properties(ccb_stave_optical_schema PROPERTIES
+    PASS_REGULAR_EXPRESSION "OPTICAL_SCHEMA_PASS")
+endif()
+
+# Strict mode must abort when a required table is removed (#978/#980).
+add_test(
+  NAME ccb_stave_strict_optical_missing_table
+  COMMAND ${CMAKE_COMMAND} -E env
+          bash -c "set -e; tmp=$(mktemp -d); cp -R ${CMAKE_BINARY_DIR}/optical/* $tmp/; rm -f $tmp/sipm_pde.csv; $<TARGET_FILE:ccb_stave_sim> --particle proton --energy 100 --nevents 1 --seed 1 --optical-dir $tmp --strict-optical --output $tmp/out.root; ec=$?; rm -rf $tmp; exit $ec")
+set_tests_properties(ccb_stave_strict_optical_missing_table PROPERTIES
+  WILL_FAIL TRUE)
+
+# Wrong units_x must fail closed in strict mode (#980).
+add_test(
+  NAME ccb_stave_strict_optical_bad_units
+  COMMAND ${CMAKE_COMMAND} -E env
+          bash -c "set -e; tmp=$(mktemp -d); cp -R ${CMAKE_BINARY_DIR}/optical/* $tmp/; printf '%s\n' '# units_x: angstrom' '# units_y: frac' '# status: BAD' '450, 0.4' > $tmp/sipm_pde.csv; $<TARGET_FILE:ccb_stave_sim> --particle proton --energy 100 --nevents 1 --seed 1 --optical-dir $tmp --strict-optical --output $tmp/out.root; ec=$?; rm -rf $tmp; exit $ec")
+set_tests_properties(ccb_stave_strict_optical_bad_units PROPERTIES
+  WILL_FAIL TRUE)

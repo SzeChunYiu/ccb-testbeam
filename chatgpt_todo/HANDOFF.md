@@ -4,7 +4,7 @@
 
 Protected `main` at selection is `8a064b37245a03dd0258ec20ae73bbc6adc25e2e`, the squash merge of #1220. PR #1220 exact head `43fd82d2fe70d90cea829a28a1e808b2fbf16098` passed MC Validation run `31505415590` and is merged. #1057 remains open/PARTIAL, governance child #1218 remains open, and CL-021 remains gated.
 
-The active atom is `ARU-MC-G4-LOADER-FS-NAMESPACE-001`, tracked as #1221 on branch `audit/geant4-loader-fs-namespace`. Parent #1214 is closed for the bounded exec-cwd primitive; this child does not reopen it.
+The active atom is `ARU-MC-G4-LOADER-FS-NAMESPACE-001`, tracked as #1221 on branch `audit/geant4-loader-fs-namespace`. Draft PR #1222 targets exact base `main@8a064b...`. Parent #1214 is closed for the bounded exec-cwd primitive; this child does not reopen it.
 
 The repository run front door still invokes `./hibeam_g4 -c krakow.config -m run_krakow.mac output_krakow.root` with relative config, macro and output spellings. The bounded pre-exec lookup state is now modeled as
 
@@ -24,13 +24,14 @@ A second real control executed a Python launcher directly into `/bin/sleep`: PID
 
 ### Repository work
 
-Branch commits so far:
+Branch commits through the draft-PR handoff:
 
 - `07f966fadd056c6368e83ee60c81f05b9165f3c7` — add `tools/audit/geant4_loader_exec_boundary_fs_attestation.py`;
 - `6f2d912875cf49ad79bc3fefc4595774e7ca9c08` — add hostile focused tests;
 - `dbca8873edad0080e7d37339660a54f0a87a2f61` — add tool/test to curated ruff;
 - `8bdb1f6e7439bceba8cf997fd631b108a189830b` — immutable atom archive;
-- `257a817a60ca4ac351deebcb6cbda9f57450afb7` — activate coordination.
+- `257a817a60ca4ac351deebcb6cbda9f57450afb7` and `e7a81d456840bf09e002106dc337a210de4dd3df` — initial coordination;
+- `1e9566ddf783e81c80c27cd086be2477613611c4` — record draft PR/final-head gate in ACTIVE_TASK.
 
 Observed GitHub blobs: tool `f173720831c693cf417c1a876626f26da9fc0eca`; focused test `c3777148928cff7fcc9549f1d4dae2e3bd6a6bab`.
 
@@ -38,7 +39,7 @@ Local deterministic authoring-copy validation used Python 3.13.5 with no RNG: `p
 
 A real `unshare -m true` mount-namespace switch control could not run because the environment returned `Operation not permitted`; do not claim such a control passed.
 
-Immutable record: `chatgpt_todo/archive/2026-08-11T153700Z_ARU-MC-G4-LOADER-FS-NAMESPACE-001.md`. Tracking issue: #1221.
+Immutable record: `chatgpt_todo/archive/2026-08-11T153700Z_ARU-MC-G4-LOADER-FS-NAMESPACE-001.md`. Tracking issue: #1221. Draft PR: #1222.
 
 ### Four sequential AI reviews
 
@@ -55,6 +56,6 @@ Surviving children are `ARU-MC-G4-RELATIVE-INPUT-CONSUMPTION-001`, `ARU-MC-G4-OU
 
 ### Immediate gate and next work
 
-Open a draft PR from `audit/geant4-loader-fs-namespace`. Require the final exact head to be current with main and to pass every required MC Validation context: curated ruff, full non-integration pytest, diagnostics and enforcement. If a failure appears, repair only the demonstrated defect and rerun. Do not merge from authoring-copy evidence or a superseded green head.
+PR #1222 must remain draft until the **final branch head after this HANDOFF commit** is current with main and every required MC Validation context passes curated ruff, full non-integration pytest, diagnostics and enforcement. A queued run on the earlier pre-finalization head `e7a81d456840bf09e002106dc337a210de4dd3df` is superseded once coordination advances the branch and must not authorize merge. If a final-head failure appears, repair only the demonstrated defect and rerun.
 
 After this bounded leaf, the next highest-value atom is `ARU-MC-G4-RELATIVE-INPUT-CONSUMPTION-001`: bind actual HIBEAM config/macro/auxiliary open state and exact opened bytes for the same runtime process. No production Geant4 campaign, beam/production-MC ROOT bytes, event-weight result, accepted rate, B2/B8, PID, timing, calibration, pile-up, ESS, p-value, or detector-performance quantity was produced or promoted here.

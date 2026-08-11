@@ -1,70 +1,61 @@
 # Latest Handoff
 
-## Upstream SiPM core main contains unresolved merge markers; bounded repair is open
+## Upstream SiPM core conflict-marker repair merged; post-merge CI still pending
 
 Selected atom: `ARU-SIPM-CORE-MERGE-CONFLICT-CLOSURE-001`.
 
 ### Live state
 
-Protected root `ccb-testbeam/main` was inspected at exact `5a020b61cbdea6cfda0aeba7a1f6d92442a369e9`; required status context remains `test`. The root's SiPM gitlink lineage remains on the earlier conflict-free `cf12c6b...` core family, so the upstream incident described below has **not** yet contaminated the root runtime dependency.
+Protected root `ccb-testbeam/main` was inspected at exact `5a020b61cbdea6cfda0aeba7a1f6d92442a369e9`; required status context remains `test`. The root SiPM gitlink lineage remains on the earlier conflict-free `cf12c6b...` core family, so the bad upstream commit was not integrated into root main.
 
-Live `ccb-sipm-core/main` is `0fc78af6679c421f7a01a85f421170bbb92cce82`, the merge of core PR #15. That commit is not a valid executable source state: exact reads of `src/Config.cc`, `src/ResponseSimulator.cc`, and `tests/test_core.cc` show literal unresolved `<<<<<<<`, `=======`, and `>>>>>>>` merge delimiters. PR #15's own automated review had explicitly warned that those conflicts remained before merge.
+Upstream `ccb-sipm-core/main@0fc78af6679c421f7a01a85f421170bbb92cce82` was confirmed to contain literal unresolved Git conflict markers after merged core PR #15 in `src/Config.cc`, `src/ResponseSimulator.cc`, and `tests/test_core.cc`. PR #15's own automated review had warned of the unresolved conflicts before merge.
+
+A bounded three-file repair was implemented on exact head `98be281d3b48d4fe2fc2e00f985ec62374f07766`, restoring the immediate-parent blobs while retaining the already-existing fail-closed measured-impulse semantics, history-complete runtime-kernel support, `CUSTOM_UNVALIDATED` provenance state, and canonical exact effective-kernel hashing.
+
+### Validation and integration
+
+Core CI run `31544391525`, job `93953654545`, completed successfully on exact repair head `98be281d...`; checkout, configure, build and Test/CTest steps all succeeded. Only after that exact-head result was PR #16 marked ready.
+
+PR #16 was squash-merged with expected-head guard as new upstream core main
+
+`caf6bdc592a05b55ae6bc343b4532a9934eb8344`
+
+with exact tree `23beb8a7e1df3fc5d2bebc1e1c21e54c29d4ae2d`.
+
+Independent main-push Core CI run `31544689778` was **queued** at last inspection. Therefore the pre-merge repair head has executable closure, the repair is present on remote core main, but a post-merge-main PASS is not yet claimed.
 
 ### Atomic contract and mechanism result
 
-For a calibrated sampled impulse `(t_i,a_i)`, the preserved parent implementation requires a nonzero norm and positive trapezoidal integral under the current polarity convention,
-
-`max |a_i| > 0`,
-
-`Q = Σ 0.5(a_i+a_{i-1})(t_i-t_{i-1}) > 0`,
-
-plus overlap with the history-complete runtime grid
+For a sampled measured impulse `(t_i,a_i)`, the preserved implementation requires finite ordered samples, `max |a_i| > 0`, positive trapezoidal integral under the current polarity convention, and support overlap with the history-complete kernel grid
 
 `N_kernel = N_output + ceil(max(0, window_start-history_start)/dt)`.
 
-The conflict-side implementation is not merely a textual alternative. It duplicates the integral accumulation in `Config.cc`, shortens measured-impulse support validation to the output window, and conflicts with the already-reviewed provenance state: one side keeps arbitrary sampled vectors `CUSTOM_UNVALIDATED` and hashes the exact cached history-complete runtime kernel, while the incoming side labels them `MEASURED` and manufactures `LEN-*` placeholders.
-
-The strongest repair candidates were compared. Keeping broken main is impossible. Favoring the incoming side is rejected as a semantic/provenance regression. Reverting all of PR #15 is unnecessarily broad. The surviving bounded repair is to restore only the three contaminated executable/test blobs from immediate parent `cf12c6b8955c48590bda858477f8dc4ebd67251b`, because that parent already contains the substantive fail-closed measured-impulse behavior claimed by #15.
-
-### Work performed
-
-Upstream branch `audit/repair-main-conflict-markers` was created from exact bad main. A three-file tree was constructed with:
-
-- `src/Config.cc` -> `7e4d84ec684d3b11eb3a7e1c6012fe22edfb53ba`;
-- `src/ResponseSimulator.cc` -> `51d5e74863d8075235fa27d4ad93f19c9a7565a7`;
-- `tests/test_core.cc` -> `3df1ea0d20bf93fbd10245791fb216ba1581f7ec`.
-
-Tree: `23beb8a7e1df3fc5d2bebc1e1c21e54c29d4ae2d`.
-Repair commit: `98be281d3b48d4fe2fc2e00f985ec62374f07766`.
-
-Draft upstream PR #16, `fix(core): remove unresolved conflict markers from main after #15`, has exact base `0fc78af...`, exact head `98be281d...`, and exactly three changed files. Core CI run `31544391525`, job `93953654545`, was still queued at last inspection. Do **not** mark it ready or merge until exact-head configure/build/CTest succeeds.
-
-The post-merge Core CI run for broken main, `31544089787`, was also only queued when inspected. Core main is currently unprotected; a bad merge therefore became main without successful CI being a precondition.
+The rejected PR #15 conflict side was not equivalent: it duplicated measured-impulse integral accumulation, shortened support validation to output-window-only, advertised arbitrary sampled vectors as `MEASURED`, and created non-cryptographic `LEN-*` placeholders. Since the immediate parent already contained the substantive degeneracy/support/ideal-delta checks, the smallest scientifically safe repair was exact restoration of only the three contaminated executable/test files.
 
 ### Preventive child and issue governance
 
-No duplicate upstream branch-protection issue existed. Opened core issue #17, stable ID `ARU-CORE-MAIN-PROTECTION-001`, requiring exact-head Core CI plus a deterministic conflict-marker scanner and verified branch/ruleset protection. PR #15 is the historical failure fixture; PR #16 is the immediate repair control.
+Opened upstream core issue #17, stable ID `ARU-CORE-MAIN-PROTECTION-001`, because core main remains unprotected. It requires exact-head Core CI, deterministic conflict-marker scanning with narrow fixture exceptions, and live branch/ruleset verification. PR #15 is the historical failure witness; PR #16 is the repair control.
 
-Root #1066 was found incorrectly `closed/completed` despite its own unresolved acceptance criteria and an existing issue-thread correction saying to keep it OPEN/PARTIAL. It was reopened and a completion-state repair comment was added. The integrated trigger/gain selector refactor is unchanged; two-pulse calibration, correlated-noise coupling, operating-point/source provenance and high-occupancy model-form uncertainty remain open.
+Root #1066 was found `closed/completed` despite its own unresolved acceptance criteria and an existing thread correction saying to keep it OPEN/PARTIAL. It was reopened and a completion-state repair comment was added. No recovery calibration result changed.
 
-Root #1067 remains OPEN/reopened. A PR title saying `fixes #1067` cannot establish its scientific acceptance: source/calibration authorization, resampling closure and historical measured-output audit remain unresolved.
+Root #1067 remains OPEN/reopened. Added an incident/quarantine comment recording core #16 and the exact CI boundary. The wording `fixes #1067` on upstream PR #15 is not scientific-completion evidence; source/calibration authorization, resampling closure and historical measured-output audit remain open.
 
 ### Four sequential AI review votes
 
-**Build/reproducibility lead — ACCEPT targeted repair / BLOCK merge until exact-head Core CI succeeds.** Raw conflict delimiters occur in compiled/test source, not comments or dedicated fixtures.
+**Build/reproducibility lead — ACCEPT repair-head executable closure / REVISE until post-merge Core CI.** Exact candidate configured, built and passed CTest before merge; independent main-push run remains pending.
 
-**Adversarial mechanism/provenance reviewer — REJECT incoming conflict side / ACCEPT parent-blob restoration.** Immediate parent already contains the desired fail-closed numerical checks; incoming conflict text weakens history support and provenance semantics.
+**Adversarial mechanism/provenance reviewer — REJECT incoming conflict side / ACCEPT parent-blob restoration.** Immediate parent already had the desired fail-closed checks; incoming conflict content weakened support/provenance semantics and duplicated numerical work.
 
-**Independent validation reviewer — ACCEPT deterministic source diagnosis / BLOCK VALIDATED until Core CI / BLOCK detector inference.** The exact repair has not yet compiled in CI; repository inspection is not a substitute for executable closure.
+**Independent validation reviewer — ACCEPT exact-head Core CI / BLOCK detector inference.** This validates software repair behavior only; no detector data or stochastic calibration participates.
 
-**Claims/provenance reviewer — ACCEPT quarantine/repair / BLOCK #1067 COMPLETE and measured-electronics promotion.** Root has not integrated the bad core SHA, and no calibration object or detector data participates here.
+**Claims/provenance reviewer — ACCEPT quarantine/repair / BLOCK #1067 COMPLETE and measured-electronics promotion.** Root never pinned the broken core SHA, and no measured impulse calibration object has been authorized.
 
 ### Next work
 
-Immediate: recheck Core CI run `31544391525`. If and only if it succeeds on exact `98be281d...`, mark #16 ready and merge with an expected-head guard; then require the resulting core-main push CI and record the final upstream main SHA. Do not point root to `0fc78af...`.
+First recheck Core CI run `31544689778` on exact remote main `caf6bdc...`. If successful, record post-merge closure in an execution addendum and keep upstream #17 open until branch/ruleset protection is actually installed and tested.
 
-Once upstream integrity is restored, the next highest-value scientific atom remains `ARU-SIPM-CORRELATED-NOISE-GENERATION-MODEL-001`: make prompt/delayed/afterpulse parent-generation recovery semantics explicit and serializable, preserve raw-`r` as a named legacy hypothesis, add discriminating alternatives/controls, and do not choose detector truth without source-bound two-pulse calibration.
+Then return to the next scientific atom `ARU-SIPM-CORRELATED-NOISE-GENERATION-MODEL-001`: expose prompt/delayed/afterpulse parent-generation recovery semantics as named, serializable hypotheses; preserve raw-`r` as legacy; add discriminating controls; and do not choose detector truth without source-bound two-pulse calibration.
 
-Immutable record: `chatgpt_todo/archive/2026-08-11T225800Z_ARU-SIPM-CORE-MERGE-CONFLICT-CLOSURE-001.md`.
+Archive checkpoint: `chatgpt_todo/archive/2026-08-11T225800Z_ARU-SIPM-CORE-MERGE-CONFLICT-CLOSURE-001.md`.
 
 No beam data, production Geant4 population, measured electronics impulse, SiPM two-pulse calibration, waveform closure, pile-up/saturation efficiency, timing/PID metric, event weights, ESS, p-value, rate, or detector-performance result was generated or promoted.

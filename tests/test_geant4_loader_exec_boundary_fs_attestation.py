@@ -165,8 +165,12 @@ def test_record_rejects_mount_namespace_drift(monkeypatch: pytest.MonkeyPatch) -
         MODULE.record_exec_boundary_fs()
 
 
-@pytest.mark.skipif(not Path("/proc/self/mountinfo").exists(), reason="Linux procfs required")
-def test_direct_exec_transition_composes_same_pid_starttime_and_target_bytes(tmp_path: Path) -> None:
+@pytest.mark.skipif(
+    not Path("/proc/self/mountinfo").exists(), reason="Linux procfs required"
+)
+def test_direct_exec_transition_composes_same_pid_starttime_and_target_bytes(
+    tmp_path: Path,
+) -> None:
     receipt_path = tmp_path / "fs_record.json"
     target = Path("/bin/sleep")
     process = subprocess.Popen(
@@ -220,7 +224,9 @@ def test_direct_exec_transition_composes_same_pid_starttime_and_target_bytes(tmp
         process.wait(timeout=3)
 
 
-@pytest.mark.skipif(os.geteuid() != 0, reason="post-exec chroot control requires root/CAP_SYS_CHROOT")
+@pytest.mark.skipif(
+    os.geteuid() != 0, reason="post-exec chroot control requires root/CAP_SYS_CHROOT"
+)
 def test_post_exec_chroot_demonstrates_exec_snapshot_is_not_input_consumption_state(
     tmp_path: Path,
 ) -> None:

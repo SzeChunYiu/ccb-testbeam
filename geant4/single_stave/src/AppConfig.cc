@@ -70,6 +70,7 @@ void AppConfig::PrintUsage(const char* prog) {
     "  --hit-y CM               impact y (width)            (default 0)\n"
     "  --theta DEG              polar tilt from +z          (default 0)\n"
     "  --phi DEG                azimuth of tilt             (default 0)\n"
+    "  --allow-miss             permit primaries that miss the stave (#999)\n"
     "  --birks-kB VAL           Birks kB [mm/MeV]           (default 0.126)\n"
     "  --production-cut MM      secondary-production range threshold [mm]\n"
     "                           (default 0.1; gamma/e-/e+/p, NOT optical tracking)\n"
@@ -111,6 +112,7 @@ std::string AppConfig::Describe() const {
      << " hit_y_cm=" << hit_y_cm
      << " theta_deg=" << theta_deg
      << " phi_deg=" << phi_deg
+     << " allow_miss=" << (allow_miss ? 1 : 0)
      << " birks_kB=" << birks_kB_mm_per_MeV
      << " production_cut_mm=" << production_cut_mm
      << " reflectivity_scale=" << reflectivity_scale
@@ -154,6 +156,7 @@ bool AppConfig::ParseArgs(int argc, char** argv) {
     else if (eq(a, "--hit-y"))             { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --hit-y requires a finite number, got '"<<v<<"'\n";return false;} hit_y_cm = t; }
     else if (eq(a, "--theta"))             { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --theta requires a finite number, got '"<<v<<"'\n";return false;} theta_deg = t; }
     else if (eq(a, "--phi"))               { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --phi requires a finite number, got '"<<v<<"'\n";return false;} phi_deg = t; }
+    else if (eq(a, "--allow-miss"))        { allow_miss = true; }
     else if (eq(a, "--birks-kB"))          { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --birks-kB requires a finite number, got '"<<v<<"'\n";return false;} birks_kB_mm_per_MeV = t; }
     else if (eq(a, "--production-cut"))    { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --production-cut requires a finite number, got '"<<v<<"'\n";return false;} production_cut_mm = t; }
     else if (eq(a, "--reflectivity-scale")){ if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --reflectivity-scale requires a finite number, got '"<<v<<"'\n";return false;} reflectivity_scale = t; }

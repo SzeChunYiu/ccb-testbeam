@@ -1,0 +1,38 @@
+schema: ccb-geometry-profile/1
+profile_id: hyp_deuteron_ke_105MeV_elastic_kinematics
+status: HYPOTHESIS
+claims_authorized: false
+issues:
+- 989
+adr: docs/adr/ADR-0002-geometry-kinematics-hypotheses.md
+source_type: DOC_CLAIM
+source_refs:
+- docs/academic_chapters/02_experimental_setup.md
+contradicts:
+- hyp_deuteron_like_15p8MeV_bstack_note
+parameters:
+  kind: energy_scale_hypothesis
+  estimand: incident_scattered_deuteron_kinetic_energy_MeV
+  value_MeV: 105.0
+  method: relativistic_two_body_pd_elastic_at_38deg
+  beam_proton_T_MeV: 190.0
+  angle_deg: 38.0
+  range_source_claimed_in_docs: NIST_PSTAR
+  range_source_valid_for_deuterons: false
+  range_source_note: 'NIST PSTAR is for protons; deuteron range cited via PSTAR in
+    Chapter 2 is a documented defect (#989). Do not reuse without a named deuteron
+    stopping method.
+
+    '
+  energy_dictionary_required_types:
+  - incident_kinetic
+  - entry_kinetic
+  - deposited
+  - visible_birks
+  - reconstructed_calibrated
+  - residual
+notes: 'Chapter-2 p+d elastic kinematics ~105 MeV at the B-stack angle. NOT the same
+  estimand as the ~15.8 MeV ''deuteron-like'' B-stack note quantity. Mixing the two
+  under one phrase is forbidden (#989).
+
+  '

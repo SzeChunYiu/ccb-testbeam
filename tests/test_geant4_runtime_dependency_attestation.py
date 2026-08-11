@@ -9,6 +9,7 @@ from pathlib import Path
 
 import pytest
 
+from tools.audit import geant4_runtime_dependency_attestation as runtime_attest
 from tools.audit.geant4_runtime_dependency_attestation import attest_runtime_dependencies
 
 
@@ -159,6 +160,38 @@ def test_same_path_replaced_after_mapping_fails_inode_identity(tmp_path: Path) -
     replacement.replace(library)
 
     with pytest.raises(ValueError, match="no longer names the mapped inode"):
+        attest_runtime_dependencies(
+            final_receipt=_parent(executable),
+            pid=pid,
+            requirements=[("geant4", "libG4*.so*")],
+            proc_root=proc_root,
+        )
+
+
+def test_same_inode_same_size_mutation_after_hash_fails_metadata_recheck(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    executable = tmp_path / "hibeam_g4"
+    library = tmp_path / "libG4run.so"
+    _make_file(executable, b"fixture executable")
+    _make_file(library, b"library-A")
+    proc_root, pid = _fake_proc(tmp_path, executable=executable, mapped_objects=[library])
+
+    original = runtime_attest._hash_open_fd
+    mutated = False
+
+    def mutate_after_library_hash(fd: int, *, label: str) -> dict[str, object]:
+        nonlocal mutated
+        record = original(fd, label=label)
+        if "mapped executable object" in label and library.name in label and not mutated:
+            library.write_bytes(b"library-B")
+            library.chmod(0o755)
+            mutated = True
+        return record
+
+    monkeypatch.setattr(runtime_attest, "_hash_open_fd", mutate_after_library_hash)
+
+    with pytest.raises(ValueError, match="path changed after hashing"):
         attest_runtime_dependencies(
             final_receipt=_parent(executable),
             pid=pid,

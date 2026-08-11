@@ -78,6 +78,10 @@ class DigitizerPipeline:
     tau_decay_ns: float = 35.0
     transport_sigma_ns: float = 0.5
     apply_birks: bool = False
+    # Required when apply_birks is True (#1079). Units: cm/MeV.
+    # No silent production default — Python 0.008 cm/MeV and Geant4 0.126 mm/MeV
+    # are distinct hypotheses and must be chosen explicitly.
+    birks_kB_cm_per_MeV: float | None = None
     global_seed: int = 0
     stages: list[str] = field(
         default_factory=lambda: ["birks", "scintillation", "transport", "sampling"]
@@ -158,11 +162,18 @@ class DigitizerPipeline:
             edep = self._require_field(
                 hit, "edep_mev", event_id=ctx["event_id"], channel_id=ctx["channel_id"]
             )
+            if self.birks_kB_cm_per_MeV is None:
+                raise ValueError(
+                    "apply_birks=True requires an explicit birks_kB_cm_per_MeV "
+                    "(#1079); refusing the silent 0.008 cm/MeV function default "
+                    "as a production response identity"
+                )
             try:
                 out["edep_mev"] = birks_quench(
                     edep,
                     step_length_cm=hit.get("step_length_cm"),
                     dedx_mev_per_cm=hit.get("dedx_mev_per_cm"),
+                    k_b_cm_per_mev=float(self.birks_kB_cm_per_MeV),
                 )
             except ValueError as exc:
                 raise ValueError(
@@ -469,6 +480,38 @@ class DigitizerPipeline:
         }
 
 
+    @staticmethod
+    def _parse_birks_kb_cm_per_mev(config: Mapping[str, Any]) -> float | None:
+        """Parse explicit Birks kB with unit tags (#1079).
+
+        Accepts ``birks_kB_cm_per_MeV`` or ``birks_kB_mm_per_MeV`` (×0.1 → cm/MeV).
+        Providing both, or a bare unlabelled ``kB`` / ``birks_kB``, is rejected.
+        """
+        has_cm = "birks_kB_cm_per_MeV" in config
+        has_mm = "birks_kB_mm_per_MeV" in config
+        forbidden = [k for k in ("kB", "birks_kB", "kb", "birks_kb") if k in config]
+        if forbidden:
+            raise ValueError(
+                f"digitizer config has unlabelled Birks key(s) {forbidden}; "
+                "use birks_kB_cm_per_MeV or birks_kB_mm_per_MeV (#1079)"
+            )
+        if has_cm and has_mm:
+            raise ValueError(
+                "digitizer config provides both birks_kB_cm_per_MeV and "
+                "birks_kB_mm_per_MeV; provide exactly one unit-tagged value (#1079)"
+            )
+        if has_cm:
+            kb = float(config["birks_kB_cm_per_MeV"])
+        elif has_mm:
+            kb = float(config["birks_kB_mm_per_MeV"]) * 0.1  # mm/MeV → cm/MeV
+        else:
+            return None
+        if not np.isfinite(kb) or kb < 0.0:
+            raise ValueError(
+                f"Birks kB must be finite and non-negative in cm/MeV, got {kb!r} (#1079)"
+            )
+        return kb
+
     @classmethod
     def from_config(cls, config: Mapping[str, Any]) -> DigitizerPipeline:
         # #1080: validate scalar domains before constructing RNG/event pipelines.
@@ -480,6 +523,13 @@ class DigitizerPipeline:
         birks_prov = resolve_bool_field(config, "apply_birks", default=False)
         sanitized = dict(config)
         sanitized["apply_birks"] = bool(birks_prov["effective"])
+        kb = cls._parse_birks_kb_cm_per_mev(config)
+        if bool(birks_prov["effective"]) and kb is None:
+            raise ValueError(
+                "apply_birks=True requires birks_kB_cm_per_MeV or "
+                "birks_kB_mm_per_MeV (#1079); no silent default across "
+                "Python/Geant4/prose quenching worlds"
+            )
         resolved = preflight_digitizer_config(sanitized)
         effective = resolved["effective"]
         elec_cfg = effective["electronics"]
@@ -498,6 +548,7 @@ class DigitizerPipeline:
             tau_decay_ns=float(effective["tau_decay_ns"]),
             transport_sigma_ns=float(effective["transport_sigma_ns"]),
             apply_birks=bool(birks_prov["effective"]),
+            birks_kB_cm_per_MeV=kb,
             global_seed=int(effective["global_seed"]),
             stages=list(effective["stages"]),
         )

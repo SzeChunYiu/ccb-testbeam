@@ -2,12 +2,34 @@
 
 from __future__ import annotations
 
+import math
+
 import numpy as np
 
 
+def _require_positive_tau(tau: float, name: str) -> float:
+    """Fail closed on non-physical rise/decay constants (#1075).
+
+    Physical time constants must be finite and strictly positive. Silent
+    clamping of ``tau <= 0`` (or non-finite values) to ``1e-12`` would
+    substitute a near-delta impulse for an invalid configuration.
+    """
+    try:
+        value = float(tau)
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f"{name} must be a finite float > 0, got {tau!r}") from exc
+    if not math.isfinite(value) or value <= 0.0:
+        raise ValueError(f"{name} must be finite and > 0 ns, got {tau!r}")
+    return value
+
+
 def _safe_tau(tau: float) -> float:
-    """Clamp time constants away from zero to avoid division blow-up."""
-    return max(float(tau), 1e-12)
+    """Deprecated alias retained for import compatibility; now fail-closed.
+
+    Prefer :func:`_require_positive_tau`. This name historically silent-clamped
+    non-physical inputs; that policy is rejected for production (#1075).
+    """
+    return _require_positive_tau(tau, "tau")
 
 
 def exponential_kernel_pdf(
@@ -21,9 +43,14 @@ def exponential_kernel_pdf(
     otherwise.  Non-negative everywhere; integrates to 1 over ``(-inf, inf)``.
     The raw shape integrates to ``tau_decay**2 / (tau_rise + tau_decay)`` which
     we divide out, so this is a proper PDF rather than a peak-normalised shape.
+
+    Raises
+    ------
+    ValueError
+        If either time constant is non-finite or ``<= 0``.
     """
-    tau_r = _safe_tau(tau_rise_ns)
-    tau_d = _safe_tau(tau_decay_ns)
+    tau_r = _require_positive_tau(tau_rise_ns, "tau_rise_ns")
+    tau_d = _require_positive_tau(tau_decay_ns, "tau_decay_ns")
     t = np.asarray(t_ns, dtype=np.float64)
     out = np.zeros_like(t)
     pos = t >= 0.0
@@ -49,9 +76,14 @@ def exponential_kernel_cdf(
     and ``0`` for ``T < 0`` (causal).  Monotonically non-decreasing with
     ``CDF(inf) = 1`` and ``CDF(0) = 0``.  Use this (not the peak-normalised
     shape) when integrating charge over absolute bin edges.
+
+    Raises
+    ------
+    ValueError
+        If either time constant is non-finite or ``<= 0``.
     """
-    tau_r = _safe_tau(tau_rise_ns)
-    tau_d = _safe_tau(tau_decay_ns)
+    tau_r = _require_positive_tau(tau_rise_ns, "tau_rise_ns")
+    tau_d = _require_positive_tau(tau_decay_ns, "tau_decay_ns")
     t = np.asarray(t_ns, dtype=np.float64)
     out = np.zeros_like(t)
     pos = t >= 0.0
@@ -76,9 +108,14 @@ def normalized_exponential_kernel(
     integrate to 1, and yields negative per-bin "charge").  Use
     :func:`exponential_kernel_pdf` (unit integral) or
     :func:`exponential_kernel_cdf` for charge-conserving sampling.
+
+    Raises
+    ------
+    ValueError
+        If either time constant is non-finite or ``<= 0``.
     """
-    tau_r = _safe_tau(tau_rise_ns)
-    tau_d = _safe_tau(tau_decay_ns)
+    tau_r = _require_positive_tau(tau_rise_ns, "tau_rise_ns")
+    tau_d = _require_positive_tau(tau_decay_ns, "tau_decay_ns")
     t = np.asarray(t_ns, dtype=np.float64)
     out = np.zeros_like(t)
     pos = t >= 0.0

@@ -1,5 +1,14 @@
 # Sample I vs Sample II — Stave Outputs, Trigger Mimicry, and the First Data↔MC Comparison
 
+<!-- claim-gate: #1045 / ADR-0002 -->
+> **Evidence gate (2026-08-11):** MC Sample I/II membership uses the HRD
+> first-stack-layer charged-hit **proxy** only (`MC_TRIGGER_PROXY`). Hardware
+> trigger geometry/electronics remain `UNKNOWN_EXTERNAL` / **BLOCKED**. Do not
+> read proxy agreement as validated hardware-trigger reproduction. See
+> `docs/contracts/TRIGGER_HARDWARE_RESPONSE.json` and
+> `docs/mc_validation/ADR-0002-trigger-hardware-proxy-blocked.md`.
+
+
 **CCB / Krakow test beam (190 MeV p on CD₂, HRD range stacks A & B)**
 Status: preliminary. Generated 2026-06-23 on LUNARC (SLURM job `3309697`, full 1M-event MC + 640k-pulse data).
 Artifacts: `reports/sampleI_II_trigger_split_1782210822/` (JSON + figures), scripts `scripts/mc01_trigger_split_truth.py`, `scripts/data01_sample_split_staves.py`, `scripts/compare_data_mc.py`.

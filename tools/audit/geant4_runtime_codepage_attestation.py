@@ -7,7 +7,7 @@ receipt, re-identifies the same live process and executable mapping set, reads
 those executable virtual-address ranges through ``/proc/<pid>/mem``, and
 compares every byte with the corresponding offset in the already-attested
 backing file. A partial final file page is compared against the Linux mmap
-zero-fill rule.
+zero-fill rule; whole pages beyond backing EOF are rejected.
 
 The receipt establishes equality between *observed executable memory bytes*
 and *current bytes of the same dev/inode backing object* while the executable
@@ -351,6 +351,10 @@ def attest_runtime_codepages(
     if not isinstance(expected_starttime, int) or expected_starttime < 0:
         raise ValueError("runtime receipt starttime is invalid")
 
+    page_size = os.sysconf("SC_PAGE_SIZE")
+    if not isinstance(page_size, int) or page_size <= 0:
+        raise ValueError("cannot determine a positive system page size")
+
     receipt_projection = _projection_from_receipt(runtime_receipt)
     proc_dir = proc_root / str(pid)
 
@@ -384,6 +388,11 @@ def attest_runtime_codepages(
                     if file_offset >= file_size:
                         raise ValueError(
                             "executable mapping begins at or beyond backing EOF"
+                        )
+                    rounded_eof = ((file_size + page_size - 1) // page_size) * page_size
+                    if file_offset + length > rounded_eof:
+                        raise ValueError(
+                            "executable mapping spans a whole page beyond backing EOF"
                         )
                     file_bytes = min(length, file_size - file_offset)
                     memory_bytes = _pread_exact(

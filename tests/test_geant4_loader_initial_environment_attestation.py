@@ -181,6 +181,21 @@ def test_process_identity_mismatch_fails(tmp_path: Path) -> None:
         )
 
 
+def test_secure_receipt_requires_auxv_record(tmp_path: Path) -> None:
+    runtime = _runtime()
+    secure = _secure(runtime)
+    body = dict(secure)
+    body.pop("receipt_sha256")
+    body["auxv"] = "not-a-record"
+    secure = _with_digest(body)
+    with pytest.raises(ValueError, match="no auxv record"):
+        initial_env.attest_loader_initial_environment(
+            runtime_receipt=runtime,
+            secure_receipt=secure,
+            proc_root=_proc(tmp_path, environ=b"LD_LIBRARY_PATH=/g4:/root\0"),
+        )
+
+
 def test_environment_change_between_reads_fails(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
@@ -242,6 +257,7 @@ def test_real_procfs_keeps_launch_region_when_program_changes_environ() -> None:
             ),
             marker=marker.encode("utf-8"),
         )
+        # Reconstruct every tracked runtime value from the actual procfs snapshot.
         parsed = initial_env._tracked_environment(raw, set(runtime["loader_environment"]))
         runtime_body = dict(runtime)
         runtime_body.pop("receipt_sha256")

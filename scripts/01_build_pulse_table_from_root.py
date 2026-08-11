@@ -56,6 +56,7 @@ GATE_PASS = "PASS"
 GATE_FAIL = "FAIL"
 GATE_NOT_RUN_MISSING_INPUT = "NOT_RUN_MISSING_INPUT"
 GATE_NOT_APPLICABLE = "NOT_APPLICABLE"
+GATE_INCOMPLETE_SCALAR_PROXY = "INCOMPLETE_SCALAR_PROXY"  # issue #953
 SCHEMA_VERSION = "v1"
 
 
@@ -402,10 +403,16 @@ def scan_raw(config: dict) -> Tuple[pd.DataFrame, pd.DataFrame, Dict[str, dict],
             baseline, amplitude, peak_sample, area = pulse_quantities(
                 waveforms, baseline_indices, polarity=stave_polarity
             )
-# Absolute peak (raw max) for peak_code_adc and hardware saturation
-            # flag (14-bit CAEN V1742, max code = 16383).
+            # Absolute peak (raw max) for peak_code_adc. Saturation is a
+            # NON-AUTHORISING diagnostic under unresolved ADC world A (#1073/#1014);
+            # do not treat max-code=16383 as authorising while Worlds A/B/C disagree.
+            from ccb_mc_validation.daq.adc_saturation_registry import (
+                diagnostic_saturation_flag,
+            )
             peak_code_adc = waveforms.max(axis=-1)
-            saturation = waveforms.max(axis=-1) >= 16383
+            saturation, _saturation_meta = diagnostic_saturation_flag(
+                peak_code_adc, world_id="A"
+            )
             selected_mask = amplitude > cut
             event_selected = selected_mask.any(axis=1)
 
@@ -756,21 +763,97 @@ def run_ml_check(
     return ml_summary
 
 
-def write_checksums(config: dict, out_dir: Path) -> pd.DataFrame:
-    files = []
+def write_checksums(
+    config: dict,
+    out_dir: Path,
+    *,
+    skip_sorted: bool = False,
+) -> pd.DataFrame:
+    """Hash inputs that exist/were consumed; record missing expected inputs (#973).
+
+    ``--skip-sorted`` no longer requires ``--skip-sha256``. Raw hashes are always
+    retained when raw files exist. Sorted files skipped by gate state are recorded
+    with an explicit ``missing_reason`` instead of unconditionally opening them.
+    """
+    rows: List[dict] = []
+
+    def _append(
+        path: Path,
+        *,
+        role: str,
+        expected: bool,
+        consumed: bool,
+        missing_reason: str | None = None,
+    ) -> None:
+        present = path.is_file()
+        if present:
+            rows.append(
+                {
+                    "file": str(path),
+                    "role": role,
+                    "expected_input": bool(expected),
+                    "present": True,
+                    "consumed": bool(consumed),
+                    "sha256": sha256_file(path),
+                    "bytes": int(path.stat().st_size),
+                    "missing_reason": None if consumed else (missing_reason or "not_consumed"),
+                }
+            )
+            return
+        rows.append(
+            {
+                "file": str(path),
+                "role": role,
+                "expected_input": bool(expected),
+                "present": False,
+                "consumed": False,
+                "sha256": None,
+                "bytes": None,
+                "missing_reason": missing_reason or "missing_file",
+            }
+        )
+
     for path in sorted(Path("data/raw").glob("**/*")):
         if path.is_file():
-            files.append(path)
-    for run in configured_runs(config):
-        files.append(raw_file(Path(config["raw_root_dir"]), run))
-        files.append(sorted_file(Path(config["sorted_b_dir"]), run))
+            _append(path, role="data_raw_tree", expected=False, consumed=True)
 
-    rows = []
-    for path in files:
-        rows.append({"file": str(path), "sha256": sha256_file(path), "bytes": path.stat().st_size})
+    raw_root = Path(config["raw_root_dir"])
+    sorted_b = Path(config.get("sorted_b_dir") or "")
+    for run in configured_runs(config):
+        _append(
+            raw_file(raw_root, run),
+            role="raw_root",
+            expected=True,
+            consumed=True,
+            missing_reason="missing_raw_root",
+        )
+        sorted_path = (
+            sorted_file(sorted_b, run)
+            if str(sorted_b)
+            else Path(f"hrdb_run_{run:04d}-sorted.root")
+        )
+        if skip_sorted:
+            reason = "skip_sorted" if not sorted_path.is_file() else "not_consumed_skip_sorted"
+            _append(
+                sorted_path,
+                role="sorted_b",
+                expected=True,
+                consumed=False,
+                missing_reason=reason,
+            )
+        else:
+            _append(
+                sorted_path,
+                role="sorted_b",
+                expected=True,
+                consumed=True,
+                missing_reason="missing_sorted_root",
+            )
+
     df = pd.DataFrame(rows)
     df.to_csv(out_dir / "input_sha256.csv", index=False)
     return df
+
 
 
 def make_figures(counts_by_run: pd.DataFrame, selected: pd.DataFrame, out_dir: Path) -> None:
@@ -1046,8 +1129,16 @@ def main() -> int:
             suffixes=("_raw", "_sorted_even"),
         )
         sorted_diff = sorted_compare["selected_pulses_raw"] - sorted_compare["selected_pulses_sorted_even"]
-        sorted_gate_pass = bool((sorted_diff.abs() <= 0).all())
-        sorted_compare["gate_state"] = GATE_PASS if sorted_gate_pass else GATE_FAIL
+        scalar_match = bool((sorted_diff.abs() <= 0).all())
+        # Issue #953: scalar hrdMax/selected-count agreement is an incomplete proxy.
+        from ccb_mc_validation.daq.raw_sorted_closure import closure_report
+        closure = closure_report(word_closure=None, scalar_proxy_used=True)
+        sorted_gate_pass = False
+        sorted_compare["gate_state"] = (
+            GATE_INCOMPLETE_SCALAR_PROXY if scalar_match else GATE_FAIL
+        )
+        sorted_compare["scalar_selected_match"] = scalar_match
+        sorted_compare["closure_reason"] = closure["reason"]
 
 # ---- All gates pass? ----
     all_gates_pass = fixed_count_pass and sorted_gate_pass
@@ -1063,7 +1154,7 @@ def main() -> int:
     if not args.skip_ml:
         run_ml_check(config, ml_rows, staging, population_prevalence=population_prevalence)
     if not args.skip_sha256:
-        write_checksums(config, staging)
+        write_checksums(config, staging, skip_sorted=bool(args.skip_sorted))
     # ---- Model identity for manifest ----
     input_hashes = None
     if not args.skip_sha256:
@@ -1090,7 +1181,11 @@ def main() -> int:
     if args.skip_sorted or not Path(config.get("sorted_b_dir", "")).exists():
         sorted_gate_state = GATE_NOT_RUN_MISSING_INPUT
     else:
-        sorted_gate_state = GATE_PASS if sorted_gate_pass else GATE_FAIL
+        sorted_gate_state = (
+            sorted_compare["gate_state"].iloc[0]
+            if len(sorted_compare) and "gate_state" in sorted_compare
+            else GATE_FAIL
+        )
     gate_states = {
         "count_match": GATE_PASS if fixed_count_pass else GATE_FAIL,
         "sorted_even_channel_crosscheck": sorted_gate_state,

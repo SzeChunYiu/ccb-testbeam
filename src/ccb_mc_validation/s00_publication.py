@@ -287,7 +287,15 @@ def resolve_artifact(
     generation_root: Path,
     logical_name: str,
 ) -> Path:
-    """Resolve and content-verify an authoritative immutable-generation artifact."""
+    """Resolve and content-verify an artifact pathname at verification time.
+
+    WARNING (#1149): returning this ``Path`` is NOT a same-bytes read guarantee.
+    A writer can mutate the file (including via hard-link alias) after verification
+    and before a later reopen. Authorising consumers MUST use
+    ``ccb_mc_validation.s00_verified_read.verified_artifact_snapshot`` and read
+    only the yielded private snapshot. See
+    ``docs/contracts/S00_VERIFIED_READ_CONTRACT.md``.
+    """
     pointer = read_publication_pointer(pointer_path)
     if logical_name not in pointer.artifacts:
         raise S00PublicationError(f"unknown logical artifact {logical_name!r}")

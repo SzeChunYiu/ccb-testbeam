@@ -13,6 +13,7 @@
 #include <cstdint>
 #include <cstdlib>
 #include <fstream>
+#include <stdexcept>
 #include <iostream>
 #include <ctime>
 #include <cstdio>
@@ -231,7 +232,10 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
   // <output>.meta.json — provenance the analysis + manifest validators consume.
   const std::string meta = cfg_.output + ".meta.json";
   std::ofstream os(meta);
-  if (!os) { std::cerr << "warning: cannot write " << meta << "\n"; return; }
+  if (!os) {
+    std::cerr << "fatal: cannot write provenance sidecar " << meta << "\n";
+    throw std::runtime_error("failed to write run metadata sidecar: " + meta);
+  }
   auto j = [](const std::string& s) -> std::string {
     // Fully robust JSON string escaping (RFC 8259).  Escapes \" \\ and all
     // control characters (< 0x20), using short forms for the common ones
@@ -263,7 +267,7 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
   };
   const char* git = std::getenv("CCB_GIT_COMMIT");
   os << "{\n"
-     << "  \"schema\": \"ccb-stave-run-meta/1\",\n"
+     << "  \"schema\": \"ccb-stave-run-meta/2\",\n"
      << "  \"git_commit\": " << j(git ? git : "unknown") << ",\n"
      << "  \"geometry_hash\": " << j(geometry_hash_) << ",\n"
      << "  \"seed\": " << cfg_.seed << ",\n"
@@ -274,7 +278,12 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
               ? "unset" : cfg_.g4_force_number_of_threads) << ",\n"
      << "  \"particle\": " << j(cfg_.particle) << ",\n"
      << "  \"kinetic_energy_MeV\": " << cfg_.kinetic_energy_MeV << ",\n"
+     << "  \"n_events_requested\": " << cfg_.n_events << ",\n"
      << "  \"n_events\": " << run->GetNumberOfEvent() << ",\n"
+     << "  \"hit_x_cm\": " << cfg_.hit_x_cm << ",\n"
+     << "  \"hit_y_cm\": " << cfg_.hit_y_cm << ",\n"
+     << "  \"theta_deg\": " << cfg_.theta_deg << ",\n"
+     << "  \"phi_deg\": " << cfg_.phi_deg << ",\n"
      << "  \"mode\": " << j(cfg_.mode == SimMode::kOpticalCalibration ? "optical" : "fast") << ",\n"
      << "  \"birks_kB_mm_per_MeV\": " << cfg_.birks_kB_mm_per_MeV << ",\n"
      << "  \"production_cut_mm\": " << cfg_.production_cut_mm << ",\n"
@@ -286,8 +295,10 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
      << "  \"collection_efficiency\": " << cfg_.collection_efficiency << ",\n"
 	     << "  \"optical_interface_model\": " << j(cfg_.optical_interface_model) << ",\n"
      << "  \"sipm_n_cells\": " << cfg_.sipm_n_cells << ",\n"
-     << "  \"far_end_mode\": " << j(cfg_.far_end_mode) << ",\n"
+     << "  \"sipm_overvoltage_V\": " << cfg_.sipm_overvoltage_V << ",\n"
+     << "  \"wls_time_profile\": " << j(cfg_.wls_time_profile) << ",\n"
      << "  \"strict_optical\": " << (cfg_.strict_optical ? "true" : "false") << ",\n"
+     << "  \"far_end_mode\": " << j(cfg_.far_end_mode) << ",\n"
      << "  \"allow_optical_fallback\": " << (cfg_.allow_optical_fallback ? "true" : "false") << ",\n"
      << "  \"authorising\": " << (cfg_.authorising ? "true" : "false") << ",\n"
      << "  \"optical_fallback_used\": " << (cfg_.optical_fallback_used ? "true" : "false") << ",\n"
@@ -308,6 +319,10 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
      << "  \"tio2_specular_spike\": " << cfg_.tio2_specular_spike << ",\n"
      << "  \"tio2_backscatter\": " << cfg_.tio2_backscatter << ",\n"
      << "  \"tio2_reflection_model_status\": " << j(cfg_.tio2_reflection_model_status) << ",\n"
+     << "  \"gpu_optical\": " << (cfg_.gpu_optical ? "true" : "false") << ",\n"
+     << "  \"optical_out\": " << j(cfg_.optical_out) << ",\n"
+     << "  \"macro\": " << j(cfg_.macro) << ",\n"
+     << "  \"output\": " << j(cfg_.output) << ",\n"
      << "  \"detector_response\": {\n"
      << "    \"adc_path\": \"ccb-sipm-core\",\n"
      << "    \"legacy_pe_path\": \"INDEPENDENT_DIAGNOSTIC_DRAW\",\n"

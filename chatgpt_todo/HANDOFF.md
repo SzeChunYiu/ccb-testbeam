@@ -1,39 +1,50 @@
 # Latest Handoff
 
-## Selected atom: current-base ancestry as merge-authorisation evidence (#1188)
+## Selected atom: bind CMake/C++ version probes to the exact opened executable bytes
 
-Protected main advanced during this session from `a1bcb6a68630845c31c0b8ebcd5b45de0cea1dd6` to `57407692c7d3af5de82585c5597b666cd74ad742` when PR #1187 passed exact-head MC Validation run `31426849092` and was squash-merged normally. The merged work quantifies interpolation-order sensitivity only; #1178/#1179/#1182 and CL-021 remain open/gated.
+Protected main is now `49797c9f54e889204b4679848ea7bf805184710c`. PR #1201 is validated on main, and concurrent PR #1189 subsequently merged the repository's current-base ancestry guard. That concurrent change is directly relevant here: #1202's first exact-head MC Validation run was green, but main advanced before merge, so its first green head is now intentionally non-authorising until the branch is refreshed and retested.
 
-### Discriminator
+### Why this child exists
 
-PR #1186 head `4a2d1909b681517eee72389bf5f8d3604e4b8f54` had successful exact-head `test` checks from MC Validation run `31426279702`, yet GitHub reported `mergeable_state=behind`. Against then-current main `a1bcb6a...`, the compare graph was `diverged`, `ahead_by=11`, `behind_by=1`, merge base `f5f96951c3f56986769a16cd53ab8e23dee3e287`. A normal squash merge with the exact expected head was rejected with HTTP 405, `Required status check "test" is expected.` No bypass or force update was attempted.
+For a mutable alias `p` and resolved target `r`, the v1 toolchain attestation sequence is approximately `hash(r)` then `exec(p)`. A symlink/path transition between those observations can make the stored SHA-256 and version output refer to different executable entrypoints. The selected atom is `ARU-MC-G4-TOOL-PROBE-BINDING-001` / `PROV-G4-CMAKE-002` under #1182.
 
-Control PR #1187 used the same required workflow, reported `mergeable_state=clean`, completed its `test` job successfully, and the same normal protected merge path succeeded. This sharply weakens the earlier generic Check-Runs/classic-status mismatch hypothesis and makes stale-base ancestry the leading mechanism for #1186's rejection. Exact branch-protection configuration remains inaccessible to the connector (403), so the hidden configuration is still a residual uncertainty.
+### Implemented contract
 
-### Implemented guard
+PR #1202 / branch `fix/geant4-tool-probe-binding` adds `ccb_geant4_tool_probe_binding_v1`:
 
-Issue #1188 owns `ARU-CI-BASE-FRESHNESS-001`. On branch `audit/ci-base-freshness-contract`, `tools/audit/validate_pr_base_freshness.py` checks the local Git graph only. Given exact protected base and PR head refs, it resolves both commits, records their merge base and left/right commit counts, checks base ancestry, emits versioned JSON, and exits:
+1. require a PASS, self-digested `ccb_geant4_cmake_toolchain_attestation_v1` parent;
+2. require the current CMake/C++ alias, resolved path, size, SHA-256 and symlink projection to equal the parent observation;
+3. open the already-resolved regular executable once and hash that open descriptor;
+4. execute `/proc/self/fd/{fd} --version` with that descriptor inherited, so the probe entrypoint is the same opened object rather than a fresh resolution of the cache alias;
+5. re-hash the same descriptor after the probe and require identical device/inode/mode/size/SHA-256;
+6. re-resolve/re-hash the original alias and require an unchanged path/target projection;
+7. self-digest the child receipt with exact stdout/stderr hashes and explicit non-authorising limitations.
 
-- 0 for exact current-base ancestry (`behind_by=0`),
-- 2 for stale/diverged ancestry,
-- 3 if the graph itself cannot be inspected.
+### Competing mechanisms and falsifiers
 
-It intentionally does not conflate ancestry with required-check status; both gates must pass.
+Hash-target/probe-original-alias is rejected by an injected alias transition. Hash-target/probe-resolved-path/post-check is a bounded improvement but still reopens by pathname. Open-once/hash/execute-that-open-object/re-hash/recheck-alias survives for this local Linux entrypoint-binding atom. Treating the bound entrypoint as evidence for dynamic libraries, wrapper child compilers, actual build invocations or generated physics remains rejected.
 
-A synthetic Git-repository falsifier was executed locally with no RNG. A feature branched before one new main commit yielded `behind_by=1`, `ahead_by=1` and nonauthorising status; a feature created from the new main yielded `behind_by=0`, `ahead_by=1` and authorising status; an unknown ref failed closed. `pytest -q tests/test_pr_base_freshness.py` returned `3 passed in 12.97s`. Local ruff could not be executed because the available executable returned an OS permission error, so exact-head repository CI remains mandatory before merge.
+Local deterministic reconstruction, no RNG, returned `6 passed in 0.06s`. Fixtures cover stable direct tools, stable symlink aliases, symlink target transition during the probe, executable self-mutation during the probe, parent-attested bytes changed before probing, and nonzero probe exit.
 
-### Four sequential review votes
+First GitHub exact-head MC Validation run `31447800441` on `148bd06266665c2ef597697538d821b9b8752120` completed with curated ruff clean and `1499 passed, 1 skipped, 8 xfailed, 1 xpassed`. During that run protected main advanced from `1968f735...` to `49797c9f...` via #1189. The subsequent normal protected squash attempt on #1202 was rejected; no bypass or force update was attempted. This is now a positive real-world application of #1189's rule: stale green CI is evidence about the old integration base, not the current one.
 
-- **Scientific-software lead — ACCEPT mechanism / REVISE workflow:** current-base control falsifies a generic check-API explanation; exact hidden protection config remains unknown.
-- **Adversarial reviewer — BLOCK stale-head authorisation:** rerunning checks on unchanged stale ancestry does not test the current integration state.
-- **Independent validation reviewer — ACCEPT A/B discriminator / REQUIRE real refresh rerun:** causal closure requires #1186 refreshed to current main, fresh CI, and a successful normal protected merge.
-- **Claims/provenance reviewer — BLOCK any statement that #1186 is on main:** its branch result is reviewable but absent from protected main.
+### Four sequential AI reviews
 
-### Immediate handoff
+- **Build/physics integration lead — ACCEPT bounded entrypoint binding / REVISE build provenance.** The alias race is real and the open-file mechanism closes it locally. Actual compiler/linker invocation remains unobserved.
+- **Adversarial mechanism reviewer — ACCEPT local mechanism / BLOCK transitive dependency claims.** A bound executable can still be dynamically linked or launch wrapper children whose bytes are not bound. Probe output is also only bounded after capture in v1 of this child, so streaming/output-resource bounds remain a non-physics implementation child if hostile tools are in scope.
+- **Independent validation reviewer — ACCEPT first deterministic CI / REQUIRE fresh current-base rerun.** The first exact-head CI is green, but it predates current main ancestry and cannot authorise merge after #1189.
+- **Claims/provenance reviewer — ACCEPT provenance refinement / BLOCK CL-021 promotion.** #1182 runtime/thread/input/output, link/runtime-library identity and compiled hostile controls remain unmet.
 
-1. Wait for / inspect exact-head repository CI on the new #1188 guard PR; do not merge it before green CI.
-2. Refresh #1186 onto the latest main through a normal **non-force** workflow, record new head and merge base, verify `behind_by=0`, and require fresh MC Validation CI before retrying merge.
-3. Audit PR #1183 similarly; its recorded base `f5f96951...` is stale relative to current main and it owns the audit precursor to #1182's P0 source-readiness fix.
-4. Do not let this repository-provenance repair promote any source, detector, ESS, p-value, PID, timing, penetration, energy or pile-up claim.
+### Current repository action
 
-No beam ROOT bytes were opened and no production Geant4 campaign was run in this atom.
+Refresh #1202 onto `main@49797c9f54e889204b4679848ea7bf805184710c` through a normal non-force merge commit that preserves #1189's files and resolves only the competing `ACTIVE_TASK.md`/`HANDOFF.md` coordination edits. Require a fresh exact-head `test` CI on the refreshed head before retrying the protected merge.
+
+### Child atoms
+
+- `ARU-MC-G4-LINK-RUNTIME-IDENTITY-001`: link inputs and actually loaded Geant4/VGM/ROOT/system library bytes.
+- `ARU-MC-G4-IMMUTABLE-CONSUMPTION-001`: bytes actually consumed by compiler/linker invocations.
+- `ARU-MC-G4-WRAPPER-CHAIN-001`: identify/bind child compiler processes when the CMake-selected compiler is a launcher/wrapper.
+- `ARU-MC-G4-PROBE-OUTPUT-BOUND-001`: if hostile/untrusted tools are considered, make probe-output memory bounds operational rather than post-capture only.
+- `ARU-MC-G4-RUNTIME-MANIFEST-001`: run-manager/thread mode, RNG engine/seeds, event count, model IDs, runtime input hashes, exit status, output ROOT/tree/schema/hash.
+
+No production Geant4 executable/build tree, beam ROOT, production MC ROOT or detector-chain output was used. No angular distribution, event weight, B2/B8, PID, penetration, timing, calibration, pile-up, ESS, p-value, rate or detector-performance result was regenerated or promoted.

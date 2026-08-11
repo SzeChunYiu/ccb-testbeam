@@ -10,9 +10,9 @@ that procfs exposes.
 
 The receipt therefore means only that two consecutive command-line reads were
 byte-equal at the attestation boundary; an ABA mutation between reads is not
-excluded.  ``argv[0]`` is not used as executable identity; the parent runtime
-receipt's content-bound ``/proc/<pid>/exe`` observation remains authoritative
-for that separate question.
+excluded.  ``argv[0]`` is not used as executable
+identity; the parent runtime receipt's content-bound ``/proc/<pid>/exe``
+observation remains authoritative for that separate question.
 """
 from __future__ import annotations
 

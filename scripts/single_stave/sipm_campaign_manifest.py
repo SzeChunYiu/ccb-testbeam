@@ -2,8 +2,8 @@
 """Create and verify immutable SiPM sensitivity campaign intent manifests.
 
 The manifest binds the expected ccb-sipm-core revision to the superproject
-Gitlink at ``geant4/single_stave/sipm``.  Callers never supply the expected
-core SHA directly.  A canonical SHA-256 over the manifest bytes is passed to
+Gitlink at ``geant4/single_stave/sipm``. Callers never supply the expected
+core SHA directly. A canonical SHA-256 over the manifest bytes is passed to
 Slurm jobs so a post-submission manifest edit fails closed.
 """
 from __future__ import annotations
@@ -46,7 +46,10 @@ def sha256_bytes(data: bytes) -> str:
 
 
 def canonical_manifest_bytes(manifest: dict[str, Any]) -> bytes:
-    return (json.dumps(manifest, sort_keys=True, separators=(",", ":"), ensure_ascii=False) + "\n").encode()
+    text = json.dumps(
+        manifest, sort_keys=True, separators=(",", ":"), ensure_ascii=False
+    )
+    return (text + "\n").encode()
 
 
 def _git(repo_root: Path, *args: str) -> str:
@@ -65,7 +68,9 @@ def _git(repo_root: Path, *args: str) -> str:
 
 
 def repo_identities(repo_root: Path) -> tuple[str, str]:
-    repo_commit = canonical_git_sha(_git(repo_root, "rev-parse", "HEAD"), field="superproject_commit")
+    repo_commit = canonical_git_sha(
+        _git(repo_root, "rev-parse", "HEAD"), field="superproject_commit"
+    )
     row = _git(repo_root, "ls-tree", "HEAD", CORE_PATH)
     parts = row.split()
     if len(parts) < 3 or parts[1] != "commit":
@@ -163,14 +168,17 @@ def validate_manifest(manifest: Any) -> dict[str, Any]:
     return manifest
 
 
-def load_and_verify_manifest(path: Path, *, expected_sha256: str | None = None) -> tuple[dict[str, Any], str]:
+def load_and_verify_manifest(
+    path: Path, *, expected_sha256: str | None = None
+) -> tuple[dict[str, Any], str]:
     raw = path.read_bytes()
     actual_digest = sha256_bytes(raw)
     if expected_sha256 is not None:
         expected_digest = canonical_sha256(expected_sha256, field="expected manifest SHA-256")
         if actual_digest != expected_digest:
             raise ManifestError(
-                f"manifest byte digest mismatch: actual {actual_digest} != expected {expected_digest}"
+                "manifest byte digest mismatch: "
+                f"actual {actual_digest} != expected {expected_digest}"
             )
     try:
         manifest = json.loads(raw)
@@ -255,7 +263,8 @@ def _cmd_verify(args: argparse.Namespace) -> int:
         expected_grid = grids[args.grid_knob]
         if actual_grid != expected_grid:
             raise ManifestError(
-                f"grid digest mismatch for {args.grid_knob}: actual {actual_grid} != expected {expected_grid}"
+                f"grid digest mismatch for {args.grid_knob}: "
+                f"actual {actual_grid} != expected {expected_grid}"
             )
     print(expected_core_sha(manifest))
     return 0

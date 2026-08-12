@@ -23,7 +23,8 @@
 #
 # Usage:
 #   sbatch --array=0-$((N-1)) --cpus-per-task=4 slurm/submit_calibration.sh build/ points.csv out/
-# points.csv columns (no header): particle,energy_MeV,hit_x_cm,hit_y_cm,seed,nevents
+# points.csv columns (no header):
+#   particle,energy_MeV,hit_x_cm,hit_y_cm,seed,nevents[,theta_deg,phi_deg]
 # Env overrides:
 #   CCB_NEVENTS  default nevents when the CSV cell is blank (default 2000)
 #   CCB_THREADS  worker threads passed to --threads (default = SLURM_CPUS_PER_TASK)
@@ -49,20 +50,23 @@ IDX="${SLURM_ARRAY_TASK_ID:-0}"
 # Read the IDX-th data line (skip blank/comment lines).
 LINE="$(grep -vE '^\s*(#|$)' "${POINTS}" | sed -n "$((IDX+1))p")"
 if [[ -z "${LINE}" ]]; then echo "no point at index ${IDX}" >&2; exit 1; fi
-IFS=',' read -r PART ENE HX HY SEED NEV <<< "${LINE}"
+IFS=',' read -r PART ENE HX HY SEED NEV THETA PHI <<< "${LINE}"
 : "${SEED:=$((IDX+1))}"
 : "${HY:=0}"
 : "${NEV:=${CCB_NEVENTS:-2000}}"
+: "${THETA:=0}"
+: "${PHI:=0}"
 THREADS="${CCB_THREADS:-${SLURM_CPUS_PER_TASK:-1}}"
 
 export CCB_GIT_COMMIT="$(git -C "$(dirname "${EXE}")" rev-parse HEAD 2>/dev/null || echo unknown)"
-OUT="${OUTDIR}/stave_${PART}_${ENE}MeV_x${HX}_s${SEED}.root"
+OUT="${OUTDIR}/stave_${PART}_${ENE}MeV_x${HX}_y${HY}_th${THETA}_ph${PHI}_s${SEED}.root"
 
-echo "point idx=${IDX} part=${PART} E=${ENE} MeV x=${HX} y=${HY} seed=${SEED} nev=${NEV} threads=${THREADS}"
+echo "point idx=${IDX} part=${PART} E=${ENE} MeV x=${HX} y=${HY} theta=${THETA} phi=${PHI} seed=${SEED} nev=${NEV} threads=${THREADS}"
 srun "${EXE}" \
   --mode optical \
   --particle "${PART}" --energy "${ENE}" \
   --hit-x "${HX}" --hit-y "${HY}" \
+  --theta "${THETA}" --phi "${PHI}" \
   --seed "${SEED}" --nevents "${NEV}" --threads "${THREADS}" \
   --optical-dir "${OPTICAL}" --strict-optical \
   --output "${OUT}"

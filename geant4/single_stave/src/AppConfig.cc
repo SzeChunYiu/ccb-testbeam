@@ -116,6 +116,9 @@ std::string AppConfig::Describe() const {
      << " phi_deg=" << phi_deg
      << " allow_miss=" << (allow_miss ? 1 : 0)
      << " birks_kB=" << birks_kB_mm_per_MeV
+    << " quenching_model_id=" << quenching_model_id
+    << " quenching_model_status=" << quenching_model_status
+    << " quenching_claims_authorized=" << (quenching_claims_authorized ? "true" : "false")
      << " production_cut_mm=" << production_cut_mm
      << " physics_list=" << (physics_list.empty() ? "UNSET" : physics_list)
      << " reflectivity_scale=" << reflectivity_scale

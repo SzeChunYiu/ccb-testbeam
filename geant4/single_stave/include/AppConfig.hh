@@ -41,6 +41,12 @@ struct AppConfig {
 
   // --- Detector / optical systematics knobs (multiplicative unless noted) ---
   double birks_kB_mm_per_MeV = 0.126; // Birks constant kB [mm/MeV] (Edep scan var)
+
+  // Quenching model provenance (#1008): Birks form is a hypothesis until
+  // material-specific validation closes the claim.
+  std::string quenching_model_id = "birks_geant4";
+  std::string quenching_model_status = "HYPOTHESIS";
+  bool quenching_claims_authorized = false;
   // Secondary-production range threshold [mm] (issue #1089). Controls Geant4
   // production of gamma/e-/e+/proton secondaries — NOT optical-photon tracking.
   // Coupled to Birks: changing it alters the explicit delta-ray population and

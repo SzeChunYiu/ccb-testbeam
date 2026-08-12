@@ -9,6 +9,11 @@ from typing import Any
 
 import numpy as np
 
+from ccb_mc_validation.digitizer.stage_graph import (
+    resolve_stage_graph as resolve_lane04_stage_graph,
+)
+from ccb_mc_validation.provenance.canonical_config_digests import digitizer_config_sha256
+
 from ccb_mc_validation.digitizer.birks import birks_quench
 from ccb_mc_validation.digitizer.config_types import (
     parse_strict_bool,
@@ -161,6 +166,15 @@ class DigitizerPipeline:
             "stage_graph": dict(self.stage_graph_meta),
         }
 
+
+    @property
+    def birks_kB_cm_per_mev(self) -> float | None:
+        """Lowercase alias for lane09 callers; canonical field is MeV-cased."""
+        return self.birks_kB_cm_per_MeV
+
+    @birks_kB_cm_per_mev.setter
+    def birks_kB_cm_per_mev(self, value: float | None) -> None:
+        self.birks_kB_cm_per_MeV = value
 
     @property
     def birks_kB_cm_per_mev(self) -> float | None:
@@ -525,15 +539,35 @@ class DigitizerPipeline:
         waveform = analog_adc_sum + self.electronics.pedestal_adc
         waveform = add_noise(waveform, stage_rng["electronics"], self.electronics)
         adc_final, sat_final = quantize_adc(waveform, self.electronics)
+        # Prefer config_types graph for run provenance (lane08 mandatory_final).
+        graph = resolve_stage_graph(list(self.stages))
+        kb_cm = None if not self.apply_birks else (
+            None if self.birks_kB_cm_per_MeV is None else float(self.birks_kB_cm_per_MeV)
+        )
+        kb_mm = None if kb_cm is None else kb_cm * 10.0
+        dig_hash = digitizer_config_sha256(
+            resolved_stages=list(graph.get("effective_stages", self.stages)),
+            apply_birks=bool(self.apply_birks),
+            birks_kB_mm_per_MeV=kb_mm,
+            n_samples=int(self.n_samples),
+            sample_spacing_ns=float(self.sample_spacing_ns),
+            gain_adc_per_mev=float(self.electronics.gain_adc_per_mev),
+            noise_adc_rms=float(self.electronics.noise_adc_rms),
+            pedestal_adc=float(self.electronics.pedestal_adc),
+        )
+        # Lane 04 object graph adds graph_sha256; merge without dropping lane08 keys.
+        lane04 = resolve_lane04_stage_graph(list(self.stages)).as_dict()
+        stage_graph = dict(graph)
+        stage_graph.update({k: v for k, v in lane04.items() if k not in stage_graph})
         return {
             "event_id": event_id,
             "adc": adc_final,
             "saturated": sat_final,
             "n_hits": len(hits),
             "digitizer_rng_schema": DIGITIZER_RNG_SCHEMA,
-            "stage_graph": dict(getattr(self, "stage_graph_meta", {})),
-            "requested_stages": list(getattr(self, "requested_stages", [])),
-            "effective_stages": list(getattr(self, "effective_stages", getattr(self, "stages", []))),
+            "stage_graph": stage_graph,
+            "birks_kB_cm_per_MeV_effective": kb_cm,
+            "digitizer_config_sha256": dig_hash,
         }
 
 

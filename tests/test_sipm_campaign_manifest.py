@@ -207,6 +207,70 @@ def test_campaign_creation_requires_clean_repository(tmp_path: Path):
         mod.require_clean_worktree(repo)
 
 
+def _make_launcher_build_receipt(source: Path, build: Path) -> None:
+    """Create a real receipt around a fake self-hashing executable outside source."""
+    root_sha = _git(source, "rev-parse", "HEAD")
+    row = _git(source, "ls-tree", "HEAD", "geant4/single_stave/sipm").split()
+    assert len(row) >= 3 and row[1] == "commit"
+    core_sha = row[2]
+
+    fake_cmake = build / "fake-cmake"
+    fake_cxx = build / "fake-cxx"
+    fake_cmake.write_text("#!/usr/bin/env sh\necho cmake-fixture\n")
+    fake_cxx.write_text("#!/usr/bin/env sh\necho cxx-fixture\n")
+    fake_cmake.chmod(0o755)
+    fake_cxx.chmod(0o755)
+    geant4 = build / "geant4"
+    geant4.mkdir()
+    (geant4 / "Geant4Config.cmake").write_text("set(Geant4_VERSION fixture)\n")
+    (build / "CMakeCache.txt").write_text(
+        f"CMAKE_COMMAND:INTERNAL={fake_cmake}\n"
+        f"CMAKE_CXX_COMPILER:FILEPATH={fake_cxx}\n"
+        "CMAKE_GENERATOR:INTERNAL=Unix Makefiles\n"
+        f"Geant4_DIR:PATH={geant4}\n"
+    )
+    exe = build / "ccb_stave_sim"
+    exe.write_text(
+        "#!/usr/bin/env python3\n"
+        "import hashlib, json, pathlib, sys\n"
+        f"root={root_sha!r}; core={core_sha!r}; cxx={str(fake_cxx)!r}\n"
+        "if sys.argv[1:] != ['--build-provenance-json']: raise SystemExit(9)\n"
+        "raw=pathlib.Path(__file__).read_bytes()\n"
+        "print(json.dumps({"
+        "'schema':'ccb-single-stave-runtime-build-identity/1',"
+        "'superproject_commit':root,'sipm_core_commit':core,"
+        "'source_tree_clean_at_configure':True,'cmake_version':'fixture',"
+        "'cxx_compiler_id':'fixture','cxx_compiler_version':'fixture',"
+        "'cxx_compiler_path':cxx,'geant4_version':'fixture',"
+        "'executable_sha256':hashlib.sha256(raw).hexdigest(),"
+        "'executable_bytes':len(raw),'executable_identity_status':'PASS_SELF_SHA256'"
+        "},sort_keys=True,separators=(',',':')))\n"
+    )
+    exe.chmod(0o755)
+    tool = source / "scripts" / "single_stave" / "sipm_build_receipt.py"
+    subprocess.run(
+        [
+            sys.executable,
+            str(tool),
+            "create",
+            "--repo-root",
+            str(source),
+            "--build-dir",
+            str(build),
+            "--executable",
+            str(exe),
+            "--receipt",
+            str(build / "ccb_stave_sim.build.json"),
+            "--digest-file",
+            str(build / "ccb_stave_sim.build.sha256"),
+        ],
+        check=True,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+
+
 def test_env_regrid_is_external_content_bound_and_leaves_source_clean(tmp_path: Path):
     """A documented grid override must not dirty tracked source before manifest freeze."""
     # The repository-wide CI intentionally creates logs, bytecode and editable-install
@@ -232,6 +296,7 @@ def test_env_regrid_is_external_content_bound_and_leaves_source_clean(tmp_path: 
 
         build = tmp_path / "build"
         build.mkdir()
+        _make_launcher_build_receipt(source, build)
         outdir = tmp_path / "campaign"
         env = os.environ.copy()
         env.update(
@@ -267,6 +332,12 @@ def test_env_regrid_is_external_content_bound_and_leaves_source_clean(tmp_path: 
         expected_grid_digest = hashlib.sha256(grid.read_bytes()).hexdigest()
         assert manifest["grid_sha256"] == {"pde_scale": expected_grid_digest}
         assert manifest["execution_intent"]["nevents_per_point"] == 60
+        assert (outdir / "build_receipt.json").read_bytes() == (
+            build / "ccb_stave_sim.build.json"
+        ).read_bytes()
+        assert (outdir / "build_receipt.sha256").read_text().strip() == hashlib.sha256(
+            (outdir / "build_receipt.json").read_bytes()
+        ).hexdigest()
 
         after = _git(source, "status", "--porcelain=v1", "--untracked-files=all")
         assert after == before

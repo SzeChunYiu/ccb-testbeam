@@ -1,0 +1,10 @@
+{
+  "schema_version": "1.0.0",
+  "issue_number": 1182,
+  "atom_id": "BOUNDED-IMPL-001",
+  "disposition": "ACCEPTANCE_COMPLETE",
+  "basis": "ACCEPTANCE_COMPLETE",
+  "unresolved_leaves": [],
+  "successors": [],
+  "pr_text": "Refs #1182. Acceptance complete for bounded scope."
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "1.0.0",
+  "contract_id": "CLOSE_INTENT_MANIFEST",
+  "issue": "#1218",
+  "audit_id": "ARU-GOV-MERGE-CLOSE-KEYWORD-001",
+  "invariant": "MERGED(implementation) != COMPLETE(research_universe)",
+  "description": "Repository-owned close-intent declaration for scientific-universe issues. Ordinary pytest validates fixture bytes only; no live GitHub API required.",
+  "required_fields": [
+    "schema_version",
+    "issue_number",
+    "atom_id",
+    "disposition",
+    "basis"
+  ],
+  "dispositions": {
+    "ACCEPTANCE_COMPLETE": "All declared material completion gates are ACCEPTED.",
+    "EXPLICIT_SUCCESSOR_TRANSFER": "Every unresolved leaf is transferred to named successor issues with blocker/claim consequences preserved.",
+    "SUPERSEDED": "Exact superseding issue is named; never emits COMPLETE.",
+    "PARTIAL_NO_CLOSE": "Bounded implementation may merge; parent must not auto-close."
+  },
+  "forbidden_auto_close_keywords": ["Closes", "Close", "Fixes", "Fix", "Resolves", "Resolve"],
+  "safe_reference_keywords": ["Refs", "Related", "does not close"],
+  "witness": {
+    "regression_parent": 1057,
+    "incident_pr": 1216,
+    "bounded_successor_transfer_ok": 1182
+  },
+  "merge_message_residual": "GitHub squash/rebase merge UI can still inject close keywords contrary to validated intent; post-merge reconciliation is required when platform enforcement is unavailable."
+}

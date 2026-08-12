@@ -7,7 +7,7 @@
 
 ## Change log (2026-08-12, issue #956)
 
-PAPER-A05 primary producer `scripts/single_stave/paper_956_deltaE_E_publication.py` regenerated Figures 7–8 and segmentation/B2–B4 diagnostics under `reports/paper_956_deltaE_E_20260812T103800Z/` with SHA-256 provenance. Manuscript Section 7.3, evidence rows P-027–P-033, claim ledger CL-028–CL-031, and checklist items above were updated. MC species-colour panels and beam-energy sensitivity remain open.
+PAPER-A05 primary producer `scripts/single_stave/paper_956_deltaE_E_publication.py` regenerated Figures 7–8 and segmentation/B2–B4 diagnostics under `reports/paper_956_deltaE_E_20260812T103800Z/` with SHA-256 provenance. Manuscript Section 7.3, evidence rows P-027–P-033, claim ledger CL-030–CL-033, and checklist items above were updated. MC species-colour panels and beam-energy sensitivity remain open.
 
 ---
 

@@ -218,16 +218,21 @@ The analysis does **not** find that machine learning should fully replace tradit
 
 ### Key Components
 
-| Component | Specification |
-|---|---|
-| Beam | 190 MeV protons (CCB isochronous cyclotron) |
-| Target | CD₂, 2.3 mm, 1.01 g/cm³ |
-| HRD Stacks | A-stack (+71.5°) and B-stack (−38°), 109 cm from target |
-| Scintillator | BC-408 plastic, 1 cm thick, 100 cm² per stave |
-| WLS fibre | Kuraray Y-11, 1 mm diameter, ~17 cm/ns propagation |
-| SiPM | Hamamatsu S13360-3050CS, 3×3 mm² |
-| Waveform | 18 samples × 10 ns = 180 ns, 100 MS/s, 14-bit ADC |
-| Trigger | Sample I: A×B coincidence (runs 31–57), Sample II: B-only (runs 58–65) |
+| Component | Specification | Status |
+|---|---|---|
+| Beam | 190 MeV protons (CCB isochronous cyclotron) | `SIM_CONFIG` |
+| Target | CD₂, 2.3 mm, 1.01 g/cm³ | `SIM_CONFIG` |
+| HRD Stacks | A-stack (+71.5°) and B-stack (−38°), 109 cm from target | `SIM_CONFIG` |
+| Scintillator stave | Extruded polystyrene, 50 × 5.18 × 2.0 cm, TiO₂ coating | `DESIGN_SPEC` (#796) |
+| WLS fibre | Kuraray Y-11, 1.8 mm diameter, two holes 2 cm apart | `DESIGN_SPEC` |
+| Readout | One fibre at one end only (1 of 4 possible channels) | `DESIGN_SPEC` |
+| SiPM | Hamamatsu S13360-3050CS, 3×3 mm² | `DESIGN_SPEC` |
+| B readout channels | B2, B4, B6, B8 → G4 layers 0/2/4/6 | `DESIGN_SPEC` / `SIM_CONFIG` |
+| Waveform | 8 channels; located raw product 8×16 samples at 10 ns nominal | `MEASURED` / lineage gated |
+| Trigger | Sample I: A×B coincidence (runs 31–57), Sample II: B-only (runs 58–65) | `UNKNOWN_EXTERNAL` hardware record |
+| Legacy narrative | BC-408, ~10×1 cm, ~1 m stave | `UNKNOWN_EXTERNAL` — superseded |
+
+Authoritative BOM: [`paper/hardware_bom.csv`](paper/hardware_bom.csv) (Refs #1296).
 
 ### Material Budget Status
 

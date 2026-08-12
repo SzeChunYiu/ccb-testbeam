@@ -3,24 +3,22 @@
 # rationale: Fast afterpulse; ~1% nominal, swept 0-8% (trap-density growth).
 # base_cli: --particle proton --energy 100 --hit-x 0 --hit-y 0 --theta 0 --phi 0
 # default_nevents: 60
-# paired_seed_design: AF-036 / #984 common-random-number
-# seed_replicates: 1000,1001,1002
-# note: same replicate_seed is reused at every knob value (CRN pairing)
-# columns: label,seed,nevents,cli_args,env_vars
-# explicit triple encoded in label as knob=value__rep=<replicate_seed>
-label,seed,nevents,cli_args,env_vars
-afterpulse=0__rep=1000,1000,60,,CCB_SIPM_AFTERPULSE_FAST_PROB=0
-afterpulse=0.01__rep=1000,1000,60,,CCB_SIPM_AFTERPULSE_FAST_PROB=0.01
-afterpulse=0.03__rep=1000,1000,60,,CCB_SIPM_AFTERPULSE_FAST_PROB=0.03
-afterpulse=0.05__rep=1000,1000,60,,CCB_SIPM_AFTERPULSE_FAST_PROB=0.05
-afterpulse=0.08__rep=1000,1000,60,,CCB_SIPM_AFTERPULSE_FAST_PROB=0.08
-afterpulse=0__rep=1001,1001,60,,CCB_SIPM_AFTERPULSE_FAST_PROB=0
-afterpulse=0.01__rep=1001,1001,60,,CCB_SIPM_AFTERPULSE_FAST_PROB=0.01
-afterpulse=0.03__rep=1001,1001,60,,CCB_SIPM_AFTERPULSE_FAST_PROB=0.03
-afterpulse=0.05__rep=1001,1001,60,,CCB_SIPM_AFTERPULSE_FAST_PROB=0.05
-afterpulse=0.08__rep=1001,1001,60,,CCB_SIPM_AFTERPULSE_FAST_PROB=0.08
-afterpulse=0__rep=1002,1002,60,,CCB_SIPM_AFTERPULSE_FAST_PROB=0
-afterpulse=0.01__rep=1002,1002,60,,CCB_SIPM_AFTERPULSE_FAST_PROB=0.01
-afterpulse=0.03__rep=1002,1002,60,,CCB_SIPM_AFTERPULSE_FAST_PROB=0.03
-afterpulse=0.05__rep=1002,1002,60,,CCB_SIPM_AFTERPULSE_FAST_PROB=0.05
-afterpulse=0.08__rep=1002,1002,60,,CCB_SIPM_AFTERPULSE_FAST_PROB=0.08
+# n_replicates: 3
+# seed_policy: paired_multi_seed issue_984 seed=SEED_BASE+replicate
+# columns: label,seed,nevents,cli_args,env_vars,replicate
+label,seed,nevents,cli_args,env_vars,replicate
+afterpulse=0__r0,1000,60,,CCB_SIPM_AFTERPULSE_FAST_PROB=0,0
+afterpulse=0.01__r0,1000,60,,CCB_SIPM_AFTERPULSE_FAST_PROB=0.01,0
+afterpulse=0.03__r0,1000,60,,CCB_SIPM_AFTERPULSE_FAST_PROB=0.03,0
+afterpulse=0.05__r0,1000,60,,CCB_SIPM_AFTERPULSE_FAST_PROB=0.05,0
+afterpulse=0.08__r0,1000,60,,CCB_SIPM_AFTERPULSE_FAST_PROB=0.08,0
+afterpulse=0__r1,1001,60,,CCB_SIPM_AFTERPULSE_FAST_PROB=0,1
+afterpulse=0.01__r1,1001,60,,CCB_SIPM_AFTERPULSE_FAST_PROB=0.01,1
+afterpulse=0.03__r1,1001,60,,CCB_SIPM_AFTERPULSE_FAST_PROB=0.03,1
+afterpulse=0.05__r1,1001,60,,CCB_SIPM_AFTERPULSE_FAST_PROB=0.05,1
+afterpulse=0.08__r1,1001,60,,CCB_SIPM_AFTERPULSE_FAST_PROB=0.08,1
+afterpulse=0__r2,1002,60,,CCB_SIPM_AFTERPULSE_FAST_PROB=0,2
+afterpulse=0.01__r2,1002,60,,CCB_SIPM_AFTERPULSE_FAST_PROB=0.01,2
+afterpulse=0.03__r2,1002,60,,CCB_SIPM_AFTERPULSE_FAST_PROB=0.03,2
+afterpulse=0.05__r2,1002,60,,CCB_SIPM_AFTERPULSE_FAST_PROB=0.05,2
+afterpulse=0.08__r2,1002,60,,CCB_SIPM_AFTERPULSE_FAST_PROB=0.08,2

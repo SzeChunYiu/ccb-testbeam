@@ -97,9 +97,9 @@ def test_sipm_submodule_pin_has_recovery_env_keys():
     cfg = (ROOT / "geant4/single_stave/sipm/src/Config.cc").read_text(encoding="utf-8")
     assert "CCB_SIPM_TRIGGER_RECOVERY_MODEL" in cfg
     assert "CCB_SIPM_GAIN_RECOVERY_MODEL" in cfg
-    event = (ROOT / "geant4/single_stave/src/EventAction.cc").read_text(encoding="utf-8")
-    assert "CCB_SIPM_TRIGGER_RECOVERY_MODEL" in event
-    assert "CCB_SIPM_GAIN_RECOVERY_MODEL" in event
+    digitizer = (ROOT / "geant4/single_stave/src/SipmDigitizerConfig.cc").read_text(encoding="utf-8")
+    assert "CCB_SIPM_TRIGGER_RECOVERY_MODEL" in digitizer
+    assert "CCB_SIPM_GAIN_RECOVERY_MODEL" in digitizer
     import subprocess
     sha = subprocess.check_output(
         ["git", "-C", str(ROOT / "geant4/single_stave/sipm"), "rev-parse", "HEAD"],

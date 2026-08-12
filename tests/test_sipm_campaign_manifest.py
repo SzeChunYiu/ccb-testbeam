@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -23,6 +24,36 @@ def _load():
     sys.modules["sipm_campaign_manifest"] = mod
     spec.loader.exec_module(mod)
     return mod
+
+
+def _git(repo: Path, *args: str) -> str:
+    return subprocess.run(
+        ["git", "-C", str(repo), *args],
+        check=True,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    ).stdout.strip()
+
+
+def _repo_with_gitlink(tmp_path: Path, core: str = CORE) -> Path:
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    _git(repo, "init")
+    _git(repo, "config", "user.email", "fixture@example.invalid")
+    _git(repo, "config", "user.name", "fixture")
+    (repo / "README").write_text("fixture\n")
+    _git(repo, "add", "README")
+    _git(repo, "commit", "-m", "initial")
+    _git(
+        repo,
+        "update-index",
+        "--add",
+        "--cacheinfo",
+        f"160000,{core},geant4/single_stave/sipm",
+    )
+    _git(repo, "commit", "-m", "add gitlink")
+    return repo
 
 
 def _manifest(mod):
@@ -123,3 +154,19 @@ def test_grid_digest_is_part_of_verified_campaign_intent(tmp_path: Path):
     assert observed == manifest_digest
     grid.write_text("label,seed\ncrosstalk=1,1\n")
     assert mod.sha256_bytes(grid.read_bytes()) != loaded["grid_sha256"]["crosstalk"]
+
+
+def test_source_label_cannot_hide_wrong_core_for_recorded_superproject(tmp_path: Path):
+    mod = _load()
+    repo = _repo_with_gitlink(tmp_path)
+    repo_commit, source_core = mod.repo_identities(repo)
+    assert source_core == CORE
+    manifest = mod.build_manifest(
+        repo_commit=repo_commit,
+        core_commit="f" * 40,
+        base_cli="--particle proton --energy 100",
+        nevents_per_point=60,
+        grid_sha256={"crosstalk": GRID_A},
+    )
+    with pytest.raises(mod.ManifestError, match="!= gitlink"):
+        mod.verify_source_binding(manifest, repo)

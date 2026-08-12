@@ -218,6 +218,28 @@ def expected_core_sha(manifest: dict[str, Any]) -> str:
     return canonical_git_sha(manifest["expected_core"]["commit"], field="expected_core.commit")
 
 
+def verify_source_binding(manifest: dict[str, Any], repo_root: Path) -> str:
+    """Verify the declared expected core against its recorded superproject commit."""
+    validate_manifest(manifest)
+    repo_commit = canonical_git_sha(
+        manifest["superproject_commit"], field="superproject_commit"
+    )
+    row = _git(repo_root, "ls-tree", repo_commit, CORE_PATH)
+    parts = row.split()
+    if len(parts) < 3 or parts[1] != "commit":
+        raise ManifestError(
+            f"{repo_commit}:{CORE_PATH}: expected gitlink entry, got {row!r}"
+        )
+    source_core = canonical_git_sha(parts[2], field="source gitlink core commit")
+    expected = expected_core_sha(manifest)
+    if source_core != expected:
+        raise ManifestError(
+            f"manifest expected core {expected} != gitlink {source_core} "
+            f"at superproject commit {repo_commit}"
+        )
+    return expected
+
+
 def _cmd_create(args: argparse.Namespace) -> int:
     repo_root = Path(args.repo_root).resolve()
     grids_dir = Path(args.grids_dir).resolve()
@@ -248,6 +270,7 @@ def _cmd_verify(args: argparse.Namespace) -> int:
     manifest, digest = load_and_verify_manifest(
         Path(args.manifest), expected_sha256=args.expected_sha256
     )
+    source_core = verify_source_binding(manifest, Path(args.repo_root).resolve())
     if args.digest_file:
         recorded = Path(args.digest_file).read_text().strip()
         canonical_sha256(recorded, field="digest file")
@@ -266,7 +289,7 @@ def _cmd_verify(args: argparse.Namespace) -> int:
                 f"grid digest mismatch for {args.grid_knob}: "
                 f"actual {actual_grid} != expected {expected_grid}"
             )
-    print(expected_core_sha(manifest))
+    print(source_core)
     return 0
 
 
@@ -284,7 +307,8 @@ def main() -> int:
     c.add_argument("--knobs", nargs="*", default=None)
     c.set_defaults(func=_cmd_create)
 
-    v = sub.add_parser("verify", help="verify canonical manifest bytes and optional frozen digest")
+    v = sub.add_parser("verify", help="verify manifest bytes and source-bound core identity")
+    v.add_argument("--repo-root", required=True)
     v.add_argument("--manifest", required=True)
     v.add_argument("--expected-sha256", default=None)
     v.add_argument("--digest-file", default=None)

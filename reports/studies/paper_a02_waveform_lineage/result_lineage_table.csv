@@ -1,0 +1,6 @@
+figure_or_table,paper_claim_id,authorising_waveform_schema,source_manifest,notes
+Figure 5 (format-limited timing),P-024,hrd_raw_8x16_v1,reports/studies/paper_a02_waveform_lineage/manifest.json,38 ns B4-B6 residual from LUNARC 8×16 raw; NOT DETECTOR RESOLUTION
+Section 3.3 waveform table,P-022;P-023,hrd_raw_8x16_v1,reports/studies/paper_a02_waveform_lineage/manifest.json,18-sample historical configs non-authorising
+ΔE-E diagnostic (B2-B4),P-031,historical S00 table (18-sample lineage),reports/1781028640.1299.266407ae/,regenerate from hrd_raw_8x16_v1 for final submission
+Canonical pulse count 640737,P-017,historical S00 table (18-sample lineage),reports/1781028640.1299.266407ae/,fixed-input count; CL-001 still GATED on #952/#953/#954
+Historical sub-ns timing,P-025,non-authorising (18-sample / toy),reports/studies/paper_a02_waveform_lineage/manifest.json,quarantined by #993 DISTINCT_SCHEMAS

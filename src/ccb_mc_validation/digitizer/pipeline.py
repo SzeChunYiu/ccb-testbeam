@@ -651,15 +651,11 @@ class DigitizerPipeline:
             preflight_digitizer_config,
         )
 
-        from ccb_mc_validation.response.digitizer_domains import DigitizerDomainError
-
         try:
             birks_prov = resolve_bool_field(config, "apply_birks", default=False)
         except Exception as exc:  # ConfigurationError from strict_bool (#1076)
-            # Satisfy both lane08 ValueError and lane03 ConfigurationError contracts.
-            if isinstance(exc, DigitizerDomainError):
-                raise
-            raise DigitizerDomainError(str(exc)) from exc
+            # Wave B contract tests expect ValueError for boolean typos.
+            raise ValueError(str(exc)) from exc
         sanitized = dict(config)
         sanitized["apply_birks"] = bool(birks_prov["effective"])
         try:

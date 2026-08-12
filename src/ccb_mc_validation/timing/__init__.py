@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-"""Timing contracts and TOF surrogate gates."""
-=======
-"""Timing numerical contracts (Lane 05)."""
+"""Timing contracts, template-grid gates, and TOF surrogate gates."""
 
 from ccb_mc_validation.timing.template_grid_contract import (
     DEFAULT_GRID_STEP_SAMPLES,
@@ -18,4 +15,3 @@ __all__ = [
     "assert_authorizing_resolution_compatible",
     "grid_step_ns",
 ]
->>>>>>> 7029afe4 (fix(response): Lane 05 Wave C Birks/step/primary/hash/grid contracts)

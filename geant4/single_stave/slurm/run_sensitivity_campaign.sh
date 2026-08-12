@@ -69,9 +69,11 @@ if [[ -n "$KNOBS" ]]; then
 fi
 EXPECTED_CORE_SHA="$(python3 "$MANIFEST_TOOL" "${manifest_args[@]}")"
 MANIFEST_SHA256="$(tr -d '[:space:]' < "$MANIFEST_DIGEST")"
-# Independent verify catches any unexpected write/formatting drift before job submission.
+# Independent verify catches any unexpected write/formatting drift before job submission
+# and proves that the declared expected core is the gitlink at the recorded commit.
 VERIFY_CORE_SHA="$(python3 "$MANIFEST_TOOL" verify \
-  --manifest "$MANIFEST" --expected-sha256 "$MANIFEST_SHA256")"
+  --repo-root "$REPO_ROOT" --manifest "$MANIFEST" \
+  --expected-sha256 "$MANIFEST_SHA256")"
 if [[ "$VERIFY_CORE_SHA" != "$EXPECTED_CORE_SHA" ]]; then
   echo "fatal: campaign manifest core mismatch after create" >&2
   exit 3
@@ -132,7 +134,8 @@ if [[ "${CCB_CAMPASSIGN_ANALYZE:-0}" == "1" ]]; then
   export MPLCONFIGDIR="${MPLCONFIGDIR:-/projects/hep/fs10/shared/nnbar/billy/.mplcache}"
   PY="${CCB_CAMPASSIGN_PY:-python3}"
   EXPECTED_CORE_SHA="$("$PY" "$MANIFEST_TOOL" verify \
-    --manifest "$MANIFEST" --expected-sha256 "$MANIFEST_SHA256")"
+    --repo-root "$REPO_ROOT" --manifest "$MANIFEST" \
+    --expected-sha256 "$MANIFEST_SHA256")"
   "$PY" "${REPO_ROOT}/scripts/single_stave/sipm_sensitivity.py" "$OUTDIR" \
        --grids-dir "$GRIDS" --expected-core-sha "$EXPECTED_CORE_SHA"
 fi

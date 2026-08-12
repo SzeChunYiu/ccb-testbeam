@@ -79,8 +79,6 @@ class DigitizerPipeline:
     transport_sigma_ns: float = 0.5
     apply_birks: bool = False
     # Required when apply_birks is True (#1079). Units: cm/MeV.
-    # No silent production default — Python 0.008 cm/MeV and Geant4 0.126 mm/MeV
-    # are distinct hypotheses and must be chosen explicitly.
     birks_kB_cm_per_MeV: float | None = None
     global_seed: int = 0
     stages: list[str] = field(
@@ -480,7 +478,7 @@ class DigitizerPipeline:
         }
 
 
-    @staticmethod
+
     def _parse_birks_kb_cm_per_mev(config: Mapping[str, Any]) -> float | None:
         """Parse explicit Birks kB with unit tags (#1079).
 
@@ -511,7 +509,6 @@ class DigitizerPipeline:
                 f"Birks kB must be finite and non-negative in cm/MeV, got {kb!r} (#1079)"
             )
         return kb
-
     @classmethod
     def from_config(cls, config: Mapping[str, Any]) -> DigitizerPipeline:
         # #1080: validate scalar domains before constructing RNG/event pipelines.
@@ -523,13 +520,6 @@ class DigitizerPipeline:
         birks_prov = resolve_bool_field(config, "apply_birks", default=False)
         sanitized = dict(config)
         sanitized["apply_birks"] = bool(birks_prov["effective"])
-        kb = cls._parse_birks_kb_cm_per_mev(config)
-        if bool(birks_prov["effective"]) and kb is None:
-            raise ValueError(
-                "apply_birks=True requires birks_kB_cm_per_MeV or "
-                "birks_kB_mm_per_MeV (#1079); no silent default across "
-                "Python/Geant4/prose quenching worlds"
-            )
         resolved = preflight_digitizer_config(sanitized)
         effective = resolved["effective"]
         elec_cfg = effective["electronics"]
@@ -540,6 +530,14 @@ class DigitizerPipeline:
             adc_ceiling=int(elec_cfg["adc_ceiling"]),
             pedestal_adc=float(elec_cfg["pedestal_adc"]),
         )
+
+        kb = cls._parse_birks_kb_cm_per_mev(config)
+        if bool(birks_prov["effective"]) and kb is None:
+            raise ValueError(
+                "apply_birks=True requires birks_kB_cm_per_MeV or "
+                "birks_kB_mm_per_MeV (#1079); no silent default across "
+                "Python/Geant4/prose quenching worlds"
+            )
         pipe = cls(
             n_samples=int(effective["n_samples"]),
             sample_spacing_ns=float(effective["sample_spacing_ns"]),

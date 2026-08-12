@@ -19,8 +19,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable
 
-TOOL_VERSION = "1.0.0"
-CONFIG_KEY = ("particle", "energy_MeV", "hit_x_cm", "seed")
+TOOL_VERSION = "1.1.0"
+CONFIG_KEY = ("particle", "energy_MeV", "hit_x_cm", "hit_y_cm", "seed")
 MANIFEST_COLUMNS = (
     "particle",
     "energy_MeV",
@@ -29,7 +29,7 @@ MANIFEST_COLUMNS = (
     "seed",
     "nevents",
 )
-OBSERVED_REQUIRED = set(CONFIG_KEY) | {"n_events"}
+OBSERVED_REQUIRED = {"particle", "energy_MeV", "hit_x_cm", "seed", "n_events"}
 FIT_BASIS = "seed_averaged_unique_energy"
 MIN_ENERGY_POINTS_FOR_LINEAR_FIT = 3
 
@@ -85,20 +85,21 @@ def parse_float(value: str, *, field: str, row_number: int) -> float:
     return parsed
 
 
-def canonical_key(row: dict[str, Any]) -> tuple[str, int, float, int]:
+def canonical_key(row: dict[str, Any]) -> tuple[str, int, float, float, int]:
     return (
         str(row["particle"]),
         int(row["energy_MeV"]),
         float(row["hit_x_cm"]),
+        float(row.get("hit_y_cm", 0.0)),
         int(row["seed"]),
     )
 
 
 def ensure_unique(
     rows: Iterable[dict[str, Any]], *, label: str
-) -> set[tuple[str, int, float, int]]:
-    seen: set[tuple[str, int, float, int]] = set()
-    duplicates: list[tuple[str, int, float, int]] = []
+) -> set[tuple[str, int, float, float, int]]:
+    seen: set[tuple[str, int, float, float, int]] = set()
+    duplicates: list[tuple[str, int, float, float, int]] = []
     for row in rows:
         key = canonical_key(row)
         if key in seen:
@@ -157,6 +158,9 @@ def read_observed(path: Path) -> list[dict[str, Any]]:
                 "observed CSV missing required columns: " + ", ".join(sorted(missing))
             )
         for row_number, raw in enumerate(reader, start=2):
+            hit_y_raw = raw.get("hit_y_cm", "0.0")
+            if hit_y_raw is None or str(hit_y_raw).strip() == "":
+                hit_y_raw = "0.0"
             rows.append(
                 {
                     "particle": str(raw["particle"]).strip(),
@@ -165,6 +169,9 @@ def read_observed(path: Path) -> list[dict[str, Any]]:
                     ),
                     "hit_x_cm": parse_float(
                         raw["hit_x_cm"], field="hit_x_cm", row_number=row_number
+                    ),
+                    "hit_y_cm": parse_float(
+                        hit_y_raw, field="hit_y_cm", row_number=row_number
                     ),
                     "seed": parse_int(raw["seed"], field="seed", row_number=row_number),
                     "n_events": parse_int(
@@ -192,11 +199,16 @@ def infer_main_hit_x(manifest: list[dict[str, Any]]) -> float:
 
 
 def energies_by_particle(
-    rows: Iterable[dict[str, Any]], *, hit_x_cm: float
+    rows: Iterable[dict[str, Any]],
+    *,
+    hit_x_cm: float,
+    hit_y_cm: float = 0.0,
 ) -> dict[str, list[int]]:
     values: dict[str, set[int]] = {}
     for row in rows:
         if float(row["hit_x_cm"]) != hit_x_cm:
+            continue
+        if float(row.get("hit_y_cm", 0.0)) != hit_y_cm:
             continue
         values.setdefault(str(row["particle"]), set()).add(int(row["energy_MeV"]))
     return {particle: sorted(energies) for particle, energies in sorted(values.items())}
@@ -397,10 +409,26 @@ def validate(
         )
 
     main_hit_x = infer_main_hit_x(manifest)
-    expected_main_rows = [row for row in manifest if float(row["hit_x_cm"]) == main_hit_x]
-    observed_main_rows = [row for row in observed if float(row["hit_x_cm"]) == main_hit_x]
-    expected_energies = energies_by_particle(manifest, hit_x_cm=main_hit_x)
-    observed_energies = energies_by_particle(observed, hit_x_cm=main_hit_x)
+    # Central-track response (issue #1092): main grid is y=0, not a stave average.
+    main_hit_y = 0.0
+    expected_main_rows = [
+        row
+        for row in manifest
+        if float(row["hit_x_cm"]) == main_hit_x
+        and float(row.get("hit_y_cm", 0.0)) == main_hit_y
+    ]
+    observed_main_rows = [
+        row
+        for row in observed
+        if float(row["hit_x_cm"]) == main_hit_x
+        and float(row.get("hit_y_cm", 0.0)) == main_hit_y
+    ]
+    expected_energies = energies_by_particle(
+        manifest, hit_x_cm=main_hit_x, hit_y_cm=main_hit_y
+    )
+    observed_energies = energies_by_particle(
+        observed, hit_x_cm=main_hit_x, hit_y_cm=main_hit_y
+    )
 
     missing = sorted(manifest_keys - observed_keys)
     if missing:
@@ -443,6 +471,8 @@ def validate(
         },
         "coverage": {
             "main_hit_x_cm": main_hit_x,
+            "main_hit_y_cm": main_hit_y,
+            "phase_space_support": "central_track_y0_not_stave_average",
             "expected_total_files": len(manifest),
             "observed_total_files": len(observed),
             "expected_main_grid_files": len(expected_main_rows),

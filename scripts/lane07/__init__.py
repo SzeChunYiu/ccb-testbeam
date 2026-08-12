@@ -1,1 +1,1 @@
-"""Lane 07 Wave B helpers (fail-closed statistical contracts)."""
+"""Lane 07 stats / DATA-MC / calibration contract helpers."""

@@ -59,7 +59,7 @@ void SteppingAction::UserSteppingAction(const G4Step* step) {
       track->GetDefinition() == G4OpticalPhoton::OpticalPhoton();
 
   if (!is_optical) {
-    // Charged / non-optical: accumulate Edep + track length in scintillator.
+    // Charged / non-optical: event-total + primary-only accumulators (#1007).
     G4StepPoint* pre = step->GetPreStepPoint();
     G4VPhysicalVolume* vol = pre->GetPhysicalVolume();
     if (vol && vol->GetName() == "Scintillator") {
@@ -74,10 +74,13 @@ void SteppingAction::UserSteppingAction(const G4Step* step) {
           G4LossTableManager::Instance()->EmSaturation();
       const double edep_visible =
           em_sat ? em_sat->VisibleEnergyDepositionAtAStep(step) : edep_raw;
-      d.edep_scint_MeV += edep_visible / MeV;  // Birks-visible (event total)
-      d.track_len_scint_mm += step->GetStepLength() / mm;  // all non-optical
-      // Primary-only accumulators for PSTAR / stopping-power identity (#1007).
+      d.edep_scint_MeV += edep_visible / MeV;  // Birks-visible
+      d.track_len_scint_mm += step->GetStepLength() / mm;
       if (track->GetParentID() == 0) {
+        if (d.primary_track_id < 0) {
+          d.primary_track_id = track->GetTrackID();
+          d.primary_pdg = track->GetDefinition()->GetPDGEncoding();
+        }
         d.primary_edep_scint_raw_MeV += edep_raw / MeV;
         d.primary_edep_scint_MeV += edep_visible / MeV;
         d.primary_track_len_scint_mm += step->GetStepLength() / mm;

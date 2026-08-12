@@ -34,52 +34,48 @@
 
 DetectorConstruction::DetectorConstruction(const AppConfig& cfg) : cfg_(cfg) {
   messenger_ = new DetectorMessenger(const_cast<AppConfig*>(&cfg_));
-  // Split provenance digests (#986): geometry must not mix Birks/optics, and
-  // must include coating/sensor thickness + far_end_mode.
+  // Issue #986: separate geometry vs physics digests. Geometry includes
+  // coating/sensor/far_end + mass-geometry material identities and excludes
+  // Birks / optical-response knobs. Named fields + schema keep digests
+  // self-describing.
   const double rCore = kFibreRadius * 0.94, rInner = kFibreRadius * 0.97,
                rOuter = kFibreRadius * 1.00;
   std::ostringstream gs;
-  gs.setf(std::ios::scientific, std::ios::floatfield);
+  gs.setf(std::ios::fmtflags(0), std::ios::floatfield);
   gs.precision(17);
-  gs << "ccb-geometry-config/1\n"
-     << "kStaveHalfX_mm=" << (kStaveHalfX / CLHEP::mm) << '\n'
-     << "kStaveHalfY_mm=" << (kStaveHalfY / CLHEP::mm) << '\n'
-     << "kStaveHalfZ_mm=" << (kStaveHalfZ / CLHEP::mm) << '\n'
-     << "kCoatingThk_mm=" << (kCoatingThk / CLHEP::mm) << '\n'
-     << "kHoleRadius_mm=" << (kHoleRadius / CLHEP::mm) << '\n'
-     << "kFibreRadius_mm=" << (kFibreRadius / CLHEP::mm) << '\n'
-     << "kFibreHalfX_mm=" << (kFibreHalfX / CLHEP::mm) << '\n'
-     << "kFibreSep_mm=" << (kFibreSep / CLHEP::mm) << '\n'
-     << "rCore_mm=" << (rCore / CLHEP::mm) << '\n'
-     << "rInner_mm=" << (rInner / CLHEP::mm) << '\n'
-     << "rOuter_mm=" << (rOuter / CLHEP::mm) << '\n'
-     << "kSensorThk_mm=" << (kSensorThk / CLHEP::mm) << '\n'
-     << "far_end_mode=" << cfg_.far_end_mode << '\n'
-     << "scintillator_material=" << cfg_.scintillator_material << '\n'
-     << "coating_material=" << cfg_.coating_material << '\n';
+  gs << "schema=geometry_config_v1"
+     << ";kStaveHalfX_mm=" << (kStaveHalfX / mm)
+     << ";kStaveHalfY_mm=" << (kStaveHalfY / mm)
+     << ";kStaveHalfZ_mm=" << (kStaveHalfZ / mm)
+     << ";kHoleRadius_mm=" << (kHoleRadius / mm)
+     << ";kFibreRadius_mm=" << (kFibreRadius / mm)
+     << ";kFibreHalfX_mm=" << (kFibreHalfX / mm)
+     << ";kFibreSep_mm=" << (kFibreSep / mm)
+     << ";rCore_mm=" << (rCore / mm)
+     << ";rInner_mm=" << (rInner / mm)
+     << ";rOuter_mm=" << (rOuter / mm)
+     << ";kCoatingThk_mm=" << (kCoatingThk / mm)
+     << ";kSensorThk_mm=" << (kSensorThk / mm)
+     << ";far_end_mode=" << cfg_.far_end_mode
+     << ";scintillator_material=" << cfg_.scintillator_material
+     << ";coating_material=" << cfg_.coating_material;
   geometry_hash_ = Sha256::hex(gs.str());
 
   std::ostringstream ps;
-  ps.setf(std::ios::scientific, std::ios::floatfield);
+  ps.setf(std::ios::fmtflags(0), std::ios::floatfield);
   ps.precision(17);
-  ps << "ccb-physics-config/1\n"
-     << "birks_kB_mm_per_MeV=" << cfg_.birks_kB_mm_per_MeV << '\n';
+  ps << "schema=physics_config_v1"
+     << ";birks_kB_mm_per_MeV=" << cfg_.birks_kB_mm_per_MeV
+     << ";optical_interface_model=" << cfg_.optical_interface_model
+     << ";production_cut_mm=" << cfg_.production_cut_mm
+     << ";wls_mean_number_photons=" << cfg_.wls_mean_number_photons
+     << ";y11_direct_scint_yield_per_MeV=" << cfg_.y11_direct_scint_yield_per_MeV
+     << ";tio2_finish=" << cfg_.tio2_finish
+     << ";tio2_specular_lobe=" << cfg_.tio2_specular_lobe
+     << ";tio2_specular_spike=" << cfg_.tio2_specular_spike
+     << ";tio2_backscatter=" << cfg_.tio2_backscatter
+     << ";y11_attenuation_form=" << cfg_.y11_attenuation_form;
   physics_hash_ = Sha256::hex(ps.str());
-
-  std::ostringstream os;
-  os.setf(std::ios::scientific, std::ios::floatfield);
-  os.precision(17);
-  os << "ccb-optical-config/1\n"
-     << "optical_interface_model=" << cfg_.optical_interface_model << '\n'
-     << "wls_mean_number_photons=" << cfg_.wls_mean_number_photons << '\n'
-     << "y11_direct_scint_yield_per_MeV=" << cfg_.y11_direct_scint_yield_per_MeV << '\n'
-     << "tio2_finish=" << cfg_.tio2_finish << '\n'
-     << "tio2_specular_lobe=" << cfg_.tio2_specular_lobe << '\n'
-     << "tio2_specular_spike=" << cfg_.tio2_specular_spike << '\n'
-     << "tio2_backscatter=" << cfg_.tio2_backscatter << '\n'
-     << "y11_attenuation_form=" << cfg_.y11_attenuation_form << '\n'
-     << "strict_optical=" << (cfg_.strict_optical ? "true" : "false") << '\n';
-  optical_hash_ = Sha256::hex(os.str());
 }
 DetectorConstruction::~DetectorConstruction() { delete messenger_; }
 
@@ -531,7 +527,6 @@ void DetectorConstruction::PrintGeometryReport() const {
             << "holes_contained_z " << holes_in_z << "\n"
             << "geometry_hash " << geometry_hash_ << "\n"
             << "physics_hash " << physics_hash_ << "\n"
-            << "optical_hash " << optical_hash_ << "\n"
             << "GEOMETRY_REPORT_END\n";
 
   const bool ok = fibre_within && fibre_protrudes && holes_in_y && holes_in_z &&

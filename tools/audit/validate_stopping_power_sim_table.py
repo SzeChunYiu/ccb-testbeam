@@ -42,8 +42,6 @@ PRIMARY_QUENCHED_EDEP_ALIASES = (
 )
 PRIMARY_SCOPE = "PRIMARY_TRACK"
 EVENT_TOTAL_SCOPE = "EVENT_TOTAL_ALL_NON_OPTICAL"
-PRIMARY_STOPPING_ESTIMATOR_ID = "primary_local_edep_over_path_v1"
-EVENT_CALORIMETRIC_DIAGNOSTIC_ID = "all_particle_edep_over_path_diagnostic_v1"
 PARTICLE_NAMES = {
     "p": "proton",
     "proton": "proton",
@@ -52,6 +50,8 @@ PARTICLE_NAMES = {
 }
 RAW_BASIS = "UNQUENCHED_RAW"
 QUENCHED_BASIS = "QUENCHED_PROXY"
+PRIMARY_STOPPING_ESTIMATOR_ID = "primary_local_edep_over_path_v1"
+EVENT_CALORIMETRIC_DIAGNOSTIC_ID = "all_particle_edep_over_path_diagnostic_v1"
 NormalizedRow = tuple[str, float, float, float]
 
 
@@ -208,6 +208,7 @@ def read_validated_simulation_table(
     energies: list[float] = []
     bases: set[str] = set()
     scopes: set[str] = set()
+    wave_c_scopes: set[str] = set()
     normalized_rows: list[NormalizedRow] = []
     reader = csv.DictReader([line for _, line in data_lines])
     for (line_no, _), row in zip(data_lines[1:], reader, strict=True):
@@ -367,7 +368,11 @@ def read_validated_simulation_table(
         particles[particle] += 1
         energies.append(energy)
         bases.add(basis)
+        # Main #1007 provenance from column aliases.
         scopes.add(track_scope)
+        # Lane07 Wave C optional explicit track_scope column (extras).
+        if "track_scope" in row and row["track_scope"] is not None and str(row["track_scope"]).strip() != "":
+            wave_c_scopes.add(str(row["track_scope"]).strip())
         normalized_rows.append((particle, energy, deposit, track_mm))
 
     if not normalized_rows:
@@ -380,11 +385,16 @@ def read_validated_simulation_table(
     if len(scopes) != 1:
         raise SimulationTableError(
             f"simulation table {path} mixes primary and event-total track-length "
-            "scopes across rows (#1007)"
+            f"scopes across rows (#1007): {sorted(scopes)}"
+        )
+    if len(wave_c_scopes) > 1:
+        raise SimulationTableError(
+            f"simulation table {path} mixes track_scope values: {sorted(wave_c_scopes)}"
         )
     basis = next(iter(bases))
     track_length_scope = next(iter(scopes))
     primary_identity = track_length_scope == PRIMARY_SCOPE
+    wave_c_scope = next(iter(wave_c_scopes)) if len(wave_c_scopes) == 1 else None
     summary: dict[str, object] = {
         "schema_version": 1,
         "tool": "tools/audit/validate_stopping_power_sim_table.py",
@@ -405,13 +415,16 @@ def read_validated_simulation_table(
         "raw_pstar_comparable": basis == RAW_BASIS,
         # Event-total path length is not the PSTAR single-particle measurand (#1007).
         "pstar_primary_identity_ok": bool(primary_identity and basis == RAW_BASIS),
-        # Lane 04 Wave B coexistence aliases for the same #1007 gate.
+        # Lane 04 Wave B coexistence aliases for the same #1007 gate (now on main).
         "estimator_id": (
             PRIMARY_STOPPING_ESTIMATOR_ID
             if primary_identity
             else EVENT_CALORIMETRIC_DIAGNOSTIC_ID
         ),
         "primary_stopping_authorising": bool(primary_identity and basis == RAW_BASIS),
+        # Lane07 Wave C extras coexist with main summary keys.
+        "track_scope": wave_c_scope,
+        "track_scope_values": sorted(wave_c_scopes),
         "all_noncomment_rows_validated": True,
         "silent_row_skipping_permitted": False,
         "normalized_rows_returned": len(normalized_rows),

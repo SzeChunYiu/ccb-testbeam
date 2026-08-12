@@ -39,15 +39,23 @@ jobs:
       - name: Install package with dev extras
         run: pip install -e ".[dev]"
       - name: Validate exact SiPM submodule source and C++ tests
+        id: sipm_core
         shell: bash
         run: |
-          set -euo pipefail
-          python3 geant4/single_stave/sipm/tools/check_conflict_markers.py --self-test
-          python3 geant4/single_stave/sipm/tools/check_conflict_markers.py
-          cmake -S geant4/single_stave/sipm -B /tmp/ccb-sipm-core-build \
-            -DCCB_SIPM_BUILD_TESTS=ON -DCCB_SIPM_BUILD_EXAMPLES=ON
-          cmake --build /tmp/ccb-sipm-core-build --parallel 2
-          ctest --test-dir /tmp/ccb-sipm-core-build --output-on-failure
+          # Keep the job fail-closed while preserving the dependency failure
+          # as an artifact.  The final enforcement step authorises only when
+          # this exact pipeline status is zero.
+          set +e
+          {
+            set -euo pipefail
+            python3 geant4/single_stave/sipm/tools/check_conflict_markers.py --self-test
+            python3 geant4/single_stave/sipm/tools/check_conflict_markers.py
+            cmake -S geant4/single_stave/sipm -B /tmp/ccb-sipm-core-build \
+              -DCCB_SIPM_BUILD_TESTS=ON -DCCB_SIPM_BUILD_EXAMPLES=ON
+            cmake --build /tmp/ccb-sipm-core-build --parallel 2
+            ctest --test-dir /tmp/ccb-sipm-core-build --output-on-failure
+          } 2>&1 | tee sipm_core.log
+          echo "status=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
       - name: Lint scientific code (ruff-clean paths)
         id: lint
         shell: bash
@@ -130,6 +138,7 @@ jobs:
         with:
           name: validation-logs-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
+            sipm_core.log
             ruff.log
             pytest.log
           if-no-files-found: error
@@ -138,11 +147,13 @@ jobs:
         if: always()
         shell: bash
         env:
+          SIPM_CORE_STATUS: ${{ steps.sipm_core.outputs.status }}
           RUFF_STATUS: ${{ steps.lint.outputs.status }}
           PYTEST_STATUS: ${{ steps.pytest.outputs.status }}
         run: |
+          echo "SiPM core status: ${SIPM_CORE_STATUS:-missing}"
           echo "ruff status: ${RUFF_STATUS:-missing}"
           echo "pytest status: ${PYTEST_STATUS:-missing}"
-          if [[ "${RUFF_STATUS:-1}" != "0" || "${PYTEST_STATUS:-1}" != "0" ]]; then
+          if [[ "${SIPM_CORE_STATUS:-1}" != "0" || "${RUFF_STATUS:-1}" != "0" || "${PYTEST_STATUS:-1}" != "0" ]]; then
             exit 1
           fi

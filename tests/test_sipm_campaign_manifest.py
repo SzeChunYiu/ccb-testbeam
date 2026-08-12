@@ -170,3 +170,36 @@ def test_source_label_cannot_hide_wrong_core_for_recorded_superproject(tmp_path:
     )
     with pytest.raises(mod.ManifestError, match="!= gitlink"):
         mod.verify_source_binding(manifest, repo)
+
+
+def test_execution_intent_mismatch_fails_closed():
+    mod = _load()
+    manifest = _manifest(mod)
+    mod.verify_execution_intent(
+        manifest,
+        base_cli="--particle proton --energy 100",
+        nevents_per_point=60,
+        threads=1,
+    )
+    with pytest.raises(mod.ManifestError, match="runtime base_cli"):
+        mod.verify_execution_intent(manifest, base_cli="--particle proton --energy 90")
+    with pytest.raises(mod.ManifestError, match="runtime nevents"):
+        mod.verify_execution_intent(manifest, nevents_per_point=61)
+    with pytest.raises(mod.ManifestError, match="runtime threads"):
+        mod.verify_execution_intent(manifest, threads=2)
+
+
+def test_campaign_creation_requires_clean_repository(tmp_path: Path):
+    mod = _load()
+    repo = tmp_path / "clean_repo"
+    repo.mkdir()
+    _git(repo, "init")
+    _git(repo, "config", "user.email", "fixture@example.invalid")
+    _git(repo, "config", "user.name", "fixture")
+    (repo / "README").write_text("fixture\n")
+    _git(repo, "add", "README")
+    _git(repo, "commit", "-m", "initial")
+    mod.require_clean_worktree(repo)
+    (repo / "dirty.txt").write_text("uncommitted\n")
+    with pytest.raises(mod.ManifestError, match="clean repository working tree"):
+        mod.require_clean_worktree(repo)

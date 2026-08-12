@@ -2,9 +2,9 @@
 # run_sensitivity_campaign.sh — orchestrate the SiPM one-knob sensitivity sweep.
 #
 # Generates the per-knob points CSVs into the campaign output directory, freezes
-# a source-bound campaign-intent manifest, submits one Slurm array per knob
-# (with a concurrency cap), and records every job id. Run the analyzer afterwards
-# with `--analyze` (waits for all jobs first) or by hand once the jobs drain.
+# source intent plus an independently content-bound ccb_stave_sim build receipt,
+# submits one Slurm array per knob, and records every job id. Run the analyzer
+# afterwards with `--analyze` (waits for all jobs first) or by hand once jobs drain.
 #
 # All sizing knobs are env-overridable (no magic numbers):
 #   CCB_CAMPASSIGN_NEVENTS      events per point        (default 60)
@@ -13,7 +13,9 @@
 #   CCB_CAMPASSIGN_BASE_CLI     common beam CLI          (see generate_points.py)
 #   CCB_CAMPASSIGN_KNOBS        space-list of knobs      (default: all)
 #   CCB_CAMPASSIGN_OUTDIR       output root              (required; outside repo)
-#   CCB_CAMPASSIGN_BUILD        build dir with ccb_stave_sim (required)
+#   CCB_CAMPASSIGN_BUILD        build dir with ccb_stave_sim + build receipt (required)
+#
+# Authorising builds must be configured with -DCCB_AUTHORISING_BUILD_RECEIPT=ON.
 #
 # Usage:
 #   CCB_CAMPASSIGN_BUILD=.../build CCB_CAMPASSIGN_OUTDIR=.../ccb-runs/sipm-p2-001 \
@@ -25,6 +27,7 @@ HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 REPO_ROOT="$(cd "${HERE}/../../.." && pwd -P)"
 GRID_SOURCE="${HERE}/grids"
 MANIFEST_TOOL="${REPO_ROOT}/scripts/single_stave/sipm_campaign_manifest.py"
+BUILD_RECEIPT_TOOL="${REPO_ROOT}/scripts/single_stave/sipm_build_receipt.py"
 
 BUILD="${CCB_CAMPASSIGN_BUILD:?set CCB_CAMPASSIGN_BUILD to the single_stave build dir}"
 OUTDIR="${CCB_CAMPASSIGN_OUTDIR:?set CCB_CAMPASSIGN_OUTDIR}"
@@ -47,6 +50,16 @@ case "${OUTDIR}/" in
 esac
 CAMPAIGN_GRIDS="${OUTDIR}/grids"
 mkdir -p "$CAMPAIGN_GRIDS"
+
+EXE="${BUILD}/ccb_stave_sim"
+SOURCE_BUILD_RECEIPT="${BUILD}/ccb_stave_sim.build.json"
+SOURCE_BUILD_DIGEST_FILE="${BUILD}/ccb_stave_sim.build.sha256"
+if [[ ! -f "$EXE" || ! -f "$SOURCE_BUILD_RECEIPT" || ! -f "$SOURCE_BUILD_DIGEST_FILE" ]]; then
+  echo "fatal: authorising campaign requires ccb_stave_sim plus ccb_stave_sim.build.{json,sha256}" >&2
+  echo "       rebuild with -DCCB_AUTHORISING_BUILD_RECEIPT=ON" >&2
+  exit 3
+fi
+SOURCE_BUILD_SHA256="$(tr -d '[:space:]' < "$SOURCE_BUILD_DIGEST_FILE")"
 
 echo "== SiPM sensitivity campaign (SIPM-P2-001) =="
 echo "   build : $BUILD"
@@ -91,12 +104,35 @@ if [[ "$VERIFY_CORE_SHA" != "$EXPECTED_CORE_SHA" ]]; then
   echo "fatal: campaign manifest core mismatch after create" >&2
   exit 3
 fi
+
 echo "   intent: $MANIFEST"
 echo "   intent sha256: $MANIFEST_SHA256"
 echo "   expected core: $EXPECTED_CORE_SHA (superproject gitlink)"
 
-# 3) Submit one array per knob. The manifest digest is copied into each Slurm
-# job's argv so editing campaign_intent.json after submission causes rejection.
+# 3) Freeze the exact build receipt into campaign-owned immutable bytes. The
+# receipt verifier requires build source/root/core identity to equal campaign
+# source intent and re-hashes the executable, CMake cache, compiler/CMake tools
+# and Geant4 package sentinel before accepting the copy.
+BUILD_RECEIPT="${OUTDIR}/build_receipt.json"
+BUILD_RECEIPT_DIGEST="${OUTDIR}/build_receipt.sha256"
+FROZEN_BUILD_SHA256="$(python3 "$BUILD_RECEIPT_TOOL" freeze \
+  --receipt "$SOURCE_BUILD_RECEIPT" \
+  --expected-sha256 "$SOURCE_BUILD_SHA256" \
+  --executable "$EXE" \
+  --campaign-manifest "$MANIFEST" \
+  --campaign-sha256 "$MANIFEST_SHA256" \
+  --repo-root "$REPO_ROOT" \
+  --output "$BUILD_RECEIPT" \
+  --digest-file "$BUILD_RECEIPT_DIGEST")"
+if [[ "$FROZEN_BUILD_SHA256" != "$SOURCE_BUILD_SHA256" ]]; then
+  echo "fatal: frozen build receipt digest mismatch" >&2
+  exit 3
+fi
+echo "   build receipt: $BUILD_RECEIPT"
+echo "   build receipt sha256: $FROZEN_BUILD_SHA256"
+
+# 4) Submit one array per knob. Both manifest and build-receipt digests are
+# copied into every job argv so post-submission substitution fails closed.
 JOBIDS_FILE="${OUTDIR}/submitted_job_ids.txt"
 : > "$JOBIDS_FILE"
 
@@ -115,7 +151,7 @@ for csv in "$CAMPAIGN_GRIDS"/points_*.csv; do
         --account="${CCB_CAMPASSIGN_ACCOUNT:-hep2023-1-3}" \
         --partition="${CCB_CAMPASSIGN_PARTITION:-hep}" \
         "${HERE}/submit_systematic.sh" "$BUILD" "$knob" "$csv" "$OUTDIR" \
-        "$MANIFEST" "$MANIFEST_SHA256" \
+        "$MANIFEST" "$MANIFEST_SHA256" "$BUILD_RECEIPT" "$FROZEN_BUILD_SHA256" \
         | awk '{print $NF}')
   echo "$knob $jid" >> "$JOBIDS_FILE"
   submitted=$((submitted+1))
@@ -123,7 +159,7 @@ done
 echo "submitted $submitted knob arrays; ids in ${JOBIDS_FILE}"
 cat "$JOBIDS_FILE"
 
-# 4) Optionally wait for all to finish, then analyze. The expected core and the
+# 5) Optionally wait for all to finish, then analyze. The expected core and the
 # execution-intent check are re-derived from the frozen manifest.
 if [[ "${CCB_CAMPASSIGN_ANALYZE:-0}" == "1" ]]; then
   echo "== waiting for all jobs to drain =="

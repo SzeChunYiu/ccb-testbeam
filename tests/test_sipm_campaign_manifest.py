@@ -13,7 +13,6 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 MOD_PATH = ROOT / "scripts" / "single_stave" / "sipm_campaign_manifest.py"
-RUN_SCRIPT = ROOT / "geant4" / "single_stave" / "slurm" / "run_sensitivity_campaign.sh"
 REPO = "4" * 40
 CORE = "3" * 40
 GRID_A = "a" * 64
@@ -210,51 +209,72 @@ def test_campaign_creation_requires_clean_repository(tmp_path: Path):
 
 def test_env_regrid_is_external_content_bound_and_leaves_source_clean(tmp_path: Path):
     """A documented grid override must not dirty tracked source before manifest freeze."""
-    before = _git(ROOT, "status", "--porcelain=v1", "--untracked-files=all")
-    assert before == ""
-
-    fake_bin = tmp_path / "bin"
-    fake_bin.mkdir()
-    sbatch = fake_bin / "sbatch"
-    sbatch.write_text("#!/usr/bin/env bash\necho 'Submitted batch job 424242'\n")
-    sbatch.chmod(0o755)
-
-    build = tmp_path / "build"
-    build.mkdir()
-    outdir = tmp_path / "campaign"
-    env = os.environ.copy()
-    env.update(
-        {
-            "PATH": f"{fake_bin}:{env['PATH']}",
-            "CCB_CAMPASSIGN_BUILD": str(build),
-            "CCB_CAMPASSIGN_OUTDIR": str(outdir),
-            "CCB_CAMPASSIGN_KNOBS": "pde_scale",
-            "CCB_GRID_PDE_SCALE": "0.95 1.05",
-            "CCB_CAMPASSIGN_SEED_REPLICATES": "1000 1001",
-        }
-    )
-    proc = subprocess.run(
-        ["bash", str(RUN_SCRIPT)],
-        cwd=ROOT,
-        env=env,
+    # The repository-wide CI intentionally creates logs, bytecode and editable-install
+    # metadata before pytest. Exercise the launcher in a fresh worktree instead of
+    # weakening its production clean-source gate to accommodate CI side effects.
+    source = tmp_path / "source"
+    subprocess.run(
+        ["git", "-C", str(ROOT), "worktree", "add", "--detach", str(source), "HEAD"],
         check=True,
         text=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
     )
-    assert "submitted 1 knob arrays" in proc.stdout
+    try:
+        before = _git(source, "status", "--porcelain=v1", "--untracked-files=all")
+        assert before == ""
 
-    grid = outdir / "grids" / "points_pde_scale.csv"
-    assert grid.is_file()
-    text = grid.read_text()
-    assert "pde_scale=0.95__rep=1000" in text
-    assert "pde_scale=1.05__rep=1001" in text
+        fake_bin = tmp_path / "bin"
+        fake_bin.mkdir()
+        sbatch = fake_bin / "sbatch"
+        sbatch.write_text("#!/usr/bin/env bash\necho 'Submitted batch job 424242'\n")
+        sbatch.chmod(0o755)
 
-    manifest_path = outdir / "campaign_intent.json"
-    manifest = json.loads(manifest_path.read_text())
-    expected_grid_digest = hashlib.sha256(grid.read_bytes()).hexdigest()
-    assert manifest["grid_sha256"] == {"pde_scale": expected_grid_digest}
-    assert manifest["execution_intent"]["nevents_per_point"] == 60
+        build = tmp_path / "build"
+        build.mkdir()
+        outdir = tmp_path / "campaign"
+        env = os.environ.copy()
+        env.update(
+            {
+                "PATH": f"{fake_bin}:{env['PATH']}",
+                "CCB_CAMPASSIGN_BUILD": str(build),
+                "CCB_CAMPASSIGN_OUTDIR": str(outdir),
+                "CCB_CAMPASSIGN_KNOBS": "pde_scale",
+                "CCB_GRID_PDE_SCALE": "0.95 1.05",
+                "CCB_CAMPASSIGN_SEED_REPLICATES": "1000 1001",
+            }
+        )
+        run_script = source / "geant4" / "single_stave" / "slurm" / "run_sensitivity_campaign.sh"
+        proc = subprocess.run(
+            ["bash", str(run_script)],
+            cwd=source,
+            env=env,
+            check=True,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+        assert "submitted 1 knob arrays" in proc.stdout
 
-    after = _git(ROOT, "status", "--porcelain=v1", "--untracked-files=all")
-    assert after == before
+        grid = outdir / "grids" / "points_pde_scale.csv"
+        assert grid.is_file()
+        text = grid.read_text()
+        assert "pde_scale=0.95__rep=1000" in text
+        assert "pde_scale=1.05__rep=1001" in text
+
+        manifest_path = outdir / "campaign_intent.json"
+        manifest = json.loads(manifest_path.read_text())
+        expected_grid_digest = hashlib.sha256(grid.read_bytes()).hexdigest()
+        assert manifest["grid_sha256"] == {"pde_scale": expected_grid_digest}
+        assert manifest["execution_intent"]["nevents_per_point"] == 60
+
+        after = _git(source, "status", "--porcelain=v1", "--untracked-files=all")
+        assert after == before
+    finally:
+        subprocess.run(
+            ["git", "-C", str(ROOT), "worktree", "remove", "--force", str(source)],
+            check=True,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )

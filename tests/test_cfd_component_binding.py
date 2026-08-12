@@ -87,9 +87,15 @@ def test_global_max_estimator_keeps_historical_first_crossing_semantics():
 
 
 def test_selector_exposes_global_fraction_floor_not_prominence():
-    """A 1-ADC bump can pass because the rule thresholds absolute height."""
+    """A one-ADC-prominence early peak passes the global-height floor.
+
+    Global max is 1000, so alpha=0.05 sets a 50-ADC absolute-height floor.
+    The early peak is 51 ADC. Its left basin minimum is 0, but before the first
+    higher peak to the right the basin minimum is 50, so the higher base is 50
+    and the topographic prominence is only 1 ADC. The selector still admits it.
+    """
     wave = np.asarray(
-        [[0.0, 50.0, 51.0, 50.0, 0.0, 0.0, 500.0, 1000.0, 500.0]],
+        [[0.0, 50.0, 51.0, 50.0, 50.0, 500.0, 1000.0, 500.0]],
         dtype=float,
     )
     diagnostic = digital_cfd.first_local_peak_diagnostics(wave)
@@ -99,6 +105,13 @@ def test_selector_exposes_global_fraction_floor_not_prominence():
     assert diagnostic["selected_amplitudes"][0] == pytest.approx(51.0)
     assert diagnostic["selection_floors"][0] == pytest.approx(50.0)
     assert diagnostic["selected_to_global_ratio"][0] == pytest.approx(0.051)
+
+    # For this fixture the first higher point to the right is sample 5 (500).
+    left_base = float(np.min(wave[0, :2]))
+    right_base = float(np.min(wave[0, 3:5]))
+    prominence = 51.0 - max(left_base, right_base)
+    assert prominence == pytest.approx(1.0)
+    assert prominence < diagnostic["selection_floors"][0]
 
 
 def test_selector_has_discontinuous_identity_at_global_floor_boundary():

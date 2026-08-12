@@ -33,6 +33,16 @@ import numpy as np
 import pandas as pd
 
 STAVES = ["B2", "B4", "B6", "B8"]
+_CLUSTER_KEY_COLUMNS = ("run", "eventno")
+
+
+def _require_cluster_key_columns(df: pd.DataFrame) -> None:
+    """Fail closed before cluster-ID export when composite key columns are absent (#1164)."""
+    missing = [col for col in _CLUSTER_KEY_COLUMNS if col not in df.columns]
+    if missing:
+        raise RuntimeError(
+            f"cluster export requires columns {list(_CLUSTER_KEY_COLUMNS)}; missing {missing}"
+        )
 
 
 def _per_event_stave_amplitude(df, sample, stave):
@@ -74,6 +84,7 @@ def main():
     os.makedirs(args.out, exist_ok=True)
 
     df = pd.read_csv(args.table)
+    _require_cluster_key_columns(df)
     df["sample"] = np.where(df["group"].str.startswith("sample_i_"), "I",
                      np.where(df["group"].str.startswith("sample_ii_"), "II", "other"))
     if not args.include_calib:
@@ -128,8 +139,19 @@ def main():
     # Pulse-row export retains amplitudes; cluster IDs are required for any
     # weighted-null calibration (#1164). statistical_unit remains pulse_row
     # until an event-aggregated DATA product is selected by the consumer.
+    _require_cluster_key_columns(df)
     sI = df.loc[(df["sample"] == "I") & (df["stave"] == "B2")]
     sII = df.loc[(df["sample"] == "II") & (df["stave"] == "B2")]
+    sample_i_cluster = (
+        sI["run"].astype(str) + ":" + sI["eventno"].astype(str)
+    ).to_numpy()
+    sample_ii_cluster = (
+        sII["run"].astype(str) + ":" + sII["eventno"].astype(str)
+    ).to_numpy()
+    if sample_i_cluster.size != sI.shape[0] or sample_ii_cluster.size != sII.shape[0]:
+        raise RuntimeError(
+            "cluster export incomplete: cluster_id length mismatch with pulse rows"
+        )
     np.savez_compressed(
         os.path.join(args.out, "first_B_layer_B2_amplitude.npz"),
         sampleI=sI["amplitude_adc"].to_numpy(np.float32),
@@ -138,12 +160,8 @@ def main():
         sampleII_run=sII["run"].to_numpy(np.int64),
         sampleI_eventno=sI["eventno"].to_numpy(np.int64),
         sampleII_eventno=sII["eventno"].to_numpy(np.int64),
-        sampleI_cluster_id=(
-            sI["run"].astype(str) + ":" + sI["eventno"].astype(str)
-        ).to_numpy(),
-        sampleII_cluster_id=(
-            sII["run"].astype(str) + ":" + sII["eventno"].astype(str)
-        ).to_numpy(),
+        sampleI_cluster_id=sample_i_cluster,
+        sampleII_cluster_id=sample_ii_cluster,
         statistical_unit=np.asarray(["pulse_row"]),
         cluster_key=np.asarray(["run:eventno"]),
         weight_semantics=np.asarray(["unit_data_pulse"]),

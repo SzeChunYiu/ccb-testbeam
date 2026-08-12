@@ -2,6 +2,10 @@
 """Compare simulated proton/deuteron deposited-energy dE/dx with NIST PSTAR.
 
 The calculation is a diagnostic proxy, not an accepted stopping-power closure.
+
+track_len_scint_mm / edep_scint_raw_MeV on current Geant4 outputs are event totals
+over non-optical tracks (#1007), so PSTAR primary comparisons remain
+physics_comparable=False until primary-only estimators exist.
 Simulation and PSTAR CSV ingestion both use repository fail-closed validators.
 """
 from __future__ import annotations
@@ -39,6 +43,8 @@ DEFAULT_REF = REPO_ROOT / "data" / "reference" / "stopping_power" / "pstar_polys
 PstarRow = tuple[float, float, float, float]
 ENERGY_GROUPING = "EXACT_CONFIGURED_ENERGY"
 MASS_STOPPING_ESTIMATOR = "RATIO_OF_SUMS_TRACK_LENGTH_WEIGHTED"
+PRIMARY_VS_EVENT_TOTAL_STATUS = "EVENT_TOTAL_NOT_PRIMARY_STOPPING_POWER"
+AUDIT_ISSUE_1007 = 1007
 SUMMATION_METHOD = "MATH_FSUM_PER_GROUP"
 DIRECT_PROTON_REFERENCE = "DIRECT_PSTAR_PROTON"
 DEUTERON_REFERENCE_PROXY = "VELOCITY_SCALED_PROTON_PROXY"

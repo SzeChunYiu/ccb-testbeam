@@ -41,24 +41,16 @@ MANIFEST_SHA256="${6:?frozen campaign manifest SHA-256 required}"
 OUTDIR="${OUTROOT}/${KNOB}"
 mkdir -p "${OUTDIR}"
 
-# Fail before simulation if campaign intent or this knob's points grid changed
-# after submission. The verifier also resolves the manifest's recorded
-# superproject commit and proves that expected_core.commit is the gitlink at
-# that exact commit; a forged source label alone is insufficient.
-EXPECTED_CORE_SHA="$(python3 "$MANIFEST_TOOL" verify \
-  --repo-root "$REPO_ROOT" --manifest "$MANIFEST" \
-  --expected-sha256 "$MANIFEST_SHA256" \
-  --grid-knob "$KNOB" --grid-file "$POINTS")"
-
 EXE="${BUILD}/ccb_stave_sim"
 OPTICAL="${BUILD}/optical"
 IDX="${SLURM_ARRAY_TASK_ID:-0}"
 
-# Common beam point for every sweep (env-overridable). Proton 100 MeV, normal
-# incidence, centred — the representative operating point.
+# Common beam point for every sweep. The inherited value is not trusted until
+# it matches the frozen manifest execution intent below.
 BASE_CLI="${CCB_CAMPASSIGN_BASE_CLI:---particle proton --energy 100 --hit-x 0 --hit-y 0 --theta 0 --phi 0}"
 
-# Read the IDX-th DATA row: skip blanks, comments, and the header line.
+# Read the IDX-th DATA row, but do not export row state or launch simulation
+# until the whole grid and this execution intent are verified.
 LINE="$(grep -vE '^\s*(#|$)' "${POINTS}" | grep -v '^label,' | sed -n "$((IDX+1))p")"
 if [[ -z "${LINE}" ]]; then echo "no point at index ${IDX} in ${POINTS}"; exit 1; fi
 IFS=',' read -r LABEL SEED NEVENTS CLI_ARGS ENV_VARS REPLICATE _REST <<< "${LINE}"
@@ -67,6 +59,14 @@ IFS=',' read -r LABEL SEED NEVENTS CLI_ARGS ENV_VARS REPLICATE _REST <<< "${LINE
 : "${CLI_ARGS:=}"
 : "${ENV_VARS:=}"
 : "${REPLICATE:=}"
+
+# Fail before simulation if manifest bytes, recorded Git-object source binding,
+# selected grid bytes, or runtime execution intent differ from submission.
+EXPECTED_CORE_SHA="$(python3 "$MANIFEST_TOOL" verify \
+  --repo-root "$REPO_ROOT" --manifest "$MANIFEST" \
+  --expected-sha256 "$MANIFEST_SHA256" \
+  --grid-knob "$KNOB" --grid-file "$POINTS" \
+  --base-cli "$BASE_CLI" --nevents "$NEVENTS" --threads 1)"
 
 OUT="${OUTDIR}/${LABEL}.root"
 

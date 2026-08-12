@@ -48,8 +48,8 @@ def first_local_peak_diagnostics(
     if wave.ndim != 2:
         raise ValueError("waveforms must be 2-D (n_pulses, n_samples)")
     alpha = float(min_prominence_frac)
-    if not np.isfinite(alpha) or alpha < 0.0:
-        raise ValueError("min_prominence_frac must be finite and nonnegative")
+    if not np.isfinite(alpha) or not (0.0 <= alpha <= 1.0):
+        raise ValueError("min_prominence_frac must be finite and in [0, 1]")
 
     n, n_samp = wave.shape
     selected_amplitudes = np.full(n, np.nan, dtype=float)

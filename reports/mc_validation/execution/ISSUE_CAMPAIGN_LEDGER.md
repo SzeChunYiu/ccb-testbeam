@@ -11,11 +11,12 @@ MC ROOT: `geant4/data/output_krakow_1M.root` (present)
 | 01 | ccb-wt-lane01 | fix/lane01-waveA | SiPM/digitizer fail-closed | #974-#977 #981-#982 #1065-#1072 #1084 #1096 | READY_FOR_PR | https://github.com/SzeChunYiu/ccb-testbeam/pull/1248 |
 | 02 | ccb-wt-lane02 | fix/lane02-waveA | Optical/WLS/material | #978-#980 #996 #1000 #1005 #1035-#1036 #1085-#1088 | MERGED (#1246) | #1246 |
 | 03 | ccb-wt-lane03 | fix/lane03-waveA | Geometry/kinematics | #987 #989 #991-#992 #999 | MERGED (#1237) | #1237 |
+| 03b | ccb-wt-lane03 | fix/issue-986-geometry-hash | Geometry provenance (#986) | #986 | READY_FOR_PR | https://github.com/SzeChunYiu/ccb-testbeam/pull/1292 |
 | 04 | ccb-wt-lane04 | fix/lane04-waveA | Source/weights | #1050-#1058 #1174 #1179 | MERGED (#1240) | #1240 |
 | 05 | ccb-wt-lane05 | fix/lane05-waveA | Timing CFD/template | #954 #964-#968 #1003-#1004 #1032-#1033 #1059-#1064 | MERGED (#1239) | #1239 |
 | 06 | ccb-wt-lane06 | fix/lane06-waveA | PID ΔE-E | #956 #1022-#1031 #1042 #1048 | IN_PROGRESS | |
 | 07 | ccb-wt-lane07 | fix/lane07-waveA | Stats/bootstrap | #958-#960 #1049 #1052 #1097 #1164 #1166 | IN_PROGRESS | |
-| 08 | ccb-wt-lane08 | fix/lane08-waveA | DAQ/S00 provenance | #953 #961-#962 #973 #997-#998 #1014 #1073 #1149 | IN_PROGRESS | |
+| 08 | ccb-wt-lane08 | fix/issue-1073-saturation-worlds | DAQ/S00 provenance | #953 #961-#962 #973 #997-#998 #1014 #1073 #1149 | READY_FOR_REVIEW | https://github.com/SzeChunYiu/ccb-testbeam/pull/1279 |
 | 09 | ccb-wt-lane09 | fix/lane09-waveA | ARU study scripts | #1112-#1129 #1137 | IN_PROGRESS | |
 | 10 | ccb-wt-lane10 | fix/lane10-waveA | Docs/gov/orchestrator | #969-#970 #990 #1002 #1078 #1218 + run_pipeline | MERGED (#1241) | #1241 |
 | 10b | ccb-wt-lane10 | fix/issue-1218-completion-gate | Gov completion gate | #1218 | READY_FOR_PR | https://github.com/SzeChunYiu/ccb-testbeam/pull/1295 |
@@ -68,6 +69,14 @@ Historical Wave-A integration aligned the gitlink with #1243 at `cf12c6b8955c485
 - Scope: chatgpt_todo/ACTIVE_TASK.md, HANDOFF.md, archive ARU-SIPM-RECOVERY-CORRELATED-NOISE-COUPLING-001.
 - Scientific content: records PARTIAL result that parent-generation correlated-noise probabilities remain hard-wired to raw r(dt) under FULL_RECOVERY; does not close #1066/#1071.
 - Policy compliance with #1218: acceptable because it did not claim scientific-universe completion for those parents.
+
+## Lane 02 Wave B — neutron tracking-time cut (#1091)
+
+Branch: fix/issue-1091-neutron-timecut (worktree ccb-wt-lane02).
+
+| Issue | Disposition | Evidence |
+|-------|-------------|----------|
+| #1091 | IN_PROGRESS (provenance pin) | --neutron-timecut-policy-id required; /physics_engine/neutron/timeLimit applied post-Initialize; run sidecar records configured 10 us pin (pin_qgsp_bic_default_10us); delayed-neutron claims remain BLOCKED (ADR-0013) |
 
 ## Lane 01 Wave B kickoff
 

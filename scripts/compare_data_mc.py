@@ -40,6 +40,8 @@ Brings together:
 Usage:
   python3 compare_data_mc.py --mc-dir <mc_out> --data-dir <data_out> --out <dir>
 """
+from __future__ import annotations
+
 import argparse
 import json
 import os

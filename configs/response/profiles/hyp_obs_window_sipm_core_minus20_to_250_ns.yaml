@@ -1,0 +1,24 @@
+schema: ccb-response-profile/1
+profile_id: hyp_obs_window_sipm_core_minus20_to_250_ns
+kind: observation_window
+status: HYPOTHESIS
+claims_authorized: false
+issues: [1090]
+adr: docs/adr/ADR-0004-quenching-material-obs-window-hypotheses.md
+source_type: CODE
+source_refs:
+  - external/ccb-sipm-core
+parameters:
+  semantic_class: ACQUISITION_WINDOW
+  window_start_ns: -20.0
+  window_end_ns: 250.0
+  time_origin_model: sipm_core_representative
+  hardware_binding: REPRESENTATIVE_ASSUMED
+  applies_to:
+    - production_ADC
+    - avalanche_schedule
+  production_validity: REPRESENTATIVE_CORE_DEFAULT
+notes: >
+  ccb-sipm-core representative acquisition window. Not canonized as hardware
+  truth until #1014 closes the real DAQ time axis. Photons outside the window
+  can still appear in full-transport arrival counters.

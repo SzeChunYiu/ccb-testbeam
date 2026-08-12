@@ -1,0 +1,70 @@
+# CCB response / quenching / material / observation-window hypothesis registry
+# (Wave B Lane 05).
+# schema: ccb-response-registry/1
+#
+# CRITICAL: There is NO approved silent default for quenching model form,
+# fibre outer-cladding transport material, or observation-window domain.
+# Callers MUST set the relevant profile id. Unset -> ConfigurationError.
+#
+# Birks/material contradictions are recorded as named HYPOTHESIS profiles.
+# Selecting a profile documents which hypothesis a run assumes; it does NOT
+# resolve the contradiction or authorize "validated light response" claims.
+
+schema: ccb-response-registry/1
+registry_version: "2026.0-waveB-lane05"
+default_quenching_profile_id: null
+default_fibre_clad_profile_id: null
+default_observation_window_profile_id: null
+fail_closed_when_unset: true
+issues:
+  - 1008
+  - 1090
+  - 994
+  - 1080
+  - 1094
+adrs:
+  - docs/adr/ADR-0004-quenching-material-obs-window-hypotheses.md
+  - docs/adr/ADR-0005-digitizer-scalar-domain-preflight.md
+  - docs/adr/ADR-0006-adc-mev-quantity-dictionary.md
+
+profiles:
+  - profile_id: hyp_geant4_birks_kb_0p126_mm_per_MeV
+    path: profiles/hyp_geant4_birks_kb_0p126_mm_per_MeV.yaml
+    kind: quenching
+    status: HYPOTHESIS
+    issues: [1008]
+  - profile_id: hyp_birks_kb_scan_grid_mm_per_MeV
+    path: profiles/hyp_birks_kb_scan_grid_mm_per_MeV.yaml
+    kind: quenching
+    status: HYPOTHESIS
+    issues: [1008]
+  - profile_id: hyp_chou_like_second_order_placeholder
+    path: profiles/hyp_chou_like_second_order_placeholder.yaml
+    kind: quenching
+    status: HYPOTHESIS
+    issues: [1008]
+  - profile_id: hyp_literature_poschl2021_model_ensemble
+    path: profiles/hyp_literature_poschl2021_model_ensemble.yaml
+    kind: quenching
+    status: HYPOTHESIS
+    issues: [1008]
+  - profile_id: hyp_fibre_outer_clad_pmma_density_1p19_proxy
+    path: profiles/hyp_fibre_outer_clad_pmma_density_1p19_proxy.yaml
+    kind: fibre_outer_clad_transport
+    status: HYPOTHESIS
+    issues: [1094]
+  - profile_id: hyp_fibre_outer_clad_fluorinated_polymer_1p43
+    path: profiles/hyp_fibre_outer_clad_fluorinated_polymer_1p43.yaml
+    kind: fibre_outer_clad_transport
+    status: HYPOTHESIS
+    issues: [1094]
+  - profile_id: hyp_obs_window_full_transport
+    path: profiles/hyp_obs_window_full_transport.yaml
+    kind: observation_window
+    status: HYPOTHESIS
+    issues: [1090]
+  - profile_id: hyp_obs_window_sipm_core_minus20_to_250_ns
+    path: profiles/hyp_obs_window_sipm_core_minus20_to_250_ns.yaml
+    kind: observation_window
+    status: HYPOTHESIS
+    issues: [1090]

@@ -1,0 +1,26 @@
+schema: ccb-response-profile/1
+profile_id: hyp_geant4_birks_kb_0p126_mm_per_MeV
+kind: quenching
+status: HYPOTHESIS
+claims_authorized: false
+issues: [1008]
+adr: docs/adr/ADR-0004-quenching-material-obs-window-hypotheses.md
+source_type: CODE
+source_refs:
+  - geant4/single_stave/include/AppConfig.hh
+  - geant4/single_stave/src/DetectorConstruction.cc
+contradicts:
+  - hyp_chou_like_second_order_placeholder
+  - hyp_literature_poschl2021_model_ensemble
+parameters:
+  model_form: birks
+  model_form_family: first_order_birks
+  kB_mm_per_MeV: 0.126
+  kB_unit: mm/MeV
+  kB_provenance: "nominal Geant4 single-stave default; density/convention ledger incomplete (#1008/#1000)"
+  density_conversion_status: UNVERIFIED
+  production_validity: SENSITIVITY_ONLY
+notes: >
+  Current Geant4 single-stave Birks coefficient. This is ONE model-form
+  hypothesis, not validated p/d light-response truth (#1008). Scanning only
+  kB under this form does not close model-form uncertainty.

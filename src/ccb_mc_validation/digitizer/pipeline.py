@@ -362,22 +362,29 @@ class DigitizerPipeline:
 
     @classmethod
     def from_config(cls, config: Mapping[str, Any]) -> DigitizerPipeline:
-        elec = ElectronicsConfig(
-            gain_adc_per_mev=float(config.get("gain_adc_per_mev", 120.0)),
-            noise_adc_rms=float(config.get("noise_adc_rms", 8.0)),
-            adc_bits=int(config.get("adc_bits", 14)),
-            adc_ceiling=int(config.get("adc_ceiling", 7000)),
-            pedestal_adc=float(config.get("pedestal_adc", 300.0)),
+        # #1080: validate scalar domains before constructing RNG/event pipelines.
+        from ccb_mc_validation.response.digitizer_domains import (
+            preflight_digitizer_config,
         )
-        stages = list(config.get("stages", ["birks", "scintillation", "transport", "sampling"]))
+
+        resolved = preflight_digitizer_config(config)
+        effective = resolved["effective"]
+        elec_cfg = effective["electronics"]
+        elec = ElectronicsConfig(
+            gain_adc_per_mev=float(elec_cfg["gain_adc_per_mev"]),
+            noise_adc_rms=float(elec_cfg["noise_adc_rms"]),
+            adc_bits=int(elec_cfg["adc_bits"]),
+            adc_ceiling=int(elec_cfg["adc_ceiling"]),
+            pedestal_adc=float(elec_cfg["pedestal_adc"]),
+        )
         return cls(
-            n_samples=int(config.get("n_samples", DEFAULT_N_SAMPLES)),
-            sample_spacing_ns=float(config.get("sample_spacing_ns", DEFAULT_SAMPLE_SPACING_NS)),
+            n_samples=int(effective["n_samples"]),
+            sample_spacing_ns=float(effective["sample_spacing_ns"]),
             electronics=elec,
-            tau_rise_ns=float(config.get("tau_rise_ns", 2.0)),
-            tau_decay_ns=float(config.get("tau_decay_ns", 35.0)),
-            transport_sigma_ns=float(config.get("transport_sigma_ns", 0.5)),
-            apply_birks=bool(config.get("apply_birks", False)),
-            global_seed=int(config.get("global_seed", 0)),
-            stages=stages,
+            tau_rise_ns=float(effective["tau_rise_ns"]),
+            tau_decay_ns=float(effective["tau_decay_ns"]),
+            transport_sigma_ns=float(effective["transport_sigma_ns"]),
+            apply_birks=bool(effective["apply_birks"]),
+            global_seed=int(effective["global_seed"]),
+            stages=list(effective["stages"]),
         )

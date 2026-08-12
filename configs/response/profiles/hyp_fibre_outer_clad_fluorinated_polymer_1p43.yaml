@@ -1,0 +1,21 @@
+schema: ccb-response-profile/1
+profile_id: hyp_fibre_outer_clad_fluorinated_polymer_1p43
+kind: fibre_outer_clad_transport
+status: HYPOTHESIS
+claims_authorized: false
+issues: [1094]
+adr: docs/adr/ADR-0004-quenching-material-obs-window-hypotheses.md
+source_type: LITERATURE
+source_refs:
+  - "Kuraray Plastic Scintillating Fiber material/reference-property table"
+contradicts:
+  - hyp_fibre_outer_clad_pmma_density_1p19_proxy
+parameters:
+  transport_base_material: fluorinated_polymer_representative
+  density_g_per_cm3: 1.43
+  optical_rindex: 1.42
+  installed_fibre_identity: UNKNOWN
+  production_validity: SENSITIVITY_CANDIDATE
+notes: >
+  Representative Kuraray fluorinated outer-cladding density with n~1.42.
+  Installed CCB Y-11 lot/construction must be recovered before APPROVED status.

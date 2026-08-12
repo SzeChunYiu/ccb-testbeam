@@ -1,0 +1,23 @@
+schema: ccb-response-profile/1
+profile_id: hyp_chou_like_second_order_placeholder
+kind: quenching
+status: HYPOTHESIS
+claims_authorized: false
+issues: [1008]
+adr: docs/adr/ADR-0004-quenching-material-obs-window-hypotheses.md
+source_type: LITERATURE_PLACEHOLDER
+source_refs:
+  - "Pöschl et al., NIM A 988 (2021) 164865"
+  - "DOI 10.1016/j.nima.2020.164865"
+contradicts:
+  - hyp_geant4_birks_kb_0p126_mm_per_MeV
+parameters:
+  model_form: chou_like_second_order
+  model_form_family: second_order_quenching
+  implementation_status: NOT_IMPLEMENTED
+  ccb_material_transferability: UNKNOWN
+  production_validity: BLOCKED_PENDING_MATERIAL_AND_FIT
+notes: >
+  Placeholder for a supported second-order/Chou-like alternative required by
+  #1008. Parameters must not be invented; calibrate only on designated
+  reference data after #1000 material identity is closed.

@@ -3,7 +3,7 @@
 **Working manuscript draft, revised 2026-08-12**  
 **Status:** complete prose for collaboration review; not yet submission-authorising for detector timing, absolute light collection, or detector energy resolution.  
 **Repository base audited:** `main@4376a3f88c8e059a5c1a92c020856c98d31f538b`, with later issue-state corrections recorded in #993 and #1088.  
-**Companion files:** `PAPER_EVIDENCE_FIGURE_MATRIX_20260812.md`, `PAPER_OPEN_ATOMS_20260812.md`, and `PAPER_PRE_SUBMISSION_REVIEW_20260812.md`.
+**Companion files:** `paper/hardware_bom.csv`, `PAPER_EVIDENCE_FIGURE_MATRIX_20260812.md`, `PAPER_OPEN_ATOMS_20260812.md`, and `PAPER_PRE_SUBMISSION_REVIEW_20260812.md`. Refs #1296.
 
 ## Abstract
 
@@ -155,7 +155,7 @@ The minimum pair `sigma68` across CFD fractions on the same events is recorded o
 
 The direct analysis of the located 8×16-sample beam files gives 5,207 B4-B6 events with valid CFD times and a central 68% residual width of approximately 38.0 ns after the applied time-of-flight subtraction. A more restrictive in-window subset does not improve the result. The B6 peak-position distribution is multi-modal and frequently lies at the waveform boundaries. With a nominal 10 ns sample period, the residual is dominated by waveform sampling/window structure.
 
-We therefore report this as a **format-limited timing residual**, not as the B-stave timing resolution. Historical values near 0.54 ns for a combined estimator and 0.68-0.75 ns for single-stave-like quantities are not promoted as beam-data performance. They belong to earlier simulation, toy-digitiser or provenance-gated analyses. A real-data CFD fraction-transition study on the located 8×16 product remains blocked until issue #993 closes the 16- versus 18-sample waveform lineage; until then, component-binding evidence is limited to deterministic synthetic controls and non-authorising producer diagnostics.
+We therefore report this as a **format-limited timing residual**, not as the B-stave timing resolution. Historical values near 0.54 ns for a combined estimator and 0.68-0.75 ns for single-stave-like quantities are not promoted as beam-data performance. They belong to earlier simulation, toy-digitiser or provenance-gated analyses. Issue #993 closes the 16- versus 18-sample lineage as **distinct schemas**; cross-schema timing transfer remains quarantined. A real-data CFD fraction-transition study may proceed only on the authorising 8×16 LUNARC product (PAPER-A04); component-binding evidence outside that schema is limited to deterministic synthetic controls and non-authorising producer diagnostics.
 
 [**Figure 5:** B4-B6 residual from the located 8×16 data product. Caption must include `10 ns nominal sampling`, event count, waveform schema and `NOT DETECTOR RESOLUTION`.]
 

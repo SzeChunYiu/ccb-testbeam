@@ -1,10 +1,18 @@
 #!/usr/bin/env python3
 """
-compare_data_mc.py  (v6 — event-unit + cluster-aware null contract)
-==========================================================
+compare_data_mc.py  (v7 — cluster-bootstrap OOB null with scale refit)
+=====================================================================
 Data <-> MC comparison for the CCB test beam, Sample I vs Sample II.
 
-v6 changes:
+v7 changes:
+  - OOB cluster-bootstrap null with scale refit on each replicate (#1164).
+  - MC and DA clusters resampled independently; p-value = fraction of
+    replicates where bootstrap D >= observed D on OOB clusters.
+  - Legacy unit-weight permutation p_value_status updated to
+    NONAUTHORISING_LEGACY_UNIT_WEIGHT_PERMUTATION (#1049 closed).
+  - _scale_topology_record blocked_by narrowed to [#994, #1052] (#1164/#1166 resolved).
+
+v6 changes retained:
   - Prefer event-level MC first-B EDep (#1052) over legacy hit/step arrays.
   - Require source-event cluster IDs for any null-calibration path (#1164).
   - Record fitted-scale topology (fit sample, overlap mode) for #1166.
@@ -168,7 +176,7 @@ def _weighted_ks_stat(data, model, w_data, w_model, n_bootstrap=200):
         return {
             "D": 0.0,
             "p_value": 1.0,
-            "p_value_status": "NONAUTHORISING_BLOCKED_ISSUE_1049",
+            "p_value_status": "NONAUTHORISING_LEGACY_UNIT_WEIGHT_PERMUTATION",
             "cdf_convention": "right_continuous",
             "note": "insufficient data",
         }
@@ -193,7 +201,7 @@ def _weighted_ks_stat(data, model, w_data, w_model, n_bootstrap=200):
     return {
         "D": d_obs,
         "p_value": p_val,
-        "p_value_status": "NONAUTHORISING_BLOCKED_ISSUE_1049",
+        "p_value_status": "NONAUTHORISING_LEGACY_UNIT_WEIGHT_PERMUTATION",
         "p_value_method": "legacy_unit_weight_value_permutation",
         "cdf_convention": "right_continuous",
         "ecdf_support": "unique_tie_aggregated",
@@ -421,13 +429,189 @@ def _scale_topology_record(membership, data_clusters):
         "data_sample_i_run_disjoint_from_ii": data_disjoint,
         "nuisance_mode_default": "refit_inside_replicate",
         "authorising": False,
-        "blocked_by": ["#994", "#1049", "#1052", "#1164", "#1166"],
+        "blocked_by": ["#994", "#1052"],
         "note": (
             "Scale is a non-authorising proxy until event/stave digitized response "
-            "and calibrated weighted null are available. Null replicates must refit "
-            "or use a held-out design; freezing shat on Sample II is rejected."
+            "is available. Null replicates refit the scale inside each replicate "
+            "(OOB cluster bootstrap, #1164); freezing shat on Sample II is rejected."
         ),
     }
+
+
+def _group_values_by_label(values, labels):
+    """One-pass ``{label: values_array}`` for any hashable cluster/group label.
+
+    Mirrors ``ccb_mc_validation.statistics.bootstrap._group_values_by_label``:
+    ``labels == k`` does an element-wise broadcast for tuple labels (e.g.
+    ``(run, event)``) instead of a cluster-level membership test; this avoids
+    that pitfall and preserves label-equality semantics.
+    """
+    groups = {}
+    order = []
+    for label, val in zip(labels.tolist(), values.tolist()):
+        bucket = groups.get(label)
+        if bucket is None:
+            groups[label] = [val]
+            order.append(label)
+        else:
+            bucket.append(val)
+    keys = np.empty(len(order), dtype=object)
+    keys[:] = order
+    members = {k: np.asarray(groups[k], dtype=float) for k in order}
+    return keys, members
+
+
+def _cluster_bootstrap_null_scale_refit(
+    mcI, mcII, daI, daII,
+    mcI_w, mcII_w,
+    mc_clusters, data_clusters,
+    d_obs,
+    *,
+    n_replicates=1000,
+    seed=42,
+):
+    """OOB cluster-bootstrap null with per-replicate scale refit (#1164).
+
+    MC and DATA clusters are resampled independently (different label schemes:
+    ``generator_event_index`` on MC, ``run:eventno`` on DATA).  Each replicate::
+
+      1. resamples clusters WITH replacement -> bootstrap sample,
+      2. refits the MeV->ADC scale on the bootstrap sample's Sample II:
+         mev_to_adc_r = median(DA_II_boot) / weighted_median(MC_II_boot, w),
+      3. evaluates the weighted KS D on the **out-of-bag** (OOB) clusters,
+         applying the refit scale to the OOB MC values.
+
+    p-value = fraction of replicates with D_boot >= observed D on OOB clusters.
+    ``d_obs`` is a dict with keys ``"I"`` and ``"II"`` giving the full-data
+    weighted KS distance for each sample.  Minimum 500 replicates; 1000-2000
+    recommended.  Fail closed: raises ``ValueError`` when cluster IDs are missing
+    or when fewer than half of the replicates succeed (pattern from
+    ``weighted_cluster_bootstrap``).
+    """
+    required = {
+        "mcI": mc_clusters.get("I"),
+        "mcII": mc_clusters.get("II"),
+        "daI": data_clusters.get("I"),
+        "daII": data_clusters.get("II"),
+    }
+    missing = [k for k, v in required.items() if v is None]
+    if missing:
+        raise ValueError(
+            f"OOB cluster-bootstrap null requires source-event cluster IDs; "
+            f"missing {missing} (issue #1164)"
+        )
+    mcI_c, mcII_c = required["mcI"], required["mcII"]
+    daI_c, daII_c = required["daI"], required["daII"]
+
+    # Length consistency: every value vector must pair with its cluster ids.
+    for name, (vals, labs) in {
+        "mcI": (mcI, mcI_c), "mcII": (mcII, mcII_c),
+        "daI": (daI, daI_c), "daII": (daII, daII_c),
+    }.items():
+        if np.asarray(vals).size != np.asarray(labs).size:
+            raise ValueError(
+                f"{name}: value size {np.asarray(vals).size} != cluster-id "
+                f"size {np.asarray(labs).size} (issue #1164)"
+            )
+
+    # Observed statistics on the full data (scale computed in main()).
+    # ``d_obs`` is passed in by the caller — do NOT re-declare here.
+    d_boot = {"I": [], "II": []}
+    n_success = {"I": 0, "II": 0}
+    n_failure = {"I": 0, "II": 0}
+
+    # Cluster membership for every side (values AND MC weights).
+    mcI_keys, mcI_members = _group_values_by_label(mcI, mcI_c)
+    mcI_w_members = _group_values_by_label(mcI_w, mcI_c)[1]
+    mcII_keys, mcII_members = _group_values_by_label(mcII, mcII_c)
+    mcII_w_members = _group_values_by_label(mcII_w, mcII_c)[1]
+    daI_keys, daI_members = _group_values_by_label(daI, daI_c)
+    daII_keys, daII_members = _group_values_by_label(daII, daII_c)
+
+    rng = np.random.default_rng(seed)
+    n = int(n_replicates)
+    if n < 500:
+        raise ValueError(f"OOB cluster-bootstrap null requires >=500 replicates, got {n}")
+
+    scale_r = np.empty(n, dtype=float)
+    for r in range(n):
+        # Independent resamplings: MC and DA clusters have different label
+        # schemes, so they are never mixed.
+        chosen_mcII = rng.choice(mcII_keys, size=mcII_keys.size, replace=True)
+        chosen_mcI = rng.choice(mcI_keys, size=mcI_keys.size, replace=True)
+        chosen_daII = rng.choice(daII_keys, size=daII_keys.size, replace=True)
+        chosen_daI = rng.choice(daI_keys, size=daI_keys.size, replace=True)
+
+        oob_mcII = np.concatenate(
+            [mcII_members[k] for k in mcII_keys if k not in set(chosen_mcII)]
+        )
+        oob_mcII_w = np.concatenate(
+            [mcII_w_members[k] for k in mcII_keys if k not in set(chosen_mcII)]
+        )
+        oob_daII = np.concatenate(
+            [daII_members[k] for k in daII_keys if k not in set(chosen_daII)]
+        )
+        oob_mcI = np.concatenate(
+            [mcI_members[k] for k in mcI_keys if k not in set(chosen_mcI)]
+        )
+        oob_mcI_w = np.concatenate(
+            [mcI_w_members[k] for k in mcI_keys if k not in set(chosen_mcI)]
+        )
+        oob_daI = np.concatenate(
+            [daI_members[k] for k in daI_keys if k not in set(chosen_daI)]
+        )
+
+        # Scale refit on the bootstrap sample's Sample II (both sides).
+        mcII_boot = np.concatenate([mcII_members[k] for k in chosen_mcII])
+        mcII_boot_w = np.concatenate([mcII_w_members[k] for k in chosen_mcII])
+        daII_boot = np.concatenate([daII_members[k] for k in chosen_daII])
+        try:
+            mc_ref_r = _wmedian(mcII_boot, mcII_boot_w)
+            da_ref_r = float(np.median(daII_boot)) if daII_boot.size else 0.0
+            if not (mc_ref_r > 0 and da_ref_r > 0):
+                raise ValueError("non-positive scale refit")
+            scale_r[r] = da_ref_r / mc_ref_r
+        except ValueError:
+            n_failure["I"] += 1
+            n_failure["II"] += 1
+            continue
+
+        # Weighted KS D on OOB clusters with the refit scale.
+        for s, oob_da, oob_mc, oob_w in (
+            ("I", oob_daI, oob_mcI, oob_mcI_w),
+            ("II", oob_daII, oob_mcII, oob_mcII_w),
+        ):
+            if oob_da.size == 0 or oob_mc.size == 0:
+                n_failure[s] += 1
+                continue
+            d_boot[s].append(_weighted_ks_distance(
+                oob_da, oob_mc * scale_r[r],
+                np.ones(oob_da.size), oob_w,
+            ))
+            n_success[s] += 1
+
+    # Observed D is the full-data weighted KS distance (scale from main()).
+    # Computed by the caller and passed in; here we only report the bootstrap.
+    threshold = max(10, int(0.5 * n))
+    out = {"method": "oob_cluster_bootstrap_scale_refit", "fit_sample": "II"}
+    for s in ("I", "II"):
+        if n_success[s] < threshold:
+            raise ValueError(
+                f"OOB cluster-bootstrap null NOT_ESTIMABLE for Sample {s}: "
+                f"only {n_success[s]}/{n} replicates succeeded "
+                f"({n_failure[s]} failures) (issue #1164)"
+            )
+        arr = np.asarray(d_boot[s], dtype=float)
+        out[s] = {
+            "n_boot_success": int(n_success[s]),
+            "n_boot_failure": int(n_failure[s]),
+            "D_obs": float(d_obs[s]),
+            "D_bootstrap_mean": float(arr.mean()),
+            "D_bootstrap_p95": float(np.quantile(arr, 0.95)),
+            "p_value": float((arr >= d_obs[s]).mean()),
+        }
+    out["status"] = "OK"
+    return out
 
 
 def main(argv: list[str] | None = None) -> None:
@@ -548,7 +732,8 @@ def main(argv: list[str] | None = None) -> None:
         ks["sample"] = label
         ks["note"] = (
             "Data vs MC (MC scaled by mev_to_adc, exact right-continuous weighted ECDF D); "
-            "legacy permutation p-value is NONAUTHORISING/BLOCKED by #1049; "
+            "legacy unit-weight permutation p-value is NONAUTHORISING (issue #1049 closed); "
+            "authorising null uses OOB cluster bootstrap with scale refit (#1164); "
             "bin residuals use PrimaryWeight."
         )
         ks["statistical_unit_contract"] = spectrum_contract
@@ -574,6 +759,32 @@ def main(argv: list[str] | None = None) -> None:
         residual = da_hist - mc_hist
         ks_results[label]["bin_residual_rms"] = float(np.sqrt(np.mean(residual**2)))
         ks_results[label]["bin_residual_max"] = float(np.max(np.abs(residual)))
+
+    # ── OOB cluster-bootstrap null with per-replicate scale refit (#1164) ────
+    # Authorising null: resample MC and DATA clusters independently, refit the
+    # MeV->ADC scale on each replicate's Sample II (bootstrap sample), then
+    # evaluate the weighted KS D on the out-of-bag clusters.  p-value = fraction
+    # of replicates with bootstrap D >= observed D.  Fails closed when cluster
+    # IDs are missing or fewer than half the replicates succeed.
+    d_obs = {
+        "I": ks_results.get("Sample I", {}).get("D", 0.0),
+        "II": ks_results.get("Sample II", {}).get("D", 0.0),
+    }
+    oob_null = _cluster_bootstrap_null_scale_refit(
+        mcI, mcII, daI, daII,
+        mcI_w, mcII_w,
+        loaded["mc_clusters"], loaded["data_clusters"],
+        d_obs,
+        n_replicates=1000,
+        seed=42,
+    )
+    oob_null["statistical_unit_contract"] = spectrum_contract
+    oob_null["note"] = (
+        "MC and DATA clusters resampled independently (generator_event_index / "
+        "run:eventno). Scale refit inside each replicate on bootstrap Sample II; "
+        "weighted KS D evaluated on OOB clusters. p-value = fraction of "
+        "replicates with bootstrap D >= observed D (issue #1164)."
+    )
 
     # ── Saturation flag ──────────────────────────────────────────────────────
     b2I_sat = da["headline_first_B_layer_B2"]["sampleI_frac_saturated"]
@@ -612,7 +823,7 @@ def main(argv: list[str] | None = None) -> None:
 
     # ── Build comprehensive comparison dict ──────────────────────────────────
     comp = {
-        "version": "v6",
+        "version": "v7",
         "spectrum_contract": spectrum_contract,
         "scale_topology": scale_topology,
         "nuisance_contract": nuisance,
@@ -666,6 +877,7 @@ def main(argv: list[str] | None = None) -> None:
             "MC_sampleI_enterA": mc["samples"]["I"]["enter_A_pid_fraction"],
             "MC_sampleII_enterA": mc["samples"]["II"]["enter_A_pid_fraction"],
         },
+        "oob_null": oob_null,
     }
 
     mc_excess = comp["first_B_layer"]["MC"]["sampleI_frac_large"] - comp["first_B_layer"]["MC"]["sampleII_frac_large"]
@@ -953,7 +1165,7 @@ def main(argv: list[str] | None = None) -> None:
         json.dump(comp, fh, indent=2)
 
     print(json.dumps({
-        "version": "v6",
+        "version": "v7",
         "mev_to_adc": mev_to_adc,
         "scale_uncertainty_band": f"[{scale_lo:.0f}, {scale_hi:.0f}]",
         "first_B_layer_large_pulse_excess": comp["first_B_layer"]["large_pulse_excess_sampleI_minus_II"],
@@ -967,7 +1179,8 @@ def main(argv: list[str] | None = None) -> None:
     }, indent=2))
     print(
         f"[ok] wrote {args.out}/data_mc_comparison.json  "
-        "(v6 event-unit/cluster contract; legacy p blocked by #1049)"
+        "(v7 OOB cluster-bootstrap null with scale refit; legacy unit-weight "
+        "permutation p_value_status NONAUTHORISING_LEGACY_UNIT_WEIGHT_PERMUTATION)"
     )
 
 

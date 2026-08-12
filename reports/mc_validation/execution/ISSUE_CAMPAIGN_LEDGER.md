@@ -15,7 +15,7 @@ MC ROOT: `geant4/data/output_krakow_1M.root` (present)
 | 05 | ccb-wt-lane05 | fix/lane05-waveA | Timing CFD/template | #954 #964-#968 #1003-#1004 #1032-#1033 #1059-#1064 | MERGED (#1239) | #1239 |
 | 06 | ccb-wt-lane06 | fix/lane06-waveA | PID ΔE-E | #956 #1022-#1031 #1042 #1048 | IN_PROGRESS | |
 | 07 | ccb-wt-lane07 | fix/lane07-waveA | Stats/bootstrap | #958-#960 #1049 #1052 #1097 #1164 #1166 | IN_PROGRESS | |
-| 08 | ccb-wt-lane08 | fix/lane08-waveA | DAQ/S00 provenance | #953 #961-#962 #973 #997-#998 #1014 #1073 #1149 | IN_PROGRESS | |
+| 08 | ccb-wt-lane08 | fix/issue-1073-saturation-worlds | DAQ/S00 provenance | #953 #961-#962 #973 #997-#998 #1014 #1073 #1149 | READY_FOR_REVIEW | https://github.com/SzeChunYiu/ccb-testbeam/pull/1279 |
 | 09 | ccb-wt-lane09 | fix/lane09-waveA | ARU study scripts | #1112-#1129 #1137 | IN_PROGRESS | |
 | 10 | ccb-wt-lane10 | fix/lane10-waveA | Docs/gov/orchestrator | #969-#970 #990 #1002 #1078 #1218 + run_pipeline | MERGED (#1241) | #1241 |
 

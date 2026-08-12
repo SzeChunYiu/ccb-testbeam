@@ -285,6 +285,27 @@ def test_env_regrid_is_external_content_bound_and_leaves_source_clean(tmp_path: 
         stderr=subprocess.PIPE,
     )
     try:
+        # A linked worktree contains the gitlink but does not materialize the nested
+        # repository.  Receipt v2 intentionally rejects that state.  Materialize an
+        # offline exact-core fixture from the already checked-out CI submodule rather
+        # than weakening production source identity or making this unit test depend
+        # on network access.
+        row = _git(source, "ls-tree", "HEAD", "geant4/single_stave/sipm").split()
+        assert len(row) >= 3 and row[0] == "160000" and row[1] == "commit"
+        expected_core = row[2]
+        source_core = source / "geant4" / "single_stave" / "sipm"
+        checked_out_core = ROOT / "geant4" / "single_stave" / "sipm"
+        subprocess.run(
+            ["git", "clone", "--local", "--no-checkout", str(checked_out_core), str(source_core)],
+            check=True,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+        _git(source_core, "checkout", "--detach", expected_core)
+        assert Path(_git(source_core, "rev-parse", "--show-toplevel")).resolve() == source_core.resolve()
+        assert _git(source_core, "rev-parse", "HEAD") == expected_core
+
         before = _git(source, "status", "--porcelain=v1", "--untracked-files=all")
         assert before == ""
 

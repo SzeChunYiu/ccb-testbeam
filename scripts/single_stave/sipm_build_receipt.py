@@ -2,14 +2,15 @@
 """Create, verify, and freeze authorising ccb_stave_sim build receipts.
 
 The receipt binds one clean superproject source revision and its ccb-sipm-core
-Gitlink to the exact ccb_stave_sim executable bytes, CMakeCache.txt, configured
-CMake/C++ compiler binaries, and the Geant4 CMake package sentinel.  The running
-executable independently self-reports its SHA-256 and compile-time source labels.
+Gitlink to the exact checked-out ccb-sipm-core worktree, ccb_stave_sim executable
+bytes, CMakeCache.txt, configured CMake/C++ compiler binaries, and the Geant4
+CMake package sentinel.  The running executable independently self-reports its
+SHA-256 and compile-time source labels.
 
 This is a build/execution provenance contract, not detector validation.  It does
 not prove every compiler/linker invocation, exclude mutate-and-restore source
-changes between observations, attest the runtime dynamic-loader image set, or
-validate any Geant4/SiPM physics observable.
+changes between observations, attest ignored submodule files, attest the runtime
+dynamic-loader image set, or validate any Geant4/SiPM physics observable.
 """
 from __future__ import annotations
 
@@ -25,7 +26,7 @@ from typing import Any
 
 import sipm_campaign_manifest as campaign
 
-SCHEMA = "ccb-single-stave-build-receipt/1"
+SCHEMA = "ccb-single-stave-build-receipt/2"
 RUNTIME_SCHEMA = "ccb-single-stave-runtime-build-identity/1"
 HEX40_RE = re.compile(r"^[0-9a-f]{40}$")
 HEX64_RE = re.compile(r"^[0-9a-f]{64}$")
@@ -114,6 +115,51 @@ def _git(repo_root: Path, *args: str) -> str:
     return proc.stdout.strip()
 
 
+def _core_worktree_identity(
+    repo_root: Path, *, expected_core: str, require_clean: bool
+) -> dict[str, Any]:
+    """Bind the materialized nested core worktree, not only the superproject gitlink.
+
+    Git commands run from an empty/non-Git directory below the superproject may
+    discover the parent repository.  Requiring the reported top-level directory
+    to equal the configured submodule path distinguishes a genuine independent
+    nested worktree (including normal .git-file submodules) from that case.
+    """
+    core_path = (repo_root / campaign.CORE_PATH).resolve()
+    try:
+        top_level = Path(_git(core_path, "rev-parse", "--show-toplevel")).resolve()
+    except BuildReceiptError as exc:
+        raise BuildReceiptError(
+            f"ccb-sipm-core path is not a materialized independent Git worktree: {core_path}"
+        ) from exc
+    if top_level != core_path:
+        raise BuildReceiptError(
+            "ccb-sipm-core path is not an independent Git worktree: "
+            f"git top-level {top_level} != expected {core_path}"
+        )
+
+    worktree_head = _canonical_git(
+        _git(core_path, "rev-parse", "HEAD"), field="ccb-sipm-core worktree HEAD"
+    )
+    if worktree_head != expected_core:
+        raise BuildReceiptError(
+            "ccb-sipm-core worktree HEAD does not equal superproject gitlink: "
+            f"{worktree_head} != {expected_core}"
+        )
+
+    status = _git(core_path, "status", "--porcelain=v1", "--untracked-files=all")
+    clean = status == ""
+    if require_clean and not clean:
+        raise BuildReceiptError(
+            "authorising build receipt requires a clean ccb-sipm-core worktree; "
+            f"first dirty entry: {status.splitlines()[0]}"
+        )
+    return {
+        "ccb_sipm_core_worktree_head": worktree_head,
+        "ccb_sipm_core_worktree_clean_at_receipt": clean,
+    }
+
+
 def source_identity(repo_root: Path, *, require_clean: bool) -> dict[str, Any]:
     head = _canonical_git(_git(repo_root, "rev-parse", "HEAD"), field="superproject HEAD")
     row = _git(repo_root, "ls-tree", head, campaign.CORE_PATH)
@@ -121,6 +167,9 @@ def source_identity(repo_root: Path, *, require_clean: bool) -> dict[str, Any]:
     if len(fields) < 3 or fields[0] != "160000" or fields[1] != "commit":
         raise BuildReceiptError(f"{head}:{campaign.CORE_PATH}: expected gitlink, got {row!r}")
     core = _canonical_git(fields[2], field="ccb-sipm-core gitlink")
+    core_worktree = _core_worktree_identity(
+        repo_root, expected_core=core, require_clean=require_clean
+    )
     status = _git(repo_root, "status", "--porcelain=v1", "--untracked-files=all")
     clean = status == ""
     if require_clean and not clean:
@@ -132,6 +181,7 @@ def source_identity(repo_root: Path, *, require_clean: bool) -> dict[str, Any]:
         "superproject_commit": head,
         "ccb_sipm_core_commit": core,
         "source_tree_clean_at_receipt": clean,
+        **core_worktree,
     }
 
 
@@ -257,6 +307,7 @@ def create_receipt(*, repo_root: Path, build_dir: Path, executable: Path) -> dic
         "scientific_scope": "BUILD_SOURCE_EXECUTABLE_CONFIGURED_TOOLCHAIN_IDENTITY_ONLY",
         "limitations": [
             "TWO_OBSERVATION_CHECK_CANNOT_EXCLUDE_TRANSIENT_MUTATE_AND_RESTORE",
+            "IGNORED_CCB_SIPM_CORE_FILES_NOT_ATTESTED",
             "EXACT_COMPILER_AND_LINKER_INVOCATION_STREAM_NOT_ATTESTED",
             "RUNTIME_DYNAMIC_LIBRARY_LOAD_SET_NOT_ATTESTED",
             "SHARED_LAUNCHER_AND_VERIFIER_BYTES_NOT_ATTESTED",
@@ -271,8 +322,19 @@ def validate_receipt(value: Any) -> dict[str, Any]:
     source = value.get("source")
     if not isinstance(source, dict) or source.get("source_tree_clean_at_receipt") is not True:
         raise BuildReceiptError("receipt source block missing or non-authorising")
-    _canonical_git(source.get("superproject_commit"), field="receipt source commit")
-    _canonical_git(source.get("ccb_sipm_core_commit"), field="receipt core commit")
+    root_commit = _canonical_git(source.get("superproject_commit"), field="receipt source commit")
+    core_commit = _canonical_git(source.get("ccb_sipm_core_commit"), field="receipt core commit")
+    worktree_head = _canonical_git(
+        source.get("ccb_sipm_core_worktree_head"), field="receipt core worktree HEAD"
+    )
+    if worktree_head != core_commit:
+        raise BuildReceiptError(
+            "receipt core worktree HEAD does not equal receipt core gitlink: "
+            f"{worktree_head} != {core_commit}"
+        )
+    if source.get("ccb_sipm_core_worktree_clean_at_receipt") is not True:
+        raise BuildReceiptError("receipt core worktree is missing or non-authorising")
+    del root_commit
     exe = value.get("executable")
     if not isinstance(exe, dict):
         raise BuildReceiptError("receipt executable block missing")

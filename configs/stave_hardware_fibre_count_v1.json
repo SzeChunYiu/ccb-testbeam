@@ -1,0 +1,13 @@
+{
+  "version": "stave_hardware_fibre_count_v1",
+  "status": "UNRESOLVED_HARDWARE_CONTRADICTION",
+  "chapter2_claim": "one_fibre_per_bar",
+  "geant4_executable_claim": "two_fibre_channels_y_pm_1cm",
+  "physical_readout_channels": ["F1_PlusX"],
+  "authorising_light_collection_claims": false,
+  "audit_issue": 987,
+  "provenance": {
+    "basis": "Documented contradiction between academic chapter 2 (singular fibre) and DetectorConstruction (two fibres). Hardware winner not selected.",
+    "required_evidence": ["MEASURED", "CAD", "BUILD_DOC", "PHOTO_INFERRED"]
+  }
+}

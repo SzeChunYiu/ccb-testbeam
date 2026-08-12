@@ -1,0 +1,8 @@
+{
+  "version": "light_collection_attenuation_gate_v1",
+  "runs": [59, 60, 61, 62, 63, 64, 65],
+  "attenuation_identifiability_status": "UNRESOLVED",
+  "authorising_attenuation_claims": false,
+  "blocked_on_issues": [987, 991, 1008, 1010, 1033],
+  "audit_issue": 1033
+}

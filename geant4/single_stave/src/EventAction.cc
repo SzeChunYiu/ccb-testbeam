@@ -42,6 +42,8 @@ EventAction::EventAction(const AppConfig& cfg, const OpticalTables& tables,
             << " baseline_adc=" << sipm_config_.baseline_adc
             << " overvoltage_V=" << sipm_config_.device_provenance.overvoltage_V
             << " temperature_C=" << sipm_config_.device_provenance.temperature_C
+            << " trigger_recovery_model=" << sipm_config_.trigger_recovery_model
+            << " gain_recovery_model=" << sipm_config_.gain_recovery_model
             << std::endl;
 }
 

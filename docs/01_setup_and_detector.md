@@ -10,9 +10,11 @@
 
 ## Apparatus (Fig. 1 in the notes)
 - Target region → **trigger scintillators** → **TPC** → **two HRD scintillator range stacks**
-  (Stack A, Stack B), each ≈ **100 cm** from the target.
-- Each stack is a stack of scintillator **staves** (~1 m long), read out at **one end** by a
-  **wavelength-shifting (WLS) fibre**; assumed WLS propagation speed **v_WLS = 17.0 cm/ns**.
+  (Stack A, Stack B), each at a nominal **109 cm** geometry parameter from target (`SIM_CONFIG`).
+- Each stack is a stack of scintillator **staves** specified as **50 × 5.18 × 2.0 cm** extruded
+  polystyrene (`DESIGN_SPEC`, issue #796), read out at **one fibre end only** by a
+  **wavelength-shifting (WLS) fibre**; assumed WLS propagation speed **v_WLS = 17.0 cm/ns**
+  (model assumption, not beam-test measurement).
 - A stack ranges out charged particles → acts as a **ΔE–E / range telescope**: amplitude
   vector + hit multiplicity + penetration depth + pulse shape + inter-stave timing together
   discriminate particle topology.

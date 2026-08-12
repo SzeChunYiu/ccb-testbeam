@@ -7,7 +7,7 @@
       "column": "single",
       "environment": {
         "matplotlib": "3.10.8",
-        "python": "3.13.12"
+        "python": "3.14.6"
       },
       "evidence_class": "DATA_MEASUREMENT",
       "figure_id": "FIG-WIKI-001",
@@ -102,7 +102,7 @@
       "column": "single",
       "environment": {
         "matplotlib": "3.10.8",
-        "python": "3.13.12"
+        "python": "3.14.6"
       },
       "evidence_class": "GOVERNANCE_LEDGER",
       "figure_id": "FIG-WIKI-002",
@@ -164,29 +164,29 @@
       "height_mm": 70.0,
       "outputs": {
         "pdf": {
-          "bytes": 14110,
+          "bytes": 14233,
           "path": "docs/figures/paper/claim_status_overview.pdf",
-          "sha256": "7229b6edf2b7ac313380e131ef935e4485f726f97308ec68141da8d1b4d62448"
+          "sha256": "1f7b8ba5d121bdbd4a8ed17cd9987e104698e56a7bff24393af9c809aacfca74"
         },
         "png": {
-          "bytes": 96590,
+          "bytes": 96966,
           "path": "docs/figures/paper/claim_status_overview.png",
-          "sha256": "351ec7fc3d70188982d30fd7819cc16947dc9454389b4cc08ac26af7d80628c2"
+          "sha256": "154e7c61fcfedd88a7045a512798ac23009f69203c0c2e1b6aed4201e6076c07"
         },
         "svg": {
-          "bytes": 14757,
+          "bytes": 15461,
           "path": "docs/figures/paper/claim_status_overview.svg",
-          "sha256": "9c670387b72e0e3ee0a71199ace11fd5451fcc82d82beef113542bbaa27eb8eb"
+          "sha256": "87258717ef1cc2d434f2ffa89e07630ea9deaf906e93ffee0c64ed94ee53dd69"
         }
       },
-      "plotted_data_sha256": "581b278034bc6ccfec40905ee0a9c3cab42cdc63d4158e83bf8f9e4b08fb9148",
+      "plotted_data_sha256": "88f83359ba24aa27160182b6e973c02b201fde01fa8cc8c4cd5ef69a2136499c",
       "qa_issues": [],
       "question": "What fraction of the project claim surface is currently publication-authorized?",
       "source_paths": [
         "docs/claim_ledger.csv"
       ],
       "source_table": "docs/figures/paper/source_tables/claim_status_overview_source.csv",
-      "source_table_sha256": "581b278034bc6ccfec40905ee0a9c3cab42cdc63d4158e83bf8f9e4b08fb9148",
+      "source_table_sha256": "88f83359ba24aa27160182b6e973c02b201fde01fa8cc8c4cd5ef69a2136499c",
       "status": "REVIEW",
       "stem": "claim_status_overview",
       "title": "Claim ledger is mostly gated or blocked",
@@ -197,7 +197,7 @@
       "column": "single",
       "environment": {
         "matplotlib": "3.10.8",
-        "python": "3.13.12"
+        "python": "3.14.6"
       },
       "evidence_class": "MC_METHOD_CLOSURE",
       "figure_id": "FIG-WIKI-003",
@@ -292,7 +292,7 @@
       "column": "single",
       "environment": {
         "matplotlib": "3.10.8",
-        "python": "3.13.12"
+        "python": "3.14.6"
       },
       "evidence_class": "SIMULATION_RESULT",
       "figure_id": "FIG-WIKI-004",
@@ -387,7 +387,7 @@
       "column": "single",
       "environment": {
         "matplotlib": "3.10.8",
-        "python": "3.13.12"
+        "python": "3.14.6"
       },
       "evidence_class": "MC_CLOSURE_PLUS_GATED_DATA_MC_PROXY",
       "figure_id": "FIG-WIKI-005",
@@ -483,7 +483,7 @@
       "column": "single",
       "environment": {
         "matplotlib": "3.10.8",
-        "python": "3.13.12"
+        "python": "3.14.6"
       },
       "evidence_class": "SIMULATION_RESULT",
       "figure_id": "FIG-WIKI-006",
@@ -578,7 +578,7 @@
       "column": "single",
       "environment": {
         "matplotlib": "3.10.8",
-        "python": "3.13.12"
+        "python": "3.14.6"
       },
       "evidence_class": "SIMULATION_RESULT",
       "figure_id": "FIG-WIKI-007",
@@ -673,7 +673,7 @@
       "column": "single",
       "environment": {
         "matplotlib": "3.10.8",
-        "python": "3.13.12"
+        "python": "3.14.6"
       },
       "evidence_class": "LEGACY_DATA_MC_DIAGNOSTIC",
       "figure_id": "FIG-WIKI-008",
@@ -768,7 +768,7 @@
       "column": "single",
       "environment": {
         "matplotlib": "3.10.8",
-        "python": "3.13.12"
+        "python": "3.14.6"
       },
       "evidence_class": "TRUTH_LEVEL_MC_ONLY",
       "figure_id": "FIG-WIKI-009",
@@ -863,7 +863,7 @@
       "column": "single",
       "environment": {
         "matplotlib": "3.10.8",
-        "python": "3.13.12"
+        "python": "3.14.6"
       },
       "evidence_class": "SYNTHETIC_WAVEFORM_MC",
       "figure_id": "FIG-WIKI-010",
@@ -958,7 +958,7 @@
       "column": "single",
       "environment": {
         "matplotlib": "3.10.8",
-        "python": "3.13.12"
+        "python": "3.14.6"
       },
       "evidence_class": "SENSITIVITY_INPUTS",
       "figure_id": "FIG-WIKI-011",

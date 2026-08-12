@@ -612,7 +612,7 @@ def main(argv: list[str] | None = None) -> None:
 
     # ── Build comprehensive comparison dict ──────────────────────────────────
     comp = {
-        "version": "v6",
+"version": "v6",
         "spectrum_contract": spectrum_contract,
         "scale_topology": scale_topology,
         "nuisance_contract": nuisance,

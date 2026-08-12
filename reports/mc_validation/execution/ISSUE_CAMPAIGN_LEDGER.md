@@ -70,6 +70,7 @@ Historical Wave-A integration aligned the gitlink with #1243 at `cf12c6b8955c485
 - Scientific content: records PARTIAL result that parent-generation correlated-noise probabilities remain hard-wired to raw r(dt) under FULL_RECOVERY; does not close #1066/#1071.
 - Policy compliance with #1218: acceptable because it did not claim scientific-universe completion for those parents.
 
+<<<<<<< HEAD
 ## Lane 02 Wave B — neutron tracking-time cut (#1091)
 
 Branch: fix/issue-1091-neutron-timecut (worktree ccb-wt-lane02).
@@ -77,6 +78,22 @@ Branch: fix/issue-1091-neutron-timecut (worktree ccb-wt-lane02).
 | Issue | Disposition | Evidence |
 |-------|-------------|----------|
 | #1091 | IN_PROGRESS (provenance pin) | --neutron-timecut-policy-id required; /physics_engine/neutron/timeLimit applied post-Initialize; run sidecar records configured 10 us pin (pin_qgsp_bic_default_10us); delayed-neutron claims remain BLOCKED (ADR-0013) |
+=======
+## Lane 05 timing CFD follow-up (#1059 #968)
+
+Branch: `chatgpt/paper-draft-20260812` (paper PR #1298); software branch `fix/issue-1059-cfd-component` (PR #1289).
+
+| Issue | Disposition | Evidence |
+|-------|-------------|----------|
+| #1059 | FIXED (software) / OPEN (physics) | `scripts/digital_cfd.py` binds `first_local_peak` CFD crossing to selected component; `scripts/cfd_fraction_transition.py` deterministic two-pulse fraction-transition controls; `scripts/cfd_selector_sensitivity.py` fail-closed identifiability limits (#1277/#1278); producer serializes `first_local_peak_selector` diagnostics |
+| #968 | PARTIAL (contract) / BLOCKED (physics) | `src/ccb_mc_validation/timing/b2_broad_residual_mechanisms.py` fail-closes microscopic `pile-up-like` wording until AF-020 discriminants are `SATISFIED` |
+| #1060 | FIXED | Left-censored crossings report `NO_CROSSING_IN_WINDOW`, never `t=0` |
+| #1061 | FIXED | Leave-one-run-out template phase in producer |
+| #1062 | FIXED (policy) | Same-sample minimum sigma68 is `SAME_SAMPLE_MINIMUM_EXPLORATORY_ONLY`; not authorising |
+| #1063 | FIXED | Canonical `digital_cfd` import path for production timing |
+| #993 | CLOSED DISTINCT | 8×16 LUNARC raw authorising; 18-sample historical non-authorising; see `reports/studies/paper_a02_waveform_lineage/` |
+| #954 #964 #965 #967 #1003 #1004 #1032 #1033 #1064 | OPEN / carried | Not closed by Lane 05 follow-up |
+>>>>>>> 33aaf36b (feat(paper): hardware BOM (#1296) and CFD component binding (#1059))
 
 ## Lane 01 Wave B kickoff
 

@@ -291,6 +291,28 @@ def _assign_cfd_columns(df: pd.DataFrame) -> dict[str, dict]:
     wave = np.vstack(df["waveform"].to_numpy())
     amp = df["amplitude_adc"].to_numpy()
     status_summary: dict[str, dict] = {}
+    if CFD_AMPLITUDE_MODE == "first_local_peak":
+        selector_diag = digital_cfd.first_local_peak_diagnostics(wave)
+        statuses = np.asarray(selector_diag["statuses"], dtype=object)
+        status_summary["first_local_peak_selector"] = {
+            "profile_id": selector_diag["profile_id"],
+            "evidence_status": selector_diag["evidence_status"],
+            "authorising_component_identity": selector_diag[
+                "authorising_component_identity"
+            ],
+            "global_fraction_floor": selector_diag["global_fraction_floor"],
+            "n_fallback_global": int(
+                np.count_nonzero(statuses == digital_cfd.SELECT_FALLBACK_GLOBAL)
+            ),
+            "n_local_selected": int(
+                np.count_nonzero(
+                    statuses == digital_cfd.SELECT_LOCAL_ABOVE_GLOBAL_FLOOR
+                )
+            ),
+            "n_invalid": int(
+                np.count_nonzero(statuses == digital_cfd.SELECT_INVALID)
+            ),
+        }
     for fraction in FRACTIONS:
         column = f"t_cfd{int(round(fraction * 100)):02d}"
         times, statuses = digital_cfd.cfd_time_samples(

@@ -67,3 +67,13 @@ Submodule gitlink aligned with #1243: geant4/single_stave/sipm -> cf12c6b8955c48
 - Scope: chatgpt_todo/ACTIVE_TASK.md, HANDOFF.md, archive ARU-SIPM-RECOVERY-CORRELATED-NOISE-COUPLING-001.
 - Scientific content: records PARTIAL result that parent-generation correlated-noise probabilities remain hard-wired to raw r(dt) under FULL_RECOVERY; does not close #1066/#1071.
 - Policy compliance with #1218: acceptable because it did not claim scientific-universe completion for those parents.
+
+## Lane 01 Wave B kickoff
+
+Branch: `fix/lane01-waveB` (rebased onto origin/main after Wave A #1248 merge).
+
+| Issue | Disposition | Note |
+|-------|-------------|------|
+| #1009 | IN_PROGRESS (fail-closed) | Metadata marks PEAK_ONLY_DISCARDED + daq schema UNSET; no invented HRD Nsamples |
+| #1010 | BLOCKED | Needs external CCB electronics impulse evidence |
+| #1066 #1068 #1070 #1071 | BLOCKED | Carried from Wave A ADRs |

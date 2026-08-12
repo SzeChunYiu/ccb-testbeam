@@ -6,6 +6,12 @@ from dataclasses import dataclass
 
 import numpy as np
 
+from ccb_mc_validation.digitizer.config_types import (
+    require_finite_float,
+    require_nonnegative_float,
+    require_positive_int,
+)
+
 
 @dataclass
 class ElectronicsConfig:
@@ -14,6 +20,20 @@ class ElectronicsConfig:
     adc_bits: int = 14
     adc_ceiling: int = 7000
     pedestal_adc: float = 300.0
+
+    def __post_init__(self) -> None:
+        # gain>=0 allowed as VALID_CONTROL (null gain experiment); negative invalid.
+        self.gain_adc_per_mev = require_nonnegative_float(
+            self.gain_adc_per_mev, field_name="gain_adc_per_mev"
+        )
+        self.noise_adc_rms = require_nonnegative_float(
+            self.noise_adc_rms, field_name="noise_adc_rms"
+        )
+        self.adc_bits = require_positive_int(self.adc_bits, field_name="adc_bits")
+        if self.adc_bits > 63:
+            raise ValueError(f"adc_bits must be in [1, 63], got {self.adc_bits}")
+        self.adc_ceiling = require_positive_int(self.adc_ceiling, field_name="adc_ceiling")
+        self.pedestal_adc = require_finite_float(self.pedestal_adc, field_name="pedestal_adc")
 
 
 def apply_gain(signal_mev: np.ndarray, cfg: ElectronicsConfig) -> np.ndarray:

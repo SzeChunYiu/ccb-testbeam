@@ -65,8 +65,11 @@ void RunAction::DefineNtuples() {
   am->CreateNtupleSColumn("particle");
   am->CreateNtupleDColumn("ke_MeV");
   am->CreateNtupleDColumn("edep_scint_MeV");       // quenched (visible)
-  am->CreateNtupleDColumn("edep_scint_raw_MeV");   // unquenched
-  am->CreateNtupleDColumn("track_len_scint_mm");
+  am->CreateNtupleDColumn("edep_scint_raw_MeV");   // unquenched (all non-optical)
+  am->CreateNtupleDColumn("track_len_scint_mm");   // all non-optical (#1007)
+  am->CreateNtupleDColumn("primary_edep_scint_MeV");
+  am->CreateNtupleDColumn("primary_edep_scint_raw_MeV");
+  am->CreateNtupleDColumn("primary_track_len_scint_mm");
   am->CreateNtupleDColumn("entry_x_cm");
   am->CreateNtupleDColumn("entry_y_cm");
   am->CreateNtupleDColumn("entry_z_cm");
@@ -186,6 +189,9 @@ void RunAction::FillEvent(const EventData& e, int event_id) {
   am->FillNtupleDColumn(nt_event_, c++, e.edep_scint_MeV);
   am->FillNtupleDColumn(nt_event_, c++, e.edep_scint_raw_MeV);
   am->FillNtupleDColumn(nt_event_, c++, e.track_len_scint_mm);
+  am->FillNtupleDColumn(nt_event_, c++, e.primary_edep_scint_MeV);
+  am->FillNtupleDColumn(nt_event_, c++, e.primary_edep_scint_raw_MeV);
+  am->FillNtupleDColumn(nt_event_, c++, e.primary_track_len_scint_mm);
   am->FillNtupleDColumn(nt_event_, c++, e.entry[0]);
   am->FillNtupleDColumn(nt_event_, c++, e.entry[1]);
   am->FillNtupleDColumn(nt_event_, c++, e.entry[2]);
@@ -273,6 +279,10 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
      << "  \"git_commit\": " << j(git ? git : "unknown") << ",\n"
      << "  \"geometry_hash\": " << j(geometry_hash_) << ",\n"
      << "  \"physics_hash\": " << j(physics_hash_) << ",\n"
+     << "  \"quenching_model_id\": " << j(cfg_.quenching_model_id) << ",\n"
+     << "  \"quenching_model_status\": " << j(cfg_.quenching_model_status) << ",\n"
+     << "  \"quenching_claims_authorized\": "
+     << (cfg_.quenching_claims_authorized ? "true" : "false") << ",\n"
      << "  \"geometry_hash_schema\": \"geometry_v2\",\n"
      << "  \"physics_hash_schema\": \"physics_v1\",\n"
      << "  \"seed\": " << cfg_.seed << ",\n"
@@ -293,6 +303,11 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
      << "  \"birks_kB_mm_per_MeV\": " << cfg_.birks_kB_mm_per_MeV << ",\n"
      << "  \"production_cut_mm\": " << cfg_.production_cut_mm << ",\n"
      << "  \"physics_list\": " << j(cfg_.physics_list) << ",\n"
+     << "  \"neutron_tracking_time_cut_us\": "
+     << "\"IMPLICIT_QGSP_BIC_DEFAULT_10_UNVALIDATED\",\n"
+     << "  \"neutron_tracking_time_cut_status\": \"BLOCKED_ISSUE_1091\",\n"
+     << "  \"step_size_convergence_status\": \"BLOCKED_ISSUE_1095\",\n"
+     << "  \"primary_vs_event_track_contract\": \"primary_* columns (#1007)\",\n"
      << "  \"reflectivity_scale\": " << cfg_.reflectivity_scale << ",\n"
      << "  \"attenuation_scale\": " << cfg_.attenuation_scale << ",\n"
      << "  \"scintillator_absorption_scale\": " << cfg_.scintillator_absorption_scale << ",\n"
@@ -303,6 +318,11 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
      << "  \"sipm_n_cells\": " << cfg_.sipm_n_cells << ",\n"
      << "  \"sipm_overvoltage_V\": " << cfg_.sipm_overvoltage_V << ",\n"
      << "  \"wls_time_profile\": " << j(cfg_.wls_time_profile) << ",\n"
+     << "  \"hrd_fibre_count_status\": \"UNRESOLVED_HARDWARE_CONTRADICTION\",\n"
+     << "  \"authorising_light_collection_claims\": false,\n"
+     << "  \"attenuation_identifiability_status\": \"UNRESOLVED\",\n"
+     << "  \"authorising_attenuation_claims\": false,\n"
+     << "  \"authorising_absolute_light_yield_claims\": false,\n"
      << "  \"strict_optical\": " << (cfg_.strict_optical ? "true" : "false") << ",\n"
      << "  \"far_end_mode\": " << j(cfg_.far_end_mode) << ",\n"
      << "  \"physics_list\": \"QGSP_BIC\",\n"

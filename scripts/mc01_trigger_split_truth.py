@@ -207,7 +207,10 @@ def main():
         # events that deposited here; pid_w = weighted species counts.
         return {"hits": 0, "sum_edep": 0.0, "n_charged": 0,
                 "pid": {}, "edep": [], "edep_w": [], "pid_w": {},
-                "wsum": 0.0}
+                "wsum": 0.0,
+                # Event-stave totals (#1052) with immutable generator-event IDs (#1164).
+                "event_edep": [], "event_edep_w": [], "event_cluster_id": [],
+                "event_in_sample_i": [], "event_in_sample_ii": []}
 
     def new_track_acc():
         return {"pdg": [], "ekin": [], "edep_l0": [], "edep_l1": [],
@@ -326,6 +329,8 @@ def main():
                     for lab, v in acc["record_counts"].items():
                         bump(S[raw_key], lab, v)
 
+                # Immutable generator-event identity within this MC file (#1164).
+                event_cluster_id = int(n_total)
                 for lid in range(NB_LAYERS):
                     mask = isB & (l == lid) & charged
                     if not mask.any():
@@ -336,9 +341,18 @@ def main():
                     acc["n_charged"] += int(mask.sum())
                     acc["sum_edep"] += float(e.sum())
                     acc["wsum"] += w_evt
+                    # Legacy hit/step records (diagnostic only; #1052).
                     if len(acc["edep"]) < EDEP_CAP:
                         acc["edep"].extend(e.tolist())
                         acc["edep_w"].extend([w_evt] * int(mask.sum()))
+                    # Authorising detector-analogue intermediate: one total per
+                    # generator event / layer (#1052), weight once per event.
+                    if len(acc["event_edep"]) < EDEP_CAP:
+                        acc["event_edep"].append(float(e.sum()))
+                        acc["event_edep_w"].append(float(w_evt))
+                        acc["event_cluster_id"].append(event_cluster_id)
+                        acc["event_in_sample_i"].append(bool("I" in belongs))
+                        acc["event_in_sample_ii"].append(bool("II" in belongs))
                     for p in pd[mask]:
                         bump(acc["pid"], species_label(p))
                         acc["pid_w"][species_label(p)] = \
@@ -637,15 +651,37 @@ def main():
     with open(os.path.join(args.out, "mc_trigger_split_summary.json"), "w") as fh:
         json.dump(out, fh, indent=2)
 
+    # Legacy hit/step export retained under explicit statistical_unit metadata
+    # (#1052). Authorising first-B comparisons must use the event-level product.
     np.savez_compressed(
         os.path.join(args.out, "first_B_layer_edep.npz"),
         sampleI=np.asarray(samples["I"]["B_layers"][0]["edep"], dtype=np.float32),
         sampleII=np.asarray(samples["II"]["B_layers"][0]["edep"], dtype=np.float32),
-        # Per-event PrimaryWeight parallel to sampleI/sampleII (issue #880),
-        # so downstream consumers (compare_data_mc.py) can build weighted
-        # histograms. Absent in legacy files -> consumers must guard.
         sampleI_weights=np.asarray(samples["I"]["B_layers"][0]["edep_w"], dtype=np.float32),
         sampleII_weights=np.asarray(samples["II"]["B_layers"][0]["edep_w"], dtype=np.float32),
+        statistical_unit=np.asarray(["hit_step_edep"]),
+        superseded_by=np.asarray(["first_B_layer_event_edep.npz"]),
+        authorising=np.asarray([False]),
+        issue_quarantine=np.asarray(["NONAUTHORISING_BLOCKED_ISSUE_1052"]),
+    )
+    np.savez_compressed(
+        os.path.join(args.out, "first_B_layer_event_edep.npz"),
+        sampleI=np.asarray(samples["I"]["B_layers"][0]["event_edep"], dtype=np.float32),
+        sampleII=np.asarray(samples["II"]["B_layers"][0]["event_edep"], dtype=np.float32),
+        sampleI_weights=np.asarray(samples["I"]["B_layers"][0]["event_edep_w"], dtype=np.float32),
+        sampleII_weights=np.asarray(samples["II"]["B_layers"][0]["event_edep_w"], dtype=np.float32),
+        sampleI_cluster_id=np.asarray(samples["I"]["B_layers"][0]["event_cluster_id"], dtype=np.int64),
+        sampleII_cluster_id=np.asarray(samples["II"]["B_layers"][0]["event_cluster_id"], dtype=np.int64),
+        sampleI_in_sample_i=np.asarray(samples["I"]["B_layers"][0]["event_in_sample_i"], dtype=bool),
+        sampleII_in_sample_i=np.asarray(samples["II"]["B_layers"][0]["event_in_sample_i"], dtype=bool),
+        sampleI_in_sample_ii=np.asarray(samples["I"]["B_layers"][0]["event_in_sample_ii"], dtype=bool),
+        sampleII_in_sample_ii=np.asarray(samples["II"]["B_layers"][0]["event_in_sample_ii"], dtype=bool),
+        statistical_unit=np.asarray(["event_stave_edep"]),
+        cluster_key=np.asarray(["generator_event_index"]),
+        weight_semantics=np.asarray(["PrimaryWeight_first_primary"]),
+        aggregation=np.asarray(["sum_charged_Sci_bar_EDep_layer0"]),
+        authorising_measurand=np.asarray([False]),  # still truth EDep, not digitized H5
+        issue_note=np.asarray(["intermediate_H3_pending_digitizer_H5"]),
     )
     for s in ("I", "II"):
         ps_data = {}

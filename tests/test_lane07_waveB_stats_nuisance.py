@@ -167,13 +167,12 @@ def test_985_quadratic_curvature_flag(resp):
 
 # --- #984 ---
 
-def test_984_emit_uses_same_seed_across_values(gen_points, tmp_path, monkeypatch):
-    monkeypatch.setenv("CCB_CAMPASSIGN_N_REPLICATES", "3")
-    monkeypatch.setenv("CCB_CAMPASSIGN_SEED_BASE", "1000")
+def test_984_emit_uses_same_seed_across_values(gen_points, tmp_path):
+    # Align with landed main AF-036 / #984 CRN contract (explicit seed replicates).
     knob = gen_points.Knob(
         "pde_scale", "cli", "--pde-scale", "x", "test", [0.6, 1.0, 1.4]
     )
-    path = gen_points.emit(knob, tmp_path)
+    path, _rows = gen_points.emit(knob, tmp_path, [1000, 1001, 1002])
     rows = []
     for ln in path.read_text().splitlines():
         if not ln or ln.startswith("#") or ln.startswith("label,"):
@@ -181,16 +180,19 @@ def test_984_emit_uses_same_seed_across_values(gen_points, tmp_path, monkeypatch
         rows.append(ln.split(","))
     assert len(rows) == 9  # 3 values x 3 replicates
     from collections import defaultdict
-    by_rep = defaultdict(set)
-    for label, seed, _nev, _cli, _env, rep in rows:
-        by_rep[rep].add(seed)
-        assert "__r" + rep in label
-    assert all(len(seeds) == 1 for seeds in by_rep.values())
-    assert {next(iter(s)) for s in by_rep.values()} == {"1000", "1001", "1002"}
+    by_seed = defaultdict(set)
+    for label, seed, _nev, _cli, _env in rows:
+        by_seed[seed].add(label.split("__rep=")[0])
+        assert f"__rep={seed}" in label
+        assert seed == label.rsplit("__rep=", 1)[1]
+    assert set(by_seed) == {"1000", "1001", "1002"}
+    assert all(len(vals) == 3 for vals in by_seed.values())
+    assert by_seed["1000"] == by_seed["1001"] == by_seed["1002"]
 
 
 def test_984_paired_replicate_effects(resp):
-    values = ["1.0__r0", "1.2__r0", "1.0__r1", "1.2__r1"]
+    # Labels use main's __rep=<seed> encoding (#984).
+    values = ["1.0__rep=0", "1.2__rep=0", "1.0__rep=1", "1.2__rep=1"]
     ys = [10.0, 12.0, 11.0, 13.5]
     out = resp.paired_replicate_effects(values, ys, preferred_nominal=1.0)
     assert out["status"] == "OK"
@@ -202,15 +204,20 @@ def test_984_paired_replicate_effects(resp):
 def test_984_checked_in_grids_are_paired():
     csv = REPO / "geant4/single_stave/slurm/grids/points_pde_scale.csv"
     text = csv.read_text()
-    assert "paired_multi_seed" in text
-    assert "replicate" in text.splitlines()[8] or "replicate" in text
+    assert "paired_seed_design" in text or "common-random-number" in text
+    assert "seed_replicates" in text
+    assert "__rep=" in text
     rows = [
         ln.split(",")
         for ln in text.splitlines()
         if ln and not ln.startswith("#") and not ln.startswith("label,")
     ]
     from collections import defaultdict
-    by_rep = defaultdict(set)
+    by_seed = defaultdict(set)
     for r in rows:
-        by_rep[r[5]].add(r[1])
-    assert all(len(s) == 1 for s in by_rep.values())
+        label, seed = r[0], r[1]
+        assert f"__rep={seed}" in label
+        by_seed[seed].add(label.split("__rep=")[0])
+    assert len(by_seed) >= 2
+    vals = next(iter(by_seed.values()))
+    assert all(v == vals for v in by_seed.values())

@@ -11,7 +11,16 @@ import numpy as np
 
 
 def parse_value_replicate(raw: str) -> Tuple[str, Optional[int]]:
-    """Parse '0.6' or '0.6__r2' -> (value_str, replicate_or_None)."""
+    """Parse knob labels with optional replicate encoding.
+
+    Accepts main AF-036 / #984 form ``0.6__rep=<seed>`` and legacy ``0.6__r2``.
+    """
+    if "__rep=" in raw:
+        base, rep = raw.rsplit("__rep=", 1)
+        try:
+            return base, int(rep)
+        except ValueError:
+            return raw, None
     if "__r" in raw:
         base, rep = raw.rsplit("__r", 1)
         try:

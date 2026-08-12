@@ -3,19 +3,21 @@
 # rationale: Far-end boundary; absorb|open|mirror|instrumented (near/far split).
 # base_cli: --particle proton --energy 100 --hit-x 0 --hit-y 0 --theta 0 --phi 0
 # default_nevents: 60
-# n_replicates: 3
-# seed_policy: paired_multi_seed issue_984 seed=SEED_BASE+replicate
-# columns: label,seed,nevents,cli_args,env_vars,replicate
-label,seed,nevents,cli_args,env_vars,replicate
-far_end=absorb__r0,1000,60,--far-end absorb,,0
-far_end=open__r0,1000,60,--far-end open,,0
-far_end=mirror__r0,1000,60,--far-end mirror,,0
-far_end=instrumented__r0,1000,60,--far-end instrumented,,0
-far_end=absorb__r1,1001,60,--far-end absorb,,1
-far_end=open__r1,1001,60,--far-end open,,1
-far_end=mirror__r1,1001,60,--far-end mirror,,1
-far_end=instrumented__r1,1001,60,--far-end instrumented,,1
-far_end=absorb__r2,1002,60,--far-end absorb,,2
-far_end=open__r2,1002,60,--far-end open,,2
-far_end=mirror__r2,1002,60,--far-end mirror,,2
-far_end=instrumented__r2,1002,60,--far-end instrumented,,2
+# paired_seed_design: AF-036 / #984 common-random-number
+# seed_replicates: 1000,1001,1002
+# note: same replicate_seed is reused at every knob value (CRN pairing)
+# columns: label,seed,nevents,cli_args,env_vars
+# explicit triple encoded in label as knob=value__rep=<replicate_seed>
+label,seed,nevents,cli_args,env_vars
+far_end=absorb__rep=1000,1000,60,--far-end absorb,
+far_end=open__rep=1000,1000,60,--far-end open,
+far_end=mirror__rep=1000,1000,60,--far-end mirror,
+far_end=instrumented__rep=1000,1000,60,--far-end instrumented,
+far_end=absorb__rep=1001,1001,60,--far-end absorb,
+far_end=open__rep=1001,1001,60,--far-end open,
+far_end=mirror__rep=1001,1001,60,--far-end mirror,
+far_end=instrumented__rep=1001,1001,60,--far-end instrumented,
+far_end=absorb__rep=1002,1002,60,--far-end absorb,
+far_end=open__rep=1002,1002,60,--far-end open,
+far_end=mirror__rep=1002,1002,60,--far-end mirror,
+far_end=instrumented__rep=1002,1002,60,--far-end instrumented,

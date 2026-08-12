@@ -411,7 +411,8 @@ def run_compare(
         )
         result["pstar_primary_identity_ok"] = primary_ok
         # Lane07 Wave C track-scope extras (fail-closed annotations).
-        result["track_scope"] = scope_meta["track_scope"]
+        # Prefer explicit CSV label when present; else normalized scope_meta.
+        result["track_scope"] = sim_summary.get("track_scope") or scope_meta["track_scope"]
         result["primary_pstar_scope_comparable"] = bool(
             scope_meta["primary_pstar_scope_comparable"]
         )

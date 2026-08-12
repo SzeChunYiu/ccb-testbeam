@@ -254,7 +254,7 @@ def test_1049_legacy_pvalue_remains_nonauthorising(cmc):
         np.array([1.0, 2.0, 3.0]),
         n_bootstrap=20,
     )
-    assert out["p_value_status"] == "NONAUTHORISING_BLOCKED_ISSUE_1049"
+    assert out["p_value_status"] == "NONAUTHORISING_LEGACY_UNIT_WEIGHT_PERMUTATION"
     assert out["p_value_method"] == "legacy_unit_weight_value_permutation"
 
 

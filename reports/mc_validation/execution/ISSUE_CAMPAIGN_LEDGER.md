@@ -70,6 +70,7 @@ Historical Wave-A integration aligned the gitlink with #1243 at `cf12c6b8955c485
 - Scientific content: records PARTIAL result that parent-generation correlated-noise probabilities remain hard-wired to raw r(dt) under FULL_RECOVERY; does not close #1066/#1071.
 - Policy compliance with #1218: acceptable because it did not claim scientific-universe completion for those parents.
 
+
 ## Lane 02 Wave B — neutron tracking-time cut (#1091)
 
 Branch: fix/issue-1091-neutron-timecut (worktree ccb-wt-lane02).
@@ -141,3 +142,4 @@ Branch: `fix/lane01-waveB` (rebased onto origin/main after Wave A #1248 merge).
 | Date | Branch | Tip | Issues | Disposition | PR |
 |------|--------|-----|--------|-------------|-----|
 | 2026-08-12 | fix/issue-977-sipm-metadata | (see PR) | #977 PARTIAL; #1067 FIXED (core, manual close requested) | Sidecar extended with requested/effective operating point, response_surface_id, electronics impulse hashes, remaining ModelConfig knobs; compile-bound core (#1280) + campaign intent (#1284) unchanged; binary build receipt remains #1285 child | https://github.com/SzeChunYiu/ccb-testbeam/pull/1287 @0371fe3e |
+

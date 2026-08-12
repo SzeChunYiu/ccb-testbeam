@@ -288,3 +288,4 @@ def test_polarity_config_is_versioned_json():
     payload = json.loads((ROOT / "configs" / "channel_polarity_v1.json").read_text(encoding="utf-8"))
     assert payload["version"] == "channel_polarity_v1"
     assert set(payload["channel_polarity"]) >= {"0", "1", "4", "6"}
+

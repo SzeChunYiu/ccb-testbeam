@@ -16,7 +16,7 @@ from typing import Callable
 
 import numpy as np
 
-__all__ = ["cluster_bootstrap", "grouped_bootstrap"]
+__all__ = ["cluster_bootstrap", "grouped_bootstrap", "weighted_cluster_bootstrap", "weighted_mean"]
 
 
 def _validate_bootstrap_args(
@@ -160,3 +160,98 @@ def cluster_bootstrap(
         float(np.quantile(stats, alpha / 2.0)),
         float(np.quantile(stats, 1.0 - alpha / 2.0)),
     )
+
+def weighted_mean(values: np.ndarray, weights: np.ndarray) -> float:
+    """Normalised weighted mean; raises on empty / non-positive weight sum."""
+    values = np.asarray(values, dtype=float)
+    weights = np.asarray(weights, dtype=float)
+    if values.shape != weights.shape:
+        raise ValueError(
+            f"values shape {values.shape} must match weights shape {weights.shape}"
+        )
+    if values.size == 0:
+        raise ValueError("weighted_mean requires non-empty values")
+    if not np.all(np.isfinite(values)):
+        raise ValueError("weighted_mean values must be finite")
+    if not np.all(np.isfinite(weights)) or np.any(weights < 0):
+        raise ValueError("weighted_mean weights must be finite and nonnegative")
+    total = float(np.sum(weights))
+    if total <= 0.0:
+        raise ValueError("weighted_mean weight sum must be positive")
+    return float(np.sum(weights * values) / total)
+
+
+def weighted_cluster_bootstrap(
+    values: np.ndarray,
+    weights: np.ndarray,
+    clusters: np.ndarray,
+    rng: np.random.Generator,
+    *,
+    n_boot: int = 500,
+    alpha: float = 0.05,
+) -> dict[str, object]:
+    """Cluster bootstrap of a normalised weighted mean (issue #960).
+
+    Each replicate resamples whole clusters with replacement (multiplicity
+    preserved), concatenates member rows, and recomputes the full weighted
+    mean with re-normalised weights. Degenerate designs raise ``ValueError``
+    rather than emitting a zero-width interval.
+    """
+    values = np.asarray(values, dtype=float)
+    weights = np.asarray(weights, dtype=float)
+    clusters = np.asarray(clusters, dtype=object)
+    _validate_bootstrap_args(values, n_boot, alpha, values_name="values")
+    if weights.shape != values.shape:
+        raise ValueError(
+            f"weights shape {weights.shape} must match values shape {values.shape}"
+        )
+    if clusters.shape != values.shape:
+        raise ValueError(
+            f"clusters shape {clusters.shape} must match values shape {values.shape}"
+        )
+    if not np.all(np.isfinite(weights)) or np.any(weights < 0):
+        raise ValueError("weights must be finite and nonnegative")
+    if float(np.sum(weights)) <= 0.0:
+        raise ValueError("weight sum must be positive")
+
+    cluster_keys, value_members = _group_values_by_label(values, clusters)
+    _, weight_members = _group_values_by_label(weights, clusters)
+    n_clusters = int(cluster_keys.size)
+    if n_clusters < 2:
+        raise ValueError(
+            f"weighted cluster bootstrap requires >=2 clusters, got {n_clusters}"
+        )
+
+    point = weighted_mean(values, weights)
+    stats = np.empty(int(n_boot), dtype=float)
+    n_success = 0
+    n_failure = 0
+    for i in range(int(n_boot)):
+        chosen = rng.choice(cluster_keys, size=n_clusters, replace=True)
+        boot_values = np.concatenate([value_members[k] for k in chosen])
+        boot_weights = np.concatenate([weight_members[k] for k in chosen])
+        try:
+            stats[n_success] = weighted_mean(boot_values, boot_weights)
+            n_success += 1
+        except ValueError:
+            n_failure += 1
+    if n_success < max(10, int(0.5 * int(n_boot))):
+        raise ValueError(
+            f"weighted cluster bootstrap NOT_ESTIMABLE: only {n_success}/{n_boot} "
+            f"replicates succeeded ({n_failure} failures)"
+        )
+    stats = stats[:n_success]
+    ess = float((np.sum(weights) ** 2) / np.sum(weights ** 2))
+    return {
+        "point": point,
+        "ci_low": float(np.quantile(stats, alpha / 2.0)),
+        "ci_high": float(np.quantile(stats, 1.0 - alpha / 2.0)),
+        "n_boot_requested": int(n_boot),
+        "n_boot_success": int(n_success),
+        "n_boot_failure": int(n_failure),
+        "n_clusters": n_clusters,
+        "effective_sample_size": ess,
+        "estimand": "pulse_ipw_accuracy",
+        "resampling_unit": "(run,event)_cluster",
+        "status": "OK",
+    }

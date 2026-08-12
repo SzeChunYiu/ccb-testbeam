@@ -228,7 +228,10 @@ class TestEndToEnd:
         ])
         assert (out / "data_mc_comparison.json").exists()
         comp = json.loads((out / "data_mc_comparison.json").read_text(encoding="utf-8"))
-        assert comp["version"] == "v5"
+        assert comp["version"] == "v6"
+        assert "spectrum_contract" in comp
+        assert "scale_topology" in comp
+        assert comp["scale_topology"]["nuisance_mode_default"] == "refit_inside_replicate"
         assert comp["mc_primary_weight_applied"] is True
         assert "mc_weight_diagnostics" in comp
         assert "sampleI" in comp["mc_weight_diagnostics"]

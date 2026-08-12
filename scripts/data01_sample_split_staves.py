@@ -125,12 +125,28 @@ def main():
         json.dump(out, fh, indent=2)
 
     # Save arrays
+    # Pulse-row export retains amplitudes; cluster IDs are required for any
+    # weighted-null calibration (#1164). statistical_unit remains pulse_row
+    # until an event-aggregated DATA product is selected by the consumer.
+    sI = df.loc[(df["sample"] == "I") & (df["stave"] == "B2")]
+    sII = df.loc[(df["sample"] == "II") & (df["stave"] == "B2")]
     np.savez_compressed(
         os.path.join(args.out, "first_B_layer_B2_amplitude.npz"),
-        sampleI=df.loc[(df["sample"] == "I") & (df["stave"] == "B2"),
-                       "amplitude_adc"].to_numpy(np.float32),
-        sampleII=df.loc[(df["sample"] == "II") & (df["stave"] == "B2"),
-                        "amplitude_adc"].to_numpy(np.float32),
+        sampleI=sI["amplitude_adc"].to_numpy(np.float32),
+        sampleII=sII["amplitude_adc"].to_numpy(np.float32),
+        sampleI_run=sI["run"].to_numpy(np.int64),
+        sampleII_run=sII["run"].to_numpy(np.int64),
+        sampleI_eventno=sI["eventno"].to_numpy(np.int64),
+        sampleII_eventno=sII["eventno"].to_numpy(np.int64),
+        sampleI_cluster_id=(
+            sI["run"].astype(str) + ":" + sI["eventno"].astype(str)
+        ).to_numpy(),
+        sampleII_cluster_id=(
+            sII["run"].astype(str) + ":" + sII["eventno"].astype(str)
+        ).to_numpy(),
+        statistical_unit=np.asarray(["pulse_row"]),
+        cluster_key=np.asarray(["run:eventno"]),
+        weight_semantics=np.asarray(["unit_data_pulse"]),
     )
     per_stave_amp = {}
     for s in ("I", "II"):

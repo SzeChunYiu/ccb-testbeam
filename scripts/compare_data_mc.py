@@ -1,10 +1,16 @@
 #!/usr/bin/env python3
 """
-compare_data_mc.py  (v5 — exact weighted ECDF discrepancy)
+compare_data_mc.py  (v6 — event-unit + cluster-aware null contract)
 ==========================================================
 Data <-> MC comparison for the CCB test beam, Sample I vs Sample II.
 
-v5 changes:
+v6 changes:
+  - Prefer event-level MC first-B EDep (#1052) over legacy hit/step arrays.
+  - Require source-event cluster IDs for any null-calibration path (#1164).
+  - Record fitted-scale topology (fit sample, overlap mode) for #1166.
+  - Legacy unit-weight permutation p-value remains NONAUTHORISING (#1049).
+
+v5 changes retained:
   - Weighted ECDFs are right-continuous step functions on unique support.
   - Tied observations are collapsed into one jump carrying their total weight.
   - Weighted KS D is evaluated exactly on the union of support points; no linear
@@ -294,6 +300,136 @@ def _build_deltaE_E_narrative(comp_fields: dict) -> dict:
     }
 
 
+def _load_spectrum_with_contract(mc_dir, data_dir):
+    """Load DATA/MC first-B spectra with statistical-unit + cluster contracts.
+
+    Prefers ``first_B_layer_event_edep.npz`` (#1052). Legacy hit/step files are
+    accepted only as explicitly non-authorising diagnostics.
+    """
+    mc_event = Path(mc_dir) / "first_B_layer_event_edep.npz"
+    mc_hit = Path(mc_dir) / "first_B_layer_edep.npz"
+    da_path = Path(data_dir) / "first_B_layer_B2_amplitude.npz"
+    if not da_path.exists():
+        raise FileNotFoundError(da_path)
+
+    da_amp = np.load(da_path)
+    daI, daII = da_amp["sampleI"], da_amp["sampleII"]
+    data_clusters = {}
+    if "sampleI_cluster_id" in da_amp.files and "sampleII_cluster_id" in da_amp.files:
+        data_clusters = {
+            "I": np.asarray(da_amp["sampleI_cluster_id"]),
+            "II": np.asarray(da_amp["sampleII_cluster_id"]),
+        }
+        data_unit = "pulse_row"
+        data_cluster_key = "run:eventno"
+    else:
+        data_unit = "pulse_row_missing_cluster_id"
+        data_cluster_key = None
+
+    if mc_event.exists():
+        mc_edep = np.load(mc_event)
+        mc_unit = str(np.asarray(mc_edep["statistical_unit"]).reshape(-1)[0]) if "statistical_unit" in mc_edep.files else "event_stave_edep"
+        product = "first_B_layer_event_edep.npz"
+        authorising_unit = mc_unit == "event_stave_edep"
+        quarantine = None if authorising_unit else "NONAUTHORISING_BLOCKED_ISSUE_1052"
+    elif mc_hit.exists():
+        mc_edep = np.load(mc_hit)
+        mc_unit = str(np.asarray(mc_edep["statistical_unit"]).reshape(-1)[0]) if "statistical_unit" in mc_edep.files else "hit_step_edep"
+        product = "first_B_layer_edep.npz"
+        authorising_unit = False
+        quarantine = "NONAUTHORISING_BLOCKED_ISSUE_1052"
+    else:
+        raise FileNotFoundError("missing first_B_layer_event_edep.npz and first_B_layer_edep.npz")
+
+    mcI, mcII = mc_edep["sampleI"], mc_edep["sampleII"]
+    if "sampleI_weights" not in mc_edep.files or "sampleII_weights" not in mc_edep.files:
+        raise ValueError(
+            f"{product} is missing sampleI_weights / sampleII_weights. "
+            "Per-event PrimaryWeight is required; re-run mc01_trigger_split_truth.py."
+        )
+    mcI_w = np.asarray(mc_edep["sampleI_weights"], dtype=np.float64)
+    mcII_w = np.asarray(mc_edep["sampleII_weights"], dtype=np.float64)
+
+    mc_clusters = {}
+    if "sampleI_cluster_id" in mc_edep.files and "sampleII_cluster_id" in mc_edep.files:
+        mc_clusters = {
+            "I": np.asarray(mc_edep["sampleI_cluster_id"]),
+            "II": np.asarray(mc_edep["sampleII_cluster_id"]),
+        }
+        mc_cluster_key = "generator_event_index"
+    else:
+        mc_cluster_key = None
+
+    membership = {}
+    for side, key_i, key_ii in (
+        ("I", "sampleI_in_sample_i", "sampleI_in_sample_ii"),
+        ("II", "sampleII_in_sample_i", "sampleII_in_sample_ii"),
+    ):
+        if key_i in mc_edep.files and key_ii in mc_edep.files:
+            membership[side] = {
+                "in_sample_i": np.asarray(mc_edep[key_i], dtype=bool),
+                "in_sample_ii": np.asarray(mc_edep[key_ii], dtype=bool),
+            }
+
+    contract = {
+        "mc_product": product,
+        "mc_statistical_unit": mc_unit,
+        "data_statistical_unit": data_unit,
+        "mc_cluster_key": mc_cluster_key,
+        "data_cluster_key": data_cluster_key,
+        "authorising_statistical_unit": bool(authorising_unit and data_cluster_key and mc_cluster_key),
+        "quarantine": quarantine,
+        "null_calibration_gate": (
+            "OPEN_FOR_RESEARCH"
+            if (mc_cluster_key and data_cluster_key and authorising_unit)
+            else "BLOCKED_MISSING_CLUSTER_OR_UNIT"
+        ),
+        "weight_semantics": "PrimaryWeight_first_primary",
+        "issues": ["#1049", "#1052", "#1164", "#1166"],
+    }
+    return {
+        "mcI": mcI,
+        "mcII": mcII,
+        "mcI_w": mcI_w,
+        "mcII_w": mcII_w,
+        "daI": daI,
+        "daII": daII,
+        "mc_clusters": mc_clusters,
+        "data_clusters": data_clusters,
+        "membership": membership,
+        "contract": contract,
+        "mc_edep": mc_edep,
+        "da_amp": da_amp,
+    }
+
+
+def _scale_topology_record(membership, data_clusters):
+    """Serialize fitted-scale fit/test overlap topology (#1166)."""
+    mc_nested = False
+    if "I" in membership and "II" in membership:
+        # Under the current trigger design, Sample I events are a subset of II.
+        mc_nested = True
+    data_disjoint = False
+    if data_clusters:
+        # DATA Sample I/II are disjoint at the configured run-family level.
+        data_disjoint = True
+    return {
+        "estimator_id": "data_mc_median_match_peak_adc_per_truth_edep_MeV_proxy",
+        "fit_sample": "II",
+        "tested_samples": ["I", "II"],
+        "mc_sample_i_subset_of_ii": mc_nested,
+        "data_sample_i_run_disjoint_from_ii": data_disjoint,
+        "nuisance_mode_default": "refit_inside_replicate",
+        "authorising": False,
+        "blocked_by": ["#994", "#1049", "#1052", "#1164", "#1166"],
+        "note": (
+            "Scale is a non-authorising proxy until event/stave digitized response "
+            "and calibrated weighted null are available. Null replicates must refit "
+            "or use a held-out design; freezing shat on Sample II is rejected."
+        ),
+    }
+
+
 def main(argv: list[str] | None = None) -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--mc-dir", required=True)
@@ -306,21 +442,21 @@ def main(argv: list[str] | None = None) -> None:
 
     mc = load_json(args.mc_dir, "mc_trigger_split_summary.json")
     da = load_json(args.data_dir, "data_sample_split_summary.json")
-    mc_edep = np.load(os.path.join(args.mc_dir, "first_B_layer_edep.npz"))
-    da_amp = np.load(os.path.join(args.data_dir, "first_B_layer_B2_amplitude.npz"))
-
-    mcI, mcII = mc_edep["sampleI"], mc_edep["sampleII"]
-    daI, daII = da_amp["sampleI"], da_amp["sampleII"]
-
-    # ── Fail closed on missing weights ───────────────────────────────────────
-    if "sampleI_weights" not in mc_edep.files or "sampleII_weights" not in mc_edep.files:
-        raise ValueError(
-            "MC first_B_layer_edep.npz is missing sampleI_weights / sampleII_weights. "
-            "Per-event PrimaryWeight is required; this file may be from a legacy "
-            "producer. Re-run mc01_trigger_split_truth.py to produce weight arrays."
+    loaded = _load_spectrum_with_contract(args.mc_dir, args.data_dir)
+    mcI = loaded["mcI"]
+    mcII = loaded["mcII"]
+    daI = loaded["daI"]
+    daII = loaded["daII"]
+    mcI_w = loaded["mcI_w"]
+    mcII_w = loaded["mcII_w"]
+    spectrum_contract = loaded["contract"]
+    scale_topology = _scale_topology_record(loaded["membership"], loaded["data_clusters"])
+    if spectrum_contract["quarantine"] == "NONAUTHORISING_BLOCKED_ISSUE_1052":
+        print(
+            "WARNING: using non-authorising MC statistical unit "
+            f"{spectrum_contract['mc_statistical_unit']} from {spectrum_contract['mc_product']} "
+            "(issue #1052). Prefer first_B_layer_event_edep.npz."
         )
-    mcI_w = np.asarray(mc_edep["sampleI_weights"], dtype=np.float64)
-    mcII_w = np.asarray(mc_edep["sampleII_weights"], dtype=np.float64)
 
     # Validate weights — fail closed if any policy gate fails
     audit_I = _validate_weight_vector(mcI_w, "Sample I")
@@ -365,6 +501,21 @@ def main(argv: list[str] | None = None) -> None:
             "legacy permutation p-value is NONAUTHORISING/BLOCKED by #1049; "
             "bin residuals use PrimaryWeight."
         )
+        ks["statistical_unit_contract"] = spectrum_contract
+        ks["null_hypothesis"] = (
+            "NOT_CALIBRATED: equality of DATA pulse distribution and PrimaryWeight-"
+            "weighted MC target measure after fitted median-ratio scale; current "
+            "p_value uses legacy unit-weight value permutation and is non-authorising."
+        )
+        ks["cluster_ids_present"] = bool(
+            loaded["mc_clusters"] and loaded["data_clusters"]
+        )
+        if not ks["cluster_ids_present"]:
+            ks["null_calibration_status"] = "BLOCKED_MISSING_CLUSTER_IDS_ISSUE_1164"
+        elif spectrum_contract["quarantine"]:
+            ks["null_calibration_status"] = spectrum_contract["quarantine"]
+        else:
+            ks["null_calibration_status"] = "RESEARCH_ONLY_PENDING_TYPEI_CALIBRATION"
         ks_results[label] = ks
 
         # Bin-by-bin residuals (normalised) — MC side weighted.
@@ -411,13 +562,16 @@ def main(argv: list[str] | None = None) -> None:
 
     # ── Build comprehensive comparison dict ──────────────────────────────────
     comp = {
-        "version": "v5",
+        "version": "v6",
+        "spectrum_contract": spectrum_contract,
+        "scale_topology": scale_topology,
         "mev_to_adc_scale": mev_to_adc,
         "mev_to_adc_scale_lo": scale_lo,
         "mev_to_adc_scale_hi": scale_hi,
         "scale_uncertainty_fraction": args.scale_uncertainty,
         "scale_reference": ("Sample-II first-B-layer weighted median (MC, PrimaryWeight), "
-                             "±30% systematic from MV0 digitizer gain"),
+                             "±30% systematic from MV0 digitizer gain; non-authorising "
+                             "proxy under #994/#1052/#1166"),
         "mc_primary_weight_applied": True,
         "mc_weight_policy": {
             "require_nonnegative": True,
@@ -748,7 +902,7 @@ def main(argv: list[str] | None = None) -> None:
         json.dump(comp, fh, indent=2)
 
     print(json.dumps({
-        "version": "v5",
+        "version": "v6",
         "mev_to_adc": mev_to_adc,
         "scale_uncertainty_band": f"[{scale_lo:.0f}, {scale_hi:.0f}]",
         "first_B_layer_large_pulse_excess": comp["first_B_layer"]["large_pulse_excess_sampleI_minus_II"],
@@ -762,7 +916,7 @@ def main(argv: list[str] | None = None) -> None:
     }, indent=2))
     print(
         f"[ok] wrote {args.out}/data_mc_comparison.json  "
-        "(v5 exact weighted ECDF D; legacy p blocked by #1049)"
+        "(v6 event-unit/cluster contract; legacy p blocked by #1049)"
     )
 
 

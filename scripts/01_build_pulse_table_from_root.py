@@ -30,6 +30,7 @@ from ccb_mc_validation.s00_selector_contract import (
     validate_s00_selector_contract,
 )
 from ccb_mc_validation.selector import estimate_pedestal_v1_batched
+from ccb_mc_validation.daq.s00_saturation_field import legacy_world_a_diagnostic
 _SCRIPTS_DIR = Path(__file__).resolve().parent
 if str(_SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(_SCRIPTS_DIR))
@@ -487,9 +488,12 @@ def scan_raw(config: dict) -> Tuple[pd.DataFrame, pd.DataFrame, Dict[str, dict],
                 waveforms, baseline_indices, polarity=stave_polarity
             )
 # Absolute peak (raw max) for peak_code_adc and hardware saturation
-            # flag (14-bit CAEN V1742, max code = 16383).
+            # flag (World-A diagnostic: legacy 14-bit CAEN-V1742 16383-code ceiling,
+            # non-authorising per s00_saturation_field DIAGNOSTIC_ONLY_ADC_WORLD_UNRESOLVED).
             peak_code_adc = waveforms.max(axis=-1)
-            saturation = waveforms.max(axis=-1) >= 16383
+            saturation, _sat_meta = legacy_world_a_diagnostic(peak_code_adc)
+            if not hasattr(scan_raw, 'saturation_contract'):
+                scan_raw.saturation_contract = _sat_meta
             selected_mask = amplitude > cut
             event_selected = selected_mask.any(axis=1)
 
@@ -1205,7 +1209,8 @@ def atomic_publish(staging_dir: Path, target_dir: Path) -> None:
 def write_manifest(out_dir: Path, config_path: Path, comparison: pd.DataFrame, selected_path: Path,
                    amplitude_cut_adc: float, amplitude_cut_source: str, *,
 canonical: bool, model_identity: dict, gate_states: dict,
-                   input_hashes: Optional[dict] = None) -> None:
+                   input_hashes: Optional[dict] = None,
+                   saturation_contract: Optional[dict] = None) -> None:
     """Write self-describing manifest with model identity + gate state.
 
     Every downstream consumer must resolve artifacts via this model-bound
@@ -1231,6 +1236,7 @@ model-bound manifest/pointer). An authorising run requires every P0 gate
         "amplitude_cut_env_var": AMPLITUDE_CUT_ENV,
         "input_sha256": input_hashes or {},
         "gate_states": {k: v for k, v in sorted(gate_states.items())},
+        "saturation_field": saturation_contract or {"contract": "not_recorded"},
         "artifacts": sorted(path.name for path in out_dir.iterdir() if path.is_file()),
     }
     (out_dir / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
@@ -1422,7 +1428,8 @@ def main() -> int:
             # Write manifest, then atomically publish staging -> canonical out_dir
             write_manifest(staging, args.config, comparison, staging_selected, cut, cut_source,
                            canonical=True, model_identity=model_identity, gate_states=gate_states,
-                           input_hashes=input_hashes)
+                           input_hashes=input_hashes,
+                           saturation_contract=getattr(scan_raw, 'saturation_contract', None))
             atomic_publish(staging, out_dir)
             print(f"[s00] canonical artifacts published: {out_dir}")
             print(f"[s00] selected pulse table: {selected_path}")
@@ -1431,7 +1438,8 @@ def main() -> int:
             # publish. The last authorising artifact set is preserved byte-identical.
             write_manifest(staging, args.config, comparison, staging_selected, cut, cut_source,
                            canonical=True, model_identity=model_identity, gate_states=gate_states,
-                           input_hashes=input_hashes)
+                           input_hashes=input_hashes,
+                           saturation_contract=getattr(scan_raw, 'saturation_contract', None))
             shutil.rmtree(staging)
             print("[s00] CANONICAL RUN FAILED GATES — staging discarded; last authorising artifacts preserved.")
             print(comparison.to_string(index=False))
@@ -1449,7 +1457,8 @@ def main() -> int:
         write_sensitivity_report(staging, cut, cut_source, counts_by_group, comparison)
         write_manifest(staging, args.config, comparison, staging_selected, cut, cut_source,
                        canonical=False, model_identity=model_identity, gate_states=gate_states,
-                       input_hashes=input_hashes)
+                       input_hashes=input_hashes,
+                       saturation_contract=getattr(scan_raw, 'saturation_contract', None))
         # Publish staging to the sensitivity namespace (always — sensitivity runs
         # are self-describing and replace their own namespace, not the canonical one).
         atomic_publish(staging, out_dir)

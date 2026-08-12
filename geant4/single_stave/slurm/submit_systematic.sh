@@ -14,7 +14,8 @@
 #
 # Usage:
 #   sbatch --array=0-$((N-1))%CAP slurm/submit_systematic.sh \
-#     BUILD KNOB POINTS_CSV OUTDIR CAMPAIGN_MANIFEST MANIFEST_SHA256
+#     BUILD KNOB POINTS_CSV OUTDIR CAMPAIGN_MANIFEST MANIFEST_SHA256 \
+#     BUILD_RECEIPT BUILD_RECEIPT_SHA256
 # Columns (points CSV, after the header):
 #   label,seed,nevents,cli_args,env_vars[,replicate]
 #   - cli_args: extra flags appended to ccb_stave_sim (e.g. "--pde-scale 1.2")
@@ -26,18 +27,21 @@ set -euo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${HERE}/../../.." && pwd)"
 MANIFEST_TOOL="${REPO_ROOT}/scripts/single_stave/sipm_campaign_manifest.py"
+BUILD_RECEIPT_TOOL="${REPO_ROOT}/scripts/single_stave/sipm_build_receipt.py"
 
 # Geant4 runtime: the build links G4 dynamically, so the build-time toolchain
 # must be loaded on the compute node (not inherited from the login session).
 module purge 2>/dev/null || true
 module load ${CCB_CAMPASSIGN_MODULES:-GCC/12.3.0 Geant4/11.2.2}
 
-BUILD="${1:?usage: submit_systematic.sh BUILD KNOB POINTS_CSV OUTDIR CAMPAIGN_MANIFEST MANIFEST_SHA256}"
+BUILD="${1:?usage: submit_systematic.sh BUILD KNOB POINTS_CSV OUTDIR CAMPAIGN_MANIFEST MANIFEST_SHA256 BUILD_RECEIPT BUILD_RECEIPT_SHA256}"
 KNOB="${2:?KNOB name (used for OUTDIR/KNOB)}"
 POINTS="${3:?points csv}"
 OUTROOT="${4:?output root dir}"
 MANIFEST="${5:?campaign_intent.json required}"
 MANIFEST_SHA256="${6:?frozen campaign manifest SHA-256 required}"
+BUILD_RECEIPT="${7:?frozen build_receipt.json required}"
+BUILD_RECEIPT_SHA256="${8:?frozen build receipt SHA-256 required}"
 OUTDIR="${OUTROOT}/${KNOB}"
 mkdir -p "${OUTDIR}"
 
@@ -68,6 +72,32 @@ EXPECTED_CORE_SHA="$(python3 "$MANIFEST_TOOL" verify \
   --grid-knob "$KNOB" --grid-file "$POINTS" \
   --base-cli "$BASE_CLI" --nevents "$NEVENTS" --threads 1)"
 
+# Re-hash the exact executable, configured toolchain/package sentinels and
+# campaign-owned receipt, then execute the binary's pre-event self-hash probe.
+# A stale or substituted executable therefore fails before event zero.
+OBSERVED_BUILD_SHA256="$(python3 "$BUILD_RECEIPT_TOOL" verify \
+  --receipt "$BUILD_RECEIPT" \
+  --expected-sha256 "$BUILD_RECEIPT_SHA256" \
+  --executable "$EXE" \
+  --runtime-probe \
+  --campaign-manifest "$MANIFEST" \
+  --campaign-sha256 "$MANIFEST_SHA256" \
+  --repo-root "$REPO_ROOT")"
+if [[ "$OBSERVED_BUILD_SHA256" != "$BUILD_RECEIPT_SHA256" ]]; then
+  echo "fatal: verified build receipt digest changed unexpectedly" >&2
+  exit 3
+fi
+EXPECTED_ROOT_SHA="$(python3 - "$BUILD_RECEIPT" <<'PY'
+import json, pathlib, sys
+print(json.loads(pathlib.Path(sys.argv[1]).read_text())["source"]["superproject_commit"])
+PY
+)"
+EXPECTED_EXE_SHA256="$(python3 - "$BUILD_RECEIPT" <<'PY'
+import json, pathlib, sys
+print(json.loads(pathlib.Path(sys.argv[1]).read_text())["executable"]["sha256"])
+PY
+)"
+
 OUT="${OUTDIR}/${LABEL}.root"
 
 # Export per-row SiPM-core env overrides (may be blank).
@@ -78,9 +108,13 @@ fi
 
 echo "[$(date -Is)] idx=${IDX} knob=${KNOB} label=${LABEL} seed=${SEED} nev=${NEVENTS} replicate=${REPLICATE}"
 echo "  cli=[${BASE_CLI} ${CLI_ARGS}] env=[${ENV_VARS}]"
-echo "  campaign_manifest_sha256=${MANIFEST_SHA256} expected_core=${EXPECTED_CORE_SHA}"
+echo "  campaign_manifest_sha256=${MANIFEST_SHA256} expected_root=${EXPECTED_ROOT_SHA} expected_core=${EXPECTED_CORE_SHA}"
+echo "  build_receipt_sha256=${BUILD_RECEIPT_SHA256} expected_executable_sha256=${EXPECTED_EXE_SHA256}"
 
-export CCB_GIT_COMMIT="$(git -C "${BUILD}" rev-parse HEAD 2>/dev/null || echo unknown)"
+# Legacy root sidecar field remains an environment bridge, but for this
+# orchestrated path it is derived only after receipt/source/executable closure.
+# The build receipt and point provenance, not this field alone, are authorising.
+export CCB_GIT_COMMIT="$EXPECTED_ROOT_SHA"
 export CCB_STRICT_OPTICAL="${CCB_STRICT_OPTICAL:-1}"
 
 srun "${EXE}" \
@@ -91,35 +125,59 @@ srun "${EXE}" \
   --optical-dir "${OPTICAL}" \
   --output "${OUT}"
 
-# Producer-side source revision is compile-bound by #1280. Require the actual
-# run sidecar to match frozen campaign intent before this task can succeed.
-python3 - "$OUT" "$EXPECTED_CORE_SHA" "$MANIFEST_SHA256" <<'PY'
+# Producer-side core revision is compile-bound by #1280. Require the actual run
+# sidecar plus a second post-run executable observation to match frozen source
+# and build intent before this task can succeed.
+python3 "$BUILD_RECEIPT_TOOL" verify \
+  --receipt "$BUILD_RECEIPT" \
+  --expected-sha256 "$BUILD_RECEIPT_SHA256" \
+  --executable "$EXE" \
+  --runtime-probe \
+  --campaign-manifest "$MANIFEST" \
+  --campaign-sha256 "$MANIFEST_SHA256" \
+  --repo-root "$REPO_ROOT" >/dev/null
+
+python3 - "$OUT" "$EXPECTED_ROOT_SHA" "$EXPECTED_CORE_SHA" "$EXPECTED_EXE_SHA256" "$MANIFEST_SHA256" "$BUILD_RECEIPT_SHA256" <<'PY'
 import json
 import pathlib
 import re
 import sys
 
 root = pathlib.Path(sys.argv[1])
-expected = sys.argv[2]
-manifest_sha = sys.argv[3]
+expected_root = sys.argv[2]
+expected_core = sys.argv[3]
+expected_exe = sys.argv[4]
+manifest_sha = sys.argv[5]
+build_receipt_sha = sys.argv[6]
 meta_path = pathlib.Path(str(root) + ".meta.json")
 meta = json.loads(meta_path.read_text())
+if meta.get("git_commit") != expected_root:
+    raise SystemExit(
+        f"fatal: {meta_path}: git_commit={meta.get('git_commit')!r} != campaign/build root {expected_root}"
+    )
 dig = meta.get("digitizer")
 if not isinstance(dig, dict):
     raise SystemExit(f"fatal: {meta_path}: digitizer block missing")
-actual = dig.get("ccb_sipm_core_commit")
-if not isinstance(actual, str) or re.fullmatch(r"[0-9a-f]{40}", actual) is None:
-    raise SystemExit(f"fatal: {meta_path}: invalid ccb_sipm_core_commit={actual!r}")
-if actual != expected:
+actual_core = dig.get("ccb_sipm_core_commit")
+if not isinstance(actual_core, str) or re.fullmatch(r"[0-9a-f]{40}", actual_core) is None:
+    raise SystemExit(f"fatal: {meta_path}: invalid ccb_sipm_core_commit={actual_core!r}")
+if actual_core != expected_core:
     raise SystemExit(
-        f"fatal: {meta_path}: compiled core {actual} != campaign expected {expected}"
+        f"fatal: {meta_path}: compiled core {actual_core} != campaign expected {expected_core}"
     )
 point_prov = {
-    "schema": "ccb-sipm-campaign-point/1",
+    "schema": "ccb-sipm-campaign-point/2",
     "campaign_manifest_sha256": manifest_sha,
-    "expected_core_commit": expected,
-    "observed_core_commit": actual,
+    "build_receipt_sha256": build_receipt_sha,
+    "expected_superproject_commit": expected_root,
+    "observed_superproject_commit": meta.get("git_commit"),
+    "expected_core_commit": expected_core,
+    "observed_core_commit": actual_core,
+    "expected_executable_sha256": expected_exe,
+    "source_match": True,
     "core_match": True,
+    "executable_match_pre_and_post_run": True,
+    "scientific_scope": "CAMPAIGN_SOURCE_BUILD_EXECUTABLE_IDENTITY_ONLY",
 }
 pathlib.Path(str(root) + ".campaign.json").write_text(
     json.dumps(point_prov, sort_keys=True, separators=(",", ":")) + "\n"

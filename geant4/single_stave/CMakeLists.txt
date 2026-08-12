@@ -9,6 +9,9 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 # to avoid the Qt5/ICU incompatibility reported on the PR (issue #796).
 option(CCB_ENABLE_VIS "Enable Geant4 visualization/UI components" OFF)
 option(CCB_ENABLE_OPTICKS "Build the OPTIONAL Opticks GPU optical bridge (needs OPTICKS_PREFIX)" OFF)
+option(CCB_AUTHORISING_BUILD_RECEIPT
+  "Fail closed on dirty source and emit a content-bound ccb_stave_sim build receipt"
+  OFF)
 
 if(CCB_ENABLE_VIS)
   find_package(Geant4 REQUIRED ui_all vis_all)
@@ -16,6 +19,51 @@ else()
   find_package(Geant4 REQUIRED)
 endif()
 include(${Geant4_USE_FILE})
+find_package(Git QUIET)
+find_program(CCB_PYTHON3 python3)
+
+# Compile source intent into the executable.  This is independent of the
+# ccb-sipm-core gitlink literal bound by SipmBuildProvenance.hh.  Scientific
+# campaign builds additionally require a clean source tree and a post-build
+# executable receipt; ordinary development builds remain possible but are
+# explicitly non-authorising at the receipt layer.
+get_filename_component(CCB_REPO_ROOT "${PROJECT_SOURCE_DIR}/../.." ABSOLUTE)
+set(CCB_BUILD_SUPERPROJECT_COMMIT "unconfigured")
+set(CCB_BUILD_SOURCE_CLEAN 0)
+if(GIT_FOUND)
+  execute_process(
+    COMMAND "${GIT_EXECUTABLE}" -C "${CCB_REPO_ROOT}" rev-parse HEAD
+    RESULT_VARIABLE CCB_GIT_HEAD_STATUS
+    OUTPUT_VARIABLE CCB_GIT_HEAD
+    ERROR_QUIET
+    OUTPUT_STRIP_TRAILING_WHITESPACE)
+  if(CCB_GIT_HEAD_STATUS EQUAL 0 AND CCB_GIT_HEAD MATCHES "^[0-9a-f][0-9a-f]+$")
+    set(CCB_BUILD_SUPERPROJECT_COMMIT "${CCB_GIT_HEAD}")
+  endif()
+  execute_process(
+    COMMAND "${GIT_EXECUTABLE}" -C "${CCB_REPO_ROOT}" status --porcelain=v1 --untracked-files=all
+    RESULT_VARIABLE CCB_GIT_STATUS_RESULT
+    OUTPUT_VARIABLE CCB_GIT_STATUS
+    ERROR_QUIET
+    OUTPUT_STRIP_TRAILING_WHITESPACE)
+  if(CCB_GIT_STATUS_RESULT EQUAL 0 AND CCB_GIT_STATUS STREQUAL "")
+    set(CCB_BUILD_SOURCE_CLEAN 1)
+  endif()
+endif()
+if(CCB_AUTHORISING_BUILD_RECEIPT)
+  if(NOT GIT_FOUND OR NOT CCB_BUILD_SOURCE_CLEAN)
+    message(FATAL_ERROR
+      "CCB_AUTHORISING_BUILD_RECEIPT requires Git and a completely clean source repository")
+  endif()
+  if(CCB_BUILD_SUPERPROJECT_COMMIT STREQUAL "unconfigured")
+    message(FATAL_ERROR
+      "CCB_AUTHORISING_BUILD_RECEIPT could not resolve the superproject commit")
+  endif()
+  if(NOT CCB_PYTHON3)
+    message(FATAL_ERROR
+      "CCB_AUTHORISING_BUILD_RECEIPT requires python3 for receipt creation")
+  endif()
+endif()
 
 file(GLOB_RECURSE CCB_STAVE_SOURCES CONFIGURE_DEPENDS
   "${PROJECT_SOURCE_DIR}/src/*.cc")
@@ -38,9 +86,34 @@ if(TARGET CCB::sipm_geant4)
   target_link_libraries(ccb_stave_sim PRIVATE CCB::sipm_geant4)
 endif()
 target_compile_options(ccb_stave_sim PRIVATE -Wall -Wextra -Wpedantic)
+target_compile_definitions(ccb_stave_sim PRIVATE
+  CCB_BUILD_SUPERPROJECT_COMMIT="${CCB_BUILD_SUPERPROJECT_COMMIT}"
+  CCB_BUILD_SOURCE_CLEAN_AT_CONFIGURE=${CCB_BUILD_SOURCE_CLEAN}
+  CCB_BUILD_CMAKE_VERSION="${CMAKE_VERSION}"
+  CCB_BUILD_CXX_COMPILER_ID="${CMAKE_CXX_COMPILER_ID}"
+  CCB_BUILD_CXX_COMPILER_VERSION="${CMAKE_CXX_COMPILER_VERSION}"
+  CCB_BUILD_CXX_COMPILER_PATH="${CMAKE_CXX_COMPILER}"
+  CCB_BUILD_GEANT4_VERSION="${Geant4_VERSION}")
 
 if(CCB_ENABLE_VIS)
   target_compile_definitions(ccb_stave_sim PRIVATE CCB_ENABLE_VIS)
+endif()
+
+# Authorising builds freeze a receipt only after the final executable exists.
+# The receipt tool re-observes clean source, the Gitlink, CMake/toolchain
+# sentinels and the exact executable SHA-256; campaign launchers require it.
+if(CCB_AUTHORISING_BUILD_RECEIPT)
+  add_custom_command(TARGET ccb_stave_sim POST_BUILD
+    COMMAND "${CCB_PYTHON3}"
+            "${CCB_REPO_ROOT}/scripts/single_stave/sipm_build_receipt.py"
+            create
+            --repo-root "${CCB_REPO_ROOT}"
+            --build-dir "${CMAKE_BINARY_DIR}"
+            --executable "$<TARGET_FILE:ccb_stave_sim>"
+            --receipt "${CMAKE_BINARY_DIR}/ccb_stave_sim.build.json"
+            --digest-file "${CMAKE_BINARY_DIR}/ccb_stave_sim.build.sha256"
+    COMMENT "Creating content-bound ccb_stave_sim build receipt"
+    VERBATIM)
 endif()
 
 # Copy runtime assets (macros + optical tables) next to the build so ctest and
@@ -117,7 +190,6 @@ set_tests_properties(ccb_stave_gpu_optical_capture PROPERTIES
   PASS_REGULAR_EXPRESSION "CCB_GPU_PHOTONS"
   FAIL_REGULAR_EXPRESSION "G4Exception.*Fatal;segmentation")
 
-find_program(CCB_PYTHON3 python3)
 if(CCB_PYTHON3)
   add_test(
     NAME ccb_stave_geometry_report_python

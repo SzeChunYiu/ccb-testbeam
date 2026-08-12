@@ -17,7 +17,6 @@ SCRIPTS = ROOT / "scripts" / "single_stave"
 MOD_PATH = SCRIPTS / "sipm_build_receipt.py"
 BUILD_IDENTITY = ROOT / "geant4" / "single_stave" / "src" / "BuildIdentity.cc"
 CORE_DIGEST = ROOT / "geant4" / "single_stave" / "sipm" / "src" / "Digest.cc"
-CORE = "3" * 40
 
 
 def _load():
@@ -43,7 +42,14 @@ def _git(repo: Path, *args: str) -> str:
     ).stdout.strip()
 
 
-def _source_repo(tmp_path: Path) -> tuple[Path, str]:
+def _source_repo(tmp_path: Path) -> tuple[Path, str, str]:
+    """Create a clean superproject plus a genuinely checked-out gitlink worktree.
+
+    A bare cacheinfo-only gitlink with no directory is reported as deleted by
+    ``git status``.  The authorising receipt intentionally requires a clean
+    source tree, so the fixture must model the recursive checkout used in CI
+    rather than weaken the production cleanliness predicate.
+    """
     repo = tmp_path / "repo"
     repo.mkdir()
     _git(repo, "init")
@@ -52,15 +58,27 @@ def _source_repo(tmp_path: Path) -> tuple[Path, str]:
     (repo / "README").write_text("fixture\n")
     _git(repo, "add", "README")
     _git(repo, "commit", "-m", "initial")
+
+    core = repo / "geant4" / "single_stave" / "sipm"
+    core.mkdir(parents=True)
+    _git(core, "init")
+    _git(core, "config", "user.email", "core-fixture@example.invalid")
+    _git(core, "config", "user.name", "core-fixture")
+    (core / "CORE_README").write_text("core fixture\n")
+    _git(core, "add", "CORE_README")
+    _git(core, "commit", "-m", "core fixture")
+    core_sha = _git(core, "rev-parse", "HEAD")
+
     _git(
         repo,
         "update-index",
         "--add",
         "--cacheinfo",
-        f"160000,{CORE},geant4/single_stave/sipm",
+        f"160000,{core_sha},geant4/single_stave/sipm",
     )
     _git(repo, "commit", "-m", "add gitlink")
-    return repo, _git(repo, "rev-parse", "HEAD")
+    assert _git(repo, "status", "--porcelain=v1", "--untracked-files=all") == ""
+    return repo, _git(repo, "rev-parse", "HEAD"), core_sha
 
 
 def _tool(path: Path, label: str) -> None:
@@ -68,7 +86,7 @@ def _tool(path: Path, label: str) -> None:
     path.chmod(0o755)
 
 
-def _fake_build(tmp_path: Path, root_sha: str) -> tuple[Path, Path]:
+def _fake_build(tmp_path: Path, root_sha: str, core_sha: str) -> tuple[Path, Path]:
     build = tmp_path / "build"
     build.mkdir()
     cmake = build / "fake-cmake"
@@ -90,7 +108,7 @@ def _fake_build(tmp_path: Path, root_sha: str) -> tuple[Path, Path]:
         "#!/usr/bin/env python3\n"
         "import hashlib, json, pathlib, sys\n"
         f"root={root_sha!r}\n"
-        f"core={CORE!r}\n"
+        f"core={core_sha!r}\n"
         f"cxx={str(cxx)!r}\n"
         "if sys.argv[1:] != ['--build-provenance-json']:\n"
         "    raise SystemExit(9)\n"
@@ -116,8 +134,8 @@ def _fake_build(tmp_path: Path, root_sha: str) -> tuple[Path, Path]:
 
 def _receipt_fixture(tmp_path: Path):
     mod = _load()
-    repo, root_sha = _source_repo(tmp_path)
-    build, exe = _fake_build(tmp_path, root_sha)
+    repo, root_sha, core_sha = _source_repo(tmp_path)
+    build, exe = _fake_build(tmp_path, root_sha, core_sha)
     receipt = mod.create_receipt(repo_root=repo, build_dir=build, executable=exe)
     return mod, repo, build, exe, receipt
 
@@ -177,9 +195,10 @@ def _compiled_core_sha() -> str:
 
 def test_build_receipt_binds_source_binary_cache_toolchain_and_geant4(tmp_path: Path):
     mod, repo, _build, exe, receipt = _receipt_fixture(tmp_path)
+    core_path = repo / mod.campaign.CORE_PATH
     assert receipt["status"] == "PASS"
     assert receipt["source"]["superproject_commit"] == _git(repo, "rev-parse", "HEAD")
-    assert receipt["source"]["ccb_sipm_core_commit"] == CORE
+    assert receipt["source"]["ccb_sipm_core_commit"] == _git(core_path, "rev-parse", "HEAD")
     assert receipt["executable"]["sha256"] == hashlib.sha256(exe.read_bytes()).hexdigest()
     mod.verify_receipt(
         receipt=receipt,
@@ -209,7 +228,7 @@ def test_toolchain_sentinel_mutation_fails_closed(tmp_path: Path):
     mod, _repo, build, exe, receipt = _receipt_fixture(tmp_path)
     (build / "fake-cxx").write_text("#!/usr/bin/env sh\necho changed\n")
     (build / "fake-cxx").chmod(0o755)
-    with pytest.raises(mod.BuildReceiptError, match="C\+\+ compiler changed since receipt"):
+    with pytest.raises(mod.BuildReceiptError, match=r"C\+\+ compiler changed since receipt"):
         mod.verify_receipt(
             receipt=receipt,
             executable=exe,
@@ -228,7 +247,7 @@ def test_campaign_source_advance_rejects_stale_build_receipt(tmp_path: Path):
     new_root = _git(repo, "rev-parse", "HEAD")
     manifest = mod.campaign.build_manifest(
         repo_commit=new_root,
-        core_commit=CORE,
+        core_commit=receipt["source"]["ccb_sipm_core_commit"],
         base_cli="--particle proton --energy 100",
         nevents_per_point=60,
         grid_sha256={"pde_scale": "a" * 64},

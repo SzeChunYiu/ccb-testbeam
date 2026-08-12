@@ -387,7 +387,14 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
        << "    \"impulse_model\": " << j(sipm_config_.impulse_model) << ",\n"
        << "    \"trigger_recovery_model\": " << j(sipm_config_.trigger_recovery_model) << ",\n"
        << "    \"gain_recovery_model\": " << j(sipm_config_.gain_recovery_model) << ",\n"
-       << "    \"core_run_metadata_json\": " << j(meta_json) << "\n"
+       << "    \"core_run_metadata_json\": " << j(meta_json) << ",\n"
+       << "    \"waveform_persistence\": \"PEAK_ONLY_DISCARDED\",\n"
+       << "    \"daq_digitizer_schema\": \"UNSET\",\n"
+       << "    \"authorising_waveform_claims\": false,\n"
+       << "    \"internal_sample_dt_ns\": " << sipm_config_.sample_dt_ns << ",\n"
+       << "    \"internal_window_start_ns\": " << sipm_config_.window_start_ns << ",\n"
+       << "    \"internal_window_end_ns\": " << sipm_config_.window_end_ns << ",\n"
+       << "    \"waveform_bridge_note\": \"Full DAQ-sampled waveform persistence requires a versioned HRD schema (#1009/#952/#993); peak-only adc_* must not authorise pulse-shape claims\"\n"
        << "  }";
   } else {
     os << ",\n"

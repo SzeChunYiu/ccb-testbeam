@@ -53,4 +53,6 @@ re-runs are `BLOCKED_COMPUTE`/`BLOCKED_EXTERNAL` on LUNARC.
 
 Scientific PRs must not auto-close research-universe issues without ledgered
 completion/successor-transfer evidence (#1218 / Wave A `fix/lane10-waveA`). Prefer `Refs`.
+Use `.github/pull_request_template.md` and `python tools/gov/run_close_intent_gates.py`
+before merge; see `docs/contracts/MERGE_CLOSE_RESIDUAL.md` for the platform residual.
 

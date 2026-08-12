@@ -14,8 +14,8 @@ MC ROOT: `geant4/data/output_krakow_1M.root` (present)
 | 03b | ccb-wt-lane03 | fix/issue-986-geometry-hash | Geometry provenance (#986) | #986 | READY_FOR_PR | https://github.com/SzeChunYiu/ccb-testbeam/pull/1292 |
 | 04 | ccb-wt-lane04 | fix/lane04-waveA | Source/weights | #1050-#1058 #1174 #1179 | MERGED (#1240) | #1240 |
 | 05 | ccb-wt-lane05 | fix/lane05-waveA | Timing CFD/template | #954 #964-#968 #1003-#1004 #1032-#1033 #1059-#1064 | MERGED (#1239) | #1239 |
-| 06 | ccb-wt-lane06 | fix/lane06-waveA | PID ΔE-E | #956 #1022-#1031 #1042 #1048 | IN_PROGRESS | |
-| 07 | ccb-wt-lane07 | fix/lane07-waveA | Stats/bootstrap | #958-#960 #1049 #1052 #1097 #1164 #1166 | IN_PROGRESS | |
+| 06 | ccb-wt-lane06 | fix/issue-1095-step-convergence | MC step + digitizer graph | #1095 #1077 | READY_FOR_PR | https://github.com/SzeChunYiu/ccb-testbeam/pull/1290 |
+| 07 | ccb-wt-lane07 | fix/issue-1164-cluster-identity | Stats/bootstrap | #958-#960 #1049 #1052 #1097 #1164 #1166 | READY_FOR_PR | https://github.com/SzeChunYiu/ccb-testbeam/pull/1291 |
 | 08 | ccb-wt-lane08 | fix/issue-1073-saturation-worlds | DAQ/S00 provenance | #953 #961-#962 #973 #997-#998 #1014 #1073 #1149 | READY_FOR_REVIEW | https://github.com/SzeChunYiu/ccb-testbeam/pull/1279 |
 | 09 | ccb-wt-lane09 | fix/lane09-waveA | ARU study scripts | #1112-#1129 #1137 | IN_PROGRESS | |
 | 10 | ccb-wt-lane10 | fix/lane10-waveA | Docs/gov/orchestrator | #969-#970 #990 #1002 #1078 #1218 + run_pipeline | MERGED (#1241) | #1241 |
@@ -93,6 +93,27 @@ Branch: `chatgpt/paper-draft-20260812` (paper PR #1298); software branch `fix/is
 | #993 | CLOSED DISTINCT | 8×16 LUNARC raw authorising; 18-sample historical non-authorising; see `reports/studies/paper_a02_waveform_lineage/` |
 | #954 #964 #965 #967 #1003 #1004 #1032 #1033 #1064 | OPEN / carried | Not closed by Lane 05 follow-up |
 
+## Lane 06 MC step + digitizer graph (#1095 #1077)
+
+Branch: `fix/issue-1095-step-convergence` (worktree `ccb-wt-lane06`).
+
+| Issue | Disposition | Evidence |
+|-------|-------------|----------|
+| #1095 | BLOCKED (infra FIXED) | `configs/transport/step_policy_registry.json` + `require_step_policy` / `authorize_step_convergence_claim` fail closed; ADR-0005 + ADR-0008; `pin_qgsp_bic_inherited_em_stepfunction` claims_authorized=false until convergence digest |
+| #1077 | FIXED | `DigitizerPipeline` executes `effective_stages`; run provenance uses frozen `stage_graph_meta`; hidden `integrate_samples` fallback removed; `tests/test_lane06_step_digitizer_graph.py` + lane04/lane08 regressions |
+
+## Lane 07 stats/bootstrap cluster identity (#958 #960 #1097 #1164)
+
+Branch: `fix/issue-1164-cluster-identity` (worktree `ccb-wt-lane07`).
+
+| Issue | Disposition | Evidence |
+|-------|-------------|----------|
+| #1164 | FIXED (export) | `data01_sample_split_staves.py` exports `run:eventno` cluster IDs fail-closed; `mc01_event_stave_truth.py` publishes `first_B_layer_event_edep.npz` with `generator_event_index` cluster IDs via `build_compare_first_b_event_edep`; `compare_data_mc.py` blocks null calibration without aligned cluster IDs |
+| #960 | FIXED | `weighted_cluster_bootstrap` targets IPW estimand; raises `NOT_ESTIMABLE` instead of zero-width CI |
+| #1097 | FIXED | `run_block_bootstrap` preserves sampled-run multiplicity (`pulse_weighted` vs `equal_cluster`) |
+| #958 | FIXED | `apply_second_stage_class_cap` updates HT weights after per-class cap |
+| #1052 #1049 #1166 | FIXED (contract) | Event-unit preference, legacy p-value quarantine, nuisance topology record (base #1245) |
+
 ## Lane 01 Wave B kickoff
 
 Branch: `fix/lane01-waveB` (rebased onto origin/main after Wave A #1248 merge).
@@ -108,4 +129,3 @@ Branch: `fix/lane01-waveB` (rebased onto origin/main after Wave A #1248 merge).
 | Date | Branch | Tip | Issues | Disposition | PR |
 |------|--------|-----|--------|-------------|-----|
 | 2026-08-12 | fix/issue-977-sipm-metadata | (see PR) | #977 PARTIAL; #1067 FIXED (core, manual close requested) | Sidecar extended with requested/effective operating point, response_surface_id, electronics impulse hashes, remaining ModelConfig knobs; compile-bound core (#1280) + campaign intent (#1284) unchanged; binary build receipt remains #1285 child | https://github.com/SzeChunYiu/ccb-testbeam/pull/1287 @0371fe3e |
-

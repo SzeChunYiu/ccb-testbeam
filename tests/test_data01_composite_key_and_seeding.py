@@ -16,6 +16,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import pytest
 
 SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "data01_sample_split_staves.py"
 SPEC = importlib.util.spec_from_file_location("data01_sample_split", SCRIPT)
@@ -69,6 +70,28 @@ def test_cross_run_collision_isolated_and_fanout_rejected() -> None:
     agg = MODULE._per_event_stave_amplitude(df2, "I", "B2")
     row = agg[(agg["run"] == 1) & (agg["eventno"] == 10)].iloc[0]
     assert row["amp"] == 9999.0
+
+
+def test_cluster_export_requires_run_and_eventno(tmp_path: Path) -> None:
+    csv = tmp_path / "sel.csv"
+    pd.DataFrame({
+        "group": ["sample_i_analysis"] * 2,
+        "stave": ["B2", "B2"],
+        "channel": [0, 0],
+        "baseline_adc": [100.0, 100.0],
+        "amplitude_adc": [2000.0, 2100.0],
+        "peak_sample": [1, 1],
+        "area_adc_samples": [1.0, 1.0],
+    }).to_csv(csv, index=False)
+    out_dir = tmp_path / "out"
+    import sys as _sys
+    argv0 = _sys.argv
+    try:
+        _sys.argv = ["data01", "--table", str(csv), "--out", str(out_dir)]
+        with pytest.raises(RuntimeError, match="cluster export requires"):
+            MODULE.main()
+    finally:
+        _sys.argv = argv0
 
 
 def test_seed_recorded_and_subsample_deterministic(tmp_path: Path) -> None:

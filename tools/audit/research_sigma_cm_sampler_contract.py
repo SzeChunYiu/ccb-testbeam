@@ -101,7 +101,7 @@ def inverse_linear_pdf_fraction(p_left: float, p_right: float, fraction: float) 
     b /= density_scale
 
     discriminant = a * a + (b - a) * (a + b) * f
-    tolerance = 64.0 * math.ulp(1.0)
+    tolerance = 64.0 * 2.220446049250313e-16  # math.ulp(1.0) — Python 3.8 compat
     if discriminant < -tolerance:
         raise ArithmeticError("negative inverse-CDF discriminant")
     root = math.sqrt(max(discriminant, 0.0))

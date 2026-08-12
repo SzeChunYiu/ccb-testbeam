@@ -24,9 +24,11 @@
 
 RunAction::RunAction(const AppConfig& cfg, const OpticalTables& tables,
                      const std::string& geometry_hash,
-                     const std::string& physics_hash)
+                     const std::string& physics_hash,
+                     const std::string& optical_hash)
     : cfg_(cfg), tables_(tables),
-      geometry_hash_(geometry_hash), physics_hash_(physics_hash) {
+      geometry_hash_(geometry_hash), physics_hash_(physics_hash),
+      optical_hash_(optical_hash) {
   // Master and worker both materialise the effective digitizer config so the
   // metadata sidecar written on the master thread cannot miss #977 fields.
   SetSipmDigitizerConfig(BuildSipmDigitizerConfig(cfg_, tables_));
@@ -282,6 +284,8 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
      << "  \"schema\": \"ccb-stave-run-meta/2\",\n"
      << "  \"git_commit\": " << j(git ? git : "unknown") << ",\n"
      << "  \"geometry_hash\": " << j(geometry_hash_) << ",\n"
+     << "  \"physics_hash\": " << j(physics_hash_) << ",\n"
+     << "  \"optical_hash\": " << j(optical_hash_) << ",\n"
      << "  \"track_len_scint_mm_scope\": \"EVENT_TOTAL_NON_OPTICAL\",\n"
      << "  \"primary_track_len_scint_mm_scope\": \"PRIMARY_PROJECTILE\",\n"
      << "  \"seed\": " << cfg_.seed << ",\n"

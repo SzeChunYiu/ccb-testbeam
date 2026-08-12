@@ -10,7 +10,8 @@ class ActionInitialization : public G4VUserActionInitialization {
  public:
   ActionInitialization(const AppConfig& cfg, const OpticalTables& tables,
                        const std::string& geometry_hash,
-                       const std::string& physics_hash);
+                       const std::string& physics_hash,
+                       const std::string& optical_hash);
   void Build() const override;
   void BuildForMaster() const override;
 
@@ -19,6 +20,7 @@ class ActionInitialization : public G4VUserActionInitialization {
   OpticalTables tables_;
   std::string geometry_hash_;
   std::string physics_hash_;
+  std::string optical_hash_;
 };
 
 #endif  // CCB_ACTIONINITIALIZATION_HH

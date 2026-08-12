@@ -539,13 +539,14 @@ class DigitizerPipeline:
         waveform = analog_adc_sum + self.electronics.pedestal_adc
         waveform = add_noise(waveform, stage_rng["electronics"], self.electronics)
         adc_final, sat_final = quantize_adc(waveform, self.electronics)
-        graph = resolve_lane04_stage_graph(list(self.stages))
+        # Prefer config_types graph for run provenance (lane08 mandatory_final).
+        graph = resolve_stage_graph(list(self.stages))
         kb_cm = None if not self.apply_birks else (
             None if self.birks_kB_cm_per_MeV is None else float(self.birks_kB_cm_per_MeV)
         )
         kb_mm = None if kb_cm is None else kb_cm * 10.0
         dig_hash = digitizer_config_sha256(
-            resolved_stages=list(graph.resolved_stages),
+            resolved_stages=list(graph.get("effective_stages", self.stages)),
             apply_birks=bool(self.apply_birks),
             birks_kB_mm_per_MeV=kb_mm,
             n_samples=int(self.n_samples),
@@ -554,13 +555,17 @@ class DigitizerPipeline:
             noise_adc_rms=float(self.electronics.noise_adc_rms),
             pedestal_adc=float(self.electronics.pedestal_adc),
         )
+        # Lane 04 object graph adds graph_sha256; merge without dropping lane08 keys.
+        lane04 = resolve_lane04_stage_graph(list(self.stages)).as_dict()
+        stage_graph = dict(graph)
+        stage_graph.update({k: v for k, v in lane04.items() if k not in stage_graph})
         return {
             "event_id": event_id,
             "adc": adc_final,
             "saturated": sat_final,
             "n_hits": len(hits),
             "digitizer_rng_schema": DIGITIZER_RNG_SCHEMA,
-            "stage_graph": graph.as_dict(),
+            "stage_graph": stage_graph,
             "birks_kB_cm_per_MeV_effective": kb_cm,
             "digitizer_config_sha256": dig_hash,
         }

@@ -3,3 +3,4 @@ geometry_inventory,Deployed MC volume/material/dimension inventory,CCB-844-GEOM,
 detector_parameters,Parameter ledger with status labels,research/DETECTOR_PARAMETERS.md,DONE
 optical_tables_provenance,Optical table paths + sha256 + status,geant4/single_stave/optical + <output>.meta.json,DONE
 timing_metrics,Per species/stave/sample timing metrics,CCB-TIMING,BLOCKED_COMPUTE
+energy_reconstruction_summary,Held-out Edep reconstruction metrics (Table 2),reports/paper_a09_heldout_edep_reconstruction/heldout_energy_reconstruction_summary.csv,MC_MODEL_DEPENDENT

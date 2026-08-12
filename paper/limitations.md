@@ -20,6 +20,10 @@ These enter as a **systematic envelope**, not point values.
 - Beam current / position / energy scans.
 
 ## Method boundaries
+- The single-stave optical MC now has an initial held-out deposited-energy
+  reconstruction closure (PAPER-A09 / #1297) on the SHA-256-bound calibration
+  grid. Headline σ68 ≈ 9% is **model-dependent** and does not authorise beam-data
+  MeV labels; the optical/SiPM nuisance envelope remains unevaluated.
 - The single-stave `fast` response kernel must be **validated against held-out
   full-optical points** before use on full-detector samples.
 - Stopping-depth (target/beamline/passive material) and stave optical

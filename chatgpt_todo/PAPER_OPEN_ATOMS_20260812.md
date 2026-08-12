@@ -44,7 +44,7 @@ A05 can proceed in parallel with A04 once A02 identifies the authorising amplitu
 - verify one-fibre/one-end channel mapping;
 - reconcile all stale narrative dimensions/material names.
 
-**Acceptance:** every exact hardware number in the paper has a primary collaboration source or is explicitly labelled source-bound simulation configuration.
+**Acceptance:** every exact hardware number in the paper has a primary collaboration source or is explicitly labelled in `paper/hardware_bom.csv` with status `MEASURED`, `DESIGN_SPEC`, `SIM_CONFIG`, or `UNKNOWN_EXTERNAL`.
 
 ---
 
@@ -63,7 +63,7 @@ A05 can proceed in parallel with A04 once A02 identifies the authorising amplitu
 5. If no exact transform is demonstrated, version products as distinct schemas and quarantine cross-schema timing transfer.
 6. Create a result-lineage table mapping every paper data figure to source file/schema/hash.
 
-**Acceptance:** #993 scientific criteria pass or timing stays explicitly historical/non-authorising.
+**Acceptance:** #993 scientific criteria **pass** as DISTINCT_SCHEMAS (`reports/studies/paper_a02_waveform_lineage/`). LUNARC 8×16 raw is authorising; 18-sample timing stays historical/non-authorising.
 
 ---
 
@@ -216,7 +216,7 @@ A05 can proceed in parallel with A04 once A02 identifies the authorising amplitu
 6. Test one common proton/deuteron calibration before allowing species-dependent calibration.
 7. Do not use 92±28 ADC/MeV as the final response and never resurrect 246 ADC/MeV.
 
-**Acceptance:** Figure 11/Table 2 from frozen held-out predictions.
+**Acceptance:** Figure 11/Table 2 from frozen held-out predictions. **Status (2026-08-12):** initial closure delivered in `reports/paper_a09_heldout_edep_reconstruction/` on the five-point SHA-256-bound grid; optical/SiPM nuisance envelope remains blocked pending A07/A08.
 
 ---
 

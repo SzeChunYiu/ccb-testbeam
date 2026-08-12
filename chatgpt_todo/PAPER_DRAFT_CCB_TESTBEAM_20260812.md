@@ -25,49 +25,60 @@ The answers have different evidence status. We use four labels throughout the ma
 
 ## 2. CCB test-beam configuration
 
+Hardware facts, simulation-configuration values and unresolved legacy narratives are separated in `paper/hardware_bom.csv` (Refs #1296, PAPER-A01). Each row carries a status label: **MEASURED** (beam-data observation), **DESIGN_SPEC** (collaboration hardware clarification), **SIM_CONFIG** (reviewed Geant4/analysis configuration), or **UNKNOWN_EXTERNAL** (primary collaboration record still absent). Geant4 agreement alone does not resolve hardware contradictions.
+
 ### 2.1 Beam, target and two-arm layout
 
-The reviewed CCB Geant4 run configuration specifies a 190 MeV incident proton beam and a 2.3 mm CD2 target. The event generator models the two-body channel
+The reviewed CCB Geant4 run configuration specifies a 190 MeV incident proton beam and a 2.3 mm CD2 target (`SIM_CONFIG`; `geant4/macros/run_krakow.mac`). The event generator models the two-body channel
 
 \[
 p+d\rightarrow p+d,
 \]
 
-and transports the outgoing charged particles toward two scintillator arms. The source-bound configuration uses a nominal geometry-distance parameter of 109 cm, with the first stack at approximately -38° and the second at +71.5°. The corresponding configuration contains eight bars in the first stack and four in the second. These values are present in `geant4/configs/krakow.geoconf` and in the reviewed simulation inputs. They describe the simulation/configuration geometry and should not be read as survey-grade metrology until the collaboration hardware record is bound to the manuscript.
+and transports the outgoing charged particles toward two scintillator arms. The source-bound configuration uses a nominal geometry-distance parameter of 109 cm, with the B stack at approximately -38° and the A stack at +71.5° (`SIM_CONFIG`; `geant4/configs/krakow.geoconf`). The corresponding configuration contains eight bars in the B stack and four in the A stack. These values describe the simulation/configuration geometry and should not be read as survey-grade metrology until the collaboration hardware record is bound to the manuscript.
 
 The compact CCB Geant4 geometry contains the CD2 target, scintillator stack volumes, scintillator bars, a trigger bar and ProtoTPC volumes. A source audit found it suitable for first-order acceptance, particle-stopping and truth-energy-deposit studies, but not yet complete enough for precision material-budget conclusions. Detailed wrapping, support material, photosensor boards, cabling, dead layers and survey uncertainties are not all represented in the historical compact geometry. This limitation is important for downstream stopping distributions because a small unmodelled material change can move a Bragg peak from an instrumented layer to an uninstrumented one.
 
 [**Figure 1:** source-bound CCB test-beam layout showing the CD2 target, B arm at approximately -38°, A arm at +71.5°, nominal 109 cm geometry parameter, eight B physical layers and four A layers. Caption: `SCHEMATIC / SOURCE-BOUND CONFIGURATION, NOT SURVEY METROLOGY`.]
 
-### 2.2 A and B stacks
+### 2.2 A and B stacks, channel map and trigger families
 
-The analysis in this paper concentrates on the B stack. The Monte Carlo represents eight physical B layers, whereas the selected data product uses four B readout channels labelled B2, B4, B6 and B8. The labels correspond to alternating positions in the stack rather than eight independent measurements in the beam data. This sparse sampling is a defining feature of the test configuration and must be retained in any data-matched Monte Carlo comparison.
+The analysis in this paper concentrates on the B stack. The Monte Carlo represents eight physical B layers, whereas the selected data product uses four B readout channels labelled B2, B4, B6 and B8 (`DESIGN_SPEC`). The labels correspond to alternating positions in the stack rather than eight independent measurements in the beam data. For data-matched Monte Carlo, the documented detector-map contract is B2→`Sci_bar_LayerID` 0, B4→2, B6→4 and B8→6 with 4 cm centre-to-centre spacing between adjacent analysed layers (`SIM_CONFIG`; S12b detector-map contract). This sparse sampling is a defining feature of the test configuration and must be retained in any data-matched Monte Carlo comparison.
 
-The A arm is used primarily to define the coincidence-selected event family. In the current Monte Carlo, Sample-I and Sample-II membership is assigned with a first-layer charged-hit proxy rather than a source-bound simulation of the complete trigger-counter geometry and electronics. We therefore label the Monte Carlo trigger selection `MC_TRIGGER_PROXY`. Agreement after this selection demonstrates that a corresponding kinematic/topological population exists in the model; it does not, by itself, validate the hardware trigger efficiency.
+The A arm is used primarily to define the coincidence-selected event family. Sample I denotes an A-and-B coincidence run family and Sample II a B-only family (`UNKNOWN_EXTERNAL` for the exact hardware trigger, threshold and prescale record). The current analysis grouping binds Sample-I calibration runs 31–37 and 39–42, Sample-I analysis runs 44–57, Sample-II calibration run 64, and Sample-II analysis runs 58–63 and 65 (`SIM_CONFIG`; S03e configuration). Runs 38 and 43 are not part of these declared groups. In the current Monte Carlo, Sample-I and Sample-II membership is assigned with a first-layer charged-hit proxy rather than a source-bound simulation of the complete trigger-counter geometry and electronics (`SIM_CONFIG`; `docs/contracts/TRIGGER_HARDWARE_RESPONSE.json`). We therefore label the Monte Carlo trigger selection `MC_TRIGGER_PROXY`. Agreement after this selection demonstrates that a corresponding kinematic/topological population exists in the model; it does not, by itself, validate the hardware trigger efficiency.
 
 ## 3. Scintillator stave and readout
 
-### 3.1 Stave geometry
+### 3.1 Stave geometry and material record
 
-The stave specification used here follows the later hardware clarification in issue #796 and the geometry implemented in `geant4/single_stave/`. Each stave is an extruded polystyrene scintillator 50 cm long, 5.18 cm wide and 2.0 cm thick along the nominal particle path. A TiO2-loaded reflective coating surrounds the exterior faces. Two longitudinal holes have 2.0 mm diameter and are separated by 2.0 cm centre to centre. Each hole accepts a 1.8 mm diameter wavelength-shifting fibre.
+The current stave specification follows the later hardware clarification in issue #796 (`DESIGN_SPEC`; `docs/stave_sim/STAVE_SIM_ENERGY_MODEL.md`) and the geometry implemented in `geant4/single_stave/`. Each stave is an extruded polystyrene scintillator 50 cm long, 5.18 cm wide and 2.0 cm thick along the nominal particle path. A TiO2-loaded reflective coating surrounds the exterior faces. Two longitudinal holes have 2.0 mm diameter and are separated by 2.0 cm centre to centre. Each hole accepts a 1.8 mm diameter Kuraray Y-11 wavelength-shifting fibre.
 
-The optical simulation resolves each fibre into a Y-11-doped polystyrene core, PMMA inner cladding and fluorinated-PMMA outer cladding. The implemented fibre radius is 0.90 mm. The simulated fibre protrudes beyond the scintillator so that guided photons can reach end-mounted sensor surfaces. Kuraray technical data for Y-11(200) list a representative green emission peak near 476 nm, an absorption peak near 430 nm and an attenuation length greater than 3.5 m [6]. These manufacturer values provide a spectral and scale reference; they are not a measurement of the installed CCB fibre/coupling system.
+Older repository prose described BC-408 bars approximately 10 cm × 1 cm × 1 m (`UNKNOWN_EXTERNAL`; legacy academic chapter 2). Issue #796 itself contains an earlier conflicting `5 cm thickness` phrase that is superseded by the later 50 × 5.18 × 2.0 cm clarification. These contradictions are not resolved by Geant4 agreement alone; they remain open until a primary collaboration build record, drawing, photo or channel map is bound. Until then, publication text uses the #796 design specification and labels all other dimensions as unresolved legacy narrative.
 
-The B-stave design can support two fibres read from both ends, corresponding to four possible optical measurements. The beam-test configuration used one fibre at one end only. This matters for energy reconstruction because a one-ended signal depends on the hit coordinate along the stave through attenuation and coupling. It also removes the two-ended time or charge asymmetry that could otherwise be used to estimate longitudinal position and reduce this dependence.
+The optical simulation resolves each fibre into a Y-11-doped polystyrene core, PMMA inner cladding and fluorinated-PMMA outer cladding (`SIM_CONFIG`; `docs/stave-geometry.md`). The implemented fibre outer-cladding radius is 0.90 mm. The simulated fibre protrudes beyond the scintillator so that guided photons can reach end-mounted sensor surfaces. Kuraray technical data for Y-11(200) list a representative green emission peak near 476 nm, an absorption peak near 430 nm and an attenuation length greater than 3.5 m [6] (`EXTERNAL_PRIMARY`). These manufacturer values provide a spectral and scale reference; they are not a measurement of the installed CCB fibre/coupling system.
+
+The B-stave design can support two fibres read from both ends, corresponding to four possible optical measurements. The beam-test configuration used one fibre at one end only (`DESIGN_SPEC`; issues #796/#797). This matters for energy reconstruction because a one-ended signal depends on the hit coordinate along the stave through attenuation and coupling. It also removes the two-ended time or charge asymmetry that could otherwise be used to estimate longitudinal position and reduce this dependence.
 
 [**Figure 2:** stave transverse and longitudinal geometry. Reuse the source-generated drawings under `figures/geometry/`, mark the two fibres and four possible fibre-end sensor positions, and highlight the single physical beam-test readout.]
 
 ### 3.2 SiPM and electronics boundary
 
-The source-bound single-stave model uses a Hamamatsu S13360-3050CS multipixel photon counter. Hamamatsu specifies a 3×3 mm² photosensitive area, 50 µm pixel pitch and 3600 pixels for this device, with a typical peak sensitivity wavelength near 450 nm [7]. The spectral range is therefore compatible with the green Y-11 emission band.
+The source-bound single-stave model uses a Hamamatsu S13360-3050CS multipixel photon counter (`DESIGN_SPEC`; issue #796). Hamamatsu specifies a 3×3 mm² photosensitive area, 50 µm pixel pitch and 3600 pixels for this device, with a typical peak sensitivity wavelength near 450 nm [7]. The spectral range is therefore compatible with the green Y-11 emission band.
 
 The manufacturer page does not define the CCB detector response on its own. Photon detection efficiency varies with wavelength and overvoltage. The observed waveform also depends on temperature, optical coupling, illuminated microcell footprint, gain, recovery, crosstalk, afterpulsing and the analogue transfer function. The current project has explicit SiPM models for several of these effects, but later audits leave the operating-point recovery law, coupling footprint, correlated-noise distributions and charge-domain impulse normalisation incompletely constrained. We therefore keep the optical-photon, primary-avalanche, charge and ADC observables as separate stages.
 
 ### 3.3 Waveform products
 
-The historical timing reconstruction declares eight channels with 18 samples per channel at a nominal 10 ns sample period. The located raw CCB ROOT product contains eight channels with 16 samples per channel. The products overlap strongly at the event/feature level, but the repository has not yet demonstrated a byte-level 16-to-18-sample transformation or proved that they are separate acquisition modes. Issue #993 has therefore been reopened on its scientific acceptance criterion.
+Two waveform schemas appear in the repository history. Historical timing and S00 reproduction configs declare eight channels with 18 samples per channel at a nominal 10 ns sample period, reading laptop-era `data/root/root` and `data/sorted-b` mounts. The located immutable LUNARC beam product under `/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/` contains eight channels with **16 samples per channel only** (`128` scalar HRDv words per event). PAPER-A02 / issue #993 closes this as **distinct acquisition schemas**, not a reversible 16↔18 transform:
 
-This distinction affects the timing chapter directly. A timing number derived from an 18-sample product cannot be transferred to the 16-sample raw files by assumption. Every production timing result must name its waveform schema, producer revision and source hashes.
+| Product | Mount / manifest | Words / event | Authorising use |
+|---|---|---:|---|
+| LUNARC raw HRDv | `/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_*.root` | 128 (`8×16`) | **Yes** for paper amplitude and format-limited timing on beam data |
+| Historical 18-sample configs + sorted-b | `configs/s00_reproduction.yaml`; laptop `data/sorted-b` | 144 (`8×18`) | **No** for the LUNARC raw product; timing remains historical/non-authorising |
+
+Evidence: complete SHA-256 manifest for all 33 paper runs; per-event width census (`128` words only); run 31 LUNARC SHA-256 `0986c826…` ≠ laptop raw `9921aa75…`; 500-record spot check finds 45 baseline/amplitude/peak mismatches against the historical canonical S00 table, including canonical `peak_sample=17` cases impossible in 16-sample raw. Samples 16–17 are absent from LUNARC rows.
+
+Every paper amplitude or timing figure must bind this schema, producer revision and source hashes. Sub-nanosecond historical timing values derived from 18-sample products are not promoted as beam-data detector performance on the located 8×16 raw files.
 
 ## 4. Simulation programmes
 
@@ -136,13 +147,15 @@ Common trigger phase, sampling phase, reconstruction choices or event conditions
 
 Leading-edge timing crosses a fixed threshold and is therefore amplitude dependent. Historical project studies explored empirical time-walk corrections, including terms proportional to \(1/A\). A production correction should be fitted on calibration runs only and evaluated without retuning on held-out runs. The required closure plots are the corrected residual mean and width versus amplitude, run and pulse class.
 
-A constant-fraction discriminator does not automatically solve the problem for multi-component waveforms. Issue #1059 demonstrates a structural ambiguity in the repository's global-maximum CFD: if an early pulse has peak \(A_1\) and a later pulse has a larger peak \(A_2\), the first crossing of \(f A_2\) can jump from the early component to the later one when \(f\) crosses approximately \(A_1/A_2\). A scan in CFD fraction can therefore change which physical pulse is timed. The production timing analysis must either select a demonstrated single-component waveform class or define a prompt/track-associated component before applying CFD.
+A constant-fraction discriminator does not automatically solve the problem for multi-component waveforms. Issue #1059 demonstrates a structural ambiguity in the repository's global-maximum CFD: if an early pulse has peak \(A_1\) and a later pulse has a larger peak \(A_2\), the first crossing of \(f A_2\) can jump from the early component to the later one when \(f\) crosses approximately \(A_1/A_2\). A scan in CFD fraction can therefore change which physical pulse is timed. Deterministic two-pulse controls in `scripts/cfd_fraction_transition.py` reproduce this switch without invoking beam data. The production producer therefore defaults to `first_local_peak`, which binds the threshold and crossing to the same selected component, and serializes component-assignment diagnostics. That selector law is explicitly non-authorising for physical pulse identity: saturation, recovery tails, baseline shifts and sub-sample phase can still retarget the selected component.
+
+The minimum pair `sigma68` across CFD fractions on the same events is recorded only as an exploratory diagnostic (`SAME_SAMPLE_MINIMUM_EXPLORATORY_ONLY`, issue #1062). It must not be promoted as detector resolution or used to choose a production CFD fraction without independent component-stability evidence.
 
 ### 6.3 Result supported by the located raw data
 
 The direct analysis of the located 8×16-sample beam files gives 5,207 B4-B6 events with valid CFD times and a central 68% residual width of approximately 38.0 ns after the applied time-of-flight subtraction. A more restrictive in-window subset does not improve the result. The B6 peak-position distribution is multi-modal and frequently lies at the waveform boundaries. With a nominal 10 ns sample period, the residual is dominated by waveform sampling/window structure.
 
-We therefore report this as a **format-limited timing residual**, not as the B-stave timing resolution. Historical values near 0.54 ns for a combined estimator and 0.68-0.75 ns for single-stave-like quantities are not promoted as beam-data performance. They belong to earlier simulation, toy-digitiser or provenance-gated analyses.
+We therefore report this as a **format-limited timing residual**, not as the B-stave timing resolution. Historical values near 0.54 ns for a combined estimator and 0.68-0.75 ns for single-stave-like quantities are not promoted as beam-data performance. They belong to earlier simulation, toy-digitiser or provenance-gated analyses. A real-data CFD fraction-transition study on the located 8×16 product remains blocked until issue #993 closes the 16- versus 18-sample waveform lineage; until then, component-binding evidence is limited to deterministic synthetic controls and non-authorising producer diagnostics.
 
 [**Figure 5:** B4-B6 residual from the located 8×16 data product. Caption must include `10 ns nominal sampling`, event count, waveform schema and `NOT DETECTOR RESOLUTION`.]
 
@@ -271,13 +284,24 @@ r=\frac{E_{\mathrm{reco}}-E_{\mathrm{dep}}}{E_{\mathrm{dep}}}.
 
 A publication analysis should report the median bias, central 68% width \(\sigma_{68}\), RMS and a tail fraction on held-out events. If the residual is non-Gaussian, a single fitted Gaussian width is insufficient.
 
-### 9.2 Simulation-only reconstruction that can be completed now
+### 9.2 Held-out deposited-energy reconstruction (PAPER-A09 / #1297)
 
-The existing optical calibration ntuples provide the raw material for this measurement. The analysis should split events or energy points before fitting the response. A simple monotonic calibration from primary avalanche count, detected PE or a validated data-like charge observable to \(E_{\mathrm{dep}}\) should be fitted on the training subset and frozen before evaluation. Proton/deuteron transfer and position dependence should then be tested without species-specific retuning unless the response model requires it physically.
+The optical calibration grid at `/projects/hep/fs10/shared/nnbar/billy/ccb_calib_grid/` provides five SHA-256-bound ROOT files (200 events each; Geant4 commit `0005ed0cb2c06617abd36b3bb1e615497e15832a`). Training uses `deuteron_70`, `proton_100` and `proton_140` (600 events); held-out evaluation uses `deuteron_110` and `proton_60` (400 events). A pooled linear response `PE = (49.3 \pm 2.5) + (7.63 \pm 0.08)\,E_{\mathrm{dep}}` is fit on the training population only and inverted to obtain \(E_{\mathrm{reco}}\). No ADC/MeV heuristic enters this chain.
 
-The campaign-reported 9-21% spreads in Section 8 are not yet this energy resolution. They mix the campaign's deposition and optical fluctuations under an older summary definition. PAPER-A09 therefore produces an explicit held-out residual and propagates the optical/SiPM nuisance set from PAPER-A07/A08.
+On the held-out fraction the relative residual \(r=(E_{\mathrm{reco}}-E_{\mathrm{dep}})/E_{\mathrm{dep}}\) gives a median bias of \(+10.1\%\), central width \(\sigma_{68}=8.9\%\), RMS \(=17.8\%\) and tail fraction \(|\!r\!|>0.20\) of 15%. Per held-out grid point:
 
-A project-level heuristic gain of roughly 92 ADC/MeV with a broad 28 ADC/MeV envelope exists in the claim ledger. It is not a precision channel calibration and should not be used to relabel beam-data amplitude axes in MeV. The older 246 ADC/MeV conversion is obsolete for production interpretation.
+| species | held-out KE [MeV] | median \(E_{\mathrm{dep}}\) [MeV] | median bias | \(\sigma_{68}\) | RMS | tail fraction |
+|---|---:|---:|---:|---:|---:|---:|
+| proton | 60 | 27.6 | +10.3% | 8.3% | 15.9% | 13.5% |
+| deuteron | 110 | 26.5 | +9.9% | 9.1% | 19.6% | 16.5% |
+
+A species-aware two-line calibration reduces the pooled median bias to \(+8.1\%\) but widens \(\sigma_{68}\) to 23.5% on the same held-out events, so the common proton/deuteron line is retained as the transparent primary baseline. Saturation corrections are not required at these deposited-energy points (mean saturation fraction 0). Longitudinal hit-position variation is negligible in this campaign and is not used.
+
+These numbers are **model-dependent optical MC** results: they describe reconstruction of Geant4 deposited energy from simulated detected PE under the current Y-11/SiPM hypothesis. They are not a beam-data energy calibration and do not authorise relabelling ADC amplitudes in MeV. The optical/SiPM nuisance envelope from PAPER-A07/A08 remains `NOT_EVALUATED`.
+
+[**Figure 11:** held-out single-stave \(E_{\mathrm{reco}}\) bias and \(\sigma_{68}\) versus \(E_{\mathrm{dep}}\) for the two held-out grid points. Caption: `MODEL-DEPENDENT OPTICAL MC; TARGET IS GEANT4 E_dep; NOT BEAM-DATA CALIBRATION`. Source: `reports/paper_a09_heldout_edep_reconstruction/`.]
+
+[**Table 2:** energy-reconstruction summary (`heldout_energy_reconstruction_summary.csv`). Estimator: pooled linear PE\(\rightarrow\)\(E_{\mathrm{dep}}\); train/held-out split as above; \(n=400\) held-out events; nuisance envelope blocked pending A07/A08.]
 
 ### 9.3 Full-stack reconstruction
 
@@ -290,10 +314,6 @@ A full-stack incident-energy estimator can use the amplitude vector
 saturation flags and the deepest active readout position. A physics baseline should precede any machine-learning model: for example, a calibrated sum of visible energy plus a range/stopping-depth correction. The Monte Carlo can then quantify the performance lost when the eight physical layers are reduced to the four-channel data view.
 
 This full-stack result remains blocked until the passive material, per-channel response and data/MC trigger/selection transfer are sufficiently constrained. The paper can describe the reconstruction method now, but a detector energy-resolution number should be inserted only after held-out closure.
-
-[**Figure 11:** held-out single-stave \(E_{\mathrm{reco}}\) bias and \(\sigma_{68}\) versus \(E_{\mathrm{dep}}\), with particle, position and nuisance scans.]
-
-[**Table 2:** energy-reconstruction summary giving estimator, target energy, train/validation split, event counts, bias, \(\sigma_{68}\), RMS, tail fraction and model-systematic envelope.]
 
 ## 10. Discussion
 
@@ -313,7 +333,7 @@ The CCB campaign provides a measured test of the stopping topology of a scintill
 
 For particle-identification plots, the correct beam-data amplitude analogue is \(\Delta E=A(B2)\) and \(E=A(B4)+A(B6)+A(B8)\). The four-channel readout misses alternating physical layers, so the sampled ΔE-E topology is sensitive to where the stopping-power rise falls relative to the readout positions. An existing B2-B4 correlation difference between data and truth MC remains useful as a two-layer model diagnostic but is not itself the paper's ΔE-E measurement.
 
-The standalone optical simulation predicts roughly 9-11 detected PE per deposited MeV at the existing proton/deuteron campaign points, with reported relative spreads of roughly 9-21%. These are model-dependent predictions because the absolute WLS fluorescence yield and CCB SiPM/electronics response are not yet fully constrained. The located raw 8×16 waveform product gives an approximately 38 ns B4-B6 residual that is sampling/window limited and is not an intrinsic stave timing resolution.
+The standalone optical simulation predicts roughly 9-11 detected PE per deposited MeV at the existing proton/deuteron campaign points, with reported relative spreads of roughly 9-21%. Held-out reconstruction of Geant4 deposited energy from detected PE on the SHA-256-bound calibration grid gives a pooled median bias of about +10% and \(\sigma_{68}\approx 9\%\) on held-out grid points. These are model-dependent predictions because the absolute WLS fluorescence yield and CCB SiPM/electronics response are not yet fully constrained. The located raw 8×16 waveform product gives an approximately 38 ns B4-B6 residual that is sampling/window limited and is not an intrinsic stave timing resolution.
 
 The paper is therefore already able to report the measured stopping topology, the correct sparse-segmentation ΔE-E framework, and the limitations of the current waveform product. The remaining P0 analyses are well defined: establish the publication hardware/run and waveform provenance, regenerate the proper amplitude ΔE-E and data-matched weighted MC comparisons, close the material budget, resolve the optical/SiPM response stages, and evaluate held-out deposited-energy reconstruction. Those steps are required before adding detector timing, absolute optical-efficiency or detector energy-resolution numbers.
 
@@ -340,7 +360,7 @@ Timing and energy calibrations must be fitted on declared calibration/training p
 - `docs/claim_ledger.csv`
 - `docs/adr/ADR-WLS-FLUORESCENCE-YIELD-UNVERIFIED.md`
 - `docs/adr/ADR-SIPM-PHYSICS-BLOCKED-WAVEA-LANE01.md`
-- issue #993, reopened for 8×16/8×18 waveform lineage
+- issue #993, closed as **distinct 8×16 LUNARC raw vs 8×18 historical products**; cross-schema timing quarantined
 - issue #1059, CFD component-selection ambiguity
 - issue #1088, reopened for the unresolved WLS fluorescence-yield physics contract
 

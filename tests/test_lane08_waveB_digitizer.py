@@ -62,7 +62,10 @@ def test_1076_from_config_typo_rejected():
 
 
 def test_1076_effective_birks_in_resolved_config():
-    pipe = DigitizerPipeline.from_config({"apply_birks": "true"})
+    pipe = DigitizerPipeline.from_config({
+        "apply_birks": "true",
+        "birks_kB_cm_per_MeV": 0.008,
+    })
     assert pipe.resolved_config()["apply_birks"]["effective"] is True
 
 

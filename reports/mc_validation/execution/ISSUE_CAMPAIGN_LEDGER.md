@@ -159,3 +159,11 @@ Branch: `close/1178-python38-compat` → PR #1315 (merged `8cd32b1e`).
 |-------|-------------|----------|
 | #1178 | CLOSED | Declared law `p(theta) = sigma(theta)·sin(theta)/Z` over measured support 26.49–169.78 deg (Ermisch et al. PRC 71 064004 (2006) Table VI, 190 MeV p-d). Mode IDs: `linear_node_pdf_exact_inverse_v1` + `measured_table_support_truncate_v1`. Reference normalization `1.1977630765144902`; probability outside measured support `0.0`; max inverse interval mass fraction error `2.22e-16` (IEEE 754 ULP). Fail-closed guard `CCB_CS_INVERSE_DISCRIMINANT` at `ScatteringGenerator.cc:449`. Evidence commits: `fa62e8bb` (bind table + gate sampler claims), `f5f96951` (exact measured-support inverse), `a1bcb6a6` (fix quadratic inverse-CDF), `d4d174d2` (source-node + interpolation sensitivity), `af0c3989` (190 MeV p-d source uncertainty), `57407692` (interpolation-order sensitivity), `d6207569` (fail closed #1182), `7a42b0ff` (Python 3.8 compat). 50 regression tests pass on Python 3.8.10. PR #1315 merged `8cd32b1e`. |
 
+## P0 #1178 — CM cross-section sampler contract (cross-cutting)
+
+Branch: `close/1178-python38-compat` → PR #1315 (merged `8cd32b1e`).
+
+| Issue | Disposition | Evidence |
+|-------|-------------|----------|
+| #1178 | CLOSED | Declared law `p(theta) = sigma(theta)·sin(theta)/Z` over measured support 26.49–169.78 deg (Ermisch et al. PRC 71 064004 (2006) Table VI, 190 MeV p-d). Mode IDs: `linear_node_pdf_exact_inverse_v1` + `measured_table_support_truncate_v1`. Reference normalization `1.1977630765144902`; probability outside measured support `0.0`; max inverse interval mass fraction error `2.22e-16` (IEEE 754 ULP). Fail-closed guard `CCB_CS_INVERSE_DISCRIMINANT` at `ScatteringGenerator.cc:449`. Evidence commits: `fa62e8bb` (bind table + gate sampler claims), `f5f96951` (exact measured-support inverse), `a1bcb6a6` (fix quadratic inverse-CDF), `d4d174d2` (source-node + interpolation sensitivity), `af0c3989` (190 MeV p-d source uncertainty), `57407692` (interpolation-order sensitivity), `d6207569` (fail closed #1182), `7a42b0ff` (Python 3.8 compat). 50 regression tests pass on Python 3.8.10. PR #1315 merged `8cd32b1e`. |
+

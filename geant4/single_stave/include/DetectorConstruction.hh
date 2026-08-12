@@ -64,6 +64,8 @@ class DetectorConstruction : public G4VUserDetectorConstruction {
 
   // Recorded provenance the RunAction writes to output metadata.
   const std::string& GeometryHash() const { return geometry_hash_; }
+  // Response/physics digest (Birks + optical interface); NOT geometry (#986).
+  const std::string& PhysicsHash() const { return physics_hash_; }
 
  private:
   G4Material* BuildScintillator();     // polystyrene + optical + Birks
@@ -77,6 +79,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction {
   const AppConfig cfg_;
   DetectorMessenger* messenger_ = nullptr;
   std::string geometry_hash_;
+  std::string physics_hash_;
   bool overlaps_found_ = false;
 };
 

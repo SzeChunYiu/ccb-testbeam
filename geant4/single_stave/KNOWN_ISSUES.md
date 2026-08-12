@@ -88,14 +88,11 @@ Issue #999 beam/primary intersection preflight is enforced in `main.cc` via
 `--allow-miss` / `allow_miss=True` only for intentional miss studies
 (`docs/adr/ADR-0003-beam-intersection-preflight.md`).
 
-## Wave B Lane 05 response hypotheses (2026-08-11)
+## Wave C Lane 05 (2026-08-11)
 
-- **#1008 Birks model form:** nominal `kB=0.126 mm/MeV` is registered as
-  `hyp_geant4_birks_kb_0p126_mm_per_MeV` (HYPOTHESIS). Do not call it validated
-  p/d light-response truth. See `configs/response/` + ADR-0004.
-- **#1094 Fibre outer cladding:** `BuildFibreOuterClad` keeps PMMA density 1.19
-  with n=1.42; competing fluorinated-polymer density 1.43 hypothesis is
-  registered. Transport≠optical identity remains **BLOCKED**.
-- **#1090 Observation window:** all-time SteppingAction counters vs sipm-core
-  `[-20,250] ns` ADC window are separate semantic classes
-  (`FULL_TRANSPORT` / `ACQUISITION_WINDOW`).
+- #1007: ntuple now emits `primary_*` scintillator estimators; event-total
+  `track_len_scint_mm` comment corrected. Rebuild required.
+- #986: `geometry_hash` schema geometry_v2 excludes Birks; `physics_hash`
+  schema physics_v1 carries Birks + optical interface. Rebuild required.
+- #1079 / #1095 / #1064: Python fail-closed contracts + ADRs (no invented
+  physics parameters).

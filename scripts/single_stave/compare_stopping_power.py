@@ -61,6 +61,9 @@ REPORT_COLUMNS = [
     "reference_in_range",
     "n_events",
     "energy_deposit_basis",
+    "track_length_scope",
+    "primary_track_identity",
+    "pstar_primary_identity_ok",
     "raw_pstar_comparable",
     "deposit_sum_MeV",
     "track_length_sum_mm",
@@ -367,6 +370,8 @@ def run_compare(
             "for labelled, non-accepting diagnostics"
         )
     basis = str(sim_summary["energy_deposit_basis"])
+    track_scope = str(sim_summary.get("track_length_scope", "EVENT_TOTAL_ALL_NON_OPTICAL"))
+    primary_ok = bool(sim_summary.get("pstar_primary_identity_ok", False))
     aggregated = aggregate(rows, rho, energy_deposit_basis=basis)
     results: list[dict[str, object]] = []
     all_pass = True
@@ -383,11 +388,25 @@ def run_compare(
         delta = (ratio - 1.0) * 100.0
         numeric_ok = abs(delta) <= tol_pct
         raw_comparable = bool(result["raw_pstar_comparable"])
+        # Deposit/reference basis comparable (may still be wrong track-scope).
         physics_comparable = raw_comparable and direct_reference
+        result["track_length_scope"] = track_scope
+        result["primary_track_identity"] = bool(
+            sim_summary.get("primary_track_identity", False)
+        )
+        result["pstar_primary_identity_ok"] = primary_ok
         uncertainty_evaluated = False
-        accepted_ok = numeric_ok and physics_comparable and uncertainty_evaluated
+        # Authorizing acceptance also requires primary-track identity (#1007).
+        accepted_ok = (
+            numeric_ok
+            and physics_comparable
+            and primary_ok
+            and uncertainty_evaluated
+        )
         if not physics_comparable:
             acceptance_status = "NONCOMPARABLE_INPUT_OR_REFERENCE"
+        elif not primary_ok:
+            acceptance_status = "NONCOMPARABLE_EVENT_TOTAL_TRACK_SCOPE"
         elif not numeric_ok:
             acceptance_status = "POINT_ESTIMATE_OUTSIDE_TOLERANCE"
         else:
@@ -504,6 +523,8 @@ def run_compare(
             print("NUMERICAL TOLERANCE: POINT_ESTIMATE_ONLY_NOT_ACCEPTED")
         else:
             print("NUMERICAL TOLERANCE: FAIL")
+    print(f"TRACK LENGTH SCOPE: {track_scope}")
+    print(f"PSTAR PRIMARY IDENTITY OK: {primary_ok}")
     print(f"UNCERTAINTY EVALUATION: {UNCERTAINTY_METHOD}")
     print("SCIENTIFIC STATUS: DIAGNOSTIC_ONLY")
     return results, all_pass and bool(results)

@@ -284,7 +284,7 @@ def test_dig007_explicit_dedx_matches_step_length():
 
 
 def test_dig007_pipeline_birks_stage_fails_closed_without_step_info():
-    pipe = DigitizerPipeline(apply_birks=True)
+    pipe = DigitizerPipeline(apply_birks=True, birks_kB_cm_per_MeV=0.008)
     with pytest.raises(ValueError, match="birks stage cannot run"):
         pipe.run([{"edep_mev": 1.0, "time_ns": 0.0}], event_id=5)
 
@@ -292,6 +292,7 @@ def test_dig007_pipeline_birks_stage_fails_closed_without_step_info():
 def test_dig007_pipeline_birks_runs_when_step_length_provided():
     pipe = DigitizerPipeline(
         apply_birks=True,
+        birks_kB_cm_per_MeV=0.008,
         transport_sigma_ns=0.0,
         electronics=ElectronicsConfig(noise_adc_rms=0.0, gain_adc_per_mev=1.0, pedestal_adc=0.0),
     )

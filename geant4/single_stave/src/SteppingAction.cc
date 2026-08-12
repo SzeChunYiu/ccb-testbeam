@@ -74,8 +74,14 @@ void SteppingAction::UserSteppingAction(const G4Step* step) {
           G4LossTableManager::Instance()->EmSaturation();
       const double edep_visible =
           em_sat ? em_sat->VisibleEnergyDepositionAtAStep(step) : edep_raw;
-      d.edep_scint_MeV += edep_visible / MeV;  // Birks-visible
-      d.track_len_scint_mm += step->GetStepLength() / mm;
+      d.edep_scint_MeV += edep_visible / MeV;  // Birks-visible (event total)
+      d.track_len_scint_mm += step->GetStepLength() / mm;  // all non-optical
+      // Primary-only accumulators for PSTAR / stopping-power identity (#1007).
+      if (track->GetParentID() == 0) {
+        d.primary_edep_scint_raw_MeV += edep_raw / MeV;
+        d.primary_edep_scint_MeV += edep_visible / MeV;
+        d.primary_track_len_scint_mm += step->GetStepLength() / mm;
+      }
       if (!d.has_entry) {
         d.has_entry = true;
         const G4ThreeVector& p = pre->GetPosition();

@@ -17,13 +17,31 @@ from collections import Counter
 from pathlib import Path
 from typing import Iterable
 
-TOOL_VERSION = "1.2.0"
+TOOL_VERSION = "1.3.0-waveC-lane05"
 INPUT_SNAPSHOT_METHOD = "SINGLE_READ_EXACT_BYTES"
 ENERGY_ALIASES = ("ke_MeV", "kinetic_energy_MeV", "energy_MeV")
 RAW_EDEP_ALIASES = ("edep_scint_raw_MeV", "edep_raw_MeV")
 QUENCHED_EDEP_ALIASES = ("edep_scint_MeV", "edep_MeV")
 TRACK_MM_ALIASES = ("track_len_scint_mm", "track_length_scint_mm")
 TRACK_CM_ALIASES = ("track_length_scint_cm", "track_len_scint_cm")
+PRIMARY_TRACK_MM_ALIASES = (
+    "primary_track_len_scint_mm",
+    "primary_track_length_scint_mm",
+)
+PRIMARY_TRACK_CM_ALIASES = (
+    "primary_track_length_scint_cm",
+    "primary_track_len_scint_cm",
+)
+PRIMARY_RAW_EDEP_ALIASES = (
+    "primary_edep_scint_raw_MeV",
+    "primary_edep_raw_MeV",
+)
+PRIMARY_QUENCHED_EDEP_ALIASES = (
+    "primary_edep_scint_MeV",
+    "primary_edep_MeV",
+)
+PRIMARY_SCOPE = "PRIMARY_TRACK"
+EVENT_TOTAL_SCOPE = "EVENT_TOTAL_ALL_NON_OPTICAL"
 PARTICLE_NAMES = {
     "p": "proton",
     "proton": "proton",
@@ -151,8 +169,20 @@ def _validate_header(path: Path, data_lines: list[tuple[int, str]]) -> list[str]
         raise SimulationTableError(f"simulation table {path} is missing particle column")
     for quantity, aliases in [
         ("energy", ENERGY_ALIASES),
-        ("energy-deposit", RAW_EDEP_ALIASES + QUENCHED_EDEP_ALIASES),
-        ("track-length", TRACK_MM_ALIASES + TRACK_CM_ALIASES),
+        (
+            "energy-deposit",
+            PRIMARY_RAW_EDEP_ALIASES
+            + PRIMARY_QUENCHED_EDEP_ALIASES
+            + RAW_EDEP_ALIASES
+            + QUENCHED_EDEP_ALIASES,
+        ),
+        (
+            "track-length",
+            PRIMARY_TRACK_MM_ALIASES
+            + PRIMARY_TRACK_CM_ALIASES
+            + TRACK_MM_ALIASES
+            + TRACK_CM_ALIASES,
+        ),
     ]:
         if not set(aliases).intersection(header):
             raise SimulationTableError(
@@ -175,6 +205,7 @@ def read_validated_simulation_table(
     particles: Counter[str] = Counter()
     energies: list[float] = []
     bases: set[str] = set()
+    scopes: set[str] = set()
     normalized_rows: list[NormalizedRow] = []
     reader = csv.DictReader([line for _, line in data_lines])
     for (line_no, _), row in zip(data_lines[1:], reader, strict=True):
@@ -213,35 +244,70 @@ def read_validated_simulation_table(
                 f"simulation table {path} line {line_no} has nonpositive energy {energy!r}"
             )
 
+        # Prefer primary-only columns when present (#1007). Mixing primary and
+        # event-total deposit aliases in one row is rejected.
+        primary_raw = populated_aliases(row, PRIMARY_RAW_EDEP_ALIASES)
+        primary_quenched = populated_aliases(row, PRIMARY_QUENCHED_EDEP_ALIASES)
         raw_columns = populated_aliases(row, RAW_EDEP_ALIASES)
         quenched_columns = populated_aliases(row, QUENCHED_EDEP_ALIASES)
-        if len(raw_columns) > 1 or len(quenched_columns) > 1:
-            columns = raw_columns if len(raw_columns) > 1 else quenched_columns
+        using_primary_edep = bool(primary_raw or primary_quenched)
+        if using_primary_edep and (raw_columns or quenched_columns):
             raise SimulationTableError(
-                f"simulation table {path} line {line_no} has ambiguous energy-deposit "
-                "aliases: " + ", ".join(columns)
+                f"simulation table {path} line {line_no} mixes primary and "
+                "event-total energy-deposit columns (#1007)"
             )
-        if raw_columns and quenched_columns:
-            raise SimulationTableError(
-                f"simulation table {path} line {line_no} populates raw and quenched "
-                "energy-deposit fields simultaneously"
-            )
-        if raw_columns:
-            deposit_column = raw_columns[0]
-            basis = RAW_BASIS
-        elif quenched_columns:
-            if not allow_quenched_proxy:
+        if using_primary_edep:
+            if len(primary_raw) > 1 or len(primary_quenched) > 1:
+                columns = primary_raw if len(primary_raw) > 1 else primary_quenched
                 raise SimulationTableError(
-                    f"simulation table {path} line {line_no} provides only quenched "
-                    "energy deposit; use --allow-quenched-proxy for a labelled, "
-                    "non-accepting diagnostic preflight"
+                    f"simulation table {path} line {line_no} has ambiguous primary "
+                    "energy-deposit aliases: " + ", ".join(columns)
                 )
-            deposit_column = quenched_columns[0]
-            basis = QUENCHED_BASIS
+            if primary_raw and primary_quenched:
+                raise SimulationTableError(
+                    f"simulation table {path} line {line_no} populates primary raw "
+                    "and quenched energy-deposit fields simultaneously"
+                )
+            if primary_raw:
+                deposit_column = primary_raw[0]
+                basis = RAW_BASIS
+            else:
+                if not allow_quenched_proxy:
+                    raise SimulationTableError(
+                        f"simulation table {path} line {line_no} provides only "
+                        "primary quenched energy deposit; use --allow-quenched-proxy "
+                        "for a labelled, non-accepting diagnostic preflight"
+                    )
+                deposit_column = primary_quenched[0]
+                basis = QUENCHED_BASIS
         else:
-            raise SimulationTableError(
-                f"simulation table {path} line {line_no} has no energy-deposit value"
-            )
+            if len(raw_columns) > 1 or len(quenched_columns) > 1:
+                columns = raw_columns if len(raw_columns) > 1 else quenched_columns
+                raise SimulationTableError(
+                    f"simulation table {path} line {line_no} has ambiguous energy-deposit "
+                    "aliases: " + ", ".join(columns)
+                )
+            if raw_columns and quenched_columns:
+                raise SimulationTableError(
+                    f"simulation table {path} line {line_no} populates raw and quenched "
+                    "energy-deposit fields simultaneously"
+                )
+            if raw_columns:
+                deposit_column = raw_columns[0]
+                basis = RAW_BASIS
+            elif quenched_columns:
+                if not allow_quenched_proxy:
+                    raise SimulationTableError(
+                        f"simulation table {path} line {line_no} provides only quenched "
+                        "energy deposit; use --allow-quenched-proxy for a labelled, "
+                        "non-accepting diagnostic preflight"
+                    )
+                deposit_column = quenched_columns[0]
+                basis = QUENCHED_BASIS
+            else:
+                raise SimulationTableError(
+                    f"simulation table {path} line {line_no} has no energy-deposit value"
+                )
         deposit = parse_finite(
             row,
             deposit_column,
@@ -255,13 +321,32 @@ def read_validated_simulation_table(
                 f"{deposit!r}"
             )
 
-        track_column = require_single_alias(
-            row,
-            TRACK_MM_ALIASES + TRACK_CM_ALIASES,
-            path=path,
-            line_no=line_no,
-            quantity="track length",
+        primary_track = populated_aliases(
+            row, PRIMARY_TRACK_MM_ALIASES + PRIMARY_TRACK_CM_ALIASES
         )
+        event_track = populated_aliases(row, TRACK_MM_ALIASES + TRACK_CM_ALIASES)
+        if primary_track and event_track:
+            raise SimulationTableError(
+                f"simulation table {path} line {line_no} mixes primary and "
+                "event-total track-length columns (#1007)"
+            )
+        if primary_track:
+            if len(primary_track) != 1:
+                raise SimulationTableError(
+                    f"simulation table {path} line {line_no} has ambiguous primary "
+                    "track-length aliases: " + ", ".join(primary_track)
+                )
+            track_column = primary_track[0]
+            track_scope = PRIMARY_SCOPE
+        else:
+            track_column = require_single_alias(
+                row,
+                TRACK_MM_ALIASES + TRACK_CM_ALIASES,
+                path=path,
+                line_no=line_no,
+                quantity="track length",
+            )
+            track_scope = EVENT_TOTAL_SCOPE
         track_value = parse_finite(
             row,
             track_column,
@@ -269,7 +354,8 @@ def read_validated_simulation_table(
             line_no=line_no,
             quantity="track length",
         )
-        track_mm = track_value * 10.0 if track_column in TRACK_CM_ALIASES else track_value
+        cm_aliases = TRACK_CM_ALIASES + PRIMARY_TRACK_CM_ALIASES
+        track_mm = track_value * 10.0 if track_column in cm_aliases else track_value
         if track_mm <= 0:
             raise SimulationTableError(
                 f"simulation table {path} line {line_no} has nonpositive track length "
@@ -279,6 +365,7 @@ def read_validated_simulation_table(
         particles[particle] += 1
         energies.append(energy)
         bases.add(basis)
+        scopes.add(track_scope)
         normalized_rows.append((particle, energy, deposit, track_mm))
 
     if not normalized_rows:
@@ -288,7 +375,14 @@ def read_validated_simulation_table(
             f"simulation table {path} mixes unquenched and quenched energy-deposit "
             "semantics across rows"
         )
+    if len(scopes) != 1:
+        raise SimulationTableError(
+            f"simulation table {path} mixes primary and event-total track-length "
+            "scopes across rows (#1007)"
+        )
     basis = next(iter(bases))
+    track_length_scope = next(iter(scopes))
+    primary_identity = track_length_scope == PRIMARY_SCOPE
     summary: dict[str, object] = {
         "schema_version": 1,
         "tool": "tools/audit/validate_stopping_power_sim_table.py",
@@ -304,7 +398,11 @@ def read_validated_simulation_table(
         "energy_min_MeV": min(energies),
         "energy_max_MeV": max(energies),
         "energy_deposit_basis": basis,
+        "track_length_scope": track_length_scope,
+        "primary_track_identity": primary_identity,
         "raw_pstar_comparable": basis == RAW_BASIS,
+        # Event-total path length is not the PSTAR single-particle measurand (#1007).
+        "pstar_primary_identity_ok": bool(primary_identity and basis == RAW_BASIS),
         "all_noncomment_rows_validated": True,
         "silent_row_skipping_permitted": False,
         "normalized_rows_returned": len(normalized_rows),

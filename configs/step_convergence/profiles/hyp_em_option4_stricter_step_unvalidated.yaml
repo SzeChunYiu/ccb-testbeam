@@ -1,0 +1,16 @@
+profile_id: hyp_em_option4_stricter_step_unvalidated
+kind: step_convergence
+status: HYPOTHESIS
+claims_authorized: false
+issue: 1095
+summary: >
+  Placeholder for an EM option4 / accuracy-oriented step policy. Selecting
+  this profile documents intent only; it does not enable option4 or invent
+  StepFunction parameters.
+parameters:
+  application_user_limits: false
+  step_limiter_physics: false
+  convergence_study: absent
+  em_option: option4_placeholder
+blocked_until:
+  - executable EM constructor binding + convergence artefacts

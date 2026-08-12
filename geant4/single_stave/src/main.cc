@@ -132,7 +132,9 @@ int main(int argc, char** argv) {
       PhysicsList::Build(cfg.physics_list, cfg.production_cut_mm, cfg.wls_time_profile));
   // geometry_hash is deterministic (constructor), so actions can be set now.
   runManager->SetUserInitialization(
-      new ActionInitialization(cfg, tables, detector->GeometryHash()));
+      new ActionInitialization(cfg, tables,
+                              detector->GeometryHash(),
+                              detector->PhysicsHash()));
 
   // Construct geometry + physics; prints the geometry report (OVERLAP_CHECK_PASS).
   runManager->Initialize();

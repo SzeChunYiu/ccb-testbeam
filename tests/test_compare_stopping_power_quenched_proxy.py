@@ -158,5 +158,6 @@ def test_raw_input_is_point_estimate_only_and_nonaccepting(tmp_path):
     assert results[0]["raw_pstar_comparable"] is True
     assert results[0]["numeric_within_tolerance"] is True
     assert results[0]["uncertainty_evaluated"] is False
-    assert results[0]["acceptance_status"] == "NOT_ACCEPTED_NO_UNCERTAINTY"
+    assert results[0]["pstar_primary_identity_ok"] is False
+    assert results[0]["acceptance_status"] == "NONCOMPARABLE_EVENT_TOTAL_TRACK_SCOPE"
     assert results[0]["within_tolerance"] is False

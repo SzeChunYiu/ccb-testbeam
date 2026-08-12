@@ -14,7 +14,7 @@ MC ROOT: `geant4/data/output_krakow_1M.root` (present)
 | 03b | ccb-wt-lane03 | fix/issue-986-geometry-hash | Geometry provenance (#986) | #986 | READY_FOR_PR | https://github.com/SzeChunYiu/ccb-testbeam/pull/1292 |
 | 04 | ccb-wt-lane04 | fix/lane04-waveA | Source/weights | #1050-#1058 #1174 #1179 | MERGED (#1240) | #1240 |
 | 05 | ccb-wt-lane05 | fix/lane05-waveA | Timing CFD/template | #954 #964-#968 #1003-#1004 #1032-#1033 #1059-#1064 | MERGED (#1239) | #1239 |
-| 06 | ccb-wt-lane06 | fix/lane06-waveA | PID ΔE-E | #956 #1022-#1031 #1042 #1048 | IN_PROGRESS | |
+| 06 | ccb-wt-lane06 | fix/issue-1095-step-convergence | MC step + digitizer graph | #1095 #1077 | READY_FOR_PR | https://github.com/SzeChunYiu/ccb-testbeam/pull/1290 |
 | 07 | ccb-wt-lane07 | fix/lane07-waveA | Stats/bootstrap | #958-#960 #1049 #1052 #1097 #1164 #1166 | IN_PROGRESS | |
 | 08 | ccb-wt-lane08 | fix/issue-1073-saturation-worlds | DAQ/S00 provenance | #953 #961-#962 #973 #997-#998 #1014 #1073 #1149 | READY_FOR_REVIEW | https://github.com/SzeChunYiu/ccb-testbeam/pull/1279 |
 | 09 | ccb-wt-lane09 | fix/lane09-waveA | ARU study scripts | #1112-#1129 #1137 | IN_PROGRESS | |

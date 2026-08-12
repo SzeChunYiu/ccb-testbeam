@@ -118,7 +118,13 @@ Branch: `fix/issue-1164-cluster-identity` (worktree `ccb-wt-lane07`).
 
 | Issue | Disposition | Evidence |
 |-------|-------------|----------|
-| #1164 | CLOSED | v7 OOB cluster-bootstrap null implemented in `_cluster_bootstrap_null_scale_refit()`: per-replicate scale refit on bootstrap Sample II (`scale_r[r] = median(DA_II_boot) / weighted_median(MC_II_boot, w)`), weighted KS D evaluated on OOB clusters, p-value = fraction of replicates with bootstrap D ≥ observed D. Requires ≥500 replicates (1000 used), fail-closed when cluster IDs missing or insufficient successful replicates. PR #1313 merged (commit `8fd35141`), CI green, unit + integration + adversarial contract tests passing. `p_value_status` = `NONAUTHORISING_LEGACY_UNIT_WEIGHT_PERMUTATION` retained for provenance under #1049. |
+| #1164 | CLOSED | v7 OOB cluster-bootstrap null implemented in `_cluster_bootstrap_null_scale_refit()`: per-replicate scale refit on bootstrap Sample II (`scale_r[r] = median(DA_II_boot) / weighted_median(MC_II_boot, w)`), weighted KS D evaluated on OOB clusters, p-value = fraction of replicates with bootstrap D \>= observed D. Requires \>=500 replicates (1000 used), fail-closed when cluster IDs missing or insufficient successful replicates. PR #1313 merged (commit `8fd35141`), CI green, unit + integration + adversarial contract tests passing. `p_value_status` = `NONAUTHORISING_LEGACY_UNIT_WEIGHT_PERMUTATION` retained for provenance under #1049. |
+
+## Lane 07 wave-A issue disposition (#958-#960 subset)
+
+| Issue | Disposition | Evidence |
+|-------|-------------|----------|
+| #959 | FIXED | `run_ml_check` requires `sampling_weight` + `eventno`; uses `StratifiedGroupKFold` + weighted ROC-AUC and group-aware isotonic calibration; refuses silent unweighted fallback on missing weights, unsupported estimators, or incomplete OOF probs. Regression: `tests/test_lane07_waveA_stats_datamc.py::test_959_ml_check_requires_weights_and_eventno`, `tests/test_s00_implementation_consistency.py::test_run_ml_check_uses_cluster_bootstrap_and_features_guard`. Merged via #1245 (`ac2e0bdd`). Tracking branch: `fix/issue-959-group-aware-ml`. |
 
 ## Lane 01 Wave B kickoff
 

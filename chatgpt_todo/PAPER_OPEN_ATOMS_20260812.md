@@ -109,7 +109,7 @@ A05 can proceed in parallel with A04 once A02 identifies the authorising amplitu
 
 ## PAPER-A05 [P0] **Correct production amplitude ΔE-E**
 
-**Supervisor contract:** issue #618. **Do not use B2 versus B4 as the primary ΔE-E observable.**
+**Status (2026-08-12):** primary producer landed in `scripts/single_stave/paper_956_deltaE_E_publication.py`; first publication bundle at `reports/paper_956_deltaE_E_20260812T103800Z/` (LUNARC mirror). Section 7 and evidence rows P-027–P-033 updated. Remaining: species-colour MC panels, beam-energy sensitivity scan, held-out run validation beyond bootstrap.
 
 ### Data definition
 

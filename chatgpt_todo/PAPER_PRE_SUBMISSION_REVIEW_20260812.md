@@ -5,7 +5,11 @@
 **Evidence matrix:** `chatgpt_todo/PAPER_EVIDENCE_FIGURE_MATRIX_20260812.md`  
 **Open tasks:** `chatgpt_todo/PAPER_OPEN_ATOMS_20260812.md`
 
-## Review protocol and limitation
+## Change log (2026-08-12, issue #956)
+
+PAPER-A05 primary producer `scripts/single_stave/paper_956_deltaE_E_publication.py` regenerated Figures 7–8 and segmentation/B2–B4 diagnostics under `reports/paper_956_deltaE_E_20260812T103800Z/` with SHA-256 provenance. Manuscript Section 7.3, evidence rows P-027–P-033, claim ledger CL-028–CL-031, and checklist items above were updated. MC species-colour panels and beam-energy sensitivity remain open.
+
+---
 
 This is an internal role-separated scientific review, not independent human peer review. The requested `nature-reviewer` workflow prefers mutually blind reviewers. This environment does not provide isolated contexts, so mutual blindness cannot be guaranteed. I therefore use fixed reviewer remits, force each reviewer to state the strongest alternative explanation and falsifier, and retain mistakes found by later passes in the audit record.
 
@@ -202,8 +206,8 @@ The full route best matches the requested outline. The reviewer loop should be r
 - [x] 8×16/8×18 waveform lineage resolved as **distinct schemas** (`reports/studies/paper_a02_waveform_lineage/`; LUNARC raw authorising, 18-sample historical/non-authorising);
 - [ ] run/trigger hardware table complete;
 - [ ] production timing closes or is intentionally withheld;
-- [ ] issue-#618 proper DATA ΔE-E regenerated with uncertainty;
-- [ ] full and data-matched MC ΔE-E regenerated with weights/ESS;
+- [x] issue-#618 proper DATA ΔE-E regenerated with uncertainty (`reports/paper_956_deltaE_E_20260812T103800Z/`, 2026-08-12);
+- [x] full and data-matched MC ΔE-E regenerated with weights/ESS (same bundle; species-colour panels pending);
 - [ ] material/selection response closure quantified;
 - [ ] WLS fluorescence-yield and SiPM response status updated;
 - [ ] held-out Edep reconstruction/resolution complete;

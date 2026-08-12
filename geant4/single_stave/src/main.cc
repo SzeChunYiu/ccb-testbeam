@@ -5,6 +5,7 @@
 // target (CCB_ENABLE_VIS) and never a hard dependency of the physics build.
 #include "AppConfig.hh"
 #include "BeamIntersection.hh"
+#include "BuildIdentity.hh"
 #include "DetectorConstruction.hh"
 #include "PhysicsList.hh"
 #include "ActionInitialization.hh"
@@ -33,6 +34,14 @@
 #include <vector>
 
 int main(int argc, char** argv) {
+  // Provenance probe used by the authorising build receipt and campaign
+  // verifier.  It exits before AppConfig/Geant4 initialization and reports the
+  // exact running executable digest plus compile-time source/toolchain labels.
+  if (argc == 2 && std::string(argv[1]) == "--build-provenance-json") {
+    std::cout << ccb::build::RenderBuildIdentityJson() << '\n';
+    return 0;
+  }
+
   AppConfig cfg;
   if (!cfg.ParseArgs(argc, argv)) {
     // --help prints usage and returns false; a parse error also returns false.

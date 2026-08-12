@@ -1,0 +1,164 @@
+{
+  "environment": {
+    "numpy": "2.4.6",
+    "pandas": "2.3.1",
+    "platform": "Linux-5.14.0-687.24.1.el9_8.x86_64-x86_64-with-glibc2.34",
+    "python": "3.11.5 (main, Aug 26 2024, 11:58:39) [GCC 13.2.0]"
+  },
+  "estimand": "r = (E_reco - E_dep) / E_dep",
+  "generated_utc": "2026-08-12T08:43:57.904540+00:00",
+  "git_commit": null,
+  "heldout_runs": [
+    "deuteron_110",
+    "proton_60"
+  ],
+  "input_bindings": [
+    {
+      "bytes": 23572615,
+      "git_commit": "0005ed0cb2c06617abd36b3bb1e615497e15832a",
+      "kinetic_energy_MeV": 110,
+      "meta_path": "/projects/hep/fs10/shared/nnbar/billy/ccb_calib_grid/deuteron_110.root.meta.json",
+      "meta_sha256": "d5bd1e05b5b50dd19d41f07754fdbca47a8a3bfdc6243d4c71c6bf49f7098db1",
+      "n_events": 200,
+      "particle": "deuteron",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb_calib_grid/deuteron_110.root",
+      "sha256": "5d345236716832a5dab224abee1928ad2ef37f15bbfa8c59036da3341836ebad"
+    },
+    {
+      "bytes": 36840325,
+      "git_commit": "0005ed0cb2c06617abd36b3bb1e615497e15832a",
+      "kinetic_energy_MeV": 70,
+      "meta_path": "/projects/hep/fs10/shared/nnbar/billy/ccb_calib_grid/deuteron_70.root.meta.json",
+      "meta_sha256": "c932ea3b608fb6c921970878f94f72711b7c347f9ef48a504d39033e09860639",
+      "n_events": 200,
+      "particle": "deuteron",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb_calib_grid/deuteron_70.root",
+      "sha256": "0a588555a4af63f7f28c0963ed122bdc6de1bfb42487973d7426d48d92552d78"
+    },
+    {
+      "bytes": 15312543,
+      "git_commit": "0005ed0cb2c06617abd36b3bb1e615497e15832a",
+      "kinetic_energy_MeV": 100,
+      "meta_path": "/projects/hep/fs10/shared/nnbar/billy/ccb_calib_grid/proton_100.root.meta.json",
+      "meta_sha256": "4419b0c00fa97e70c5d82d61003065aedc256b0d5cb9eb1e746c6ef8c4d4b529",
+      "n_events": 200,
+      "particle": "proton",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb_calib_grid/proton_100.root",
+      "sha256": "02f6229d245844472d6ca5c793019202d61d99cbc3922653004d295fec0655c6"
+    },
+    {
+      "bytes": 12067620,
+      "git_commit": "0005ed0cb2c06617abd36b3bb1e615497e15832a",
+      "kinetic_energy_MeV": 140,
+      "meta_path": "/projects/hep/fs10/shared/nnbar/billy/ccb_calib_grid/proton_140.root.meta.json",
+      "meta_sha256": "914107d1cf67dde18229ba8cb3fabc9c599e8beb05180ef0b2b83e528bac5472",
+      "n_events": 200,
+      "particle": "proton",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb_calib_grid/proton_140.root",
+      "sha256": "2b3aa1f76ab0f4df057e7d08619b3a76ff331d9f337c31fa00e02b5b1303996c"
+    },
+    {
+      "bytes": 24256916,
+      "git_commit": "0005ed0cb2c06617abd36b3bb1e615497e15832a",
+      "kinetic_energy_MeV": 60,
+      "meta_path": "/projects/hep/fs10/shared/nnbar/billy/ccb_calib_grid/proton_60.root.meta.json",
+      "meta_sha256": "3b831c2d64e65fd8f7d161c4cf3d4c813923b923faaa8a38e067129c4b403819",
+      "n_events": 200,
+      "particle": "proton",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb_calib_grid/proton_60.root",
+      "sha256": "160b0ec84e4fb7ec484fa8f33263428e1959caaad49a72f1f8d77eb662fd15bb"
+    }
+  ],
+  "issue": "#1297",
+  "notes": [
+    "Calibration is frozen on the training runs before any held-out evaluation.",
+    "Species-aware lines are reported only as a secondary comparator.",
+    "Optical/SiPM nuisance envelope from PAPER-A07/A08 is not yet propagated.",
+    "Do not interpret as beam-data energy calibration; no ADC/MeV heuristic is used."
+  ],
+  "paper_atom": "PAPER-A09",
+  "per_point": [
+    {
+      "edep_mean_MeV": 28.582263937963933,
+      "edep_median_MeV": 26.5492692778059,
+      "kinetic_energy_MeV": 110.0,
+      "median_bias_fraction": 0.09888832676807205,
+      "n_heldout": 200,
+      "rms_fraction": 0.19607175709559538,
+      "run_id": "deuteron_110",
+      "saturation_fraction_mean": 0.0,
+      "sigma68_fraction": 0.09095304015374477,
+      "species": "deuteron",
+      "tail_fraction": 0.165
+    },
+    {
+      "edep_mean_MeV": 28.665770264738658,
+      "edep_median_MeV": 27.589965533022934,
+      "kinetic_energy_MeV": 60.0,
+      "median_bias_fraction": 0.1030478098551432,
+      "n_heldout": 200,
+      "rms_fraction": 0.15866492653768804,
+      "run_id": "proton_60",
+      "saturation_fraction_mean": 0.0,
+      "sigma68_fraction": 0.08293683811378619,
+      "species": "proton",
+      "tail_fraction": 0.135
+    }
+  ],
+  "primary_estimator": "pooled linear PE = intercept + slope * E_dep",
+  "response_observable": "detected_readout PE",
+  "schema": "ccb-paper-a09-heldout-edep/1",
+  "status_label": "MC_MODEL_DEPENDENT",
+  "summary": {
+    "fit": {
+      "intercept_pe": 49.31541310129382,
+      "intercept_se": 2.522000590615111,
+      "n_train": 600,
+      "slope_pe_per_MeV": 7.631106755646569,
+      "slope_se": 0.08037385317540333
+    },
+    "heldout_median_bias_fraction": 0.10119560262026123,
+    "heldout_rms_fraction": 0.1783517491416388,
+    "heldout_runs": [
+      "deuteron_110",
+      "proton_60"
+    ],
+    "heldout_sigma68_fraction": 0.08868460991999053,
+    "heldout_tail_fraction": 0.15,
+    "model": "pooled_linear",
+    "n_heldout": 400,
+    "n_train": 600,
+    "species_aware_fits": [
+      {
+        "intercept_pe": 110.36982794751945,
+        "intercept_se": 35.597980596030176,
+        "n_train": 200,
+        "slope_pe_per_MeV": 6.465487653447148,
+        "slope_se": 0.7126273672867112,
+        "species": "deuteron"
+      },
+      {
+        "intercept_pe": 75.92661311017874,
+        "intercept_se": 2.6631465162521764,
+        "n_train": 400,
+        "slope_pe_per_MeV": 5.681434020163182,
+        "slope_se": 0.17589170859457695,
+        "species": "proton"
+      }
+    ],
+    "species_aware_heldout_median_bias_fraction": 0.08117366521819003,
+    "species_aware_heldout_sigma68_fraction": 0.23505220193931314,
+    "train_runs": [
+      "deuteron_70",
+      "proton_100",
+      "proton_140"
+    ]
+  },
+  "tail_threshold_abs_r": 0.2,
+  "target_energy": "Geant4 scintillator deposited energy (edep_scint_MeV)",
+  "train_runs": [
+    "deuteron_70",
+    "proton_100",
+    "proton_140"
+  ]
+}

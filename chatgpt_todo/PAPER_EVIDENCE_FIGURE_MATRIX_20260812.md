@@ -1,12 +1,13 @@
 # CCB test-beam paper evidence and figure matrix
 
 **Date:** 2026-08-12  
-**Purpose:** bind every manuscript claim to a measured result, source/configuration record, model-dependent MC result, external primary source or explicit blocker. This file is a publication truth surface; when it conflicts with older narrative text, the canonical claim ledger and later ADRs win.
+**Purpose:** bind every manuscript claim to a measured result, source/configuration record, model-dependent MC result, external primary source or explicit blocker. This file is a publication truth surface; when it conflicts with older narrative text, `paper/hardware_bom.csv`, the canonical claim ledger and later ADRs win.
 
 ## Evidence classes
 
 - `DATA_MEASURED`: result calculated from real beam data for a declared selected population. Does not imply absolute detector calibration.
-- `SOURCE_BOUND_CONFIG`: exact value in configuration/source or a collaboration hardware clarification. Not automatically survey/metrology truth.
+- `SOURCE_BOUND_CONFIG`: exact value in configuration/source. Not automatically survey/metrology truth.
+- `DESIGN_SPEC`: collaboration hardware clarification or build specification with primary-source path recorded in `paper/hardware_bom.csv`. Not automatically survey/metrology truth.
 - `MC_TRUTH`: Geant4 particle/energy-deposit observable before detector response.
 - `MC_MODEL_DEPENDENT`: numerical detector-response prediction under declared but incompletely calibrated assumptions.
 - `GATED`: useful result exists but claim promotion is blocked by a named provenance/calibration/systematic condition.
@@ -22,10 +23,10 @@
 | P-003 | simulation/configuration target 2.3 mm CD2 | SOURCE_BOUND_CONFIG | S21 source review | bind hardware/target record before metrology claim |
 | P-004 | nominal 109 geometry parameter, arms about -38°/+71.5°, 8/4 bars | SOURCE_BOUND_CONFIG | `geant4/configs/krakow.geoconf` | label source-bound configuration, not survey |
 | P-005 | compact CCB Geant4 geometry omits some real passive/support/electronics material | AUDIT / GATED | S21 source review | material-budget closure required for quantitative stopping |
-| P-006 | B stave is extruded polystyrene, 50 × 5.18 × 2.0 cm | SOURCE_BOUND_CONFIG + collaboration clarification | issue #796 comments; `docs/stave-geometry.md`; paper outline | PAPER-A01 must resolve conflicting older 5 cm/~1 m wording |
-| P-007 | two 2.0 mm holes, two 1.8 mm Y-11 fibres, 2 cm separation | SOURCE_BOUND_CONFIG | issue #796; `docs/stave-geometry.md` | bind construction record/fibre grade if available |
-| P-008 | only one fibre at one end was read out in beam test | collaboration clarification | issues #796/#797 | retain in setup and every optical interpretation |
-| P-009 | source-bound sensor is S13360-3050CS | SOURCE_BOUND_CONFIG | optical geometry/model | operating point is separate |
+| P-006 | B stave is extruded polystyrene, 50 × 5.18 × 2.0 cm | DESIGN_SPEC | issue #796; `paper/hardware_bom.csv`; `docs/stave_sim/STAVE_SIM_ENERGY_MODEL.md` | legacy BC-408/~1 m prose remains `UNKNOWN_EXTERNAL`; do not resolve by Geant4 alone |
+| P-007 | two 2.0 mm holes, two 1.8 mm Y-11 fibres, 2 cm separation | DESIGN_SPEC | issue #796; `paper/hardware_bom.csv`; `docs/stave-geometry.md` | fibre grade/lot and construction record still absent |
+| P-008 | only one fibre at one end was read out in beam test | DESIGN_SPEC | issues #796/#797; `paper/hardware_bom.csv` | retain in setup and every optical interpretation |
+| P-009 | source-bound sensor is S13360-3050CS | DESIGN_SPEC | issue #796; `paper/hardware_bom.csv` | operating point, bias and coupling are separate claims |
 | P-010 | S13360-3050CS 3×3 mm², 50 µm pitch, 3600 pixels | EXTERNAL_PRIMARY | Hamamatsu official data | safe manufacturer specification |
 | P-011 | Y-11 representative 476 nm emission, 430 nm absorption, >3.5 m attenuation | EXTERNAL_PRIMARY | Kuraray official technical data | representative, not installed-fibre calibration |
 | P-012 | Geant4 provides scintillation/absorption/boundary/WLS optical processes | EXTERNAL_PRIMARY | Geant4 manuals/papers | no detector-calibration inference from toolkit semantics |
@@ -38,11 +39,11 @@
 | P-019 | Sample-I B2 historical selected population: n=241,422, mean 6090 ADC, saturation fraction 0.417 | DATA_MEASURED in historical selection | `SAMPLE_I_II_DATA_MC_REPORT.md` | final current producer must revalidate baseline/polarity/saturation rules |
 | P-020 | Sample-II B2 historical mean 3663 ADC, saturation fraction 0.061 | DATA_MEASURED in historical selection | same | same |
 | P-021 | trigger-proxy MC gives deuteron-enriched first B layer for Sample I and more penetrating Sample II | MC_TRUTH + proxy gate | `SAMPLE_I_II_DATA_MC_REPORT.md` | not hardware trigger efficiency |
-| P-022 | located beam ROOT waveform product is 8×16 samples | DATA provenance observation | data-side report; #993 | use only after complete immutable manifest |
-| P-023 | historical timing product/config declares 8×18 at 10 ns nominal sampling | SOURCE_BOUND_CONFIG / lineage BLOCKED | S00/S03 configs; #993 | #993 reopened; no assumed 16↔18 transform |
+| P-022 | located LUNARC beam ROOT waveform product is 8×16 samples (128 HRDv words/event) | DATA provenance / immutable manifest | `reports/studies/paper_a02_waveform_lineage/manifest.json`; #993 closed DISTINCT | authorising schema `hrd_raw_8x16_v1` for paper amplitude + format-limited timing |
+| P-023 | historical timing product/config declares 8×18 at 10 ns on different laptop mounts | DISTINCT_SCHEMA / non-authorising for LUNARC raw | `configs/s00_reproduction.yaml`; S00a sorted-b manifest; #993 | quarantine cross-schema timing transfer; 18-sample timing historical only |
 | P-024 | raw 8×16 B4-B6 central width ~38.0 ns for n=5207 | DATA_MEASURED / NON-PERFORMANCE | data-side report | caption `FORMAT-LIMITED; NOT DETECTOR RESOLUTION` |
-| P-025 | historical sub-ns timing numbers are not authorising beam-data detector resolutions | GATED/BLOCKED | claim ledger; #993; #1059 | keep historical/toy/MC only if clearly labelled |
-| P-026 | global-maximum CFD can switch physical pulse component as fraction changes | confirmed algorithmic ambiguity | open issue #1059 | production timing must define target component |
+| P-025 | historical sub-ns timing numbers are not authorising beam-data detector resolutions | GATED/BLOCKED | claim ledger; #993; #1059; `~38 ns` format-limited B4-B6 residual | keep historical/toy/MC only if clearly labelled; no invented sub-ns resolutions |
+| P-026 | global-maximum CFD can switch physical pulse component as fraction changes | confirmed algorithmic ambiguity (software bound) | #1059; `scripts/cfd_fraction_transition.py`; `first_local_peak` producer default; lane05 synthetic tests | production timing must define target component; real-data fraction scan BLOCKED until #993 closes; same-sample sigma minimum is exploratory only (#1062) |
 | P-027 | **Correct DATA ΔE-E definition:** ΔE=A(B2); E=A(B4)+A(B6)+A(B8) | collaboration analysis contract | issue #618 | axes remain ADC amplitude proxies |
 | P-028 | **Correct data-matched MC ΔE-E:** ΔE=Edep(B2); E=Edep(B4)+Edep(B6)+Edep(B8) | collaboration analysis contract | issue #618 | separate from full downstream truth sum |
 | P-029 | full MC ΔE-E residual E should include every downstream physical B layer available | collaboration analysis contract | issue #618 | use full and four-readout panels side by side |
@@ -59,8 +60,8 @@
 | P-040 | old analytical 0.56% total efficiency is non-authorising | SUPERSEDED FOR CLAIMS | `STAVE_SIM_ENERGY_MODEL.md` vs later ADRs | do not publish as detector efficiency |
 | P-041 | heuristic ~92 ADC/MeV with ~28 ADC/MeV envelope is not precision calibration | GATED | claim ledger | do not relabel data axes in MeV |
 | P-042 | historical ~246 ADC/MeV conversion is obsolete | SUPERSEDED | paper outline / later gain work | remove from production figures |
-| P-043 | single-stave Edep reconstruction can be evaluated with existing optical MC | method ready, result pending | calibration ntuples and response chain | PAPER-A09 held-out analysis |
-| P-044 | full-stack incident-energy resolution is not yet calibrated in data | BLOCKED | material + per-channel response + trigger/selection gaps | PAPER-A06/A08/A09 |
+| P-043 | single-stave Edep reconstruction evaluated on held-out optical MC grid | MC_MODEL_DEPENDENT | `reports/paper_a09_heldout_edep_reconstruction/result.json`; SHA-256-bound grid at `ccb_calib_grid/` | pooled linear PE→Edep on train runs (d70,p100,p140); held-out d110+p60: median bias +10.1%, σ68 8.9%, RMS 17.8%, tail 15%; nuisance envelope NOT_EVALUATED |
+| P-044 | full-stack incident-energy resolution is not yet calibrated in data | BLOCKED | material + per-channel response + trigger/selection gaps | PAPER-A06/A08/A09 full-stack extension |
 
 ## Required figures
 
@@ -82,11 +83,11 @@
 
 ### Figure 5: raw timing residual
 
-**Status:** `GREEN` only as a negative/format-limited result. Caption: `8×16 raw product; 10 ns nominal sampling; NOT DETECTOR RESOLUTION`.
+**Status:** `GREEN` only as a negative/format-limited result on `hrd_raw_8x16_v1`. Caption: `8×16 LUNARC raw; 10 ns nominal sampling; NOT DETECTOR RESOLUTION`.
 
 ### Figure 6: production timing/time-walk closure
 
-**Status:** `RED`. Blocked by PAPER-A02/A04, #993 and #1059.
+**Status:** `RED`. Blocked by PAPER-A04 and #1059 on the authorising 8×16 schema; 18-sample historical timing explicitly non-authorising (#993 DISTINCT).
 
 ### Figure 7: **proper data amplitude ΔE-E**
 
@@ -119,11 +120,11 @@ Show proton, deuteron and combined truth categories, sample I/II, with event wei
 
 ### Figure 11: held-out energy-reconstruction resolution
 
-**Status:** `RED`. Requires PAPER-A09. Target first: reconstructed Geant4 Edep, not incident kinetic energy.
+**Status:** `YELLOW` (model-dependent MC closure on deposited energy; nuisance envelope pending A07/A08). Primary estimand \(r=(E_{\mathrm{reco}}-E_{\mathrm{dep}})/E_{\mathrm{dep}}\) with run-held-out split. Source: `reports/paper_a09_heldout_edep_reconstruction/`, figure `docs/figures/paper/edep_reconstruction_heldout.png`. Caption must state `MODEL-DEPENDENT OPTICAL MC; NOT BEAM-DATA CALIBRATION`.
 
 ## Unsafe/stale text that must not return
 
-1. `docs/academic_chapters/02_experimental_setup.md` old ~100×10×1 cm BC-408 description unless primary hardware evidence overturns current spec.
+1. `docs/academic_chapters/02_experimental_setup.md` legacy BC-408 / ~1 m / ~10×1 cm prose — retained only as `UNKNOWN_EXTERNAL` rows in `paper/hardware_bom.csv` unless primary hardware evidence overturns the #796 design spec.
 2. Any sub-ns timing value described as a measured beam-data detector resolution under current #993/#1059 status.
 3. `~10 PE/MeV` described as measured absolute light yield.
 4. analytical `0.56%` total optical efficiency described as detector efficiency.

@@ -24,14 +24,14 @@ The four lenses are:
 
 **Vote: MAJOR REVISION; ACCEPT stopping-topology result, BLOCK detector timing/absolute energy performance.**
 
-The draft has enough beam data to support a paper, but the strongest measured result is narrower than several historical project summaries suggested. Sample I and Sample II have visibly different selected depth/amplitude populations. The four B readout channels also make the detector limitation easy to explain. By contrast, the available waveform provenance does not support an intrinsic sub-nanosecond timing result.
+The draft has enough beam data to support a paper, but the strongest measured result is narrower than several historical project summaries suggested. Sample I and Sample II have visibly different selected depth/amplitude populations. The four B readout channels also make the detector limitation easy to explain. PAPER-A02 / #993 now closes waveform lineage as **DISTINCT_SCHEMAS**: the located 8×16 LUNARC raw product authorises format-limited timing only; historical 18-sample sub-ns values remain non-authorising.
 
 ### Major points
 
 - The current 50 × 5.18 × 2.0 cm stave description is preferable to the older ~1 m BC-408 narrative, but PAPER-A01 must bind a primary collaboration hardware record because issue #796 itself contains an earlier conflicting `5cm thickness` phrase.
 - Data trigger names need a run-log/hardware source. The MC selection must remain labelled `MC_TRIGGER_PROXY`; first-layer hit logic is not a validated simulation of the trigger counter/electronics.
-- The ~38 ns B4-B6 result from the located 8×16 data product is publishable only as evidence that the waveform representation is sampling/window limited. It is not the detector timing resolution.
-- Issue #1059 changes the timing measurand for multi-component pulses: global-maximum CFD can retarget a later pulse as the fraction changes. A production timing result must define which physical component is timed before optimisation.
+- The ~38 ns B4-B6 result from the located 8×16 LUNARC raw product is publishable only as evidence that the waveform representation is sampling/window limited. It is not the detector timing resolution. Historical 18-sample sub-ns timing values remain non-authorising for this product (#993 DISTINCT_SCHEMAS).
+- Issue #1059 changes the timing measurand for multi-component pulses: global-maximum CFD can retarget a later pulse as the fraction changes. Lane 05 closes the software contract with `first_local_peak` component binding, deterministic fraction-transition controls, and fail-closed selector identifiability limits (#1277/#1278). Physical component identity and authorising beam-data timing remain blocked until PAPER-A04 closes on the authorising 8×16 schema; the ~38 ns format-limited residual is the only publishable beam-data timing statement today.
 - Pulse fractions are selected-population quantities, not particle efficiencies.
 
 **Strongest alternative explanation:** the Sample-I/Sample-II depth difference could be amplified by trigger thresholds, B2 saturation and analysis selection rather than caused only by a different p/d mixture.
@@ -115,7 +115,7 @@ This was a scientifically material review failure because observable definition 
 
 ## R1 second pass
 
-**Vote: ACCEPT WITH REQUIRED PRE-SUBMISSION EVIDENCE for the topology/sparse-range paper; BLOCK any intrinsic timing number until #993/PAPER-A04 close.**
+**Vote: ACCEPT WITH REQUIRED PRE-SUBMISSION EVIDENCE for the topology/sparse-range paper; BLOCK any intrinsic timing number until PAPER-A04 closes on the authorising 8×16 schema (#993 now DISTINCT_SCHEMAS).**
 
 The corrected manuscript now has a clear experimental core. It reports the selected stopping-versus-penetrating topology, separates physical layers from readout channels and does not claim a detector timing resolution from the 8×16 data. Remaining experimental requirements are the publication hardware/run contract and regeneration of the proper downstream-sum ΔE-E plot from the authorising data product.
 
@@ -144,7 +144,7 @@ The following phrases/values are prohibited unless new evidence changes their st
 - 92±28 ADC/MeV described as precision calibration;
 - MC trigger described as validated hardware-trigger reproduction;
 - B2 versus B4 described as ΔE-E;
-- 16- and 18-sample waveform products described as equivalent without #993 closure.
+- 16- and 18-sample waveform products described as equivalent — **removed**; #993 closes them as distinct schemas with quarantined cross-schema timing transfer.
 
 ---
 
@@ -178,11 +178,11 @@ Rules retained in the current draft:
 ## What still blocks a full detector-characterisation submission
 
 - authoritative hardware/run and waveform provenance: PAPER-A01/A02/A03;
-- physically defined production timing: PAPER-A04 and #1059/#993;
+- physically defined production timing: PAPER-A04 remains open for authorising beam-data performance; #1059 software binding and negative ~38 ns format-limited result are reportable; #993 blocks real-data fraction-transition product;
 - proper issue-#618 ΔE-E data/MC figures with grouped uncertainty and weights: PAPER-A05;
 - passive-material/data-matched MC closure: PAPER-A06;
 - WLS/SiPM stage calibration, including reopened #1088: PAPER-A07/A08;
-- held-out Edep energy resolution: PAPER-A09.
+- held-out Edep energy resolution: **initial MC_MODEL_DEPENDENT closure delivered** (PAPER-A09 / `reports/paper_a09_heldout_edep_reconstruction/`); optical/SiPM nuisance envelope still blocked.
 
 ## Decision
 
@@ -199,7 +199,7 @@ The full route best matches the requested outline. The reviewer loop should be r
 ## Final checklist for the next reviewer loop
 
 - [ ] hardware BOM/source record complete;
-- [ ] 8×16/8×18 waveform lineage resolved or explicitly separated;
+- [x] 8×16/8×18 waveform lineage resolved as **distinct schemas** (`reports/studies/paper_a02_waveform_lineage/`; LUNARC raw authorising, 18-sample historical/non-authorising);
 - [ ] run/trigger hardware table complete;
 - [ ] production timing closes or is intentionally withheld;
 - [ ] issue-#618 proper DATA ΔE-E regenerated with uncertainty;

@@ -1,6 +1,6 @@
 plot_id,manifest_ref,generating_script,result_files,status
 edep_vs_pe,PLOT_MANIFEST.csv,scripts/single_stave/analyze_single_stave.py,out/stave_*.root,BLOCKED_COMPUTE
-resolution_bias,PLOT_MANIFEST.csv,scripts/single_stave/analyze_single_stave.py,out/stave_*.root,BLOCKED_COMPUTE
+resolution_bias,PLOT_MANIFEST.csv,scripts/single_stave/paper_a09_heldout_edep_reconstruction.py,reports/paper_a09_heldout_edep_reconstruction/result.json,MC_MODEL_DEPENDENT
 attenuation_vs_pos,PLOT_MANIFEST.csv,scripts/single_stave/analyze_single_stave.py,out/stave_*.root,BLOCKED_COMPUTE
 arrival_time_vs_pos,PLOT_MANIFEST.csv,scripts/single_stave/analyze_single_stave.py,out/photons ntuple,BLOCKED_COMPUTE
 birks_scan,PLOT_MANIFEST.csv,scripts/single_stave/analyze_single_stave.py,out/stave_birks_*.root,BLOCKED_COMPUTE

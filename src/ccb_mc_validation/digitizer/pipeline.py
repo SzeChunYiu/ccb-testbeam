@@ -29,6 +29,12 @@ StageFn = Callable[[Mapping[str, Any], np.random.Generator, dict[str, Any]], Map
 # hard error -- silently defaulting them to zero would corrupt the physics.
 REQUIRED_HIT_FIELDS: tuple[str, ...] = ("edep_mev", "time_ns")
 
+# Stable microscopic identity fields for hit-keyed RNG (#1074).
+HIT_IDENTITY_FIELDS: tuple[str, ...] = ("track_id", "step_id")
+
+# Versioned RNG schema persisted in waveform provenance.
+DIGITIZER_RNG_SCHEMA = "hit_keyed_v1"
+
 # Stochastic stages that consume RNG; each receives its own independent
 # deterministic stream derived from (global_seed, source, run, event, channel).
 _STOCHASTIC_STAGES: tuple[str, ...] = ("transport", "electronics")
@@ -258,6 +264,68 @@ class DigitizerPipeline:
     # ------------------------------------------------------------------
     # RNG plumbing
     # ------------------------------------------------------------------
+
+    def _hit_identity_tokens(
+        self,
+        hit: Mapping[str, Any],
+        *,
+        event_id: Any,
+        channel_id: Any,
+        hit_index: int,
+        require_identity: bool,
+    ) -> tuple[Any, Any]:
+        """Return stable (track_id, step_id) or fail closed when required.
+
+        Row index is never used as a physical identity. When a single hit has
+        no identity and stochastic transport is inactive, a sentinel is used
+        only for empty-stream bookkeeping. Multi-hit stochastic digitization
+        requires explicit track/step identity (#1074).
+        """
+        missing = [k for k in HIT_IDENTITY_FIELDS if k not in hit]
+        if missing:
+            if require_identity:
+                raise ValueError(
+                    "digitizer hit missing stable identity fields "
+                    f"{missing} (event_id={event_id!r}, channel_id={channel_id!r}, "
+                    f"hit_index={hit_index}); RNG schema {DIGITIZER_RNG_SCHEMA} "
+                    "forbids row-order stochastic assignment"
+                )
+            return ("__no_hit_identity__", hit_index)
+        track_id = hit["track_id"]
+        step_id = hit["step_id"]
+        if track_id is None or step_id is None:
+            raise ValueError(
+                "digitizer hit identity fields must be non-None "
+                f"(event_id={event_id!r}, channel_id={channel_id!r}, "
+                f"track_id={track_id!r}, step_id={step_id!r})"
+            )
+        return track_id, step_id
+
+    def _hit_stage_rng(
+        self,
+        *,
+        event_id: Any,
+        source_id: Any,
+        run_id: Any,
+        channel_id: Any,
+        track_id: Any,
+        step_id: Any,
+        stage_name: str,
+    ) -> np.random.Generator:
+        """Independent deterministic Generator keyed on hit identity + stage."""
+        entropy = [
+            int(self.global_seed),
+            _hash_to_int(source_id),
+            _hash_to_int(run_id),
+            _hash_to_int(event_id),
+            _hash_to_int(channel_id),
+            _hash_to_int(track_id),
+            _hash_to_int(step_id),
+            _hash_to_int(stage_name),
+            _hash_to_int(DIGITIZER_RNG_SCHEMA),
+        ]
+        return np.random.default_rng(np.random.SeedSequence(entropy))
+
     def _seed_sequence(
         self,
         *,
@@ -309,10 +377,11 @@ class DigitizerPipeline:
     ) -> dict[str, Any]:
         """Process truth hits for one channel/event into a summed ADC waveform.
 
-        Independent RNG streams are derived from
-        ``(global_seed, source_id, run_id, event_id, channel_id)`` so that
-        different channels/stages of the same event do not collide, while the
-        same identifying tuple reproduces the same waveform exactly.
+        Stochastic hit-level draws use hit-keyed substreams under
+        ``DIGITIZER_RNG_SCHEMA`` so that a pure storage-order permutation of
+        the same physical hit multiset does not change the fixed-seed
+        waveform (#1074). Channel-level electronics noise remains on the
+        event/channel stage stream.
         """
         stage_rng = self._stage_rngs(
             event_id=event_id,
@@ -320,18 +389,55 @@ class DigitizerPipeline:
             run_id=run_id,
             channel_id=channel_id,
         )
-        # Deterministic stages receive a generator they must not call.
         idle_rng = np.random.default_rng(
-            np.random.SeedSequence([int(self.global_seed), _hash_to_int(event_id), 0xBAD])
+            np.random.SeedSequence(
+                [int(self.global_seed), _hash_to_int(event_id), 0xBAD]
+            )
         )
 
-        analog_adc_sum = np.zeros(self.n_samples, dtype=np.float64)
-        for hit in hits:
-            ctx_hit: dict[str, Any] = {"event_id": event_id, "channel_id": channel_id}
+        transport_stochastic = (
+            "transport" in self.stages and float(self.transport_sigma_ns) != 0.0
+        )
+        require_identity = transport_stochastic and len(hits) > 1
+
+        # Accumulate in identity order so float summation is permutation-stable
+        # for the same physical multiset.
+        prepared: list[tuple[tuple[Any, Any], Mapping[str, Any], dict[str, Any]]] = []
+        for hit_index, hit in enumerate(hits):
+            track_id, step_id = self._hit_identity_tokens(
+                hit,
+                event_id=event_id,
+                channel_id=channel_id,
+                hit_index=hit_index,
+                require_identity=require_identity,
+            )
+            ctx_hit: dict[str, Any] = {
+                "event_id": event_id,
+                "channel_id": channel_id,
+                "track_id": track_id,
+                "step_id": step_id,
+            }
             current: Mapping[str, Any] = hit
             for stage_name in self.stages:
-                rng_for_stage = stage_rng.get(stage_name, idle_rng)
+                if stage_name in _STOCHASTIC_STAGES and stage_name == "transport":
+                    rng_for_stage = self._hit_stage_rng(
+                        event_id=event_id,
+                        source_id=source_id,
+                        run_id=run_id,
+                        channel_id=channel_id,
+                        track_id=track_id,
+                        step_id=step_id,
+                        stage_name=stage_name,
+                    )
+                else:
+                    rng_for_stage = stage_rng.get(stage_name, idle_rng)
                 current = self._dispatch(stage_name)(current, rng_for_stage, ctx_hit)
+            prepared.append(((track_id, step_id), current, ctx_hit))
+
+        prepared.sort(key=lambda item: (_hash_to_int(item[0][0]), _hash_to_int(item[0][1])))
+
+        analog_adc_sum = np.zeros(self.n_samples, dtype=np.float64)
+        for _identity, current, ctx_hit in prepared:
             light = ctx_hit.get("light_curve_mev")
             if light is None:
                 edep = self._require_field(
@@ -358,7 +464,9 @@ class DigitizerPipeline:
             "adc": adc_final,
             "saturated": sat_final,
             "n_hits": len(hits),
+            "digitizer_rng_schema": DIGITIZER_RNG_SCHEMA,
         }
+
 
     @classmethod
     def from_config(cls, config: Mapping[str, Any]) -> DigitizerPipeline:

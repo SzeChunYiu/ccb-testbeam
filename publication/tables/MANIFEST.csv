@@ -1,0 +1,4 @@
+path,status,source_path,role
+hardware_bom.csv,LIVE_LINK,paper/hardware_bom.csv,hardware truth/status surface
+claim_ledger.csv,LIVE_LINK,docs/claim_ledger.csv,canonical scientific claim status
+gated/heldout_energy_reconstruction_summary.csv,GATED,reports/paper_a09_heldout_edep_reconstruction/heldout_energy_reconstruction_summary.csv,quarantined A09 table

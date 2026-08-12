@@ -1,0 +1,19 @@
+path,status,source_path,publication_role
+final/stave_geometry.pdf,PENDING,hardware/CAD or source-bound drawing,final setup figure after #1296
+final/data_depth_profile.pdf,PENDING,authorising 8x16 event-level data producer,final beam-data longitudinal topology
+final/mc_depth_profile.pdf,PENDING,provenance-bound weighted MC,final data-matched MC topology
+final/timing_b4_b6_residual.pdf,PENDING,authorising 8x16 timing producer,negative timing-format result
+gated/fig07_data_deltaE_E_per_sample.png,GATED,reports/paper_956_deltaE_E_20260812T103800Z/figures/fig07_data_deltaE_E_per_sample.png,quarantined #956 output
+gated/fig08_mc_deltaE_E_I.png,GATED,reports/paper_956_deltaE_E_20260812T103800Z/figures/fig08_mc_deltaE_E_I.png,quarantined #956 output
+gated/fig08_mc_deltaE_E_II.png,GATED,reports/paper_956_deltaE_E_20260812T103800Z/figures/fig08_mc_deltaE_E_II.png,quarantined #956 output
+gated/fig_b2_b4_two_channel_diagnostic.png,GATED,reports/paper_956_deltaE_E_20260812T103800Z/figures/fig_b2_b4_two_channel_diagnostic.png,two-channel diagnostic only
+gated/edep_reconstruction_heldout.png,GATED,docs/figures/paper/edep_reconstruction_heldout.png,quarantined #1297/#1302/#1303 output
+gated/selected_pulse_inventory.png,GATED,docs/figures/paper/selected_pulse_inventory.png,CL-001 status controlled by canonical ledger
+model_diagnostics/timing_mc_method_closure.png,MC_METHOD_CLOSURE,docs/figures/paper/timing_mc_method_closure.png,simulation method diagnostic
+model_diagnostics/pid_mc_validation.png,SIMULATION_RESULT,docs/figures/paper/pid_mc_validation.png,simulation result only
+model_diagnostics/adc_mc_calibration.png,SIMULATION_RESULT,docs/figures/paper/adc_mc_calibration.png,simulation result only
+model_diagnostics/birks_mc_comparison.png,SIMULATION_RESULT,docs/figures/paper/birks_mc_comparison.png,simulation result only
+model_diagnostics/pileup_digitizer_mc.png,SIMULATION_RESULT,docs/figures/paper/pileup_digitizer_mc.png,simulation result only
+illustrative/geometry_tof.png,ILLUSTRATIVE,docs/figures/geometry_tof.png,no measured claim
+illustrative/06_timewalk_explained.png,ILLUSTRATIVE,docs/figures/06_timewalk_explained.png,no measured claim
+illustrative/03_waveform_annotated.png,ILLUSTRATIVE,docs/figures/03_waveform_annotated.png,no measured claim

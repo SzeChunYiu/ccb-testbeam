@@ -1,0 +1,1 @@
+../../../scripts/check_plot_quality.py

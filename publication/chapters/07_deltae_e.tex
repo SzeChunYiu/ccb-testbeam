@@ -1,0 +1,33 @@
+\section{Amplitude \texorpdfstring{$\Delta E$--$E$}{Delta E--E} and the segmentation limit}
+
+\subsection{Observable definition}
+
+The supervisor-defined beam-data analogue of a range-telescope observable is
+\[
+\Delta E_{\rm data}=A(B2),\qquad
+E_{\rm data}=A(B4)+A(B6)+A(B8),
+\]
+where \(A\) is a baseline-subtracted ADC amplitude. These axes are response proxies, not calibrated energies.
+
+A data-matched MC view should use the same four physical readout positions,
+\[
+\Delta E_{\rm MC,4}=E_{\rm dep}(B2),\qquad
+E_{\rm MC,4}=E_{\rm dep}(B4)+E_{\rm dep}(B6)+E_{\rm dep}(B8),
+\]
+while a full-segmentation truth view must sum each unique downstream physical layer exactly once. A B2-versus-B4 plot is a two-channel response diagnostic and must not be called \(\Delta E\)--\(E\).
+
+\subsection{Sparse-segmentation mechanism}
+
+Alternating readout positions can miss the layer in which the stopping-power rise becomes largest. A change in entry energy, angle or passive material can move the Bragg-rise region between sampled and unsampled layers and thereby alter the apparent sparse \(\Delta E\)--\(E\) topology. The publication test is therefore a controlled comparison of full physical layers and the exact data-matched readout mask, with readout phase treated as a nuisance until the hardware map is source-bound.
+
+\subsection{Cycle-3 status of the current production bundle}
+
+\begin{publicationhold}
+The numerical bundle currently stored under \nolinkurl{reports/paper_956_deltaE_E_20260812T103800Z/} is \textbf{not} publication-authorising. The Cycle-3 audit found that (i) its beam-data input is the historical 18-sample selected-pulse product despite the 8-by-16 authorising raw schema; (ii) downstream amplitudes are threshold-censored before missing channels are zero-filled; (iii) the MC builder aliases readout columns onto physical-layer names and corrupts the supposed full-downstream sum; (iv) the exact even/odd layer-map offset is unresolved; (v) the 7000-ADC ``saturation'' boundary is not source-bound hardware saturation; and (vi) the legacy MC source measure/production receipt is gated.
+\end{publicationhold}
+
+The quarantined plots are kept under \nolinkurl{publication/figures/gated/} to preserve provenance without allowing accidental use in the paper.
+
+\GatedFigure{figures/gated/fig07_data_deltaE_E_per_sample.png}{0.92}{Quarantined current beam-data amplitude $\Delta E$--$E$ plot.}{GATED by Cycle-3 audit; do not cite as final result.}
+
+The final Figure~7/8 production must start from an event-level table that contains all four reconstructed channel amplitudes before analysis-threshold censoring, then apply declared threshold scans; import the source-bound readout map; keep physical-layer and readout namespaces distinct; and use a production MC whose source measure and run provenance are authorising.

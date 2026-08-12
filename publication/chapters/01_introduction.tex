@@ -1,0 +1,20 @@
+\section{Introduction}
+
+The HIBEAM/NNBAR programme at the European Spallation Source is designed to search for neutron-conversion processes, including neutron--antineutron oscillation. A free neutron--antineutron transition would violate baryon number by two units and would probe physics beyond the Standard Model~\cite{Yiu2022}. The annihilation detector must identify the products of an antineutron interaction in a thin target and reconstruct a low-energy hadronic final state containing pions, nuclear fragments and secondary interactions.
+
+The detector operates under constraints that differ from those of a collider spectrometer. The neutron flight region must remain magnetically quiet, limiting conventional magnetic momentum measurement. Many charged annihilation products also lie below the energy range in which a standard high-energy sampling calorimeter is most effective. HIBEAM/NNBAR detector studies therefore proposed a range measurement based on multiple layers of plastic scintillator followed by an electromagnetic calorimeter~\cite{Dunne2022}. The range stack can provide the depth reached by a charged particle, the pattern of energy loss along its path and an inter-layer timing observable.
+
+The CCB test beam was used to study this range-stack concept with charged particles whose stopping behaviour can be modelled in Geant4. This paper asks five questions:
+\begin{enumerate}[label=(\roman*)]
+  \item what longitudinal stopping/penetration differences are measured between the declared beam-data run families;
+  \item how much information is lost when only alternating B-stack layers appear in the analysed readout;
+  \item what timing statement is supported by the authorising waveform product;
+  \item what causal response stages must be included in a one-fibre, one-end optical model; and
+  \item how should deposited/visible-energy reconstruction be defined and validated without converting simulation assumptions into detector calibration constants.
+\end{enumerate}
+
+Four evidence classes are used throughout. \textbf{Beam-data measurement} denotes a quantity computed from source-bound CCB data for a declared population. \textbf{Truth-level MC} denotes Geant4 particle or energy-deposit information before detector response. \textbf{Model-dependent detector MC} denotes a numerical prediction after optical/electronics modelling when important response parameters remain hypotheses. \textbf{Calibrated detector result} is reserved for a response whose relevant nuisance parameters and data lineage have independent evidence and held-out closure.
+
+\begin{evidencebox}
+This chapter deliberately separates measured data, simulation truth and model-dependent response. The distinction is part of the scientific result: a reproducible simulation number is not automatically a detector-performance measurement.
+\end{evidencebox}

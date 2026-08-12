@@ -8,18 +8,18 @@ MC ROOT: `geant4/data/output_krakow_1M.root` (present)
 
 | Lane | Worktree | Branch | Theme | Issues | Status | PR |
 |------|----------|--------|-------|--------|--------|-----|
-| 01 | ccb-wt-lane01 | fix/lane01-waveA | SiPM/digitizer fail-closed | #974-#977 #981-#982 #1065-#1072 #1084 #1096 | READY_FOR_PR | https://github.com/SzeChunYiu/ccb-testbeam/pull/1248 |
+| 01 | ccb-wt-lane01 | fix/lane01-waveA | SiPM/digitizer fail-closed | #974-#977 #981-#982 #1065-#1072 #1084 #1096 | MERGED (#1248) | #1248 |
 | 02 | ccb-wt-lane02 | fix/lane02-waveA | Optical/WLS/material | #978-#980 #996 #1000 #1005 #1035-#1036 #1085-#1088 | MERGED (#1246) | #1246 |
 | 03 | ccb-wt-lane03 | fix/lane03-waveA | Geometry/kinematics | #987 #989 #991-#992 #999 | MERGED (#1237) | #1237 |
-| 03b | ccb-wt-lane03 | fix/issue-986-geometry-hash | Geometry provenance (#986) | #986 | READY_FOR_PR | https://github.com/SzeChunYiu/ccb-testbeam/pull/1292 |
+| 03b | ccb-wt-lane03 | fix/issue-986-geometry-hash | Geometry provenance (#986) | #986 | MERGED (#1292) | #1292 |
 | 04 | ccb-wt-lane04 | fix/lane04-waveA | Source/weights | #1050-#1058 #1174 #1179 | MERGED (#1240) | #1240 |
 | 05 | ccb-wt-lane05 | fix/lane05-waveA | Timing CFD/template | #954 #964-#968 #1003-#1004 #1032-#1033 #1059-#1064 | MERGED (#1239) | #1239 |
-| 06 | ccb-wt-lane06 | fix/issue-1095-step-convergence | MC step + digitizer graph | #1095 #1077 | READY_FOR_PR | https://github.com/SzeChunYiu/ccb-testbeam/pull/1290 |
+| 06 | ccb-wt-lane06 | fix/issue-1095-step-convergence | MC step + digitizer graph | #1095 #1077 | MERGED (#1290) | #1290 |
 | 07 | ccb-wt-lane07 | fix/issue-1164-cluster-identity | Stats/bootstrap | #958-#960 #1049 #1052 #1097 #1166 | IN_PROGRESS | #1313 (partial) |
-| 08 | ccb-wt-lane08 | fix/issue-1073-saturation-worlds | DAQ/S00 provenance | #953 #961-#962 #973 #997-#998 #1014 #1073 #1149 | READY_FOR_REVIEW | https://github.com/SzeChunYiu/ccb-testbeam/pull/1279 |
+| 08 | ccb-wt-lane08 | fix/issue-1073-saturation-worlds | DAQ/S00 provenance | #953 #961-#962 #973 #997-#998 #1014 #1073 #1149 | MERGED (#1279) | #1279 |
 | 09 | ccb-wt-lane09 | fix/lane09-waveA | ARU study scripts | #1112-#1129 #1137 | IN_PROGRESS | |
 | 10 | ccb-wt-lane10 | fix/lane10-waveA | Docs/gov/orchestrator | #969-#970 #990 #1002 #1078 #1218 + run_pipeline | MERGED (#1241) | #1241 |
-| 10b | ccb-wt-lane10 | fix/issue-1218-completion-gate | Gov completion gate | #1218 | READY_FOR_PR | https://github.com/SzeChunYiu/ccb-testbeam/pull/1295 |
+| 10b | ccb-wt-lane10 | fix/issue-1218-completion-gate | Gov completion gate | #1218 | MERGED (#1295) | #1295 |
 
 ## Rules
 - Edit only on LUNARC worktrees. Push branches; open PRs to main.
@@ -60,7 +60,7 @@ Historical Wave-A integration aligned the gitlink with #1243 at `cf12c6b8955c485
 | #990 | AF-042 nature badges | FIXED | Review taxonomy badges + validator; badges no longer unqualified ACCEPTED |
 | #1002 | AF-051 compare_data_mc narrative | FIXED | Narrative derived from machine-readable fields; causal claim gated |
 | #1078 | ARU-MV0-MODEL-IDENTITY-001 | FIXED (freeze) | Executable MV0 identity frozen; Chapter 10 prose marked DIVERGENT until regenerated |
-| #1218 | ARU-GOV-MERGE-CLOSE-KEYWORD-001 | READY_FOR_PR | PR #1295: `run_close_intent_gates.py` + PR template + full fixture matrix in CI |
+| #1218 | ARU-GOV-MERGE-CLOSE-KEYWORD-001 | FIXED | PR #1295 merged (2026-08-12T08:06:29Z): run_close_intent_gates.py + PR template + full fixture matrix in CI; merge-close protocol enforced via #1218 compliance |
 | PR #1236 | SiPM recovery coupling archive | AUDITED (already merged) | Coordination/provenance only; no detector-claim promotion; do not treat as physics close of #1066/#1071 |
 
 ### PR #1236 audit (Lane 10; no force-merge)
@@ -100,8 +100,16 @@ Branch: `fix/issue-1095-step-convergence` (worktree `ccb-wt-lane06`).
 
 | Issue | Disposition | Evidence |
 |-------|-------------|----------|
-| #1095 | BLOCKED (infra FIXED) | `configs/transport/step_policy_registry.json` + `require_step_policy` / `authorize_step_convergence_claim` fail closed; ADR-0005 + ADR-0008; `pin_qgsp_bic_inherited_em_stepfunction` claims_authorized=false until convergence digest |
+| #1095 | CLOSED | Step-convergence fail-closed contract via #1290 (merge 66a94bef, 2026-08-12T19:38:06Z). `configs/transport/step_policy_registry.json` + `require_step_policy` / `authorize_step_convergence_claim` in place; ADR-0005 + ADR-0008; `pin_qgsp_bic_inherited_em_stepfunction` claims_authorized=false until convergence digest. CI green. |
 | #1077 | FIXED | `DigitizerPipeline` executes `effective_stages`; run provenance uses frozen `stage_graph_meta`; hidden `integrate_samples` fallback removed; `tests/test_lane06_step_digitizer_graph.py` + lane04/lane08 regressions |
+
+## P0 #1007 — Primary stopping MC tracking (#1007)
+
+Branch: close/1007-primary-stopping (PRs #1258 #1260 #1263 #1264 #1265, all merged).
+
+| Issue | Disposition | Evidence |
+|-------|-------------|----------|
+| #1007 | CLOSED | Per-primary track fields `primary_entry`/ `primary_exit_or_stop`/ `primary_track_len` added to MC truth output; tracking PRs #1258 (track fields), #1260 (stop detection), #1263 (entry/exit), #1264 (track len), #1265 (CI integration). All five PRs merged; CI green. |
 
 ## Lane 07 stats/bootstrap cluster identity (#958 #960 #1097 #1164)
 
@@ -141,7 +149,7 @@ Branch: `fix/lane01-waveB` (rebased onto origin/main after Wave A #1248 merge).
 
 | Date | Branch | Tip | Issues | Disposition | PR |
 |------|--------|-----|--------|-------------|-----|
-| 2026-08-12 | fix/issue-977-sipm-metadata | (see PR) | #977 PARTIAL; #1067 FIXED (core, manual close requested) | Sidecar extended with requested/effective operating point, response_surface_id, electronics impulse hashes, remaining ModelConfig knobs; compile-bound core (#1280) + campaign intent (#1284) unchanged; binary build receipt remains #1285 child | https://github.com/SzeChunYiu/ccb-testbeam/pull/1287 @0371fe3e |
+| 2026-08-12 | fix/issue-977-sipm-metadata | (see PR) | #977 PARTIAL; #1067 FIXED (core, manual close requested) | MERGED (#1287 @0371fe3e, 2026-08-12T18:42:55Z). Sidecar extended with requested/effective operating point, response_surface_id, electronics impulse hashes, remaining ModelConfig knobs; compile-bound core (#1280) + campaign intent (#1284) unchanged; binary build receipt remains #1285 child | https://github.com/SzeChunYiu/ccb-testbeam/pull/1287 @0371fe3e |
 
 ## P0 #1178 — CM cross-section sampler contract (cross-cutting)
 

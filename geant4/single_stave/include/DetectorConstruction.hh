@@ -62,10 +62,10 @@ class DetectorConstruction : public G4VUserDetectorConstruction {
   // Emits "OVERLAP_CHECK_PASS" (or FAIL) which the ctest greps for.
   void PrintGeometryReport() const;
 
-  // Recorded provenance the RunAction writes to output metadata.
+  // Recorded provenance the RunAction writes to output metadata (#986).
   const std::string& GeometryHash() const { return geometry_hash_; }
-  // Response/physics digest (Birks + optical interface); NOT geometry (#986).
   const std::string& PhysicsHash() const { return physics_hash_; }
+  const std::string& OpticalHash() const { return optical_hash_; }
 
  private:
   G4Material* BuildScintillator();     // polystyrene + optical + Birks
@@ -80,6 +80,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction {
   DetectorMessenger* messenger_ = nullptr;
   std::string geometry_hash_;
   std::string physics_hash_;
+  std::string optical_hash_;
   bool overlaps_found_ = false;
 };
 

@@ -42,6 +42,8 @@ PRIMARY_QUENCHED_EDEP_ALIASES = (
 )
 PRIMARY_SCOPE = "PRIMARY_TRACK"
 EVENT_TOTAL_SCOPE = "EVENT_TOTAL_ALL_NON_OPTICAL"
+PRIMARY_STOPPING_ESTIMATOR_ID = "primary_local_edep_over_path_v1"
+EVENT_CALORIMETRIC_DIAGNOSTIC_ID = "all_particle_edep_over_path_diagnostic_v1"
 PARTICLE_NAMES = {
     "p": "proton",
     "proton": "proton",
@@ -403,6 +405,13 @@ def read_validated_simulation_table(
         "raw_pstar_comparable": basis == RAW_BASIS,
         # Event-total path length is not the PSTAR single-particle measurand (#1007).
         "pstar_primary_identity_ok": bool(primary_identity and basis == RAW_BASIS),
+        # Lane 04 Wave B coexistence aliases for the same #1007 gate.
+        "estimator_id": (
+            PRIMARY_STOPPING_ESTIMATOR_ID
+            if primary_identity
+            else EVENT_CALORIMETRIC_DIAGNOSTIC_ID
+        ),
+        "primary_stopping_authorising": bool(primary_identity and basis == RAW_BASIS),
         "all_noncomment_rows_validated": True,
         "silent_row_skipping_permitted": False,
         "normalized_rows_returned": len(normalized_rows),

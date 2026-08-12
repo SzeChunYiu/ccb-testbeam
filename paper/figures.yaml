@@ -223,7 +223,7 @@ EDEP-RECO-MC:                # PAPER-A09 / #1297 -- held-out Edep reconstruction
   result: reports/paper_a09_heldout_edep_reconstruction/result.json
   value_key: summary/heldout_sigma68_fraction
   source_figure: docs/figures/paper/edep_reconstruction_heldout.png
-  claim_id: CL-027
+  claim_id: CL-029
   evidence_class: MC_MODEL_DEPENDENT
   status: MC_MODEL_DEPENDENT
   kind: quantitative

@@ -94,20 +94,15 @@ def test_hardware_and_attenuation_configs_exist():
 
 
 def test_sipm_submodule_pin_has_recovery_env_keys():
+    cfg = (ROOT / "geant4/single_stave/sipm/src/Config.cc").read_text(encoding="utf-8")
+    assert "CCB_SIPM_TRIGGER_RECOVERY_MODEL" in cfg
+    assert "CCB_SIPM_GAIN_RECOVERY_MODEL" in cfg
+    event = (ROOT / "geant4/single_stave/src/EventAction.cc").read_text(encoding="utf-8")
+    assert "CCB_SIPM_TRIGGER_RECOVERY_MODEL" in event
+    assert "CCB_SIPM_GAIN_RECOVERY_MODEL" in event
     import subprocess
-    digitizer = (ROOT / "geant4/single_stave/src/SipmDigitizerConfig.cc").read_text(encoding="utf-8")
-    assert "CCB_SIPM_TRIGGER_RECOVERY_MODEL" in digitizer
-    assert "CCB_SIPM_GAIN_RECOVERY_MODEL" in digitizer
-    gitlink = subprocess.check_output(
-        ["git", "ls-tree", "HEAD", "geant4/single_stave/sipm"],
-        cwd=ROOT,
+    sha = subprocess.check_output(
+        ["git", "-C", str(ROOT / "geant4/single_stave/sipm"), "rev-parse", "HEAD"],
         text=True,
     ).strip()
-    assert "0fc78af" in gitlink, gitlink  # main pin after #1266; retains cf12c6b recovery env keys
-    cfg_path = ROOT / "geant4/single_stave/sipm/src/Config.cc"
-    if cfg_path.is_file():
-        cfg = cfg_path.read_text(encoding="utf-8")
-        assert "CCB_SIPM_TRIGGER_RECOVERY_MODEL" in cfg
-        assert "CCB_SIPM_GAIN_RECOVERY_MODEL" in cfg
-
-
+    assert sha.startswith("cf12c6b"), sha

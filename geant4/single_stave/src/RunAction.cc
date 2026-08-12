@@ -65,11 +65,13 @@ void RunAction::DefineNtuples() {
   am->CreateNtupleSColumn("particle");
   am->CreateNtupleDColumn("ke_MeV");
   am->CreateNtupleDColumn("edep_scint_MeV");       // quenched (visible)
-  am->CreateNtupleDColumn("edep_scint_raw_MeV");   // unquenched (all non-optical)
-  am->CreateNtupleDColumn("track_len_scint_mm");   // all non-optical (#1007)
+  am->CreateNtupleDColumn("edep_scint_raw_MeV");   // unquenched
+  am->CreateNtupleDColumn("track_len_scint_mm");  // EVENT_TOTAL_NON_OPTICAL
   am->CreateNtupleDColumn("primary_edep_scint_MeV");
   am->CreateNtupleDColumn("primary_edep_scint_raw_MeV");
   am->CreateNtupleDColumn("primary_track_len_scint_mm");
+  am->CreateNtupleIColumn("primary_track_id");
+  am->CreateNtupleIColumn("primary_pdg");
   am->CreateNtupleDColumn("entry_x_cm");
   am->CreateNtupleDColumn("entry_y_cm");
   am->CreateNtupleDColumn("entry_z_cm");
@@ -192,6 +194,8 @@ void RunAction::FillEvent(const EventData& e, int event_id) {
   am->FillNtupleDColumn(nt_event_, c++, e.primary_edep_scint_MeV);
   am->FillNtupleDColumn(nt_event_, c++, e.primary_edep_scint_raw_MeV);
   am->FillNtupleDColumn(nt_event_, c++, e.primary_track_len_scint_mm);
+  am->FillNtupleIColumn(nt_event_, c++, e.primary_track_id);
+  am->FillNtupleIColumn(nt_event_, c++, e.primary_pdg);
   am->FillNtupleDColumn(nt_event_, c++, e.entry[0]);
   am->FillNtupleDColumn(nt_event_, c++, e.entry[1]);
   am->FillNtupleDColumn(nt_event_, c++, e.entry[2]);
@@ -278,13 +282,8 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
      << "  \"schema\": \"ccb-stave-run-meta/2\",\n"
      << "  \"git_commit\": " << j(git ? git : "unknown") << ",\n"
      << "  \"geometry_hash\": " << j(geometry_hash_) << ",\n"
-     << "  \"physics_hash\": " << j(physics_hash_) << ",\n"
-     << "  \"quenching_model_id\": " << j(cfg_.quenching_model_id) << ",\n"
-     << "  \"quenching_model_status\": " << j(cfg_.quenching_model_status) << ",\n"
-     << "  \"quenching_claims_authorized\": "
-     << (cfg_.quenching_claims_authorized ? "true" : "false") << ",\n"
-     << "  \"geometry_hash_schema\": \"geometry_v2\",\n"
-     << "  \"physics_hash_schema\": \"physics_v1\",\n"
+     << "  \"track_len_scint_mm_scope\": \"EVENT_TOTAL_NON_OPTICAL\",\n"
+     << "  \"primary_track_len_scint_mm_scope\": \"PRIMARY_PROJECTILE\",\n"
      << "  \"seed\": " << cfg_.seed << ",\n"
      << "  \"threads_requested\": " << cfg_.n_threads << ",\n"
      << "  \"threads_effective\": " << cfg_.n_threads_effective << ",\n"

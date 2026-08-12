@@ -38,6 +38,9 @@ from tools.audit.validate_stopping_power_sim_table import (  # noqa: E402
     TOOL_VERSION as SIM_TABLE_VALIDATOR_VERSION,
     read_validated_simulation_table,
 )
+from scripts.lane07.stopping_power_track_scope import (  # noqa: E402
+    resolve_table_track_scope,
+)
 
 DEFAULT_REF = REPO_ROOT / "data" / "reference" / "stopping_power" / "pstar_polystyrene.csv"
 PstarRow = tuple[float, float, float, float]
@@ -71,6 +74,9 @@ REPORT_COLUMNS = [
     "primary_track_identity",
     "pstar_primary_identity_ok",
     "raw_pstar_comparable",
+    "track_scope",
+    "primary_pstar_scope_comparable",
+    "pstar_acceptance_gate",
     "deposit_sum_MeV",
     "track_length_sum_mm",
     "material_density_g_cm3",
@@ -376,8 +382,11 @@ def run_compare(
             "for labelled, non-accepting diagnostics"
         )
     basis = str(sim_summary["energy_deposit_basis"])
+    # Main #1007 provenance from validator summary.
     track_scope = str(sim_summary.get("track_length_scope", "EVENT_TOTAL_ALL_NON_OPTICAL"))
     primary_ok = bool(sim_summary.get("pstar_primary_identity_ok", False))
+    # Lane07 Wave C extras coexist with main keys.
+    scope_meta = resolve_table_track_scope(sim_summary)
     aggregated = aggregate(rows, rho, energy_deposit_basis=basis)
     results: list[dict[str, object]] = []
     all_pass = True
@@ -401,6 +410,13 @@ def run_compare(
             sim_summary.get("primary_track_identity", False)
         )
         result["pstar_primary_identity_ok"] = primary_ok
+        # Lane07 Wave C track-scope extras (fail-closed annotations).
+        # Prefer explicit CSV label when present; else normalized scope_meta.
+        result["track_scope"] = sim_summary.get("track_scope") or scope_meta["track_scope"]
+        result["primary_pstar_scope_comparable"] = bool(
+            scope_meta["primary_pstar_scope_comparable"]
+        )
+        result["pstar_acceptance_gate"] = scope_meta["pstar_acceptance_gate"]
         uncertainty_evaluated = False
         # Authorizing acceptance also requires primary-track identity (#1007).
         accepted_ok = (

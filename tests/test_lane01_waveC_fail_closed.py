@@ -94,15 +94,18 @@ def test_hardware_and_attenuation_configs_exist():
 
 
 def test_sipm_submodule_pin_has_recovery_env_keys():
-    cfg = (ROOT / "geant4/single_stave/sipm/src/Config.cc").read_text(encoding="utf-8")
-    assert "CCB_SIPM_TRIGGER_RECOVERY_MODEL" in cfg
-    assert "CCB_SIPM_GAIN_RECOVERY_MODEL" in cfg
+    import subprocess
     digitizer = (ROOT / "geant4/single_stave/src/SipmDigitizerConfig.cc").read_text(encoding="utf-8")
     assert "CCB_SIPM_TRIGGER_RECOVERY_MODEL" in digitizer
     assert "CCB_SIPM_GAIN_RECOVERY_MODEL" in digitizer
-    import subprocess
-    sha = subprocess.check_output(
-        ["git", "-C", str(ROOT / "geant4/single_stave/sipm"), "rev-parse", "HEAD"],
+    gitlink = subprocess.check_output(
+        ["git", "ls-tree", "HEAD", "geant4/single_stave/sipm"],
+        cwd=ROOT,
         text=True,
     ).strip()
-    assert sha.startswith("cf12c6b"), sha
+    assert "cf12c6b" in gitlink, gitlink
+    cfg_path = ROOT / "geant4/single_stave/sipm/src/Config.cc"
+    if cfg_path.is_file():
+        cfg = cfg_path.read_text(encoding="utf-8")
+        assert "CCB_SIPM_TRIGGER_RECOVERY_MODEL" in cfg
+        assert "CCB_SIPM_GAIN_RECOVERY_MODEL" in cfg

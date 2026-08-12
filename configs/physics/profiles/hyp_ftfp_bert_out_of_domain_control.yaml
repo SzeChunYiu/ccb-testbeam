@@ -1,0 +1,10 @@
+profile_id: hyp_ftfp_bert_out_of_domain_control
+status: HYPOTHESIS
+claims_authorized: false
+geant4_reference_list: FTFP_BERT
+applicability_note: >
+  Control / negative-control list often used at higher energies. Listed only so
+  an out-of-domain request is an explicit hypothesis rather than a silent
+  fallback. Must not be averaged into a low-energy p/d systematic without a
+  documented applicability argument.
+issue: 1006

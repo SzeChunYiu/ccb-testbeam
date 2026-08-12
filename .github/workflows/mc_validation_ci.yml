@@ -96,6 +96,12 @@ jobs:
             tests/test_repository_content_transfer.py \
             2>&1 | tee ruff.log
           echo "status=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+
+      - name: Scientific close-intent / merge-close gates (#1218)
+        run: |
+          python tools/gov/check_merge_close_keywords.py --text "Refs #1057. Does not close #1057."
+          python tools/gov/validate_close_intent.py --manifest tests/fixtures/gov/close_intent/09_partial_no_close_pass.json --expect PASS
+          python tools/gov/validate_close_intent.py --manifest tests/fixtures/gov/close_intent/02_unresolved_autoclose_block.json --expect BLOCK_OR_REVIEW_CLOSE
       - name: Run unit tests
         id: pytest
         shell: bash

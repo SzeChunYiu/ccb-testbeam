@@ -23,6 +23,8 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
+
+from ccb_mc_validation.waveform_ratios import late_and_peak_ratios
 import pandas as pd
 import uproot
 from sklearn.calibration import CalibratedClassifierCV
@@ -263,8 +265,10 @@ def selected_pulses(data: dict) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.
 def pulse_shape_features(waveforms: np.ndarray, amp: np.ndarray) -> pd.DataFrame:
     safe_amp = np.maximum(amp, 1.0)
     peak = waveforms.argmax(axis=1)
-    area = waveforms.sum(axis=1)
-    tail = waveforms[:, 10:].sum(axis=1) / np.maximum(area, 1.0)
+    # #1100: typed invalid ratios for nonpositive area (no epsilon projection).
+    _ratios = late_and_peak_ratios(waveforms, late_start=10)
+    area = _ratios["area_signed"]
+    tail = _ratios["late_signed_fraction_v1"]
     late = waveforms[:, 12:].max(axis=1) / safe_amp
     early = waveforms[:, :4].max(axis=1) / safe_amp
     post_min = waveforms[:, 8:].min(axis=1) / safe_amp

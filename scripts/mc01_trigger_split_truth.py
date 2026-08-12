@@ -38,9 +38,10 @@ import argparse
 import json
 import os
 import sys
-from pathlib import Path
 
 import numpy as np
+
+from ccb_mc_validation.truth.stop_depth import summarize_stop_depth_h3
 
 from ccb_mc_validation.truth.pdg import (
     DEFAULT_MOMENTUM_UNIT,
@@ -48,6 +49,9 @@ from ccb_mc_validation.truth.pdg import (
     kinetic_energy_from_branch_momentum,
     pdg_charge,
     species_label,
+)
+from ccb_mc_validation.truth.entering_species import (
+    accumulate_entering_species,
 )
 
 B_ARM, A_ARM = 1, 2
@@ -58,14 +62,6 @@ COINC_DEFAULT = 15.0  # ns
 #: weight used throughout is the first primary's weight (the beam primary),
 #: identical to scripts/single_stave/deltaE_E_mc.py (A-003).
 PRIMARY_WEIGHT_BRANCH = "PrimaryWeight"
-
-# Issue #1050 measure-closure helpers (weighted authorising vs unweighted diagnostic).
-import importlib.util as _ilu
-_mc01_helper_path = Path(__file__).resolve().parents[1] / "tools" / "audit" / "mc01_measure_closure.py"
-_spec = _ilu.spec_from_file_location("mc01_measure_closure", _mc01_helper_path)
-assert _spec and _spec.loader
-_mc01 = _ilu.module_from_spec(_spec)
-_spec.loader.exec_module(_mc01)
 
 
 def _wmean(x, w):
@@ -304,14 +300,31 @@ def main():
                 S["n_events"] += 1
                 if s == "II":
                     all_event_weights.append(w_evt)
-                for p in pd[firstB]:
-                    bump(S["enterB_pid"], species_label(p))
-                    enter_pid_w[s]["B"][species_label(p)] = \
-                        enter_pid_w[s]["B"].get(species_label(p), 0.0) + w_evt
-                for p in pd[firstA]:
-                    bump(S["enterA_pid"], species_label(p))
-                    enter_pid_w[s]["A"][species_label(p)] = \
-                        enter_pid_w[s]["A"].get(species_label(p), 0.0) + w_evt
+                # #1046: unique-track (H2) for particle-flux fractions; raw
+                # records preserved separately as transport diagnostic.
+                for arm, mask, key in (
+                    ("B", firstB, "enterB_pid"),
+                    ("A", firstA, "enterA_pid"),
+                ):
+                    if not mask.any():
+                        continue
+                    acc = accumulate_entering_species(
+                        pdg=pd,
+                        track_id=tid,
+                        edep=ed,
+                        first_layer_mask=mask,
+                        event_weight=w_evt,
+                    )
+                    for lab, v in acc["track_counts"].items():
+                        bump(S[key], lab, v)
+                        enter_pid_w[s][arm][lab] = (
+                            enter_pid_w[s][arm].get(lab, 0.0) + float(v)
+                        )
+                    raw_key = f"{key}_records"
+                    if raw_key not in S:
+                        S[raw_key] = {}
+                    for lab, v in acc["record_counts"].items():
+                        bump(S[raw_key], lab, v)
 
                 for lid in range(NB_LAYERS):
                     mask = isB & (l == lid) & charged
@@ -408,17 +421,32 @@ def main():
             deltaE_E[s][k] = np.asarray(deltaE_E[s][k], dtype=float)
 
     def layer_summary(acc, large_mev):
-        # Canonical fields follow the declared measure (#1050). Unweighted
-        # values live only under unweighted_diagnostic when apply_weight is on.
-        return _mc01.layer_summary_from_counts(
-            edep=acc["edep"],
-            edep_w=acc["edep_w"],
-            pid_counts=acc["pid"],
-            pid_w=acc["pid_w"],
-            wsum=float(acc["wsum"]),
-            large_mev=large_mev,
-            apply_weight=bool(args.apply_weight),
-        )
+        e = np.asarray(acc["edep"], dtype=float)
+        ew = np.asarray(acc["edep_w"], dtype=float) if acc["edep_w"] else np.ones_like(e)
+        d = {
+            "hits": acc["hits"],
+            "mean_edep_MeV": float(e.mean()) if e.size else 0.0,
+            "median_edep_MeV": float(np.median(e)) if e.size else 0.0,
+            "p95_edep_MeV": float(np.percentile(e, 95)) if e.size else 0.0,
+            "frac_large": float((e > large_mev).mean()) if e.size else 0.0,
+            "pid_fraction": {},
+            # Weighted (PrimaryWeight, issue #880). These are the physically
+            # correct flux-weighted quantities; the unweighted fields above are
+            # retained for traceability.
+            "weighted_sum_event_weight": float(acc["wsum"]),
+            "mean_edep_MeV_weighted": _wmean(e, ew),
+            "median_edep_MeV_weighted": _wmedian(e, ew),
+            "p95_edep_MeV_weighted": _wpercentile(e, ew, 95),
+            "frac_large_weighted": _wfrac_large(e, ew, large_mev),
+            "pid_fraction_weighted": {},
+        }
+        tot = sum(acc["pid"].values()) or 1
+        for k, v in sorted(acc["pid"].items(), key=lambda kv: -kv[1]):
+            d["pid_fraction"][k] = round(v / tot, 4)
+        wtot = sum(acc["pid_w"].values()) or 1.0
+        for k, v in sorted(acc["pid_w"].items(), key=lambda kv: -kv[1]):
+            d["pid_fraction_weighted"][k] = round(v / wtot, 4)
+        return d
 
     out = {
         "mc_file": os.path.abspath(args.mc),
@@ -426,21 +454,12 @@ def main():
         "coinc_ns": args.coinc_ns,
         "edep_large_mev": args.edep_large_mev,
         "n_events_read": n_total,
-        "weighting": (
-            "PrimaryWeight is the authorising MC measure (#1050/#880). Canonical "
-            "scalars/figures use it; unweighted_generated_rows live under "
-            "unweighted_diagnostic only."
-            if args.apply_weight else
-            "LEGACY_UNWEIGHTED_PROPOSAL_DIAGNOSTIC (--no-weight); not authorising "
-            "when production PrimaryWeight is nontrivial."
-        ),
+        "weighting": ("PrimaryWeight applied (A-003, issue #880); per-event weight "
+                      "= first primary PrimaryWeight (beam primary), as in "
+                      "deltaE_E_mc.py. Every *_weighted field uses it; plain fields "
+                      "are retained unweighted for traceability.")
+                     if args.apply_weight else "unweighted (--no-weight)",
         "apply_weight": bool(args.apply_weight),
-        "mc_measure": (
-            _mc01.MEASURE_PRIMARY_WEIGHT if args.apply_weight else _mc01.MEASURE_UNWEIGHTED
-        ),
-        "mc_measure_status": (
-            _mc01.MEASURE_STATUS_AUTHORISING if args.apply_weight else _mc01.MEASURE_STATUS_DIAGNOSTIC
-        ),
         "trigger_counts": {"enter_B": n_enterB, "enter_A": n_enterA,
                            "coincidence_AB": n_coinc},
         "samples": {},
@@ -476,35 +495,61 @@ def main():
                     "median_edep_MeV_weighted": _wmedian(arr, warr),
                 }
 
+    # Issue #1047 / ADR H3: weighted stop-depth is conditional on termination==stop.
+    # Unconditional stop/escape/censored probabilities are reported separately.
     stopping_summary = {}
     for s in ("I", "II"):
         stopping_summary[s] = {}
         T = samples[s]["tracks"]
         tpdg = np.asarray(T["pdg"], dtype=float)
         tstop = np.asarray(T["stop_layer"], dtype=float)
+        tterm = np.asarray(T["termination"], dtype=object)
         tw = np.asarray(T["weight"], dtype=float)
         for sp_name, stop_layers in stopping_depth[s].items():
             arr = np.asarray(stop_layers, dtype=int)
-            # weighted counterpart from the track table (carries event weight)
             sp_pdg = {"p": 2212, "d": 1000010020}.get(sp_name)
             if sp_pdg is not None:
                 wmask = tpdg == sp_pdg
-                warr = tstop[wmask]; ww = tw[wmask]
+                h3 = summarize_stop_depth_h3(
+                    termination=tterm[wmask],
+                    stop_layer=tstop[wmask],
+                    weights=tw[wmask],
+                    n_layers=NB_LAYERS,
+                    species=sp_name,
+                )
             else:
-                warr = np.empty(0); ww = np.empty(0)
-            stop_dist_w = {}
-            if warr.size:
-                sw = ww.sum()
-                for ll in range(NB_LAYERS):
-                    stop_dist_w[int(ll)] = float(np.sum(ww[warr == ll]) / sw) if sw > 0 else 0.0
+                h3 = summarize_stop_depth_h3(
+                    termination=[],
+                    stop_layer=[],
+                    weights=[],
+                    n_layers=NB_LAYERS,
+                    species=sp_name,
+                )
+            mean_w = h3["mean_stop_layer_weighted"]
             stopping_summary[s][sp_name] = {
                 "count": int(len(arr)),
                 "mean_stop_layer": float(arr.mean()) if len(arr) > 0 else 0.0,
                 "median_stop_layer": float(np.median(arr)) if len(arr) > 0 else 0.0,
                 "stop_distribution": {int(l): int((arr == l).sum())
                                       for l in range(NB_LAYERS)},
-                "mean_stop_layer_weighted": _wmean(warr, ww),
-                "stop_distribution_weighted": stop_dist_w,
+                # H3 fields (issue #1047)
+                "estimand": h3["estimand"],
+                "conditioning": h3["conditioning"],
+                "termination_count": h3["termination_count"],
+                "termination_prob_weighted": h3["termination_prob_weighted"],
+                "termination_prob_unweighted": h3["termination_prob_unweighted"],
+                "weight_sum_all": h3["weight_sum_all"],
+                "weight_sum_stop": h3["weight_sum_stop"],
+                "sum_w2_stop": h3["sum_w2_stop"],
+                "n_stop": h3["n_stop"],
+                "mean_stop_layer_weighted": mean_w,
+                "mean_stop_layer_weighted_status": h3["mean_stop_layer_weighted_status"],
+                "mean_stop_layer_weighted_reason": h3.get(
+                    "mean_stop_layer_weighted_reason"),
+                "stop_distribution_weighted": {
+                    int(k): float(v)
+                    for k, v in h3["stop_distribution_weighted"].items()
+                },
             }
 
     for s in ("I", "II"):
@@ -517,22 +562,25 @@ def main():
         out["samples"][s] = {
             "n_events": S["n_events"],
             "n_tracks": int(len(T["pdg"])),
-            "enter_B_pid_fraction": (
-                {k: round(v / wtot_b, 4) for k, v in sorted(enter_pid_w[s]["B"].items(), key=lambda kv: -kv[1])}
-                if args.apply_weight else
-                {k: round(v / tot_b, 4) for k, v in sorted(S["enterB_pid"].items(), key=lambda kv: -kv[1])}
-            ),
-            "enter_A_pid_fraction": (
-                {k: round(v / wtot_a, 4) for k, v in sorted(enter_pid_w[s]["A"].items(), key=lambda kv: -kv[1])}
-                if args.apply_weight else
-                {k: round(v / tot_a, 4) for k, v in sorted(S["enterA_pid"].items(), key=lambda kv: -kv[1])}
-            ),
-            "unweighted_diagnostic_enter_pid": {
-                "enter_B_pid_fraction": {k: round(v / tot_b, 4)
-                                         for k, v in sorted(S["enterB_pid"].items(), key=lambda kv: -kv[1])},
-                "enter_A_pid_fraction": {k: round(v / tot_a, 4)
-                                         for k, v in sorted(S["enterA_pid"].items(), key=lambda kv: -kv[1])},
-            } if args.apply_weight else {},
+            # #1046: enter_*_pid_fraction is unique-track particle flux (H2).
+            "enter_pid_statistical_unit": "unique_truth_track",
+            "enter_pid_denominator": "unique (event, TrackID) charged first-layer crossings",
+            "enter_B_pid_fraction": {k: round(v / tot_b, 4)
+                                     for k, v in sorted(S["enterB_pid"].items(), key=lambda kv: -kv[1])},
+            "enter_A_pid_fraction": {k: round(v / tot_a, 4)
+                                     for k, v in sorted(S["enterA_pid"].items(), key=lambda kv: -kv[1])},
+            "enter_B_pid_fraction_weighted": {k: round(v / wtot_b, 4)
+                                              for k, v in sorted(enter_pid_w[s]["B"].items(), key=lambda kv: -kv[1])},
+            "enter_A_pid_fraction_weighted": {k: round(v / wtot_a, 4)
+                                              for k, v in sorted(enter_pid_w[s]["A"].items(), key=lambda kv: -kv[1])},
+            "first_layer_record_fraction_B": {
+                k: round(v / (sum(S.get("enterB_pid_records", {}).values()) or 1), 4)
+                for k, v in sorted(S.get("enterB_pid_records", {}).items(), key=lambda kv: -kv[1])
+            },
+            "first_layer_record_fraction_A": {
+                k: round(v / (sum(S.get("enterA_pid_records", {}).values()) or 1), 4)
+                for k, v in sorted(S.get("enterA_pid_records", {}).items(), key=lambda kv: -kv[1])
+            },
             "B_layers": [layer_summary(S["B_layers"][l], args.edep_large_mev)
                          for l in range(NB_LAYERS)],
             "per_stave_species": per_stave_summary[s],
@@ -571,9 +619,20 @@ def main():
 
     l0_I = out["samples"]["I"]["B_layers"][0]
     l0_II = out["samples"]["II"]["B_layers"][0]
-    out["headline_first_B_layer"] = _mc01.build_headline_first_b_layer(
-        l0_I, l0_II, apply_weight=bool(args.apply_weight)
-    )
+    out["headline_first_B_layer"] = {
+        "sampleI_d_fraction": l0_I["pid_fraction"].get("d", 0.0),
+        "sampleII_d_fraction": l0_II["pid_fraction"].get("d", 0.0),
+        "sampleI_frac_large": l0_I["frac_large"],
+        "sampleII_frac_large": l0_II["frac_large"],
+        "sampleI_mean_edep_MeV": l0_I["mean_edep_MeV"],
+        "sampleII_mean_edep_MeV": l0_II["mean_edep_MeV"],
+        "sampleI_d_fraction_weighted": l0_I["pid_fraction_weighted"].get("d", 0.0),
+        "sampleII_d_fraction_weighted": l0_II["pid_fraction_weighted"].get("d", 0.0),
+        "sampleI_frac_large_weighted": l0_I["frac_large_weighted"],
+        "sampleII_frac_large_weighted": l0_II["frac_large_weighted"],
+        "sampleI_mean_edep_MeV_weighted": l0_I["mean_edep_MeV_weighted"],
+        "sampleII_mean_edep_MeV_weighted": l0_II["mean_edep_MeV_weighted"],
+    }
 
     with open(os.path.join(args.out, "mc_trigger_split_summary.json"), "w") as fh:
         json.dump(out, fh, indent=2)
@@ -624,12 +683,7 @@ def main():
             is_d = pdg_a == 1000010020
             other = ~(is_p | is_d)
             n_pts = min(8000, len(ed0))
-            wscatter = deltaE_E[s]["weight"] if args.apply_weight else np.ones(len(ed0))
-            seed = 1050 + si
-            idx = (
-                _mc01.choose_scatter_indices(len(ed0), n_pts, wscatter, seed=seed)
-                if len(ed0) > n_pts else np.arange(len(ed0))
-            )
+            idx = np.random.choice(len(ed0), n_pts, replace=False) if len(ed0) > n_pts else np.arange(len(ed0))
             ax.scatter(ed0[idx][other[idx]], ed1[idx][other[idx]], s=2, alpha=0.25,
                        color="gray", label="other", rasterized=True)
             ax.scatter(ed0[idx][is_p[idx]], ed1[idx][is_p[idx]], s=2, alpha=0.35,
@@ -638,14 +692,7 @@ def main():
                        color="C3", label="d", rasterized=True)
             ax.set_xlabel("EDep Layer 0 (B2) [MeV]")
             ax.set_ylabel("EDep Layer 1 (B4) [MeV]")
-            scatter_measure = (
-                out.get("mc_measure", "PrimaryWeight") if args.apply_weight
-                else "unweighted_generated_rows"
-            )
-            ax.set_title(
-                f"MC Sample {s} — ΔE-E Plane (truth; measure={scatter_measure}; "
-                f"seed={seed})"
-            )
+            ax.set_title(f"MC Sample {s} — ΔE-E Plane (truth)")
             ax.legend(loc="upper right", markerscale=3)
         fig.suptitle("MC Truth ΔE vs E: Sample I (coincidence) vs Sample II (single-B trigger)",
                      fontsize=13, fontweight="bold")
@@ -656,22 +703,14 @@ def main():
         # Figure 2: First B layer EDep spectrum
         fig, ax = plt.subplots(figsize=(10, 5.5))
         colors = {"I": "C0", "II": "C3"}
-        measure_label = out.get("mc_measure", "PrimaryWeight")
         for s, label, ls in (("I", "Sample I (coincidence)", "-"),
                               ("II", "Sample II (single-B)", "--")):
             e = np.asarray(samples[s]["B_layers"][0]["edep"], dtype=float)
-            w = np.asarray(samples[s]["B_layers"][0]["edep_w"], dtype=float)
-            if (not args.apply_weight) or w.size != e.size:
-                w = None
             ax.hist(e, bins=80, range=(0, 100), histtype="step", linewidth=2,
-                    color=colors[s], linestyle=ls, label=label, density=True,
-                    weights=w)
+                    color=colors[s], linestyle=ls, label=label, density=True)
         ax.set_xlabel("EDep first B layer (B2) [MeV]")
-        ax.set_ylabel("Normalised density")
-        ax.set_title(
-            f"MC: First B-Layer (B2) Energy Deposit — Sample I vs Sample II "
-            f"[measure={measure_label}]"
-        )
+        ax.set_ylabel("Normalised counts")
+        ax.set_title("MC: First B-Layer (B2) Energy Deposit — Sample I vs Sample II")
         ax.legend()
         ax.set_xlim(0, 80)
         fig.tight_layout()
@@ -695,10 +734,7 @@ def main():
         ax.set_xticklabels([f"B{(l+1)*2}" for l in range(NB_LAYERS)])
         ax.set_xlabel("B-stack stave")
         ax.set_ylabel("Fraction of charged hits")
-        ax.set_title(
-            "MC: Deuteron & Proton Fraction per B-Stave — Sample I vs Sample II "
-            f"[measure={out.get('mc_measure', 'PrimaryWeight')}]"
-        )
+        ax.set_title("MC: Deuteron & Proton Fraction per B-Stave — Sample I vs Sample II")
         ax.legend()
         ax.grid(True, alpha=0.3)
         fig.tight_layout()

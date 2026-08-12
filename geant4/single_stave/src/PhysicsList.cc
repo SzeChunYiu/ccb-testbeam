@@ -5,20 +5,36 @@
 #include "G4OpticalParameters.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4ProcessManager.hh"
+#include "G4Exception.hh"
 
 #include <iostream>
+#include <sstream>
 
 G4VModularPhysicsList* PhysicsList::Build(const G4String& reference,
                                           G4double production_cut_mm,
                                           const G4String& wls_time_profile) {
+  // Issue #1006: fail closed — never warning-fallback to another list.
+  if (reference.empty()) {
+    G4Exception("PhysicsList::Build", "CCBPhysList0001", FatalException,
+                "physics list reference is empty; pass an explicit "
+                "--physics-list (no silent QGSP_BIC default)");
+  }
+
   G4PhysListFactory factory;
-  G4VModularPhysicsList* physics = nullptr;
-  if (factory.IsReferencePhysList(reference)) {
-    physics = factory.GetReferencePhysList(reference);
-  } else {
-    std::cerr << "warning: reference list '" << reference
-              << "' unavailable; falling back to QGSP_BIC\n";
-    physics = factory.GetReferencePhysList("QGSP_BIC");
+  if (!factory.IsReferencePhysList(reference)) {
+    std::ostringstream msg;
+    msg << "requested reference physics list '" << reference
+        << "' is unavailable in this Geant4 build; refusing to fall back "
+           "(issue #1006 fail-closed)";
+    G4Exception("PhysicsList::Build", "CCBPhysList0002", FatalException,
+                msg.str().c_str());
+  }
+  G4VModularPhysicsList* physics = factory.GetReferencePhysList(reference);
+  if (physics == nullptr) {
+    std::ostringstream msg;
+    msg << "G4PhysListFactory returned null for '" << reference << "'";
+    G4Exception("PhysicsList::Build", "CCBPhysList0003", FatalException,
+                msg.str().c_str());
   }
 
   // Optical physics: scintillation, WLS, boundary, absorption, Rayleigh.

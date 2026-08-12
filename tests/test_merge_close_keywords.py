@@ -6,7 +6,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "tools" / "gov"))
-import check_merge_close_keywords as c
+import check_merge_close_keywords as c  # noqa: E402
 
 
 def test_blocks_closes_keyword():

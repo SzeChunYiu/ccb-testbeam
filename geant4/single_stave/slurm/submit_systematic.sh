@@ -14,10 +14,12 @@
 #
 # Usage:
 #   sbatch --array=0-$((N-1))%CAP slurm/submit_systematic.sh BUILD KNOB POINTS_CSV OUTDIR
-# Columns (points CSV, after the header): label,seed,nevents,cli_args,env_vars
+# Columns (points CSV, after the header):
+#   label,seed,nevents,cli_args,env_vars[,replicate]
 #   - cli_args: extra flags appended to ccb_stave_sim (e.g. "--pde-scale 1.2")
 #   - env_vars: "VAR=val" (or blank) exported before the run, e.g.
 #               "CCB_SIPM_CROSSTALK_PROB=0.06"
+#   - replicate: optional paired-seed replicate index (issue #984)
 set -euo pipefail
 
 # Geant4 runtime: the build links G4 dynamically, so the build-time toolchain
@@ -43,11 +45,12 @@ BASE_CLI="${CCB_CAMPASSIGN_BASE_CLI:---particle proton --energy 100 --hit-x 0 --
 # Read the IDX-th DATA row: skip blanks, comments, and the header line.
 LINE="$(grep -vE '^\s*(#|$)' "${POINTS}" | grep -v '^label,' | sed -n "$((IDX+1))p")"
 if [[ -z "${LINE}" ]]; then echo "no point at index ${IDX} in ${POINTS}"; exit 1; fi
-IFS=',' read -r LABEL SEED NEVENTS CLI_ARGS ENV_VARS <<< "${LINE}"
+IFS=',' read -r LABEL SEED NEVENTS CLI_ARGS ENV_VARS REPLICATE _REST <<< "${LINE}"
 : "${SEED:=$((IDX+1))}"
 : "${NEVENTS:=60}"
 : "${CLI_ARGS:=}"
 : "${ENV_VARS:=}"
+: "${REPLICATE:=}"
 
 OUT="${OUTDIR}/${LABEL}.root"
 
@@ -57,7 +60,7 @@ if [[ -n "${ENV_VARS}" ]]; then
   export "${ENV_VARS}"
 fi
 
-echo "[$(date -Is)] idx=${IDX} knob=${KNOB} label=${LABEL} seed=${SEED} nev=${NEVENTS}"
+echo "[$(date -Is)] idx=${IDX} knob=${KNOB} label=${LABEL} seed=${SEED} nev=${NEVENTS} replicate=${REPLICATE}"
 echo "  cli=[${BASE_CLI} ${CLI_ARGS}] env=[${ENV_VARS}]"
 
 export CCB_GIT_COMMIT="$(git -C "${BUILD}" rev-parse HEAD 2>/dev/null || echo unknown)"

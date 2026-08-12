@@ -8,16 +8,18 @@
 
 ActionInitialization::ActionInitialization(const AppConfig& cfg,
                                            const OpticalTables& tables,
-                                           const std::string& geometry_hash)
-    : cfg_(cfg), tables_(tables), geometry_hash_(geometry_hash) {}
+                                           const std::string& geometry_hash,
+                                           const std::string& physics_hash)
+    : cfg_(cfg), tables_(tables),
+      geometry_hash_(geometry_hash), physics_hash_(physics_hash) {}
 
 void ActionInitialization::BuildForMaster() const {
-  SetUserAction(new RunAction(cfg_, tables_, geometry_hash_));
+  SetUserAction(new RunAction(cfg_, tables_, geometry_hash_, physics_hash_));
 }
 
 void ActionInitialization::Build() const {
   SetUserAction(new PrimaryGeneratorAction(cfg_));
-  auto* run_action = new RunAction(cfg_, tables_, geometry_hash_);
+  auto* run_action = new RunAction(cfg_, tables_, geometry_hash_, physics_hash_);
   SetUserAction(run_action);
   auto* event_action = new EventAction(cfg_, tables_, run_action);
   SetUserAction(event_action);

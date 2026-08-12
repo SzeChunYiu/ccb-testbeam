@@ -23,8 +23,10 @@
 #include <vector>
 
 RunAction::RunAction(const AppConfig& cfg, const OpticalTables& tables,
-                     const std::string& geometry_hash)
-    : cfg_(cfg), tables_(tables), geometry_hash_(geometry_hash) {
+                     const std::string& geometry_hash,
+                     const std::string& physics_hash)
+    : cfg_(cfg), tables_(tables),
+      geometry_hash_(geometry_hash), physics_hash_(physics_hash) {
   // Master and worker both materialise the effective digitizer config so the
   // metadata sidecar written on the master thread cannot miss #977 fields.
   SetSipmDigitizerConfig(BuildSipmDigitizerConfig(cfg_, tables_));
@@ -270,6 +272,9 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
      << "  \"schema\": \"ccb-stave-run-meta/2\",\n"
      << "  \"git_commit\": " << j(git ? git : "unknown") << ",\n"
      << "  \"geometry_hash\": " << j(geometry_hash_) << ",\n"
+     << "  \"physics_hash\": " << j(physics_hash_) << ",\n"
+     << "  \"geometry_hash_schema\": \"geometry_v2\",\n"
+     << "  \"physics_hash_schema\": \"physics_v1\",\n"
      << "  \"seed\": " << cfg_.seed << ",\n"
      << "  \"threads_requested\": " << cfg_.n_threads << ",\n"
      << "  \"threads_effective\": " << cfg_.n_threads_effective << ",\n"
@@ -287,6 +292,7 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
      << "  \"mode\": " << j(cfg_.mode == SimMode::kOpticalCalibration ? "optical" : "fast") << ",\n"
      << "  \"birks_kB_mm_per_MeV\": " << cfg_.birks_kB_mm_per_MeV << ",\n"
      << "  \"production_cut_mm\": " << cfg_.production_cut_mm << ",\n"
+     << "  \"physics_list\": " << j(cfg_.physics_list) << ",\n"
      << "  \"reflectivity_scale\": " << cfg_.reflectivity_scale << ",\n"
      << "  \"attenuation_scale\": " << cfg_.attenuation_scale << ",\n"
      << "  \"scintillator_absorption_scale\": " << cfg_.scintillator_absorption_scale << ",\n"
@@ -299,6 +305,12 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
      << "  \"wls_time_profile\": " << j(cfg_.wls_time_profile) << ",\n"
      << "  \"strict_optical\": " << (cfg_.strict_optical ? "true" : "false") << ",\n"
      << "  \"far_end_mode\": " << j(cfg_.far_end_mode) << ",\n"
+     << "  \"physics_list\": \"QGSP_BIC\",\n"
+     << "  \"step_policy_id\": \"pin_qgsp_bic_inherited_em_stepfunction\",\n"
+     << "  \"neutron_timecut_policy_id\": \"pin_qgsp_bic_default_10us\",\n"
+     << "  \"neutron_time_cut_us\": 10.0,\n"
+     << "  \"daq_digitizer_schema_id\": null,\n"
+     << "  \"daq_digitizer_status\": \"BLOCKED_UNMEASURED_TRANSFER_FUNCTION\",\n"
      << "  \"allow_optical_fallback\": " << (cfg_.allow_optical_fallback ? "true" : "false") << ",\n"
      << "  \"authorising\": " << (cfg_.authorising ? "true" : "false") << ",\n"
      << "  \"optical_fallback_used\": " << (cfg_.optical_fallback_used ? "true" : "false") << ",\n"

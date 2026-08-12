@@ -18,7 +18,8 @@ struct EventData;
 class RunAction : public G4UserRunAction {
  public:
   RunAction(const AppConfig& cfg, const OpticalTables& tables,
-            const std::string& geometry_hash);
+            const std::string& geometry_hash,
+            const std::string& physics_hash);
   ~RunAction() override;
 
   void BeginOfRunAction(const G4Run* run) override;
@@ -53,6 +54,7 @@ class RunAction : public G4UserRunAction {
   AppConfig cfg_;
   OpticalTables tables_;
   std::string geometry_hash_;
+  std::string physics_hash_;
 
   bool have_sipm_config_ = false;
   ccb::sipm::ModelConfig sipm_config_;

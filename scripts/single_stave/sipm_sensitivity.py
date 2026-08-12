@@ -33,7 +33,10 @@ from typing import Any, Dict, List, Optional, Tuple
 import numpy as np
 
 # Fallback only when metadata lacks ADC fields (should not happen after #977).
-ADC_CLIP_FALLBACK = 3895.0
+from ccb_mc_validation.response_surface import summarize_nuisance_sweep
+
+ADC_CLIP_DEFAULT = 3895.0  # 2**12 - 1 - baseline(200); points at this are saturated
+ADC_CLIP_FALLBACK = ADC_CLIP_DEFAULT
 
 ADC_CH = ["adc_readout", "adc_f2near", "adc_f2far"]
 PE_CH = ["pe_sat_readout", "detected_readout"]
@@ -307,25 +310,35 @@ def summarize_knob(
             f"{s.get('mean_edep_scint_MeV', float('nan')):.3f} | "
             f"{s.get('frac_clipped_readout', float('nan')):.2f} |"
         )
+    # #985: local/asymmetric response near nominal — not a forced global line.
     if _is_numeric_column(values) and len(values) >= 2:
         xs = np.array([_safe_float(v) for v in values], dtype=float)
-        # Causal slope only for ADC; PE slopes labelled diagnostic.
-        for obs, label, causal in [
-            ("mean_adc_readout", "adc_readout", True),
-            ("mean_pe_sat_readout", "pe_sat_readout", False),
-            ("mean_detected_readout", "detected_readout", False),
-        ]:
+        clips = np.array(
+            [s.get("frac_clipped_readout", 0.0) for s in stats], dtype=float
+        )
+        for obs, label in [("mean_adc_readout", "adc_readout"),
+                           ("mean_pe_sat_readout", "pe_sat_readout"),
+                           ("mean_detected_readout", "detected_readout")]:
             ys = np.array([s.get(obs, float("nan")) for s in stats], dtype=float)
-            m = np.isfinite(xs) & np.isfinite(ys)
-            if m.sum() >= 2 and np.ptp(xs[m]) > 0:
-                slope, _ = np.polyfit(xs[m], ys[m], 1)
-                x0, y0 = float(np.median(xs[m])), float(np.median(ys[m]))
-                elast = (slope * x0 / y0) if abs(y0) > 1e-9 else float("nan")
-                tag = "causal" if causal else "diagnostic-only"
+            summary = summarize_nuisance_sweep(xs, ys, frac_clipped=clips)
+            slope = summary.get("recommended_slope", float("nan"))
+            elast = summary.get("recommended_elasticity", float("nan"))
+            lines.append(
+                f"  - `{label}` local d(obs)/d({knob}) near nominal = "
+                f"{slope:.4g} per {unit}; local elasticity = {elast:.3f}"
+            )
+            if summary.get("global_linear_misleading"):
+                reasons = ",".join(summary.get("misleading_reasons") or [])
                 lines.append(
-                    f"  - `{label}` [{tag}] d(obs)/d({knob}) = {slope:.4g} per {unit}; "
-                    f"elasticity = {elast:.3f}"
+                    f"  - `{label}` **global linear slope MISLEADING** "
+                    f"({reasons}); use local/asymmetric response (#985)."
                 )
+            asym = summary.get("asymmetric_excursion") or {}
+            lines.append(
+                f"  - `{label}` asymmetric unsaturated Δy: "
+                f"below={asym.get('delta_y_min_below', float('nan')):.4g}, "
+                f"above={asym.get('delta_y_max_above', float('nan')):.4g}"
+            )
     frac_clip = [s.get("frac_clipped_readout", 0.0) for s in stats]
     if any(f > 0.5 for f in frac_clip):
         lines.append("")
@@ -393,7 +406,7 @@ def main() -> int:
         "",
         "Filename labels are requests; points are admitted only when effective "
         "digitizer metadata matches (#982). `adc_*` is the production path; "
-        "`pe_sat_*`/`detected_*` are independent diagnostics (#1084).",
+        "`pe_sat_*`/`detected_*` are independent diagnostics (#1084). Elasticity uses local unsaturated response near nominal (#985).",
         "",
     ]
     n_total_points = 0
@@ -440,13 +453,15 @@ def main() -> int:
         if _is_numeric_column(values) and len(values) >= 2:
             xs = np.array([_safe_float(v) for v in values], dtype=float)
             ys = np.array(adcs, dtype=float)
-            m = np.isfinite(xs) & np.isfinite(ys)
-            if m.sum() >= 2 and np.ptp(xs[m]) > 0:
-                slope, _ = np.polyfit(xs[m], ys[m], 1)
-                x0 = float(np.median(xs[m]))
-                y0 = float(np.median(ys[m]))
-                if abs(y0) > 1e-9:
-                    elast_str = f"{slope * x0 / y0:.3f}"
+            clips = np.array(
+                [s.get("frac_clipped_readout", 0.0) for s in stats], dtype=float
+            )
+            summary = summarize_nuisance_sweep(xs, ys, frac_clipped=clips)
+            elast = summary.get("recommended_elasticity", float("nan"))
+            if np.isfinite(elast):
+                elast_str = f"{elast:.3f}"
+                if summary.get("global_linear_misleading"):
+                    elast_str += " (local; global-linear misleading)"
         finite_adcs = [v for v in adcs if math.isfinite(v)]
         rng = (
             f"{min(finite_adcs):.0f}..{max(finite_adcs):.0f}" if finite_adcs else "n/a"

@@ -356,30 +356,27 @@ class PipelineOrchestrator:
         self._event("preflight", status, {"cluster": cluster})
         return preflight
 
-
     def _running_on_lunarc(self) -> bool:
-        """True when this process is already on a LUNARC login/compute host."""
-        import os
-        host = (os.environ.get("HOSTNAME") or os.environ.get("HOST") or platform.node() or "").lower()
-        if "cosmos" in host or "lunarc" in host:
+        """True when this process is already on a LUNARC node (no nested ssh)."""
+        markers = (
+            Path("/projects/hep/fs10"),
+            Path("/home/s/scyiu"),
+        )
+        if any(p.exists() for p in markers):
             return True
-        # Shared filesystem marker used by this campaign
-        marker = Path("/projects/hep/fs10/shared/nnbar")
-        return marker.is_dir() and Path("/etc/slurm").exists()
+        host = (self.exec_raw.get("cluster", {}) or {}).get("ssh_host", "lunarc") if isinstance(self.exec_raw, dict) else "lunarc"
+        try:
+            import socket
+            return host in socket.gethostname() or "lunarc" in socket.gethostname().lower()
+        except OSError:
+            return False
 
     def _slurm_cmd(self, remote_command: str) -> list[str]:
-        """Build sbatch/sacct command; avoid nested ssh when already on LUNARC."""
+        """Run sacct/sbatch directly on-cluster; ssh only from off-cluster hosts."""
         if self._running_on_lunarc():
-            # Run through bash -lc so relative sbatch scripts resolve from project_root
-            project = None
-            if isinstance(self.exec_raw, dict):
-                project = self.exec_raw.get("cluster", {}).get("project_root")
-            project = project or str(self.repo_root)
-            return ["bash", "-lc", f"cd {project} && {remote_command}"]
-        host = "lunarc"
-        if isinstance(self.exec_raw, dict):
-            host = self.exec_raw.get("cluster", {}).get("ssh_host", "lunarc")
-        return ["ssh", host, remote_command]
+            return ["bash", "-lc", remote_command]
+        host = (self.exec_raw.get("cluster", {}) or {}).get("ssh_host", "lunarc") if isinstance(self.exec_raw, dict) else "lunarc"
+        return ["ssh", "-o", "BatchMode=yes", host, remote_command]
 
     def _cluster_probe(self) -> str:
         if self._running_on_lunarc():
@@ -387,12 +384,10 @@ class PipelineOrchestrator:
         host = self.exec_raw.get("cluster", {}).get("ssh_host", "lunarc") if isinstance(self.exec_raw, dict) else "lunarc"
         try:
             check = subprocess.run(["ssh", "-O", "check", host], capture_output=True, text=True, timeout=8)
-            if check.returncode == 0:
-                ping = subprocess.run(["ssh", "-o", "BatchMode=yes", "-o", "ConnectTimeout=8", host, "hostname"], capture_output=True, text=True, timeout=12)
-                return "REACHABLE" if ping.returncode == 0 else f"UNREACHABLE ({ping.stderr.strip()[:160]})"
-            # Fallback: direct BatchMode ssh (billy-old -> lunarc path without ControlPath)
+            if check.returncode != 0:
+                return f"UNREACHABLE (no active ssh control socket for {host})"
             ping = subprocess.run(["ssh", "-o", "BatchMode=yes", "-o", "ConnectTimeout=8", host, "hostname"], capture_output=True, text=True, timeout=12)
-            return "REACHABLE" if ping.returncode == 0 else f"UNREACHABLE (no active ssh control socket for {host}; direct probe failed)"
+            return "REACHABLE" if ping.returncode == 0 else f"UNREACHABLE ({ping.stderr.strip()[:160]})"
         except (subprocess.TimeoutExpired, FileNotFoundError) as exc:
             return f"UNREACHABLE ({exc})"
 
@@ -536,10 +531,7 @@ class PipelineOrchestrator:
             atomic_write_json(run_path / "execution" / "SUBMIT_DRY_RUN.json", result)
             return result
         # Submit canonical batch driver; actual heavy worker must enforce SLURM_JOB_ID.
-        # When already on LUNARC, invoke sbatch locally (no nested ssh).
-        project = self.exec_raw.get("cluster", {}).get("project_root", str(self.repo_root)) if isinstance(self.exec_raw, dict) else str(self.repo_root)
-        remote = f"cd {project} && sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch {self.run_id} {studies}"
-        cmd = self._slurm_cmd(remote)
+        cmd = ["ssh", "lunarc", f"cd {self.exec_raw.get('cluster', {}).get('project_root', '/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam')} && sbatch --parsable geant4/jobs/mc_validation_pipeline.sbatch {self.run_id} {studies}"]
         proc = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
         job_id = proc.stdout.strip().splitlines()[-1] if proc.returncode == 0 and proc.stdout.strip() else None
         status = STATUS_SUBMITTED if proc.returncode == 0 else STATUS_FAILED
@@ -607,7 +599,7 @@ class PipelineOrchestrator:
                 "run_id": self.run_id,
                 "artifacts": sorted(set(artifacts)),
                 "not_for_physics": True,
-                "manifest": str((path / "execution" / "COLLECT.json").relative_to(self.repo_root)) if False else str(path / "execution" / "COLLECT.json"),
+                "dag_ready": True,
             }
             atomic_write_json(path / "execution" / "COLLECT.json", result)
             self._event("collect", result["status"], {"artifacts": len(result["artifacts"])})
@@ -623,6 +615,7 @@ class PipelineOrchestrator:
             "jobs": jobs,
             "artifacts": sorted(set(artifacts)),
             "not_for_physics": not completed,
+            "dag_ready": True,
         }
         atomic_write_json(path / "execution" / "COLLECT.json", result)
         self._event("collect", result["status"], {"artifacts": len(result["artifacts"])})

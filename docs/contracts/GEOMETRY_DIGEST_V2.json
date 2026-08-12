@@ -1,0 +1,37 @@
+{
+  "schema_version": "2.0.0",
+  "contract_id": "GEOMETRY_DIGEST_V2",
+  "issue": "#986",
+  "audit_id": "AF-038",
+  "description": "Canonical named-field geometry digest. Excludes response/physics knobs (Birks, optical yields). Includes coating/sensor/far-end geometry.",
+  "canonical_field_order": [
+    "schema_version",
+    "stave_half_x_mm",
+    "stave_half_y_mm",
+    "stave_half_z_mm",
+    "coating_thk_mm",
+    "hole_radius_mm",
+    "fibre_radius_mm",
+    "fibre_half_x_mm",
+    "fibre_sep_mm",
+    "sensor_thk_mm",
+    "fibre_core_radius_mm",
+    "fibre_inner_clad_radius_mm",
+    "fibre_outer_clad_radius_mm",
+    "far_end_mode"
+  ],
+  "excluded_from_geometry_digest": [
+    "birks_kB_mm_per_MeV",
+    "optical_interface_model",
+    "scintillator_material",
+    "coating_material",
+    "wls_mean_number_photons",
+    "y11_direct_scint_yield_per_MeV",
+    "tio2_finish",
+    "tio2_specular_lobe",
+    "tio2_specular_spike",
+    "tio2_backscatter",
+    "y11_attenuation_form"
+  ],
+  "serialization": "key=value pairs joined by ';', floats as .17g, SHA-256 hex of UTF-8 bytes"
+}

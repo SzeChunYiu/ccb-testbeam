@@ -11,7 +11,9 @@
   "forbidden_auto_close_patterns": [
     "(?i)\\bCloses\\s+#\\d+",
     "(?i)\\bClose\\s+#\\d+",
-    "(?i)\\bFixes\\s+#\\d+"
+    "(?i)\\bFixes\\s+#\\d+",
+    "(?i)\\bFix(?:e[sd])?\\s+#\\d+",
+    "(?i)\\bResolves?\\s+#\\d+"
   ],
   "safe_reference_patterns": [
     "(?i)\\bRefs\\s+#\\d+",
@@ -19,6 +21,7 @@
     "(?i)\\bdoes not close\\s+#\\d+"
   ],
   "scientific_universe_issues_require_manual_review": true,
+  "close_intent_schema": "docs/contracts/CLOSE_INTENT.schema.json",
   "witness": {
     "parent": "#1057",
     "incident_pr": "#1216",

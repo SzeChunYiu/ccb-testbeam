@@ -1,0 +1,8 @@
+{
+  "authorising_schema": "hrd_raw_8x16_v1",
+  "issue": 993,
+  "paper_atom": "PAPER-A02",
+  "raw_manifest_complete": true,
+  "timing_18_sample_non_authorising": true,
+  "verdict": "DISTINCT_SCHEMAS"
+}

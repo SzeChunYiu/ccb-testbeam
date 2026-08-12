@@ -537,3 +537,119 @@ def build_event_stave_product(
         ],
     }
     return payload, metadata
+
+
+COMPARE_FIRST_B_PRODUCT = "first_B_layer_event_edep.npz"
+COMPARE_CLUSTER_KEY = "generator_event_index"
+
+
+def build_compare_first_b_event_edep(
+    payload: dict[str, np.ndarray],
+) -> dict[str, np.ndarray]:
+    """Build compare_data_mc-compatible first-B export with cluster IDs (#1164).
+
+    Uses ``entry_index`` as the immutable generator-event cluster key so
+    cluster-bootstrap replicates preserve event identity.  Raises
+    ``DataContractError`` when required arrays are missing or misaligned.
+    """
+    required = (
+        "entry_index",
+        "sample_I",
+        "sample_II",
+        "event_weight",
+        "b_stave_edep_mev",
+    )
+    missing = [key for key in required if key not in payload]
+    if missing:
+        raise DataContractError(
+            f"compare first-B export incomplete: missing payload keys {missing}"
+        )
+
+    entry_index = np.asarray(payload["entry_index"], dtype=np.int64)
+    sample_i = np.asarray(payload["sample_I"], dtype=bool)
+    sample_ii = np.asarray(payload["sample_II"], dtype=bool)
+    weights = np.asarray(payload["event_weight"], dtype=np.float64)
+    edep = np.asarray(payload["b_stave_edep_mev"], dtype=np.float64)
+    n = entry_index.size
+    for name, arr in (
+        ("sample_I", sample_i),
+        ("sample_II", sample_ii),
+        ("event_weight", weights),
+    ):
+        if arr.size != n:
+            raise DataContractError(
+                f"compare first-B export length mismatch: {name} has {arr.size}, "
+                f"expected {n}"
+            )
+    if edep.ndim != 2 or edep.shape[0] != n or edep.shape[1] < 1:
+        raise DataContractError(
+            f"b_stave_edep_mev must be (n_events, n_layers) with n_events={n}"
+        )
+
+    cluster_ids = entry_index.copy()
+    layer0 = edep[:, 0].astype(np.float32, copy=False)
+    w = weights.astype(np.float32, copy=False)
+    ii_mask = sample_ii
+    i_mask = sample_i
+    if not np.all(ii_mask):
+        raise DataContractError("compare export requires every row in Sample II")
+    if np.any(i_mask & ~ii_mask):
+        raise DataContractError("Sample I must be a subset of Sample II for export")
+
+    export = {
+        "sampleI": layer0[i_mask],
+        "sampleII": layer0[ii_mask],
+        "sampleI_weights": w[i_mask],
+        "sampleII_weights": w[ii_mask],
+        "sampleI_cluster_id": cluster_ids[i_mask],
+        "sampleII_cluster_id": cluster_ids[ii_mask],
+        "sampleI_in_sample_i": np.ones(int(i_mask.sum()), dtype=bool),
+        "sampleI_in_sample_ii": np.ones(int(i_mask.sum()), dtype=bool),
+        "sampleII_in_sample_i": i_mask[ii_mask],
+        "sampleII_in_sample_ii": np.ones(int(ii_mask.sum()), dtype=bool),
+        "statistical_unit": np.asarray(["event_stave_edep"]),
+        "cluster_key": np.asarray([COMPARE_CLUSTER_KEY]),
+        "weight_semantics": np.asarray([PRIMARY_WEIGHT_SEMANTICS]),
+        "aggregation": np.asarray([AGGREGATION_RULE]),
+        "authorising_measurand": np.asarray([False]),
+        "issue_note": np.asarray(
+            ["intermediate_H3_pending_digitizer_H5_issue_1164_cluster_export"]
+        ),
+    }
+    _validate_compare_first_b_cluster_export(export)
+    return export
+
+
+def _validate_compare_first_b_cluster_export(export: dict[str, np.ndarray]) -> None:
+    """Fail closed when compare export arrays are incomplete (#1164)."""
+    required = (
+        "sampleI",
+        "sampleII",
+        "sampleI_weights",
+        "sampleII_weights",
+        "sampleI_cluster_id",
+        "sampleII_cluster_id",
+    )
+    missing = [key for key in required if key not in export]
+    if missing:
+        raise DataContractError(
+            f"compare first-B cluster export incomplete: missing {missing}"
+        )
+    n_i = int(np.asarray(export["sampleI"]).size)
+    n_ii = int(np.asarray(export["sampleII"]).size)
+    for key in required:
+        arr = np.asarray(export[key])
+        if key.startswith("sampleII"):
+            expected = n_ii
+        else:
+            expected = n_i
+        if arr.size != expected:
+            raise DataContractError(
+                f"compare export {key} length {arr.size} != expected {expected}"
+            )
+    if n_ii < 1:
+        raise DataContractError("compare export requires at least one Sample-II row")
+    if not np.issubdtype(
+        np.asarray(export["sampleII_cluster_id"]).dtype, np.integer
+    ):
+        raise DataContractError("sampleII_cluster_id must be integer-valued")

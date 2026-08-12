@@ -92,7 +92,8 @@ Issue #999 beam/primary intersection preflight is enforced in `main.cc` via
 
 - #1007: ntuple now emits `primary_*` scintillator estimators; event-total
   `track_len_scint_mm` comment corrected. Rebuild required.
-- #986: `geometry_hash` schema geometry_v2 excludes Birks; `physics_hash`
-  schema physics_v1 carries Birks + optical interface. Rebuild required.
+- #986: `geometry_hash` uses GEOMETRY_DIGEST_V2 (`schema_version=2.0.0`);
+  excludes Birks/material labels; `physics_hash` / `optical_hash` recorded in
+  run sidecar. Rebuild required. Residual mass-material table scope: ADR-0011.
 - #1079 / #1095 / #1064: Python fail-closed contracts + ADRs (no invented
   physics parameters).

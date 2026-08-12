@@ -12,6 +12,7 @@ Updated by `scripts/mc_validation/run_pipeline.py` workflow.
 Refs #1218 #986 #1091 #1062. Does not close those issues.
 
 - Close-intent schema + hostile fixture matrix + CI gate (#1218)
+- PR template + `run_close_intent_gates.py` ledger workflow (#1218 completion gate)
 - GEOMETRY_DIGEST_V2 named-field digest excluding Birks/optics (#986)
 - Neutron tracking-time cut recorded as implicit QGSP_BIC default (#1091)
 - Timing same-sample method-selection authorising gate (#1062)

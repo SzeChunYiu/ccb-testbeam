@@ -31,7 +31,9 @@ import ccb_mc_validation.truth.trigger as trigger_module
 from ccb_mc_validation.exceptions import DataContractError
 from ccb_mc_validation.truth.event_stave import (
     AUTHORISATION_STATE,
+    COMPARE_FIRST_B_PRODUCT,
     EVENT_STAVE_SCHEMA_ID,
+    build_compare_first_b_event_edep,
     build_event_stave_product,
 )
 
@@ -242,6 +244,9 @@ def main() -> int:
         metadata,
         max_events=args.max_events,
     )
+    compare_export = build_compare_first_b_event_edep(payload)
+    compare_product = product_path.parent / COMPARE_FIRST_B_PRODUCT
+    _write_product(compare_product, compare_export)
     print(
         json.dumps(
             {

@@ -24,9 +24,11 @@
 
 RunAction::RunAction(const AppConfig& cfg, const OpticalTables& tables,
                      const std::string& geometry_hash,
-                     const std::string& physics_hash)
+                     const std::string& physics_hash,
+                     const std::string& optical_hash)
     : cfg_(cfg), tables_(tables),
-      geometry_hash_(geometry_hash), physics_hash_(physics_hash) {
+      geometry_hash_(geometry_hash), physics_hash_(physics_hash),
+      optical_hash_(optical_hash) {
   // Master and worker both materialise the effective digitizer config so the
   // metadata sidecar written on the master thread cannot miss #977 fields.
   SetSipmDigitizerConfig(BuildSipmDigitizerConfig(cfg_, tables_));
@@ -282,6 +284,8 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
      << "  \"schema\": \"ccb-stave-run-meta/2\",\n"
      << "  \"git_commit\": " << j(git ? git : "unknown") << ",\n"
      << "  \"geometry_hash\": " << j(geometry_hash_) << ",\n"
+     << "  \"physics_hash\": " << j(physics_hash_) << ",\n"
+     << "  \"optical_hash\": " << j(optical_hash_) << ",\n"
      << "  \"track_len_scint_mm_scope\": \"EVENT_TOTAL_NON_OPTICAL\",\n"
      << "  \"primary_track_len_scint_mm_scope\": \"PRIMARY_PROJECTILE\",\n"
      << "  \"seed\": " << cfg_.seed << ",\n"
@@ -302,9 +306,13 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
      << "  \"birks_kB_mm_per_MeV\": " << cfg_.birks_kB_mm_per_MeV << ",\n"
      << "  \"production_cut_mm\": " << cfg_.production_cut_mm << ",\n"
      << "  \"physics_list\": " << j(cfg_.physics_list) << ",\n"
-     << "  \"neutron_tracking_time_cut_us\": "
-     << "\"IMPLICIT_QGSP_BIC_DEFAULT_10_UNVALIDATED\",\n"
-     << "  \"neutron_tracking_time_cut_status\": \"BLOCKED_ISSUE_1091\",\n"
+     << "  \"neutron_tracking_time_cut_us\": " << cfg_.neutron_time_cut_us << ",\n"
+     << "  \"neutron_tracking_time_cut_status\": " << j(cfg_.neutron_tracking_time_cut_status) << ",\n"
+     << "  \"neutron_tracking_time_cut_configured\": " << (cfg_.neutron_tracking_time_cut_configured ? "true" : "false") << ",\n"
+     << "  \"neutron_timecut_policy_id\": " << j(cfg_.neutron_timecut_policy_id) << ",\n"
+     << "  \"neutron_time_cut_us\": " << cfg_.neutron_time_cut_us << ",\n"
+     << "  \"neutron_timecut_adr\": " << j(cfg_.neutron_timecut_adr) << ",\n"
+     << "  \"neutron_timecut_claims_authorized\": " << (cfg_.neutron_timecut_claims_authorized ? "true" : "false") << ",\n"
      << "  \"step_size_convergence_status\": \"BLOCKED_ISSUE_1095\",\n"
      << "  \"primary_vs_event_track_contract\": \"primary_* columns (#1007)\",\n"
      << "  \"reflectivity_scale\": " << cfg_.reflectivity_scale << ",\n"
@@ -324,10 +332,7 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
      << "  \"authorising_absolute_light_yield_claims\": false,\n"
      << "  \"strict_optical\": " << (cfg_.strict_optical ? "true" : "false") << ",\n"
      << "  \"far_end_mode\": " << j(cfg_.far_end_mode) << ",\n"
-     << "  \"physics_list\": \"QGSP_BIC\",\n"
      << "  \"step_policy_id\": \"pin_qgsp_bic_inherited_em_stepfunction\",\n"
-     << "  \"neutron_timecut_policy_id\": \"pin_qgsp_bic_default_10us\",\n"
-     << "  \"neutron_time_cut_us\": 10.0,\n"
      << "  \"daq_digitizer_schema_id\": null,\n"
      << "  \"daq_digitizer_status\": \"BLOCKED_UNMEASURED_TRANSFER_FUNCTION\",\n"
      << "  \"allow_optical_fallback\": " << (cfg_.allow_optical_fallback ? "true" : "false") << ",\n"
@@ -382,9 +387,24 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
     const std::vector<std::uint8_t> bytes(meta_json.begin(), meta_json.end());
     const std::string digest = ccb::sipm::Sha256Hex(bytes);
     const char* sipm_git = std::getenv("CCB_SIPM_CORE_COMMIT");
+    const bool ov_label_matches =
+        cfg_.sipm_overvoltage_V == sipm_config_.device_provenance.overvoltage_V;
     os << ",\n"
        << "  \"digitizer\": {\n"
        << "    \"validation_status\": \"OK\",\n"
+       << "    \"requested_operating_point\": {\n"
+       << "      \"overvoltage_V\": " << cfg_.sipm_overvoltage_V << ",\n"
+       << "      \"temperature_C\": null,\n"
+       << "      \"temperature_status\": \"PROFILE_FIXED_NOT_IN_APPCONFIG\"\n"
+       << "    },\n"
+       << "    \"effective_operating_point\": {\n"
+       << "      \"overvoltage_V\": " << sipm_config_.device_provenance.overvoltage_V << ",\n"
+       << "      \"temperature_C\": " << sipm_config_.device_provenance.temperature_C << "\n"
+       << "    },\n"
+       << "    \"operating_point_label_matches_effective\": "
+       << (ov_label_matches ? "true" : "false") << ",\n"
+       << "    \"operating_point_physics_mapping_status\": \"BLOCKED_ADR_SIPM_OPERATING_POINT_H1\",\n"
+       << "    \"response_surface_id\": " << j(sipm_config_.device_provenance.profile_file) << ",\n"
        << "    \"ccb_sipm_core_commit\": " << j(sipm_git ? sipm_git : "unspecified") << ",\n"
        << "    \"digitizer_config_sha256\": " << j(digest) << ",\n"
        << "    \"cells_x\": " << sipm_config_.cells_x << ",\n"
@@ -399,8 +419,16 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
        << "    \"dark_count_rate_hz\": " << sipm_config_.dark_count_rate_hz << ",\n"
        << "    \"enable_dark_counts\": " << (sipm_config_.enable_dark_counts ? "true" : "false") << ",\n"
        << "    \"prompt_crosstalk_probability\": " << sipm_config_.prompt_crosstalk_probability << ",\n"
+       << "    \"enable_delayed_crosstalk\": "
+       << (sipm_config_.enable_delayed_crosstalk ? "true" : "false") << ",\n"
+       << "    \"delayed_crosstalk_probability\": " << sipm_config_.delayed_crosstalk_probability << ",\n"
        << "    \"afterpulse_fast_probability\": " << sipm_config_.afterpulse_fast_probability << ",\n"
        << "    \"afterpulse_slow_probability\": " << sipm_config_.afterpulse_slow_probability << ",\n"
+       << "    \"dead_time_ns\": " << sipm_config_.dead_time_ns << ",\n"
+       << "    \"sptr_sigma_ns\": " << sipm_config_.sptr_sigma_ns << ",\n"
+       << "    \"electronics_noise_sigma_pe\": " << sipm_config_.electronics_noise_sigma_pe << ",\n"
+       << "    \"shaper_integrator_stages\": " << sipm_config_.shaper_integrator_stages << ",\n"
+       << "    \"pulse_decay_ns\": " << sipm_config_.pulse_decay_ns << ",\n"
        << "    \"adc_bits\": " << sipm_config_.adc_bits << ",\n"
        << "    \"adc_lsb_pe\": " << sipm_config_.adc_lsb_pe << ",\n"
        << "    \"baseline_adc\": " << sipm_config_.baseline_adc << ",\n"
@@ -416,6 +444,11 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
        << "    \"device_name\": " << j(sipm_config_.device_provenance.device_name) << ",\n"
        << "    \"calibration_status\": " << j(sipm_config_.device_provenance.calibration_status) << ",\n"
        << "    \"impulse_model\": " << j(sipm_config_.impulse_model) << ",\n"
+       << "    \"impulse_response_status\": " << j(meta.electronics.impulse_response_status) << ",\n"
+       << "    \"shaper_model\": " << j(meta.electronics.shaper_model) << ",\n"
+       << "    \"measured_impulse_source_hash\": " << j(meta.electronics.measured_impulse_source_hash) << ",\n"
+       << "    \"effective_kernel_hash\": " << j(meta.electronics.effective_kernel_hash) << ",\n"
+       << "    \"authorising_measured_electronics_claims\": false,\n"
        << "    \"trigger_recovery_model\": " << j(sipm_config_.trigger_recovery_model) << ",\n"
        << "    \"gain_recovery_model\": " << j(sipm_config_.gain_recovery_model) << ",\n"
        << "    \"core_run_metadata_json\": " << j(meta_json) << ",\n"

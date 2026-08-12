@@ -22,9 +22,10 @@ The figure generator must read result files dynamically — no hand-entered cons
    staged scan, χ²/ndf + likelihood GoF; the 11.12 g/cm² value is a scan start,
    not a calibrated answer.
 7. **Single-stave optical calibration (#796)** — deposited-E vs photons/PE,
-   resolution/bias, collection efficiency, attenuation vs position, arrival-time
-   vs position, proton/deuteron overlays, Birks scan, reflector/PDE/coupling/
-   far-end/saturation systematics.
+   held-out Edep reconstruction (PAPER-A09 / #1297), resolution/bias, collection
+   efficiency, attenuation vs position, arrival-time vs position,
+   proton/deuteron overlays, Birks scan, reflector/PDE/coupling/far-end/saturation
+   systematics.
 8. **What MC/ML learns and where it fails** — traditional baseline first, fair ML
    comparator, run-family splits (no leakage).
 9. **Systematic uncertainty & external-data limitations** — see `limitations.md`.

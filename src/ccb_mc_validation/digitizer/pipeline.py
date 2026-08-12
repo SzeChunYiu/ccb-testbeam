@@ -520,33 +520,25 @@ class DigitizerPipeline:
         for _identity, current, ctx_hit in prepared:
             light = ctx_hit.get("light_curve_mev")
             if light is None:
-                edep = self._require_field(
-                    current, "edep_mev", event_id=event_id, channel_id=channel_id
-                )
-                t = self._require_field(
-                    current, "time_ns", event_id=event_id, channel_id=channel_id
-                )
-                light = integrate_samples(
-                    edep,
-                    t,
-                    sample_spacing_ns=self.sample_spacing_ns,
-                    n_samples=self.n_samples,
-                    tau_rise_ns=self.tau_rise_ns,
-                    tau_decay_ns=self.tau_decay_ns,
+                raise ValueError(
+                    "digitizer hit missing light_curve_mev after effective stage "
+                    f"graph {self.effective_stages!r}; refusing hidden "
+                    "integrate_samples fallback (#1077)"
                 )
             analog_adc_sum += apply_gain(light, self.electronics)
 
         waveform = analog_adc_sum + self.electronics.pedestal_adc
         waveform = add_noise(waveform, stage_rng["electronics"], self.electronics)
         adc_final, sat_final = quantize_adc(waveform, self.electronics)
-        # Prefer config_types graph for run provenance (lane08 mandatory_final).
-        graph = resolve_stage_graph(list(self.stages))
+        # Frozen at construction: self.stages is the effective executor list and
+        # would erase mandatory_inserted if re-resolved here (#1077).
+        graph = dict(self.stage_graph_meta)
         kb_cm = None if not self.apply_birks else (
             None if self.birks_kB_cm_per_MeV is None else float(self.birks_kB_cm_per_MeV)
         )
         kb_mm = None if kb_cm is None else kb_cm * 10.0
         dig_hash = digitizer_config_sha256(
-            resolved_stages=list(graph.get("effective_stages", self.stages)),
+            resolved_stages=list(self.effective_stages),
             apply_birks=bool(self.apply_birks),
             birks_kB_mm_per_MeV=kb_mm,
             n_samples=int(self.n_samples),
@@ -556,7 +548,7 @@ class DigitizerPipeline:
             pedestal_adc=float(self.electronics.pedestal_adc),
         )
         # Lane 04 object graph adds graph_sha256; merge without dropping lane08 keys.
-        lane04 = resolve_lane04_stage_graph(list(self.stages)).as_dict()
+        lane04 = resolve_lane04_stage_graph(list(self.effective_stages)).as_dict()
         stage_graph = dict(graph)
         stage_graph.update({k: v for k, v in lane04.items() if k not in stage_graph})
         return {

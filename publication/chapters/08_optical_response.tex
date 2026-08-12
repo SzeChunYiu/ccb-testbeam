@@ -1,0 +1,25 @@
+\section{Monte Carlo prediction of light collection and transport}
+
+\subsection{Stage-resolved response}
+
+The optical model should report separately the production of scintillation photons, WLS absorption, WLS re-emission, guided/transported photons, sensor arrivals, primary SiPM avalanches, correlated avalanches, charge and ADC response. Useful conditional efficiencies include
+\[
+\epsilon_{\rm WLS\,capture}=\frac{N_{\gamma,\rm WLS\,abs}}{N_{\gamma,\rm scint}},\quad
+\epsilon_{\rm transport}=\frac{N_{\gamma,\rm sensor}}{N_{\gamma,\rm WLS\,emit}},\quad
+\epsilon_{\rm PDE}=\frac{N_{\rm primary\,aval}}{N_{\gamma,\rm sensor}}.
+\]
+These ratios should be studied versus hit position, species/deposit regime and model nuisance parameters.
+
+\subsection{Historical July calibration grid}
+
+The July single-stave grid contains five proton/deuteron points and historically produced an order-ten detected-PE per visible-MeV scale. It is useful as a regression/history object, but it is not the nominal publication model.
+
+\begin{publicationhold}
+The exact July calibration revision predates multiple source-level fixes. In particular, inner and outer fibre claddings both used the shared NIST \texttt{G4\_PLEXIGLASS} material and attached different refractive-index tables, allowing the later assignment to overwrite the intended inner-clad optical properties. The campaign also predates explicit WLS fluorescence-yield/multiplicity, separated scintillator/Y-11 attenuation controls, corrected reflector-surface semantics, source-bound fibre-to-SiPM interface modelling and a single canonical SiPM response state. Its historical ``PE/MeV'' denominator is the Birks-visible variable, not unquenched deposited energy. Issue \#1303 therefore requires regeneration before any numerical light-yield result is promoted.
+\end{publicationhold}
+
+The historical values and plots remain available under \texttt{publication/figures/gated/} and the source report for correction history only.
+
+\subsection{Required nominal optical campaign}
+
+A publication campaign must bind a clean source revision and build receipt; preserve \(E_{\rm raw}\) and \(E_{\rm vis}\) separately; record stage counters; use the physical one-fibre/one-end channel with other ends only as controls; scan or state the support in longitudinal/transverse position and angle; and propagate independent high-impact optical nuisance families rather than re-tuning the total mean response back to a historical target.

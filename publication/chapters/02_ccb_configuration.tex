@@ -1,0 +1,25 @@
+\section{CCB test-beam configuration}
+
+Hardware facts, simulation-configuration values and unresolved legacy narratives are separated in the publication hardware bill of materials. Each quantity should carry one of four statuses: \status{MEASURED}, \status{DESIGN\_SPEC}, \status{SIM\_CONFIG}, or \status{UNKNOWN\_EXTERNAL}. Simulation agreement is not hardware provenance.
+
+\subsection{Beam, target and two-arm layout}
+
+The reviewed CCB simulation configuration uses a 190 MeV incident proton beam and a deuterated target. The model contains the elastic channel
+\[
+  p+d\rightarrow p+d,
+\]
+and transports the outgoing charged particles toward two scintillator arms. Historical source configuration uses a nominal geometry-distance parameter of 109 cm, with the B stack near \(-38^{\circ}\) and the A stack near \(+71.5^{\circ}\), and contains eight B bars and four A bars. These values are publication-safe as simulation/configuration quantities; they are not survey-grade metrology until matched to primary collaboration records.
+
+The compact detector simulation contains the target, scintillator stack volumes, trigger-related volumes and ProtoTPC components. Source review shows that it is useful for first-order acceptance and truth-energy-deposit studies but does not yet represent every passive material relevant to precision stopping predictions. Wrapping, supports, photosensor boards, cabling, dead layers and survey uncertainties must therefore be treated explicitly when the paper makes material-budget claims.
+
+\PaperFigure{figures/illustrative/geometry_tof.png}{0.92}{CCB two-arm geometry schematic. The current package treats this as illustrative/configuration evidence, not survey metrology.}{ILLUSTRATIVE; source-bound survey figure still required.}
+
+\subsection{B-stack readout and run families}
+
+The analysed data use four B-stack channels labelled B2, B4, B6 and B8. The simulation contains eight physical B layers, so the data represent alternating longitudinal samples. The exact offset between detector labels and Geant4 copy/layer IDs remains a publication blocker: historical issue \#869 argued for layers 1/3/5/7 while later paper/BOM material uses 0/2/4/6. Only the every-other-layer structure is currently robust. A final data-matched MC figure must import a single source-bound detector map rather than hard-code either convention.
+
+The current analysis configuration separates Sample-I and Sample-II run families and also separates calibration and analysis roles. However, the exact hardware trigger thresholds, coincidence logic, prescales and run-purpose record remain partly external. The safest beam-data language is therefore \emph{Sample-I/Sample-II run-family comparison}. The MC selection based on first-stack-layer charged hits is retained only as \evidence{MC\_TRIGGER\_PROXY} until the hardware response is modelled or demonstrated equivalent.
+
+\begin{publicationhold}
+Do not use the words ``trigger efficiency'', ``hardware-trigger reproduction'', or quantitative trigger-induced species fractions until issues \#962, \#1045 and \#1296 close on the same run/hardware truth surface.
+\end{publicationhold}

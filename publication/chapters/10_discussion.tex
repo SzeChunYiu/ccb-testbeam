@@ -1,0 +1,11 @@
+\section{Discussion}
+
+The CCB beam data demonstrate that the scintillator stack resolves markedly different longitudinal selected populations. This is the strongest direct experimental observation currently available for the paper. Its interpretation as a trigger effect is plausible and consistent with the intended run families, but the publication text should remain at run-family level until the hardware trigger/run log is source-bound.
+
+Sparse longitudinal sampling is a central design lesson. An alternating four-channel readout can retain stopping-depth information while losing the local sequence of energy loss near the Bragg rise. This creates a real aliasing mechanism: changes in energy, angle or passive material can move the high-\(dE/dx\) region across the readout phase. A full detector should therefore instrument sufficient longitudinal positions, or otherwise constrain the missing layer response, before using a sparse \(\Delta E\)--\(E\) band as a high-precision PID observable.
+
+The timing analysis gives a complementary negative result. The located waveform schema is adequate for amplitude and coarse timing diagnostics but not for an intrinsic sub-nanosecond stave-resolution measurement. This result is scientifically useful because it states exactly what must be recorded or calibrated in a future campaign: sufficient waveform window, source-bound sampling/timebase, stable component assignment and an independent timing reference/covariance model.
+
+The optical-model audit shows why a detector-response paper must distinguish a causal response graph from a tuned total efficiency. WLS fluorescence yield, trapping/attenuation, end coupling, PDE, microcell occupancy/recovery, correlated noise and electronics can compensate one another in the mean. Stage-resolved counters, phase-space scans and independent bench/hardware constraints are more informative than matching one PE/ADC number.
+
+The current publication package intentionally treats invalidated results as \emph{gated objects} rather than deleting them. This preserves provenance and makes reviewer-visible the difference between a historical result, a reproducible diagnostic and an authorising measurement.

@@ -219,6 +219,22 @@ SYST-BUDGET:                 # CL-026 -- systematic uncertainty budget
     covariance, hash-bound inputs, or coverage study. Component estimates are not
     blanket authorisation (CL-026).
 
+EDEP-RECO-MC:                # PAPER-A09 / #1297 -- held-out Edep reconstruction
+  result: reports/paper_a09_heldout_edep_reconstruction/result.json
+  value_key: summary/heldout_sigma68_fraction
+  source_figure: docs/figures/paper/edep_reconstruction_heldout.png
+  claim_id: CL-029
+  evidence_class: MC_MODEL_DEPENDENT
+  status: MC_MODEL_DEPENDENT
+  kind: quantitative
+  caption: >-
+    Held-out single-stave deposited-energy reconstruction on the SHA-256-bound
+    optical calibration grid. Pooled linear PE-to-Edep fit on train runs
+    (deuteron_70, proton_100, proton_140); held-out deuteron_110 + proton_60:
+    median bias +10.1%, sigma68 8.9%, RMS 17.8%, tail fraction 15% (|r|>0.20).
+    MODEL-DEPENDENT OPTICAL MC; NOT a beam-data energy calibration. Optical/SiPM
+    nuisance envelope NOT_EVALUATED pending PAPER-A07/A08.
+
 # === Synthesis figures (cluster E) -- status mirrors the claim dashboard ======
 
 CLAIM-DASHBOARD:

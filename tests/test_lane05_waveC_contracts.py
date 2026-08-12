@@ -192,8 +192,8 @@ def test_986_coating_thickness_changes_geometry_hash():
 
 def test_986_canonical_includes_schema_and_named_fields():
     d = digests_for_nominal()
-    assert "schema=geometry_v2" in d["geometry_canonical"]
-    assert "kCoatingThk_mm=" in d["geometry_canonical"]
+    assert d["geometry_canonical"].startswith("schema_version=2.0.0;")
+    assert "coating_thk_mm=" in d["geometry_canonical"]
     assert "far_end_mode=" in d["geometry_canonical"]
     assert "birks_kB" not in d["geometry_canonical"]
     assert "schema=physics_v1" in d["physics_canonical"]

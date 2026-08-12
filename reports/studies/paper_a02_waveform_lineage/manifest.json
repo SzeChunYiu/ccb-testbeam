@@ -1,0 +1,1334 @@
+{
+  "audit_id": "PAPER-A02-993",
+  "canonical_table": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/1781028640.1299.266407ae/s00_selected_b_pulses.csv.gz",
+  "config_path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/configs/data_side_s00_rebuild.yaml",
+  "event_channel_sample_closure": {
+    "area_canonical_uses_18_sample_window": true,
+    "area_match_does_not_prove_lineage": true,
+    "baseline_amplitude_peak_mismatch_count": 45,
+    "baseline_amplitude_peak_mismatches": [
+      {
+        "canonical_amplitude": 3575.0,
+        "canonical_baseline": 7033.0,
+        "canonical_peak_sample": 17,
+        "eventno": 404922,
+        "raw_amplitude": 1916.5,
+        "raw_baseline": 5125.5,
+        "raw_peak_sample": 15,
+        "run": 31,
+        "stave": "B4"
+      },
+      {
+        "canonical_amplitude": 8223.5,
+        "canonical_baseline": 7042.5,
+        "canonical_peak_sample": 5,
+        "eventno": 600480,
+        "raw_amplitude": 7415.0,
+        "raw_baseline": 7851.0,
+        "raw_peak_sample": 9,
+        "run": 36,
+        "stave": "B4"
+      },
+      {
+        "canonical_amplitude": 3715.0,
+        "canonical_baseline": 7132.0,
+        "canonical_peak_sample": 5,
+        "eventno": 608896,
+        "raw_amplitude": 3882.5,
+        "raw_baseline": 6964.5,
+        "raw_peak_sample": 9,
+        "run": 36,
+        "stave": "B4"
+      },
+      {
+        "canonical_amplitude": 2897.0,
+        "canonical_baseline": 10486.0,
+        "canonical_peak_sample": 3,
+        "eventno": 654510,
+        "raw_amplitude": 4376.5,
+        "raw_baseline": 9006.5,
+        "raw_peak_sample": 7,
+        "run": 37,
+        "stave": "B4"
+      },
+      {
+        "canonical_amplitude": 2065.0,
+        "canonical_baseline": 7006.0,
+        "canonical_peak_sample": 10,
+        "eventno": 658300,
+        "raw_amplitude": 463.0,
+        "raw_baseline": 8608.0,
+        "raw_peak_sample": 14,
+        "run": 37,
+        "stave": "B4"
+      },
+      {
+        "canonical_amplitude": 3549.5,
+        "canonical_baseline": 7026.5,
+        "canonical_peak_sample": 12,
+        "eventno": 686726,
+        "raw_amplitude": 3388.0,
+        "raw_baseline": 5936.0,
+        "raw_peak_sample": 15,
+        "run": 39,
+        "stave": "B4"
+      },
+      {
+        "canonical_amplitude": 2725.5,
+        "canonical_baseline": 7031.5,
+        "canonical_peak_sample": 6,
+        "eventno": 734176,
+        "raw_amplitude": 3228.5,
+        "raw_baseline": 6528.5,
+        "raw_peak_sample": 10,
+        "run": 41,
+        "stave": "B4"
+      },
+      {
+        "canonical_amplitude": 3281.0,
+        "canonical_baseline": 7049.0,
+        "canonical_peak_sample": 10,
+        "eventno": 738771,
+        "raw_amplitude": 4121.5,
+        "raw_baseline": 6208.5,
+        "raw_peak_sample": 14,
+        "run": 41,
+        "stave": "B4"
+      },
+      {
+        "canonical_amplitude": 1864.0,
+        "canonical_baseline": 6907.0,
+        "canonical_peak_sample": 9,
+        "eventno": 2420,
+        "raw_amplitude": 1277.0,
+        "raw_baseline": 7880.0,
+        "raw_peak_sample": 7,
+        "run": 44,
+        "stave": "B6"
+      },
+      {
+        "canonical_amplitude": 1282.0,
+        "canonical_baseline": 6905.0,
+        "canonical_peak_sample": 7,
+        "eventno": 44417,
+        "raw_amplitude": 1174.5,
+        "raw_baseline": 7856.5,
+        "raw_peak_sample": 7,
+        "run": 45,
+        "stave": "B6"
+      },
+      {
+        "canonical_amplitude": 3266.0,
+        "canonical_baseline": 7173.0,
+        "canonical_peak_sample": 4,
+        "eventno": 123112,
+        "raw_amplitude": 1076.0,
+        "raw_baseline": 9363.0,
+        "raw_peak_sample": 8,
+        "run": 49,
+        "stave": "B4"
+      },
+      {
+        "canonical_amplitude": 1418.5,
+        "canonical_baseline": 6998.5,
+        "canonical_peak_sample": 17,
+        "eventno": 123779,
+        "raw_amplitude": 830.0,
+        "raw_baseline": 8637.0,
+        "raw_peak_sample": 0,
+        "run": 49,
+        "stave": "B4"
+      },
+      {
+        "canonical_amplitude": 1010.0,
+        "canonical_baseline": 9936.0,
+        "canonical_peak_sample": 3,
+        "eventno": 215467,
+        "raw_amplitude": 4356.0,
+        "raw_baseline": 6590.0,
+        "raw_peak_sample": 7,
+        "run": 53,
+        "stave": "B4"
+      },
+      {
+        "canonical_amplitude": 2054.5,
+        "canonical_baseline": 6998.5,
+        "canonical_peak_sample": 17,
+        "eventno": 353590,
+        "raw_amplitude": 569.0,
+        "raw_baseline": 8042.0,
+        "raw_peak_sample": 0,
+        "run": 56,
+        "stave": "B4"
+      },
+      {
+        "canonical_amplitude": 2964.5,
+        "canonical_baseline": 7027.5,
+        "canonical_peak_sample": 8,
+        "eventno": 429755,
+        "raw_amplitude": 2354.0,
+        "raw_baseline": 7638.0,
+        "raw_peak_sample": 12,
+        "run": 59,
+        "stave": "B4"
+      },
+      {
+        "canonical_amplitude": 1352.0,
+        "canonical_baseline": 8138.0,
+        "canonical_peak_sample": 4,
+        "eventno": 431960,
+        "raw_amplitude": 59.5,
+        "raw_baseline": 9613.5,
+        "raw_peak_sample": 3,
+        "run": 59,
+        "stave": "B4"
+      },
+      {
+        "canonical_amplitude": 3677.5,
+        "canonical_baseline": 6914.5,
+        "canonical_peak_sample": 5,
+        "eventno": 436882,
+        "raw_amplitude": 2127.5,
+        "raw_baseline": 7126.5,
+        "raw_peak_sample": 11,
+        "run": 59,
+        "stave": "B8"
+      },
+      {
+        "canonical_amplitude": 3896.0,
+        "canonical_baseline": 7004.0,
+        "canonical_peak_sample": 7,
+        "eventno": 457021,
+        "raw_amplitude": 2130.5,
+        "raw_baseline": 8769.5,
+        "raw_peak_sample": 11,
+        "run": 59,
+        "stave": "B4"
+      },
+      {
+        "canonical_amplitude": 3505.5,
+        "canonical_baseline": 6905.5,
+        "canonical_peak_sample": 8,
+        "eventno": 457152,
+        "raw_amplitude": 2607.0,
+        "raw_baseline": 6754.0,
+        "raw_peak_sample": 15,
+        "run": 59,
+        "stave": "B6"
+      },
+      {
+        "canonical_amplitude": 3652.0,
+        "canonical_baseline": 7033.0,
+        "canonical_peak_sample": 7,
+        "eventno": 457333,
+        "raw_amplitude": 2731.5,
+        "raw_baseline": 7953.5,
+        "raw_peak_sample": 11,
+        "run": 59,
+        "stave": "B4"
+      },
+      {
+        "canonical_amplitude": 3120.5,
+        "canonical_baseline": 7046.5,
+        "canonical_peak_sample": 11,
+        "eventno": 459452,
+        "raw_amplitude": 1181.5,
+        "raw_baseline": 8985.5,
+        "raw_peak_sample": 15,
+        "run": 59,
+        "stave": "B4"
+      },
+      {
+        "canonical_amplitude": 1906.5,
+        "canonical_baseline": 8268.5,
+        "canonical_peak_sample": 3,
+        "eventno": 471339,
+        "raw_amplitude": 717.5,
+        "raw_baseline": 9457.5,
+        "raw_peak_sample": 7,
+        "run": 60,
+        "stave": "B4"
+      },
+      {
+        "canonical_amplitude": 1424.0,
+        "canonical_baseline": 10645.0,
+        "canonical_peak_sample": 2,
+        "eventno": 485608,
+        "raw_amplitude": 4879.0,
+        "raw_baseline": 7190.0,
+        "raw_peak_sample": 14,
+        "run": 60,
+        "stave": "B8"
+      },
+      {
+        "canonical_amplitude": 2495.0,
+        "canonical_baseline": 7409.0,
+        "canonical_peak_sample": 4,
+        "eventno": 487374,
+        "raw_amplitude": 1587.5,
+        "raw_baseline": 8316.5,
+        "raw_peak_sample": 8,
+        "run": 60,
+        "stave": "B4"
+      },
+      {
+        "canonical_amplitude": 3314.0,
+        "canonical_baseline": 6922.0,
+        "canonical_peak_sample": 10,
+        "eventno": 494608,
+        "raw_amplitude": 1967.5,
+        "raw_baseline": 6777.5,
+        "raw_peak_sample": 7,
+        "run": 60,
+        "stave": "B6"
+      },
+      {
+        "canonical_amplitude": 2983.0,
+        "canonical_baseline": 6763.0,
+        "canonical_peak_sample": 16,
+        "eventno": 501719,
+        "raw_amplitude": 2729.0,
+        "raw_baseline": 6763.0,
+        "raw_peak_sample": 15,
+        "run": 61,
+        "stave": "B2"
+      },
+      {
+        "canonical_amplitude": 4881.0,
+        "canonical_baseline": 7012.0,
+        "canonical_peak_sample": 14,
+        "eventno": 504546,
+        "raw_amplitude": 4292.5,
+        "raw_baseline": 6360.5,
+        "raw_peak_sample": 12,
+        "run": 61,
+        "stave": "B4"
+      },
+      {
+        "canonical_amplitude": 3172.0,
+        "canonical_baseline": 7004.0,
+        "canonical_peak_sample": 11,
+        "eventno": 506793,
+        "raw_amplitude": 1066.0,
+        "raw_baseline": 9110.0,
+        "raw_peak_sample": 15,
+        "run": 61,
+        "stave": "B4"
+      },
+      {
+        "canonical_amplitude": 2662.5,
+        "canonical_baseline": 7418.5,
+        "canonical_peak_sample": 7,
+        "eventno": 508953,
+        "raw_amplitude": 1287.5,
+        "raw_baseline": 8793.5,
+        "raw_peak_sample": 15,
+        "run": 61,
+        "stave": "B6"
+      },
+      {
+        "canonical_amplitude": 3935.0,
+        "canonical_baseline": 7536.0,
+        "canonical_peak_sample": 4,
+        "eventno": 509265,
+        "raw_amplitude": 2951.5,
+        "raw_baseline": 8519.5,
+        "raw_peak_sample": 12,
+        "run": 61,
+        "stave": "B6"
+      },
+      {
+        "canonical_amplitude": 1396.0,
+        "canonical_baseline": 6930.0,
+        "canonical_peak_sample": 9,
+        "eventno": 532653,
+        "raw_amplitude": 886.0,
+        "raw_baseline": 8212.0,
+        "raw_peak_sample": 7,
+        "run": 61,
+        "stave": "B6"
+      },
+      {
+        "canonical_amplitude": 3001.0,
+        "canonical_baseline": 7066.0,
+        "canonical_peak_sample": 10,
+        "eventno": 537323,
+        "raw_amplitude": 1008.0,
+        "raw_baseline": 9059.0,
+        "raw_peak_sample": 14,
+        "run": 61,
+        "stave": "B4"
+      },
+      {
+        "canonical_amplitude": 3300.5,
+        "canonical_baseline": 7056.5,
+        "canonical_peak_sample": 7,
+        "eventno": 541787,
+        "raw_amplitude": 1594.5,
+        "raw_baseline": 8762.5,
+        "raw_peak_sample": 11,
+        "run": 62,
+        "stave": "B4"
+      },
+      {
+        "canonical_amplitude": 2805.5,
+        "canonical_baseline": 7046.5,
+        "canonical_peak_sample": 8,
+        "eventno": 547295,
+        "raw_amplitude": 604.5,
+        "raw_baseline": 9247.5,
+        "raw_peak_sample": 12,
+        "run": 62,
+        "stave": "B4"
+      },
+      {
+        "canonical_amplitude": 4053.0,
+        "canonical_baseline": 7010.0,
+        "canonical_peak_sample": 8,
+        "eventno": 550477,
+        "raw_amplitude": 1952.5,
+        "raw_baseline": 9110.5,
+        "raw_peak_sample": 12,
+        "run": 62,
+        "stave": "B4"
+      },
+      {
+        "canonical_amplitude": 2730.0,
+        "canonical_baseline": 6929.0,
+        "canonical_peak_sample": 9,
+        "eventno": 552856,
+        "raw_amplitude": 1134.0,
+        "raw_baseline": 8018.0,
+        "raw_peak_sample": 7,
+        "run": 62,
+        "stave": "B6"
+      },
+      {
+        "canonical_amplitude": 2326.5,
+        "canonical_baseline": 7051.5,
+        "canonical_peak_sample": 9,
+        "eventno": 554559,
+        "raw_amplitude": 89.0,
+        "raw_baseline": 9375.0,
+        "raw_peak_sample": 3,
+        "run": 62,
+        "stave": "B4"
+      },
+      {
+        "canonical_amplitude": 2490.5,
+        "canonical_baseline": 6946.5,
+        "canonical_peak_sample": 8,
+        "eventno": 569014,
+        "raw_amplitude": 2448.0,
+        "raw_baseline": 6515.0,
+        "raw_peak_sample": 15,
+        "run": 62,
+        "stave": "B6"
+      },
+      {
+        "canonical_amplitude": 3321.0,
+        "canonical_baseline": 7009.0,
+        "canonical_peak_sample": 8,
+        "eventno": 578748,
+        "raw_amplitude": 2207.0,
+        "raw_baseline": 8123.0,
+        "raw_peak_sample": 12,
+        "run": 63,
+        "stave": "B4"
+      },
+      {
+        "canonical_amplitude": 4279.5,
+        "canonical_baseline": 6942.5,
+        "canonical_peak_sample": 6,
+        "eventno": 586976,
+        "raw_amplitude": 2251.5,
+        "raw_baseline": 6984.5,
+        "raw_peak_sample": 11,
+        "run": 63,
+        "stave": "B8"
+      },
+      {
+        "canonical_amplitude": 5112.5,
+        "canonical_baseline": 7035.5,
+        "canonical_peak_sample": 7,
+        "eventno": 600579,
+        "raw_amplitude": 3561.0,
+        "raw_baseline": 8587.0,
+        "raw_peak_sample": 11,
+        "run": 63,
+        "stave": "B4"
+      },
+      {
+        "canonical_amplitude": 4345.0,
+        "canonical_baseline": 6898.0,
+        "canonical_peak_sample": 9,
+        "eventno": 608235,
+        "raw_amplitude": 1721.0,
+        "raw_baseline": 7283.0,
+        "raw_peak_sample": 0,
+        "run": 63,
+        "stave": "B8"
+      },
+      {
+        "canonical_amplitude": 2743.5,
+        "canonical_baseline": 7010.5,
+        "canonical_peak_sample": 8,
+        "eventno": 637815,
+        "raw_amplitude": 557.0,
+        "raw_baseline": 9197.0,
+        "raw_peak_sample": 12,
+        "run": 64,
+        "stave": "B4"
+      },
+      {
+        "canonical_amplitude": 3743.5,
+        "canonical_baseline": 7945.5,
+        "canonical_peak_sample": 4,
+        "eventno": 644783,
+        "raw_amplitude": 3326.0,
+        "raw_baseline": 8101.0,
+        "raw_peak_sample": 15,
+        "run": 64,
+        "stave": "B8"
+      },
+      {
+        "canonical_amplitude": 2639.5,
+        "canonical_baseline": 6927.5,
+        "canonical_peak_sample": 8,
+        "eventno": 663502,
+        "raw_amplitude": 26.0,
+        "raw_baseline": 9325.0,
+        "raw_peak_sample": 7,
+        "run": 65,
+        "stave": "B6"
+      }
+    ],
+    "canonical_table": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/1781028640.1299.266407ae/s00_selected_b_pulses.csv.gz",
+    "disputed_samples_16_17_present_in_raw": false,
+    "disputed_tail_note": "LUNARC HRDv rows contain exactly 16 samples/channel (indices 0\u201315). Samples 16\u201317 referenced by historical 18-sample configs are absent.",
+    "records_checked": 500,
+    "sample_size_requested": 500,
+    "unresolved_wanted_keys": []
+  },
+  "generated_at_utc": "2026-08-12T08:45:24+00:00",
+  "historical_reference_manifests": {
+    "laptop_s00a_raw_run31_sha256": "9921aa75c062d0b8994573299a201cbe2725673319fdf1b8cffb711fb9adcea7",
+    "laptop_s00a_sorted_run31_sha256": "3544baa9918bf87ba04bde091b40d518cb40cec3d2380ab64eaeff5280cd73bf",
+    "source": "reports/1780997954.15097.28a25ecb__s00a_sorted_hrdmax_semantics/manifest.json"
+  },
+  "hypothesis_tests": {
+    "batch_reshape_9x128_to_8x144": {
+      "accepted": false,
+      "falsifier": "per-event 144-word contract passes without boundary mixing",
+      "hypothesis": "nine 8\u00d716 events batch-reshape into eight 8\u00d718 pseudo-events",
+      "observed": "144-word contract fails on every event; 128-word contract passes"
+    },
+    "distinct_acquisition_or_storage_products": {
+      "accepted": true,
+      "falsifier": "byte-identical inputs plus reversible per-event word mapping",
+      "hypothesis": "8\u00d716 LUNARC raw and 8\u00d718 historical laptop/sorted products are separate schemas",
+      "observed": "different immutable SHA-256 for run 31; LUNARC exclusively 128-word events; historical configs/manifests declare 144-word reshape on different mounts"
+    },
+    "identical_byte_stream_as_laptop_root": {
+      "accepted": false,
+      "falsifier": "SHA-256 equality",
+      "hypothesis": "LUNARC ccb_data hrdb_run_0031.root equals laptop data/root/root file",
+      "observed": {
+        "equal": false,
+        "laptop_run31_sha256": "9921aa75c062d0b8994573299a201cbe2725673319fdf1b8cffb711fb9adcea7",
+        "lunarc_run31_sha256": "0986c8263d7445eda3633578fc606902d487a6c8ffb4b4ccd68336e6d140c268"
+      }
+    },
+    "padding_or_truncation_to_18": {
+      "accepted": false,
+      "falsifier": "any event word count other than exactly 128",
+      "hypothesis": "LUNARC raw HRDv is an 8\u00d716 payload padded/truncated to 8\u00d718",
+      "observed": "all scanned events are 128 words on every paper run"
+    },
+    "reversible_16_to_18_without_external_producer": {
+      "accepted": false,
+      "falsifier": "demonstrate exact mapping for matched events/channels/samples",
+      "hypothesis": "samples 16\u201317 are recoverable from LUNARC raw bytes alone",
+      "observed": "samples 16\u201317 absent; sorted-b 18-sample producer not on data host"
+    }
+  },
+  "paper_runs": [
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    39,
+    40,
+    41,
+    42,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65
+  ],
+  "raw_dir": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root",
+  "raw_input_digest_schema": "same-open-stream-v1",
+  "raw_input_missing_runs": [],
+  "raw_input_sha256": [
+    {
+      "bytes": 10493094,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0031.root",
+      "run": 31,
+      "sha256": "0986c8263d7445eda3633578fc606902d487a6c8ffb4b4ccd68336e6d140c268",
+      "source_ctime_ns": 1766079266421638824,
+      "source_dev": 65,
+      "source_ino": 521848030343,
+      "source_mtime_ns": 1766079266421638824,
+      "source_nlink": 1
+    },
+    {
+      "bytes": 10955325,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0032.root",
+      "run": 32,
+      "sha256": "6a070aa1881d39ba660f566496503b6e96b104af3594d04ce8ffbfe586820693",
+      "source_ctime_ns": 1766079266529640670,
+      "source_dev": 65,
+      "source_ino": 521848030344,
+      "source_mtime_ns": 1766079266529640670,
+      "source_nlink": 1
+    },
+    {
+      "bytes": 15148919,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0033.root",
+      "run": 33,
+      "sha256": "f08c8e8cf9a6ff53deb1b3a58413e009a00ffbaf5ed13e1cda10304619bcd87a",
+      "source_ctime_ns": 1766079266680643253,
+      "source_dev": 65,
+      "source_ino": 521848030620,
+      "source_mtime_ns": 1766079266680643253,
+      "source_nlink": 1
+    },
+    {
+      "bytes": 10553098,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0034.root",
+      "run": 34,
+      "sha256": "a46d1ef0d4e40a910868b444a0e045cce6ce47937e51385993112534f15bc95c",
+      "source_ctime_ns": 1766079266780644963,
+      "source_dev": 65,
+      "source_ino": 521848030621,
+      "source_mtime_ns": 1766079266780644963,
+      "source_nlink": 1
+    },
+    {
+      "bytes": 7020079,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0035.root",
+      "run": 35,
+      "sha256": "5e21d618e06973a3dfcf41ec0e574c8cfcc226a9cbb69d1ed76efe0b4ab4cd44",
+      "source_ctime_ns": 1766079266850646160,
+      "source_dev": 65,
+      "source_ino": 521848030623,
+      "source_mtime_ns": 1766079266850646160,
+      "source_nlink": 1
+    },
+    {
+      "bytes": 5561341,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0036.root",
+      "run": 36,
+      "sha256": "f1d1cb893fa44be68dc9f7e16611473ab0bd6707d54a9cee431feec372d2d20f",
+      "source_ctime_ns": 1766079266905647101,
+      "source_dev": 65,
+      "source_ino": 521848030628,
+      "source_mtime_ns": 1766079266905647101,
+      "source_nlink": 1
+    },
+    {
+      "bytes": 12960056,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0037.root",
+      "run": 37,
+      "sha256": "80599099bbebd7a5cd7f3627efce2606b23ce92e81de5958aa200d0e13b741f6",
+      "source_ctime_ns": 1766079267026649170,
+      "source_dev": 65,
+      "source_ino": 521848030629,
+      "source_mtime_ns": 1766079267026649170,
+      "source_nlink": 1
+    },
+    {
+      "bytes": 7780933,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0039.root",
+      "run": 39,
+      "sha256": "7c414dc13e0dec570ebaac440bb89d178d17b3ba9b97581658d6fe4a82382d26",
+      "source_ctime_ns": 1766079267115650690,
+      "source_dev": 65,
+      "source_ino": 521848030630,
+      "source_mtime_ns": 1766079267115650690,
+      "source_nlink": 1
+    },
+    {
+      "bytes": 8356389,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0040.root",
+      "run": 40,
+      "sha256": "ea09d9a8e697acaa18ce015790ac4fac0b390c4ec79d395fdb77c2806b84b7cb",
+      "source_ctime_ns": 1766079267196652077,
+      "source_dev": 65,
+      "source_ino": 521848030651,
+      "source_mtime_ns": 1766079267196652077,
+      "source_nlink": 1
+    },
+    {
+      "bytes": 8740211,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0041.root",
+      "run": 41,
+      "sha256": "03db1e99751eceda45d690f288335e9b5fca024f277b142d032cc90c7a63ad0b",
+      "source_ctime_ns": 1766079267282653548,
+      "source_dev": 65,
+      "source_ino": 521848030652,
+      "source_mtime_ns": 1766079267282653548,
+      "source_nlink": 1
+    },
+    {
+      "bytes": 8810116,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0042.root",
+      "run": 42,
+      "sha256": "a710fc1102d1d9a0adf05db34760fe7edc7c2b8530df0d8bb27873835d087f77",
+      "source_ctime_ns": 1766079267368655018,
+      "source_dev": 65,
+      "source_ino": 521848030653,
+      "source_mtime_ns": 1766079267368655018,
+      "source_nlink": 1
+    },
+    {
+      "bytes": 1107651,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0044.root",
+      "run": 44,
+      "sha256": "95bd440c14e82ed69299f199435d99f3f800f364cbf6643abd1152496ff1880e",
+      "source_ctime_ns": 1766079267389655377,
+      "source_dev": 65,
+      "source_ino": 521848034574,
+      "source_mtime_ns": 1766079267389655377,
+      "source_nlink": 1
+    },
+    {
+      "bytes": 12435030,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0045.root",
+      "run": 45,
+      "sha256": "761489cebcc71ede91fa9f3aceaa06f3ddd620a23d68f8f76151e82c3e12fe55",
+      "source_ctime_ns": 1766079267509657429,
+      "source_dev": 65,
+      "source_ino": 521848024077,
+      "source_mtime_ns": 1766079267509657429,
+      "source_nlink": 1
+    },
+    {
+      "bytes": 372275,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0046.root",
+      "run": 46,
+      "sha256": "13b5dd19686b579bee081c69ff317e5b54f8be684260828674bcf40e1c1945cf",
+      "source_ctime_ns": 1766079267520657617,
+      "source_dev": 65,
+      "source_ino": 521848024080,
+      "source_mtime_ns": 1766079267520657617,
+      "source_nlink": 1
+    },
+    {
+      "bytes": 2794293,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0047.root",
+      "run": 47,
+      "sha256": "92a8cdbb6fc4e3ef37bc8b95979274b7aa91d5dfeef1c15a5bd728c604741676",
+      "source_ctime_ns": 1766079267552658165,
+      "source_dev": 65,
+      "source_ino": 521848024081,
+      "source_mtime_ns": 1766079267552658165,
+      "source_nlink": 1
+    },
+    {
+      "bytes": 8109481,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0048.root",
+      "run": 48,
+      "sha256": "55a300b0335a2948c44d3ca68c64664ecdc0f01a258d10d6dfdf4d01c7b17d50",
+      "source_ctime_ns": 1766079267636659601,
+      "source_dev": 65,
+      "source_ino": 521848034575,
+      "source_mtime_ns": 1766079267636659601,
+      "source_nlink": 1
+    },
+    {
+      "bytes": 8298987,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0049.root",
+      "run": 49,
+      "sha256": "6967423d6a273cb8773bb556ff0438ddffeff141697d7063aceb0cacedd55f7f",
+      "source_ctime_ns": 1766079267728661174,
+      "source_dev": 65,
+      "source_ino": 521848034576,
+      "source_mtime_ns": 1766079267728661174,
+      "source_nlink": 1
+    },
+    {
+      "bytes": 11930230,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0050.root",
+      "run": 50,
+      "sha256": "94f53db2dda469cd69d9db63716c26f39555f53116cf82b724aab589aacbe17d",
+      "source_ctime_ns": 1766079267841663107,
+      "source_dev": 65,
+      "source_ino": 521848034577,
+      "source_mtime_ns": 1766079267841663107,
+      "source_nlink": 1
+    },
+    {
+      "bytes": 5447385,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0051.root",
+      "run": 51,
+      "sha256": "8053fe7ecd75bdb61b9819e90fe5a9ae656145cef7edd7def79ddfc65e7e0725",
+      "source_ctime_ns": 1766079267905664201,
+      "source_dev": 65,
+      "source_ino": 521848034578,
+      "source_mtime_ns": 1766079267905664201,
+      "source_nlink": 1
+    },
+    {
+      "bytes": 2654076,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0052.root",
+      "run": 52,
+      "sha256": "0ffbaf269dbb210d578d1ca13bbb10078c5598cdf3d3366bb4b4e1ebab7fdcdf",
+      "source_ctime_ns": 1766079267942664834,
+      "source_dev": 65,
+      "source_ino": 521848034579,
+      "source_mtime_ns": 1766079267942664834,
+      "source_nlink": 1
+    },
+    {
+      "bytes": 10572369,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0053.root",
+      "run": 53,
+      "sha256": "2e922a6807479f33ec159114cf82e8b5bf765109f3623a7d949ea48270c94a6d",
+      "source_ctime_ns": 1766079268049666662,
+      "source_dev": 65,
+      "source_ino": 521848034580,
+      "source_mtime_ns": 1766079268049666662,
+      "source_nlink": 1
+    },
+    {
+      "bytes": 9978701,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0054.root",
+      "run": 54,
+      "sha256": "919d53bf3774dbbed49e8a6dc07c912fad879f4808a77b4c2a2b6077b18a4df3",
+      "source_ctime_ns": 1766079268147668338,
+      "source_dev": 65,
+      "source_ino": 521848034581,
+      "source_mtime_ns": 1766079268147668338,
+      "source_nlink": 1
+    },
+    {
+      "bytes": 6449574,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0055.root",
+      "run": 55,
+      "sha256": "2210ae1b5b4e81b20314c87b583c315dc2c1402f0f78e6349138cf9f26219ac3",
+      "source_ctime_ns": 1766079268213669468,
+      "source_dev": 65,
+      "source_ino": 521848034582,
+      "source_mtime_ns": 1766079268213669468,
+      "source_nlink": 1
+    },
+    {
+      "bytes": 13769970,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0056.root",
+      "run": 56,
+      "sha256": "4ee17a947ca2269056027ad8d3e7efb2132141d2a19074386e5757f6d773ff08",
+      "source_ctime_ns": 1766079268342671674,
+      "source_dev": 65,
+      "source_ino": 521848034583,
+      "source_mtime_ns": 1766079268342671674,
+      "source_nlink": 1
+    },
+    {
+      "bytes": 7995229,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0057.root",
+      "run": 57,
+      "sha256": "1caee44500906ae5887686bbbfa611c3e8745922fe54006b3a0a073b34c03b7b",
+      "source_ctime_ns": 1766079268433673230,
+      "source_dev": 65,
+      "source_ino": 521848034584,
+      "source_mtime_ns": 1766079268433673230,
+      "source_nlink": 1
+    },
+    {
+      "bytes": 8659468,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0058.root",
+      "run": 58,
+      "sha256": "304f9b50c19cee6561aa091e2b9984f4962f1d78f641c77acbc3b4c97b0515b2",
+      "source_ctime_ns": 1766079268523674769,
+      "source_dev": 65,
+      "source_ino": 521848034585,
+      "source_mtime_ns": 1766079268523674769,
+      "source_nlink": 1
+    },
+    {
+      "bytes": 10822104,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0059.root",
+      "run": 59,
+      "sha256": "51b5d63edfa1b5679b070b7bb63387c1243054a57940ea68733960df85a31d84",
+      "source_ctime_ns": 1766079268636676701,
+      "source_dev": 65,
+      "source_ino": 521848034586,
+      "source_mtime_ns": 1766079268636676701,
+      "source_nlink": 1
+    },
+    {
+      "bytes": 9145997,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0060.root",
+      "run": 60,
+      "sha256": "20ba402ba484219627bd4d4fdd2bdf917af5a31c8a01fc3bf933f06cbe056762",
+      "source_ctime_ns": 1766079268733678360,
+      "source_dev": 65,
+      "source_ino": 521848034587,
+      "source_mtime_ns": 1766079268733678360,
+      "source_nlink": 1
+    },
+    {
+      "bytes": 9314446,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0061.root",
+      "run": 61,
+      "sha256": "9db4fcc0098ddb35dcbb268135529280c26eca6ba2ea96dfbb6096aff6f40296",
+      "source_ctime_ns": 1766079268835680104,
+      "source_dev": 65,
+      "source_ino": 521848034588,
+      "source_mtime_ns": 1766079268835680104,
+      "source_nlink": 1
+    },
+    {
+      "bytes": 9562318,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0062.root",
+      "run": 62,
+      "sha256": "bc43abbed1a2bbeacc5a9aeec20d127820caed835c07e4a4248a734fc29613d0",
+      "source_ctime_ns": 1766079268939681883,
+      "source_dev": 65,
+      "source_ino": 521848034589,
+      "source_mtime_ns": 1766079268939681883,
+      "source_nlink": 1
+    },
+    {
+      "bytes": 9448582,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0063.root",
+      "run": 63,
+      "sha256": "c43ed7992ce1e14d8b85e882fd4dbae955589bde6945cb57eafb8b9bf2521239",
+      "source_ctime_ns": 1766079269044683678,
+      "source_dev": 65,
+      "source_ino": 521848034590,
+      "source_mtime_ns": 1766079269044683678,
+      "source_nlink": 1
+    },
+    {
+      "bytes": 9006475,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0064.root",
+      "run": 64,
+      "sha256": "dc79a6d1b6c88872eaf011f36904597ce6fbaa273217e9f6965678fd76e46566",
+      "source_ctime_ns": 1766079269142685354,
+      "source_dev": 65,
+      "source_ino": 521848034591,
+      "source_mtime_ns": 1766079269142685354,
+      "source_nlink": 1
+    },
+    {
+      "bytes": 9526454,
+      "file": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0065.root",
+      "run": 65,
+      "sha256": "8d4c0d1b07453dee70b5cd6082ea3a28e8b4444873a733af86bcbeb95af19702",
+      "source_ctime_ns": 1766079269241687047,
+      "source_dev": 65,
+      "source_ino": 521848034592,
+      "source_mtime_ns": 1766079269241687047,
+      "source_nlink": 1
+    }
+  ],
+  "raw_input_sha256_complete": true,
+  "raw_input_sha256_count": 33,
+  "run_census": [
+    {
+      "contract_8x16_pass": true,
+      "contract_8x18_pass": false,
+      "events_scanned": 39990,
+      "length_histogram": {
+        "128": 39990
+      },
+      "malformed_events": 0,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0031.root",
+      "run": 31
+    },
+    {
+      "contract_8x16_pass": true,
+      "contract_8x18_pass": false,
+      "events_scanned": 41921,
+      "length_histogram": {
+        "128": 41921
+      },
+      "malformed_events": 0,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0032.root",
+      "run": 32
+    },
+    {
+      "contract_8x16_pass": true,
+      "contract_8x18_pass": false,
+      "events_scanned": 57173,
+      "length_histogram": {
+        "128": 57173
+      },
+      "malformed_events": 0,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0033.root",
+      "run": 33
+    },
+    {
+      "contract_8x16_pass": true,
+      "contract_8x18_pass": false,
+      "events_scanned": 39765,
+      "length_histogram": {
+        "128": 39765
+      },
+      "malformed_events": 0,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0034.root",
+      "run": 34
+    },
+    {
+      "contract_8x16_pass": true,
+      "contract_8x18_pass": false,
+      "events_scanned": 27786,
+      "length_histogram": {
+        "128": 27786
+      },
+      "malformed_events": 0,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0035.root",
+      "run": 35
+    },
+    {
+      "contract_8x16_pass": true,
+      "contract_8x18_pass": false,
+      "events_scanned": 21764,
+      "length_histogram": {
+        "128": 21764
+      },
+      "malformed_events": 0,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0036.root",
+      "run": 36
+    },
+    {
+      "contract_8x16_pass": true,
+      "contract_8x18_pass": false,
+      "events_scanned": 50513,
+      "length_histogram": {
+        "128": 50513
+      },
+      "malformed_events": 0,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0037.root",
+      "run": 37
+    },
+    {
+      "contract_8x16_pass": true,
+      "contract_8x18_pass": false,
+      "events_scanned": 30321,
+      "length_histogram": {
+        "128": 30321
+      },
+      "malformed_events": 0,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0039.root",
+      "run": 39
+    },
+    {
+      "contract_8x16_pass": true,
+      "contract_8x18_pass": false,
+      "events_scanned": 32613,
+      "length_histogram": {
+        "128": 32613
+      },
+      "malformed_events": 0,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0040.root",
+      "run": 40
+    },
+    {
+      "contract_8x16_pass": true,
+      "contract_8x18_pass": false,
+      "events_scanned": 33997,
+      "length_histogram": {
+        "128": 33997
+      },
+      "malformed_events": 0,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0041.root",
+      "run": 41
+    },
+    {
+      "contract_8x16_pass": true,
+      "contract_8x18_pass": false,
+      "events_scanned": 33972,
+      "length_histogram": {
+        "128": 33972
+      },
+      "malformed_events": 0,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0042.root",
+      "run": 42
+    },
+    {
+      "contract_8x16_pass": true,
+      "contract_8x18_pass": false,
+      "events_scanned": 4294,
+      "length_histogram": {
+        "128": 4294
+      },
+      "malformed_events": 0,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0044.root",
+      "run": 44
+    },
+    {
+      "contract_8x16_pass": true,
+      "contract_8x18_pass": false,
+      "events_scanned": 48181,
+      "length_histogram": {
+        "128": 48181
+      },
+      "malformed_events": 0,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0045.root",
+      "run": 45
+    },
+    {
+      "contract_8x16_pass": true,
+      "contract_8x18_pass": false,
+      "events_scanned": 1441,
+      "length_histogram": {
+        "128": 1441
+      },
+      "malformed_events": 0,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0046.root",
+      "run": 46
+    },
+    {
+      "contract_8x16_pass": true,
+      "contract_8x18_pass": false,
+      "events_scanned": 10970,
+      "length_histogram": {
+        "128": 10970
+      },
+      "malformed_events": 0,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0047.root",
+      "run": 47
+    },
+    {
+      "contract_8x16_pass": true,
+      "contract_8x18_pass": false,
+      "events_scanned": 31713,
+      "length_histogram": {
+        "128": 31713
+      },
+      "malformed_events": 0,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0048.root",
+      "run": 48
+    },
+    {
+      "contract_8x16_pass": true,
+      "contract_8x18_pass": false,
+      "events_scanned": 32354,
+      "length_histogram": {
+        "128": 32354
+      },
+      "malformed_events": 0,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0049.root",
+      "run": 49
+    },
+    {
+      "contract_8x16_pass": true,
+      "contract_8x18_pass": false,
+      "events_scanned": 44804,
+      "length_histogram": {
+        "128": 44804
+      },
+      "malformed_events": 0,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0050.root",
+      "run": 50
+    },
+    {
+      "contract_8x16_pass": true,
+      "contract_8x18_pass": false,
+      "events_scanned": 20569,
+      "length_histogram": {
+        "128": 20569
+      },
+      "malformed_events": 0,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0051.root",
+      "run": 51
+    },
+    {
+      "contract_8x16_pass": true,
+      "contract_8x18_pass": false,
+      "events_scanned": 10005,
+      "length_histogram": {
+        "128": 10005
+      },
+      "malformed_events": 0,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0052.root",
+      "run": 52
+    },
+    {
+      "contract_8x16_pass": true,
+      "contract_8x18_pass": false,
+      "events_scanned": 39612,
+      "length_histogram": {
+        "128": 39612
+      },
+      "malformed_events": 0,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0053.root",
+      "run": 53
+    },
+    {
+      "contract_8x16_pass": true,
+      "contract_8x18_pass": false,
+      "events_scanned": 37413,
+      "length_histogram": {
+        "128": 37413
+      },
+      "malformed_events": 0,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0054.root",
+      "run": 54
+    },
+    {
+      "contract_8x16_pass": true,
+      "contract_8x18_pass": false,
+      "events_scanned": 24416,
+      "length_histogram": {
+        "128": 24416
+      },
+      "malformed_events": 0,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0055.root",
+      "run": 55
+    },
+    {
+      "contract_8x16_pass": true,
+      "contract_8x18_pass": false,
+      "events_scanned": 51823,
+      "length_histogram": {
+        "128": 51823
+      },
+      "malformed_events": 0,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0056.root",
+      "run": 56
+    },
+    {
+      "contract_8x16_pass": true,
+      "contract_8x18_pass": false,
+      "events_scanned": 31284,
+      "length_histogram": {
+        "128": 31284
+      },
+      "malformed_events": 0,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0057.root",
+      "run": 57
+    },
+    {
+      "contract_8x16_pass": true,
+      "contract_8x18_pass": false,
+      "events_scanned": 34141,
+      "length_histogram": {
+        "128": 34141
+      },
+      "malformed_events": 0,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0058.root",
+      "run": 58
+    },
+    {
+      "contract_8x16_pass": true,
+      "contract_8x18_pass": false,
+      "events_scanned": 42303,
+      "length_histogram": {
+        "128": 42303
+      },
+      "malformed_events": 0,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0059.root",
+      "run": 59
+    },
+    {
+      "contract_8x16_pass": true,
+      "contract_8x18_pass": false,
+      "events_scanned": 36074,
+      "length_histogram": {
+        "128": 36074
+      },
+      "malformed_events": 0,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0060.root",
+      "run": 60
+    },
+    {
+      "contract_8x16_pass": true,
+      "contract_8x18_pass": false,
+      "events_scanned": 36535,
+      "length_histogram": {
+        "128": 36535
+      },
+      "malformed_events": 0,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0061.root",
+      "run": 61
+    },
+    {
+      "contract_8x16_pass": true,
+      "contract_8x18_pass": false,
+      "events_scanned": 37584,
+      "length_histogram": {
+        "128": 37584
+      },
+      "malformed_events": 0,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0062.root",
+      "run": 62
+    },
+    {
+      "contract_8x16_pass": true,
+      "contract_8x18_pass": false,
+      "events_scanned": 37030,
+      "length_histogram": {
+        "128": 37030
+      },
+      "malformed_events": 0,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0063.root",
+      "run": 63
+    },
+    {
+      "contract_8x16_pass": true,
+      "contract_8x18_pass": false,
+      "events_scanned": 35943,
+      "length_histogram": {
+        "128": 35943
+      },
+      "malformed_events": 0,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0064.root",
+      "run": 64
+    },
+    {
+      "contract_8x16_pass": true,
+      "contract_8x18_pass": false,
+      "events_scanned": 38424,
+      "length_histogram": {
+        "128": 38424
+      },
+      "malformed_events": 0,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0065.root",
+      "run": 65
+    }
+  ],
+  "verdict": {
+    "all_runs_contract_8x16_pass": true,
+    "any_run_contract_8x18_pass": false,
+    "authorising_waveform_schema_for_paper_amplitude_timing": "hrd_raw_8x16_v1",
+    "cross_schema_timing_transfer_allowed": false,
+    "historical_18_sample_timing_authorising_for_16_sample_raw": false,
+    "issue": 993,
+    "verdict": "DISTINCT_SCHEMAS"
+  }
+}

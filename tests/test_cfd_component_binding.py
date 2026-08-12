@@ -87,13 +87,7 @@ def test_global_max_estimator_keeps_historical_first_crossing_semantics():
 
 
 def test_selector_exposes_global_fraction_floor_not_prominence():
-    """A 1-ADC bump can pass because the rule thresholds absolute height.
-
-    Global max is 1000, so alpha=0.05 sets a 50-ADC floor. The early local
-    maximum is only one ADC above both neighbours (51 vs 50) yet is selected.
-    This is a deterministic distinction between a global-height floor and a
-    basin/prominence criterion; no detector interpretation is implied.
-    """
+    """A 1-ADC bump can pass because the rule thresholds absolute height."""
     wave = np.asarray(
         [[0.0, 50.0, 51.0, 50.0, 0.0, 0.0, 500.0, 1000.0, 500.0]],
         dtype=float,
@@ -122,8 +116,6 @@ def test_selector_has_discontinuous_identity_at_global_floor_boundary():
         digital_cfd.SELECT_LOCAL_ABOVE_GLOBAL_FLOOR,
         digital_cfd.SELECT_LOCAL_ABOVE_GLOBAL_FLOOR,
     ]
-    # The first row still has the late 1000-ADC interior local peak eligible;
-    # crossing the floor makes the earlier peak become the *first* eligible one.
     assert diagnostic["selected_to_global_ratio"][0] == pytest.approx(1.0)
     assert diagnostic["selected_to_global_ratio"][1] == pytest.approx(0.0501)
 
@@ -144,9 +136,11 @@ def test_selector_reports_silent_fallback_to_boundary_global_peak():
     assert diagnostic["statuses"][0] == digital_cfd.SELECT_FALLBACK_GLOBAL
 
 
-def test_selector_rejects_negative_or_nonfinite_floor_fraction():
+def test_selector_rejects_out_of_domain_or_nonfinite_floor_fraction():
     wave = np.asarray([[0.0, 1.0, 0.0]])
-    with pytest.raises(ValueError, match="finite and nonnegative"):
-        digital_cfd.first_local_peak_diagnostics(wave, min_prominence_frac=-0.1)
-    with pytest.raises(ValueError, match="finite and nonnegative"):
-        digital_cfd.first_local_peak_diagnostics(wave, min_prominence_frac=np.nan)
+    for alpha in (-0.1, 1.1, np.nan, np.inf):
+        with pytest.raises(ValueError, match=r"finite and in \[0, 1\]"):
+            digital_cfd.first_local_peak_diagnostics(
+                wave,
+                min_prominence_frac=alpha,
+            )

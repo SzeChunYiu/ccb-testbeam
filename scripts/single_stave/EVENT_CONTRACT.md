@@ -71,3 +71,18 @@ with producer commit, sidecar, ROOT hash, normalized-table hash, row-count
 closure, result/manifest hashes, and review of the generated plots before any
 optical-yield, calibration, resolution, PID, or detector-performance claim is
 accepted.
+
+## Primary vs event-total stopping estimators (#1007)
+
+The producer now distinguishes:
+
+| Branch | Meaning |
+|---|---|
+| `edep_scint_raw_MeV` / `track_len_scint_mm` | All non-optical particles (calorimetric diagnostic) |
+| `primary_edep_scint_raw_MeV` / `primary_track_len_scint_mm` | Primary only (`ParentID==0`) |
+| `secondary_*` / `secondary_scint_activity` | Non-primary scintillator activity gate |
+
+Authorising PSTAR / primary stopping-power comparisons must use the primary
+estimator and exclude `secondary_scint_activity!=0`. Full regenerated closure
+remains BLOCKED on material (#1000) and physics-list (#1006) resolution — see
+`docs/mc_validation/adr/ADR-1007-primary-stopping-estimators.md`.

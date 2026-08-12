@@ -42,6 +42,8 @@ def test_valid_raw_table_records_exact_provenance(tmp_path):
     result = module.validate_simulation_table(path)
 
     assert result["status"] == "VALIDATED"
+    assert result["primary_stopping_authorising"] is False
+    assert result["estimator_id"] == "all_particle_edep_over_path_diagnostic_v1"
     assert result["rows_validated"] == 2
     assert result["particle_counts"] == {"deuteron": 1, "proton": 1}
     assert result["energy_deposit_basis"] == "UNQUENCHED_RAW"

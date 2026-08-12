@@ -39,6 +39,21 @@ from tools.audit.validate_stopping_power_sim_table import (  # noqa: E402
     read_validated_simulation_table,
 )
 
+
+# Primary vs event-total estimator contract (#1007).
+try:
+    from ccb_mc_validation.truth.stopping_power_estimators import (
+        PRIMARY_STOPPING_ESTIMATOR_ID,
+        StoppingPowerEstimatorError,
+        primary_stopping_ratio_mev_per_mm,
+    )
+except ImportError:  # pragma: no cover - script may run with repo root on path
+    from src.ccb_mc_validation.truth.stopping_power_estimators import (  # type: ignore
+        PRIMARY_STOPPING_ESTIMATOR_ID,
+        StoppingPowerEstimatorError,
+        primary_stopping_ratio_mev_per_mm,
+    )
+
 DEFAULT_REF = REPO_ROOT / "data" / "reference" / "stopping_power" / "pstar_polystyrene.csv"
 PstarRow = tuple[float, float, float, float]
 ENERGY_GROUPING = "EXACT_CONFIGURED_ENERGY"
@@ -67,9 +82,6 @@ REPORT_COLUMNS = [
     "reference_in_range",
     "n_events",
     "energy_deposit_basis",
-    "track_length_scope",
-    "primary_track_identity",
-    "pstar_primary_identity_ok",
     "raw_pstar_comparable",
     "deposit_sum_MeV",
     "track_length_sum_mm",
@@ -282,11 +294,13 @@ def reference_for(particle: str, energy_mev: float, table: list[PstarRow]) -> fl
 def _read_sim_with_summary(
     path: Path,
     allow_quenched_proxy: bool = False,
+    require_primary_estimator: bool = False,
 ) -> tuple[list[tuple[str, float, float, float]], dict[str, object]]:
     try:
         return read_validated_simulation_table(
             path,
             allow_quenched_proxy=allow_quenched_proxy,
+            require_primary_estimator=require_primary_estimator,
         )
     except SimulationTableError as exc:
         raise StoppingPowerInputError(str(exc)) from exc
@@ -305,6 +319,9 @@ def aggregate(
     sim_rows: list[tuple[str, float, float, float]],
     rho: float,
     energy_deposit_basis: str = RAW_BASIS,
+    *,
+    primary_stopping_authorising: bool = False,
+    estimator_id: str = "all_particle_edep_over_path_diagnostic_v1",
 ) -> list[dict[str, object]]:
     """Group rows by particle/energy with compensated, order-stable sums."""
     if not math.isfinite(rho) or rho <= 0:
@@ -334,6 +351,10 @@ def aggregate(
                 "energy_grouping": ENERGY_GROUPING,
                 "n_events": len(deposits),
                 "energy_deposit_basis": energy_deposit_basis,
+                "estimator_id": estimator_id,
+                "primary_stopping_authorising": primary_stopping_authorising,
+                # Diagnostic raw-basis flag; authorising primary PSTAR uses
+                # primary_stopping_authorising (#1007).
                 "raw_pstar_comparable": energy_deposit_basis == RAW_BASIS,
                 "deposit_sum_MeV": deposit_sum,
                 "track_length_sum_mm": track_sum,
@@ -355,6 +376,7 @@ def run_compare(
     tol_pct: float,
     allow_quenched_proxy: bool = False,
     allow_deuteron_proxy: bool = False,
+    require_primary_estimator: bool = False,
 ) -> tuple[list[dict[str, object]], bool]:
     """Run a validated diagnostic comparison and optionally write a CSV report."""
     if not math.isfinite(tol_pct) or tol_pct < 0:
@@ -367,7 +389,15 @@ def run_compare(
         else None
     )
     table, ref_summary = _read_reference_with_summary(ref_path)
-    rows, sim_summary = _read_sim_with_summary(sim_path, allow_quenched_proxy)
+    # Keep the two-arg call shape so monkeypatched test doubles remain valid.
+    if require_primary_estimator:
+        rows, sim_summary = _read_sim_with_summary(
+            sim_path,
+            allow_quenched_proxy,
+            require_primary_estimator=True,
+        )
+    else:
+        rows, sim_summary = _read_sim_with_summary(sim_path, allow_quenched_proxy)
     has_deuteron = any(particle == "deuteron" for particle, *_ in rows)
     if has_deuteron and not allow_deuteron_proxy:
         raise StoppingPowerInputError(
@@ -376,9 +406,19 @@ def run_compare(
             "for labelled, non-accepting diagnostics"
         )
     basis = str(sim_summary["energy_deposit_basis"])
-    track_scope = str(sim_summary.get("track_length_scope", "EVENT_TOTAL_ALL_NON_OPTICAL"))
-    primary_ok = bool(sim_summary.get("pstar_primary_identity_ok", False))
-    aggregated = aggregate(rows, rho, energy_deposit_basis=basis)
+    aggregated = aggregate(
+        rows,
+        rho,
+        energy_deposit_basis=basis,
+        primary_stopping_authorising=bool(
+            sim_summary.get("primary_stopping_authorising", False)
+        ),
+        estimator_id=str(
+            sim_summary.get(
+                "estimator_id", "all_particle_edep_over_path_diagnostic_v1"
+            )
+        ),
+    )
     results: list[dict[str, object]] = []
     all_pass = True
     ref_min = table[0][0]
@@ -394,25 +434,11 @@ def run_compare(
         delta = (ratio - 1.0) * 100.0
         numeric_ok = abs(delta) <= tol_pct
         raw_comparable = bool(result["raw_pstar_comparable"])
-        # Deposit/reference basis comparable (may still be wrong track-scope).
         physics_comparable = raw_comparable and direct_reference
-        result["track_length_scope"] = track_scope
-        result["primary_track_identity"] = bool(
-            sim_summary.get("primary_track_identity", False)
-        )
-        result["pstar_primary_identity_ok"] = primary_ok
         uncertainty_evaluated = False
-        # Authorizing acceptance also requires primary-track identity (#1007).
-        accepted_ok = (
-            numeric_ok
-            and physics_comparable
-            and primary_ok
-            and uncertainty_evaluated
-        )
+        accepted_ok = numeric_ok and physics_comparable and uncertainty_evaluated
         if not physics_comparable:
             acceptance_status = "NONCOMPARABLE_INPUT_OR_REFERENCE"
-        elif not primary_ok:
-            acceptance_status = "NONCOMPARABLE_EVENT_TOTAL_TRACK_SCOPE"
         elif not numeric_ok:
             acceptance_status = "POINT_ESTIMATE_OUTSIDE_TOLERANCE"
         else:
@@ -529,8 +555,6 @@ def run_compare(
             print("NUMERICAL TOLERANCE: POINT_ESTIMATE_ONLY_NOT_ACCEPTED")
         else:
             print("NUMERICAL TOLERANCE: FAIL")
-    print(f"TRACK LENGTH SCOPE: {track_scope}")
-    print(f"PSTAR PRIMARY IDENTITY OK: {primary_ok}")
     print(f"UNCERTAINTY EVALUATION: {UNCERTAINTY_METHOD}")
     print("SCIENTIFIC STATUS: DIAGNOSTIC_ONLY")
     return results, all_pass and bool(results)
@@ -607,6 +631,11 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         action="store_true",
         help="permit labelled, non-accepting deuteron E/2 PSTAR proxy output",
     )
+    parser.add_argument(
+        "--require-primary-estimator",
+        action="store_true",
+        help="require primary_* estimators and exclude secondary activity (#1007)",
+    )
     parser.add_argument("--self-test", action="store_true")
     return parser.parse_args(argv)
 
@@ -625,6 +654,7 @@ def main(argv: list[str] | None = None) -> int:
             args.out,
             args.tolerance_pct,
             allow_quenched_proxy=args.allow_quenched_proxy,
+            require_primary_estimator=args.require_primary_estimator,
             allow_deuteron_proxy=args.allow_deuteron_proxy,
         )
         return 0 if ok else 1

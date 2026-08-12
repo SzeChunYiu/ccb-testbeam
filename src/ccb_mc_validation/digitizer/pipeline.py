@@ -10,6 +10,13 @@ from typing import Any
 import numpy as np
 
 from ccb_mc_validation.digitizer.birks import birks_quench
+from ccb_mc_validation.digitizer.config_types import (
+    parse_strict_bool,
+    require_nonnegative_float,
+    require_positive_float,
+    require_positive_int,
+    resolve_stage_graph,
+)
 from ccb_mc_validation.digitizer.electronics import (
     ElectronicsConfig,
     add_noise,
@@ -26,18 +33,17 @@ from ccb_mc_validation.strict_bool import PARSER_VERSION, resolve_bool_field
 
 StageFn = Callable[[Mapping[str, Any], np.random.Generator, dict[str, Any]], Mapping[str, Any]]
 
+DIGITIZER_RNG_SCHEMA = "hit_keyed_v1"
+
 # Schema fields required on every hit.  Missing fields or non-finite values are a
 # hard error -- silently defaulting them to zero would corrupt the physics.
 REQUIRED_HIT_FIELDS: tuple[str, ...] = ("edep_mev", "time_ns")
-
-# Stable microscopic identity fields for hit-keyed RNG (#1074).
 HIT_IDENTITY_FIELDS: tuple[str, ...] = ("track_id", "step_id")
-
-# Versioned RNG schema persisted in waveform provenance.
-DIGITIZER_RNG_SCHEMA = "hit_keyed_v1"
 
 # Stochastic stages that consume RNG; each receives its own independent
 # deterministic stream derived from (global_seed, source, run, event, channel).
+# "electronics" here names the final DAQ-observation noise stream (always applied),
+# not a toggleable per-hit stage in ``stages``.
 _STOCHASTIC_STAGES: tuple[str, ...] = ("transport", "electronics")
 
 
@@ -69,6 +75,15 @@ class DigitizerPipeline:
     ``(global_seed, source_id, run_id, event_id, channel_id)`` so that distinct
     channels/stages of the same event never share RNG state, while the same
     inputs always reproduce the same waveform.
+
+    Stage graph contract (``digitizer-stage-graph/1``, #1077):
+      - ``stages`` lists per-hit transforms only.
+      - Final DAQ observation (gain/pedestal/noise/quantize) is always applied
+        once after summation and is not a stages-list toggle.
+      - ``sampling`` is mandatory for the ADC observation model; omission is
+        recorded as ``mandatory_inserted`` on the resolved graph.
+      - Hidden sampling fallbacks are removed: no silent integrate_samples when
+        sampling was not in the effective graph.
     """
 
     n_samples: int = DEFAULT_N_SAMPLES
@@ -84,6 +99,58 @@ class DigitizerPipeline:
     stages: list[str] = field(
         default_factory=lambda: ["birks", "scintillation", "transport", "sampling"]
     )
+    # Provenance filled by __post_init__ / resolve_stage_graph.
+    requested_stages: list[str] = field(default_factory=list, repr=False)
+    effective_stages: list[str] = field(default_factory=list, repr=False)
+    stage_graph_meta: dict[str, Any] = field(default_factory=dict, repr=False)
+
+    def __post_init__(self) -> None:
+        self.n_samples = require_positive_int(self.n_samples, field_name="n_samples")
+        self.sample_spacing_ns = require_positive_float(
+            self.sample_spacing_ns, field_name="sample_spacing_ns"
+        )
+        self.tau_rise_ns = require_positive_float(self.tau_rise_ns, field_name="tau_rise_ns")
+        self.tau_decay_ns = require_positive_float(self.tau_decay_ns, field_name="tau_decay_ns")
+        self.transport_sigma_ns = require_nonnegative_float(
+            self.transport_sigma_ns, field_name="transport_sigma_ns"
+        )
+        if not isinstance(self.apply_birks, bool):
+            # Direct construction should already pass a real bool; coerce via
+            # strict parser so string accidents fail closed here too.
+            self.apply_birks = parse_strict_bool(self.apply_birks, field_name="apply_birks")
+        if not isinstance(self.electronics, ElectronicsConfig):
+            raise TypeError("electronics must be an ElectronicsConfig")
+        # Re-run electronics validation in case a caller mutated fields.
+        self.electronics.__post_init__()
+
+        graph = resolve_stage_graph(list(self.stages))
+        self.requested_stages = list(graph["requested_stages"])
+        self.effective_stages = list(graph["effective_stages"])
+        self.stage_graph_meta = graph
+        # Execute the effective graph (may include mandatory sampling insert).
+        self.stages = list(self.effective_stages)
+
+    def resolved_config(self) -> dict[str, Any]:
+        """Requested/effective config snapshot for provenance (#1076/#1077/#1080)."""
+        return {
+            "n_samples": self.n_samples,
+            "sample_spacing_ns": self.sample_spacing_ns,
+            "tau_rise_ns": self.tau_rise_ns,
+            "tau_decay_ns": self.tau_decay_ns,
+            "transport_sigma_ns": self.transport_sigma_ns,
+            "apply_birks": {
+                "effective": bool(self.apply_birks),
+            },
+            "global_seed": int(self.global_seed),
+            "electronics": {
+                "gain_adc_per_mev": self.electronics.gain_adc_per_mev,
+                "noise_adc_rms": self.electronics.noise_adc_rms,
+                "adc_bits": self.electronics.adc_bits,
+                "adc_ceiling": self.electronics.adc_ceiling,
+                "pedestal_adc": self.electronics.pedestal_adc,
+            },
+            "stage_graph": dict(self.stage_graph_meta),
+        }
 
 
     def model_identity(self) -> dict[str, Any]:
@@ -115,10 +182,10 @@ class DigitizerPipeline:
         }
 
     # ------------------------------------------------------------------
-    # schema validation
+    # field validation
     # ------------------------------------------------------------------
-    @staticmethod
     def _require_field(
+        self,
         hit: Mapping[str, Any],
         key: str,
         *,
@@ -129,7 +196,7 @@ class DigitizerPipeline:
             raise ValueError(
                 f"digitizer hit missing required field {key!r} "
                 f"(event_id={event_id!r}, channel_id={channel_id!r}); "
-                f"schema requires {REQUIRED_HIT_FIELDS}"
+                f"requires {REQUIRED_HIT_FIELDS}"
             )
         val = hit[key]
         try:
@@ -225,39 +292,8 @@ class DigitizerPipeline:
             tau_rise_ns=self.tau_rise_ns,
             tau_decay_ns=self.tau_decay_ns,
         )
+        ctx["_sampling_executed"] = True
         return out
-
-    def _stage_electronics(
-        self,
-        hit: Mapping[str, Any],
-        rng: np.random.Generator,
-        ctx: dict[str, Any],
-    ) -> Mapping[str, Any]:
-        """Deprecated per-hit electronics stage retained for compatibility.
-
-        The production ``run`` method no longer invokes this stage per hit.  If a
-        caller explicitly includes ``electronics`` in ``stages`` this method only
-        records an analog ADC contribution without pedestal/noise/quantisation;
-        final electronics are still applied once per waveform by ``run``.
-        """
-        light = ctx.get("light_curve_mev")
-        if light is None:
-            edep = self._require_field(
-                hit, "edep_mev", event_id=ctx["event_id"], channel_id=ctx["channel_id"]
-            )
-            t = self._require_field(
-                hit, "time_ns", event_id=ctx["event_id"], channel_id=ctx["channel_id"]
-            )
-            light = integrate_samples(
-                edep,
-                t,
-                sample_spacing_ns=self.sample_spacing_ns,
-                n_samples=self.n_samples,
-                tau_rise_ns=self.tau_rise_ns,
-                tau_decay_ns=self.tau_decay_ns,
-            )
-        ctx["analog_adc"] = apply_gain(light, self.electronics)
-        return dict(hit)
 
     def _dispatch(self, stage_name: str) -> StageFn:
         table: dict[str, StageFn] = {
@@ -265,7 +301,6 @@ class DigitizerPipeline:
             "scintillation": self._stage_scintillation,
             "transport": self._stage_transport,
             "sampling": self._stage_sampling,
-            "electronics": self._stage_electronics,
         }
         if stage_name not in table:
             raise KeyError(f"unknown digitizer stage {stage_name!r}")
@@ -274,7 +309,6 @@ class DigitizerPipeline:
     # ------------------------------------------------------------------
     # RNG plumbing
     # ------------------------------------------------------------------
-
     def _hit_identity_tokens(
         self,
         hit: Mapping[str, Any],
@@ -475,6 +509,9 @@ class DigitizerPipeline:
             "saturated": sat_final,
             "n_hits": len(hits),
             "digitizer_rng_schema": DIGITIZER_RNG_SCHEMA,
+            "stage_graph": dict(getattr(self, "stage_graph_meta", {})),
+            "requested_stages": list(getattr(self, "requested_stages", [])),
+            "effective_stages": list(getattr(self, "effective_stages", getattr(self, "stages", []))),
         }
 
 
@@ -511,24 +548,42 @@ class DigitizerPipeline:
         return kb
     @classmethod
     def from_config(cls, config: Mapping[str, Any]) -> DigitizerPipeline:
-        # #1080: validate scalar domains before constructing RNG/event pipelines.
+        """Build a pipeline with strict typed parsing before event 0.
+
+        Scientific booleans use :func:`parse_strict_bool` (#1076). Scalar domains
+        and the stage graph are validated in ``__post_init__`` (#1075/#1077/#1080).
+        """
+        # #1076: resolve before preflight so bool("false") cannot leak into truthiness.
         from ccb_mc_validation.response.digitizer_domains import (
+            DigitizerDomainError,
             preflight_digitizer_config,
         )
 
-        # #1076: resolve before preflight so bool("false") cannot leak into truthiness.
-        birks_prov = resolve_bool_field(config, "apply_birks", default=False)
+        from ccb_mc_validation.response.digitizer_domains import DigitizerDomainError
+
+        try:
+            birks_prov = resolve_bool_field(config, "apply_birks", default=False)
+        except Exception as exc:  # ConfigurationError from strict_bool (#1076)
+            # Satisfy both lane08 ValueError and lane03 ConfigurationError contracts.
+            if isinstance(exc, DigitizerDomainError):
+                raise
+            raise DigitizerDomainError(str(exc)) from exc
         sanitized = dict(config)
         sanitized["apply_birks"] = bool(birks_prov["effective"])
-        resolved = preflight_digitizer_config(sanitized)
+        try:
+            resolved = preflight_digitizer_config(sanitized)
+        except DigitizerDomainError:
+            raise
+        except ValueError as exc:
+            raise DigitizerDomainError(str(exc)) from exc
         effective = resolved["effective"]
         elec_cfg = effective["electronics"]
         elec = ElectronicsConfig(
-            gain_adc_per_mev=float(elec_cfg["gain_adc_per_mev"]),
-            noise_adc_rms=float(elec_cfg["noise_adc_rms"]),
-            adc_bits=int(elec_cfg["adc_bits"]),
-            adc_ceiling=int(elec_cfg["adc_ceiling"]),
-            pedestal_adc=float(elec_cfg["pedestal_adc"]),
+            gain_adc_per_mev=config.get("gain_adc_per_mev", 120.0),
+            noise_adc_rms=config.get("noise_adc_rms", 8.0),
+            adc_bits=config.get("adc_bits", 14),
+            adc_ceiling=config.get("adc_ceiling", 7000),
+            pedestal_adc=config.get("pedestal_adc", 300.0),
         )
 
         kb = cls._parse_birks_kb_cm_per_mev(config)

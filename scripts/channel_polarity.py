@@ -128,24 +128,27 @@ def infer_channel_polarity(
         signed = np.where(snr_pos >= snr_neg, 1, -1)
         strong = (snr_pos >= snr_cut) | (snr_neg >= snr_cut)
         if not np.any(strong):
-            polarities[ch] = 1
+            # Fail closed for authorising use: do not invent +1 (#954).
+            polarities[ch] = 0
             diagnostics[str(ch)] = {
                 "status": "UNMEASURED_LOW_SNR",
                 "n_strong": 0,
                 "frac_positive_preference": None,
-                "assigned": 1,
+                "assigned": None,
+                "authorising": False,
             }
             continue
         frac_pos = float(np.mean(signed[strong] > 0))
         assigned = 1 if frac_pos >= 0.5 else -1
         ambiguous = 0.3 < frac_pos < 0.7
-        polarities[ch] = assigned
+        polarities[ch] = 0 if ambiguous else assigned
         diagnostics[str(ch)] = {
             "status": "AMBIGUOUS" if ambiguous else "MEASURED",
             "n_strong": int(np.count_nonzero(strong)),
             "n_pos_candidates": int(np.count_nonzero(use_pos)),
             "n_neg_candidates": int(np.count_nonzero(use_neg)),
             "frac_positive_preference": frac_pos,
-            "assigned": int(assigned),
+            "assigned": None if ambiguous else int(assigned),
+            "authorising": (not ambiguous),
         }
     return polarities, {"n_events": int(n_events), "channels": diagnostics}

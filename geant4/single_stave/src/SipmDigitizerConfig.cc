@@ -79,6 +79,22 @@ bool ParseStrictEnvBool(const char* name, bool default_value) {
   throw std::invalid_argument(std::string("invalid boolean ") + name + "='" + raw + "'");
 }
 
+
+void ApplyOptionalEnvString(const char* name, std::string& out) {
+  const char* raw = std::getenv(name);
+  if (raw == nullptr) return;
+  const std::string value(raw);
+  if (value.empty()) {
+    throw std::invalid_argument(std::string("invalid empty ") + name);
+  }
+  for (unsigned char ch : value) {
+    if (std::isspace(ch)) {
+      throw std::invalid_argument(std::string("invalid ") + name + "='" + raw + "'");
+    }
+  }
+  out = value;
+}
+
 void RejectImmutableOperatingPointOverride(const char* name, double expected) {
   if (std::getenv(name) == nullptr) return;
   const double requested = ParseRequiredEnvDouble(
@@ -160,6 +176,11 @@ ccb::sipm::ModelConfig BuildSipmDigitizerConfig(const AppConfig& cfg,
   ApplyOptionalEnvDouble("CCB_SIPM_AFTERPULSE_FAST_PROB",
                          c.afterpulse_fast_probability,
                          0.0, true, 1.0, false);
+
+  // Dual recovery-law selectors from ccb-sipm-core@cf12c6b (#1066 env surface).
+  // Unknown tokens fail closed in ModelConfig::validate().
+  ApplyOptionalEnvString("CCB_SIPM_TRIGGER_RECOVERY_MODEL", c.trigger_recovery_model);
+  ApplyOptionalEnvString("CCB_SIPM_GAIN_RECOVERY_MODEL", c.gain_recovery_model);
 
   if (std::getenv("CCB_SIPM_NO_DARK") != nullptr) {
     c.enable_dark_counts = !ParseStrictEnvBool("CCB_SIPM_NO_DARK", false);

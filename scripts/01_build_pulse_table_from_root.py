@@ -379,20 +379,35 @@ def pulse_quantities(
 
 def resolve_analysis_polarity(n_channels: int, config: dict | None = None) -> tuple[np.ndarray, dict]:
     """Load versioned channel polarity; fail closed if map is incomplete (#954)."""
+    from sipm_waveC_gates import polarity_authorisation_report
+
     path = Path(os.environ.get(
         "CCB_CHANNEL_POLARITY_PATH",
         str(Path(__file__).resolve().parents[1] / "configs" / "channel_polarity_v1.json"),
     ))
     polarity_map = load_polarity_map(path)
     vec = polarity_map.polarity_vector(n_channels)
+    if np.any(np.asarray(vec) == 0):
+        raise ValueError(
+            "channel polarity map contains unset (0) entries; refuse amplitude extraction (#954)"
+        )
     meta = {
         "path": str(path),
         "version": polarity_map.version,
         "status": polarity_map.status,
         "channel_polarity": {str(i): int(vec[i]) for i in range(n_channels)},
     }
+    auth = polarity_authorisation_report(polarity_map.status)
+    meta.update(auth)
+    require = True if config is None else bool(config.get("channel_polarity_required", True))
     if config is not None:
-        meta["config_hint"] = bool(config.get("channel_polarity_required", True))
+        meta["config_hint"] = require
+    if require and not auth["authorising_waveform_amplitude_claims"]:
+        raise ValueError(
+            "channel polarity map is not authorising for amplitude/timing extraction: "
+            + "; ".join(auth["blocked_reasons"])
+            + " (#954)"
+        )
     return vec, meta
 
 

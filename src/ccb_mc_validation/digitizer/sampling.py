@@ -4,6 +4,10 @@ from __future__ import annotations
 
 import numpy as np
 
+from ccb_mc_validation.digitizer.config_types import (
+    require_positive_float,
+    require_positive_int,
+)
 from ccb_mc_validation.digitizer.scintillation import exponential_kernel_cdf
 
 DEFAULT_N_SAMPLES = 18
@@ -30,7 +34,14 @@ def integrate_samples(
     Returns per-sample charge in MeV-equivalent units.  Over an infinite window
     the sum equals ``edep_mev`` (charge/energy conservation); a finite window
     captures only the fraction of the pulse that falls inside it.
+
+    Domain (#1080): ``n_samples >= 1``, ``sample_spacing_ns > 0``. Zero spacing
+    or zero samples are INVALID_INPUT for the ordinary observation model.
     """
+    n_samples = require_positive_int(n_samples, field_name="n_samples")
+    sample_spacing_ns = require_positive_float(
+        sample_spacing_ns, field_name="sample_spacing_ns"
+    )
     edges = np.arange(n_samples + 1, dtype=np.float64) * float(sample_spacing_ns)
     cdf_vals = exponential_kernel_cdf(
         edges - float(t0_ns),

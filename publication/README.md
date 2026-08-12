@@ -9,7 +9,7 @@ The older `docs/latex/` tree is a broader technical/academic report and is **not
 ```text
 publication/
 ├── main.tex                     # master TeX document
-├── paper.pdf                    # compiled working PDF
+├── paper.pdf                    # compiled working PDF (generated/committed by CI)
 ├── chapters/                    # one TeX file per paper section/chapter
 ├── references/                  # references section
 ├── figures/
@@ -27,7 +27,7 @@ publication/
 │   └── gated/                   # quarantined current tables
 ├── data/                        # data provenance/index only; no raw beam ROOT copied
 ├── source/                      # previous working manuscript/audit provenance
-├── build.sh                     # deterministic-ish local build entry point
+├── build.sh                     # local build entry point
 └── Makefile
 ```
 
@@ -50,7 +50,7 @@ or
 make -C publication
 ```
 
-The build writes `publication/paper.pdf`. Intermediate LaTeX files remain under `publication/build/` and are ignored.
+The build writes `publication/paper.pdf`. Intermediate LaTeX files remain under `publication/build/` and are ignored. On `chatgpt/publication-package-20260812`, the `Publication PDF` GitHub Actions workflow rebuilds the PDF and commits `paper.pdf` plus `BUILD_RECEIPT.json` back to the branch.
 
 ## Editing rule
 

@@ -32,8 +32,8 @@ def test_legacy_unit_weight_permutation_is_not_representation_invariant():
         data, split_model, data_weights, split_weights, n_bootstrap=200
     )
 
-    assert base["p_value_status"] == "NONAUTHORISING_BLOCKED_ISSUE_1049"
-    assert split["p_value_status"] == "NONAUTHORISING_BLOCKED_ISSUE_1049"
+    assert base["p_value_status"] == "NONAUTHORISING_LEGACY_UNIT_WEIGHT_PERMUTATION"
+    assert split["p_value_status"] == "NONAUTHORISING_LEGACY_UNIT_WEIGHT_PERMUTATION"
     assert base["p_value_method"] == "legacy_unit_weight_value_permutation"
     assert split["p_value_method"] == "legacy_unit_weight_value_permutation"
     assert base["D"] == pytest.approx(split["D"], abs=1e-12)

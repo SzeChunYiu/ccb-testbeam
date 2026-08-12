@@ -16,7 +16,7 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Dict
 
 import numpy as np
 
@@ -147,7 +147,7 @@ def _summarize(arr: np.ndarray) -> WeightAudit:
     )
 
 
-Finding = dict[str, Any]
+Finding = Dict[str, Any]
 
 
 def _finding(code: str, blocking: bool = False, **meta: Any) -> Finding:

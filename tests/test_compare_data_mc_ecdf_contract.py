@@ -145,5 +145,5 @@ def test_p_value_is_explicitly_non_authorising_until_issue_1049():
     )
     assert result["cdf_convention"] == "right_continuous"
     assert result["ecdf_support"] == "unique_tie_aggregated"
-    assert result["p_value_status"] == "NONAUTHORISING_BLOCKED_ISSUE_1049"
+    assert result["p_value_status"] == "NONAUTHORISING_LEGACY_UNIT_WEIGHT_PERMUTATION"
     assert result["p_value_method"] == "legacy_unit_weight_value_permutation"

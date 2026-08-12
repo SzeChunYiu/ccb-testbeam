@@ -133,15 +133,3 @@ Fixed synthetic-waveform MC output: three components explain 72.5% and eight exp
 Dimensionless cluster-D ADC-response elasticities only. Mixed-unit rows (gain envelope, kB span and missing material) are excluded rather than combined. This is a sensitivity inventory, not a propagated uncertainty budget.
 
 [PDF](https://raw.githubusercontent.com/SzeChunYiu/ccb-testbeam/main/docs/figures/paper/systematic_sensitivity_inputs.pdf) · [SVG](https://raw.githubusercontent.com/SzeChunYiu/ccb-testbeam/main/docs/figures/paper/systematic_sensitivity_inputs.svg) · [source CSV](https://raw.githubusercontent.com/SzeChunYiu/ccb-testbeam/main/docs/figures/paper/source_tables/systematic_sensitivity_inputs_source.csv)
-
-## Manuscript Figure 11 — Held-out deposited-energy reconstruction
-
-**Question:** After freezing a pooled PE→Edep calibration on training grid points, what are the held-out bias and σ68 versus true Geant4 deposited energy?
-
-![Held-out deposited-energy reconstruction](https://raw.githubusercontent.com/SzeChunYiu/ccb-testbeam/main/docs/figures/paper/edep_reconstruction_heldout.png)
-
-**Status:** `MC_MODEL_DEPENDENT` · **Evidence:** `MC_MODEL_DEPENDENT` · **Claim:** `CL-027` · **Issue:** `#1297`
-
-Held-out evaluation on SHA-256-bound optical MC (`deuteron_110`, `proton_60`; n=400) after training on `deuteron_70`, `proton_100`, `proton_140`. Pooled median bias +10.1%, σ68 8.9%, RMS 17.8%, tail fraction 15% (|r|>0.20). Target is Geant4 E_dep, not incident kinetic energy; not a beam-data calibration. Optical/SiPM nuisance envelope remains `NOT_EVALUATED`.
-
-[PDF](https://raw.githubusercontent.com/SzeChunYiu/ccb-testbeam/main/docs/figures/paper/edep_reconstruction_heldout.pdf) · [source CSV](https://raw.githubusercontent.com/SzeChunYiu/ccb-testbeam/main/docs/figures/paper/source_tables/edep_reconstruction_heldout_source.csv) · [result JSON](https://raw.githubusercontent.com/SzeChunYiu/ccb-testbeam/main/reports/paper_a09_heldout_edep_reconstruction/result.json)

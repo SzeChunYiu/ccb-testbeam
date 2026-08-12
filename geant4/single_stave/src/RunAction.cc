@@ -249,7 +249,7 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
   };
   const char* git = std::getenv("CCB_GIT_COMMIT");
   os << "{\n"
-     << "  \"schema\": \"ccb-stave-run-meta/1\",\n"
+     << "  \"schema\": \"ccb-stave-run-meta/2\",\n"
      << "  \"git_commit\": " << j(git ? git : "unknown") << ",\n"
      << "  \"geometry_hash\": " << j(geometry_hash_) << ",\n"
      << "  \"physics_hash\": " << j(physics_hash_) << ",\n"

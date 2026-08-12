@@ -12,7 +12,7 @@ MC ROOT: `geant4/data/output_krakow_1M.root` (present)
 | 02 | ccb-wt-lane02 | fix/lane02-waveA | Optical/WLS/material | #978-#980 #996 #1000 #1005 #1035-#1036 #1085-#1088 | MERGED (#1246) | #1246 |
 | 03 | ccb-wt-lane03 | fix/lane03-waveA | Geometry/kinematics | #987 #989 #991-#992 #999 | MERGED (#1237) | #1237 |
 | 04 | ccb-wt-lane04 | fix/lane04-waveA | Source/weights | #1050-#1058 #1174 #1179 | MERGED (#1240) | #1240 |
-| 05 | ccb-wt-lane05 | fix/lane05-waveA | Timing CFD/template | #954 #964-#968 #1003-#1004 #1032-#1033 #1059-#1064 | MERGED (#1239) | #1239 |
+| 05 | ccb-wt-lane05 | fix/issue-1059-cfd-component | Timing CFD/template | #954 #964-#968 #1003-#1004 #1032-#1033 #1059-#1064 | READY_FOR_PR | |
 | 06 | ccb-wt-lane06 | fix/lane06-waveA | PID ΔE-E | #956 #1022-#1031 #1042 #1048 | IN_PROGRESS | |
 | 07 | ccb-wt-lane07 | fix/lane07-waveA | Stats/bootstrap | #958-#960 #1049 #1052 #1097 #1164 #1166 | IN_PROGRESS | |
 | 08 | ccb-wt-lane08 | fix/lane08-waveA | DAQ/S00 provenance | #953 #961-#962 #973 #997-#998 #1014 #1073 #1149 | IN_PROGRESS | |
@@ -67,6 +67,19 @@ Historical Wave-A integration aligned the gitlink with #1243 at `cf12c6b8955c485
 - Scope: chatgpt_todo/ACTIVE_TASK.md, HANDOFF.md, archive ARU-SIPM-RECOVERY-CORRELATED-NOISE-COUPLING-001.
 - Scientific content: records PARTIAL result that parent-generation correlated-noise probabilities remain hard-wired to raw r(dt) under FULL_RECOVERY; does not close #1066/#1071.
 - Policy compliance with #1218: acceptable because it did not claim scientific-universe completion for those parents.
+
+## Lane 05 timing CFD follow-up (#1059 #968)
+
+Branch: `fix/issue-1059-cfd-component` (worktree `ccb-wt-lane05`).
+
+| Issue | Disposition | Evidence |
+|-------|-------------|----------|
+| #1059 | FIXED (software) | `scripts/digital_cfd.py` binds `first_local_peak` CFD crossing to selected component; `scripts/cfd_selector_sensitivity.py` retains fail-closed identifiability limits (#1277/#1278); producer serializes `first_local_peak_selector` diagnostics |
+| #968 | PARTIAL (contract) / BLOCKED (physics) | `src/ccb_mc_validation/timing/b2_broad_residual_mechanisms.py` fail-closes microscopic `pile-up-like` wording until AF-020 discriminants are `SATISFIED`; mechanism-neutral support table ranks alternatives without authorizing pile-up |
+| #1060 | FIXED | Left-censored crossings report `NO_CROSSING_IN_WINDOW`, never `t=0` |
+| #1061 | FIXED | Leave-one-run-out template phase in producer |
+| #1063 | FIXED | Canonical `digital_cfd` import path for production timing |
+| #954 #964 #965 #967 #1003 #1004 #1032 #1033 #1062 #1064 | OPEN / carried | Not closed by Lane 05 follow-up |
 
 ## Lane 01 Wave B kickoff
 

@@ -1,4 +1,4 @@
-"""Lane05 Wave-A timing CFD contract tests (#954,#1003,#1004,#1059,#1060,#1061,#1063)."""
+"""Lane05 Wave-A timing CFD contract tests (#954,#1003,#1004,#1059,#1060,#1061,#1063,#1277,#1278)."""
 from __future__ import annotations
 
 import importlib.util
@@ -183,7 +183,25 @@ def test_producer_source_contract_tokens():
     assert "SAME_SAMPLE_MINIMUM_EXPLORATORY_ONLY" in source
     assert "select_complete_pair_rows" in source
     assert "load_polarity_map" in source
+    assert "first_local_peak_diagnostics" in source
+    assert "first_local_peak_selector" in source
     assert "/ np.sqrt(2)" not in source
+
+
+def test_first_local_selector_identifiability_limits_are_non_authorising():
+    wave = np.asarray(
+        [[0.0, 25.0, 49.9, 25.0, 0.0, 0.0, 500.0, 1000.0, 500.0]],
+        dtype=float,
+    )
+    diagnostic = digital_cfd.first_local_peak_diagnostics(wave)
+    assert diagnostic["authorising_component_identity"] is False
+    assert diagnostic["evidence_status"] == digital_cfd.FIRST_LOCAL_PEAK_SELECTOR_STATUS
+    import cfd_selector_sensitivity
+
+    stability = cfd_selector_sensitivity.first_local_peak_linf_stability_diagnostics(
+        wave
+    )
+    assert stability["certificate_statuses"][0] != "AUTHORIZED_COMPONENT_IDENTITY"
 
 
 def test_polarity_config_is_versioned_json():

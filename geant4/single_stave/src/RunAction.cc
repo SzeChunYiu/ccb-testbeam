@@ -1,18 +1,26 @@
 #include "RunAction.hh"
 #include "SimData.hh"
 #include "NpyWriter.hh"
+#include "SipmDigitizerConfig.hh"
 
 #include "G4Run.hh"
 #include "G4AnalysisManager.hh"
 #include "G4SystemOfUnits.hh"
 
+#include "ccb/sipm/Digest.hh"
+#include "ccb/sipm/ResponseSimulator.hh"
+
+#include <cstdint>
 #include <cstdlib>
 #include <fstream>
+#include <stdexcept>
 #include <iostream>
 #include <ctime>
 #include <cstdio>
+#include <sstream>
 #include <string>
 #include <sys/stat.h>
+#include <vector>
 
 RunAction::RunAction(const AppConfig& cfg, const OpticalTables& tables,
                      const std::string& geometry_hash,
@@ -25,6 +33,22 @@ RunAction::RunAction(const AppConfig& cfg, const OpticalTables& tables,
 }
 
 RunAction::~RunAction() = default;
+
+void RunAction::SetSipmDigitizerConfig(const ccb::sipm::ModelConfig& cfg) {
+  sipm_config_ = cfg;
+  have_sipm_config_ = true;
+}
+
+void RunAction::NoteSipmEventDiagnostics(bool candidate_limit_reached,
+                                         std::size_t n_candidates_processed) {
+  if (candidate_limit_reached) {
+    ++candidate_limit_hits_;
+  }
+  if (n_candidates_processed > max_candidates_processed_) {
+    max_candidates_processed_ = n_candidates_processed;
+  }
+}
+
 
 void RunAction::DefineNtuples() {
   auto* am = G4AnalysisManager::Instance();
@@ -40,12 +64,9 @@ void RunAction::DefineNtuples() {
   am->CreateNtupleIColumn("event");
   am->CreateNtupleSColumn("particle");
   am->CreateNtupleDColumn("ke_MeV");
-  am->CreateNtupleDColumn("edep_scint_MeV");       // quenched (visible), EVENT TOTAL
-  am->CreateNtupleDColumn("edep_scint_raw_MeV");   // unquenched, EVENT TOTAL
-  am->CreateNtupleDColumn("track_len_scint_mm");   // ALL non-optical (#1007)
-  am->CreateNtupleDColumn("primary_edep_scint_MeV");
-  am->CreateNtupleDColumn("primary_edep_scint_raw_MeV");
-  am->CreateNtupleDColumn("primary_track_len_scint_mm");
+  am->CreateNtupleDColumn("edep_scint_MeV");       // quenched (visible)
+  am->CreateNtupleDColumn("edep_scint_raw_MeV");   // unquenched
+  am->CreateNtupleDColumn("track_len_scint_mm");
   am->CreateNtupleDColumn("entry_x_cm");
   am->CreateNtupleDColumn("entry_y_cm");
   am->CreateNtupleDColumn("entry_z_cm");
@@ -94,8 +115,7 @@ void RunAction::BeginOfRunAction(const G4Run*) {
   // run manager is constructed.
   if (IsMaster() || G4Threading::G4GetThreadId() < 0) {
     std::cout << "RUN_CONFIG " << cfg_.Describe() << " geometry_hash="
-              << geometry_hash_ << " physics_hash=" << physics_hash_
-              << std::endl;
+              << geometry_hash_ << std::endl;
   }
   DefineNtuples();
   if (cfg_.gpu_optical) {
@@ -166,9 +186,6 @@ void RunAction::FillEvent(const EventData& e, int event_id) {
   am->FillNtupleDColumn(nt_event_, c++, e.edep_scint_MeV);
   am->FillNtupleDColumn(nt_event_, c++, e.edep_scint_raw_MeV);
   am->FillNtupleDColumn(nt_event_, c++, e.track_len_scint_mm);
-  am->FillNtupleDColumn(nt_event_, c++, e.primary_edep_scint_MeV);
-  am->FillNtupleDColumn(nt_event_, c++, e.primary_edep_scint_raw_MeV);
-  am->FillNtupleDColumn(nt_event_, c++, e.primary_track_len_scint_mm);
   am->FillNtupleDColumn(nt_event_, c++, e.entry[0]);
   am->FillNtupleDColumn(nt_event_, c++, e.entry[1]);
   am->FillNtupleDColumn(nt_event_, c++, e.entry[2]);
@@ -217,7 +234,10 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
   // <output>.meta.json — provenance the analysis + manifest validators consume.
   const std::string meta = cfg_.output + ".meta.json";
   std::ofstream os(meta);
-  if (!os) { std::cerr << "warning: cannot write " << meta << "\n"; return; }
+  if (!os) {
+    std::cerr << "fatal: cannot write provenance sidecar " << meta << "\n";
+    throw std::runtime_error("failed to write run metadata sidecar: " + meta);
+  }
   auto j = [](const std::string& s) -> std::string {
     // Fully robust JSON string escaping (RFC 8259).  Escapes \" \\ and all
     // control characters (< 0x20), using short forms for the common ones
@@ -263,7 +283,12 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
               ? "unset" : cfg_.g4_force_number_of_threads) << ",\n"
      << "  \"particle\": " << j(cfg_.particle) << ",\n"
      << "  \"kinetic_energy_MeV\": " << cfg_.kinetic_energy_MeV << ",\n"
+     << "  \"n_events_requested\": " << cfg_.n_events << ",\n"
      << "  \"n_events\": " << run->GetNumberOfEvent() << ",\n"
+     << "  \"hit_x_cm\": " << cfg_.hit_x_cm << ",\n"
+     << "  \"hit_y_cm\": " << cfg_.hit_y_cm << ",\n"
+     << "  \"theta_deg\": " << cfg_.theta_deg << ",\n"
+     << "  \"phi_deg\": " << cfg_.phi_deg << ",\n"
      << "  \"mode\": " << j(cfg_.mode == SimMode::kOpticalCalibration ? "optical" : "fast") << ",\n"
      << "  \"birks_kB_mm_per_MeV\": " << cfg_.birks_kB_mm_per_MeV << ",\n"
      << "  \"production_cut_mm\": " << cfg_.production_cut_mm << ",\n"
@@ -276,8 +301,10 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
      << "  \"collection_efficiency\": " << cfg_.collection_efficiency << ",\n"
 	     << "  \"optical_interface_model\": " << j(cfg_.optical_interface_model) << ",\n"
      << "  \"sipm_n_cells\": " << cfg_.sipm_n_cells << ",\n"
-     << "  \"far_end_mode\": " << j(cfg_.far_end_mode) << ",\n"
+     << "  \"sipm_overvoltage_V\": " << cfg_.sipm_overvoltage_V << ",\n"
+     << "  \"wls_time_profile\": " << j(cfg_.wls_time_profile) << ",\n"
      << "  \"strict_optical\": " << (cfg_.strict_optical ? "true" : "false") << ",\n"
+     << "  \"far_end_mode\": " << j(cfg_.far_end_mode) << ",\n"
      << "  \"allow_optical_fallback\": " << (cfg_.allow_optical_fallback ? "true" : "false") << ",\n"
      << "  \"authorising\": " << (cfg_.authorising ? "true" : "false") << ",\n"
      << "  \"optical_fallback_used\": " << (cfg_.optical_fallback_used ? "true" : "false") << ",\n"
@@ -298,6 +325,15 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
      << "  \"tio2_specular_spike\": " << cfg_.tio2_specular_spike << ",\n"
      << "  \"tio2_backscatter\": " << cfg_.tio2_backscatter << ",\n"
      << "  \"tio2_reflection_model_status\": " << j(cfg_.tio2_reflection_model_status) << ",\n"
+     << "  \"gpu_optical\": " << (cfg_.gpu_optical ? "true" : "false") << ",\n"
+     << "  \"optical_out\": " << j(cfg_.optical_out) << ",\n"
+     << "  \"macro\": " << j(cfg_.macro) << ",\n"
+     << "  \"output\": " << j(cfg_.output) << ",\n"
+     << "  \"detector_response\": {\n"
+     << "    \"adc_path\": \"ccb-sipm-core\",\n"
+     << "    \"legacy_pe_path\": \"INDEPENDENT_DIAGNOSTIC_DRAW\",\n"
+     << "    \"legacy_pe_note\": \"detected_*/pe_sat_* use a separate Bernoulli+analytic occupancy draw; not the latent state of adc_* (issue #1084)\"\n"
+     << "  },\n"
      << "  \"optical_tables\": {\n";
   // Record each optical table path + hash + validation status (#978/#980).
   size_t k = 0, n = tables_.All().size();

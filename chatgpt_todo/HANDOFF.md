@@ -1,35 +1,33 @@
 # Latest Handoff
 
-## Root SiPM gitlink now points at a conflicted core commit; repair and CI closure are in flight
+## Production SiPM sidecar core revision was not executable-bound
 
-Selected atom: `ARU-SIPM-ROOT-GITLINK-EXECUTION-CLOSURE-001`.
+Selected atom: `ARU-SIPM-RUN-METADATA-COMPILED-CORE-SHA-001`.
 
-Protected root `main@09991a0f598b51b030ca180507c6ea5741acc7e0` was inspected after #1266 merged. That merge changed only `geant4/single_stave/sipm`, advancing it from `ccb-sipm-core@692857b...` to exact `0fc78af6679c421f7a01a85f421170bbb92cce82`. Exact upstream source at `0fc78af...` contains unresolved Git merge delimiters in compiled/test files, including `src/Config.cc`; therefore the current root gitlink is not an executable/source-closed dependency state.
+Protected `ccb-testbeam/main@896c6c0bca2fa0d5fdf50a5d33840e4b8ab75b60` now has an executable/tested SiPM gitlink after #1276, but the run-metadata layer still had a separate provenance gap. `RunAction::WriteMetadataSidecar()` obtains `digitizer.ccb_sipm_core_commit` only from environment variable `CCB_SIPM_CORE_COMMIT` and otherwise serializes `unspecified`. The systematic campaign launcher exports `CCB_GIT_COMMIT` but not this core variable. Nevertheless the sidecar sets `digitizer.validation_status=OK`, and `scripts/single_stave/sipm_sensitivity.py` accepts `OK` plus a nonempty config digest without requiring exact core source identity.
 
-Current upstream core is `3627dc87137a9f33f511a755671414b11853c0a0`, a strict two-commit descendant of `0fc78af...`. `caf6bdc...` repairs the three contaminated files, and `3627dc...` adds `tools/check_conflict_markers.py` plus a Core CI gate that runs the self-test/repository scan before configure/build/CTest. Exact main-push Core CI run `31548111836` completed SUCCESS on `3627dc...`.
+The contract is `H_meta = H_compiled = H_link`: the SHA in a produced sidecar must equal both the ccb-sipm-core revision encoded in that executable and the reviewed superproject gitlink. The existing `digitizer_config_sha256` and core effective-kernel digest remain necessary identities of numerical state; they cannot identify the implementation revision because code revision is not an input to those digests.
 
-The root protection gap is independent and material. Pre-repair `.github/workflows/mc_validation_ci.yml` used plain `actions/checkout@v4`; submodule checkout is not enabled by default. Thus root protected Python/static CI could be green without materializing or compiling the exact core commit named by the gitlink. This is the mechanism that must be closed at the root integration layer, not merely documented upstream.
+Mechanism review rejected caller environment as provenance because it is mutable/unset/forgeable, and rejected deriving only the current checkout at launch because a stale executable may not have been rebuilt. The bounded surviving repair compiles the reviewed gitlink literal into the executable itself. Full executable-byte/compiler/linker provenance remains a separate child.
 
-Repair branch `audit/sipm-pin-conflict-repair-v1` was created from exact root main with no force-push. Commit `20475c13663553735289e210a4714cbefae7e852` repins only the gitlink to `3627dc...`. Commit `92586447255b98ad851ab1116f444e5b38c8ce33` upgrades the required root test job to recursively checkout submodules and run the pinned core conflict-marker self-test/scan, CMake configure/build, and CTest before the root Python suite. The controlling invariant is:
+Branch `audit/sipm-compiled-core-sha-binding-v1` starts from exact protected main and adds `SipmBuildProvenance.hh` with exact gitlink `3627dc87137a9f33f511a755671414b11853c0a0`; `SipmBuildProvenance.cc`, automatically included by the existing `src/*.cc` CMake glob, overwrites `CCB_SIPM_CORE_COMMIT` from that compiled constant before `main()` and aborts if the binding cannot be installed; and `tests/test_sipm_compiled_core_provenance.py` requires the literal to equal `git ls-tree HEAD geant4/single_stave/sipm`, compiles/runs the binding translation unit against a hostile pre-set `deadbeef` environment, and guards the CMake composition assumption.
 
-`AUTHORISE_ROOT_SIPM(h_root,h_core) => gitlink(h_root)=h_core && CoreCI(h_core)=SUCCESS && ConflictMarkerScan(h_core)=PASS && RootRequiredCI(h_root,h_core)=SUCCESS`.
+An isolated local C++17 fixture using the exact same binding logic compiled with `-Wall -Wextra -Wpedantic` and, under hostile `CCB_SIPM_CORE_COMMIT=deadbeef`, printed exactly `3627dc87137a9f33f511a755671414b11853c0a0`. This is deterministic software evidence only; no local GitHub clone or Geant4 detector execution was possible because external DNS remained unavailable.
 
-A direct local `git ls-remote` attempt failed with `Could not resolve host: github.com` (status 128), so no local clone/build PASS is claimed. Upstream exact-head Core CI is real execution evidence; root exact-head protected CI remains the next merge gate.
+#977 was reopened because its acceptance explicitly requires the exact core commit and the prior closure was based on #1248 before this execution-identity defect was inspected. Stable concern `CCB-977-COMPILED-CORE-SHA-001` records the mechanism, falsifier, implementation, roles and residuals. #1067 was also reopened because source-byte binding, calibration/resampling validation, positive measured authorization and historical-output audit remain material.
 
-A governance contradiction was also confirmed. #1067 is currently closed/completed, but its own acceptance criteria and prior issue reviews retain unresolved source-byte binding, calibration/resampling validation, positive measured-authorisation semantics, run-metadata serialization, and historical-output audit. The campaign ledger labels #1067 `FIXED (core)` and still describes a prior `cf12c6b...` pin, which is no longer the current root state. This atom therefore requires reopening/correcting #1067 to PARTIAL/BLOCKED rather than treating the existence of fail-closed code upstream as scientific completion.
+### Sequential AI review votes
 
-### Four sequential AI votes
+**Detector-response/provenance lead:** `ACCEPT bounded compiled-source binding / BLOCK #977 COMPLETE`. Strongest counter-hypothesis was that an environment label identifies the executable; missing/hostile environment falsifies it. Residual is binary/toolchain identity.
 
-**Detector-response integration lead — ACCEPT repair design / BLOCK merge pending protected root CI.** Exact broken source falsifies the counter-hypothesis that the desired fail-closed changes make `0fc78af...` an acceptable pin. Residual: final root branch bytes have not yet passed their required workflow.
+**Adversarial mechanism reviewer:** `REJECT caller-env and config-digest equivalence / ACCEPT compiled literal`. A numerical config digest can remain identical across distinct code revisions; source identity is an independent variable.
 
-**Adversarial mechanism/provenance reviewer — REJECT pointer-only validation / ACCEPT recursive dependency execution.** A green superproject Python job did not observe the C++ dependency because submodules were not checked out. Future authorization must execute the exact gitlink.
+**Independent validation reviewer:** `ACCEPT deterministic compile/run probe / BLOCK detector inference`. Protected exact-final-head root CI remains the integration gate; no detector population participates.
 
-**Independent validation reviewer — ACCEPT upstream Core CI / BLOCK root integration until exact-head root CI.** Core run `31548111836` is sufficient software evidence for `3627dc...` itself, but not for its composition into root main. No detector sample participates.
+**Claims/provenance reviewer:** `REOPEN #977/#1067 / BLOCK waveform, measured-electronics and detector-performance promotion`. Exact core SHA, effective config/kernel identity and calibration authority are separate gates.
 
-**Claims/provenance reviewer — REOPEN/REVISE #1067 / BLOCK measured-electronics claims.** Source/build integrity is necessary but does not provide measured calibration authority or output-level provenance closure.
+Archive: `chatgpt_todo/archive/2026-08-12T035600Z_ARU-SIPM-RUN-METADATA-COMPILED-CORE-SHA-001.md`.
 
-Archive: `chatgpt_todo/archive/2026-08-12T015000Z_ARU-SIPM-ROOT-GITLINK-EXECUTION-CLOSURE-001.md`.
+Next immediate gate: exact-final-head protected MC Validation on the bounded branch/PR; merge only if all required contexts pass and current-main ancestry remains clean. Highest-value subsequent children are historical sidecar audit and a downstream sensitivity gate that refuses missing/non-exact core identity. A stronger `ARU-SIPM-RUN-METADATA-BINARY-BUILD-MANIFEST-001` must bind compiler/linker/build inputs or executable digest.
 
-Next immediate action is exact-final-head root CI on the bounded PR and integration only after every required duplicate context succeeds. Once the gitlink execution gate is integrated, the highest-value scientific child is `ARU-ELEC-IMPULSE-RUN-METADATA-SERIALIZATION-001`: bind the exact core SHA, provenance status, waveform-affecting configuration, and canonical effective runtime-kernel identity into the production sidecar from the same state actually used by event simulation. Source-byte/calibration closure and historical-output audit remain separate children.
-
-No beam bytes, production Geant4 sample, measured electronics waveform, DATA↔MC result, timing/PID metric, pile-up efficiency, rate, ESS, p-value, or public detector-performance quantity was generated or promoted.
+No beam bytes, production Geant4 population, measured electronics waveform, DATA↔MC result, timing/PID metric, pile-up efficiency, rate, ESS, p-value, or detector-performance quantity was generated or promoted.

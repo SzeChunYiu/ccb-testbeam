@@ -113,7 +113,7 @@ A relativistic p+d elastic kinematics tool and tests are already present on the 
 | Issue | Objective |
 |---:|---|
 | #958 | Include the second class-cap inclusion probability or simplify sampling design |
-| #959 | Group-aware weighted model selection/calibration; no silent unweighted fallback |
+| #959 | FIXED (#1245): group-aware weighted ML selection/calibration; fail-closed when weights unset |
 | #960 | Bootstrap the same weighted estimand; failures cannot become zero-width CIs |
 | #961 | Use the canonical DAQ event identity for folds/bootstrap/join grouping |
 | #1001 | Reuse one MC-weight contract for weighted data/MC tests and uncertainty |

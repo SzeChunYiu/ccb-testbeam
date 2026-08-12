@@ -13,9 +13,9 @@ MC ROOT: `geant4/data/output_krakow_1M.root` (present)
 | 03 | ccb-wt-lane03 | fix/lane03-waveA | Geometry/kinematics | #987 #989 #991-#992 #999 | MERGED (#1237) | #1237 |
 | 04 | ccb-wt-lane04 | fix/lane04-waveA | Source/weights | #1050-#1058 #1174 #1179 | MERGED (#1240) | #1240 |
 | 05 | ccb-wt-lane05 | fix/lane05-waveA | Timing CFD/template | #954 #964-#968 #1003-#1004 #1032-#1033 #1059-#1064 | MERGED (#1239) | #1239 |
-| 06 | ccb-wt-lane06 | fix/lane06-waveA | PID ΔE-E | #956 #1022-#1031 #1042 #1048 | IN_PROGRESS | |
-| 07 | ccb-wt-lane07 | fix/lane07-waveA | Stats/bootstrap | #958-#960 #1049 #1052 #1097 #1164 #1166 | IN_PROGRESS | |
-| 08 | ccb-wt-lane08 | fix/lane08-waveA | DAQ/S00 provenance | #953 #961-#962 #973 #997-#998 #1014 #1073 #1149 | IN_PROGRESS | |
+| 06 | ccb-wt-lane06 | fix/issue-1095-step-convergence | MC step + digitizer graph | #1095 #1077 | READY_FOR_PR | |
+| 07 | ccb-wt-lane07 | fix/lane07-waveA | Stats/bootstrap | #958-#960 #1049 #1052 #1097 #1164 #1166 | IN_PROGRESS | #1245 |
+| 08 | ccb-wt-lane08 | fix/issue-1073-saturation-worlds | DAQ/S00 provenance | #953 #961-#962 #973 #997-#998 #1014 #1073 #1149 | READY_FOR_REVIEW | https://github.com/SzeChunYiu/ccb-testbeam/pull/1279 |
 | 09 | ccb-wt-lane09 | fix/lane09-waveA | ARU study scripts | #1112-#1129 #1137 | IN_PROGRESS | |
 | 10 | ccb-wt-lane10 | fix/lane10-waveA | Docs/gov/orchestrator | #969-#970 #990 #1002 #1078 #1218 + run_pipeline | MERGED (#1241) | #1241 |
 
@@ -68,6 +68,15 @@ Historical Wave-A integration aligned the gitlink with #1243 at `cf12c6b8955c485
 - Scientific content: records PARTIAL result that parent-generation correlated-noise probabilities remain hard-wired to raw r(dt) under FULL_RECOVERY; does not close #1066/#1071.
 - Policy compliance with #1218: acceptable because it did not claim scientific-universe completion for those parents.
 
+## Lane 06 MC step + digitizer graph (#1095 #1077)
+
+Branch: `fix/issue-1095-step-convergence` (worktree `ccb-wt-lane06`).
+
+| Issue | Disposition | Evidence |
+|-------|-------------|----------|
+| #1095 | BLOCKED (infra FIXED) | `configs/transport/step_policy_registry.json` + `require_step_policy` / `authorize_step_convergence_claim` fail closed; ADR-0005 + ADR-0008; `pin_qgsp_bic_inherited_em_stepfunction` claims_authorized=false until convergence digest |
+| #1077 | FIXED | `DigitizerPipeline` executes `effective_stages`; run provenance uses frozen `stage_graph_meta`; hidden `integrate_samples` fallback removed; `tests/test_lane06_step_digitizer_graph.py` + lane04/lane08 regressions |
+
 ## Lane 01 Wave B kickoff
 
 Branch: `fix/lane01-waveB` (rebased onto origin/main after Wave A #1248 merge).
@@ -77,3 +86,9 @@ Branch: `fix/lane01-waveB` (rebased onto origin/main after Wave A #1248 merge).
 | #1009 | IN_PROGRESS (fail-closed) | Metadata marks PEAK_ONLY_DISCARDED + daq schema UNSET; no invented HRD Nsamples |
 | #1010 | BLOCKED | Needs external CCB electronics impulse evidence |
 | #1066 #1068 #1070 #1071 | BLOCKED | Carried from Wave A ADRs |
+
+## Lane 07 wave-A issue disposition (#958-#960 subset)
+
+| Issue | Disposition | Evidence |
+|-------|-------------|----------|
+| #959 | FIXED | `run_ml_check` requires `sampling_weight` + `eventno`; uses `StratifiedGroupKFold` + weighted ROC-AUC and group-aware isotonic calibration; refuses silent unweighted fallback on missing weights, unsupported estimators, or incomplete OOF probs. Regression: `tests/test_lane07_waveA_stats_datamc.py::test_959_ml_check_requires_weights_and_eventno`, `tests/test_s00_implementation_consistency.py::test_run_ml_check_uses_cluster_bootstrap_and_features_guard`. Merged via #1245 (`ac2e0bdd`). Tracking branch: `fix/issue-959-group-aware-ml`. |

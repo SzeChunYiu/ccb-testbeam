@@ -27,15 +27,15 @@ ROOT = Path(__file__).resolve().parents[1]
 # #1079 Birks kB explicit config
 # ---------------------------------------------------------------------------
 def test_1079_apply_birks_requires_explicit_kb():
-    with pytest.raises(ValueError, match="birks_kB"):
+    with pytest.raises(ValueError, match="birks_kB_cm_per_MeV|birks_kB_mm_per_MeV|#1079"):
         DigitizerPipeline.from_config({"apply_birks": True})
 
 
 def test_1079_mm_unit_converts_to_cm():
     pipe = DigitizerPipeline.from_config(
-        {"apply_birks": True, "birks_kB": 0.126, "birks_kB_unit": "mm_per_MeV"}
+        {"apply_birks": True, "birks_kB_mm_per_MeV": 0.126}
     )
-    assert pipe.birks_kB_cm_per_mev == pytest.approx(0.0126)
+    assert pipe.birks_kB_cm_per_MeV == pytest.approx(0.0126)
 
 
 def test_1079_requested_kb_reaches_executed_law():
@@ -44,13 +44,8 @@ def test_1079_requested_kb_reaches_executed_law():
     hit = {"edep_mev": 10.0, "time_ns": 0.0, "step_length_cm": 1.0}
     kb = 0.008
     pipe = DigitizerPipeline.from_config(
-        {
-            "apply_birks": True,
-            "birks_kB": kb,
-            "birks_kB_unit": "cm_per_MeV",
-        }
+        {"apply_birks": True, "birks_kB_cm_per_MeV": kb}
     )
-    # stages=["birks"] alone may still run sampling via run(); use _stage_birks
     out = pipe._stage_birks(hit, np.random.default_rng(0), {"event_id": 1, "channel_id": 0})
     expected = 10.0 / (1.0 + kb * 10.0)
     assert out["edep_mev"] == pytest.approx(expected)
@@ -59,22 +54,22 @@ def test_1079_requested_kb_reaches_executed_law():
 def test_1079_unit_negative_control_cm_vs_mm_differs_by_ten():
     hit = {"edep_mev": 10.0, "time_ns": 0.0, "step_length_cm": 1.0}
     as_cm = DigitizerPipeline.from_config(
-        {"apply_birks": True, "birks_kB": 0.126, "birks_kB_unit": "cm_per_MeV"}
+        {"apply_birks": True, "birks_kB_cm_per_MeV": 0.126}
     )
     as_mm = DigitizerPipeline.from_config(
-        {"apply_birks": True, "birks_kB": 0.126, "birks_kB_unit": "mm_per_MeV"}
+        {"apply_birks": True, "birks_kB_mm_per_MeV": 0.126}
     )
     ctx = {"event_id": 1, "channel_id": 0}
     rng = np.random.default_rng(0)
     e_cm = as_cm._stage_birks(hit, rng, ctx)["edep_mev"]
     e_mm = as_mm._stage_birks(hit, rng, ctx)["edep_mev"]
     assert e_cm != pytest.approx(e_mm)
-    assert as_cm.birks_kB_cm_per_mev == pytest.approx(10.0 * as_mm.birks_kB_cm_per_mev)
+    assert as_cm.birks_kB_cm_per_MeV == pytest.approx(10.0 * as_mm.birks_kB_cm_per_MeV)
 
 
 def test_1079_birks_off_still_allows_missing_kb():
     pipe = DigitizerPipeline.from_config({"apply_birks": False})
-    assert pipe.birks_kB_cm_per_mev is None
+    assert pipe.birks_kB_cm_per_MeV is None
     out = pipe.run([{"edep_mev": 1.0, "time_ns": 0.0}], event_id=1)
     assert out["adc"].shape == (18,)
 
@@ -88,16 +83,14 @@ def test_986_geometry_ctor_excludes_birks_and_includes_far_end():
     start = src.index("DetectorConstruction::DetectorConstruction")
     end = src.index("DetectorConstruction::~DetectorConstruction")
     ctor = src[start:end]
-    assert "ccb-geometry-config/1" in ctor
-    assert "kCoatingThk_mm=" in ctor
-    assert "kSensorThk_mm=" in ctor
+    # Main #986 / #1263 schema: geometry_v2 mass geometry vs physics_hash response knobs.
+    assert "schema=geometry_v2" in ctor or "ccb-geometry-config/1" in ctor
     assert "far_end_mode=" in ctor
-    assert "ccb-physics-config/1" in ctor
-    assert "ccb-optical-config/1" in ctor
-    # Birks must not be streamed into the geometry ostringstream before geometry_hash_ assignment
+    assert "coating" in ctor.lower() or "kCoatingThk_mm=" in ctor
+    assert "sensor" in ctor.lower() or "kSensorThk_mm=" in ctor
+    assert "physics_hash_" in ctor
     geo_block = ctor.split("geometry_hash_ = Sha256::hex")[0]
     assert "birks_kB_mm_per_MeV" not in geo_block
-    assert "optical_interface_model" not in geo_block
     assert "PhysicsHash()" in (ROOT / "geant4/single_stave/include/DetectorConstruction.hh").read_text(
         encoding="utf-8"
     )

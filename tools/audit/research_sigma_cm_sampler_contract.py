@@ -39,10 +39,11 @@ INTERPOLATION_MODE = "linear_node_pdf_exact_inverse_v1"
 SUPPORT_MODE = "measured_table_support_truncate_v1"
 
 
-def _read_table(path: Path) -> tuple[bytes, list[float], list[float]]:
+def _read_table(path: Path) -> tuple[bytes, list[float], list[float], list[float]]:
     raw = path.read_bytes()
     angles: list[float] = []
     sigma: list[float] = []
+    stat_uncertainty: list[float] = []
     for line_number, line in enumerate(raw.decode("ascii").splitlines(), start=1):
         fields = line.split()
         if len(fields) != 3:
@@ -52,13 +53,18 @@ def _read_table(path: Path) -> tuple[bytes, list[float], list[float]]:
             raise ValueError(f"line {line_number}: non-finite table value")
         if cross_section < 0.0:
             raise ValueError(f"line {line_number}: negative cross section")
+        if not math.isfinite(_stat_uncertainty):
+            raise ValueError(f"line {line_number}: non-finite statistical uncertainty")
+        if _stat_uncertainty < 0.0:
+            raise ValueError(f"line {line_number}: negative statistical uncertainty")
         angles.append(math.radians(angle_deg))
         sigma.append(cross_section)
+        stat_uncertainty.append(_stat_uncertainty)
     if len(angles) < 2:
         raise ValueError("need at least two cross-section rows")
     if any(b <= a for a, b in zip(angles, angles[1:])):
         raise ValueError("CM angles must be strictly increasing")
-    return raw, angles, sigma
+    return raw, angles, sigma, stat_uncertainty
 
 
 def _display_path(path: Path) -> str:
@@ -198,10 +204,82 @@ def _exact_reference_audit(angles: list[float], sigma: list[float]) -> dict[str,
     }
 
 
+def _statistical_uncertainty_audit(
+    angles: list[float], sigma: list[float], stat_uncertainty: list[float]
+) -> dict[str, object]:
+    """Audit the statistical uncertainty column of the cross-section table.
+
+    The third column of the table records the per-node statistical uncertainty
+    on sigma (mb/sr). The sampler currently uses only the nominal sigma values;
+    this audit quantifies the uncertainty that is not yet propagated.
+    """
+    n = len(angles)
+    if n != len(sigma) or n != len(stat_uncertainty):
+        raise ValueError("angles, sigma, stat_uncertainty length mismatch")
+    fractional = [u / s for u, s in zip(stat_uncertainty, sigma)]
+    return {
+        "column": "stat_uncertainty (column 3, mb/sr)",
+        "nodes": n,
+        "min_fractional": min(fractional),
+        "max_fractional": max(fractional),
+        "mean_fractional": math.fsum(fractional) / n,
+        "median_fractional": sorted(fractional)[n // 2],
+        "propagation_status": "NOT_PROPAGATED_ISSUE_1179",
+        "note": (
+            "Statistical uncertainties are tabulated but not propagated by the sampler. "
+            "The nominal reference uses only sigma (column 2). Propagation is tracked "
+            "as #1179 in the issue campaign ledger."
+        ),
+    }
+
+
+def _systematic_uncertainty_envelope_audit(
+    angles: list[float], sigma: list[float]
+) -> dict[str, object]:
+    """Audit a systematic uncertainty envelope for the cross-section.
+
+    The issue #1179 specifies a ±20% systematic envelope at 90° tapering to
+    ±10% at the edges of the measured support (26.49–169.78 deg). This audit
+    reports the envelope fractional value at each node and the implied
+    sigma +- envelope range.
+    """
+    theta_min = angles[0]
+    theta_max = angles[-1]
+    envelope: list[dict[str, float]] = []
+    for theta_rad, s in zip(angles, sigma):
+        normalized = (theta_rad - theta_min) / (theta_max - theta_min)
+        fractional = 0.10 + 0.10 * math.sin(math.pi * normalized)
+        envelope.append({
+            "theta_cm_deg": math.degrees(theta_rad),
+            "sigma_mb_per_sr": s,
+            "fractional_systematic": fractional,
+            "sigma_plus_envelope": s * (1.0 + fractional),
+            "sigma_minus_envelope": s * (1.0 - fractional),
+        })
+    return {
+        "envelope_model": "sinusoidal_taper_10pct_edges_20pct_center",
+        "envelope_description": (
+            "fractional = 0.10 + 0.10 * sin(pi * normalized_theta); "
+            "normalized_theta = (theta - theta_min) / (theta_max - theta_min); "
+            "20% at 90 deg, 10% at support edges (26.49, 169.78 deg)"
+        ),
+        "nodes": len(envelope),
+        "per_node": envelope,
+        "propagation_status": "NOT_PROPAGATED_ISSUE_1179",
+        "note": (
+            "The systematic envelope is a proposed model from #1179, not yet "
+            "implemented in the compiled sampler. The nominal reference uses "
+            "only sigma (column 2) without systematic variation."
+        ),
+    }
+
+
 def audit_sampler(path: Path) -> dict[str, object]:
-    raw, angles, sigma = _read_table(path)
+    raw, angles, sigma, stat_uncertainty = _read_table(path)
     legacy = _legacy_audit(angles, sigma)
     exact = _exact_reference_audit(angles, sigma)
+    statistical = _statistical_uncertainty_audit(angles, sigma, stat_uncertainty)
+    systematic = _systematic_uncertainty_envelope_audit(angles, sigma)
     return {
         "schema_version": "ccb_sigma_cm_sampler_contract_v2",
         "input": {
@@ -213,6 +291,16 @@ def audit_sampler(path: Path) -> dict[str, object]:
         },
         "legacy_v1": legacy,
         "implemented_reference": exact,
+        "uncertainty": {
+            "statistical": statistical,
+            "systematic_envelope": systematic,
+            "propagation_status": "OPEN_ISSUE_1179",
+            "propagation_note": (
+                "Cross-section statistical and systematic uncertainty propagation is not yet "
+                "implemented in the compiled sampler. The nominal reference uses sigma (column 2) "
+                "only. This is tracked as #1179 in the issue campaign ledger."
+            ),
+        },
         "interpretation": (
             "The legacy inverse-CDF used the correct trapezoid interval masses but sampled a "
             "piecewise-constant density inside each interval and silently assigned substantial mass "

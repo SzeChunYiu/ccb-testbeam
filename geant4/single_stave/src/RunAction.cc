@@ -65,8 +65,11 @@ void RunAction::DefineNtuples() {
   am->CreateNtupleSColumn("particle");
   am->CreateNtupleDColumn("ke_MeV");
   am->CreateNtupleDColumn("edep_scint_MeV");       // quenched (visible)
-  am->CreateNtupleDColumn("edep_scint_raw_MeV");   // unquenched
-  am->CreateNtupleDColumn("track_len_scint_mm");
+  am->CreateNtupleDColumn("edep_scint_raw_MeV");   // unquenched (all non-optical)
+  am->CreateNtupleDColumn("track_len_scint_mm");   // all non-optical (#1007)
+  am->CreateNtupleDColumn("primary_edep_scint_MeV");
+  am->CreateNtupleDColumn("primary_edep_scint_raw_MeV");
+  am->CreateNtupleDColumn("primary_track_len_scint_mm");
   am->CreateNtupleDColumn("entry_x_cm");
   am->CreateNtupleDColumn("entry_y_cm");
   am->CreateNtupleDColumn("entry_z_cm");
@@ -186,6 +189,9 @@ void RunAction::FillEvent(const EventData& e, int event_id) {
   am->FillNtupleDColumn(nt_event_, c++, e.edep_scint_MeV);
   am->FillNtupleDColumn(nt_event_, c++, e.edep_scint_raw_MeV);
   am->FillNtupleDColumn(nt_event_, c++, e.track_len_scint_mm);
+  am->FillNtupleDColumn(nt_event_, c++, e.primary_edep_scint_MeV);
+  am->FillNtupleDColumn(nt_event_, c++, e.primary_edep_scint_raw_MeV);
+  am->FillNtupleDColumn(nt_event_, c++, e.primary_track_len_scint_mm);
   am->FillNtupleDColumn(nt_event_, c++, e.entry[0]);
   am->FillNtupleDColumn(nt_event_, c++, e.entry[1]);
   am->FillNtupleDColumn(nt_event_, c++, e.entry[2]);
@@ -297,6 +303,11 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
      << "  \"birks_kB_mm_per_MeV\": " << cfg_.birks_kB_mm_per_MeV << ",\n"
      << "  \"production_cut_mm\": " << cfg_.production_cut_mm << ",\n"
      << "  \"physics_list\": " << j(cfg_.physics_list) << ",\n"
+     << "  \"neutron_tracking_time_cut_us\": "
+     << "\"IMPLICIT_QGSP_BIC_DEFAULT_10_UNVALIDATED\",\n"
+     << "  \"neutron_tracking_time_cut_status\": \"BLOCKED_ISSUE_1091\",\n"
+     << "  \"step_size_convergence_status\": \"BLOCKED_ISSUE_1095\",\n"
+     << "  \"primary_vs_event_track_contract\": \"primary_* columns (#1007)\",\n"
      << "  \"reflectivity_scale\": " << cfg_.reflectivity_scale << ",\n"
      << "  \"attenuation_scale\": " << cfg_.attenuation_scale << ",\n"
      << "  \"scintillator_absorption_scale\": " << cfg_.scintillator_absorption_scale << ",\n"

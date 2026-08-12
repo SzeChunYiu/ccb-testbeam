@@ -62,6 +62,14 @@ def _hash_to_int(token: Any) -> int:
     return int(h, 16)
 
 
+# Named kB hypotheses (#1079). Values are cm/MeV; none is CCB truth.
+BIRKS_KB_HYPOTHESES_CM_PER_MEV: dict[str, float] = {
+    "python_digitizer_legacy_0p008": 0.008,
+    "geant4_stave_default_0p0126": 0.0126,  # 0.126 mm/MeV
+    "mv0_prose_disabled_0": 0.0,
+}
+
+
 @dataclass
 class DigitizerPipeline:
     """Configurable staged digitizer.
@@ -95,6 +103,7 @@ class DigitizerPipeline:
     apply_birks: bool = False
     # Required when apply_birks is True (#1079). Units: cm/MeV.
     birks_kB_cm_per_MeV: float | None = None
+    birks_kB_hypothesis_id: str = "UNSET"
     global_seed: int = 0
     stages: list[str] = field(
         default_factory=lambda: ["birks", "scintillation", "transport", "sampling"]
@@ -153,6 +162,15 @@ class DigitizerPipeline:
         }
 
 
+    @property
+    def birks_kB_cm_per_mev(self) -> float | None:
+        """Lowercase alias for lane09 callers; canonical field is MeV-cased."""
+        return self.birks_kB_cm_per_MeV
+
+    @birks_kB_cm_per_mev.setter
+    def birks_kB_cm_per_mev(self, value: float | None) -> None:
+        self.birks_kB_cm_per_MeV = value
+
     def model_identity(self) -> dict[str, Any]:
         """Return the frozen executable MV0 model identity (#1078)."""
         return {
@@ -177,6 +195,10 @@ class DigitizerPipeline:
                 "adc_ceiling": int(self.electronics.adc_ceiling),
             },
             "apply_birks": bool(self.apply_birks),
+            "birks_kB_cm_per_MeV": (
+                None if self.birks_kB_cm_per_MeV is None else float(self.birks_kB_cm_per_MeV)
+            ),
+            "birks_kB_hypothesis_id": str(self.birks_kB_hypothesis_id),
             "stages": list(self.stages),
             "contract": "docs/contracts/MV0_DIGITIZER_MODEL_IDENTITY.json",
         }
@@ -516,14 +538,17 @@ class DigitizerPipeline:
 
 
 
+    @staticmethod
     def _parse_birks_kb_cm_per_mev(config: Mapping[str, Any]) -> float | None:
-        """Parse explicit Birks kB with unit tags (#1079).
+        """Parse explicit unit-tagged Birks kB (#1079 lane05).
 
-        Accepts ``birks_kB_cm_per_MeV`` or ``birks_kB_mm_per_MeV`` (×0.1 → cm/MeV).
-        Providing both, or a bare unlabelled ``kB`` / ``birks_kB``, is rejected.
+        Accepts ``birks_kB_cm_per_MeV`` / ``birks_kB_cm_per_mev`` or
+        ``birks_kB_mm_per_MeV`` / ``birks_kB_mm_per_mev`` (×0.1 → cm/MeV).
+        Providing both unit families, or a bare unlabelled ``kB`` / ``birks_kB``,
+        is rejected.
         """
-        has_cm = "birks_kB_cm_per_MeV" in config
-        has_mm = "birks_kB_mm_per_MeV" in config
+        has_cm = ("birks_kB_cm_per_MeV" in config) or ("birks_kB_cm_per_mev" in config)
+        has_mm = ("birks_kB_mm_per_MeV" in config) or ("birks_kB_mm_per_mev" in config)
         forbidden = [k for k in ("kB", "birks_kB", "kb", "birks_kb") if k in config]
         if forbidden:
             raise ValueError(
@@ -536,9 +561,11 @@ class DigitizerPipeline:
                 "birks_kB_mm_per_MeV; provide exactly one unit-tagged value (#1079)"
             )
         if has_cm:
-            kb = float(config["birks_kB_cm_per_MeV"])
+            raw = config["birks_kB_cm_per_MeV"] if "birks_kB_cm_per_MeV" in config else config["birks_kB_cm_per_mev"]
+            kb = float(raw)
         elif has_mm:
-            kb = float(config["birks_kB_mm_per_MeV"]) * 0.1  # mm/MeV → cm/MeV
+            raw = config["birks_kB_mm_per_MeV"] if "birks_kB_mm_per_MeV" in config else config["birks_kB_mm_per_mev"]
+            kb = float(raw) * 0.1  # mm/MeV → cm/MeV
         else:
             return None
         if not np.isfinite(kb) or kb < 0.0:
@@ -546,6 +573,37 @@ class DigitizerPipeline:
                 f"Birks kB must be finite and non-negative in cm/MeV, got {kb!r} (#1079)"
             )
         return kb
+
+    @classmethod
+    def _resolve_birks_kB(
+        cls, config: Mapping[str, Any]
+    ) -> tuple[float | None, str]:
+        """Resolve Birks kB from unit-tagged keys and/or hypothesis_id (#1079).
+
+        Lane05 contracts require unit-tagged keys; lane09 additionally accepts
+        ``birks_kB_hypothesis_id`` when no numeric key is provided.
+        """
+        hyp = str(config.get("birks_kB_hypothesis_id", "UNSET") or "UNSET")
+        kb = cls._parse_birks_kb_cm_per_mev(config)
+        if kb is not None:
+            if hyp not in ("UNSET", ""):
+                expected = BIRKS_KB_HYPOTHESES_CM_PER_MEV.get(hyp)
+                if expected is not None and abs(kb - expected) > 1e-15:
+                    raise ValueError(
+                        f"birks_kB_cm_per_MeV={kb!r} disagrees with hypothesis "
+                        f"{hyp!r} expected {expected!r} (#1079)"
+                    )
+                return kb, hyp
+            return kb, "EXPLICIT_NUMERIC"
+        if hyp in BIRKS_KB_HYPOTHESES_CM_PER_MEV:
+            return BIRKS_KB_HYPOTHESES_CM_PER_MEV[hyp], hyp
+        if hyp not in ("UNSET", ""):
+            raise ValueError(
+                f"unknown birks_kB_hypothesis_id={hyp!r}; known="
+                f"{sorted(BIRKS_KB_HYPOTHESES_CM_PER_MEV)}"
+            )
+        return None, "UNSET"
+
     @classmethod
     def from_config(cls, config: Mapping[str, Any]) -> DigitizerPipeline:
         """Build a pipeline with strict typed parsing before event 0.
@@ -586,12 +644,13 @@ class DigitizerPipeline:
             pedestal_adc=config.get("pedestal_adc", 300.0),
         )
 
-        kb = cls._parse_birks_kb_cm_per_mev(config)
+        kb, hyp = cls._resolve_birks_kB(config)
         if bool(birks_prov["effective"]) and kb is None:
             raise ValueError(
                 "apply_birks=True requires birks_kB_cm_per_MeV or "
                 "birks_kB_mm_per_MeV (#1079); no silent default across "
-                "Python/Geant4/prose quenching worlds"
+                "Python/Geant4/prose quenching worlds "
+                "(or provide birks_kB_hypothesis_id)"
             )
         pipe = cls(
             n_samples=int(effective["n_samples"]),
@@ -602,6 +661,7 @@ class DigitizerPipeline:
             transport_sigma_ns=float(effective["transport_sigma_ns"]),
             apply_birks=bool(birks_prov["effective"]),
             birks_kB_cm_per_MeV=kb,
+            birks_kB_hypothesis_id=hyp,
             global_seed=int(effective["global_seed"]),
             stages=list(effective["stages"]),
         )

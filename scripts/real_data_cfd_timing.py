@@ -317,7 +317,8 @@ def _template_phase_loro(df: pd.DataFrame) -> tuple[np.ndarray, dict]:
         "authorising_for_in_sample_template": False,
         "n_runs": len(runs),
         "grid_samples": 0.05,
-        "grid_note": "0.05-sample grid (~0.5 ns at 10 ns/sample); sub-grid interpolation not applied (#1064)",
+        "grid_refine": "parabolic",
+        "grid_note": "0.05-sample SSE lattice with parabolic sub-grid refine (#1064); physical ns conversion still conditional on #1014/#993 clock schema",
         "per_run": {},
     }
     grid = np.arange(-1.5, 1.55, 0.05)
@@ -332,7 +333,7 @@ def _template_phase_loro(df: pd.DataFrame) -> tuple[np.ndarray, dict]:
             continue
         templates = s02.build_templates(train, list(PAIR))
         test_df = df.iloc[test_idx].copy()
-        phases = s02.template_phase_time(test_df, templates, grid)
+        phases = s02.template_phase_time(test_df, templates, grid, refine="parabolic")
         out[test_idx] = phases
         meta["per_run"][str(heldout)] = {
             "status": "OK",

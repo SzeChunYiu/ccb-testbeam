@@ -18,6 +18,7 @@ MC ROOT: `geant4/data/output_krakow_1M.root` (present)
 | 08 | ccb-wt-lane08 | fix/lane08-waveA | DAQ/S00 provenance | #953 #961-#962 #973 #997-#998 #1014 #1073 #1149 | IN_PROGRESS | |
 | 09 | ccb-wt-lane09 | fix/lane09-waveA | ARU study scripts | #1112-#1129 #1137 | IN_PROGRESS | |
 | 10 | ccb-wt-lane10 | fix/lane10-waveA | Docs/gov/orchestrator | #969-#970 #990 #1002 #1078 #1218 + run_pipeline | MERGED (#1241) | #1241 |
+| 10b | ccb-wt-lane10 | fix/issue-1218-completion-gate | Gov completion gate | #1218 | READY_FOR_PR | |
 
 ## Rules
 - Edit only on LUNARC worktrees. Push branches; open PRs to main.
@@ -58,7 +59,7 @@ Historical Wave-A integration aligned the gitlink with #1243 at `cf12c6b8955c485
 | #990 | AF-042 nature badges | FIXED | Review taxonomy badges + validator; badges no longer unqualified ACCEPTED |
 | #1002 | AF-051 compare_data_mc narrative | FIXED | Narrative derived from machine-readable fields; causal claim gated |
 | #1078 | ARU-MV0-MODEL-IDENTITY-001 | FIXED (freeze) | Executable MV0 identity frozen; Chapter 10 prose marked DIVERGENT until regenerated |
-| #1218 | ARU-GOV-MERGE-CLOSE-KEYWORD-001 | FIXED | Merge-close keyword checker + scientific completion gate policy |
+| #1218 | ARU-GOV-MERGE-CLOSE-KEYWORD-001 | READY_FOR_PR | `run_close_intent_gates.py` + PR template + full fixture matrix in CI; branch `fix/issue-1218-completion-gate` |
 | PR #1236 | SiPM recovery coupling archive | AUDITED (already merged) | Coordination/provenance only; no detector-claim promotion; do not treat as physics close of #1066/#1071 |
 
 ### PR #1236 audit (Lane 10; no force-merge)

@@ -82,7 +82,7 @@ def mock_mc_dir(tmp_path: Path) -> Path:
     (d / "mc_trigger_split_summary.json").write_text(json.dumps(summ), encoding="utf-8")
     # Event-level EDep arrays (#1052) with weights and cluster IDs (#1164)
     rng = np.random.default_rng(42)
-    nI, nII = 5000, 10000
+    nI, nII = 200, 400
     np.savez_compressed(
         d / "first_B_layer_event_edep.npz",
         sampleI=rng.exponential(3.0, nI).astype(np.float32),

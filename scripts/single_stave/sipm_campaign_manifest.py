@@ -67,6 +67,16 @@ def _git(repo_root: Path, *args: str) -> str:
     return proc.stdout.strip()
 
 
+def require_clean_worktree(repo_root: Path) -> None:
+    status = _git(repo_root, "status", "--porcelain=v1", "--untracked-files=all")
+    if status:
+        first = status.splitlines()[0]
+        raise ManifestError(
+            "campaign intent requires a clean repository working tree; "
+            f"first dirty entry: {first}"
+        )
+
+
 def repo_identities(repo_root: Path) -> tuple[str, str]:
     repo_commit = canonical_git_sha(
         _git(repo_root, "rev-parse", "HEAD"), field="superproject_commit"
@@ -141,6 +151,8 @@ def validate_manifest(manifest: Any) -> dict[str, Any]:
         raise ManifestError("manifest must be a JSON object")
     if manifest.get("schema") != SCHEMA:
         raise ManifestError(f"schema must be {SCHEMA!r}")
+    if manifest.get("campaign_id") != "SIPM-P2-001":
+        raise ManifestError("campaign_id must be 'SIPM-P2-001'")
     canonical_git_sha(manifest.get("superproject_commit"), field="superproject_commit")
     expected = manifest.get("expected_core")
     if not isinstance(expected, dict):
@@ -218,6 +230,28 @@ def expected_core_sha(manifest: dict[str, Any]) -> str:
     return canonical_git_sha(manifest["expected_core"]["commit"], field="expected_core.commit")
 
 
+def verify_execution_intent(
+    manifest: dict[str, Any],
+    *,
+    base_cli: str | None = None,
+    nevents_per_point: int | None = None,
+    threads: int | None = None,
+) -> None:
+    """Check runtime knobs against the frozen campaign execution intent."""
+    validate_manifest(manifest)
+    intent = manifest["execution_intent"]
+    if base_cli is not None and base_cli != intent["base_cli"]:
+        raise ManifestError(
+            f"runtime base_cli {base_cli!r} != manifest {intent['base_cli']!r}"
+        )
+    if nevents_per_point is not None and nevents_per_point != intent["nevents_per_point"]:
+        raise ManifestError(
+            f"runtime nevents {nevents_per_point} != manifest {intent['nevents_per_point']}"
+        )
+    if threads is not None and threads != intent["threads"]:
+        raise ManifestError(f"runtime threads {threads} != manifest {intent['threads']}")
+
+
 def verify_source_binding(manifest: dict[str, Any], repo_root: Path) -> str:
     """Verify the declared expected core against its recorded superproject commit."""
     validate_manifest(manifest)
@@ -245,6 +279,7 @@ def _cmd_create(args: argparse.Namespace) -> int:
     grids_dir = Path(args.grids_dir).resolve()
     manifest_path = Path(args.manifest).resolve()
     digest_path = Path(args.digest_file).resolve()
+    require_clean_worktree(repo_root)
     repo_commit, core_commit = repo_identities(repo_root)
     grids = selected_grid_files(grids_dir, args.knobs or [])
     manifest = build_manifest(
@@ -271,6 +306,12 @@ def _cmd_verify(args: argparse.Namespace) -> int:
         Path(args.manifest), expected_sha256=args.expected_sha256
     )
     source_core = verify_source_binding(manifest, Path(args.repo_root).resolve())
+    verify_execution_intent(
+        manifest,
+        base_cli=args.base_cli,
+        nevents_per_point=args.nevents,
+        threads=args.threads,
+    )
     if args.digest_file:
         recorded = Path(args.digest_file).read_text().strip()
         canonical_sha256(recorded, field="digest file")
@@ -312,6 +353,9 @@ def main() -> int:
     v.add_argument("--manifest", required=True)
     v.add_argument("--expected-sha256", default=None)
     v.add_argument("--digest-file", default=None)
+    v.add_argument("--base-cli", default=None)
+    v.add_argument("--nevents", type=int, default=None)
+    v.add_argument("--threads", type=int, default=None)
     v.add_argument("--grid-knob", default=None)
     v.add_argument("--grid-file", default=None)
     v.set_defaults(func=_cmd_verify)

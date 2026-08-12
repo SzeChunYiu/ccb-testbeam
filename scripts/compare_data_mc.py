@@ -469,6 +469,56 @@ def main(argv: list[str] | None = None) -> None:
     scale_lo = mev_to_adc * (1 - args.scale_uncertainty)
     scale_hi = mev_to_adc * (1 + args.scale_uncertainty)
 
+    # ── Nuisance contract (issue #1166, WKS-NULL-SCALE-001) ─────────────────
+    # Machine-readable description of the fitted-scale nuisance shat, its
+    # estimator, fit/test topology, and authorisation state.  The shat is fit
+    # on Sample II (both MC weighted median and DATA median) and applied to the
+    # comparison of both Sample I and Sample II.  The MC fit-test overlap is
+    # nested: Sample II MC events appear in both the fit and the test.  The
+    # DATA side has the same structure.  This contract is non-authorising until
+    # the gating issues (#994, #1052) close.
+    nuisance = {
+        "estimator_id": "data_mc_median_match_peak_adc_per_truth_edep_MeV_proxy",
+        "estimator_formula": "shat = median(DA_II) / weighted_median(MC_II, PrimaryWeight)",
+        "fit_sample": "Sample II",
+        "tested_samples": ["Sample I", "Sample II"],
+        "units": "ADC_per_MeV",
+        "fit_sample_components": {
+            "MC": {
+                "estimator": "weighted_median",
+                "weight": "PrimaryWeight",
+                "n_events": int(mcII.size) if mcII.size else 0,
+                "value": mc_ref,
+            },
+            "DATA": {
+                "estimator": "median",
+                "n_events": int(daII.size) if daII.size else 0,
+                "value": da_ref,
+            },
+        },
+        "fit_test_overlap": {
+            "mode": "NESTED",
+            "description": (
+                "The fit uses Sample II (both MC and DATA).  The test evaluates "
+                "both Sample I and Sample II against the same scale.  On the MC side, "
+                "Sample II events participate in both the fit (weighted median) and "
+                "the test (weighted ECDF D).  The DATA side shares the same nested "
+                "structure: Sample II median is the fit target, and Sample II also "
+                "appears in the test."
+            ),
+            "mc_fit_test_relation": "nested_MC",
+            "data_fit_test_relation": "nested_DATA",
+        },
+        "authorisation": {
+            "status": "NONAUTHORISING",
+            "blockers": {
+                "#994": "truth-typed scale identity gate",
+                "#1052": "matched detector-event/stave response",
+                "#1164": "source-bound event IDs and membership",
+            },
+        },
+    }
+
     # ── Counterfactual ───────────────────────────────────────────────────────
     counterfactual = {
         "no_trigger_mimicry_note": "Without trigger mimicry, all ENTER-B events form one undifferentiated sample. "
@@ -565,6 +615,7 @@ def main(argv: list[str] | None = None) -> None:
         "version": "v6",
         "spectrum_contract": spectrum_contract,
         "scale_topology": scale_topology,
+        "nuisance_contract": nuisance,
         "mev_to_adc_scale": mev_to_adc,
         "mev_to_adc_scale_lo": scale_lo,
         "mev_to_adc_scale_hi": scale_hi,

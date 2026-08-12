@@ -1,4 +1,4 @@
-"""Hadronic / EM reference-list provenance contract (#1006)."""
+"""Physics-list / transport contract helpers (#1006) + neutron time-cut gate (#1091)."""
 
 from ccb_mc_validation.physics.registry import (
     REGISTRY_VERSION,

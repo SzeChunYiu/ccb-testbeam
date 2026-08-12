@@ -102,3 +102,10 @@ Branch: `fix/lane01-waveB` (rebased onto origin/main after Wave A #1248 merge).
 | #1009 | IN_PROGRESS (fail-closed) | Metadata marks PEAK_ONLY_DISCARDED + daq schema UNSET; no invented HRD Nsamples |
 | #1010 | BLOCKED | Needs external CCB electronics impulse evidence |
 | #1066 #1068 #1070 #1071 | BLOCKED | Carried from Wave A ADRs |
+
+## Lane 01 Wave C kickoff — SiPM provenance (#977 / #1067 verify)
+
+| Date | Branch | Tip | Issues | Disposition | PR |
+|------|--------|-----|--------|-------------|-----|
+| 2026-08-12 | fix/issue-977-sipm-metadata | (see PR) | #977 PARTIAL; #1067 FIXED (core, manual close requested) | Sidecar extended with requested/effective operating point, response_surface_id, electronics impulse hashes, remaining ModelConfig knobs; compile-bound core (#1280) + campaign intent (#1284) unchanged; binary build receipt remains #1285 child | https://github.com/SzeChunYiu/ccb-testbeam/pull/1287 @0371fe3e |
+

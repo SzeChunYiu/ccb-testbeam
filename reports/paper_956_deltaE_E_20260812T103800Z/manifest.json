@@ -1,0 +1,121 @@
+{
+  "args": {
+    "coinc_ns": 15.0,
+    "mc_entry_stop": 0,
+    "mc_root": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root",
+    "mc_source_id": "output_krakow_1M",
+    "out": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/paper_956_deltaE_E_20260812T103800Z",
+    "pulse_table": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/1780917628.449525.085b2dc0__s01b_s00_selected_table_manifest/s00_selected_b_pulses.csv.gz",
+    "seed": 20260812,
+    "source_file_id": "s00_selected_b_pulses_manifest"
+  },
+  "command": "scripts/single_stave/paper_956_deltaE_E_publication.py --pulse-table /projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/1780917628.449525.085b2dc0__s01b_s00_selected_table_manifest/s00_selected_b_pulses.csv.gz --mc-root /projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root --out /projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/paper_956_deltaE_E_20260812T103800Z --source-file-id s00_selected_b_pulses_manifest --mc-source-id output_krakow_1M --seed 20260812",
+  "environment": {
+    "numpy": "2.4.6",
+    "pandas": "2.3.1",
+    "platform": "Linux-5.14.0-687.24.1.el9_8.x86_64-x86_64-with-glibc2.34",
+    "python": "3.11.5"
+  },
+  "generated_utc": "2026-08-12T09:33:55.716143+00:00",
+  "git_commit": "6871ec983f0a6117f50d4948e8207166ce10351e",
+  "inputs": [
+    {
+      "bytes": 9246625,
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/1780917628.449525.085b2dc0__s01b_s00_selected_table_manifest/s00_selected_b_pulses.csv.gz",
+      "role": "data_pulse_table",
+      "sha256": "648c32d0109fb05cdf04b2a0d2817044067e8741c70a53f540308a1c038a8b2f"
+    },
+    {
+      "bytes": 677221620,
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root",
+      "role": "mc_root",
+      "sha256": "2b62403f0aa7ecc8c6fc8ffb5006b59d833ff1a31a95a8f389f88f45a18542cc"
+    }
+  ],
+  "issue": "#956 / PAPER-A05",
+  "outputs": [
+    {
+      "bytes": 3066957,
+      "path": "deltaE_E_events_data.csv.gz",
+      "sha256": "cdef3166e832aa0eb4f129c340403b6299c895605eeecad22fb52f7aad2ec30d"
+    },
+    {
+      "bytes": 14782375,
+      "path": "deltaE_E_events_mc.csv.gz",
+      "sha256": "55f4cb301daff0c1fe88815821c229ad260946bb89174d13501366cd97aed630"
+    },
+    {
+      "bytes": 43064,
+      "path": "figures/fig07_data_deltaE_E_per_sample.pdf",
+      "sha256": "419a4782672276fa65cde71309e24ff20ac6b8a30c1029f551b831004574daa3"
+    },
+    {
+      "bytes": 414063,
+      "path": "figures/fig07_data_deltaE_E_per_sample.png",
+      "sha256": "ce23c75d554154f5e89eb43f5cc1503ad67aee58ee30d2faae5970169b15d95e"
+    },
+    {
+      "bytes": 41997,
+      "path": "figures/fig08_mc_deltaE_E_I.pdf",
+      "sha256": "9aef29a61017afe14caae26651eb4137b2c0ad0e31d164cf821044823576a8e4"
+    },
+    {
+      "bytes": 278816,
+      "path": "figures/fig08_mc_deltaE_E_I.png",
+      "sha256": "a0dbf76ecaff26544af5197140daeed36b31584832acaf026872f08404ae05d3"
+    },
+    {
+      "bytes": 46207,
+      "path": "figures/fig08_mc_deltaE_E_II.pdf",
+      "sha256": "9ad8e8af88e85554fe623a1caa7a5c53db65591239083b5c38eb7d05221330c8"
+    },
+    {
+      "bytes": 319784,
+      "path": "figures/fig08_mc_deltaE_E_II.png",
+      "sha256": "e1cc6d00c0c42e2fedeac17e1498a6b610ac78b6bcbf8d54522124f0b7cc2366"
+    },
+    {
+      "bytes": 32265,
+      "path": "figures/fig_b2_b4_two_channel_diagnostic.pdf",
+      "sha256": "f741905b8d8a5d87797e9758558f072906cc0b0927a27d654a1026544b7ef9c1"
+    },
+    {
+      "bytes": 401597,
+      "path": "figures/fig_b2_b4_two_channel_diagnostic.png",
+      "sha256": "6cef30bc856db6de2aa8e32e0248be2c1272d0477b0538f5ddc3028c09830ba0"
+    },
+    {
+      "bytes": 42217,
+      "path": "figures/fig_segmentation_readout_phase.pdf",
+      "sha256": "0555a436af669a4d4de94e92f1db04b9405950e1d580da18136212accf12e2e2"
+    },
+    {
+      "bytes": 305449,
+      "path": "figures/fig_segmentation_readout_phase.png",
+      "sha256": "9fe95052cf4259cb8b0a450accb10007bf7ab532848f28b9b33e41162a81dfec"
+    },
+    {
+      "bytes": 18502,
+      "path": "result.json",
+      "sha256": "aaa581666d935737b692e84f0a35a75cf89bced19b92e5f6c36d33de08d60646"
+    },
+    {
+      "bytes": 5029,
+      "path": "tables/sample_summary.json",
+      "sha256": "12030068f5b3c23be170b8faf3acfd210f46c33678dc96e03afe930127ae4a9d"
+    }
+  ],
+  "producer": "scripts/single_stave/paper_956_deltaE_E_publication.py",
+  "schema": {
+    "composite_key": [
+      "source_file_id",
+      "run_id",
+      "event_id"
+    ],
+    "data_E": "A(B4)+A(B6)+A(B8) ADC",
+    "data_deltaE": "A(B2) ADC",
+    "mc_E_4layer": "Edep(B4)+Edep(B6)+Edep(B8) MeV",
+    "mc_E_full": "sum downstream physical B-layer Edep MeV",
+    "mc_deltaE": "Edep(B2) MeV"
+  }
+}

@@ -197,15 +197,19 @@ The beam-test readout misses alternating physical layers. This can change the sh
 
 This is not a failure of the ΔE-E principle. It is an aliasing problem caused by coarse longitudinal sampling. A future fully instrumented range stack would retain more of the Bragg-curve information and should be less sensitive to the readout-layer phase. PAPER-A10 therefore compares the full eight-layer MC with the data-matched four-layer view to quantify the information loss.
 
-### 7.3 Existing two-channel diagnostic
+### 7.3 Production ΔE–E and two-channel diagnostic
 
-The real-data study contains 33,966 events with selected B2 and B4 pulses. For those two amplitudes, the Pearson correlation is +0.221; the median B2 and B4 amplitudes are 3385 and 2963 ADC. The corresponding historical truth-MC two-layer diagnostic gives a correlation of -0.533 with medians near 101.0 MeV and 24.1 MeV for its selected energy-deposit observables.
+Issue #956 regenerated the amplitude ΔE–E observable from the authorising S00 selected-pulse table using composite keys `(source_file_id, run_id, event_id)` and analysis-run groups only (Sample-I runs 44–57; Sample-II runs 58–63, 65). Missing downstream readout channels are zero-filled only after composite-key validation.
 
-The sign difference shows that the present data and truth-MC two-layer topologies are not identical. It is not an absolute energy discrepancy: the data are ADC amplitudes, the MC values are truth-level deposits, and the geometry/selection/response are not yet matched. The final ΔE-E section should therefore lead with the correct B2 versus downstream-sum definition and use the two-channel correlation only as a supporting diagnostic.
+For the proper downstream-sum definition, Sample-I contains 147,274 physical events with median ΔE = 7101 ADC and median downstream E = 0 ADC because most coincidence-selected tracks stop at B2; the weighted Pearson correlation between ΔE and E is −0.042 with a run-block bootstrap interval [−0.051, −0.030]. Sample-II contains 69,174 events with median ΔE = 3567 ADC, median E = 4405 ADC (16–84% range 0–4405 ADC) and r = −0.070 ([−0.091, −0.029]). B2 saturation (≥7000 ADC) affects 51.8% of Sample-I and 7.6% of Sample-II B2 amplitudes; excluding saturated B2 events shifts Sample-I r to −0.092.
 
-[**Figure 7:** data amplitude ΔE-E, separate Sample-I and Sample-II panels, \(\Delta E=A(B2)\), \(E=A(B4)+A(B6)+A(B8)\), identical axis ranges, B2 saturation marked. Include saturated-event sensitivity and run-block uncertainty.]
+Under `MC_TRIGGER_PROXY` with PrimaryWeight propagation (Σw and ESS recorded in `reports/paper_956_deltaE_E_20260812T103800Z/`), the data-matched four-readout MC gives r = −0.70 (Sample I, n = 46,992, ESS = 23,099) and r = −0.46 (Sample II, n = 203,459, ESS = 102,463). Full-downstream truth sums yield r = +0.13 and +0.045 for the same samples, illustrating segmentation loss when uninstrumented layers are included.
 
-[**Figure 8:** MC ΔE-E. Left: full downstream truth sum. Right: data-matched B4+B6+B8 sum. Produce proton-only, deuteron-only and colour-coded combined versions for Sample I and II; state event weights and truth species.]
+The historical B2-versus-B4 two-channel diagnostic (33,966 events, r = +0.221) used an `eventno`-only join and is retained only as a legacy reference. The composite-key rerun with both B2 and B4 present gives n = 25,423 and r = +0.151 ([0.123, 0.178]); it is labelled `two-channel response diagnostic` and is not ΔE–E.
+
+[**Figure 7:** `reports/paper_956_deltaE_E_20260812T103800Z/figures/fig07_data_deltaE_E_per_sample` — DATA amplitude ΔE–E per sample, identical axes, B2 saturation line at 7000 ADC, run-block bootstrap in `tables/sample_summary.json`.]
+
+[**Figure 8:** `reports/paper_956_deltaE_E_20260812T103800Z/figures/fig08_mc_deltaE_E_{I,II}` — MC four-readout vs full-downstream panels per sample; PrimaryWeight-weighted; `MC_TRIGGER_PROXY`. Segmentation phase ablation: `fig_segmentation_readout_phase`.]
 
 ## 8. Monte Carlo prediction of light collection and transport
 

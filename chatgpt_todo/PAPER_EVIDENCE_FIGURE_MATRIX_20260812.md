@@ -44,13 +44,13 @@
 | P-024 | raw 8×16 B4-B6 central width ~38.0 ns for n=5207 | DATA_MEASURED / NON-PERFORMANCE | data-side report | caption `FORMAT-LIMITED; NOT DETECTOR RESOLUTION` |
 | P-025 | historical sub-ns timing numbers are not authorising beam-data detector resolutions | GATED/BLOCKED | claim ledger; #993; #1059; `~38 ns` format-limited B4-B6 residual | keep historical/toy/MC only if clearly labelled; no invented sub-ns resolutions |
 | P-026 | global-maximum CFD can switch physical pulse component as fraction changes | confirmed algorithmic ambiguity (software bound) | #1059; `scripts/cfd_fraction_transition.py`; `first_local_peak` producer default; lane05 synthetic tests | production timing must define target component; real-data fraction scan on authorising 8×16 schema only (#993 DISTINCT); same-sample sigma minimum is exploratory only (#1062) |
-| P-027 | **Correct DATA ΔE-E definition:** ΔE=A(B2); E=A(B4)+A(B6)+A(B8) | collaboration analysis contract | issue #618 | axes remain ADC amplitude proxies |
-| P-028 | **Correct data-matched MC ΔE-E:** ΔE=Edep(B2); E=Edep(B4)+Edep(B6)+Edep(B8) | collaboration analysis contract | issue #618 | separate from full downstream truth sum |
-| P-029 | full MC ΔE-E residual E should include every downstream physical B layer available | collaboration analysis contract | issue #618 | use full and four-readout panels side by side |
-| P-030 | B2-vs-B4 alone is **not** the CCB ΔE-E analogue | explicit supervisor correction | issue #618 | label only as two-channel correlation diagnostic |
-| P-031 | existing B2-B4 real-data diagnostic has n=33,966 and corr +0.221 | DATA_MEASURED diagnostic | data-side report | add run-block interval; do not call it ΔE-E |
-| P-032 | historical B2-B4 truth-MC diagnostic corr -0.533 | MC_TRUTH diagnostic on different scale | data-side report | no calibrated Δcorr claim |
-| P-033 | sparse alternating-layer readout can flip apparent ΔE-E pointing direction when stopping rise falls in missing stave | segmentation interpretation | issue #879 + geometry | quantify with PAPER-A10 8-vs-4 layer ablation |
+| P-027 | **Correct DATA ΔE-E definition:** ΔE=A(B2); E=A(B4)+A(B6)+A(B8) | DATA_MEASURED | issue #618; `reports/paper_956_deltaE_E_20260812T103800Z/` | regenerated 2026-08-12; composite key; axes remain ADC proxies |
+| P-028 | **Correct data-matched MC ΔE-E:** ΔE=Edep(B2); E=Edep(B4)+Edep(B6)+Edep(B8) | MC_TRUTH + MC_TRIGGER_PROXY | issue #618; paper_956 run | PrimaryWeight: Sample I ESS=23,099; Sample II ESS=102,463 |
+| P-029 | full MC ΔE-E residual E should include every downstream physical B layer available | MC_TRUTH + MC_TRIGGER_PROXY | issue #618; paper_956 run | full vs 4-readout panels side by side; r flips sign Sample I |
+| P-030 | B2-vs-B4 alone is **not** the CCB ΔE-E analogue | explicit supervisor correction | issue #618 | composite-key diagnostic n=25,423, r=+0.151 |
+| P-031 | composite-key B2-B4 diagnostic n=25,423, corr +0.151 | DATA_MEASURED diagnostic | `paper_956_deltaE_E_20260812T103800Z` | supersedes eventno-only 33,966/0.221 for production use |
+| P-032 | historical B2-B4 truth-MC diagnostic corr -0.533 | MC_TRUTH diagnostic (legacy) | data-side report | retained as legacy two-layer reference only |
+| P-033 | sparse alternating-layer readout can flip apparent ΔE-E pointing direction when stopping rise falls in missing stave | segmentation interpretation | issue #879; `fig_segmentation_readout_phase` | 1/3/5/7 vs 0/2/4/6 phase panels produced |
 | P-034 | composite event key required; event-number-only joins are unsafe across runs | confirmed historical analysis flaw | #797 closing context / corrected producers | final producer asserts uniqueness before pivot |
 | P-035 | optical campaign gives about 8.7-11.0 detected PE/MeV at selected p/d points | MC_MODEL_DEPENDENT | issue #796 campaign / calibration artifacts | never call measured light yield |
 | P-036 | campaign relative spreads about 8.9-20.8% at selected points | MC_MODEL_DEPENDENT | same | define event-level resolution denominator before publication use |
@@ -91,24 +91,11 @@
 
 ### Figure 7: **proper data amplitude ΔE-E**
 
-**Status:** `RED/YELLOW`. Must be regenerated using issue #618:
-
-- ΔE = A(B2)
-- E = A(B4)+A(B6)+A(B8)
-- Sample I and II separate, identical axes
-- B2 saturation marked
-- run-block bootstrap interval/robust topology summaries
-
-The existing B2-vs-B4 plot may appear only as a secondary two-channel diagnostic.
+**Status:** `YELLOW/GREEN`. Regenerated 2026-08-12 in `reports/paper_956_deltaE_E_20260812T103800Z/` (issue #956). Composite key, Sample I/II separate panels, identical axes, B2 saturation marked, run-block bootstrap in `tables/sample_summary.json`.
 
 ### Figure 8: **proper MC ΔE-E**
 
-**Status:** `YELLOW/RED`. Produce both:
-
-1. full downstream truth sum using all physical downstream B layers;
-2. data-matched Edep(B4)+Edep(B6)+Edep(B8).
-
-Show proton, deuteron and combined truth categories, sample I/II, with event weights and ESS.
+**Status:** `YELLOW`. Regenerated 2026-08-12: four-readout and full-downstream panels per sample with PrimaryWeight (Σw, ESS in manifest). Species-colour panels remain a follow-up; `MC_TRIGGER_PROXY` labelled.
 
 ### Figure 9: single-stave Edep → detected PE
 

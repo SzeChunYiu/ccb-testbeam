@@ -38,7 +38,7 @@ MC ROOT: `geant4/data/output_krakow_1M.root` (present)
 | #982 | FIXED | sipm_sensitivity.py joins sidecar; requested!=effective -> non-zero exit |
 | #1065 | FIXED (core) | Verified in ccb-sipm-core ancestry through cf12c6b (fractional-delay convolution) |
 | #1066 | PARTIAL / BLOCKED | Model knobs + env overrides at cf12c6b (#1243); CCB-true law -> ADR-SIPM-PHYSICS-BLOCKED |
-| #1067 | FIXED (core) | Measured-impulse fail-closed in pinned core |
+| #1067 | PARTIAL / BLOCKED | Fail-closed numerical child exists upstream, but root #1266 pinned conflicted core `0fc78af...`; repair branch repins validated descendant `3627dc...`. Source-byte/calibration/resampling/run-serialization/historical-output leaves remain unresolved. |
 | #1068 | BLOCKED | ADR-SIPM-PHYSICS-BLOCKED (normalization/units) |
 | #1069 | FIXED | candidate_limit_reached aborts; counters in sidecar |
 | #1070 | BLOCKED | ADR-SIPM-PHYSICS-BLOCKED (illumination footprint) |
@@ -47,7 +47,7 @@ MC ROOT: `geant4/data/output_krakow_1M.root` (present)
 | #1084 | FIXED (label) | Metadata + analyzer: legacy PE = INDEPENDENT_DIAGNOSTIC_DRAW; ADR-SIPM-DUALPATH-H2 |
 | #1096 | FIXED (core) | Pre-window history in pinned core (history_start_ns) |
 
-Submodule gitlink aligned with #1243: geant4/single_stave/sipm -> cf12c6b8955c48590bda858477f8dc4ebd67251b.
+Historical Wave-A integration aligned the gitlink with #1243 at `cf12c6b8955c48590bda858477f8dc4ebd67251b`. This is **not current-root state**: #1266 later advanced protected main to conflicted `0fc78af...`. `ARU-SIPM-ROOT-GITLINK-EXECUTION-CLOSURE-001` repairs that regression by targeting validated/guarded descendant `3627dc...` and adding exact-gitlink C++ execution to required root CI. Do not mark #1067 COMPLETE from the historical Wave-A row.
 
 ## Lane 10 wave-A atom status (authoritative for merged #1241)
 

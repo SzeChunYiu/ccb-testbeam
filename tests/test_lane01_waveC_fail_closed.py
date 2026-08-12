@@ -103,7 +103,7 @@ def test_sipm_submodule_pin_has_recovery_env_keys():
         cwd=ROOT,
         text=True,
     ).strip()
-    assert "0fc78af" in gitlink, gitlink  # main pin after #1266; retains cf12c6b recovery env keys
+    assert "3627dc8" in gitlink, gitlink  # conflict-free descendant of 0fc78af/#1266; retains cf12c6b recovery env keys
     cfg_path = ROOT / "geant4/single_stave/sipm/src/Config.cc"
     if cfg_path.is_file():
         cfg = cfg_path.read_text(encoding="utf-8")

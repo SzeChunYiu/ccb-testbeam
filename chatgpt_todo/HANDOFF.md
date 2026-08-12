@@ -1,50 +1,35 @@
 # Latest Handoff
 
-## First-local CFD selector nuisance sensitivity: deterministic support mapped; detector support unresolved
+## Root SiPM gitlink now points at a conflicted core commit; repair and CI closure are in flight
 
-Selected atom: `ARU-TIMING-CFD-NOISE-PHASE-SATURATION-SENSITIVITY-001`, child of #1059/#1063.
+Selected atom: `ARU-SIPM-ROOT-GITLINK-EXECUTION-CLOSURE-001`.
 
-### Live provenance
+Protected root `main@09991a0f598b51b030ca180507c6ea5741acc7e0` was inspected after #1266 merged. That merge changed only `geant4/single_stave/sipm`, advancing it from `ccb-sipm-core@692857b...` to exact `0fc78af6679c421f7a01a85f421170bbb92cce82`. Exact upstream source at `0fc78af...` contains unresolved Git merge delimiters in compiled/test files, including `src/Config.cc`; therefore the current root gitlink is not an executable/source-closed dependency state.
 
-The parent selector-identifiability/component-bound-crossing repair is now present on protected main via PR #1278 at exact `main@5b7312e8ecabdfbfb9fe2d74a26a4e70352eaec6`. Exact pre-merge parent head `d2ba6a37776d14b6fdcd0967c9e724e4752c24aa` passed pull-request MC Validation `31557640867` and push MC Validation `31557638606`; both were required before merge. Draft #1274 was closed unmerged only because its ready transition was unavailable; its same science was recreated without force-push as #1278.
+Current upstream core is `3627dc87137a9f33f511a755671414b11853c0a0`, a strict two-commit descendant of `0fc78af...`. `caf6bdc...` repairs the three contaminated files, and `3627dc...` adds `tools/check_conflict_markers.py` plus a Core CI gate that runs the self-test/repository scan before configure/build/CTest. Exact main-push Core CI run `31548111836` completed SUCCESS on `3627dc...`.
 
-#1059 had drifted to `closed/completed` although its own real-data transition, ambiguity, truth-transfer and downstream-regeneration criteria remain unresolved. It was reopened and remains OPEN/PARTIAL.
+The root protection gap is independent and material. Pre-repair `.github/workflows/mc_validation_ci.yml` used plain `actions/checkout@v4`; submodule checkout is not enabled by default. Thus root protected Python/static CI could be green without materializing or compiling the exact core commit named by the gitlink. This is the mechanism that must be closed at the root integration layer, not merely documented upstream.
 
-Immutable beam ROOT files required by `scripts/real_data_cfd_timing.py` are external to GitHub under `/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root` and unavailable in this execution environment. The checked-in timing result is explicitly `FLAWED_LEGACY_OUTPUT_QUARANTINED`, so no historical timing number is reused as new evidence.
+Repair branch `audit/sipm-pin-conflict-repair-v1` was created from exact root main with no force-push. Commit `20475c13663553735289e210a4714cbefae7e852` repins only the gitlink to `3627dc...`. Commit `92586447255b98ad851ab1116f444e5b38c8ce33` upgrades the required root test job to recursively checkout submodules and run the pinned core conflict-marker self-test/scan, CMake configure/build, and CTest before the root Python suite. The controlling invariant is:
 
-### Deterministic robustness contract
+`AUTHORISE_ROOT_SIPM(h_root,h_core) => gitlink(h_root)=h_core && CoreCI(h_core)=SUCCESS && ConflictMarkerScan(h_core)=PASS && RootRequiredCI(h_root,h_core)=SUCCESS`.
 
-For the named parent selector with floor `F=alpha*max(y)`, the child computes a sufficient exact-selected-index radius for arbitrary additive sample perturbations `||delta||_inf < rho`.
+A direct local `git ls-remote` attempt failed with `Could not resolve host: github.com` (status 128), so no local clone/build PASS is claimed. Upstream exact-head Core CI is real execution evidence; root exact-head protected CI remains the next merge gate.
 
-For selected local sample `j`, sufficient candidate-persistence pieces are `(y[j]-F)/(1+alpha)` for floor eligibility, `(y[j]-y[j-1])/2` and `(y[j]-y[j+1])/2` for neighbour ordering. For each earlier candidate, every currently failed predicate supplies a failure-persistence radius; because one persistent failure is enough to keep that sample ineligible, use the maximum per earlier sample, then the minimum across earlier samples. The overall exact-index certificate is the minimum of selected eligibility and earlier-exclusion pieces. The guarantee is strict, sufficient rather than necessary, and non-authorising for physical pulse identity.
-
-Fallback states combine persistence of all interior ineligibilities with half the unique global-argmax gap. Ties/plateaus naturally give zero exact-index certificate.
-
-### Exact deterministic discriminators
-
-1. Near-floor `[0,25,49.9,25,0,0,500,1000,500]`: adversarial `+eps` on early peak and `-eps` on global peak flips at `eps*=0.1/1.05=0.09523809523809524 ADC`; tests check both sides.
-2. Common residual baseline `[0,20,40,20,0,0,500,1000,500]+b`: `m'(b)=m+(1-alpha)b`; selector transition at `b*=10/0.95=10.526315789473685 ADC`.
-3. Clipping only the later dominant component `min(y,C)`: unchanged early 40-ADC component becomes eligible at exact `C=800 ADC`; `C=801` remains late.
-4. Synthetic separated triangular continuous fixture sampled at `n+phi`: `phi=0/.2/.5/.8` selects indices `10/3/10/9`; deterministic 1001-point phase support scan gives `{3:229,9:300,10:472}`. These are support counts only, not a detector probability because no CCB phase measure is supplied.
-5. Controls: clean single pulse has 25-ADC sufficient exact-index radius; `100/100/100` plateau has zero; monotonic fallback has 5 ADC.
-
-### Mechanism boundary
-
-Residual baseline, digitizer clipping, sub-sample phase, true pile-up, SiPM delayed/correlated activity, electronics shaping/recovery and DAQ corruption can all alter selector output. The controlled transformations establish estimator non-invariance only; they do not identify which mechanism occurs or how often.
-
-### Implementation
-
-PR #1277 carries `scripts/cfd_selector_sensitivity.py`, seven focused deterministic tests, the immutable ARU archive, and coordination updates. After parent #1278 integration, #1277 is to target protected main and requires fresh exact-final-head push and pull-request checks. No RNG, beam data, production MC or fitted nuisance distribution participates.
+A governance contradiction was also confirmed. #1067 is currently closed/completed, but its own acceptance criteria and prior issue reviews retain unresolved source-byte binding, calibration/resampling validation, positive measured-authorisation semantics, run-metadata serialization, and historical-output audit. The campaign ledger labels #1067 `FIXED (core)` and still describes a prior `cf12c6b...` pin, which is no longer the current root state. This atom therefore requires reopening/correcting #1067 to PARTIAL/BLOCKED rather than treating the existence of fail-closed code upstream as scientific completion.
 
 ### Four sequential AI votes
 
-**Timing / sampled-signal lead:** ACCEPT deterministic sensitivity law; BLOCK detector-stability inference.  
-**Adversarial waveform / DAQ reviewer:** ACCEPT estimator counterexamples; BLOCK occurrence and microscopic-mechanism claims.  
-**Independent validation reviewer:** ACCEPT deterministic support oracle; REJECT phase-grid counts as probabilities.  
-**Claims / provenance reviewer:** ACCEPT bounded software child; KEEP #1059 OPEN/PARTIAL and timing claims gated.
+**Detector-response integration lead — ACCEPT repair design / BLOCK merge pending protected root CI.** Exact broken source falsifies the counter-hypothesis that the desired fail-closed changes make `0fc78af...` an acceptable pin. Residual: final root branch bytes have not yet passed their required workflow.
 
-### Next work
+**Adversarial mechanism/provenance reviewer — REJECT pointer-only validation / ACCEPT recursive dependency execution.** A green superproject Python job did not observe the C++ dependency because submodules were not checked out. Future authorization must execute the exact gitlink.
 
-Highest-value physical child remains `ARU-TIMING-CFD-REALDATA-TRANSITION-001` when immutable beam bytes become available. Before comparing mathematical margins to detector support, separately close `ARU-TIMING-CFD-BASELINE-RESIDUAL-DISTRIBUTION-001`, `ARU-TIMING-CFD-DAQ-CLIPPING-TRANSFER-001`, and `ARU-TIMING-CFD-SAMPLING-PHASE-DISTRIBUTION-001`; held-out truth transfer remains required.
+**Independent validation reviewer — ACCEPT upstream Core CI / BLOCK root integration until exact-head root CI.** Core run `31548111836` is sufficient software evidence for `3627dc...` itself, but not for its composition into root main. No detector sample participates.
 
-Do not close #1059, do not promote a timing resolution, and do not infer pile-up/saturation/noise from a selector switch alone.
+**Claims/provenance reviewer — REOPEN/REVISE #1067 / BLOCK measured-electronics claims.** Source/build integrity is necessary but does not provide measured calibration authority or output-level provenance closure.
+
+Archive: `chatgpt_todo/archive/2026-08-12T015000Z_ARU-SIPM-ROOT-GITLINK-EXECUTION-CLOSURE-001.md`.
+
+Next immediate action is exact-final-head root CI on the bounded PR and integration only after every required duplicate context succeeds. Once the gitlink execution gate is integrated, the highest-value scientific child is `ARU-ELEC-IMPULSE-RUN-METADATA-SERIALIZATION-001`: bind the exact core SHA, provenance status, waveform-affecting configuration, and canonical effective runtime-kernel identity into the production sidecar from the same state actually used by event simulation. Source-byte/calibration closure and historical-output audit remain separate children.
+
+No beam bytes, production Geant4 sample, measured electronics waveform, DATA↔MC result, timing/PID metric, pile-up efficiency, rate, ESS, p-value, or public detector-performance quantity was generated or promoted.

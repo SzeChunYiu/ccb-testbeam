@@ -1,7 +1,7 @@
 """Python mirror of single-stave geometry/physics hash recipes (#986).
 
-Kept in sync with ``DetectorConstruction`` schema geometry_v2 / physics_v1.
-Used for fail-closed unit tests without requiring a Geant4 rebuild.
+Kept in sync with ``DetectorConstruction`` GEOMETRY_DIGEST_V2 / physics_v1 /
+optical_v1. Used for fail-closed unit tests without requiring a Geant4 rebuild.
 """
 
 from __future__ import annotations
@@ -9,10 +9,36 @@ from __future__ import annotations
 import hashlib
 from typing import Mapping
 
+from ccb_mc_validation.provenance.geometry_digest import (
+    SCHEMA_VERSION,
+    canonical_payload,
+    geometry_digest_hex,
+)
+
 
 def _fmt(x: float) -> str:
-    # Match C++ defaultfmt precision(17) stream for finite floats.
+    # Match C++ CanonFloat / Python geometry_digest (.17g).
     return format(float(x), ".17g")
+
+
+def _geometry_fields_from_nominal(params: Mapping[str, object]) -> dict[str, object]:
+    fr = float(params["kFibreRadius_mm"])
+    return {
+        "schema_version": SCHEMA_VERSION,
+        "stave_half_x_mm": float(params["kStaveHalfX_mm"]),
+        "stave_half_y_mm": float(params["kStaveHalfY_mm"]),
+        "stave_half_z_mm": float(params["kStaveHalfZ_mm"]),
+        "coating_thk_mm": float(params["kCoatingThk_mm"]),
+        "hole_radius_mm": float(params["kHoleRadius_mm"]),
+        "fibre_radius_mm": fr,
+        "fibre_half_x_mm": float(params["kFibreHalfX_mm"]),
+        "fibre_sep_mm": float(params["kFibreSep_mm"]),
+        "sensor_thk_mm": float(params["kSensorThk_mm"]),
+        "fibre_core_radius_mm": fr * 0.94,
+        "fibre_inner_clad_radius_mm": fr * 0.97,
+        "fibre_outer_clad_radius_mm": fr * 1.00,
+        "far_end_mode": str(params["far_end_mode"]),
+    }
 
 
 def geometry_v2_canonical(
@@ -31,21 +57,24 @@ def geometry_v2_canonical(
     kSensorThk_mm: float,
     far_end_mode: str,
 ) -> str:
-    return (
-        "schema=geometry_v2"
-        f";kStaveHalfX_mm={_fmt(kStaveHalfX_mm)}"
-        f";kStaveHalfY_mm={_fmt(kStaveHalfY_mm)}"
-        f";kStaveHalfZ_mm={_fmt(kStaveHalfZ_mm)}"
-        f";kHoleRadius_mm={_fmt(kHoleRadius_mm)}"
-        f";kFibreRadius_mm={_fmt(kFibreRadius_mm)}"
-        f";kFibreHalfX_mm={_fmt(kFibreHalfX_mm)}"
-        f";kFibreSep_mm={_fmt(kFibreSep_mm)}"
-        f";rCore_mm={_fmt(rCore_mm)}"
-        f";rInner_mm={_fmt(rInner_mm)}"
-        f";rOuter_mm={_fmt(rOuter_mm)}"
-        f";kCoatingThk_mm={_fmt(kCoatingThk_mm)}"
-        f";kSensorThk_mm={_fmt(kSensorThk_mm)}"
-        f";far_end_mode={far_end_mode}"
+    """Return GEOMETRY_DIGEST_V2 canonical payload (legacy kw names)."""
+    return canonical_payload(
+        {
+            "schema_version": SCHEMA_VERSION,
+            "stave_half_x_mm": kStaveHalfX_mm,
+            "stave_half_y_mm": kStaveHalfY_mm,
+            "stave_half_z_mm": kStaveHalfZ_mm,
+            "coating_thk_mm": kCoatingThk_mm,
+            "hole_radius_mm": kHoleRadius_mm,
+            "fibre_radius_mm": kFibreRadius_mm,
+            "fibre_half_x_mm": kFibreHalfX_mm,
+            "fibre_sep_mm": kFibreSep_mm,
+            "sensor_thk_mm": kSensorThk_mm,
+            "fibre_core_radius_mm": rCore_mm,
+            "fibre_inner_clad_radius_mm": rInner_mm,
+            "fibre_outer_clad_radius_mm": rOuter_mm,
+            "far_end_mode": far_end_mode,
+        }
     )
 
 
@@ -90,16 +119,14 @@ def assert_birks_excluded_from_geometry(geo_a: str, geo_b: str) -> None:
 
 def digests_for_nominal(overrides: Mapping[str, object] | None = None) -> dict[str, str]:
     """Nominal single-stave constants (mm) matching DetectorConstruction."""
-    fibre_r = 0.5  # mm? actually kFibreRadius is typically 0.5 mm — leave parametric
-    # Use the same relative clad radii as C++ (0.94/0.97/1.00 * fibre radius).
-    params = {
-        "kStaveHalfX_mm": 250.0,   # 25 cm half-length
-        "kStaveHalfY_mm": 25.9,    # 2.59 cm
-        "kStaveHalfZ_mm": 10.0,    # 1.0 cm
+    params: dict[str, object] = {
+        "kStaveHalfX_mm": 250.0,
+        "kStaveHalfY_mm": 25.9,
+        "kStaveHalfZ_mm": 10.0,
         "kHoleRadius_mm": 1.0,
         "kFibreRadius_mm": 0.90,
-        "kFibreHalfX_mm": 260.0,   # 26 cm
-        "kFibreSep_mm": 20.0,      # 2 cm
+        "kFibreHalfX_mm": 260.0,
+        "kFibreSep_mm": 20.0,
         "kCoatingThk_mm": 0.25,
         "kSensorThk_mm": 0.10,
         "far_end_mode": "instrumented",
@@ -108,22 +135,8 @@ def digests_for_nominal(overrides: Mapping[str, object] | None = None) -> dict[s
     }
     if overrides:
         params.update(dict(overrides))
-    fr = float(params["kFibreRadius_mm"])
-    geo = geometry_v2_canonical(
-        kStaveHalfX_mm=float(params["kStaveHalfX_mm"]),
-        kStaveHalfY_mm=float(params["kStaveHalfY_mm"]),
-        kStaveHalfZ_mm=float(params["kStaveHalfZ_mm"]),
-        kHoleRadius_mm=float(params["kHoleRadius_mm"]),
-        kFibreRadius_mm=fr,
-        kFibreHalfX_mm=float(params["kFibreHalfX_mm"]),
-        kFibreSep_mm=float(params["kFibreSep_mm"]),
-        rCore_mm=fr * 0.94,
-        rInner_mm=fr * 0.97,
-        rOuter_mm=fr * 1.00,
-        kCoatingThk_mm=float(params["kCoatingThk_mm"]),
-        kSensorThk_mm=float(params["kSensorThk_mm"]),
-        far_end_mode=str(params["far_end_mode"]),
-    )
+    geo_fields = _geometry_fields_from_nominal(params)
+    geo = canonical_payload(geo_fields)
     phy = physics_v1_canonical(
         birks_kB_mm_per_MeV=float(params["birks_kB_mm_per_MeV"]),
         optical_interface_model=str(params["optical_interface_model"]),
@@ -144,6 +157,6 @@ def digests_for_nominal(overrides: Mapping[str, object] | None = None) -> dict[s
     return {
         "geometry_canonical": geo,
         "physics_canonical": phy,
-        "geometry_hash": sha256_hex(geo),
+        "geometry_hash": geometry_digest_hex(geo_fields),
         "physics_hash": sha256_hex(phy),
     }

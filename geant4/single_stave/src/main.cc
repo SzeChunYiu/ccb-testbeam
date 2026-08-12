@@ -144,7 +144,8 @@ int main(int argc, char** argv) {
   runManager->SetUserInitialization(
       new ActionInitialization(cfg, tables,
                               detector->GeometryHash(),
-                              detector->PhysicsHash()));
+                              detector->PhysicsHash(),
+                              detector->OpticalHash()));
 
   // Construct geometry + physics; prints the geometry report (OVERLAP_CHECK_PASS).
   runManager->Initialize();

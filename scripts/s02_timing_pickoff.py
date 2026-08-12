@@ -187,7 +187,35 @@ def shifted_template(template: np.ndarray, shift: float) -> np.ndarray:
     return np.interp(x - shift, x, template, left=template[0], right=template[-1])
 
 
-def template_phase_time(pulses: pd.DataFrame, templates: Dict[str, np.ndarray], grid: np.ndarray) -> np.ndarray:
+def parabolic_subgrid_offset(grid: np.ndarray, sse: np.ndarray, j: int) -> float:
+    """Continuous phase from a 3-point parabola about grid[j] (#1064)."""
+    g = np.asarray(grid, dtype=float)
+    y = np.asarray(sse, dtype=float)
+    if j <= 0 or j >= len(g) - 1:
+        return float(g[j])
+    y0, y1, y2 = float(y[j - 1]), float(y[j]), float(y[j + 1])
+    denom = y0 - 2.0 * y1 + y2
+    if not np.isfinite(denom) or abs(denom) < 1e-30:
+        return float(g[j])
+    dx = float(g[j] - g[j - 1])
+    if not np.isfinite(dx) or dx == 0.0:
+        return float(g[j])
+    delta = 0.5 * dx * (y0 - y2) / denom
+    if abs(delta) > abs(dx):
+        return float(g[j])
+    return float(g[j] + delta)
+
+
+def template_phase_time(
+    pulses: pd.DataFrame,
+    templates: Dict[str, np.ndarray],
+    grid: np.ndarray,
+    *,
+    refine: str = "parabolic",
+) -> np.ndarray:
+    """Template-phase pickoff with optional parabolic sub-grid refine (#1064)."""
+    if refine not in ("parabolic", "none"):
+        raise ValueError(f"unknown template refine mode {refine!r}; use parabolic|none")
     out = np.full(len(pulses), np.nan, dtype=float)
     for stave, template in templates.items():
         idx = np.flatnonzero(pulses["stave"].to_numpy() == stave)
@@ -198,7 +226,9 @@ def template_phase_time(pulses: pd.DataFrame, templates: Dict[str, np.ndarray], 
         for row_idx in idx:
             wf = pulses.iloc[row_idx]["waveform"] / max(float(pulses.iloc[row_idx]["amplitude_adc"]), 1.0)
             sse = ((shifted - wf[None, :]) ** 2).sum(axis=1)
-            out[row_idx] = refs + grid[int(np.argmin(sse))]
+            j = int(np.argmin(sse))
+            phase = float(grid[j]) if refine == "none" else parabolic_subgrid_offset(grid, sse, j)
+            out[row_idx] = refs + phase
     return out
 
 

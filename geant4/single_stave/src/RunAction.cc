@@ -18,7 +18,11 @@ RunAction::RunAction(const AppConfig& cfg, const OpticalTables& tables,
                      const std::string& geometry_hash,
                      const std::string& physics_hash)
     : cfg_(cfg), tables_(tables),
-      geometry_hash_(geometry_hash), physics_hash_(physics_hash) {}
+      geometry_hash_(geometry_hash), physics_hash_(physics_hash) {
+  // Master and worker both materialise the effective digitizer config so the
+  // metadata sidecar written on the master thread cannot miss #977 fields.
+  SetSipmDigitizerConfig(BuildSipmDigitizerConfig(cfg_, tables_));
+}
 
 RunAction::~RunAction() = default;
 

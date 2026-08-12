@@ -159,3 +159,19 @@ Branch: `close/1178-python38-compat` → PR #1315 (merged `8cd32b1e`).
 |-------|-------------|----------|
 | #1178 | CLOSED | Declared law `p(theta) = sigma(theta)·sin(theta)/Z` over measured support 26.49–169.78 deg (Ermisch et al. PRC 71 064004 (2006) Table VI, 190 MeV p-d). Mode IDs: `linear_node_pdf_exact_inverse_v1` + `measured_table_support_truncate_v1`. Reference normalization `1.1977630765144902`; probability outside measured support `0.0`; max inverse interval mass fraction error `2.22e-16` (IEEE 754 ULP). Fail-closed guard `CCB_CS_INVERSE_DISCRIMINANT` at `ScatteringGenerator.cc:449`. Evidence commits: `fa62e8bb` (bind table + gate sampler claims), `f5f96951` (exact measured-support inverse), `a1bcb6a6` (fix quadratic inverse-CDF), `d4d174d2` (source-node + interpolation sensitivity), `af0c3989` (190 MeV p-d source uncertainty), `57407692` (interpolation-order sensitivity), `d6207569` (fail closed #1182), `7a42b0ff` (Python 3.8 compat). 50 regression tests pass on Python 3.8.10. PR #1315 merged `8cd32b1e`. |
 
+## P0 #1178 — CM cross-section sampler contract (cross-cutting)
+
+Branch: `close/1178-python38-compat` → PR #1315 (merged `8cd32b1e`).
+
+| Issue | Disposition | Evidence |
+|-------|-------------|----------|
+| #1178 | CLOSED | Declared law `p(theta) = sigma(theta)·sin(theta)/Z` over measured support 26.49–169.78 deg (Ermisch et al. PRC 71 064004 (2006) Table VI, 190 MeV p-d). Mode IDs: `linear_node_pdf_exact_inverse_v1` + `measured_table_support_truncate_v1`. Reference normalization `1.1977630765144902`; probability outside measured support `0.0`; max inverse interval mass fraction error `2.22e-16` (IEEE 754 ULP). Fail-closed guard `CCB_CS_INVERSE_DISCRIMINANT` at `ScatteringGenerator.cc:449`. Evidence commits: `fa62e8bb` (bind table + gate sampler claims), `f5f96951` (exact measured-support inverse), `a1bcb6a6` (fix quadratic inverse-CDF), `d4d174d2` (source-node + interpolation sensitivity), `af0c3989` (190 MeV p-d source uncertainty), `57407692` (interpolation-order sensitivity), `d6207569` (fail closed #1182), `7a42b0ff` (Python 3.8 compat). 50 regression tests pass on Python 3.8.10. PR #1315 merged `8cd32b1e`. |
+
+## P0 #1179 — CS statistical/systematic uncertainty propagation audit (derived from #1178)
+
+Branch: `fix/issue-1179-cs-uncertainty` → PR #1325.
+
+| Issue | Disposition | Evidence |
+|-------|-------------|----------|
+| #1179 | PARTIAL (contract + audit) | Fail-closed contract `CCB_CS_UNCERTAINTY_DISCRIMINANT` declared in `ScatteringGenerator.cc` BuildSigmaCDF (`G4cout` compile-time contract): `uncertainty_contract=not_propagated_issue_1179`. The compiled `LoadCrossSection()` reads only 2 columns (angle, sigma); the third column (per-node statistical uncertainty mb/sr, 28 nodes) is tabulated but NOT propagated. Sampling law unchanged. Audit tool `tools/audit/research_sigma_cm_sampler_contract.py` extended: `_read_table` returns 4-tuple (raw, angles, sigma, stat_uncertainty); new `_statistical_uncertainty_audit` (per-node fractional uncertainty); new `_systematic_uncertainty_envelope_audit` (`sinusoidal_taper_10pct_edges_20pct_center`: `fractional = 0.10 + 0.10·sin(pi·normalized_theta)`, 20% at 90°, 10% at support edges 26.49/169.78 deg); `audit_sampler` output includes `uncertainty` key with `propagation_status=OPEN_ISSUE_1179`. Input validation extended: stat_uncertainty finite + nonnegative. Evidence commit: `70c614e0` (2 files, +96/−3). PR #1325. |
+

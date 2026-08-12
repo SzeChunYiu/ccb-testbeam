@@ -1,81 +1,63 @@
 # Latest Handoff
 
-## First-local-peak CFD selector is explicit but not physically identified
+## First-local CFD selector: deterministic nuisance sensitivity is explicit, physical support is not
 
-Selected atom: `ARU-TIMING-CFD-PEAK-SELECTION-IDENTIFIABILITY-001`, child of #1059/#1063. Microscopic mechanism interpretation remains separate; #968 has been reopened as physics-BLOCKED after live provenance review.
+Selected atom: `ARU-TIMING-CFD-NOISE-PHASE-SATURATION-SENSITIVITY-001`, child of #1059/#1063. This work is stacked on parent PR #1274 because current protected main still lacks the component-bound crossing and selector-diagnostic dependency.
 
-### Live repository state
+### Live provenance
 
-The clean branch `audit/cfd-selector-identifiability-v1` was created from exact protected `main@75b80839042a367e54743401cc2d11cfab6d4c3b`; the branch-protection contract requires `test`. Draft PR #1274 contains the selector-identifiability work and, because current main lacked it at branch creation, the already-reviewed component-bound CFD crossing dependency from draft #1259.
+Protected main at selection: `ac2e0bdd873016531f9ef31b30048275c3d2965d`, required context `test`. Parent #1274 was refreshed without force-push onto that main as exact head `06618a7ab7b3836b0c7a0e7e0160c88842eee2f9`; fresh push and pull-request CI were triggered and must both be green before it can integrate.
 
-#1259 remains draft/unmerged. Its exact head `458506cff29daa9fb8a80a7656ebd73bff180b53` had successful pull-request and push MC Validation, but those checks cannot authorize #1274 because #1274 has a different base and additional code/tests.
+#1059 was found incorrectly `closed/completed` even though its issue body still requires real-data fraction/component decomposition, ambiguous-component handling, truth transfer, and downstream regeneration. The prior issue thread itself said to keep it open. It has been reopened; software/ADR integration is not scientific completion.
 
-### Atomic selector contract
+Immutable beam ROOT files expected by `scripts/real_data_cfd_timing.py` are outside GitHub under `/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root` and are unavailable here. `reports/real_data_cfd_timing/result.json` is explicitly `FLAWED_LEGACY_OUTPUT_QUARANTINED`, so no historical timing number is reused as new evidence.
 
-For waveform `y`, let `A_g=max(y)` and default `alpha=0.05`. The existing first-local selector is exactly:
+### Additive robustness contract
 
-- interior `j` is eligible if `y[j]>=y[j-1]`, `y[j]>=y[j+1]`, and `y[j]>=alpha*A_g`;
-- choose the smallest eligible `j`;
-- if no eligible interior sample exists, fall back to `argmax(y)`.
+For the named parent selector with `F=alpha*max(y)`, the child module computes a **sufficient exact-selected-index** radius for arbitrary additive sample perturbations `||delta||_inf < rho`.
 
-#1274 freezes this as hypothesis profile `first_local_peak_global_fraction_floor_v1`, state `HYPOTHESIS_UNVALIDATED_COMPONENT_IDENTITY`, with `authorising_component_identity=false`. The legacy parameter name `min_prominence_frac` is retained only for compatibility; the computation is a global-amplitude floor, not topographic prominence. Nonfinite or out-of-domain `alpha` outside `[0,1]` now fails closed.
+For selected local sample `j`, the sufficient candidate-persistence pieces are:
 
-For candidate amplitude `A_j`, the floor margin is `m_j=A_j-alpha*A_g`. With global-max identity fixed and bounded perturbations `|delta_j|<=eps_j`, `|delta_g|<=eps_g`, a sufficient floor-stability condition is `|m_j| > eps_j + alpha*eps_g`. Neighbour-ordering margins are separate, and plateaus have zero uniqueness margin under the existing `>=` rule. A global-max switch changes the floor itself.
+- floor: `(y[j]-F)/(1+alpha)`;
+- left local ordering: `(y[j]-y[j-1])/2`;
+- right local ordering: `(y[j]-y[j+1])/2`.
 
-### Corrected deterministic discriminators
+For each earlier candidate `k`, every currently failed eligibility predicate supplies a failure-persistence radius: floor deficit divided by `1+alpha`, or neighbour-order deficit divided by 2. Because one persisting failed predicate is enough to keep `k` ineligible, use the maximum available failure radius for that `k`, then the minimum across earlier samples. The overall selected-index certificate is the minimum of selected eligibility and earlier-exclusion pieces. The bound is sufficient, not necessary, and the guarantee is strict (`eps<rho`).
 
-1. **Prominence/floor separation:** `[0,50,51,50,50,500,1000,500]`. `A_g=1000`, so the selector floor is 50 ADC and the early 51-ADC peak is admitted. Its left basin minimum is 0 and its right basin minimum before the first higher sample is 50; the higher base is 50, so topographic prominence is `51-max(0,50)=1` ADC. This separates the implemented global-height rule from a prominence threshold.
-2. **Floor discontinuity:** otherwise identical traces with early peaks 49.9 and 50.1 ADC and the same 1000-ADC late peak move selected index from late sample 7 to early sample 2 under only a 0.2-ADC perturbation.
-3. **Plateau non-uniqueness:** `[0,50,100,100,100,50,0]` gives three eligible samples; choosing the first is an implementation tie-break rather than a unique physical peak.
-4. **Fallback:** `[0,10,20,30,40]` has no eligible interior local maximum and therefore collapses to the boundary global maximum; diagnostics expose the fallback.
-5. **Parameter domain:** `alpha<0`, `alpha>1`, NaN and infinity are rejected.
-6. **Negative control:** a clean unimodal pulse makes first-local and global component definitions coincide.
+Fallback states combine persistence of all interior ineligibilities with half the unique global-argmax gap. Ties/plateaus naturally give zero exact-index certificate.
 
-**Preserved adversarial correction:** the first draft used `[0,50,51,50,0,0,500,1000,500]` and incorrectly called the early peak's prominence 1 ADC. Because the right basin reaches zero, its topographic prominence is actually 51 ADC. The adversarial review caught this before merge. The test, PR body, stable concern and handoff now use the corrected fixture above. The disagreement/correction is part of the provenance rather than being averaged away.
+### Exact deterministic discriminators
 
-The branch also retains the #1259 same-component CFD contract: with selected peak `(p,A_p)` and threshold `T=f*A_p`, the crossing uses the nearest pre-peak bracket `y[k]<T<=y[k+1]`, `k+1<=p`; rejected earlier activity cannot supply the selected component's time. The explicit `global_max` estimator keeps historical whole-waveform first-crossing semantics.
+1. Near-floor waveform `[0,25,49.9,25,0,0,500,1000,500]`: adversarial `+eps` on the early candidate and `-eps` on the global peak flips selection at `eps*=0.1/1.05=0.09523809523809524 ADC`. The software certificate matches this boundary.
+2. Common residual baseline on `[0,20,40,20,0,0,500,1000,500]`: local ordering is unchanged, but the selector margin changes as `m'(b)=m+(1-alpha)b`; transition threshold is `b*=10/0.95=10.526315789473685 ADC`.
+3. Clipping only the later dominant component: with `y'=min(y,C)`, the unchanged early 40-ADC component becomes eligible at exact `C=800 ADC`; `C=801` remains late while `C=800` retargets early.
+4. Sampling phase: a synthetic separated triangular waveform sampled at `n+phi` selects index 10 at `phi=0`, 3 at `.2`, 10 at `.5`, and 9 at `.8`. A deterministic 1001-point phase support grid gives `{3:229,9:300,10:472}`. Do not interpret those counts as detector probabilities; no physical phase measure is specified.
+5. Controls: clean `[0,50,100,50,0]` has a 25-ADC sufficient exact-index certificate; the `100,100,100` plateau has zero; monotonic boundary fallback has 5 ADC.
 
-### Mechanism collapse
+### Mechanism boundary
 
-Noise, a true earlier particle/pile-up pulse, delayed SiPM activity, electronics/recovery structure, saturation and overlap can all change selector output. They are observationally equivalent at this atom. A selector transition is evidence of estimator instability, not evidence for a particular microscopic cause.
+Baseline residuals, digitizer clipping, sub-sample phase, true pile-up, SiPM delayed/correlated activity, electronics shaping/recovery and DAQ corruption can all change selector output. The controlled transforms only establish estimator non-invariance. They do not identify which mechanism occurs in CCB data or how often.
 
-### Cross-atom governance correction
+### Implementation
 
-Issue #968 had been closed as `completed` with a campaign-ledger note, but merged PR #1239 explicitly lists **#968 B2 broad-residual mechanism discrimination** under `BLOCKED / out of scope for this code PR (need dedicated studies / data)`. The campaign ledger marks Lane05 merged but does not provide a Lane05 per-issue physics disposition satisfying #968's acceptance criteria. #968 was therefore reopened as physics-BLOCKED. The reopening does not revert or dispute #1239's bounded software fixes.
+Stacked branch: `audit/cfd-selector-nuisance-sensitivity-v1` from parent #1274 exact head `06618a7...`.
 
-### Repository actions and provenance
+New files:
+- `scripts/cfd_selector_sensitivity.py` — pure deterministic L-infinity certificate;
+- `tests/test_cfd_selector_sensitivity.py` — exact near-floor, baseline, clipping, 1001-phase, clean, plateau and fallback controls;
+- `chatgpt_todo/archive/...ARU-TIMING-CFD-NOISE-PHASE-SATURATION-SENSITIVITY-001.md`.
 
-- Branch base: protected `main@75b80839042a367e54743401cc2d11cfab6d4c3b`.
-- Code-profile commit `5cf030d2e50e326903f76b077a7234fbc31ba8a0`.
-- Parameter-domain commit `a0d8910986292fdfbf614fb830ea75e13b5a38ae`.
-- Corrected prominence-test commit `ee070d6bce20b327a5b830b6d01166e0266e8ace`.
-- Draft PR #1274: `fix(timing): expose first-local selector identifiability limits`.
-- Stable concern `CCB-1059-PEAK-SELECTOR-IDENTIFIABILITY-001` updated with the corrected prominence derivation and explicit adversarial `REVISE` history.
-- #968 reopened with evidence that its physics mechanism study remains unresolved.
-- Archive: `chatgpt_todo/archive/2026-08-12T003900Z_ARU-TIMING-CFD-PEAK-SELECTION-IDENTIFIABILITY-001.md`; correct before integration and treat its first-draft error as superseded by the explicit correction.
-- A local sparse-clone attempt failed before checkout because the execution container could not resolve `github.com`; therefore there is no local pytest PASS claim.
-- Every branch write changes the exact head. Merge only after both final-head push and pull-request `test` contexts succeed; do not inherit earlier green runs.
-
-### External documentation boundary
-
-SciPy's authoritative `peak_prominences` documentation defines prominence by vertical distance to the lowest contour line / bases; `find_peaks` separately documents local maxima and flat-peak behavior. Those sources justify the terminology correction only. They do not validate a CCB detector component or any `alpha` value.
+Coordination: this `HANDOFF.md` and `ACTIVE_TASK.md`. No RNG, beam data, production MC or fitted detector nuisance distribution participates.
 
 ### Four sequential AI votes
 
-**Timing / sampled-signal lead — ACCEPT explicit selector profile and diagnostics / BLOCK detector-truth validation.** Algorithmic state is now explicit; actual CCB noise, saturation, overlap and component truth are unmeasured here.
+**Timing / sampled-signal lead:** ACCEPT deterministic sensitivity law; BLOCK detector-stability inference.  
+**Adversarial waveform / DAQ reviewer:** ACCEPT estimator counterexamples; BLOCK occurrence and microscopic-mechanism claims.  
+**Independent validation reviewer:** ACCEPT deterministic support oracle; REJECT interpreting the phase-grid counts as probabilities.  
+**Claims / provenance reviewer:** ACCEPT bounded software child; KEEP #1059 OPEN/PARTIAL and all timing-performance claims gated.
 
-**Adversarial waveform / mechanism reviewer — REVISE first falsifier; after correction ACCEPT the floor-vs-prominence distinction / BLOCK authorising component identity.** The first prominence example was mathematically wrong and was corrected before merge. Boundary, plateau and fallback counterexamples remain.
+### Next work
 
-**Independent statistics / validation reviewer — ACCEPT deterministic identifiability diagnosis / BLOCK timing-resolution inference.** Fixtures establish decision-surface discontinuities but do not measure real-data misassignment, timing bias or coverage and do not choose a validated alternative.
+Highest-value physical child remains `ARU-TIMING-CFD-REALDATA-TRANSITION-001` once immutable beam bytes are available. Before comparing mathematical margins to detector support, separately close `ARU-TIMING-CFD-BASELINE-RESIDUAL-DISTRIBUTION-001`, `ARU-TIMING-CFD-DAQ-CLIPPING-TRANSFER-001`, and `ARU-TIMING-CFD-SAMPLING-PHASE-DISTRIBUTION-001`; held-out truth transfer remains required.
 
-**Claims / provenance reviewer — ACCEPT bounded fail-closed selector state / KEEP #1059 and #968 OPEN.** The real-data producer defaults to first-local selection and can operate in authorising mode, while physical component identity and B2 mechanism discrimination remain unresolved. The known legacy real-data CFD report remains FLAWED/QUARANTINED.
-
-### Children / next work
-
-Highest-value next child if immutable beam bytes are available: `ARU-TIMING-CFD-REALDATA-TRANSITION-001`. Serialize selector diagnostics in the producer and measure selected/fallback/plateau transitions by run, stave, amplitude and topology with run-aware uncertainty.
-
-If beam bytes are unavailable, next strongest fixture child: `ARU-TIMING-CFD-NOISE-PHASE-SATURATION-SENSITIVITY-001`, with controlled baseline/noise/sampling-phase/clipping perturbations and stability margins.
-
-Other surviving children: `ARU-TIMING-CFD-OVERLAP-BASIN-001`, `ARU-TIMING-CFD-TRUTH-TRANSFER-001`, and downstream regeneration/audit of reports, figures and claim rows consuming `first_local_peak` after the estimator changes.
-
-No beam timing resolution, pile-up rate/mechanism, WLS response, PID metric, efficiency, rate, ESS, p-value or detector-performance quantity was regenerated or promoted.
+Do not close #1059, do not promote a timing resolution, and do not call a selector switch pile-up/saturation/noise solely from this atom.

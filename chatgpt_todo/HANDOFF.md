@@ -1,71 +1,80 @@
 # Latest Handoff
 
-## Trigger/gain recovery separation exposed an independent correlated-noise recovery law
+## First-local-peak CFD selector is an explicit, non-authorising hypothesis
 
-Selected atom: `ARU-SIPM-RECOVERY-CORRELATED-NOISE-COUPLING-001`, child of #1066 and #1071.
+Selected atom: `ARU-TIMING-CFD-PEAK-SELECTION-IDENTIFIABILITY-001`, child of #1059/#1063. Microscopic interpretation remains under #968/#1009/#1010.
 
 ### Live repository state
 
-Protected testbeam `main` advanced from `e25d59be37f59b8fddf7dd897295bcaa7bee14d0` to `d9992a48d86a34f03f18a1e4f9426c97f6cf399b` when PR #1235 integrated `ccb-sipm-core@692857bde0c1c6c2ed59aac5a56c94740da31354`. #1066 remains OPEN; this integration is PARTIAL and must not be interpreted as recovery-model validation.
+The clean branch `audit/cfd-selector-identifiability-v1` was created from exact protected `main@75b80839042a367e54743401cc2d11cfab6d4c3b`; the branch-protection contract requires `test`. Draft PR #1274 contains the new selector-identifiability work and, because current main still lacks it, the already-reviewed component-bound CFD crossing dependency from draft #1259.
 
-Core PR #13 exact head `c2b79d83642852b458299b181d50dd94b733bdb7` passed Core CI run `31533574607`; merged core main `692857b...` passed independent push Core CI run `31533753427`. Testbeam PR #1235 exact head `4cb06465c2aaf30b4319e43f003578b18c953d8c` passed MC Validation run `31534733706`, job `93923024769`: ruff clean and pytest `1642 passed, 2 skipped, 8 xfailed, 1 xpassed, 7 warnings in 124.43 s`. The merged testbeam commit `d9992a48...` then independently passed main-push MC Validation run `31535409449` / job `93925207048`, including checkout, curated ruff, unit tests, diagnostics upload, and enforcement. The testbeam workflow is Python/static and does not compile the C++ submodule; the upstream Core CI is the C++ execution evidence.
+#1259 remains open/draft/unmerged. Its exact head `458506cff29daa9fb8a80a7656ebd73bff180b53` did eventually receive successful pull-request and push MC Validation runs, but those checks cannot authorize #1274 because #1274 has a different base and additional code/tests.
 
-### Atomic contract
+### Atomic selector contract
 
-For a previously fired cell, the core forms
+For waveform `y`, let `A_g=max(y)` and default `alpha=0.05`. The existing first-local selector is exactly:
 
-`r(dt)=1-exp(-dt/tau_recovery)`.
+- interior `j` is eligible if `y[j]>=y[j-1]`, `y[j]>=y[j+1]`, and `y[j]>=alpha*A_g`;
+- choose the smallest eligible `j`;
+- if no eligible interior sample exists, fall back to `argmax(y)`.
 
-PR #13 made two accepted-parent response quantities explicit:
+This is frozen as hypothesis profile `first_local_peak_global_fraction_floor_v1`, state `HYPOTHESIS_UNVALIDATED_COMPONENT_IDENTITY`, with `authorising_component_identity=false`. The historical parameter name `min_prominence_frac` is retained for API compatibility but is now documented as a misnomer: no topographic-prominence calculation is performed.
 
-- `P_fire/P_full = F_trigger(r)`;
-- `Q/Q_full = F_gain(r)`.
+For candidate amplitude `A_j`, the floor margin is
 
-Current selectors are `trigger_recovery_model=EXPONENTIAL`, `gain_recovery_model=EXPONENTIAL_H1_SHARED`, and gain alternative `FULL_RECOVERY`.
+`m_j=A_j-alpha*A_g`.
 
-The cross-atom contradiction is that correlated-noise generation from the accepted parent avalanche is still anonymous and hard-wired to raw `r`:
+With global-max identity fixed and bounded perturbations `|delta_j|<=eps_j`, `|delta_g|<=eps_g`, a sufficient floor-stability condition is
 
-- prompt crosstalk `N ~ Poisson((-ln(1-p_prompt))*r)`;
-- delayed crosstalk Bernoulli(`p_delayed*r`);
-- fast/slow afterpulse scheduling Bernoulli(`p_after*r`).
+`|m_j| > eps_j + alpha*eps_g`.
 
-The scheduled child is later subjected to its own target/same-cell recovery gate. Parent secondary generation and child triggering are therefore separate physical state transitions.
+This does not close local-maximum identity: neighbour-order margins are separate, and plateaus have zero uniqueness margin under the existing `>=` rule. A global-max switch changes the floor itself and is another child assumption.
 
-At `dt=tau`, `r=0.6321205588285577`. With `gain_recovery_model=FULL_RECOVERY`, the modeled accepted parent has full gain while secondary generation remains at 63.212% of the fully recovered nominal multiplier. For the representative uncalibrated profile, prompt `p=0.03` gives `lambda=0.030459207484708546` and current `lambda*r=0.01925389125670895`; fast/slow afterpulse scheduling becomes `0.006321205588285576` / `0.003160602794142788`. These are simulator-law calculations, not CCB measurements.
+### Deterministic discriminators
 
-### Equivalence and mechanism review
+1. `[0,50,51,50,0,0,500,1000,500]`: `A_g=1000`, so the floor is 50. A peak only 1 ADC above both neighbours is selected at sample 2. Therefore the rule is a global-height filter, not a prominence/basin filter.
+2. Early peak `49.9` versus `50.1` ADC with the same late 1000-ADC maximum: only 0.2 ADC moves the selected component from late sample 7 to early sample 2 by crossing the exact 5% floor.
+3. `[0,50,100,100,100,50,0]`: samples 2,3,4 all meet the `>=` local-max condition, so the earliest is an implementation tie-break rather than a unique physical peak; diagnostics expose the multiplicity/plateau.
+4. `[0,10,20,30,40]`: no eligible interior maximum exists, so the selector silently becomes global-max unless fallback state is serialized.
+5. Clean unimodal pulses remain the negative control in which first-local and global component definitions coincide.
 
-The crucial identifiability result is that raw-recharge coupling `C=r` and parent-gain coupling `C=g` collapse to the same observable model under default `EXPONENTIAL_H1_SHARED`, because `g=r`. Existing H1-only tests therefore cannot validate which correlated-noise coupling is intended. `FULL_RECOVERY` (`g=1`) breaks that degeneracy.
+The branch also retains the #1259 same-component CFD contract: with selected peak `(p,A_p)` and threshold `T=f*A_p`, the crossing uses the nearest pre-peak bracket `y[k]<T<=y[k+1]`, `k+1<=p`; rejected earlier activity cannot supply the selected component's time. The explicit `global_max` estimator keeps historical whole-waveform first-crossing semantics.
 
-Surviving hypotheses are: named legacy `C=r`; gain/charge-coupled parent generation; mechanism-specific prompt/delayed/afterpulse recovery surfaces; and an explicit `C=1` negative-control family with child recovery retained downstream. No physical winner is selected without actual secondary-pulse delay×amplitude calibration at the relevant device, overvoltage and temperature.
+### Mechanism collapse
 
-Hamamatsu guidance and primary Hamamatsu-SiPM correlated-noise studies motivate keeping avalanche amplitude, delay, crosstalk and afterpulse observables explicit; they do not authorize a CCB-specific `C=r` or `C=g` law from manufacturer defaults.
+Noise, a true earlier particle/pile-up pulse, delayed SiPM activity, electronics/recovery structure, saturation and overlap can all change the selector output. They are observationally equivalent at this atom. A selector transition is evidence of estimator instability, not evidence for a particular microscopic cause.
 
-### Repository actions
+### Repository actions and provenance
 
-- Added stable concern `CCB-1071-RECOVERY-COUPLING-001` to existing #1071 instead of creating a duplicate issue.
-- Added cross-atom partial-completion evidence and four-role review to #1066; issue remains OPEN.
-- Reframed PR #1235 before integration as `fix(sipm): integrate partial trigger/gain recovery separation (#1066)` with exact upstream/testbeam CI and claim boundary.
-- PR #1235 merged as testbeam main `d9992a48d86a34f03f18a1e4f9426c97f6cf399b`; post-merge MC Validation run `31535409449` / job `93925207048` completed successfully.
-- Coordination-only draft PR #1236 carries this archive and refreshed active/handoff state; merge only after its final exact-head protected CI passes.
-- Immutable record: `chatgpt_todo/archive/2026-08-11T205700Z_ARU-SIPM-RECOVERY-CORRELATED-NOISE-COUPLING-001.md`.
+- Created branch from exact protected main.
+- Code commit `5cf030d2e50e326903f76b077a7234fbc31ba8a0`; pre-coordination source blob `197ab80571823f6aa13ede1a20b1efc1d9c07b53`.
+- Implementation/test head `2d8740501d2e3227506458813a6007173310ba0c` adds ten deterministic controls.
+- Opened draft PR #1274, `fix(timing): expose first-local selector identifiability limits`.
+- Added stable concern `CCB-1059-PEAK-SELECTOR-IDENTIFIABILITY-001` to existing #1059; no duplicate issue was opened.
+- Archived the full atom at `chatgpt_todo/archive/2026-08-12T003900Z_ARU-TIMING-CFD-PEAK-SELECTION-IDENTIFIABILITY-001.md` in commit `6dc182bb280979b9ca62637f0f3c235caeeef2e4`.
+- A local sparse-clone attempt failed before checkout because the execution container could not resolve `github.com`; therefore there is no local pytest PASS claim.
+- PR-triggered MC Validation run `31550836290` was first observed queued on pre-coordination head `2d874...`. These coordination commits create a new final head, so fresh exact-head protected CI is required before readiness/merge.
+
+### External documentation boundary
+
+SciPy's authoritative `peak_prominences` documentation defines prominence by a peak's vertical distance to its lowest contour line/bases; `find_peaks` separately documents local maxima and flat peaks. Those sources justify the terminology correction only. They do not validate a CCB detector component or any choice of `alpha`.
 
 ### Four sequential AI votes
 
-**SiPM/device lead — ACCEPT bounded trigger/gain refactor / REVISE physical recovery model.** Exact code separates trigger/gain but leaves correlated-noise generation coupled to raw `r`. Actual CCB delay×amplitude calibration is absent.
+**Timing / sampled-signal lead — ACCEPT explicit selector profile and diagnostics / BLOCK detector-truth validation.** The algorithm is now specified exactly, but actual CCB noise, saturation, overlap and component truth are unmeasured here.
 
-**Adversarial mechanism reviewer — BLOCK implicit coupling.** `C=r` and `C=g` are only indistinguishable under H1; `FULL_RECOVERY` produces a 36.8% separation at `dt=tau`.
+**Adversarial waveform / mechanism reviewer — REVISE any robustness or prominence interpretation / BLOCK authorising component identity.** Floor-boundary, plateau and fallback fixtures remain valid counterexamples; microscopic causes are intentionally not inferred.
 
-**Independent statistics/validation reviewer — ACCEPT software/source diagnosis / BLOCK detector inference.** Green H1 tests cannot discriminate collapsed parameterizations; held-out two-pulse/secondary-pulse data are required for physical model selection.
+**Independent statistics / validation reviewer — ACCEPT deterministic identifiability diagnosis / BLOCK timing-resolution inference.** The fixtures establish discontinuous decision surfaces but do not measure real-data misassignment, timing bias or coverage and do not select a validated alternative.
 
-**Claims/provenance reviewer — BLOCK #1066/#1071 completion and saturation/pile-up/late-component promotion.** The representative profile is explicitly not a CCB calibration, and downstream physics studies have not been re-evaluated over the surviving model family.
+**Claims / provenance reviewer — ACCEPT bounded fail-closed selector state / KEEP #1059 OPEN.** `real_data_cfd_timing.py` can operate in authorising mode and defaults to first-local selection, so selector identity must remain explicit and non-authorising until real-data/truth-transfer children close. The known legacy real-data CFD report remains FLAWED/QUARANTINED.
 
-### Child atoms / next work
+### Children / next work
 
-Highest-value next atom: `ARU-SIPM-CORRELATED-NOISE-GENERATION-MODEL-001`. Make the currently hidden parent-generation recovery law explicit and serializable per mechanism, retain raw-`r` as a named legacy hypothesis, add `C=1` and gain-coupled test hypotheses where appropriate, and construct paired fixed-seed controls that break the H1 degeneracy. This is a software-model interface atom; it must not choose detector truth in the absence of calibration.
+Highest-value next child if immutable beam bytes are available: `ARU-TIMING-CFD-REALDATA-TRANSITION-001`. Serialize selector diagnostics in the producer and measure selected/fallback/plateau transitions by run, stave, amplitude and topology with run-aware uncertainty.
 
-Physical child: `ARU-SIPM-CORRELATED-NOISE-TWO-PULSE-CALIBRATION-001`, requiring source-bound secondary-pulse delay×amplitude data and held-out validation at the actual device operating point.
+If beam bytes are unavailable, next strongest fixture-level child: `ARU-TIMING-CFD-NOISE-PHASE-SATURATION-SENSITIVITY-001`, with controlled baseline/noise/sampling-phase/clipping perturbations and stability margins.
 
-Other independent dependencies remain: `ARU-SIPM-RECOVERY-DISTINCT-TAU-001` because trigger/gain selectors still consume one shared raw `r`/`tau`; #1072 operating-point response surfaces; #1096 physical history-horizon convergence; #1067 measured-impulse source/calibration authorization.
+Other surviving children: `ARU-TIMING-CFD-OVERLAP-BASIN-001`, `ARU-TIMING-CFD-TRUTH-TRANSFER-001`, and downstream regeneration/audit of reports, figures and claim rows consuming `first_local_peak` after the estimator changes.
 
-No beam data, production Geant4 sample, detector calibration, pile-up efficiency, saturation closure, timing/PID result, rate, ESS, p-value or public detector-performance quantity was generated or promoted.
+No beam timing resolution, pile-up rate/mechanism, WLS response, PID metric, efficiency, rate, ESS, p-value or detector-performance quantity was regenerated or promoted.

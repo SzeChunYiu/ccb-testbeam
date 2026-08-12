@@ -48,10 +48,9 @@ echo "   base  : $BASE_CLI"
 # 1) (Re)generate the per-knob grids from the documented catalogue.
 python3 "${GRIDS}/generate_points.py" --outdir "$GRIDS" ${KNOBS:+--knobs $KNOBS}
 
-# 2) Freeze campaign intent from exact repository bytes.  The expected core SHA
-# is derived only from the superproject gitlink; there is no operator-supplied
-# expected-core override.  Existing OUTDIR intent may only be reused byte-for-
-# byte; changed intent requires a new campaign output directory.
+# 2) Freeze campaign intent from exact committed repository bytes. The creator
+# fails closed when the tracked/untracked working tree is dirty; source intent
+# cannot be attributed to HEAD while executing uncommitted repository state.
 MANIFEST="${OUTDIR}/campaign_intent.json"
 MANIFEST_DIGEST="${OUTDIR}/campaign_intent.sha256"
 manifest_args=(
@@ -69,11 +68,12 @@ if [[ -n "$KNOBS" ]]; then
 fi
 EXPECTED_CORE_SHA="$(python3 "$MANIFEST_TOOL" "${manifest_args[@]}")"
 MANIFEST_SHA256="$(tr -d '[:space:]' < "$MANIFEST_DIGEST")"
-# Independent verify catches any unexpected write/formatting drift before job submission
-# and proves that the declared expected core is the gitlink at the recorded commit.
+# Independent verify proves source binding and that live runtime intent equals
+# the newly frozen base CLI, event count and single-thread contract.
 VERIFY_CORE_SHA="$(python3 "$MANIFEST_TOOL" verify \
   --repo-root "$REPO_ROOT" --manifest "$MANIFEST" \
-  --expected-sha256 "$MANIFEST_SHA256")"
+  --expected-sha256 "$MANIFEST_SHA256" \
+  --base-cli "$BASE_CLI" --nevents "$NEVENTS" --threads 1)"
 if [[ "$VERIFY_CORE_SHA" != "$EXPECTED_CORE_SHA" ]]; then
   echo "fatal: campaign manifest core mismatch after create" >&2
   exit 3
@@ -82,9 +82,8 @@ echo "   intent: $MANIFEST"
 echo "   intent sha256: $MANIFEST_SHA256"
 echo "   expected core: $EXPECTED_CORE_SHA (superproject gitlink)"
 
-# 3) Submit one array per knob.  The manifest digest is copied into each Slurm
-# job's immutable argv so editing campaign_intent.json after submission causes
-# the job to fail before simulation.
+# 3) Submit one array per knob. The manifest digest is copied into each Slurm
+# job's argv so editing campaign_intent.json after submission causes rejection.
 JOBIDS_FILE="${OUTDIR}/submitted_job_ids.txt"
 : > "$JOBIDS_FILE"
 
@@ -111,8 +110,8 @@ done
 echo "submitted $submitted knob arrays; ids in ${JOBIDS_FILE}"
 cat "$JOBIDS_FILE"
 
-# 4) Optionally wait for all to finish, then analyze.  The expected core SHA is
-# always re-derived from the frozen manifest, never typed as an operator token.
+# 4) Optionally wait for all to finish, then analyze. The expected core and the
+# execution-intent check are re-derived from the frozen manifest.
 if [[ "${CCB_CAMPASSIGN_ANALYZE:-0}" == "1" ]]; then
   echo "== waiting for all jobs to drain =="
   while true; do
@@ -121,7 +120,6 @@ if [[ "${CCB_CAMPASSIGN_ANALYZE:-0}" == "1" ]]; then
       [[ -z "$jid" ]] && continue
       state=$(sacct -j "$jid" --format=State --noheader -n 2>/dev/null | \
               awk '{print $1}' | sort -u)
-      # Still running / queued if any state is PENDING/RUNNING.
       if echo "$state" | grep -qE 'PENDING|RUNNING|REQUEUE'; then
         pending=$((pending+1))
       fi
@@ -135,7 +133,8 @@ if [[ "${CCB_CAMPASSIGN_ANALYZE:-0}" == "1" ]]; then
   PY="${CCB_CAMPASSIGN_PY:-python3}"
   EXPECTED_CORE_SHA="$("$PY" "$MANIFEST_TOOL" verify \
     --repo-root "$REPO_ROOT" --manifest "$MANIFEST" \
-    --expected-sha256 "$MANIFEST_SHA256")"
+    --expected-sha256 "$MANIFEST_SHA256" \
+    --base-cli "$BASE_CLI" --nevents "$NEVENTS" --threads 1)"
   "$PY" "${REPO_ROOT}/scripts/single_stave/sipm_sensitivity.py" "$OUTDIR" \
        --grids-dir "$GRIDS" --expected-core-sha "$EXPECTED_CORE_SHA"
 fi

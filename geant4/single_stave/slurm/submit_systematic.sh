@@ -42,10 +42,12 @@ OUTDIR="${OUTROOT}/${KNOB}"
 mkdir -p "${OUTDIR}"
 
 # Fail before simulation if campaign intent or this knob's points grid changed
-# after submission.  The expected core revision is derived from the verified
-# superproject-gitlink manifest, not from caller memory or a mutable env label.
+# after submission. The verifier also resolves the manifest's recorded
+# superproject commit and proves that expected_core.commit is the gitlink at
+# that exact commit; a forged source label alone is insufficient.
 EXPECTED_CORE_SHA="$(python3 "$MANIFEST_TOOL" verify \
-  --manifest "$MANIFEST" --expected-sha256 "$MANIFEST_SHA256" \
+  --repo-root "$REPO_ROOT" --manifest "$MANIFEST" \
+  --expected-sha256 "$MANIFEST_SHA256" \
   --grid-knob "$KNOB" --grid-file "$POINTS")"
 
 EXE="${BUILD}/ccb_stave_sim"
@@ -89,7 +91,7 @@ srun "${EXE}" \
   --optical-dir "${OPTICAL}" \
   --output "${OUT}"
 
-# Producer-side source revision is compile-bound by #1280.  Require the actual
+# Producer-side source revision is compile-bound by #1280. Require the actual
 # run sidecar to match frozen campaign intent before this task can succeed.
 python3 - "$OUT" "$EXPECTED_CORE_SHA" "$MANIFEST_SHA256" <<'PY'
 import json

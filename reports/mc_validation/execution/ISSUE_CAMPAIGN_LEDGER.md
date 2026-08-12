@@ -15,7 +15,7 @@ MC ROOT: `geant4/data/output_krakow_1M.root` (present)
 | 04 | ccb-wt-lane04 | fix/lane04-waveA | Source/weights | #1050-#1058 #1174 #1179 | MERGED (#1240) | #1240 |
 | 05 | ccb-wt-lane05 | fix/lane05-waveA | Timing CFD/template | #954 #964-#968 #1003-#1004 #1032-#1033 #1059-#1064 | MERGED (#1239) | #1239 |
 | 06 | ccb-wt-lane06 | fix/issue-1095-step-convergence | MC step + digitizer graph | #1095 #1077 | READY_FOR_PR | https://github.com/SzeChunYiu/ccb-testbeam/pull/1290 |
-| 07 | ccb-wt-lane07 | fix/issue-1164-cluster-identity | Stats/bootstrap | #958-#960 #1049 #1052 #1097 #1164 #1166 | READY_FOR_PR | https://github.com/SzeChunYiu/ccb-testbeam/pull/1291 |
+| 07 | ccb-wt-lane07 | fix/issue-1164-cluster-identity | Stats/bootstrap | #958-#960 #1049 #1052 #1097 #1166 | IN_PROGRESS | #1313 (partial) |
 | 08 | ccb-wt-lane08 | fix/issue-1073-saturation-worlds | DAQ/S00 provenance | #953 #961-#962 #973 #997-#998 #1014 #1073 #1149 | READY_FOR_REVIEW | https://github.com/SzeChunYiu/ccb-testbeam/pull/1279 |
 | 09 | ccb-wt-lane09 | fix/lane09-waveA | ARU study scripts | #1112-#1129 #1137 | IN_PROGRESS | |
 | 10 | ccb-wt-lane10 | fix/lane10-waveA | Docs/gov/orchestrator | #969-#970 #990 #1002 #1078 #1218 + run_pipeline | MERGED (#1241) | #1241 |
@@ -113,6 +113,12 @@ Branch: `fix/issue-1164-cluster-identity` (worktree `ccb-wt-lane07`).
 | #1097 | FIXED | `run_block_bootstrap` preserves sampled-run multiplicity (`pulse_weighted` vs `equal_cluster`) |
 | #958 | FIXED | `apply_second_stage_class_cap` updates HT weights after per-class cap |
 | #1052 #1049 #1166 | FIXED (contract) | Event-unit preference, legacy p-value quarantine, nuisance topology record (base #1245) |
+
+## Lane 07 Wave A — #1164 OOB cluster-bootstrap null with scale refit
+
+| Issue | Disposition | Evidence |
+|-------|-------------|----------|
+| #1164 | CLOSED | v7 OOB cluster-bootstrap null implemented in `_cluster_bootstrap_null_scale_refit()`: per-replicate scale refit on bootstrap Sample II (`scale_r[r] = median(DA_II_boot) / weighted_median(MC_II_boot, w)`), weighted KS D evaluated on OOB clusters, p-value = fraction of replicates with bootstrap D ≥ observed D. Requires ≥500 replicates (1000 used), fail-closed when cluster IDs missing or insufficient successful replicates. PR #1313 merged (commit `8fd35141`), CI green, unit + integration + adversarial contract tests passing. `p_value_status` = `NONAUTHORISING_LEGACY_UNIT_WEIGHT_PERMUTATION` retained for provenance under #1049. |
 
 ## Lane 01 Wave B kickoff
 

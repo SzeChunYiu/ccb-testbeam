@@ -156,9 +156,11 @@ def _weighted_ks_stat(data, model, w_data, w_model, n_bootstrap=200):
 
     ``D`` is the exact supremum distance between the two right-continuous
     weighted empirical CDFs.  The numerical p-value is retained only for
-    backwards traceability: issue #1049 establishes that the current unit-weight
-    value-permutation null is not calibrated for non-uniform MC weights and is
-    therefore non-authorising.
+    backwards traceability: issue #1049 (now closed via #1245) established that
+    the current unit-weight value-permutation null is not calibrated for
+    non-uniform MC weights and is therefore non-authorising.  The authorising
+    design-consistent null (cluster-bootstrap preserving event-cluster
+    identity) is owned by issue #1164.
     """
     data = np.asarray(data, dtype=float)
     model = np.asarray(model, dtype=float)
@@ -168,7 +170,7 @@ def _weighted_ks_stat(data, model, w_data, w_model, n_bootstrap=200):
         return {
             "D": 0.0,
             "p_value": 1.0,
-            "p_value_status": "NONAUTHORISING_BLOCKED_ISSUE_1049",
+            "p_value_status": "NONAUTHORISING_LEGACY_UNIT_WEIGHT_PERMUTATION",
             "cdf_convention": "right_continuous",
             "note": "insufficient data",
         }
@@ -176,7 +178,8 @@ def _weighted_ks_stat(data, model, w_data, w_model, n_bootstrap=200):
     d_obs = _weighted_ks_distance(data, model, w_data, w_model)
 
     # Legacy non-authorising permutation null retained for provenance only.
-    # Issue #1049 owns replacement with a calibrated design-consistent null.
+    # Issue #1049 (closed via #1245); the authorising cluster-bootstrap null
+    # preserving event-cluster identity is owned by issue #1164.
     pooled = np.concatenate([data, model])
     n_d = len(data)
     N = min(n_bootstrap, 200)
@@ -193,7 +196,7 @@ def _weighted_ks_stat(data, model, w_data, w_model, n_bootstrap=200):
     return {
         "D": d_obs,
         "p_value": p_val,
-        "p_value_status": "NONAUTHORISING_BLOCKED_ISSUE_1049",
+        "p_value_status": "NONAUTHORISING_LEGACY_UNIT_WEIGHT_PERMUTATION",
         "p_value_method": "legacy_unit_weight_value_permutation",
         "cdf_convention": "right_continuous",
         "ecdf_support": "unique_tie_aggregated",
@@ -723,7 +726,7 @@ def main(argv: list[str] | None = None) -> None:
             ax.text(
                 0.95,
                 0.85,
-                f"wECDF D={ks.get('D', 0):.4f}\nlegacy p BLOCKED (#1049)",
+                f"wECDF D={ks.get('D', 0):.4f}\nlegacy p non-authorising (#1164)",
                 transform=ax.transAxes,
                 ha="right",
                 fontsize=9,

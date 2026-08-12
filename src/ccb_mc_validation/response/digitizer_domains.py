@@ -18,7 +18,7 @@ VALID_CONTROL = "VALID_CONTROL"
 INVALID_INPUT = "INVALID_INPUT"
 
 
-class DigitizerDomainError(ConfigurationError):
+class DigitizerDomainError(ConfigurationError, ValueError):
     """Raised when digitizer scalars are outside the allowed domain."""
 
     def __init__(self, message: str, *, field: str | None = None) -> None:

@@ -407,6 +407,11 @@ void ScatteringGenerator::BuildSigmaCDF()
 	       << (ang.front()/pi)*180. << "," << (ang.back()/pi)*180. << "] deg from "
 	       << ang.size() << " CS pts; interpolation=linear_node_pdf_exact_inverse_v1; "
 	       << "support=measured_table_support_truncate_v1." << G4endl;
+	G4cout << "ScatteringGenerator: uncertainty_contract=not_propagated_issue_1179; "
+	       << "propagation_note=Cross-section statistical and systematic uncertainty propagation is "
+	       << "not yet implemented. The nominal reference uses sigma (column 2) only. "
+	       << "Tracked as issue #1179 in the campaign ledger."
+	       << G4endl;
 }
 
 G4double ScatteringGenerator::SampleThetaCM()

@@ -19,9 +19,14 @@ struct PhotonHit {
 
 struct EventData {
   // Charged / non-optical energy accounting in the scintillator.
-  double edep_scint_MeV = 0.0;        // Birks-quenched visible energy
-  double edep_scint_raw_MeV = 0.0;    // unquenched deposit
-  double track_len_scint_mm = 0.0;    // primary path length inside scintillator
+  // EVENT TOTALS (all non-optical tracks) — calorimetric bookkeeping (#1007).
+  double edep_scint_MeV = 0.0;        // Birks-quenched visible energy (all non-optical)
+  double edep_scint_raw_MeV = 0.0;    // unquenched deposit (all non-optical)
+  double track_len_scint_mm = 0.0;    // path length of ALL non-optical tracks in scint
+  // PRIMARY-ONLY estimators for stopping-power / PSTAR comparisons (#1007).
+  double primary_edep_scint_MeV = 0.0;
+  double primary_edep_scint_raw_MeV = 0.0;
+  double primary_track_len_scint_mm = 0.0;
   bool   has_entry = false;
   double entry[3] = {0, 0, 0};
   double exit[3]  = {0, 0, 0};
@@ -59,6 +64,7 @@ struct EventData {
 
   void Reset() {
     edep_scint_MeV = edep_scint_raw_MeV = track_len_scint_mm = 0.0;
+    primary_edep_scint_MeV = primary_edep_scint_raw_MeV = primary_track_len_scint_mm = 0.0;
     has_entry = false;
     for (int i = 0; i < 3; ++i) entry[i] = exit[i] = 0.0;
     n_scint_generated = n_wls_generated = n_cerenkov_generated = 0;

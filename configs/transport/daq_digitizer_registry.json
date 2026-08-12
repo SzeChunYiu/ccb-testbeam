@@ -1,0 +1,41 @@
+{
+  "schema_version": "2026.0-waveB-lane06",
+  "default_schema_id": null,
+  "fail_closed_when_unset": true,
+  "required_evidence": [
+    "measured_hrd_transfer_function_digest",
+    "resolved_waveform_contract_952_993",
+    "sample_interval_ns_from_hardware_or_daq_manual",
+    "samples_per_channel_and_channel_order",
+    "trigger_phase_circular_buffer_convention"
+  ],
+  "legacy_parametric_bridges": [
+    {
+      "id": "s17c_digitized_g4_waveform_bridge",
+      "samples_per_channel": 18,
+      "status": "LEGACY_PARAMETRIC_STUDY",
+      "notes": "Historical parametric digitizer. Not authorization for the production 8x16 HRD product."
+    },
+    {
+      "id": "ccb_mc_validation.digitizer.pipeline.DigitizerPipeline",
+      "samples_per_channel": 18,
+      "sample_spacing_ns": 10.0,
+      "status": "LEGACY_PARAMETRIC_STUDY",
+      "notes": "Internal MV0 18-sample parametric pipeline. Distinct from production DAQ observation grid."
+    }
+  ],
+  "schemas": {
+    "hyp_hrd_8x16_nominal_10ns_unmeasured": {
+      "status": "BLOCKED",
+      "claims_authorized": false,
+      "n_channels": 8,
+      "samples_per_channel": 16,
+      "sample_interval_ns": null,
+      "measured_transfer_function": {
+        "evidence_digest": null,
+        "status": "UNAVAILABLE"
+      },
+      "notes": "8x16 nominal description without measured TF; inventing sample_interval_ns is forbidden."
+    }
+  }
+}

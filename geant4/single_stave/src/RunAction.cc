@@ -287,6 +287,7 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
      << "  \"mode\": " << j(cfg_.mode == SimMode::kOpticalCalibration ? "optical" : "fast") << ",\n"
      << "  \"birks_kB_mm_per_MeV\": " << cfg_.birks_kB_mm_per_MeV << ",\n"
      << "  \"production_cut_mm\": " << cfg_.production_cut_mm << ",\n"
+     << "  \"physics_list\": " << j(cfg_.physics_list) << ",\n"
      << "  \"reflectivity_scale\": " << cfg_.reflectivity_scale << ",\n"
      << "  \"attenuation_scale\": " << cfg_.attenuation_scale << ",\n"
      << "  \"scintillator_absorption_scale\": " << cfg_.scintillator_absorption_scale << ",\n"

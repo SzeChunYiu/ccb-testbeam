@@ -46,6 +46,11 @@ struct AppConfig {
   // Coupled to Birks: changing it alters the explicit delta-ray population and
   // thus the fitted kB (the "cut x kB coupling").
   double production_cut_mm = 0.1;
+  // Hadronic/EM reference physics list (issue #1006). Empty means UNSET:
+  // ParseArgs fails closed unless --physics-list is provided. Never
+  // silently default to QGSP_BIC in scientific production.
+  std::string physics_list = "";
+
   double reflectivity_scale = 1.0;    // scales the TiO2 reflectivity table
   double attenuation_scale  = 1.0;    // DEPRECATED: use scintillator_absorption_scale
                                        //   and y11_bulk_attenuation_scale instead.

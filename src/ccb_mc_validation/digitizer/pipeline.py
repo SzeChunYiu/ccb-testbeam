@@ -22,6 +22,7 @@ from ccb_mc_validation.digitizer.sampling import (
     integrate_samples,
 )
 from ccb_mc_validation.digitizer.transport import smear_time
+from ccb_mc_validation.strict_bool import PARSER_VERSION, resolve_bool_field
 
 StageFn = Callable[[Mapping[str, Any], np.random.Generator, dict[str, Any]], Mapping[str, Any]]
 
@@ -475,7 +476,11 @@ class DigitizerPipeline:
             preflight_digitizer_config,
         )
 
-        resolved = preflight_digitizer_config(config)
+        # #1076: resolve before preflight so bool("false") cannot leak into truthiness.
+        birks_prov = resolve_bool_field(config, "apply_birks", default=False)
+        sanitized = dict(config)
+        sanitized["apply_birks"] = bool(birks_prov["effective"])
+        resolved = preflight_digitizer_config(sanitized)
         effective = resolved["effective"]
         elec_cfg = effective["electronics"]
         elec = ElectronicsConfig(
@@ -485,14 +490,37 @@ class DigitizerPipeline:
             adc_ceiling=int(elec_cfg["adc_ceiling"]),
             pedestal_adc=float(elec_cfg["pedestal_adc"]),
         )
-        return cls(
+        pipe = cls(
             n_samples=int(effective["n_samples"]),
             sample_spacing_ns=float(effective["sample_spacing_ns"]),
             electronics=elec,
             tau_rise_ns=float(effective["tau_rise_ns"]),
             tau_decay_ns=float(effective["tau_decay_ns"]),
             transport_sigma_ns=float(effective["transport_sigma_ns"]),
-            apply_birks=bool(effective["apply_birks"]),
+            apply_birks=bool(birks_prov["effective"]),
             global_seed=int(effective["global_seed"]),
             stages=list(effective["stages"]),
+        )
+        pipe._bool_provenance = {  # type: ignore[attr-defined]
+            "apply_birks": birks_prov,
+            "parser_version": PARSER_VERSION,
+        }
+        return pipe
+
+    def bool_provenance(self) -> Mapping[str, Any]:
+        """Requested/effective boolean config provenance (#1076)."""
+        return getattr(
+            self,
+            "_bool_provenance",
+            {
+                "apply_birks": {
+                    "key": "apply_birks",
+                    "requested": None,
+                    "requested_present": False,
+                    "effective": bool(self.apply_birks),
+                    "parser_version": PARSER_VERSION,
+                    "default_applied": False,
+                },
+                "parser_version": PARSER_VERSION,
+            },
         )

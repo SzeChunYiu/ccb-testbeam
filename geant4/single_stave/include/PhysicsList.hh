@@ -1,8 +1,8 @@
-// PhysicsList.hh — hadronic reference list (QGSP_BIC) + optical physics.
-// QGSP_BIC is a standard choice for protons/deuterons in the 10s-100s MeV range
-// (Binary Cascade). Optical physics is registered for scintillation / WLS /
-// boundary processes. Birks quenching is set on the scintillator material in
-// DetectorConstruction.
+// PhysicsList.hh — configurable hadronic reference list + optical physics.
+// Caller MUST pass an explicit reference list name (issue #1006). Unavailable
+// lists abort; there is no warning-fallback to QGSP_BIC. Optical physics is
+// registered for scintillation / WLS / boundary processes. Birks quenching
+// is set on the scintillator material in DetectorConstruction.
 //
 // PRODUCTION CUTS are set here deliberately via SetDefaultCutValue(). Despite
 // naming this parameter "production_cut_mm", it controls the Geant4 secondary-
@@ -28,7 +28,7 @@ class PhysicsList {
   //                            (default 0.1). Controls secondary production
   //                            (gamma, e-, e+, proton), NOT optical tracking.
   //                            See issue #1089 for the cut x kB coupling.
-  static G4VModularPhysicsList* Build(const G4String& reference = "QGSP_BIC",
+  static G4VModularPhysicsList* Build(const G4String& reference,
                                       G4double production_cut_mm = 0.1,
                                       const G4String& wls_time_profile = "exponential");
 };

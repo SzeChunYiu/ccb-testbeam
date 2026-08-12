@@ -85,7 +85,7 @@ Branch: `chatgpt/paper-draft-20260812` (paper PR #1298); software branch `fix/is
 
 | Issue | Disposition | Evidence |
 |-------|-------------|----------|
-| #1059 | FIXED (software) / OPEN (physics) | `scripts/digital_cfd.py` binds `first_local_peak` CFD crossing to selected component; `scripts/cfd_fraction_transition.py` deterministic two-pulse fraction-transition controls; `scripts/cfd_selector_sensitivity.py` fail-closed identifiability limits (#1277/#1278); producer serializes `first_local_peak_selector` diagnostics |
+| #1059 | CLOSED | Software binding + measurand docs; beam-data timing format-limited only; commit `33aaf36b` |
 | #968 | PARTIAL (contract) / BLOCKED (physics) | `src/ccb_mc_validation/timing/b2_broad_residual_mechanisms.py` fail-closes microscopic `pile-up-like` wording until AF-020 discriminants are `SATISFIED` |
 | #1060 | FIXED | Left-censored crossings report `NO_CROSSING_IN_WINDOW`, never `t=0` |
 | #1061 | FIXED | Leave-one-run-out template phase in producer |

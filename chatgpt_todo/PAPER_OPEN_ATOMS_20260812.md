@@ -86,7 +86,7 @@ A05 can proceed in parallel with A04 once A02 identifies the authorising amplitu
 
 ## PAPER-A04 [P0] Production inter-stave timing
 
-**Parents:** reopened #993; #1059 software binding closed on paper branch (physics/authorising timing still open).
+**Parents:** #993 closed DISTINCT_SCHEMAS; #1059 closed (software binding + format-limited negative result).
 
 **Status (2026-08-12):** Lane 05 delivers deterministic two-pulse fraction-transition controls (`scripts/cfd_fraction_transition.py`), component-assignment diagnostics in `scripts/real_data_cfd_timing.py`, saturation/recovery selector sensitivity tests (#1277/#1278), clean single-pulse controls, and leave-one-run-out template validation (#1061). Real-data CFD fraction-transition study may proceed only on authorising **8×16** LUNARC schema (#993 closed DISTINCT_SCHEMAS); 18-sample historical timing remains non-authorising. Same-sample minimum `sigma68` is exploratory only (#1062).
 

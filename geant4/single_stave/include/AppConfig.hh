@@ -56,6 +56,14 @@ struct AppConfig {
   // ParseArgs fails closed unless --physics-list is provided. Never
   // silently default to QGSP_BIC in scientific production.
   std::string physics_list = "";
+  // Neutron tracking-time cut policy (#1091 / ADR-0005). Empty means UNSET:
+  // ParseArgs fails closed unless --neutron-timecut-policy-id is provided.
+  std::string neutron_timecut_policy_id = "";
+  double neutron_time_cut_us = 0.0;
+  bool neutron_tracking_time_cut_configured = false;
+  std::string neutron_tracking_time_cut_status = "UNSET";
+  std::string neutron_timecut_adr = "";
+  bool neutron_timecut_claims_authorized = false;
 
   double reflectivity_scale = 1.0;    // scales the TiO2 reflectivity table
   double attenuation_scale  = 1.0;    // DEPRECATED: use scintillator_absorption_scale

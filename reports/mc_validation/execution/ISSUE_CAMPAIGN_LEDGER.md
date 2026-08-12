@@ -69,6 +69,14 @@ Historical Wave-A integration aligned the gitlink with #1243 at `cf12c6b8955c485
 - Scientific content: records PARTIAL result that parent-generation correlated-noise probabilities remain hard-wired to raw r(dt) under FULL_RECOVERY; does not close #1066/#1071.
 - Policy compliance with #1218: acceptable because it did not claim scientific-universe completion for those parents.
 
+## Lane 02 Wave B — neutron tracking-time cut (#1091)
+
+Branch: fix/issue-1091-neutron-timecut (worktree ccb-wt-lane02).
+
+| Issue | Disposition | Evidence |
+|-------|-------------|----------|
+| #1091 | IN_PROGRESS (provenance pin) | --neutron-timecut-policy-id required; /physics_engine/neutron/timeLimit applied post-Initialize; run sidecar records configured 10 us pin (pin_qgsp_bic_default_10us); delayed-neutron claims remain BLOCKED (ADR-0013) |
+
 ## Lane 01 Wave B kickoff
 
 Branch: `fix/lane01-waveB` (rebased onto origin/main after Wave A #1248 merge).

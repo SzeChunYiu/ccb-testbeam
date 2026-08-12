@@ -114,7 +114,10 @@ def test_digitizer_from_config_string_false_disables_birks():
 
 
 def test_digitizer_from_config_string_true_enables_birks():
-    pipe = DigitizerPipeline.from_config({"apply_birks": "true"})
+    pipe = DigitizerPipeline.from_config({
+        "apply_birks": "true",
+        "birks_kB_cm_per_MeV": 0.008,
+    })
     assert pipe.apply_birks is True
 
 
@@ -125,7 +128,10 @@ def test_digitizer_from_config_typo_fails_closed():
 
 def test_digitizer_from_config_native_bool():
     assert DigitizerPipeline.from_config({"apply_birks": False}).apply_birks is False
-    assert DigitizerPipeline.from_config({"apply_birks": True}).apply_birks is True
+    assert DigitizerPipeline.from_config({
+        "apply_birks": True,
+        "birks_kB_cm_per_MeV": 0.008,
+    }).apply_birks is True
     assert DigitizerPipeline.from_config({}).apply_birks is False
 
 

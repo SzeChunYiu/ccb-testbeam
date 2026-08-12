@@ -11,6 +11,7 @@ from ccb_mc_validation.exceptions import DataContractError
 from ccb_mc_validation.truth.event_stave import (
     EVENT_STAVE_SCHEMA_ID,
     aggregate_b_stave_edep,
+    build_compare_first_b_event_edep,
     build_event_stave_product,
     fingerprinted_regular_file_stream,
     primary_event_weight,
@@ -231,6 +232,29 @@ def test_builder_preserves_event_identity_trigger_topology_and_one_weight(monkey
     np.testing.assert_allclose(payload["b_stave_edep_mev"][:, 1], [0.0, 1.0])
     assert len(set(payload["event_id"].tolist())) == 2
     assert not isinstance(seen["arg"], (str, bytes))
+
+
+def test_compare_first_b_export_preserves_generator_cluster_identity():
+    """Issue #1164: compare export must carry entry_index as cluster IDs."""
+    payload = {
+        "entry_index": np.array([10, 20, 30], dtype=np.int64),
+        "sample_I": np.array([True, False, True], dtype=bool),
+        "sample_II": np.array([True, True, True], dtype=bool),
+        "event_weight": np.array([1.0, 2.0, 3.0], dtype=np.float64),
+        "b_stave_edep_mev": np.array(
+            [[1.0, 0.0], [2.0, 0.0], [3.0, 0.0]], dtype=np.float64
+        ),
+    }
+    export = build_compare_first_b_event_edep(payload)
+    np.testing.assert_array_equal(export["sampleII_cluster_id"], [10, 20, 30])
+    np.testing.assert_array_equal(export["sampleI_cluster_id"], [10, 30])
+    assert export["cluster_key"][0] == "generator_event_index"
+    assert export["statistical_unit"][0] == "event_stave_edep"
+
+
+def test_compare_first_b_export_fails_closed_when_incomplete():
+    with pytest.raises(DataContractError, match="missing payload keys"):
+        build_compare_first_b_event_edep({"entry_index": np.array([0])})
 
 
 def _publication_fixture():

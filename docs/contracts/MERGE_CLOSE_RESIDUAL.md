@@ -12,7 +12,8 @@ permission/event contract.
 ## Required controls
 
 1. PRs that touch scientific-universe issues use `Refs` / `does not close`, never auto-close keywords.
-2. `tools/gov/validate_close_intent.py` + `tools/gov/check_merge_close_keywords.py` gate repository-owned text in CI.
+2. `.github/pull_request_template.md` requires explicit close-intent declaration for ARU parents.
+3. `tools/gov/run_close_intent_gates.py` runs the hostile fixture matrix in CI; `validate_close_intent.py` and `check_merge_close_keywords.py` gate repository-owned text.
 3. Human/AI pre-merge review checks the **actual** merge commit message.
 4. Post-merge reconciliation: if an issue transitions `closed/completed` contrary to validated intent, reopen and record the audit (as with #1057).
 

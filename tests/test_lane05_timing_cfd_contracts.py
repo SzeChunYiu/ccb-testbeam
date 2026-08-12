@@ -204,7 +204,88 @@ def test_first_local_selector_identifiability_limits_are_non_authorising():
     assert stability["certificate_statuses"][0] != "AUTHORIZED_COMPONENT_IDENTITY"
 
 
+def test_global_max_fraction_scan_switches_component_near_a1_over_a2():
+    """Deterministic two-pulse control: global-max CFD retargets at ~A1/A2 (#1059)."""
+    import cfd_fraction_transition
+
+    early_amp, late_amp = 1000.0, 3000.0
+    wave = cfd_fraction_transition.synthetic_two_pulse_triangle(
+        early_amplitude=early_amp,
+        late_amplitude=late_amp,
+    )[None, :]
+    fractions = np.linspace(0.05, 0.95, 19)
+    scan = cfd_fraction_transition.fraction_transition_scan(
+        wave,
+        fractions,
+        amplitude_mode="global_max",
+    )
+    threshold = cfd_fraction_transition.expected_global_max_switch_fraction(
+        early_amp,
+        late_amp,
+    )
+    assert threshold == pytest.approx(1.0 / 3.0)
+    assert scan["n_switch_events"] >= 1
+    early_time = cfd_fraction_transition.fraction_transition_scan(
+        wave, [0.1], amplitude_mode="global_max"
+    )["rows"][0]["time_samples"]
+    late_time = cfd_fraction_transition.fraction_transition_scan(
+        wave, [0.9], amplitude_mode="global_max"
+    )["rows"][0]["time_samples"]
+    assert float(early_time) < 5.0
+    assert float(late_time) > 7.0
+
+
+def test_first_local_peak_fraction_scan_stays_on_selected_component():
+    import cfd_fraction_transition
+
+    wave = cfd_fraction_transition.synthetic_two_pulse_triangle(
+        early_amplitude=1000.0,
+        late_amplitude=3000.0,
+    )[None, :]
+    diagnostic = digital_cfd.first_local_peak_diagnostics(wave)
+    selected_index = int(diagnostic["selected_peak_indices"][0])
+    assert selected_index < 5
+
+    fractions = [0.1, 0.2, 0.3, 0.4, 0.5]
+    times = []
+    for fraction in fractions:
+        time, status = digital_cfd.cfd_time_samples(
+            wave,
+            None,
+            fraction,
+            amplitude_mode="first_local_peak",
+            return_status=True,
+        )
+        assert status[0] == digital_cfd.OK
+        times.append(float(time[0]))
+        assert float(time[0]) < 5.0
+    assert max(times) - min(times) < 2.0
+
+
+def test_method_selection_is_exploratory_not_authorising():
+    source = (SCRIPTS / "real_data_cfd_timing.py").read_text(encoding="utf-8")
+    assert "SAME_SAMPLE_MINIMUM_EXPLORATORY_ONLY" in source
+    assert "same_sample_method_minimum_authorized" in source
+    assert "best_pair_sigma68_authorising" in source
+    assert "not authorising" in source.lower() or "Not an unconditional" in source
+
+
+def test_real_data_fraction_transition_blocked_until_schema_gate():
+    """#993 lineage blocks authorising real-data fraction-transition product."""
+    import cfd_fraction_transition
+
+    assert (
+        cfd_fraction_transition.REAL_DATA_SCHEMA_GATE
+        == "BLOCKED_UNTIL_993_WAVEFORM_LINEAGE_CLOSES"
+    )
+    report = (ROOT / "reports" / "real_data_cfd_timing" / "REPORT.md").read_text(
+        encoding="utf-8"
+    )
+    assert "QUARANTINED" in report or "FLAWED" in report
+
+
 def test_polarity_config_is_versioned_json():
     payload = json.loads((ROOT / "configs" / "channel_polarity_v1.json").read_text(encoding="utf-8"))
     assert payload["version"] == "channel_polarity_v1"
     assert set(payload["channel_polarity"]) >= {"0", "1", "4", "6"}
+

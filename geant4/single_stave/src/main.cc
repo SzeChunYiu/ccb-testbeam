@@ -31,6 +31,7 @@
 #include <exception>
 #include <iostream>
 #include <string>
+#include <sstream>
 #include <vector>
 
 int main(int argc, char** argv) {
@@ -148,6 +149,30 @@ int main(int argc, char** argv) {
 
   // Construct geometry + physics; prints the geometry report (OVERLAP_CHECK_PASS).
   runManager->Initialize();
+
+  // Issue #1091: make the QGSP_BIC neutron tracking-time cut explicit via the
+  // Geant4 UI messenger (G4NeutronKiller /physics_engine/neutron/timeLimit).
+  if (!cfg.neutron_tracking_time_cut_configured) {
+    std::cerr << "fatal: neutron tracking-time cut is unset (#1091 fail-closed)\n";
+    delete runManager;
+    return 4;
+  }
+  {
+    std::ostringstream neutron_cmd;
+    neutron_cmd << "/physics_engine/neutron/timeLimit "
+                << cfg.neutron_time_cut_us << " microsecond";
+    auto* ui_neutron = G4UImanager::GetUIpointer();
+    const int neutron_status = ui_neutron->ApplyCommand(neutron_cmd.str());
+    if (neutron_status != 0) {
+      std::cerr << "fatal: Geant4 neutron time-limit UI command failed with status "
+                << neutron_status << ": " << neutron_cmd.str() << '\n';
+      delete runManager;
+      return 4;
+    }
+    std::cout << "CCB_NEUTRON_TIMECUT policy_id=" << cfg.neutron_timecut_policy_id
+              << " time_cut_us=" << cfg.neutron_time_cut_us
+              << " status=" << cfg.neutron_tracking_time_cut_status << std::endl;
+  }
 
   // Optional: serialize the PRODUCTION geometry to GDML (for Opticks ingestion)
   // and exit. The spike's dump_gdml promoted to a first-class main option, so

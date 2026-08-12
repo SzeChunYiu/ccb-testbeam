@@ -1,0 +1,23 @@
+\section{Data taking and event selections}
+
+\subsection{Run families}
+
+Current configuration files define Sample-I and Sample-II analysis populations and separate calibration populations. These configuration roles are useful for reproducible processing but are not a substitute for the primary hardware run log. The run-role discrepancy discussed under issue \#962 means that calibration/analysis assignment must be bound to the exact fitted object before timing or response calibration can be described as held out.
+
+The historical S00 selected-pulse product contains 640,737 B-stack pulses. That count is deterministic for the fixed historical producer/input set, but the canonical claim ledger gates publication promotion because the raw waveform width, raw-to-sorted lineage and channel-polarity/hardware contracts are not all independently closed. Selected-pulse counts are not detector efficiencies.
+
+\subsection{Measured longitudinal topology}
+
+The robust data-side observation is that the declared Sample-I and Sample-II populations have different longitudinal B-stack occupancy patterns: one population is concentrated near the entrance while the other has a larger downstream fraction. This is the central measured range-stack result that survives the current audit.
+
+\PaperFigure{figures/final/data_depth_profile.pdf}{0.92}{Target beam-data B-stack depth profile for Sample-I and Sample-II.}{PENDING regeneration from the authorising 8-by-16 event-level amplitude product.}
+
+\begin{evidencebox}
+Until the hardware run/trigger record closes, the paper should call this a run-family-dependent longitudinal topology. Interpreting the difference uniquely as a trigger effect would confound trigger changes with possible run-period beam/electronics changes.
+\end{evidencebox}
+
+\subsection{Monte Carlo population comparison}
+
+The corresponding MC population is currently formed with \evidence{MC\_TRIGGER\_PROXY}. It can show that the transport model contains physically plausible stopping/penetrating populations, but it cannot authorise a hardware-trigger efficiency or a precise proton/deuteron mixture until event-level species counting, trigger response, source measure and production provenance all close.
+
+\PaperFigure{figures/final/mc_depth_profile.pdf}{0.92}{Target weighted MC depth and species-composition figure matched to the final data population definitions.}{PENDING source-measure, trigger-response, event-unit and MC-production provenance closure.}

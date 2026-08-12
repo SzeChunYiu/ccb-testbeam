@@ -1,4 +1,4 @@
-"""Tests for scripts/compare_data_mc.py v5 (exact weighted ECDF discrepancy)."""
+"""Tests for scripts/compare_data_mc.py v7 (OOB cluster-bootstrap null with scale refit, #1164)."""
 from __future__ import annotations
 
 import json
@@ -38,19 +38,22 @@ def mock_data_dir(tmp_path: Path) -> Path:
         },
     }
     (d / "data_sample_split_summary.json").write_text(json.dumps(summ), encoding="utf-8")
-    # B2 amplitude arrays
+    # B2 amplitude arrays with source-event cluster IDs (run:eventno key, #1164)
     rng = np.random.default_rng(42)
+    nI, nII = 200, 400
     np.savez_compressed(
         d / "first_B_layer_B2_amplitude.npz",
-        sampleI=rng.exponential(2000, 500).astype(np.float32),
-        sampleII=rng.exponential(2500, 2000).astype(np.float32),
+        sampleI=rng.exponential(2000, nI).astype(np.float32),
+        sampleII=rng.exponential(2500, nII).astype(np.float32),
+        sampleI_cluster_id=np.arange(nI, dtype=np.int64),
+        sampleII_cluster_id=np.arange(nII, dtype=np.int64),
     )
     return d
 
 
 @pytest.fixture
 def mock_mc_dir(tmp_path: Path) -> Path:
-    """Create a minimal MC-side output directory with EDep arrays and weights."""
+    """Create a minimal MC-side output directory with event-level EDep arrays + weights + cluster IDs (#1164)."""
     d = tmp_path / "mc"
     d.mkdir()
     # Write mc_trigger_split_summary.json
@@ -77,15 +80,24 @@ def mock_mc_dir(tmp_path: Path) -> Path:
         },
     }
     (d / "mc_trigger_split_summary.json").write_text(json.dumps(summ), encoding="utf-8")
-    # EDep arrays with weights
+    # Event-level EDep arrays (#1052) with weights and cluster IDs (#1164)
     rng = np.random.default_rng(42)
-    nI, nII = 5000, 10000
+    nI, nII = 200, 400
     np.savez_compressed(
-        d / "first_B_layer_edep.npz",
+        d / "first_B_layer_event_edep.npz",
         sampleI=rng.exponential(3.0, nI).astype(np.float32),
         sampleII=rng.exponential(2.0, nII).astype(np.float32),
         sampleI_weights=np.ones(nI, dtype=np.float32),
         sampleII_weights=np.ones(nII, dtype=np.float32),
+        sampleI_cluster_id=np.arange(nI, dtype=np.int64),
+        sampleII_cluster_id=np.arange(nII, dtype=np.int64),
+        sampleI_in_sample_i=np.ones(nI, dtype=bool),
+        sampleI_in_sample_ii=np.ones(nI, dtype=bool),
+        sampleII_in_sample_i=np.zeros(nII, dtype=bool),
+        sampleII_in_sample_ii=np.ones(nII, dtype=bool),
+        statistical_unit=np.asarray(["event_stave_edep"]),
+        cluster_key=np.asarray(["generator_event_index"]),
+        weight_semantics=np.asarray(["PrimaryWeight_first_primary"]),
     )
     return d
 
@@ -165,7 +177,7 @@ class TestWeightedKS:
         result = cmc._weighted_ks_stat(x, x, w, w, n_bootstrap=50)
         assert result["D"] <= 0.2  # should be close to 0
         assert result["p_value"] >= 0.01  # legacy diagnostic only
-        assert result["p_value_status"] == "NONAUTHORISING_BLOCKED_ISSUE_1049"
+        assert result["p_value_status"] == "NONAUTHORISING_LEGACY_UNIT_WEIGHT_PERMUTATION"
 
     def test_different_means(self):
         rng = np.random.default_rng(42)
@@ -175,14 +187,14 @@ class TestWeightedKS:
         result = cmc._weighted_ks_stat(x, y, w, w, n_bootstrap=50)
         assert result["D"] > 0.5
         assert result["p_value"] < 0.05  # legacy diagnostic only
-        assert result["p_value_status"] == "NONAUTHORISING_BLOCKED_ISSUE_1049"
+        assert result["p_value_status"] == "NONAUTHORISING_LEGACY_UNIT_WEIGHT_PERMUTATION"
 
     def test_insufficient_data(self):
         result = cmc._weighted_ks_stat(np.array([1.0]), np.array([2.0]),
                                         np.ones(1), np.ones(1))
         assert result["D"] == 0.0
         assert result["p_value"] == 1.0
-        assert result["p_value_status"] == "NONAUTHORISING_BLOCKED_ISSUE_1049"
+        assert result["p_value_status"] == "NONAUTHORISING_LEGACY_UNIT_WEIGHT_PERMUTATION"
 
 
 class TestWeightValidation:
@@ -228,7 +240,7 @@ class TestEndToEnd:
         ])
         assert (out / "data_mc_comparison.json").exists()
         comp = json.loads((out / "data_mc_comparison.json").read_text(encoding="utf-8"))
-        assert comp["version"] == "v6"
+        assert comp["version"] == "v7"
         assert "spectrum_contract" in comp
         assert "scale_topology" in comp
         assert comp["scale_topology"]["nuisance_mode_default"] == "refit_inside_replicate"
@@ -243,7 +255,20 @@ class TestEndToEnd:
             assert ks["D"] >= 0
             assert ks["cdf_convention"] == "right_continuous"
             assert ks["ecdf_support"] == "unique_tie_aggregated"
-            assert ks["p_value_status"] == "NONAUTHORISING_BLOCKED_ISSUE_1049"
+            assert ks["p_value_status"] == "NONAUTHORISING_LEGACY_UNIT_WEIGHT_PERMUTATION"
+        # OOB cluster-bootstrap null with per-replicate scale refit (#1164)
+        oob = comp["oob_null"]
+        assert oob["status"] == "OK"
+        assert oob["method"] == "oob_cluster_bootstrap_scale_refit"
+        assert oob["fit_sample"] == "II"
+        assert oob["statistical_unit_contract"]["mc_cluster_key"] == "generator_event_index"
+        assert oob["statistical_unit_contract"]["data_cluster_key"] == "run:eventno"
+        for s in ("I", "II"):
+            assert oob[s]["n_boot_success"] >= 500
+            assert oob[s]["n_boot_failure"] == 0
+            assert oob[s]["D_obs"] == pytest.approx(comp["ks_tests"][
+                "Sample I" if s == "I" else "Sample II"]["D"])
+            assert 0.0 <= oob[s]["p_value"] <= 1.0
 
     def test_legacy_missing_weights_fails_closed(self, mock_mc_dir_legacy,
                                                   mock_data_dir, tmp_path):

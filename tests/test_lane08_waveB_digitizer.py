@@ -169,6 +169,19 @@ def test_1077_missing_sampling_is_mandatory_inserted():
     out = pipe.run([{"edep_mev": 1.0, "time_ns": 0.0}], event_id=2)
     assert np.all(np.isfinite(out["adc"]))
     assert out["stage_graph"]["mandatory_final"] == "daq_observation_once"
+    # Run provenance must match construction graph (not re-resolve effective list).
+    assert out["stage_graph"]["requested_stages"] == pipe.requested_stages
+    assert out["stage_graph"]["effective_stages"] == pipe.effective_stages
+    assert out["stage_graph"]["mandatory_inserted"] == ["sampling"]
+    assert pipe.stages == pipe.effective_stages
+
+
+def test_1077_run_rejects_hidden_integrate_samples_fallback():
+    pipe = DigitizerPipeline(stages=["birks", "scintillation", "transport", "sampling"])
+    # Simulate a corrupted executor list that skips sampling without updating graph.
+    pipe.stages = ["birks", "scintillation", "transport"]
+    with pytest.raises(ValueError, match="hidden integrate_samples"):
+        pipe.run([{"edep_mev": 1.0, "time_ns": 0.0}], event_id=3)
 
 
 def test_1077_unknown_stage_rejected():

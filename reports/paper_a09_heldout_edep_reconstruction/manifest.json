@@ -1,0 +1,104 @@
+{
+  "args": {
+    "grid_dir": "/projects/hep/fs10/shared/nnbar/billy/ccb_calib_grid",
+    "output": "/projects/hep/fs10/shared/nnbar/billy/ccb_calib_report/paper_a09_heldout_edep",
+    "seed": 20260812
+  },
+  "command": [
+    "/tmp/paper_a09_heldout_edep_reconstruction.py",
+    "--grid-dir",
+    "/projects/hep/fs10/shared/nnbar/billy/ccb_calib_grid",
+    "--output",
+    "/projects/hep/fs10/shared/nnbar/billy/ccb_calib_report/paper_a09_heldout_edep"
+  ],
+  "inputs": [
+    {
+      "bytes": 23572615,
+      "git_commit": "0005ed0cb2c06617abd36b3bb1e615497e15832a",
+      "kinetic_energy_MeV": 110,
+      "meta_path": "/projects/hep/fs10/shared/nnbar/billy/ccb_calib_grid/deuteron_110.root.meta.json",
+      "meta_sha256": "d5bd1e05b5b50dd19d41f07754fdbca47a8a3bfdc6243d4c71c6bf49f7098db1",
+      "n_events": 200,
+      "particle": "deuteron",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb_calib_grid/deuteron_110.root",
+      "sha256": "5d345236716832a5dab224abee1928ad2ef37f15bbfa8c59036da3341836ebad"
+    },
+    {
+      "bytes": 36840325,
+      "git_commit": "0005ed0cb2c06617abd36b3bb1e615497e15832a",
+      "kinetic_energy_MeV": 70,
+      "meta_path": "/projects/hep/fs10/shared/nnbar/billy/ccb_calib_grid/deuteron_70.root.meta.json",
+      "meta_sha256": "c932ea3b608fb6c921970878f94f72711b7c347f9ef48a504d39033e09860639",
+      "n_events": 200,
+      "particle": "deuteron",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb_calib_grid/deuteron_70.root",
+      "sha256": "0a588555a4af63f7f28c0963ed122bdc6de1bfb42487973d7426d48d92552d78"
+    },
+    {
+      "bytes": 15312543,
+      "git_commit": "0005ed0cb2c06617abd36b3bb1e615497e15832a",
+      "kinetic_energy_MeV": 100,
+      "meta_path": "/projects/hep/fs10/shared/nnbar/billy/ccb_calib_grid/proton_100.root.meta.json",
+      "meta_sha256": "4419b0c00fa97e70c5d82d61003065aedc256b0d5cb9eb1e746c6ef8c4d4b529",
+      "n_events": 200,
+      "particle": "proton",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb_calib_grid/proton_100.root",
+      "sha256": "02f6229d245844472d6ca5c793019202d61d99cbc3922653004d295fec0655c6"
+    },
+    {
+      "bytes": 12067620,
+      "git_commit": "0005ed0cb2c06617abd36b3bb1e615497e15832a",
+      "kinetic_energy_MeV": 140,
+      "meta_path": "/projects/hep/fs10/shared/nnbar/billy/ccb_calib_grid/proton_140.root.meta.json",
+      "meta_sha256": "914107d1cf67dde18229ba8cb3fabc9c599e8beb05180ef0b2b83e528bac5472",
+      "n_events": 200,
+      "particle": "proton",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb_calib_grid/proton_140.root",
+      "sha256": "2b3aa1f76ab0f4df057e7d08619b3a76ff331d9f337c31fa00e02b5b1303996c"
+    },
+    {
+      "bytes": 24256916,
+      "git_commit": "0005ed0cb2c06617abd36b3bb1e615497e15832a",
+      "kinetic_energy_MeV": 60,
+      "meta_path": "/projects/hep/fs10/shared/nnbar/billy/ccb_calib_grid/proton_60.root.meta.json",
+      "meta_sha256": "3b831c2d64e65fd8f7d161c4cf3d4c813923b923faaa8a38e067129c4b403819",
+      "n_events": 200,
+      "particle": "proton",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb_calib_grid/proton_60.root",
+      "sha256": "160b0ec84e4fb7ec484fa8f33263428e1959caaad49a72f1f8d77eb662fd15bb"
+    }
+  ],
+  "outputs": [
+    {
+      "bytes": 21237,
+      "path": "edep_reconstruction_heldout.pdf",
+      "sha256": "9a25b3ebbbd37b4ad283edeca6ac4466e95d6e66a5013d1a972e894b649c2eb2"
+    },
+    {
+      "bytes": 66404,
+      "path": "edep_reconstruction_heldout.png",
+      "sha256": "5a24d6a6ca8ba63a9847e0827e96b9dfad5b039564a83fe5ebd8a9710726b557"
+    },
+    {
+      "bytes": 435,
+      "path": "heldout_energy_reconstruction_summary.csv",
+      "sha256": "d11666ece2f0c0aac9fd1930d83b4b7ee0f788d6dfcf6a97d73837065dbe4fc6"
+    },
+    {
+      "bytes": 37554,
+      "path": "heldout_event_residuals.csv",
+      "sha256": "492306b2105c0a7c83f1337d19219418776173716dea952dd59371a8caaf788c"
+    },
+    {
+      "bytes": 6109,
+      "path": "result.json",
+      "sha256": "e1e33a1768b1f0eb7035c7594b88cae78ae2837b69fe03de92e1f6e42028df9e"
+    },
+    {
+      "bytes": 435,
+      "path": "source_tables/edep_reconstruction_heldout_source.csv",
+      "sha256": "d11666ece2f0c0aac9fd1930d83b4b7ee0f788d6dfcf6a97d73837065dbe4fc6"
+    }
+  ],
+  "schema": "ccb-paper-a09-heldout-edep/1/manifest"
+}

@@ -10,7 +10,9 @@ computes the mean (+ standard error) of the ADC and PE channels, and emits:
   * <OUTDIR>/SUMMARY.md                       global summary across all knobs
 
 Filename labels are *requests*, never truth. A point is rejected unless the
-effective digitizer metadata matches the requested knob within policy.
+effective digitizer metadata matches the requested knob within policy and the
+producer records one canonical exact ccb-sipm-core revision. Mixed core
+revisions are never aggregated into one campaign summary.
 
 Channels (single-stave events ntuple):
   adc_*        canonical ccb-sipm-core production path
@@ -37,6 +39,7 @@ from ccb_mc_validation.response_surface import summarize_nuisance_sweep
 
 ADC_CLIP_DEFAULT = 3895.0  # 2**12 - 1 - baseline(200); points at this are saturated
 ADC_CLIP_FALLBACK = ADC_CLIP_DEFAULT
+CORE_SHA_RE = re.compile(r"^[0-9a-f]{40}$")
 
 ADC_CH = ["adc_readout", "adc_f2near", "adc_f2far"]
 PE_CH = ["pe_sat_readout", "detected_readout"]
@@ -58,7 +61,7 @@ KNOB_TO_EFFECTIVE: Dict[str, str] = {
 
 
 class ProvenanceError(RuntimeError):
-    """Requested filename label disagrees with effective digitizer metadata."""
+    """Requested labels or producer provenance fail the authorisation contract."""
 
 
 def adc_clip_from_digitizer(digitizer: Dict[str, Any]) -> float:
@@ -67,7 +70,17 @@ def adc_clip_from_digitizer(digitizer: Dict[str, Any]) -> float:
     return float((2**bits) - 1) - baseline
 
 
-def load_sidecar(root_path: Path) -> Dict[str, Any]:
+def canonical_core_sha(value: Any, *, context: str) -> str:
+    """Return one exact lowercase 40-hex core revision or fail closed."""
+    if not isinstance(value, str) or not CORE_SHA_RE.fullmatch(value) or value == "0" * 40:
+        raise ProvenanceError(
+            f"{context}: ccb_sipm_core_commit missing or invalid: {value!r}; "
+            "require canonical lowercase 40-hex producer identity"
+        )
+    return value
+
+
+def load_sidecar(root_path: Path, *, expected_core_sha: Optional[str] = None) -> Dict[str, Any]:
     meta_path = Path(str(root_path) + ".meta.json")
     if not meta_path.is_file():
         # Also accept stem.meta.json next to foo.root
@@ -87,6 +100,16 @@ def load_sidecar(root_path: Path) -> Dict[str, Any]:
         )
     if not dig.get("digitizer_config_sha256"):
         raise ProvenanceError(f"{meta_path}: digitizer_config_sha256 missing")
+    actual_core_sha = canonical_core_sha(
+        dig.get("ccb_sipm_core_commit"), context=str(meta_path)
+    )
+    if expected_core_sha is not None:
+        expected = canonical_core_sha(expected_core_sha, context="expected core SHA")
+        if actual_core_sha != expected:
+            raise ProvenanceError(
+                f"{meta_path}: ccb_sipm_core_commit={actual_core_sha} "
+                f"!= expected {expected}"
+            )
     return data
 
 
@@ -127,12 +150,16 @@ def assert_requested_matches_effective(
             f"requested {knob}={requested!r} != effective {effective!r} "
             f"(digitizer_config_sha256={dig.get('digitizer_config_sha256')})"
         )
+    core_sha = canonical_core_sha(
+        dig.get("ccb_sipm_core_commit"), context="digitizer metadata"
+    )
     return {
         "knob": knob,
         "requested": requested,
         "effective": effective,
         "digitizer_config_sha256": dig.get("digitizer_config_sha256"),
-        "ccb_sipm_core_commit": dig.get("ccb_sipm_core_commit"),
+        "ccb_sipm_core_commit": core_sha,
+        "core_identity_status": "EXACT_40HEX_CAMPAIGN_CONSISTENT",
         "adc_bits": dig.get("adc_bits"),
         "baseline_adc": dig.get("baseline_adc"),
         "adc_clip": adc_clip_from_digitizer(dig),
@@ -194,6 +221,8 @@ def _is_numeric_column(vals: List[str]) -> bool:
 
 def collect_knob(
     knob_dir: Path,
+    *,
+    expected_core_sha: Optional[str] = None,
 ) -> Tuple[List[str], List[Dict[str, float]], List[str], List[Dict[str, Any]]]:
     """Return (values, stats, labels, provenance_rows). Fail-closed on mismatch."""
     files = sorted(knob_dir.glob("*.root"))
@@ -204,10 +233,19 @@ def collect_knob(
     labels: List[str] = []
     prov_rows: List[Dict[str, Any]] = []
     digests: set[str] = set()
+    observed_core_sha: Optional[str] = None
     for fp in files:
         knob, val = _parse_label(fp.stem)
-        meta = load_sidecar(fp)
+        meta = load_sidecar(fp, expected_core_sha=expected_core_sha)
         row = assert_requested_matches_effective(knob, val, meta)
+        core_sha = str(row["ccb_sipm_core_commit"])
+        if observed_core_sha is None:
+            observed_core_sha = core_sha
+        elif core_sha != observed_core_sha:
+            raise ProvenanceError(
+                f"{knob_dir}: mixed ccb_sipm_core_commit values "
+                f"{observed_core_sha} and {core_sha}; do not aggregate code revisions"
+            )
         digests.add(str(row["digitizer_config_sha256"]))
         # Refuse mixed profile digests within one knob dir unless values differ
         # only by the scanned knob (digest is allowed to change with the knob).
@@ -316,9 +354,11 @@ def summarize_knob(
         clips = np.array(
             [s.get("frac_clipped_readout", 0.0) for s in stats], dtype=float
         )
-        for obs, label in [("mean_adc_readout", "adc_readout"),
-                           ("mean_pe_sat_readout", "pe_sat_readout"),
-                           ("mean_detected_readout", "detected_readout")]:
+        for obs, label in [
+            ("mean_adc_readout", "adc_readout"),
+            ("mean_pe_sat_readout", "pe_sat_readout"),
+            ("mean_detected_readout", "detected_readout"),
+        ]:
             ys = np.array([s.get(obs, float("nan")) for s in stats], dtype=float)
             summary = summarize_nuisance_sweep(xs, ys, frac_clipped=clips)
             slope = summary.get("recommended_slope", float("nan"))
@@ -378,12 +418,30 @@ def main() -> int:
         default=None,
         help="specific knob(s) to analyze (default: every <knob>/ subdir)",
     )
+    ap.add_argument(
+        "--expected-core-sha",
+        default=None,
+        help=(
+            "optional externally pinned canonical 40-hex ccb-sipm-core revision; "
+            "every sidecar must match exactly"
+        ),
+    )
     args = ap.parse_args()
 
     outdir = Path(args.outdir)
     if not outdir.is_dir():
         print(f"error: {outdir} is not a directory", file=sys.stderr)
         return 2
+
+    expected_core_sha: Optional[str] = None
+    if args.expected_core_sha is not None:
+        try:
+            expected_core_sha = canonical_core_sha(
+                args.expected_core_sha, context="--expected-core-sha"
+            )
+        except ProvenanceError as e:
+            print(f"error: provenance gate failed: {e}", file=sys.stderr)
+            return 3
 
     grids_dir = Path(args.grids_dir) if args.grids_dir else None
     if grids_dir is None:
@@ -405,12 +463,25 @@ def main() -> int:
         f"Output root: `{outdir}`",
         "",
         "Filename labels are requests; points are admitted only when effective "
-        "digitizer metadata matches (#982). `adc_*` is the production path; "
-        "`pe_sat_*`/`detected_*` are independent diagnostics (#1084). Elasticity uses local unsaturated response near nominal (#985).",
+        "digitizer metadata matches (#982), an exact canonical 40-hex "
+        "ccb-sipm-core revision is present (#977), and one code revision is "
+        "used across the campaign. `adc_*` is the production path; "
+        "`pe_sat_*`/`detected_*` are independent diagnostics (#1084). "
+        "Elasticity uses local unsaturated response near nominal (#985).",
         "",
     ]
+    if expected_core_sha is not None:
+        global_sections += [f"Externally expected ccb-sipm-core: `{expected_core_sha}`", ""]
+    else:
+        global_sections += [
+            "External core pin: not supplied; exact producer identity is still required "
+            "and campaign-internal mixed revisions are rejected.",
+            "",
+        ]
+
     n_total_points = 0
     n_clipped_points = 0
+    observed_campaign_core_sha: Optional[str] = None
     per_knob_rows = [
         "| knob | unit | npoints | adc_readout range | clipped pts | elasticity(adc) |",
         "|------|------|---------|--------------------|-------------|------------------|",
@@ -425,7 +496,23 @@ def main() -> int:
         if grids_dir:
             unit, rationale = load_grid_meta(grids_dir, knob)
         try:
-            values, stats, labels, prov_rows = collect_knob(kdir)
+            values, stats, labels, prov_rows = collect_knob(
+                kdir, expected_core_sha=expected_core_sha
+            )
+            if prov_rows:
+                knob_core_shas = {str(row["ccb_sipm_core_commit"]) for row in prov_rows}
+                if len(knob_core_shas) != 1:
+                    raise ProvenanceError(
+                        f"{kdir}: mixed ccb_sipm_core_commit values within knob"
+                    )
+                knob_core_sha = next(iter(knob_core_shas))
+                if observed_campaign_core_sha is None:
+                    observed_campaign_core_sha = knob_core_sha
+                elif knob_core_sha != observed_campaign_core_sha:
+                    raise ProvenanceError(
+                        "mixed ccb_sipm_core_commit values across campaign: "
+                        f"{observed_campaign_core_sha} and {knob_core_sha}"
+                    )
         except ProvenanceError as e:
             print(f"error: provenance gate failed for {knob}: {e}", file=sys.stderr)
             return 3
@@ -478,6 +565,7 @@ def main() -> int:
     global_sections += per_knob_rows
     global_sections += [
         "",
+        f"**Observed ccb-sipm-core revision**: `{observed_campaign_core_sha or 'NONE'}`",
         f"**Totals**: {n_total_points} points across {len(knobs)} knobs; "
         f"{n_clipped_points} point(s) ADC-clipped.",
         "",

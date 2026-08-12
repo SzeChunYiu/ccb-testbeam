@@ -154,17 +154,17 @@ class DigitizerPipeline:
 
     def __post_init__(self) -> None:
         if self.apply_birks:
-            if self.birks_kB_cm_per_mev is None:
+            if self.birks_kB_cm_per_MeV is None:
                 raise ValueError(
-                    "apply_birks=True requires explicit birks_kB_cm_per_mev "
+                    "apply_birks=True requires explicit birks_kB_cm_per_MeV "
                     "(cm/MeV); refusing the implicit birks_quench default (#1079)"
                 )
-            kb = float(self.birks_kB_cm_per_mev)
+            kb = float(self.birks_kB_cm_per_MeV)
             if not np.isfinite(kb) or kb < 0.0:
                 raise ValueError(
-                    f"birks_kB_cm_per_mev must be finite and >= 0, got {self.birks_kB_cm_per_mev!r}"
+                    f"birks_kB_cm_per_MeV must be finite and >= 0, got {self.birks_kB_cm_per_MeV!r}"
                 )
-            self.birks_kB_cm_per_mev = kb
+            self.birks_kB_cm_per_MeV = kb
 
     # ------------------------------------------------------------------
     # field validation
@@ -507,13 +507,13 @@ class DigitizerPipeline:
         0.126 mm/MeV, Chapter-10 MV0 prose kB=0). Production must name the
         requested value; we do not invent a canonical physics choice here.
         """
-        raw = config.get("birks_kB", config.get("birks_kB_cm_per_mev", None))
+        raw = config.get("birks_kB", config.get("birks_kB_cm_per_MeV", None))
         unit = config.get("birks_kB_unit", None)
         if raw is None:
             if apply_birks:
                 raise ValueError(
                     "apply_birks=True requires config key 'birks_kB' (or "
-                    "'birks_kB_cm_per_mev') with 'birks_kB_unit' in "
+                    "'birks_kB_cm_per_MeV') with 'birks_kB_unit' in "
                     "{'cm_per_MeV','mm_per_MeV'} (#1079)"
                 )
             return None
@@ -524,8 +524,8 @@ class DigitizerPipeline:
         if not np.isfinite(value) or value < 0.0:
             raise ValueError(f"birks_kB must be finite and >= 0, got {raw!r}")
         if unit is None:
-            # Allow bare birks_kB_cm_per_mev key without separate unit.
-            if "birks_kB_cm_per_mev" in config and "birks_kB" not in config:
+            # Allow bare birks_kB_cm_per_MeV key without separate unit.
+            if "birks_kB_cm_per_MeV" in config and "birks_kB" not in config:
                 return value
             raise ValueError(
                 "birks_kB_unit is required when birks_kB is set "

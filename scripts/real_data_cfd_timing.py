@@ -33,7 +33,13 @@ import uproot
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-import digital_cfd  # noqa: E402
+import digital_cfd
+from ccb_mc_validation.timing.template_phase_grid import (
+    default_template_phase_grid,
+    template_phase_grid_contract,
+)
+from ccb_mc_validation.timing.qtemplate_contract import qtemplate_provenance
+  # noqa: E402
 import s02_timing_pickoff as s02  # noqa: E402
 from channel_polarity import apply_polarity, load_polarity_map  # noqa: E402
 from real_data_cfd_contract import (  # noqa: E402
@@ -312,16 +318,18 @@ def _template_phase_loro(df: pd.DataFrame) -> tuple[np.ndarray, dict]:
     """Leave-one-run-out template phase (#1061). No event scores a self-included template."""
     out = np.full(len(df), np.nan, dtype=float)
     runs = sorted(int(r) for r in df["run"].unique())
+    grid_contract = template_phase_grid_contract(sample_period_ns=PERIOD_NS)
     meta = {
         "policy": "LEAVE_ONE_RUN_OUT",
         "authorising_for_in_sample_template": False,
         "n_runs": len(runs),
-        "grid_samples": 0.05,
-        "grid_refine": "parabolic",
-        "grid_note": "0.05-sample SSE lattice with parabolic sub-grid refine (#1064); physical ns conversion still conditional on #1014/#993 clock schema",
+        "grid_samples": grid_contract["grid_step_samples"],
+        "grid_note": grid_contract["note"],
+        "template_phase_grid": grid_contract,
+        "qtemplate": qtemplate_provenance(),
         "per_run": {},
     }
-    grid = np.arange(-1.5, 1.55, 0.05)
+    grid = default_template_phase_grid(grid_contract["grid_step_samples"])
     if len(runs) < 2:
         meta["status"] = "BLOCKED_SINGLE_RUN_CANNOT_LORO"
         return out, meta
@@ -333,7 +341,7 @@ def _template_phase_loro(df: pd.DataFrame) -> tuple[np.ndarray, dict]:
             continue
         templates = s02.build_templates(train, list(PAIR))
         test_df = df.iloc[test_idx].copy()
-        phases = s02.template_phase_time(test_df, templates, grid, refine="parabolic")
+        phases = s02.template_phase_time(test_df, templates, grid)
         out[test_idx] = phases
         meta["per_run"][str(heldout)] = {
             "status": "OK",

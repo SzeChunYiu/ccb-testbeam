@@ -1,0 +1,19 @@
+{
+  "schema": "ccb-publication-build-receipt-v1",
+  "scientific_status": "FAIL_CLOSED_NOT_SUBMISSION_READY",
+  "source_repository_head": "UNAVAILABLE:CalledProcessError",
+  "source_date_epoch": "1786533311",
+  "built_utc": "2026-08-12T12:11:48.933794+00:00",
+  "entrypoint": "publication/build.sh",
+  "master_tex": "publication/main.tex",
+  "output": "publication/paper.pdf",
+  "pdf_sha256": "f03cdbf17dd1c5d1911991933e165d70b28db522becbba6c57206a26e9bad58c",
+  "pdf_bytes": 328942,
+  "pdf_pages": 15,
+  "pdf_page_size": "595.276 x 841.89 pts (A4)",
+  "latexmk": "Latexmk, John Collins, 11 Dec. 2024. Version 4.86",
+  "pdflatex": "pdfTeX 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian)",
+  "validation": "PUBLICATION_STRUCTURE_PASS",
+  "pdf_preflight": "openable, unencrypted, chapterised working build",
+  "note": "A successful build authorises typography/structure only, not gated physics claims."
+}

@@ -1,0 +1,24 @@
+\section{Simulation programmes}
+
+\subsection{CCB event simulation}
+
+The CCB event simulation provides particle identities, trajectories and energy deposits across the two-arm detector. Historical production used Geant4 electromagnetic and hadronic/ion transport suitable as a starting point for proton/deuteron studies in this energy domain~\cite{Agostinelli2003,Allison2016}. The simulation is used for truth-level stopping and for testing how detector segmentation changes observables.
+
+The publication audit identified important source-model constraints. Legacy samples can contain non-unit \texttt{PrimaryWeight} values from a generator source-measure implementation whose frame/Jacobian semantics were later found to be defective. The exact paper MC file \texttt{output\_krakow\_1M.root} is byte-hashed but is not yet bound to a complete production receipt containing generator revision, cross-section table/mode, seed, physics list, build/toolchain and all geometry/material configuration. Until issue \#1311 closes, that file is a historical provenance-gated diagnostic rather than the nominal publication MC.
+
+\subsection{Single-stave optical simulation}
+
+The single-stave model transports the charged particle through a detailed scintillator/fibre geometry and follows optical photons through scintillation, wavelength shifting, attenuation and sensor boundaries. A separate SiPM/electronics layer converts sensor arrivals into avalanche/charge/waveform quantities.
+
+The model is scientifically most useful when represented as a causal graph:
+\[
+E_{\rm raw}\rightarrow E_{\rm vis}\rightarrow N_{\gamma,\rm scint}
+\rightarrow N_{\gamma,\rm WLS\,abs}\rightarrow N_{\gamma,\rm WLS\,emit}
+\rightarrow N_{\gamma,\rm sensor}\rightarrow N_{\rm primary\,aval}
+\rightarrow Q\rightarrow A_{\rm ADC}.
+\]
+Here \(E_{\rm raw}\) is unquenched deposited energy and \(E_{\rm vis}\) is the Birks-visible energy. These two variables must never share the same bare \(E_{\rm dep}\) label.
+
+\subsection{Simulation evidence classes}
+
+Paper figures distinguish \evidence{TRUTH\_LEVEL\_MC}, \evidence{DIGITISED\_MC}, \evidence{MODEL\_DEPENDENT\_OPTICAL\_MC}, and \evidence{CALIBRATED\_DETECTOR\_MC}. The last category is intentionally empty until response nuisances and held-out data closure satisfy the publication gate.

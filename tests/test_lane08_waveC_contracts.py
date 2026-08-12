@@ -83,17 +83,26 @@ def test_986_geometry_ctor_excludes_birks_and_includes_far_end():
     start = src.index("DetectorConstruction::DetectorConstruction")
     end = src.index("DetectorConstruction::~DetectorConstruction")
     ctor = src[start:end]
-    # Main #986 / #1263 schema: geometry_v2 mass geometry vs physics_hash response knobs.
-    assert "schema=geometry_v2" in ctor or "ccb-geometry-config/1" in ctor
+    # GEOMETRY_DIGEST_V2 (#986): mass geometry vs physics_hash response knobs.
+    assert "schema_version=2.0.0" in ctor
     assert "far_end_mode=" in ctor
-    assert "coating" in ctor.lower() or "kCoatingThk_mm=" in ctor
-    assert "sensor" in ctor.lower() or "kSensorThk_mm=" in ctor
+    assert "coating_thk_mm=" in ctor
+    assert "sensor_thk_mm=" in ctor
     assert "physics_hash_" in ctor
+    assert "optical_hash_" in ctor
     geo_block = ctor.split("geometry_hash_ = Sha256::hex")[0]
     assert "birks_kB_mm_per_MeV" not in geo_block
+    assert "scintillator_material" not in geo_block
     assert "PhysicsHash()" in (ROOT / "geant4/single_stave/include/DetectorConstruction.hh").read_text(
         encoding="utf-8"
     )
+
+
+def test_986_run_sidecar_records_physics_and_optical_hash():
+    body = (ROOT / "geant4/single_stave/src/RunAction.cc").read_text(encoding="utf-8")
+    assert "physics_hash_" in body
+    assert "optical_hash_" in body
+    assert "WriteMetadataSidecar" in body
 
 
 def test_986_adr_documents_digest_split():

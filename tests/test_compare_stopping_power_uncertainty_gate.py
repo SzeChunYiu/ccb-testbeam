@@ -60,13 +60,15 @@ def test_direct_proton_point_estimate_cannot_authorize_acceptance(tmp_path):
     assert result["physics_comparable"] is True
     assert result["uncertainty_method"] == "NOT_EVALUATED"
     assert result["uncertainty_evaluated"] is False
-    assert result["acceptance_status"] == "NOT_ACCEPTED_NO_UNCERTAINTY"
+    assert result["pstar_primary_identity_ok"] is False
+    assert result["acceptance_status"] == "NONCOMPARABLE_EVENT_TOTAL_TRACK_SCOPE"
     assert result["within_tolerance"] is False
 
     row = next(csv.DictReader(output.open()))
     assert row["uncertainty_method"] == "NOT_EVALUATED"
     assert row["uncertainty_evaluated"] == "False"
-    assert row["acceptance_status"] == "NOT_ACCEPTED_NO_UNCERTAINTY"
+    assert row["pstar_primary_identity_ok"] == "False"
+    assert row["acceptance_status"] == "NONCOMPARABLE_EVENT_TOTAL_TRACK_SCOPE"
     assert row["within_tolerance"] == "False"
 
 
@@ -100,6 +102,8 @@ def test_cli_never_prints_pass_for_point_estimate_only(tmp_path):
     assert process.returncode == 1
     assert "POINT_ONLY" in process.stdout
     assert "NUMERICAL TOLERANCE: POINT_ESTIMATE_ONLY_NOT_ACCEPTED" in process.stdout
+    assert "TRACK LENGTH SCOPE: EVENT_TOTAL_ALL_NON_OPTICAL" in process.stdout
+    assert "PSTAR PRIMARY IDENTITY OK: False" in process.stdout
     assert "UNCERTAINTY EVALUATION: NOT_EVALUATED" in process.stdout
     assert "NUMERICAL TOLERANCE: PASS" not in process.stdout
     assert output.is_file()

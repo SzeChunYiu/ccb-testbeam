@@ -23,8 +23,10 @@
 #include <vector>
 
 RunAction::RunAction(const AppConfig& cfg, const OpticalTables& tables,
-                     const std::string& geometry_hash)
-    : cfg_(cfg), tables_(tables), geometry_hash_(geometry_hash) {
+                     const std::string& geometry_hash,
+                     const std::string& physics_hash)
+    : cfg_(cfg), tables_(tables),
+      geometry_hash_(geometry_hash), physics_hash_(physics_hash) {
   // Master and worker both materialise the effective digitizer config so the
   // metadata sidecar written on the master thread cannot miss #977 fields.
   SetSipmDigitizerConfig(BuildSipmDigitizerConfig(cfg_, tables_));
@@ -270,6 +272,9 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
      << "  \"schema\": \"ccb-stave-run-meta/2\",\n"
      << "  \"git_commit\": " << j(git ? git : "unknown") << ",\n"
      << "  \"geometry_hash\": " << j(geometry_hash_) << ",\n"
+     << "  \"physics_hash\": " << j(physics_hash_) << ",\n"
+     << "  \"geometry_hash_schema\": \"geometry_v2\",\n"
+     << "  \"physics_hash_schema\": \"physics_v1\",\n"
      << "  \"seed\": " << cfg_.seed << ",\n"
      << "  \"threads_requested\": " << cfg_.n_threads << ",\n"
      << "  \"threads_effective\": " << cfg_.n_threads_effective << ",\n"

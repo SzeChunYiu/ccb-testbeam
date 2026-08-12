@@ -14,6 +14,11 @@ def birks_quench(
 ) -> float:
     """Apply Birks' law: ``L = E / (1 + k_B * dE/dx)``.
 
+    NOTE (#1079): the ``0.008 cm/MeV`` default exists only for low-level unit
+    tests of the algebraic form. Production callers (``DigitizerPipeline``)
+    must pass an explicit unit-tagged kB; do not treat this default as the
+    validated detector response identity.
+
     Birks' quenching requires the specific energy loss ``dE/dx`` (units
     ``MeV/cm``), with ``k_B`` in ``cm/MeV``.  It cannot be inferred from the
     total energy deposit alone -- a step length or an explicit ``dE/dx`` is

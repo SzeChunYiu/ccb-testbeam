@@ -1,0 +1,14 @@
+profile_id: hyp_user_max_step_study_pending
+kind: step_convergence
+status: HYPOTHESIS
+claims_authorized: false
+issue: 1095
+summary: >
+  Placeholder for a future G4UserLimits / max-step campaign. No numerical
+  max-step is published here (no invented physics).
+parameters:
+  application_user_limits: pending
+  max_step_mm: null
+  convergence_study: pending
+blocked_until:
+  - measured/max-step scan artefacts near Bragg peak for p/d in BC-408 proxy

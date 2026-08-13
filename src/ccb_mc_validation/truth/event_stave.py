@@ -28,6 +28,7 @@ from ccb_mc_validation.truth.event_builder import build_event_rows
 from ccb_mc_validation.truth.pdg import is_charged
 from ccb_mc_validation.truth.weight_adapter import (
     MODE_DIRECT_UNIT,
+    MODE_LEGACY_CM_IMPORTANCE,
     WEIGHT_ADAPTER_SCHEMA,
     adapt_raw_primary_weight,
     resolve_adapter_id,
@@ -388,6 +389,11 @@ def build_event_stave_product(
     import uproot
 
     source_path = Path(path)
+    legs_mode = (
+        str(generator_measure_mode) == MODE_LEGACY_CM_IMPORTANCE
+        if generator_measure_mode is not None
+        else False
+    )
     branches = [
         "Sci_bar_LayerID",
         "Sci_bar_LayerID1",
@@ -396,6 +402,14 @@ def build_event_stave_product(
         "Sci_bar_Time",
         "PrimaryWeight",
     ]
+    if legs_mode:
+        branches += [
+            "PrimaryEkin",
+            "PrimaryMomX",
+            "PrimaryMomY",
+            "PrimaryMomZ",
+            "PrimaryPosZ",
+        ]
     event_ids: list[str] = []
     entries: list[int] = []
     sample_i_rows: list[bool] = []
@@ -444,6 +458,21 @@ def build_event_stave_product(
                         generator_measure_mode=generator_measure_mode,
                         weight_adapter_id=weight_adapter_id,
                         apply_weight=apply_weight,
+                        primary_ekin=(
+                            chunk["PrimaryEkin"][i] if legs_mode else None
+                        ),
+                        primary_mom_x=(
+                            chunk["PrimaryMomX"][i] if legs_mode else None
+                        ),
+                        primary_mom_y=(
+                            chunk["PrimaryMomY"][i] if legs_mode else None
+                        ),
+                        primary_mom_z=(
+                            chunk["PrimaryMomZ"][i] if legs_mode else None
+                        ),
+                        primary_pos_z=(
+                            chunk["PrimaryPosZ"][i] if legs_mode else None
+                        ),
                     )
                     weight = adapted["event_weight"]
                     if not adapted_provenance:

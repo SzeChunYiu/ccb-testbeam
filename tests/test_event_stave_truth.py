@@ -291,6 +291,146 @@ def test_publication_exposes_product_and_manifest_as_one_immutable_generation(tm
     assert product.read_bytes() == before
 
 
+def _sigma_table_path() -> Path:
+    """Resolve the sigma table path relative to the repo root."""
+    return Path(__file__).resolve().parent.parent / "geant4/src_patch/sigma_pd_cm_190.txt"
+
+
+def _legacy_primary_request(ekin, px, py, pz):
+    """Build a single-legacy-primary weight call with an absolute sigma table path."""
+    from ccb_mc_validation.truth.weight_adapter import adapt_raw_primary_weight
+    return adapt_raw_primary_weight(
+        np.array([1.0]),
+        generator_measure_mode="legacy_cm_importance_weight",
+        primary_ekin=np.array([ekin]),
+        primary_mom_x=np.array([px]),
+        primary_mom_y=np.array([py]),
+        primary_mom_z=np.array([pz]),
+        sigma_table_path=str(_sigma_table_path()),
+    )
+
+
+def test_legacy_cm_importance_weight_single_primary():
+    """Single primary at known kinematics produces the expected weight."""
+    result = _legacy_primary_request(80.0, 0.0, 0.0, 300.0)
+    assert result["generator_measure_mode"] == "legacy_cm_importance_weight"
+    assert result["weight_adapter_id"] == "legacy_cm_importance_weight_v1"
+    assert result["event_weight"] == pytest.approx(0.0082229126, abs=1e-10)
+    assert result["authorising"] is True
+
+
+def test_legacy_cm_importance_weight_multi_primary():
+    """Multiple primaries sum their per-primary ratios."""
+    from ccb_mc_validation.truth.weight_adapter import adapt_raw_primary_weight
+    result = adapt_raw_primary_weight(
+        np.array([1.0]),
+        generator_measure_mode="legacy_cm_importance_weight",
+        primary_ekin=np.array([80.0, 100.0]),
+        primary_mom_x=np.array([0.0, 20.0]),
+        primary_mom_y=np.array([0.0, 10.0]),
+        primary_mom_z=np.array([300.0, 350.0]),
+        sigma_table_path=str(_sigma_table_path()),
+    )
+    assert result["event_weight"] == pytest.approx(0.0205690116, abs=1e-10)
+
+
+def test_legacy_cm_importance_weight_missing_kinematics():
+    """Missing kinematics arrays raise DataContractError."""
+    from ccb_mc_validation.truth.weight_adapter import adapt_raw_primary_weight
+    with pytest.raises(DataContractError, match="requires primary_ekin"):
+        adapt_raw_primary_weight(
+            np.array([1.0]),
+            generator_measure_mode="legacy_cm_importance_weight",
+            sigma_table_path=str(_sigma_table_path()),
+        )
+
+
+def test_legacy_cm_importance_weight_nan_kinematics():
+    """Non-finite ekin raises DataContractError."""
+    with pytest.raises(DataContractError, match="kinematics must be finite"):
+        _legacy_primary_request(float("nan"), 0.0, 0.0, 300.0)
+
+
+def test_legacy_cm_importance_weight_negative_ekin():
+    """Negative ekin raises DataContractError."""
+    with pytest.raises(DataContractError, match="ekin must be non-negative"):
+        _legacy_primary_request(-1.0, 0.0, 0.0, 300.0)
+
+
+def test_legacy_cm_importance_weight_oob_forward():
+    """Theta_cm below measured support (near 0°) raises DataContractError."""
+    # px=0, py=0, pz large positive gives theta_cm ~ 0° (outside [26.49, 169.78])
+    with pytest.raises(DataContractError, match="outside measured support"):
+        _legacy_primary_request(0.1, 0.0, 0.0, 1000.0)
+
+
+def test_legacy_cm_importance_weight_oob_backward():
+    """Theta_cm above measured support (180°) raises DataContractError."""
+    with pytest.raises(DataContractError, match="outside measured support"):
+        _legacy_primary_request(0.1, 0.0, 0.0, -1000.0)
+
+
+def test_legacy_cm_importance_weight_full_builder_integration(monkeypatch, tmp_path):
+    """Full build_event_stave_product runs with legacy CM importance weights."""
+    monkeypatch.chdir(Path(__file__).resolve().parent.parent)
+    source = tmp_path / "mc.root"
+    source.write_bytes(b"fake-root-bytes")
+    chunk = {
+        "Sci_bar_LayerID": _obj([[0], [0]]),
+        "Sci_bar_LayerID1": _obj([[1], [1]]),
+        "Sci_bar_PDG": _obj([[2212], [2212]]),
+        "Sci_bar_EDep": _obj([[2.0], [3.0]]),
+        "Sci_bar_Time": _obj([[10.0], [10.0]]),
+        "PrimaryWeight": _obj([[1.0], [1.0]]),
+        "PrimaryEkin": _obj([[80.0], [100.0]]),
+        "PrimaryMomX": _obj([[0.0], [20.0]]),
+        "PrimaryMomY": _obj([[0.0], [10.0]]),
+        "PrimaryMomZ": _obj([[300.0], [350.0]]),
+        "PrimaryPosZ": _obj([[0.0], [0.0]]),
+    }
+
+    class FakeTree:
+        def iterate(self, branches, **kwargs):
+            assert {
+                "PrimaryEkin",
+                "PrimaryMomX",
+                "PrimaryMomY",
+                "PrimaryMomZ",
+                "PrimaryPosZ",
+            }.issubset(set(branches))
+            yield chunk
+
+    class FakeRoot:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args):
+            return False
+
+        def __contains__(self, key):
+            return key == "hibeam"
+
+        def __getitem__(self, key):
+            return FakeTree()
+
+    def fake_open(stream):
+        return FakeRoot()
+
+    monkeypatch.setitem(sys.modules, "uproot", SimpleNamespace(open=fake_open))
+    payload, meta = build_event_stave_product(
+        source,
+        coinc_ns=15.0,
+        generator_measure_mode="legacy_cm_importance_weight",
+    )
+    assert meta["generator_measure_mode"] == "legacy_cm_importance_weight"
+    assert meta["weight_adapter_id"] == "legacy_cm_importance_weight_v1"
+    np.testing.assert_allclose(
+        payload["event_weight"],
+        [0.0082229126, 0.0123460990],
+        rtol=1e-8,
+    )
+
+
 def test_publication_failure_leaves_no_visible_generation(monkeypatch, tmp_path):
     payload, metadata = _publication_fixture()
 

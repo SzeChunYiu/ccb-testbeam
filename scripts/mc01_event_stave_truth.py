@@ -39,6 +39,7 @@ from ccb_mc_validation.truth.event_stave import (
 from ccb_mc_validation.truth.weight_adapter import (
     MODE_COMMON_REPLICATED,
     MODE_DIRECT_UNIT,
+    MODE_LEGACY_CM_IMPORTANCE,
     MODE_SCALAR,
 )
 
@@ -238,11 +239,11 @@ def main() -> int:
         "--generator-measure-mode",
         type=str,
         default=None,
-        choices=[MODE_SCALAR, MODE_COMMON_REPLICATED, MODE_DIRECT_UNIT],
+        choices=[MODE_SCALAR, MODE_COMMON_REPLICATED, MODE_DIRECT_UNIT, MODE_LEGACY_CM_IMPORTANCE],
         help=(
             "Generator-event measure mode for PrimaryWeight adaptation. "
             "Required when --no-weight is not set. "
-            f"Choices: {MODE_SCALAR}, {MODE_COMMON_REPLICATED}, {MODE_DIRECT_UNIT}."
+            f"Choices: {MODE_SCALAR}, {MODE_COMMON_REPLICATED}, {MODE_DIRECT_UNIT}, {MODE_LEGACY_CM_IMPORTANCE}."
         ),
     )
     args = parser.parse_args()

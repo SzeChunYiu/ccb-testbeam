@@ -36,6 +36,11 @@ from ccb_mc_validation.truth.event_stave import (
     build_compare_first_b_event_edep,
     build_event_stave_product,
 )
+from ccb_mc_validation.truth.weight_adapter import (
+    MODE_COMMON_REPLICATED,
+    MODE_DIRECT_UNIT,
+    MODE_SCALAR,
+)
 
 try:
     import fcntl
@@ -229,6 +234,17 @@ def main() -> int:
         action="store_true",
         help="Explicit diagnostic mode: replace PrimaryWeight with unit weights.",
     )
+    parser.add_argument(
+        "--generator-measure-mode",
+        type=str,
+        default=None,
+        choices=[MODE_SCALAR, MODE_COMMON_REPLICATED, MODE_DIRECT_UNIT],
+        help=(
+            "Generator-event measure mode for PrimaryWeight adaptation. "
+            "Required when --no-weight is not set. "
+            f"Choices: {MODE_SCALAR}, {MODE_COMMON_REPLICATED}, {MODE_DIRECT_UNIT}."
+        ),
+    )
     args = parser.parse_args()
 
     payload, metadata = build_event_stave_product(
@@ -236,6 +252,7 @@ def main() -> int:
         tree_name=args.tree,
         coinc_ns=args.coinc_ns,
         apply_weight=not args.no_weight,
+        generator_measure_mode=args.generator_measure_mode,
         max_events=args.max_events,
     )
     product_path, manifest_path, manifest = _publish_generation(

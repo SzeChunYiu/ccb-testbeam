@@ -26,6 +26,12 @@ from ccb_mc_validation.constants import B_ARM, NB_LAYERS
 from ccb_mc_validation.exceptions import DataContractError
 from ccb_mc_validation.truth.event_builder import build_event_rows
 from ccb_mc_validation.truth.pdg import is_charged
+from ccb_mc_validation.truth.weight_adapter import (
+    MODE_DIRECT_UNIT,
+    WEIGHT_ADAPTER_SCHEMA,
+    adapt_raw_primary_weight,
+    resolve_adapter_id,
+)
 
 EVENT_STAVE_SCHEMA_ID = "mc_event_stave_edep_v1"
 STATISTICAL_UNIT = "generator_event"
@@ -33,7 +39,12 @@ EVENT_KEY_TYPE = "sha256_file_tree_entry_v1"
 AGGREGATION_RULE = "sum_all_sci_bar_edep_per_generator_event_b_stave"
 CHARGED_DIAGNOSTIC_RULE = "sum_charged_sci_bar_edep_per_generator_event_b_stave"
 AUTHORISATION_STATE = "NONAUTHORISING_TRUTH_DIAGNOSTIC"
+# Legacy fallback text kept only for comparison exports built without an
+# explicit adapter provenance source. New products bind a versioned
+# weight_adapter_id instead (issue #880).
 PRIMARY_WEIGHT_SEMANTICS = "first_primary_PrimaryWeight_once_per_generator_event"
+UNIT_WEIGHT_DIAGNOSTIC_SEMANTICS = "unit_weight_explicit_no_weight_mode"
+LEGACY_SEMANTICS_UNBOUND = "unbound_legacy_first_primary_semantics"
 
 
 @dataclass(frozen=True)
@@ -252,24 +263,6 @@ def aggregate_b_stave_edep(
     )
 
 
-def primary_event_weight(primary_weights: Any, *, apply_weight: bool = True) -> float:
-    """Return one generator weight for one event, failing closed in weighted mode."""
-    if not apply_weight:
-        return 1.0
-    weights = _as_1d("PrimaryWeight", primary_weights, dtype=float)
-    if weights.size == 0:
-        raise DataContractError("PrimaryWeight is empty in weighted mode")
-    if weights.size != 1:
-        raise DataContractError(
-            "PrimaryWeight must have cardinality exactly 1 per generator event; "
-            f"got {weights.size} entries"
-        )
-    weight = float(weights[0])
-    if not np.isfinite(weight):
-        raise DataContractError("first PrimaryWeight is non-finite")
-    if weight < 0.0:
-        raise DataContractError("first PrimaryWeight is negative")
-    return weight
 
 
 def validate_event_stave_product(
@@ -381,6 +374,8 @@ def build_event_stave_product(
     tree_name: str = "hibeam",
     coinc_ns: float = 15.0,
     apply_weight: bool = True,
+    generator_measure_mode: str | None = None,
+    weight_adapter_id: str | None = None,
     max_events: int = 0,
     step_size: str = "200 MB",
 ) -> tuple[dict[str, np.ndarray], dict[str, Any]]:
@@ -411,6 +406,7 @@ def build_event_stave_product(
     hit_counts: list[np.ndarray] = []
     charged_hit_counts: list[np.ndarray] = []
     n_entries_read = 0
+    adapted_provenance: dict[str, str] = {}
 
     with fingerprinted_regular_file_stream(source_path) as (stream, source):
         with uproot.open(stream) as root_file:
@@ -443,10 +439,18 @@ def build_event_stave_product(
                         chunk["Sci_bar_PDG"][i],
                         chunk["Sci_bar_EDep"][i],
                     )
-                    weight = primary_event_weight(
+                    adapted = adapt_raw_primary_weight(
                         chunk["PrimaryWeight"][i],
+                        generator_measure_mode=generator_measure_mode,
+                        weight_adapter_id=weight_adapter_id,
                         apply_weight=apply_weight,
                     )
+                    weight = adapted["event_weight"]
+                    if not adapted_provenance:
+                        adapted_provenance = {
+                            "generator_measure_mode": adapted["generator_measure_mode"],
+                            "weight_adapter_id": adapted["weight_adapter_id"],
+                        }
                     event_ids.append(str(row["event_id"]))
                     entries.append(int(row["entry_index"]))
                     sample_i_rows.append(bool(row["sample_I"]))
@@ -520,8 +524,14 @@ def build_event_stave_product(
         "n_sample_I_events": int(payload["sample_I"].sum()),
         "n_b_layers": NB_LAYERS,
         "weighting_enabled": bool(apply_weight),
+        "generator_measure_mode": adapted_provenance.get(
+            "generator_measure_mode", "unweighted_diagnostic"
+        ),
+        "weight_adapter_id": adapted_provenance.get(
+            "weight_adapter_id", "unit_weight_diagnostic_v1"
+        ),
         "weight_semantics": (
-            PRIMARY_WEIGHT_SEMANTICS if apply_weight else "unit_weight_explicit_no_weight_mode"
+            PRIMARY_WEIGHT_SEMANTICS if apply_weight else UNIT_WEIGHT_DIAGNOSTIC_SEMANTICS
         ),
         "sum_event_weight": sum_w,
         "sum_event_weight_squared": sum_w2,
@@ -545,6 +555,8 @@ COMPARE_CLUSTER_KEY = "generator_event_index"
 
 def build_compare_first_b_event_edep(
     payload: dict[str, np.ndarray],
+    *,
+    weight_semantics: str = LEGACY_SEMANTICS_UNBOUND,
 ) -> dict[str, np.ndarray]:
     """Build compare_data_mc-compatible first-B export with cluster IDs (#1164).
 
@@ -609,7 +621,7 @@ def build_compare_first_b_event_edep(
         "sampleII_in_sample_ii": np.ones(int(ii_mask.sum()), dtype=bool),
         "statistical_unit": np.asarray(["event_stave_edep"]),
         "cluster_key": np.asarray([COMPARE_CLUSTER_KEY]),
-        "weight_semantics": np.asarray([PRIMARY_WEIGHT_SEMANTICS]),
+        "weight_semantics": np.asarray([weight_semantics]),
         "aggregation": np.asarray([AGGREGATION_RULE]),
         "authorising_measurand": np.asarray([False]),
         "issue_note": np.asarray(

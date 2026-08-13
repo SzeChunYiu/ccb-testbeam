@@ -141,7 +141,15 @@ Branch: `fix/issue-880-weight-adapter-integration`.
 
 | Issue | Disposition | Evidence |
 |-------|-------------|----------|
-| #880 | FIXED | `build_event_stave_product()` binds `adapt_raw_primary_weight()` from `weight_adapter.py` with versioned adapter IDs (`scalar_event_weight_v1`, `common_replicated_primary_weight_v1`, `direct_sampling_unit_weight_v1`). Three modes: `MODE_SCALAR` ("scalar_event_weight"), `MODE_COMMON_REPLICATED` ("common_replicated_primary"), `MODE_DIRECT_UNIT` ("direct_sampling_unit_weight"). `generator_measure_mode` fail-closed when weighted mode is required and mode is missing (DataContractError). Legacy `primary_event_weight()` fully removed. `--generator-measure-mode` CLI arg added to `mc01_event_stave_truth.py` with three explicit choices. 21 tests green; cardinality-permutation falsifier defeats naive "first entry passes" implementations. Modified: `src/ccb_mc_validation/truth/event_stave.py`, `scripts/mc01_event_stave_truth.py`, `tests/test_event_stave_truth.py`. |
+| #880 | CLOSED | `build_event_stave_product()` binds `adapt_raw_primary_weight()` from `weight_adapter.py` with versioned adapter IDs (`scalar_event_weight_v1`, `common_replicated_primary_weight_v1`, `direct_sampling_unit_weight_v1`). Three modes: `MODE_SCALAR` ("scalar_event_weight"), `MODE_COMMON_REPLICATED` ("common_replicated_primary"), `MODE_DIRECT_UNIT` ("direct_sampling_unit_weight"). `generator_measure_mode` fail-closed when weighted mode is required and mode is missing (DataContractError). Legacy `primary_event_weight()` fully removed. `--generator-measure-mode` CLI arg added to `mc01_event_stave_truth.py` with three explicit choices. 21 tests green; cardinality-permutation falsifier defeats naive "first entry passes" implementations. PR #1327 merged; GitHub closed 2026-08-13 with ledger-evidence comment. Modified: `src/ccb_mc_validation/truth/event_stave.py`, `scripts/mc01_event_stave_truth.py`, `tests/test_event_stave_truth.py`. |
+
+## P0 #1047 — Weighted stopping-depth estimand fixed to H3
+
+Branch: tracking PRs #1252 (H3 termination contract) and #1256 (weighted factor-stop boundaries).
+
+| Issue | Disposition | Evidence |
+|-------|-------------|----------|
+| #1047 | CLOSED | GitHub closed 2026-08-13T00:46:37Z with ledger-evidence comment citing merged tracking PRs #1252 and #1256. Derivative H3 termination contract (weighted stopping-depth estimand) landed; 35 tests across both PRs. Prior claim of closure was void (issue reopened on GitHub before the manual close executed) — now closed with evidence recorded. |
 
 ## Lane 01 Wave B kickoff
 
@@ -158,14 +166,6 @@ Branch: `fix/lane01-waveB` (rebased onto origin/main after Wave A #1248 merge).
 | Date | Branch | Tip | Issues | Disposition | PR |
 |------|--------|-----|--------|-------------|-----|
 | 2026-08-12 | fix/issue-977-sipm-metadata | (see PR) | #977 PARTIAL; #1067 FIXED (core, manual close requested) | MERGED (#1287 @0371fe3e, 2026-08-12T18:42:55Z). Sidecar extended with requested/effective operating point, response_surface_id, electronics impulse hashes, remaining ModelConfig knobs; compile-bound core (#1280) + campaign intent (#1284) unchanged; binary build receipt remains #1285 child | https://github.com/SzeChunYiu/ccb-testbeam/pull/1287 @0371fe3e |
-
-## P0 #1178 — CM cross-section sampler contract (cross-cutting)
-
-Branch: `close/1178-python38-compat` → PR #1315 (merged `8cd32b1e`).
-
-| Issue | Disposition | Evidence |
-|-------|-------------|----------|
-| #1178 | CLOSED | Declared law `p(theta) = sigma(theta)·sin(theta)/Z` over measured support 26.49–169.78 deg (Ermisch et al. PRC 71 064004 (2006) Table VI, 190 MeV p-d). Mode IDs: `linear_node_pdf_exact_inverse_v1` + `measured_table_support_truncate_v1`. Reference normalization `1.1977630765144902`; probability outside measured support `0.0`; max inverse interval mass fraction error `2.22e-16` (IEEE 754 ULP). Fail-closed guard `CCB_CS_INVERSE_DISCRIMINANT` at `ScatteringGenerator.cc:449`. Evidence commits: `fa62e8bb` (bind table + gate sampler claims), `f5f96951` (exact measured-support inverse), `a1bcb6a6` (fix quadratic inverse-CDF), `d4d174d2` (source-node + interpolation sensitivity), `af0c3989` (190 MeV p-d source uncertainty), `57407692` (interpolation-order sensitivity), `d6207569` (fail closed #1182), `7a42b0ff` (Python 3.8 compat). 50 regression tests pass on Python 3.8.10. PR #1315 merged `8cd32b1e`. |
 
 ## P0 #1178 — CM cross-section sampler contract (cross-cutting)
 

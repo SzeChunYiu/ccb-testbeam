@@ -135,6 +135,14 @@ Branch: `fix/issue-1164-cluster-identity` (worktree `ccb-wt-lane07`).
 |-------|-------------|----------|
 | #959 | FIXED | `run_ml_check` requires `sampling_weight` + `eventno`; uses `StratifiedGroupKFold` + weighted ROC-AUC and group-aware isotonic calibration; refuses silent unweighted fallback on missing weights, unsupported estimators, or incomplete OOF probs. Regression: `tests/test_lane07_waveA_stats_datamc.py::test_959_ml_check_requires_weights_and_eventno`, `tests/test_s00_implementation_consistency.py::test_run_ml_check_uses_cluster_bootstrap_and_features_guard`. Merged via #1245 (`ac2e0bdd`). Tracking branch: `fix/issue-959-group-aware-ml`. |
 
+## Source/weights — weight adapter integration (#880)
+
+Branch: `fix/issue-880-weight-adapter-integration`.
+
+| Issue | Disposition | Evidence |
+|-------|-------------|----------|
+| #880 | FIXED | `build_event_stave_product()` binds `adapt_raw_primary_weight()` from `weight_adapter.py` with versioned adapter IDs (`scalar_event_weight_v1`, `common_replicated_primary_weight_v1`, `direct_sampling_unit_weight_v1`). Three modes: `MODE_SCALAR` ("scalar_event_weight"), `MODE_COMMON_REPLICATED` ("common_replicated_primary"), `MODE_DIRECT_UNIT` ("direct_sampling_unit_weight"). `generator_measure_mode` fail-closed when weighted mode is required and mode is missing (DataContractError). Legacy `primary_event_weight()` fully removed. `--generator-measure-mode` CLI arg added to `mc01_event_stave_truth.py` with three explicit choices. 21 tests green; cardinality-permutation falsifier defeats naive "first entry passes" implementations. Modified: `src/ccb_mc_validation/truth/event_stave.py`, `scripts/mc01_event_stave_truth.py`, `tests/test_event_stave_truth.py`. |
+
 ## Lane 01 Wave B kickoff
 
 Branch: `fix/lane01-waveB` (rebased onto origin/main after Wave A #1248 merge).

@@ -14,7 +14,6 @@ from ccb_mc_validation.truth.event_stave import (
     build_compare_first_b_event_edep,
     build_event_stave_product,
     fingerprinted_regular_file_stream,
-    primary_event_weight,
     validate_event_stave_product,
 )
 
@@ -69,13 +68,6 @@ def test_aggregation_fails_closed_on_malformed_event(layer, layer1, pdg, edep):
         aggregate_b_stave_edep(layer, layer1, pdg, edep)
 
 
-def test_primary_event_weight_is_one_per_event_and_fails_closed():
-    assert primary_event_weight([], apply_weight=False) == pytest.approx(1.0)
-    for bad in ([], [np.nan], [-0.1], [2.5, 9.0]):
-        with pytest.raises(DataContractError):
-            primary_event_weight(bad)
-
-
 def test_primary_event_weight_cardinality_permutation_falsifier(tmp_path, monkeypatch):
     """Inject a multi-element PrimaryWeight row among valid single-element rows.
 
@@ -112,8 +104,10 @@ def test_primary_event_weight_cardinality_permutation_falsifier(tmp_path, monkey
     monkeypatch.setitem(sys.modules, "uproot", SimpleNamespace(open=fake_open))
     source = Path(tmp_path) / "mc.root"
     source.write_bytes(b"fake-root-bytes")
-    with pytest.raises(DataContractError, match="cardinality"):
-        build_event_stave_product(source, coinc_ns=15.0)
+    with pytest.raises(DataContractError, match="scalar_event_weight mode requires"):
+        build_event_stave_product(
+            source, coinc_ns=15.0, generator_measure_mode="scalar_event_weight"
+        )
 
 
 def _valid_product():
@@ -216,7 +210,9 @@ def test_builder_preserves_event_identity_trigger_topology_and_one_weight(monkey
         return FakeRoot()
 
     monkeypatch.setitem(sys.modules, "uproot", SimpleNamespace(open=fake_open))
-    payload, meta = build_event_stave_product(source, coinc_ns=15.0)
+    payload, meta = build_event_stave_product(
+        source, coinc_ns=15.0, generator_measure_mode="scalar_event_weight"
+    )
 
     assert meta["schema_id"] == EVENT_STAVE_SCHEMA_ID
     assert meta["source_sha256"] == hashlib.sha256(source_bytes).hexdigest()

@@ -1,20 +1,16 @@
 \section{Introduction}
 
-The HIBEAM/NNBAR programme at the European Spallation Source is designed to search for neutron-conversion processes, including neutron--antineutron oscillation. A free neutron--antineutron transition would violate baryon number by two units and would probe physics beyond the Standard Model~\cite{Yiu2022}. The annihilation detector must identify the products of an antineutron interaction in a thin target and reconstruct a low-energy hadronic final state containing pions, nuclear fragments and secondary interactions.
+The HIBEAM/NNBAR programme at the European Spallation Source is developing the experimental techniques required for searches for baryon-number-violating neutron-conversion processes, including free neutron--antineutron oscillation~\cite{Yiu2022,Barrow2021}. In a neutron--antineutron search, an antineutron would annihilate in a thin target and produce a low-energy hadronic final state whose charged particles, pions and secondary nuclear interactions must be reconstructed with high efficiency while backgrounds are rejected.
 
-The detector operates under constraints that differ from those of a collider spectrometer. The neutron flight region must remain magnetically quiet, limiting conventional magnetic momentum measurement. Many charged annihilation products also lie below the energy range in which a standard high-energy sampling calorimeter is most effective. HIBEAM/NNBAR detector studies therefore proposed a range measurement based on multiple layers of plastic scintillator followed by an electromagnetic calorimeter~\cite{Dunne2022}. The range stack can provide the depth reached by a charged particle, the pattern of energy loss along its path and an inter-layer timing observable.
+These requirements differ from those of a conventional collider spectrometer. The neutron flight region must remain magnetically quiet, restricting the use of magnetic momentum analysis close to the interaction region, while many charged annihilation products are sufficiently slow that range and specific-ionisation information are directly useful. The HIBEAM/NNBAR calorimeter concept therefore includes multiple layers of plastic scintillator ahead of the electromagnetic calorimeter, so that the longitudinal pattern of deposited energy and the depth reached by a charged particle can supplement calorimetric and timing information~\cite{Dunne2022}. A segmented scintillator range stack also provides a controlled system in which the consequences of sparse readout, thresholding and finite waveform sampling can be studied explicitly.
 
-The CCB test beam was used to study this range-stack concept with charged particles whose stopping behaviour can be modelled in Geant4. This paper asks five questions:
+The CCB test-beam data provide an experimental test of this range-stack concept with charged-particle events that can also be represented in Geant4. The present study focuses on five connected questions:
 \begin{enumerate}[label=(\roman*)]
-  \item what longitudinal stopping/penetration differences are measured between the declared beam-data run families;
-  \item how much information is lost when only alternating B-stack layers appear in the analysed readout;
-  \item what timing statement is supported by the authorising waveform product;
-  \item what causal response stages must be included in a one-fibre, one-end optical model; and
-  \item how should deposited/visible-energy reconstruction be defined and validated without converting simulation assumptions into detector calibration constants.
+  \item what longitudinal-response differences are observed between the declared beam-data run families;
+  \item how much range and energy-loss information is lost when the analysed readout samples only alternating positions in the B stack;
+  \item what timing observable is supported by the source-bound waveform format and estimator;
+  \item which causal response stages must be represented in a one-fibre, one-end scintillator/WLS/SiPM model; and
+  \item how raw deposited energy and Birks-visible energy should be kept distinct when defining and validating an energy-reconstruction estimator.
 \end{enumerate}
 
-Four evidence classes are used throughout. \textbf{Beam-data measurement} denotes a quantity computed from source-bound CCB data for a declared population. \textbf{Truth-level MC} denotes Geant4 particle or energy-deposit information before detector response. \textbf{Model-dependent detector MC} denotes a numerical prediction after optical/electronics modelling when important response parameters remain hypotheses. \textbf{Calibrated detector result} is reserved for a response whose relevant nuisance parameters and data lineage have independent evidence and held-out closure.
-
-\begin{evidencebox}
-This chapter deliberately separates measured data, simulation truth and model-dependent response. The distinction is part of the scientific result: a reproducible simulation number is not automatically a detector-performance measurement.
-\end{evidencebox}
+The analysis intentionally separates direct beam-data observables from truth-level simulation and from model-dependent optical/electronics predictions. This distinction is essential for the present detector state: a result that is reproducible within a specified Monte-Carlo model is evidence about that model, but it becomes a detector-performance measurement only after the relevant hardware, calibration, data-lineage and held-out validation conditions are established. The evidence and provenance rules used to enforce this separation are described in the reproducibility section rather than being treated as additional detector observables.

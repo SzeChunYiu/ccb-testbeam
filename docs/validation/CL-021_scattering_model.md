@@ -1,6 +1,6 @@
 # CL-021 — MV3 scattering-model (p+CD2 CM-angle cross-section weighting)
 
-**Status: OPEN — hypothesis FALSIFIED; source model remains GATED.**
+**Status: CENTRAL_VALUE_ONLY — primary source covariance unavailable (blocker preserved per #1179).**
 
 The exact `sigma_pd_cm_190.txt` bytes are source-bound to Table VI of
 K. Ermisch et al., *Physical Review C* **71**, 064004 (2005), DOI
@@ -114,13 +114,10 @@ the data-facing B2 population is low-energy dominated; inelastic nuclear
 secondaries, the recoil-deuteron channel, Sample-I selection, source support,
 and detector-response effects remain competing mechanisms.
 
-Recommendation: keep the source table and direct-sampling campaign class, keep
-unit event weights for direct-sampled campaigns unless another documented
-factor exists, and use the exact-inverse measured-support law only as an
-explicitly labelled nominal truth reference. Do **not** close CL-021 until
-#1053, #1178 and #1179 are resolved, the modified Geant4 source is actually
-compiled and exercised with seeded generator-level closure, source mode IDs and
-table hash are serialized in production provenance, and surviving source
-variants are propagated through the validated detector-response chain. See
-`reports/scatter_cl021/REPORT.md` for the historical central-value numbers and
-plots.
+**Recommendation (2026-08-14):** The regenerated 100k campaign (`cmc_100k_regenerated_20260814`) is bound as central-value-only with explicit declaration at
+`geant4/uncertainty/cmc_100k_regenerated_20260814_source_systematics_declaration.json`.
+The source table is source-bound, the sampler mode (direct CDF inverse) is validated,
+and source-node sensitivity is quantified (PR #1190). However, primary source covariance
+remains unavailable, so no propagated source-systematic campaign exists. CL-021 remains
+CENTRAL_VALUE_ONLY; detector-level claims must not assert source-systematic propagation.
+See the declaration for authorized vs prohibited claims and the preserved blocker path.

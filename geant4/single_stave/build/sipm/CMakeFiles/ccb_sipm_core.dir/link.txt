@@ -1,2 +1,0 @@
-/home/scyiu/.conda/envs/hibeam_g4_250603/bin/x86_64-conda-linux-gnu-ar qc libccb_sipm_core.a CMakeFiles/ccb_sipm_core.dir/src/Config.cc.o CMakeFiles/ccb_sipm_core.dir/src/Digest.cc.o CMakeFiles/ccb_sipm_core.dir/src/Seed.cc.o CMakeFiles/ccb_sipm_core.dir/src/ResponseSimulator.cc.o
-/home/scyiu/.conda/envs/hibeam_g4_250603/bin/x86_64-conda-linux-gnu-ranlib libccb_sipm_core.a

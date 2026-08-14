@@ -1,3 +1,6 @@
 results/*.root
 outputs/
 *.root
+
+# generated Geant4 build trees (never track)
+**/build/

@@ -41,9 +41,13 @@
     "beamspot_mm": 10.0
   },
   "uncertainty_contract": {
-    "propagation_status": "not_propagated_issue_1179",
-    "statistical_uncertainty": "encoded in table col 3, not propagated",
-    "systematic_uncertainty": "3% point-to-point + <4.5% total, not propagated"
+    "propagation_status": "central_value_only_issue_1179",
+    "declaration_path": "geant4/uncertainty/cmc_100k_regenerated_20260814_source_systematics_declaration.json",
+    "statistical_uncertainty": "encoded in table col 3, not propagated to campaign",
+    "systematic_uncertainty": "3% point-to-point + <4.5% total, not propagated to campaign (primary covariance unavailable)",
+    "nuisance_mode": "NOMINAL_V1",
+    "framework_reference": "PR #1349 (df72735)",
+    "sensitivity_reference": "PR #1190 (d4d174d)"
   },
   "geant4_environment": {
     "version": "from hibeam_g4_250603 conda env",

@@ -4,7 +4,9 @@
 
 The CCB event simulation provides particle identities, trajectories and energy deposits across the two-arm detector. Historical production used Geant4 electromagnetic and hadronic/ion transport suitable as a starting point for proton/deuteron studies in this energy domain~\cite{Agostinelli2003,Allison2016}. The simulation is used for truth-level stopping and for testing how detector segmentation changes observables.
 
-The publication audit identified important source-model constraints. Legacy samples can contain non-unit \texttt{PrimaryWeight} values from a generator source-measure implementation whose frame/Jacobian semantics were later found to be defective. The exact paper MC file \texttt{output\_krakow\_1M.root} is byte-hashed but is not yet bound to a complete production receipt containing generator revision, cross-section table/mode, seed, physics list, build/toolchain and all geometry/material configuration. Until issue \#1311 closes, that file is a historical provenance-gated diagnostic rather than the nominal publication MC.
+The elastic p--d angular source table used by the current source-model work is bound to the 190-MeV centre-of-mass differential cross sections reported in Table VI of Ermisch et al.~\cite{Ermisch2005}. The deterministic inverse-CDF implementation defect tracked by issue \#1178 has been repaired: the current source explicitly defines its interpolation and measured-support policy and can generate the nominal central-value law with unit event weights for direct-sampled campaigns. This bounded source-sampler closure must not be confused with publication-MC closure. Source-model uncertainty, surviving support/model alternatives, exact production provenance and downstream detector-response dependencies remain separate requirements.
+
+Legacy samples can contain non-unit \texttt{PrimaryWeight} values from a generator source-measure implementation whose frame/Jacobian semantics were later found to be defective. The exact paper MC file \texttt{output\_krakow\_1M.root} is byte-hashed but is not yet bound to a complete production receipt containing generator revision, cross-section table/mode, seed, physics list, build/toolchain and all geometry/material configuration. Until the legacy event-measure and source-uncertainty contracts and issue \#1311 close, that file is a historical provenance-gated diagnostic rather than the nominal publication MC.
 
 \subsection{Single-stave optical simulation}
 
@@ -18,6 +20,8 @@ E_{\rm raw}\rightarrow E_{\rm vis}\rightarrow N_{\gamma,\rm scint}
 \rightarrow Q\rightarrow A_{\rm ADC}.
 \]
 Here \(E_{\rm raw}\) is unquenched deposited energy and \(E_{\rm vis}\) is the Birks-visible energy. These two variables must never share the same bare \(E_{\rm dep}\) label.
+
+The current single-stave source explicitly separates the fibre inner and outer cladding materials and records the WLS secondary-multiplicity parameter in the optical configuration. These implementation repairs post-date the July optical calibration grid used by the historical response studies. Therefore the old grid is a superseded model diagnostic and must be regenerated from the current source before absolute optical-response or energy-reconstruction numbers are promoted.
 
 \subsection{Simulation evidence classes}
 

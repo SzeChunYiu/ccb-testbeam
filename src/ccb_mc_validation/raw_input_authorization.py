@@ -76,8 +76,23 @@ def _manifest_identity(row: Mapping[str, object]) -> dict[str, object]:
     return parsed
 
 
+def _descriptor_identity_stable(info: os.stat_result) -> tuple[int, int, int, int, int]:
+    """Environment-stable view of the descriptor identity (no ctime)."""
+    return (
+        int(info.st_dev),
+        int(info.st_ino),
+        int(info.st_nlink),
+        int(info.st_size),
+        int(info.st_mtime_ns),
+    )
+
+
 def _descriptor_identity(info: os.stat_result) -> tuple[int, int, int, int, int, int]:
-    """Return mutation/alias-sensitive identity fields for an opened source."""
+    """Return mutation/alias-sensitive identity fields for an opened source.
+
+    Includes ctime: only meaningful for comparisons of fstat snapshots taken
+    within one host transaction (before/verified/final of the same descriptor).
+    """
     return (
         int(info.st_dev),
         int(info.st_ino),
@@ -88,14 +103,22 @@ def _descriptor_identity(info: os.stat_result) -> tuple[int, int, int, int, int,
     )
 
 
-def _expected_identity(row: Mapping[str, object]) -> tuple[int, int, int, int, int, int]:
+def _expected_identity(row: Mapping[str, object]) -> tuple[int, int, int, int, int]:
+    """Environment-stable identity subset used against the manifest row.
+
+    ctime is deliberately excluded: it is kernel-set and environment-dependent
+    (restore/copy/backup metadata operations change it without changing a
+    single byte), so comparing it across environments would false-reject
+    byte-identical sources. It remains a required manifest field as a forensic
+    record and is still enforced within a single transaction via
+    ``_descriptor_identity``.
+    """
     return (
         int(row["source_dev"]),
         int(row["source_ino"]),
         int(row["source_nlink"]),
         int(row["bytes"]),
         int(row["source_mtime_ns"]),
-        int(row["source_ctime_ns"]),
     )
 
 
@@ -127,6 +150,11 @@ def verified_raw_input_stream(
     consumer finishes. Any mutation or alias-state change during the consumer
     transaction fails closed before that transaction may be treated as
     authorizing scientific output.
+
+    The manifest comparison uses the environment-stable identity subset
+    (dev, ino, nlink, size, mtime); ctime is excluded there because it is
+    kernel-set and environment-dependent. The intra-transaction stability
+    checks below still compare full identity including ctime.
 
     The bounded contract assumes ordinary filesystem metadata semantics. It
     does not claim protection from a privileged hostile writer capable of
@@ -161,7 +189,7 @@ def verified_raw_input_stream(
             raise RawInputAuthorizationError(
                 f"raw input is not a regular file: {path}"
             )
-        if _descriptor_identity(before) != _expected_identity(expected):
+        if _descriptor_identity_stable(before) != _expected_identity(expected):
             raise RawInputAuthorizationError(
                 f"raw input descriptor identity does not match manifest: {path}"
             )

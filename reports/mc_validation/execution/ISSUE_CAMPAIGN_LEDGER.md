@@ -184,3 +184,37 @@ Branch: `fix/issue-1179-cs-uncertainty` → PR #1325.
 |-------|-------------|----------|
 | #1179 | PARTIAL (contract + audit) | Fail-closed contract `CCB_CS_UNCERTAINTY_DISCRIMINANT` declared in `ScatteringGenerator.cc` BuildSigmaCDF (`G4cout` compile-time contract): `uncertainty_contract=not_propagated_issue_1179`. The compiled `LoadCrossSection()` reads only 2 columns (angle, sigma); the third column (per-node statistical uncertainty mb/sr, 28 nodes) is tabulated but NOT propagated. Sampling law unchanged. Audit tool `tools/audit/research_sigma_cm_sampler_contract.py` extended: `_read_table` returns 4-tuple (raw, angles, sigma, stat_uncertainty); new `_statistical_uncertainty_audit` (per-node fractional uncertainty); new `_systematic_uncertainty_envelope_audit` (`sinusoidal_taper_10pct_edges_20pct_center`: `fractional = 0.10 + 0.10·sin(pi·normalized_theta)`, 20% at 90°, 10% at support edges 26.49/169.78 deg); `audit_sampler` output includes `uncertainty` key with `propagation_status=OPEN_ISSUE_1179`. Input validation extended: stat_uncertainty finite + nonnegative. Evidence commit: `70c614e0` (2 files, +96/−3). PR #1325. |
 
+
+## Lane 08 — #956/#1321 ΔE–E producer repair (P0-1 defects)
+
+Branch: `fix/issue-956-deltae-producer` (worktree `ccb-wt-956`).
+
+| Issue | Disposition | Evidence |
+|-------|-------------|----------|
+| #956 | IN_PROGRESS | P0-1 producer fixes applied: removed S00_CUT_ADC pre-threshold censoring; removed SAT_ADC pseudo-saturation threshold; readout parity configurable via --readout-parity; physical columns edep_layer_0..7 added (immutable); separate readout_B2/B4/B6/B8 aliases; removed duplicated edeps/edep_cols block; MC Sample I/II now DISJOINT (I=coincidence-only, II=B-enter-only, no overlap); species assignment by entrance-primary track identity; event weight diagnostics (sum(w), sum(w²), ESS, negative/nonfinite counts); bootstrap >=1000 replicates; explicit channel states (PRESENT_MEASURED/BELOW_THRESHOLD/MISSING/CORRUPT). Data-side report updated to relabel B2-vs-B4 as two-channel diagnostic. |
+| #1321 | OPEN | Final figure package gated on #956 producer completion + MC provenance #1311 + event-level product #1318. |
+
+**P0-1 fixes applied (2026-08-14):**
+- `paper_956_deltaE_E_publication.py` (876 lines, syntax verified)
+- No pre-threshold censoring: threshold_adc parameter now only for flags, NOT selection
+- No pseudo-saturation threshold: SAT_ADC removed
+- Configurable readout parity: `--readout-parity 1/3/5/7` or `0/2/4/6`
+- Physical layer namespace isolation: edep_layer_0..7 immutable; edep_B* kept for compatibility
+- Disjoint MC samples: Sample I = coincidence-only, Sample II = B-enter-only (no "I;II" overlap)
+- Entrance-primary species: uses first B-layer hit PDG, not largest-deposit PDG
+- Weight diagnostics: mc_weight_diagnostics() returns sum_w, sum_w2, ESS, nonfinite/negative counts
+- Bootstrap: 1000 replicates (configurable), validated >=1000
+- Channel states: state_B2/B4/B6/B8 = PRESENT_MEASURED/BELOW_THRESHOLD/MISSING/CORRUPT
+
+**Pending for #1321:**
+- MC provenance closure (#1311): `output_krakow_1M.root` is diagnostic only; production MC needs full provenance
+- Event-level product (#1318): pre-threshold 8×16 event-level parquet for DATA side
+- Final figure package generation after both producers are certified
+
+## Lane 10 — #1304 canonical-ledger enforcement
+
+Branch: `fix/issue-1304-claim-governance` (worktree `ccb-wt-1304`).
+
+| Issue | Disposition | Evidence |
+|-------|-------------|----------|
+| #1304 | DONE (canonical-ledger enforcement) | Fail-closed consistency checker `tools/claim_governance/check_claim_consistency.py` (exit 0/1/2; missing input = SCOPE, never silent pass) wired into pytest via `tests/test_claim_governance.py` (16 hostile fixtures + real-tree no-alarm gate). Enforces: `publication/tables/claim_ledger.csv` byte-equality; NO parallel `paper/claims_ledger.csv` (deleted, references redirected); figures.yaml status/caption never exceed canonical claim status; WIKI claim-line gating with quarantining-word allowance; forbidden-promotion table `docs/claim_governance/forbidden_promotions.csv` (FP-001..007: stale +0.221, 2.92 MHz data-derived, sub-ns timing, 8.9%, VALIDATED-count phrasing, PE/deposited conflation, VALIDATED banners); manuscript token gate `publication/claims/manuscript_claim_tokens.csv` (MT-001..005) over paper+publication tex; `quality_report.json` = TECHNICAL_RENDERING_QA_ONLY. Real-tree first run found 17 genuine divergences, all fixed in-tree: S00-COUNT VALIDATED-to-GATED (status+banner+caption), WIKI L66/72/151/158/186, ch05 GATED-inline, ch06+ch11 format-limited 38 ns inline, generator scope keys + regenerated report, manuscript_outline + generate_completion_report reference redirects. Checker validated on real data BEFORE fixes (all 17 findings verified real; 3 checker-granularity defects corrected: multi-line YAML captions moved to structural scan, gate word-stem, negated-mention allowance). |

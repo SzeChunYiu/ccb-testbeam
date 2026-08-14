@@ -1,0 +1,6 @@
+token_id,regex,claim_id,required_qualifier_regex,rationale
+MT-001,"640,?737",CL-001,gate|blocked|#95\d|non-authorising,The S00 selected-pulse count backs CL-001 which is GATED on data contracts #952/#953/#954; abstract/conclusions citing it must carry the gated qualifier
+MT-002,2\.92\s*MHz,CL-010,model|gated|blocked|non-authorising,Rmax 2.92 MHz derives from a conflicted model (CL-010 BLOCKED); manuscript must qualify it as model-derived
+MT-003,0\.(54|68|75)\s*ns,CL-002..004,mc|toy|format|sampling|gated|withheld|superseded,Sub-ns beam-timing numbers are toy-digitizer MC estimates (CL-002..004 GATED; beam format limits sigma68 to >=38 ns)
+MT-004,(?<![\d.])(8\.9\s*%|0\.0887),CL-029,gated|model|non-authorising|birks|e_vis|mc,Energy resolution 8.9 percent is MC model-dependent optical (CL-029 GATED); manuscript must qualify it
+MT-005,38\s*ns,CL-002..004,format|sampling|limit|gated,38 ns is the sampling-limited floor of the 16-sample 100 MS/s format; it must be presented as a format limit

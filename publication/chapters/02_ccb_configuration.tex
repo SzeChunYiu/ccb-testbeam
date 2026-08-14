@@ -8,7 +8,7 @@ The reviewed CCB simulation configuration uses a 190 MeV incident proton beam an
 \[
   p+d\rightarrow p+d,
 \]
-and transports the outgoing charged particles toward two scintillator arms. Historical source configuration uses a nominal geometry-distance parameter of 109 cm, with the B stack near \(-38^{\circ}\) and the A stack near \(+71.5^{\circ}\), and contains eight B bars and four A bars. These values are publication-safe as simulation/configuration quantities; they are not survey-grade metrology until matched to primary collaboration records.
+and transports the outgoing charged particles toward two scintillator arms. Historical source configuration uses a nominal geometry-distance parameter of 109 cm, with the B stack near \(-38^{\circ}\) and the A stack near \(+71.5^{\circ}\), and contains eight B bars and four A bars. These values are publication-safe as simulation/configuration quantities; they are not survey-grade metrology until matched to primary collaboration records. An external collaboration preprint independently reports the in-beam CCB configuration --- a 190~MeV proton beam on a CD$_2$ target, a TPC arm at $71^\circ$ to the beam and a second scintillator arm at $38^\circ$, with two-arm coincidences selecting candidate elastic-scattering events~\cite{Rataj2026}; the reported arm-angle magnitudes are consistent with the two-arm configuration above.
 
 The compact detector simulation contains the target, scintillator stack volumes, trigger-related volumes and ProtoTPC components. Source review shows that it is useful for first-order acceptance and truth-energy-deposit studies but does not yet represent every passive material relevant to precision stopping predictions. Wrapping, supports, photosensor boards, cabling, dead layers and survey uncertainties must therefore be treated explicitly when the paper makes material-budget claims.
 
@@ -21,5 +21,5 @@ The analysed data use four B-stack channels labelled B2, B4, B6 and B8. The simu
 The current analysis configuration separates Sample-I and Sample-II run families and also separates calibration and analysis roles. However, the exact hardware trigger thresholds, coincidence logic, prescales and run-purpose record remain partly external. The safest beam-data language is therefore \emph{Sample-I/Sample-II run-family comparison}. The MC selection based on first-stack-layer charged hits is retained only as \evidence{MC\_TRIGGER\_PROXY} until the hardware response is modelled or demonstrated equivalent.
 
 \begin{publicationhold}
-Do not use the words ``trigger efficiency'', ``hardware-trigger reproduction'', or quantitative trigger-induced species fractions until issues \#962, \#1045 and \#1296 close on the same run/hardware truth surface.
+Do not use the words ``trigger efficiency'', ``hardware-trigger reproduction'', or quantitative trigger-induced species fractions until issues \#962 and \#1045 close on the same run/hardware truth surface (\#1296 closed scope-bound 2026-08-14; its hardware-UNKNOWN rows remain recorded in the BOM).
 \end{publicationhold}

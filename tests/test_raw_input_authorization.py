@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import os
+import time
 from pathlib import Path
 
 import pytest
@@ -180,3 +181,49 @@ def test_symlink_and_invalid_block_size_fail_closed(tmp_path):
     with pytest.raises(RawInputAuthorizationError, match="symlink"):
         with verified_raw_input_stream(link, link_row):
             pass
+
+
+def test_manifest_ctime_mismatch_alone_still_authorizes(tmp_path):
+    """No-alarm case: ctime is kernel-set and environment-dependent. A source
+    whose metadata was legitimately touched after manifesting (backup/restore,
+    ACL or ownership fixups -- new ctime, same inode, same bytes) must still
+    authorize; content is separately sha256-bound in the same transaction."""
+    source = tmp_path / "raw.root"
+    payload = b"authorized-root-bytes"
+    source.write_bytes(payload)
+    row = manifest_row(source)
+    row["source_ctime_ns"] = int(row["source_ctime_ns"]) + 1
+
+    with verified_raw_input_stream(source, row, block_size=3) as stream:
+        assert stream.read() == payload
+
+
+def test_ctime_change_during_consumption_fails_closed(tmp_path):
+    """Intra-transaction ctime is stable on one host and stays enforced: a
+    metadata mutation on the held descriptor (chmod changes only ctime) must
+    fail the transaction closed."""
+    source = tmp_path / "raw.root"
+    payload = b"authorized-open-inode"
+    source.write_bytes(payload)
+    row = manifest_row(source)
+
+    with pytest.raises(
+        RawInputAuthorizationError, match="consumer held authorized stream"
+    ):
+        with verified_raw_input_stream(source, row) as stream:
+            # chmod bumps ctime, but inode timestamps can be coarse-grained
+            # (same tick for the whole transaction): poll until it observably
+            # moves so final != verified is guaranteed on any filesystem.
+            c0 = os.stat(source).st_ctime_ns
+            mode = 0o400
+            deadline = time.monotonic() + 5.0
+            while os.stat(source).st_ctime_ns == c0:
+                if time.monotonic() > deadline:
+                    pytest.fail("ctime did not change after chmod within 5s")
+                # creation and the first chmod can land in the same coarse
+                # timestamp tick: keep issuing fresh metadata ops until the
+                # inode clock observably advances.
+                os.chmod(source, mode)
+                mode = 0o600 if mode == 0o400 else 0o400
+                time.sleep(0.05)
+            stream.seek(0)

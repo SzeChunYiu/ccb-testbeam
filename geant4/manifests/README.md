@@ -29,7 +29,7 @@ To generate the MC (requires hibeam_g4 executable):
 - Manifest: COMPLETE
 - Macro: COMPLETE
 - Job script: COMPLETE (hibeam_g4 build required)
-- Output file: NOT YET GENERATED
+- Output file: GENERATED 2026-08-14 (SLURM 3498666, first successful regeneration; 35,760,505 bytes, sha256 efb40aa09a5fdae1520e9d92b5a8c28f1c6283681f3b2b416fcbaf4a9404ca6c). Full digests in cmc_100k_regenerated_20260814.json (output_receipt / production / executable_receipt).
 
 ### Known Limitations
 

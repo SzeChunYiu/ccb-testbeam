@@ -57,7 +57,9 @@ jobs:
           echo "Direct push rejected (branch protection); delivering via PR."
           BRANCH="publication/pdf-${GITHUB_RUN_ID}"
           git push origin HEAD:refs/heads/${BRANCH}
-          gh pr create --head "${BRANCH}" --base "${GITHUB_REF_NAME}" \
+          if ! gh pr create --head "${BRANCH}" --base "${GITHUB_REF_NAME}" \
             --repo "${GITHUB_REPOSITORY}" \
             --title "docs(publication): rebuild working paper PDF (run ${GITHUB_RUN_NUMBER})" \
-            --body "Automated publication PDF rebuild from workflow run ${GITHUB_RUN_ID} at ${GITHUB_SHA}. Build receipt: publication/BUILD_RECEIPT.json. Opened by the workflow because direct push to a protected branch was rejected; merge with owner privileges once the PDF diff is reviewed."
+            --body "Automated publication PDF rebuild from workflow run ${GITHUB_RUN_ID} at ${GITHUB_SHA}. Build receipt: publication/BUILD_RECEIPT.json. Opened by the workflow because direct push to a protected branch was rejected; merge with owner privileges once the PDF diff is reviewed."; then
+            echo "::warning::GITHUB_TOKEN cannot open PRs on this repo (integration scope); delivery branch ${BRANCH} pushed — an owner opens/merges the PDF PR."
+          fi

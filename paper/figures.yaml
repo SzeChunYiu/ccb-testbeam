@@ -274,3 +274,85 @@ SCH-03:
   status: ILLUSTRATIVE
   kind: illustrative
   caption: Annotated scintillator waveform (simulated). Not quantitative.
+# === ΔE–E figures (corrected producer #956 #1336) ===============================
+
+DELTA-E-DATA-I:              # CL-030 -- DATA Sample-I ΔE-E Pearson r
+  result: reports/paper_956_deltaE_E_20260814T090700Z/result.json
+  value_key: data_I_pearson_r
+  source_figure: publication/figures/gated/fig07_data_deltaE_E_per_sample.png
+  claim_id: CL-030
+  evidence_class: data_amplitude_proxy
+  status: DONE_DATA_ONLY
+  kind: quantitative
+  caption: >-
+    DATA Sample-I ΔE=A(B2), E=A(B4)+A(B6)+A(B8) Pearson r = −0.0419 (68% CI
+    [−0.0507, −0.0298], n=147,274, run-block bootstrap). DONE_DATA_ONLY: MC
+    gate (CL-033) pending. Not calibrated energy; 51.8% B2 saturation.
+
+DELTA-E-DATA-II:             # CL-031 -- DATA Sample-II ΔE-E Pearson r
+  result: reports/paper_956_deltaE_E_20260814T090700Z/result.json
+  value_key: data_II_pearson_r
+  source_figure: publication/figures/gated/fig07_data_deltaE_E_per_sample.png
+  claim_id: CL-031
+  evidence_class: data_amplitude_proxy
+  status: DONE_DATA_ONLY
+  kind: quantitative
+  caption: >-
+    DATA Sample-II ΔE=A(B2), E=A(B4)+A(B6)+A(B8) Pearson r = −0.0697 (68% CI
+    [−0.0984, −0.0303], n=69,174, run-block bootstrap). DONE_DATA_ONLY: MC gate
+    (CL-033) pending. Not calibrated energy; 7.6% B2 saturation.
+
+DELTA-E-MC-I:               # CL-033 -- MC Sample-I ΔE-E weighted Pearson r (GATED)
+  result: reports/paper_956_deltaE_E_20260814T090700Z/result.json
+  value_key: mc_I_pearson_r
+  source_figure: publication/figures/gated/fig08_mc_deltaE_E_I.png
+  claim_id: CL-033
+  evidence_class: mc_truth_proxy
+  status: GATED
+  kind: quantitative
+  caption: >-
+    MC Sample-I ΔE-E four-readout weighted Pearson r. GATED pending
+    MC_TRIGGER_PROXY closure (CL-033). Σw=357,482; ESS=102,463. Not hardware
+    trigger validated.
+
+DELTA-E-MC-II:               # CL-033 -- MC Sample-II ΔE-E weighted Pearson r (GATED)
+  result: reports/paper_956_deltaE_E_20260814T090700Z/result.json
+  value_key: mc_II_pearson_r
+  source_figure: publication/figures/gated/fig08_mc_deltaE_E_II.png
+  claim_id: CL-033
+  evidence_class: mc_truth_proxy
+  status: GATED
+  kind: quantitative
+  caption: >-
+    MC Sample-II ΔE-E four-readout weighted Pearson r. GATED pending
+    MC_TRIGGER_PROXY closure (CL-033). Σw=357,482; ESS=102,463. Not hardware
+    trigger validated.
+
+DELTA-E-B2B4-DIAG:           # CL-032 -- B2-B4 two-channel diagnostic (NOT ΔE-E)
+  result: reports/paper_956_deltaE_E_20260814T090700Z/result.json
+  value_key: b2_b4_pearson_r
+  source_figure: publication/figures/gated/fig_b2_b4_two_channel_diagnostic.png
+  claim_id: CL-032
+  evidence_class: data_amplitude_proxy
+  status: DONE_DATA_ONLY
+  kind: quantitative
+  caption: >-
+    B2-B4 two-channel amplitude diagnostic Pearson r = 0.1506 (68% CI
+    [0.1254, 0.1801], n=25,423). NOT ΔE-E: this is a response diagnostic only.
+    Supersedes eventno-only join for production use.
+
+DELTA-E-SEGMENTATION:        # Segmentation mechanism illustration
+  result: publication/figures/gated/fig_segmentation_readout_phase.png
+  source_figure: publication/figures/gated/fig_segmentation_readout_phase.png
+  claim_id: CL-030
+  evidence_class: data_amplitude_proxy
+  status: DONE_DATA_ONLY
+  kind: figure_sourced
+  caption: >-
+    Segmentation and readout-phase mechanism: alternating B2/B4/B6/B8
+    longitudinal positions sample the Bragg rise at different phases. A change in
+    entry energy, angle or passive material can move the peak between sampled
+    and unsampled layers, altering the apparent sparse ΔE-E topology. Full
+    physical-layer sums are required for validation. DONE_DATA_ONLY with
+    corrected producer; remaining gates: layer-map offset (#1296), saturation
+    source-binding, MC provenance (#1311).

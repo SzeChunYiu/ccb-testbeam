@@ -8,7 +8,7 @@
 
 Central gated items:
 
-- #956/#1321: DeltaE-E producer repaired in #1336 (8×16 schema, threshold-censoring order, physical-layer/readout namespaces). Corrected-run evidence CL-030..033 per #1342. Final figure package still pending #1321.
+- #956/#1321: DeltaE-E producer repaired in #1336, final figure package delivered via corrected producer (CL-030..033 point to paper_956_deltaE_E_20260814T090700Z). Remaining gates: layer-map offset (#1296), saturation source-binding, MC provenance (#1311).
 - #1303/#1322: optical grid regeneration in flight (~4h SLURM job running); 8.9% energy result quarantined until regenerated optical campaign completes.
 - #1296/#962/#1045/#869/#954: installed hardware, run/trigger, mapping and polarity evidence.
 - #1311: MC production provenance (rerun in flight).

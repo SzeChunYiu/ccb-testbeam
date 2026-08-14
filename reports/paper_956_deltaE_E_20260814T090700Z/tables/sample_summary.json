@@ -1,0 +1,160 @@
+{
+  "b2_b4_diagnostic": {
+    "corr_bootstrap": {
+      "n_bootstrap": 1000,
+      "n_runs": 21,
+      "p16": 0.12541354743567937,
+      "p84": 0.18011320732302047,
+      "point": 0.15058402387831674
+    },
+    "label": "two-channel diagnostic; NOT \u0394E\u2013E",
+    "median_B2_adc": 3640.0,
+    "median_B4_adc": 2973.5,
+    "n_events": 25423,
+    "pearson_r": 0.15058402387831674
+  },
+  "data_I": {
+    "E_median": 0.0,
+    "E_p16": 0.0,
+    "E_p84": 0.0,
+    "corr_bootstrap": {
+      "n_bootstrap": 1000,
+      "n_runs": 14,
+      "p16": -0.05140936918497779,
+      "p84": -0.03047410523919582,
+      "point": -0.04189769358155508
+    },
+    "deltaE_median": 7101.0,
+    "deltaE_p16": 3855.5,
+    "deltaE_p84": 8609.5,
+    "missing_channel_policy": "EXPLICIT_STATE_TRACKING_MISSING_NOT_ZERO",
+    "n_events": 147274,
+    "pearson_r": -0.04189769358155508,
+    "sample": "I",
+    "side": "DATA"
+  },
+  "data_II": {
+    "E_median": 0.0,
+    "E_p16": 0.0,
+    "E_p84": 4405.0,
+    "corr_bootstrap": {
+      "n_bootstrap": 1000,
+      "n_runs": 7,
+      "p16": -0.09840789467883261,
+      "p84": -0.0303058776294742,
+      "point": -0.06971735061043272
+    },
+    "deltaE_median": 3566.5,
+    "deltaE_p16": 2018.5,
+    "deltaE_p84": 5820.0,
+    "missing_channel_policy": "EXPLICIT_STATE_TRACKING_MISSING_NOT_ZERO",
+    "n_events": 69174,
+    "pearson_r": -0.06971735061043272,
+    "sample": "II",
+    "side": "DATA"
+  },
+  "mc4_I": {
+    "E_median": 0.0,
+    "E_p16": 0.0,
+    "E_p84": 0.0,
+    "deltaE_median": 23.80565259572827,
+    "deltaE_p16": 14.244524297951779,
+    "deltaE_p84": 51.46141230019647,
+    "missing_channel_policy": "EXPLICIT_STATE_TRACKING_MISSING_NOT_ZERO",
+    "n_events": 46992,
+    "pearson_r": -0.6967516622748765,
+    "sample": "I",
+    "side": "MC",
+    "weight_diagnostics": {
+      "effective_sample_size": 23098.563815222773,
+      "max_w": 4.4851117615128935,
+      "min_w": 0.17010206828796992,
+      "n_finite": 46992,
+      "n_negative": 0,
+      "n_nonfinite": 0,
+      "n_positive": 46992,
+      "n_total": 46992,
+      "n_zero": 0,
+      "sum_w": 30294.15982284714,
+      "sum_w2": 39731.30653116127
+    }
+  },
+  "mc4_II": {
+    "E_median": 49.65184190602516,
+    "E_p16": 0.0,
+    "E_p84": 56.80246732556645,
+    "deltaE_median": 12.405481855798195,
+    "deltaE_p16": 11.676979972259714,
+    "deltaE_p84": 29.418488827509048,
+    "missing_channel_policy": "EXPLICIT_STATE_TRACKING_MISSING_NOT_ZERO",
+    "n_events": 156467,
+    "pearson_r": -0.3604729085211715,
+    "sample": "II",
+    "side": "MC",
+    "weight_diagnostics": {
+      "effective_sample_size": 88656.5859408486,
+      "max_w": 13.378039222702828,
+      "min_w": 0.1262657374042797,
+      "n_finite": 156467,
+      "n_negative": 0,
+      "n_nonfinite": 0,
+      "n_positive": 156467,
+      "n_total": 156467,
+      "n_zero": 0,
+      "sum_w": 327187.86552261695,
+      "sum_w2": 1207489.5306330742
+    }
+  },
+  "mcfull_I": {
+    "E_median": 0.0,
+    "E_p16": 0.0,
+    "E_p84": 0.0,
+    "deltaE_median": 23.80565259572827,
+    "deltaE_p16": 14.244524297951779,
+    "deltaE_p84": 51.46141230019647,
+    "missing_channel_policy": "EXPLICIT_STATE_TRACKING_MISSING_NOT_ZERO",
+    "n_events": 46992,
+    "pearson_r": -0.6967516622748765,
+    "sample": "I",
+    "side": "MC",
+    "weight_diagnostics": {
+      "effective_sample_size": 23098.563815222773,
+      "max_w": 4.4851117615128935,
+      "min_w": 0.17010206828796992,
+      "n_finite": 46992,
+      "n_negative": 0,
+      "n_nonfinite": 0,
+      "n_positive": 46992,
+      "n_total": 46992,
+      "n_zero": 0,
+      "sum_w": 30294.15982284714,
+      "sum_w2": 39731.30653116127
+    }
+  },
+  "mcfull_II": {
+    "E_median": 49.65184190602516,
+    "E_p16": 0.0,
+    "E_p84": 56.80246732556645,
+    "deltaE_median": 12.405481855798195,
+    "deltaE_p16": 11.676979972259714,
+    "deltaE_p84": 29.418488827509048,
+    "missing_channel_policy": "EXPLICIT_STATE_TRACKING_MISSING_NOT_ZERO",
+    "n_events": 156467,
+    "pearson_r": -0.3604729085211715,
+    "sample": "II",
+    "side": "MC",
+    "weight_diagnostics": {
+      "effective_sample_size": 88656.5859408486,
+      "max_w": 13.378039222702828,
+      "min_w": 0.1262657374042797,
+      "n_finite": 156467,
+      "n_negative": 0,
+      "n_nonfinite": 0,
+      "n_positive": 156467,
+      "n_total": 156467,
+      "n_zero": 0,
+      "sum_w": 327187.86552261695,
+      "sum_w2": 1207489.5306330742
+    }
+  }
+}

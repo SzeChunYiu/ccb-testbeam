@@ -186,12 +186,18 @@ def load_grid(grid_dir: Path) -> tuple[pd.DataFrame, list[dict[str, Any]]]:
     frames: list[pd.DataFrame] = []
     for path in root_files:
         meta_path = path.with_suffix(path.suffix + ".meta.json")
-        meta = json.loads(meta_path.read_text()) if meta_path.is_file() else {}
-        with uproot.open(path) as root_file:
-            frame = root_file["events"].arrays(library="pd")
-        _requested = meta.get("n_events_requested")
+        # Completeness gate BEFORE touching the tree: an in-flight job's ROOT file
+        # has no readable keys at all and would otherwise kill the whole load.
         if not meta_path.is_file():
             print(f"SKIP (no meta receipt): {path.name}")
+            continue
+        meta = json.loads(meta_path.read_text())
+        _requested = meta.get("n_events_requested")
+        try:
+            with uproot.open(path) as root_file:
+                frame = root_file["events"].arrays(library="pd")
+        except uproot.KeyInFileError:
+            print(f"SKIP (unreadable/partial ROOT): {path.name}")
             continue
         if _requested is not None and len(frame) < int(_requested):
             print(f"SKIP (incomplete {len(frame)}/{_requested}): {path.name}")

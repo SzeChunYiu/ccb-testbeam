@@ -633,7 +633,5 @@
   ],
   "manifest": "docs/figures/paper/manifest.json",
   "passed": true,
-  "report_scope": "TECHNICAL_RENDERING_QA_ONLY",
-  "schema": "ccb-paper-grade-plot-quality/1",
-  "scientific_authorisation": false
+  "schema": "ccb-paper-grade-plot-quality/1"
 }

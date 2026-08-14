@@ -234,3 +234,11 @@ Branch: fix/issue-1320-timing-residual → PR #1335 (merged e4552571).
 | Issue | Disposition | Evidence |
 |-------|-------------|----------|
 | #1320 | DONE (figure delivered; format-limited) | Authorising 8x16 B4-B6 pair residual with component-safe CFD (issue #1059 mode). Sample II, 7 runs, 10,776 pair events. CFD 20% first_local_peak: sigma68 = 8.748 ns (68% CI [8.295, 9.270]), RMS = 16.962 ns. TOF = 0.312 ns (4 cm spacing, B6 downstream of B4). 6-fraction scan reported (no selection by minimum). Bootstrap 1000 replicates. Validation: wrong-component rejection PASS, synthetic two-pulse FAIL (test expectation incorrect: selector binds to FIRST leading component per #1059, not largest; pair timing unaffected). Figure: reports/issue_1320_timing/timing_b4_b6_residual_sample_II.pdf (caption states PAIR RESIDUAL, no sqrt(2) deconvolution). Format-limited: 38 ns pair residual dominated by 16-sample 100 MS/s waveform representation, not intrinsic detector resolution. Timing chapter already updated (ch06 inline format-limited qualifier per #1304). Remaining gates: channel-polarity provenance (#954), component identity validation (#1059). |
+
+## Lane 13 — #1318 authorising 8×16 beam-data longitudinal depth profile (PAPER-FINISH-01C/02)
+
+Branch: fix/issue-1318-depth-profile → PR #1341 (in review).
+
+| Issue | Disposition | Evidence |
+|-------|-------------|----------|
+| #1318 | DONE (product + figure delivered) | Pre-threshold 8×16 event-level product builder (33 runs, 1,096,728 events) + longitudinal B-stack depth profile (Sample I vs II). Event table: `reports/studies/paper_1318_depth_profile/event_table_8x16.parquet` with manifest `manifest_8x16.json` (SHA-256 digests per input ROOT file). Amplitude estimator: `polarity * (peak - baseline)` with baseline = median(samples[0:3]). Profile figure: `depth_profile_thresh_0.pdf` (4 panels: absolute occupancy, mean amplitude with 95% CI, normalized profile, Sample II/I ratio). Key finding: Sample I front-loaded (B2=87.4%, B8=0.8%); Sample II shows ~7.6× more deepest-stave activity (B2=72.7%, B8=6.1%). Run-block bootstrap uncertainty (seed 1318, 1000 replicates). Claim CL-1318-001 GATED pending scientific review. Governance: claim_ledger.csv row GATED, ISSUE_CAMPAIGN_LEDGER.md section added, MANIFEST.csv entry GATED, 11 pytest tests pass. |

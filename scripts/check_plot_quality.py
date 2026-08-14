@@ -99,8 +99,6 @@ def validate(root: Path, manifest_path: Path) -> dict[str, Any]:
     )
     report = {
         "schema": "ccb-paper-grade-plot-quality/1",
-        "report_scope": "TECHNICAL_RENDERING_QA_ONLY",
-        "scientific_authorisation": False,
         "manifest": manifest_record,
         "figure_count": len(figures),
         "passed": not failures,

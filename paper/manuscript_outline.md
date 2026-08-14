@@ -1,7 +1,7 @@
 # CCB test-beam — manuscript outline (issue #797)
 
 **Status:** skeleton. No claim may be written without a direct result-file path,
-commit, config, input hash, uncertainty, and status label (see `docs/claim_ledger.csv`).
+commit, config, input hash, uncertainty, and status label (see `claims_ledger.csv`).
 The figure generator must read result files dynamically — no hand-entered constants.
 
 ## Sections

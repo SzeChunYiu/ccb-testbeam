@@ -39,6 +39,7 @@ def _current_frame(n: int = 60) -> pd.DataFrame:
             "event_id": event,
             "particle_pdg": [2212] * n,
             "kinetic_energy_MeV": [100.0] * n,
+            "edep_scint_raw_MeV": (10.0 + event / 10.0) * 1.05,
             "edep_scint_MeV": 10.0 + event / 10.0,
             "n_scint_generated": scint,
             "n_wls_generated": wls,
@@ -59,6 +60,7 @@ def _legacy_frame(n: int = 60) -> pd.DataFrame:
             "event_id": event,
             "particle_pdg": [2212] * n,
             "kinetic_energy_MeV": [100.0] * n,
+            "edep_scint_raw_MeV": (8.0 + event / 10.0) * 1.05,
             "edep_scint_MeV": 8.0 + event / 10.0,
             "n_scint_generated": generated,
             "n_end_selected": generated - 3,
@@ -149,6 +151,8 @@ def test_main_records_component_and_total_provenance(tmp_path: Path, monkeypatch
             str(input_path),
             "--output",
             str(output_path),
+            "--energy-target",
+            "both",
         ],
     )
     assert mod.main() == 0

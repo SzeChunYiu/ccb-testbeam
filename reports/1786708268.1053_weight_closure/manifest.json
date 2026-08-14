@@ -1,0 +1,6 @@
+{
+  "ticket_id": "${REPORT_ID}.1053_weight_closure",
+  "artifacts": ["REPORT.md", "result.json"],
+  "test_module": "tests/test_weight_closure_issue_1053.py",
+  "ci_enabled": true
+}

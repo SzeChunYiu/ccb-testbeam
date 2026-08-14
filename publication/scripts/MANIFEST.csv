@@ -4,4 +4,5 @@ gated/energy_reconstruction_current.py,GATED,scripts/single_stave/paper_a09_held
 gated/timing_current.py,GATED,scripts/real_data_cfd_timing.py,current timing producer; precision result not authorised
 utilities/generate_publication_figures.py,UTILITY,scripts/generate_publication_figures.py,figure registry utility
 utilities/check_plot_quality.py,UTILITY,scripts/check_plot_quality.py,technical figure QA only
-validate_publication.py,PACKAGE,publication/scripts/validate_publication.py,fail-closed publication structure validator
+validate_publication.py,PACKAGE,publication/scripts/validate_publication.py,fail-closed working-package structure/status validator
+validate_submission_readiness.py,PACKAGE,publication/scripts/validate_submission_readiness.py,strict mechanical submission gate for final artifacts/provenance/claim authorization/exact-head receipt

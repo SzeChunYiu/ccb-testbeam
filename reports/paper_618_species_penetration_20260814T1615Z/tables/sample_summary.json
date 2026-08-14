@@ -1,0 +1,160 @@
+{
+  "b2_b4_diagnostic": {
+    "corr_bootstrap": {
+      "n_bootstrap": 1000,
+      "n_runs": 21,
+      "p16": 0.12541354743567937,
+      "p84": 0.18011320732302047,
+      "point": 0.15058402387831674
+    },
+    "label": "two-channel diagnostic; NOT \u0394E\u2013E",
+    "median_B2_adc": 3640.0,
+    "median_B4_adc": 2973.5,
+    "n_events": 25423,
+    "pearson_r": 0.15058402387831674
+  },
+  "data_I": {
+    "E_median": 0.0,
+    "E_p16": 0.0,
+    "E_p84": 0.0,
+    "corr_bootstrap": {
+      "n_bootstrap": 1000,
+      "n_runs": 14,
+      "p16": -0.05140936918497779,
+      "p84": -0.03047410523919582,
+      "point": -0.04189769358155508
+    },
+    "deltaE_median": 7101.0,
+    "deltaE_p16": 3855.5,
+    "deltaE_p84": 8609.5,
+    "missing_channel_policy": "EXPLICIT_STATE_TRACKING_MISSING_NOT_ZERO",
+    "n_events": 147274,
+    "pearson_r": -0.04189769358155508,
+    "sample": "I",
+    "side": "DATA"
+  },
+  "data_II": {
+    "E_median": 0.0,
+    "E_p16": 0.0,
+    "E_p84": 4405.0,
+    "corr_bootstrap": {
+      "n_bootstrap": 1000,
+      "n_runs": 7,
+      "p16": -0.09840789467883261,
+      "p84": -0.0303058776294742,
+      "point": -0.06971735061043272
+    },
+    "deltaE_median": 3566.5,
+    "deltaE_p16": 2018.5,
+    "deltaE_p84": 5820.0,
+    "missing_channel_policy": "EXPLICIT_STATE_TRACKING_MISSING_NOT_ZERO",
+    "n_events": 69174,
+    "pearson_r": -0.06971735061043272,
+    "sample": "II",
+    "side": "DATA"
+  },
+  "mc4_I": {
+    "E_median": 0.0,
+    "E_p16": 0.0,
+    "E_p84": 47.63678591762537,
+    "deltaE_median": 33.88011109582224,
+    "deltaE_p16": 13.412146734693458,
+    "deltaE_p84": 53.13428733307173,
+    "missing_channel_policy": "EXPLICIT_STATE_TRACKING_MISSING_NOT_ZERO",
+    "n_events": 44,
+    "pearson_r": -0.6426407311452393,
+    "sample": "I",
+    "side": "MC",
+    "weight_diagnostics": {
+      "effective_sample_size": 44.0,
+      "max_w": 1.0,
+      "min_w": 1.0,
+      "n_finite": 44,
+      "n_negative": 0,
+      "n_nonfinite": 0,
+      "n_positive": 44,
+      "n_total": 44,
+      "n_zero": 0,
+      "sum_w": 44.0,
+      "sum_w2": 44.0
+    }
+  },
+  "mc4_II": {
+    "E_median": 46.34863593817772,
+    "E_p16": 0.0,
+    "E_p84": 55.855012897489225,
+    "deltaE_median": 12.42716165179478,
+    "deltaE_p16": 11.189270135086625,
+    "deltaE_p84": 14.530437859900035,
+    "missing_channel_policy": "EXPLICIT_STATE_TRACKING_MISSING_NOT_ZERO",
+    "n_events": 577,
+    "pearson_r": -0.32290692151291145,
+    "sample": "II",
+    "side": "MC",
+    "weight_diagnostics": {
+      "effective_sample_size": 577.0,
+      "max_w": 1.0,
+      "min_w": 1.0,
+      "n_finite": 577,
+      "n_negative": 0,
+      "n_nonfinite": 0,
+      "n_positive": 577,
+      "n_total": 577,
+      "n_zero": 0,
+      "sum_w": 577.0,
+      "sum_w2": 577.0
+    }
+  },
+  "mcfull_I": {
+    "E_median": 0.0,
+    "E_p16": 0.0,
+    "E_p84": 47.63678591762537,
+    "deltaE_median": 33.88011109582224,
+    "deltaE_p16": 13.412146734693458,
+    "deltaE_p84": 53.13428733307173,
+    "missing_channel_policy": "EXPLICIT_STATE_TRACKING_MISSING_NOT_ZERO",
+    "n_events": 44,
+    "pearson_r": -0.6426407311452393,
+    "sample": "I",
+    "side": "MC",
+    "weight_diagnostics": {
+      "effective_sample_size": 44.0,
+      "max_w": 1.0,
+      "min_w": 1.0,
+      "n_finite": 44,
+      "n_negative": 0,
+      "n_nonfinite": 0,
+      "n_positive": 44,
+      "n_total": 44,
+      "n_zero": 0,
+      "sum_w": 44.0,
+      "sum_w2": 44.0
+    }
+  },
+  "mcfull_II": {
+    "E_median": 46.34863593817772,
+    "E_p16": 0.0,
+    "E_p84": 55.855012897489225,
+    "deltaE_median": 12.42716165179478,
+    "deltaE_p16": 11.189270135086625,
+    "deltaE_p84": 14.530437859900035,
+    "missing_channel_policy": "EXPLICIT_STATE_TRACKING_MISSING_NOT_ZERO",
+    "n_events": 577,
+    "pearson_r": -0.32290692151291145,
+    "sample": "II",
+    "side": "MC",
+    "weight_diagnostics": {
+      "effective_sample_size": 577.0,
+      "max_w": 1.0,
+      "min_w": 1.0,
+      "n_finite": 577,
+      "n_negative": 0,
+      "n_nonfinite": 0,
+      "n_positive": 577,
+      "n_total": 577,
+      "n_zero": 0,
+      "sum_w": 577.0,
+      "sum_w2": 577.0
+    }
+  }
+}

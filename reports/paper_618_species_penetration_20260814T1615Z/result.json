@@ -1,0 +1,596 @@
+{
+  "contract": "#618",
+  "core_result": {
+    "flag_schema_version": "dee-bool-flag-v1",
+    "generated_utc": "2026-08-14T14:32:19.440199+00:00",
+    "join_cardinality": {
+      "cross_run_collision": false,
+      "data_rows_for_shared_event_ids": 216447,
+      "event_ids_shared_across_runs": 16383,
+      "key": [
+        "source_file_id",
+        "run_id",
+        "event_id"
+      ],
+      "n_data": 216448,
+      "n_data_only": 216448,
+      "n_matched": 0,
+      "n_mc": 686,
+      "n_mc_only": 686,
+      "validate": "one_to_one"
+    },
+    "mc_weights": {
+      "all_unit_weights": true,
+      "ess": 686.0,
+      "max_w": 1.0,
+      "min_w": 1.0,
+      "n_events": 686,
+      "n_zero": 0,
+      "sum_w": 686.0,
+      "sum_w2": 686.0,
+      "weight_semantics": "per-event generator/importance weight (PrimaryWeight)",
+      "weight_variable": "PrimaryWeight"
+    },
+    "measurand_names": {
+      "data_deepest_proxy": "deepest_active_stave",
+      "mc_deposit_proxy": "deepest_edep_layer",
+      "mc_primary_stop_truth": null,
+      "note": "DATA deepest_active_stave is the deepest readout above threshold; MC deepest_edep_layer is event-level deposit proxy, not primary stop."
+    },
+    "n_data_events": 216448,
+    "n_mc_events": 686,
+    "sample_counts": {
+      "in_both": 0,
+      "sample_II_exclusive": 69174,
+      "sample_II_inclusive": 69174,
+      "sample_I_exclusive": 147274,
+      "sample_I_inclusive": 147274,
+      "sample_I_subset_of_II": false
+    },
+    "sample_label_census": {
+      "invalid_examples": [],
+      "n_invalid_labels": 0,
+      "schema_version": "dee-sample-label-v1"
+    },
+    "sample_selected": "all",
+    "saturation": {
+      "any_saturation_events": 0,
+      "per_layer": {
+        "B2": 0,
+        "B4": 0,
+        "B6": 0,
+        "B8": 0
+      }
+    },
+    "seed": 20260814,
+    "status": "PASS",
+    "stopping": {
+      "data_adc": {
+        "distributions": [
+          {
+            "comparison_rule": ">",
+            "comparison_rule_schema": "dee-threshold-cmp-v1",
+            "n_events": 216448,
+            "n_no_layer_passes": 0,
+            "reach_by_layer": {
+              "B2": 1.0,
+              "B4": 0.13308508279124778,
+              "B6": 0.06815031785925488,
+              "B8": 0.02644053075103489
+            },
+            "stop_category_fractions": {
+              "B2": 0.8669149172087522,
+              "B4": 0.0649347649319929,
+              "B6": 0.04170978710821999,
+              "B8": 0.02644053075103489,
+              "no_layer_passes": 0.0
+            },
+            "threshold": 500.0
+          },
+          {
+            "comparison_rule": ">",
+            "comparison_rule_schema": "dee-threshold-cmp-v1",
+            "n_events": 216448,
+            "n_no_layer_passes": 0,
+            "reach_by_layer": {
+              "B2": 1.0,
+              "B4": 0.13308508279124778,
+              "B6": 0.06815031785925488,
+              "B8": 0.02644053075103489
+            },
+            "stop_category_fractions": {
+              "B2": 0.8669149172087522,
+              "B4": 0.0649347649319929,
+              "B6": 0.04170978710821999,
+              "B8": 0.02644053075103489,
+              "no_layer_passes": 0.0
+            },
+            "threshold": 750.0
+          },
+          {
+            "comparison_rule": ">",
+            "comparison_rule_schema": "dee-threshold-cmp-v1",
+            "n_events": 216448,
+            "n_no_layer_passes": 0,
+            "reach_by_layer": {
+              "B2": 1.0,
+              "B4": 0.13308508279124778,
+              "B6": 0.06815031785925488,
+              "B8": 0.02644053075103489
+            },
+            "stop_category_fractions": {
+              "B2": 0.8669149172087522,
+              "B4": 0.0649347649319929,
+              "B6": 0.04170978710821999,
+              "B8": 0.02644053075103489,
+              "no_layer_passes": 0.0
+            },
+            "threshold": 1000.0
+          },
+          {
+            "comparison_rule": ">",
+            "comparison_rule_schema": "dee-threshold-cmp-v1",
+            "n_events": 216448,
+            "n_no_layer_passes": 8799,
+            "reach_by_layer": {
+              "B2": 0.9593482037256061,
+              "B4": 0.12260219544648138,
+              "B6": 0.06188553370786517,
+              "B8": 0.023871784447072737
+            },
+            "stop_category_fractions": {
+              "B2": 0.8367460082791248,
+              "B4": 0.0607166617386162,
+              "B6": 0.03801374926079243,
+              "B8": 0.023871784447072737,
+              "no_layer_passes": 0.04065179627439385
+            },
+            "threshold": 1500.0
+          }
+        ],
+        "layers": [
+          "B2",
+          "B4",
+          "B6",
+          "B8"
+        ],
+        "monotonic_reach": true,
+        "proxy_name": "deepest_active_stave"
+      },
+      "mc_mev": {
+        "distributions": [
+          {
+            "comparison_rule": ">",
+            "comparison_rule_schema": "dee-threshold-cmp-v1",
+            "n_events": 686,
+            "n_no_layer_passes": 66,
+            "reach_by_layer": {
+              "B2": 0.9037900874635568,
+              "B4": 0.7186588921282799,
+              "B6": 0.5816326530612245,
+              "B8": 0.30612244897959184
+            },
+            "stop_category_fractions": {
+              "B2": 0.18513119533527697,
+              "B4": 0.13702623906705538,
+              "B6": 0.2755102040816326,
+              "B8": 0.30612244897959184,
+              "no_layer_passes": 0.09620991253644315
+            },
+            "sum_w": 686.0,
+            "threshold": 0.05,
+            "weighted_no_layer_passes_mass": 66.0
+          },
+          {
+            "comparison_rule": ">",
+            "comparison_rule_schema": "dee-threshold-cmp-v1",
+            "n_events": 686,
+            "n_no_layer_passes": 67,
+            "reach_by_layer": {
+              "B2": 0.902332361516035,
+              "B4": 0.7157434402332361,
+              "B6": 0.5787172011661808,
+              "B8": 0.30612244897959184
+            },
+            "stop_category_fractions": {
+              "B2": 0.18658892128279883,
+              "B4": 0.13702623906705538,
+              "B6": 0.2725947521865889,
+              "B8": 0.30612244897959184,
+              "no_layer_passes": 0.09766763848396501
+            },
+            "sum_w": 686.0,
+            "threshold": 0.15,
+            "weighted_no_layer_passes_mass": 67.0
+          },
+          {
+            "comparison_rule": ">",
+            "comparison_rule_schema": "dee-threshold-cmp-v1",
+            "n_events": 686,
+            "n_no_layer_passes": 68,
+            "reach_by_layer": {
+              "B2": 0.9008746355685131,
+              "B4": 0.7142857142857143,
+              "B6": 0.5787172011661808,
+              "B8": 0.30612244897959184
+            },
+            "stop_category_fractions": {
+              "B2": 0.18658892128279883,
+              "B4": 0.13556851311953352,
+              "B6": 0.2725947521865889,
+              "B8": 0.30612244897959184,
+              "no_layer_passes": 0.09912536443148688
+            },
+            "sum_w": 686.0,
+            "threshold": 0.3,
+            "weighted_no_layer_passes_mass": 68.0
+          }
+        ],
+        "layers": [
+          "B2",
+          "B4",
+          "B6",
+          "B8"
+        ],
+        "monotonic_reach": true,
+        "proxy_name": "deepest_edep_layer"
+      }
+    },
+    "study_id": "CCB-DELTAE-E",
+    "threshold_comparison": {
+      "rule": ">",
+      "schema_version": "dee-threshold-cmp-v1"
+    },
+    "thresholds": {
+      "data_thresholds_adc": [
+        500.0,
+        750.0,
+        1000.0,
+        1500.0
+      ],
+      "primary_data_threshold_adc": 500.0,
+      "primary_stop_threshold_mev": 0.05,
+      "stop_thresholds_mev": [
+        0.05,
+        0.15,
+        0.3
+      ]
+    },
+    "unit_labels": {
+      "E_data_adc": "ADC",
+      "E_mc_4layer_mev": "MeV",
+      "E_mc_full_mev": "MeV",
+      "deltaE_data_adc": "ADC",
+      "deltaE_mc_mev": "MeV"
+    }
+  },
+  "data_meta": {
+    "bridge": {
+      "amplitude_column": "amplitude_adc",
+      "amplitude_column_explicitly_requested": true,
+      "amplitude_convention": "net",
+      "amplitude_polarity": null,
+      "amplitude_transform": "identity",
+      "amplitude_validation": "FINITE_NUMERIC_NET_HEIGHT_VALIDATED_BEFORE_AGGREGATION",
+      "eventno_values_spanning_multiple_events": 0,
+      "events_that_eventno_only_join_would_corrupt": 0,
+      "key": [
+        "source_file_id",
+        "run",
+        "evt"
+      ],
+      "missing_layer_policy": "ZERO_FILL_ONLY_AFTER_FINITE_ROW_VALIDATION_AND_EVENT_STAVE_AGGREGATION",
+      "n_eventno_values": 332940,
+      "n_events_composite_key": 216448,
+      "physical_events_with_multiple_eventno_values": 90260,
+      "source_file_id": "s00_selected_b_pulses_manifest",
+      "staves_present": [
+        "B2",
+        "B4",
+        "B6",
+        "B8"
+      ],
+      "stopping_distribution": {
+        "B2": 187642,
+        "B4": 14055,
+        "B6": 9028,
+        "B8": 5723
+      },
+      "stopping_distribution_total": 216448,
+      "threshold_adc": 0.0,
+      "units": "ADC (data); never relabeled MeV"
+    },
+    "channel_states": [
+      "state_B2",
+      "state_B4",
+      "state_B6",
+      "state_B8"
+    ],
+    "composite_key": [
+      "source_file_id",
+      "run_id",
+      "event_id"
+    ],
+    "missing_layer_policy": "EXPLICIT_STATE_TRACKING_MISSING_NOT_ZERO",
+    "n_events": 216448,
+    "runs_sample_I": [
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "runs_sample_II": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "threshold_adc_for_flags_only": 0.0
+  },
+  "figures": [
+    {
+      "figure_id": "FIG-07",
+      "path": "reports/paper_618_species_penetration_20260814T1615Z/figures/fig07_data_deltaE_E_per_sample.png"
+    },
+    {
+      "figure_id": "FIG-08-I",
+      "path": "reports/paper_618_species_penetration_20260814T1615Z/figures/fig08_mc_deltaE_E_I.png"
+    },
+    {
+      "figure_id": "FIG-08-II",
+      "path": "reports/paper_618_species_penetration_20260814T1615Z/figures/fig08_mc_deltaE_E_II.png"
+    },
+    {
+      "figure_id": "FIG-SEG",
+      "path": "reports/paper_618_species_penetration_20260814T1615Z/figures/fig_segmentation_readout_phase.png"
+    },
+    {
+      "figure_id": "FIG-B2B4",
+      "path": "reports/paper_618_species_penetration_20260814T1615Z/figures/fig_b2_b4_two_channel_diagnostic.png"
+    }
+  ],
+  "generated_utc": "2026-08-14T14:32:19.440896+00:00",
+  "issue": "#956",
+  "mc_meta": {
+    "coincidence_window_ns": 15.0,
+    "mc_trigger_proxy": true,
+    "n_coincidence_sample_I": 56,
+    "n_enter_B": 686,
+    "n_mc_source_events": 100000,
+    "n_rows": 686,
+    "namespace_isolation": "physical:edep_layer_0..7, readout:readout_B2/B4/B6/B8, compatible:edep_B2/B4/B6/B8",
+    "readout_mapping": {
+      "B2": "layer_1",
+      "B4": "layer_3",
+      "B6": "layer_5",
+      "B8": "layer_7"
+    },
+    "readout_parity": "1/3/5/7",
+    "sample_disjoint": true,
+    "weight_diagnostics": {
+      "effective_sample_size": 100000.0,
+      "max_w": 1.0,
+      "min_w": 1.0,
+      "n_finite": 100000,
+      "n_negative": 0,
+      "n_nonfinite": 0,
+      "n_positive": 100000,
+      "n_total": 100000,
+      "n_zero": 0,
+      "sum_w": 100000.0,
+      "sum_w2": 100000.0
+    }
+  },
+  "p01_fixes_applied": [
+    "no_pre_threshold_censoring",
+    "no_pseudo_saturation_threshold",
+    "readout_parity_configurable",
+    "physical_layer_namespace_isolated",
+    "mc_samples_disjoint",
+    "species_by_entrance_primary",
+    "weight_adapter_diagnostics",
+    "bootstrap_ge_1000",
+    "explicit_channel_states"
+  ],
+  "per_sample": {
+    "b2_b4_diagnostic": {
+      "corr_bootstrap": {
+        "n_bootstrap": 1000,
+        "n_runs": 21,
+        "p16": 0.12541354743567937,
+        "p84": 0.18011320732302047,
+        "point": 0.15058402387831674
+      },
+      "label": "two-channel diagnostic; NOT \u0394E\u2013E",
+      "median_B2_adc": 3640.0,
+      "median_B4_adc": 2973.5,
+      "n_events": 25423,
+      "pearson_r": 0.15058402387831674
+    },
+    "data_I": {
+      "E_median": 0.0,
+      "E_p16": 0.0,
+      "E_p84": 0.0,
+      "corr_bootstrap": {
+        "n_bootstrap": 1000,
+        "n_runs": 14,
+        "p16": -0.05140936918497779,
+        "p84": -0.03047410523919582,
+        "point": -0.04189769358155508
+      },
+      "deltaE_median": 7101.0,
+      "deltaE_p16": 3855.5,
+      "deltaE_p84": 8609.5,
+      "missing_channel_policy": "EXPLICIT_STATE_TRACKING_MISSING_NOT_ZERO",
+      "n_events": 147274,
+      "pearson_r": -0.04189769358155508,
+      "sample": "I",
+      "side": "DATA"
+    },
+    "data_II": {
+      "E_median": 0.0,
+      "E_p16": 0.0,
+      "E_p84": 4405.0,
+      "corr_bootstrap": {
+        "n_bootstrap": 1000,
+        "n_runs": 7,
+        "p16": -0.09840789467883261,
+        "p84": -0.0303058776294742,
+        "point": -0.06971735061043272
+      },
+      "deltaE_median": 3566.5,
+      "deltaE_p16": 2018.5,
+      "deltaE_p84": 5820.0,
+      "missing_channel_policy": "EXPLICIT_STATE_TRACKING_MISSING_NOT_ZERO",
+      "n_events": 69174,
+      "pearson_r": -0.06971735061043272,
+      "sample": "II",
+      "side": "DATA"
+    },
+    "mc4_I": {
+      "E_median": 0.0,
+      "E_p16": 0.0,
+      "E_p84": 47.63678591762537,
+      "deltaE_median": 33.88011109582224,
+      "deltaE_p16": 13.412146734693458,
+      "deltaE_p84": 53.13428733307173,
+      "missing_channel_policy": "EXPLICIT_STATE_TRACKING_MISSING_NOT_ZERO",
+      "n_events": 44,
+      "pearson_r": -0.6426407311452393,
+      "sample": "I",
+      "side": "MC",
+      "weight_diagnostics": {
+        "effective_sample_size": 44.0,
+        "max_w": 1.0,
+        "min_w": 1.0,
+        "n_finite": 44,
+        "n_negative": 0,
+        "n_nonfinite": 0,
+        "n_positive": 44,
+        "n_total": 44,
+        "n_zero": 0,
+        "sum_w": 44.0,
+        "sum_w2": 44.0
+      }
+    },
+    "mc4_II": {
+      "E_median": 46.34863593817772,
+      "E_p16": 0.0,
+      "E_p84": 55.855012897489225,
+      "deltaE_median": 12.42716165179478,
+      "deltaE_p16": 11.189270135086625,
+      "deltaE_p84": 14.530437859900035,
+      "missing_channel_policy": "EXPLICIT_STATE_TRACKING_MISSING_NOT_ZERO",
+      "n_events": 577,
+      "pearson_r": -0.32290692151291145,
+      "sample": "II",
+      "side": "MC",
+      "weight_diagnostics": {
+        "effective_sample_size": 577.0,
+        "max_w": 1.0,
+        "min_w": 1.0,
+        "n_finite": 577,
+        "n_negative": 0,
+        "n_nonfinite": 0,
+        "n_positive": 577,
+        "n_total": 577,
+        "n_zero": 0,
+        "sum_w": 577.0,
+        "sum_w2": 577.0
+      }
+    },
+    "mcfull_I": {
+      "E_median": 0.0,
+      "E_p16": 0.0,
+      "E_p84": 47.63678591762537,
+      "deltaE_median": 33.88011109582224,
+      "deltaE_p16": 13.412146734693458,
+      "deltaE_p84": 53.13428733307173,
+      "missing_channel_policy": "EXPLICIT_STATE_TRACKING_MISSING_NOT_ZERO",
+      "n_events": 44,
+      "pearson_r": -0.6426407311452393,
+      "sample": "I",
+      "side": "MC",
+      "weight_diagnostics": {
+        "effective_sample_size": 44.0,
+        "max_w": 1.0,
+        "min_w": 1.0,
+        "n_finite": 44,
+        "n_negative": 0,
+        "n_nonfinite": 0,
+        "n_positive": 44,
+        "n_total": 44,
+        "n_zero": 0,
+        "sum_w": 44.0,
+        "sum_w2": 44.0
+      }
+    },
+    "mcfull_II": {
+      "E_median": 46.34863593817772,
+      "E_p16": 0.0,
+      "E_p84": 55.855012897489225,
+      "deltaE_median": 12.42716165179478,
+      "deltaE_p16": 11.189270135086625,
+      "deltaE_p84": 14.530437859900035,
+      "missing_channel_policy": "EXPLICIT_STATE_TRACKING_MISSING_NOT_ZERO",
+      "n_events": 577,
+      "pearson_r": -0.32290692151291145,
+      "sample": "II",
+      "side": "MC",
+      "weight_diagnostics": {
+        "effective_sample_size": 577.0,
+        "max_w": 1.0,
+        "min_w": 1.0,
+        "n_finite": 577,
+        "n_negative": 0,
+        "n_nonfinite": 0,
+        "n_positive": 577,
+        "n_total": 577,
+        "n_zero": 0,
+        "sum_w": 577.0,
+        "sum_w2": 577.0
+      }
+    }
+  },
+  "run_groups_verified": {
+    "sample_II_analysis": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "sample_I_analysis": [
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ]
+  },
+  "study_id": "PAPER-956-DELTAE-E-P01-FIXED"
+}

@@ -1,0 +1,135 @@
+{
+ "bundle": "reports/paper_618_species_penetration_20260814T1615Z",
+ "mc": {
+  "I": {
+   "full": {
+    "n_events": 56,
+    "n_p": 15,
+    "n_d": 41
+   },
+   "4layer": {
+    "n_events": 56,
+    "n_p": 15,
+    "n_d": 41
+   },
+   "reaching_fractions": {
+    "p": {
+     "n": 15,
+     "frac_reach_B4": 0.933333,
+     "frac_reach_B6": 0.8,
+     "frac_reach_B8": 0.0,
+     "frac_deepest_active": 1.0
+    },
+    "d": {
+     "n": 41,
+     "frac_reach_B4": 0.04878,
+     "frac_reach_B6": 0.0,
+     "frac_reach_B8": 0.0,
+     "frac_deepest_active": 1.0
+    },
+    "all": {
+     "n": 56,
+     "frac_reach_B4": 0.285714,
+     "frac_reach_B6": 0.214286,
+     "frac_reach_B8": 0.0,
+     "frac_deepest_active": 1.0
+    }
+   }
+  },
+  "II": {
+   "full": {
+    "n_events": 630,
+    "n_p": 535,
+    "n_d": 92
+   },
+   "4layer": {
+    "n_events": 630,
+    "n_p": 535,
+    "n_d": 92
+   },
+   "reaching_fractions": {
+    "p": {
+     "n": 535,
+     "frac_reach_B4": 0.854206,
+     "frac_reach_B6": 0.723364,
+     "frac_reach_B8": 0.392523,
+     "frac_deepest_active": 1.0
+    },
+    "d": {
+     "n": 92,
+     "frac_reach_B4": 0.217391,
+     "frac_reach_B6": 0.01087,
+     "frac_reach_B8": 0.0,
+     "frac_deepest_active": 1.0
+    },
+    "all": {
+     "n": 630,
+     "frac_reach_B4": 0.757143,
+     "frac_reach_B6": 0.615873,
+     "frac_reach_B8": 0.333333,
+     "frac_deepest_active": 1.0
+    }
+   }
+  }
+ },
+ "data": {
+  "I": {
+   "n_events": 147274,
+   "b2_saturation_fraction": 0.0
+  },
+  "II": {
+   "n_events": 69174,
+   "b2_saturation_fraction": 0.0
+  },
+  "penetration": {
+   "I": {
+    "n_events": 147274,
+    "frac_reach_B4": 0.043327,
+    "frac_reach_B6": 0.020866,
+    "frac_reach_B8": 0.00878,
+    "stopping_layer_values": {
+     "B2": 0.94608,
+     "B4": 0.029109,
+     "B6": 0.016031,
+     "B8": 0.00878
+    }
+   },
+   "II": {
+    "n_events": 69174,
+    "frac_reach_B4": 0.284355,
+    "frac_reach_B6": 0.154581,
+    "frac_reach_B8": 0.064041,
+    "stopping_layer_values": {
+     "B2": 0.698369,
+     "B4": 0.141209,
+     "B6": 0.09638,
+     "B8": 0.064041
+    }
+   }
+  }
+ },
+ "penetration": {
+  "I": {
+   "p": {
+    "mean": 5.2,
+    "frac_none": 0.0
+   },
+   "d": {
+    "mean": 0.926829268292683,
+    "frac_none": 0.0
+   }
+  },
+  "II": {
+   "p": {
+    "mean": 5.207476635514019,
+    "frac_none": 0.0
+   },
+   "d": {
+    "mean": 1.315217391304348,
+    "frac_none": 0.0
+   }
+  }
+ },
+ "penetration_stability_rows": 30,
+ "l_stop_contract": "deepest layer (0..7) with edep > threshold; default 0.02 MeV; stability at 0/0.05/0.1/0.5 MeV; sentinel 'none' = no layer above threshold"
+}

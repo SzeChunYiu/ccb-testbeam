@@ -1,0 +1,126 @@
+{
+  "args": {
+    "bootstrap_replicates": 1000,
+    "coinc_ns": 15.0,
+    "data_threshold_adc": 0.0,
+    "mc_entry_stop": 0,
+    "mc_root": "geant4/data/output_krakow_2m_regenerated.root",
+    "mc_source_id": "cmc_2m_regenerated_20260814",
+    "out": "reports/paper_618_species_penetration_2m_20260814T1449Z",
+    "pulse_table": "reports/1780917628.449525.085b2dc0__s01b_s00_selected_table_manifest/s00_selected_b_pulses.csv.gz",
+    "readout_parity": "1/3/5/7",
+    "seed": 20260814,
+    "source_file_id": "s00_selected_b_pulses_manifest"
+  },
+  "command": "scripts/single_stave/paper_956_deltaE_E_publication.py --pulse-table reports/1780917628.449525.085b2dc0__s01b_s00_selected_table_manifest/s00_selected_b_pulses.csv.gz --mc-root geant4/data/output_krakow_2m_regenerated.root --out reports/paper_618_species_penetration_2m_20260814T1449Z --source-file-id s00_selected_b_pulses_manifest --mc-source-id cmc_2m_regenerated_20260814 --seed 20260814 --bootstrap-replicates 1000",
+  "environment": {
+    "numpy": "2.4.6",
+    "pandas": "2.3.1",
+    "platform": "Linux-5.14.0-687.24.1.el9_8.x86_64-x86_64-with-glibc2.34",
+    "python": "3.11.14"
+  },
+  "generated_utc": "2026-08-14T15:02:28.809438+00:00",
+  "git_commit": "6b57771e3c872ff3ee1b503f84f732c454acca6d",
+  "inputs": [
+    {
+      "bytes": 9246625,
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-coord-1350/reports/1780917628.449525.085b2dc0__s01b_s00_selected_table_manifest/s00_selected_b_pulses.csv.gz",
+      "role": "data_pulse_table",
+      "sha256": "648c32d0109fb05cdf04b2a0d2817044067e8741c70a53f540308a1c038a8b2f"
+    },
+    {
+      "bytes": 711988750,
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-coord-1350/geant4/data/output_krakow_2m_regenerated.root",
+      "role": "mc_root",
+      "sha256": "0d8c827502b3ce8f5bbe419e1c11a2905db55015b94a741a11ec7e52f292afe1"
+    }
+  ],
+  "issue": "#956 / PAPER-A05",
+  "outputs": [
+    {
+      "bytes": 2724562,
+      "path": "deltaE_E_events_data.parquet",
+      "sha256": "3d1863a23caa4fc0b6f6274753c622afed0c886537f2a833353d66720d6367c2"
+    },
+    {
+      "bytes": 1976124,
+      "path": "deltaE_E_events_mc.parquet",
+      "sha256": "d67b0bf47e1485877af9b9732b0139bbf5a2fd88733e6a7c2d4e2266184c5c40"
+    },
+    {
+      "bytes": 42365,
+      "path": "figures/fig07_data_deltaE_E_per_sample.pdf",
+      "sha256": "3b8bbec983c2f31409158a676dfc581742b2123a8865afae7a72f3ef76288557"
+    },
+    {
+      "bytes": 372992,
+      "path": "figures/fig07_data_deltaE_E_per_sample.png",
+      "sha256": "fd29aaed90eadfc37c8f546013fc63f283abc3282eea753e043b9ce4a6147a81"
+    },
+    {
+      "bytes": 33531,
+      "path": "figures/fig08_mc_deltaE_E_I.pdf",
+      "sha256": "1ddc42490f0b2c7d2a58f70c1c959aae526e69e2b92660a3410f5231e43f04bd"
+    },
+    {
+      "bytes": 153162,
+      "path": "figures/fig08_mc_deltaE_E_I.png",
+      "sha256": "08e8e36ed2889796c4b672e6bf778041bbddf2c01c4e3af33a1b44fb3b52b3c7"
+    },
+    {
+      "bytes": 37730,
+      "path": "figures/fig08_mc_deltaE_E_II.pdf",
+      "sha256": "52e74ae4080d4b064d2f6c4b2229ae38e51dd44eba229642c2b8bcf20800581c"
+    },
+    {
+      "bytes": 267622,
+      "path": "figures/fig08_mc_deltaE_E_II.png",
+      "sha256": "d354abe5f651b70f4e7bbf1301f262395e8c124560958d80d8f4d515f4470192"
+    },
+    {
+      "bytes": 32265,
+      "path": "figures/fig_b2_b4_two_channel_diagnostic.pdf",
+      "sha256": "23f23a25fc1777fb193c50693811e92e8a2cb5a0e26771a851afb19c801fb501"
+    },
+    {
+      "bytes": 401597,
+      "path": "figures/fig_b2_b4_two_channel_diagnostic.png",
+      "sha256": "6cef30bc856db6de2aa8e32e0248be2c1272d0477b0538f5ddc3028c09830ba0"
+    },
+    {
+      "bytes": 34519,
+      "path": "figures/fig_segmentation_readout_phase.pdf",
+      "sha256": "401378d8f22d00ead249dd6260eea6759b0c21cbc36d95c0073926e10d651854"
+    },
+    {
+      "bytes": 228034,
+      "path": "figures/fig_segmentation_readout_phase.png",
+      "sha256": "0e7a44fc78a8923774d68e11aa3be0724aa6be0615422001ad953cef62fc6e45"
+    },
+    {
+      "bytes": 16649,
+      "path": "result.json",
+      "sha256": "3d7c6ebdbe3919b1b4fa9e897fd506423a63cd3b7a48a7f046a8e282f8fba22d"
+    },
+    {
+      "bytes": 4155,
+      "path": "tables/sample_summary.json",
+      "sha256": "c0a629cdcf29ce3fa52350960260688a3465dd2f42987931e89cd5d87e427ffa"
+    }
+  ],
+  "p01_fixes": "P0-1 defects fixed: no pre-threshold censoring, no pseudo-saturation, configurable parity, physical layer namespace isolated, disjoint MC samples, entrance-primary species, weight diagnostics, 1000+ bootstrap, explicit channel states",
+  "producer": "scripts/single_stave/paper_956_deltaE_E_publication.py",
+  "schema": {
+    "composite_key": [
+      "source_file_id",
+      "run_id",
+      "event_id"
+    ],
+    "data_E": "A(B4)+A(B6)+A(B8) ADC",
+    "data_deltaE": "A(B2) ADC",
+    "mc_E_4layer": "edep_B4+edep_B6+edep_B8 MeV",
+    "mc_E_full": "sum(edep_layer_1..7) MeV",
+    "mc_deltaE": "edep_B2 MeV (from readout_B2 = edep_layer_N)",
+    "mc_samples_disjoint": "Sample I=coincidence-only, Sample II=B-enter-only"
+  }
+}

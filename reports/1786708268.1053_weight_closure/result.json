@@ -1,0 +1,59 @@
+{
+  "ticket_id": "${REPORT_ID}.1053_weight_closure",
+  "issue": "#1053",
+  "description": "Legacy PrimaryWeight=σ(theta_lab) retirement closure study",
+  "date": "2026-08-14",
+  "verdict": "PASS",
+  "closure_items": {
+    "direct_vs_legacy_corrected": {
+      "theta_cm": {
+        "ks_statistic": 0.010809967335008497,
+        "p_value": 0.802,
+        "alpha": 0.05,
+        "reject_null": false
+      },
+      "theta_lab": {
+        "ks_statistic": 0.010809966921329628,
+        "p_value": 0.802,
+        "alpha": 0.05,
+        "reject_null": false
+      }
+    },
+    "negative_control": {
+      "theta_cm": {
+        "ks_statistic": 0.08855627331481469,
+        "p_value": 0.0,
+        "alpha": 0.05,
+        "reject_null": true
+      },
+      "theta_lab": {
+        "ks_statistic": 0.08855627339976857,
+        "p_value": 0.0,
+        "alpha": 0.05,
+        "reject_null": true
+      }
+    },
+    "representation_splitting": {
+      "theta_cm": {
+        "ks_statistic": 1.616484723854228e-13,
+        "p_value": 1.0,
+        "alpha": 0.05,
+        "reject_null": false
+      },
+      "theta_lab": {
+        "ks_statistic": 1.616484723854228e-13,
+        "p_value": 1.0,
+        "alpha": 0.05,
+        "reject_null": false
+      }
+    }
+  },
+  "sigma_table": {
+    "n_rows": 28,
+    "support_deg": [26.49, 169.78],
+    "sigma_min": 0.126,
+    "sigma_max": 6.005
+  },
+  "sample_sizes_tested": [100, 1000, 10000],
+  "all_tests_passed": true
+}

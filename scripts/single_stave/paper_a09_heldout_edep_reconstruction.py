@@ -45,6 +45,7 @@ import hashlib
 import json
 import math
 import platform
+import re
 import subprocess
 import sys
 from dataclasses import dataclass
@@ -185,11 +186,35 @@ def load_grid(grid_dir: Path) -> tuple[pd.DataFrame, list[dict[str, Any]]]:
     frames: list[pd.DataFrame] = []
     for path in root_files:
         meta_path = path.with_suffix(path.suffix + ".meta.json")
-        meta = json.loads(meta_path.read_text()) if meta_path.is_file() else {}
-        with uproot.open(path) as root_file:
-            frame = root_file["events"].arrays(library="pd")
+        # Completeness gate BEFORE touching the tree: an in-flight job's ROOT file
+        # has no readable keys at all and would otherwise kill the whole load.
+        if not meta_path.is_file():
+            print(f"SKIP (no meta receipt): {path.name}")
+            continue
+        meta = json.loads(meta_path.read_text())
+        _requested = meta.get("n_events_requested")
+        try:
+            with uproot.open(path) as root_file:
+                frame = root_file["events"].arrays(library="pd")
+        except uproot.KeyInFileError:
+            print(f"SKIP (unreadable/partial ROOT): {path.name}")
+            continue
+        if _requested is not None and len(frame) < int(_requested):
+            print(f"SKIP (incomplete {len(frame)}/{_requested}): {path.name}")
+            continue
         frame = frame.copy()
-        frame["run_id"] = path.stem
+        # Normalized run id "species_KE" so TRAIN/HELDOUT partitions bind to grid
+        # points regardless of file-naming convention (#1303 regenerated grid uses
+        # stave_<species>_<KE>MeV_x.._s<seed>.root stems).
+        _species_norm = (meta.get("particle") or path.stem.split("_")[0]).lower()
+        _ke_norm = meta.get("kinetic_energy_MeV")
+        if _ke_norm is None:
+            m = re.search(r"_(\d+)MeV", path.stem)
+            _ke_norm = int(m.group(1)) if m else None
+        if _species_norm and _ke_norm is not None:
+            frame["run_id"] = f"{_species_norm}_{int(_ke_norm)}"
+        else:
+            frame["run_id"] = path.stem
         frame["event_id"] = frame["event"] if "event" in frame else frame.index
         frame["species"] = frame["particle"].astype(str).str.lower()
         frame["kinetic_energy_MeV"] = pd.to_numeric(frame["ke_MeV"], errors="coerce")

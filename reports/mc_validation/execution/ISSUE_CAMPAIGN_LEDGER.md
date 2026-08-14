@@ -211,3 +211,10 @@ Branch: `fix/issue-956-deltae-producer` (worktree `ccb-wt-956`).
 - Event-level product (#1318): pre-threshold 8×16 event-level parquet for DATA side
 - Final figure package generation after both producers are certified
 
+## Lane 10 — #1304 canonical-ledger enforcement
+
+Branch: `fix/issue-1304-claim-governance` (worktree `ccb-wt-1304`).
+
+| Issue | Disposition | Evidence |
+|-------|-------------|----------|
+| #1304 | DONE (canonical-ledger enforcement) | Fail-closed consistency checker `tools/claim_governance/check_claim_consistency.py` (exit 0/1/2; missing input = SCOPE, never silent pass) wired into pytest via `tests/test_claim_governance.py` (16 hostile fixtures + real-tree no-alarm gate). Enforces: `publication/tables/claim_ledger.csv` byte-equality; NO parallel `paper/claims_ledger.csv` (deleted, references redirected); figures.yaml status/caption never exceed canonical claim status; WIKI claim-line gating with quarantining-word allowance; forbidden-promotion table `docs/claim_governance/forbidden_promotions.csv` (FP-001..007: stale +0.221, 2.92 MHz data-derived, sub-ns timing, 8.9%, VALIDATED-count phrasing, PE/deposited conflation, VALIDATED banners); manuscript token gate `publication/claims/manuscript_claim_tokens.csv` (MT-001..005) over paper+publication tex; `quality_report.json` = TECHNICAL_RENDERING_QA_ONLY. Real-tree first run found 17 genuine divergences, all fixed in-tree: S00-COUNT VALIDATED-to-GATED (status+banner+caption), WIKI L66/72/151/158/186, ch05 GATED-inline, ch06+ch11 format-limited 38 ns inline, generator scope keys + regenerated report, manuscript_outline + generate_completion_report reference redirects. Checker validated on real data BEFORE fixes (all 17 findings verified real; 3 checker-granularity defects corrected: multi-line YAML captions moved to structural scan, gate word-stem, negated-mention allowance). |

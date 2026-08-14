@@ -101,18 +101,19 @@ RMAX-MC:                     # clusterC #917, VIS-PU-002 -- digitizer-domain Rma
     only; the canonical detector Rmax is BLOCKED
     (CL-010/S-STAT-003) and the legacy 3.044 MHz is SUPERSEDED (CL-012).
 
-# === The single VALIDATED data row ===========================================
+# === S00 data-count row (CL-001 GATED) ========================================
 
 S00-COUNT:                   # CL-001 -- S00 selected-pulse reproduction
   result: reports/S00_data_integrity_pipeline_reproduction/count_match_table.csv
   source_figure: docs/figures/paper/selected_pulse_inventory.png
   claim_id: CL-001
   evidence_class: DATA_MEASUREMENT
-  status: VALIDATED
+  status: GATED
   kind: figure_sourced
   caption: >-
     Selected B-stack pulses (S00 median gate) = 640,737, exact deterministic
-    reproduction for fixed raw inputs. The ONLY VALIDATED data row in the ledger.
+    reproduction for fixed raw inputs. CL-001 is GATED pending data-contract
+    closure (#952/#953/#954); this is not an authorising ledger row.
 
 # === Opticks GPU/CPU parity -- PARTIAL =======================================
 

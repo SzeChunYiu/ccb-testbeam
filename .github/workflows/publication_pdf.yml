@@ -30,12 +30,34 @@ jobs:
           chmod +x publication/build.sh publication/scripts/validate_publication.py publication/scripts/write_build_receipt.py
           publication/build.sh
           pdfinfo publication/paper.pdf | grep -E 'Pages|Page size|Encrypted'
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: paper-pdf
+          path: |
+            publication/paper.pdf
+            publication/BUILD_RECEIPT.json
+          if-no-files-found: error
       - name: Commit generated PDF and receipt
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -f publication/paper.pdf publication/BUILD_RECEIPT.json
-          if ! git diff --cached --quiet; then
-            git commit -m "docs(publication): build working paper PDF"
-            git push origin HEAD:${GITHUB_REF_NAME}
+          if git diff --cached --quiet; then
+            echo "No PDF changes to deliver."
+            exit 0
           fi
+          git commit -m "docs(publication): build working paper PDF"
+          if git push origin HEAD:${GITHUB_REF_NAME}; then
+            echo "Pushed directly to ${GITHUB_REF_NAME}."
+            exit 0
+          fi
+          echo "Direct push rejected (branch protection); delivering via PR."
+          BRANCH="publication/pdf-${GITHUB_RUN_ID}"
+          git push origin HEAD:refs/heads/${BRANCH}
+          gh pr create --head "${BRANCH}" --base "${GITHUB_REF_NAME}" \
+            --repo "${GITHUB_REPOSITORY}" \
+            --title "docs(publication): rebuild working paper PDF (run ${GITHUB_RUN_NUMBER})" \
+            --body "Automated publication PDF rebuild from workflow run ${GITHUB_RUN_ID} at ${GITHUB_SHA}. Build receipt: publication/BUILD_RECEIPT.json. Opened by the workflow because direct push to a protected branch was rejected; merge with owner privileges once the PDF diff is reviewed."

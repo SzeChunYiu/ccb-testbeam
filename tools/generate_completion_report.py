@@ -181,7 +181,11 @@ def rows() -> list[ClosureRow]:
             status="IN_PROGRESS",
             issue="#797",
             dependencies=["CCB-796-RUN", "CCB-844-SCAN", "CCB-TIMING"],
+<<<<<<< HEAD
             evidence=["paper/ (skeleton: outline, crosswalks, limitations; canonical claim ledger at docs/claim_ledger.csv)"],
+=======
+            evidence=["paper/ (skeleton: outline, crosswalks, claims_ledger, limitations)"],
+>>>>>>> a4908de2 (feat: add authorising 8x16 beam-data longitudinal depth profile)
             acceptance=[
                 acc("every claim maps to result-file path + commit + uncertainty + status", False,
                     "claims populate as results land"),

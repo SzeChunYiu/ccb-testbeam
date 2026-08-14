@@ -162,11 +162,11 @@ def audit_sources(adapter: str, analyzer: str, contract: str) -> dict[str, Any]:
             )
 
     contract_normalized = " ".join(contract.lower().split())
-    if "analyzer version 2.0.0" not in contract_normalized:
+    if "analyzer version 2.1.0" not in contract_normalized:
         findings.append(
             {
                 "code": "CONTRACT_ANALYZER_VERSION_MISSING",
-                "detail": "EVENT_CONTRACT.md does not bind analyzer version 2.0.0",
+                "detail": "EVENT_CONTRACT.md does not bind analyzer version 2.1.0",
             }
         )
     if "uses the exact total-optical count" not in contract_normalized:

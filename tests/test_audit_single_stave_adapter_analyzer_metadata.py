@@ -122,7 +122,7 @@ def test_contract_must_bind_version_and_total_semantics():
 def test_wrapped_contract_prose_is_normalized():
     mod = _load()
     wrapped = (
-        "Analyzer version\n2.0.0 preserves all components and uses the\n"
+        "Analyzer version\n2.1.0 preserves all components and uses the\n"
         "exact total-optical count for collection efficiency."
     )
     result = mod.audit_sources(_corrected_adapter(), _analyzer(), wrapped)

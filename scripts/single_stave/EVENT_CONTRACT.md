@@ -7,7 +7,7 @@ normalized table consumed by `analyze_single_stave.py` use different branch
 names and units. Do not bypass the explicit adapter.
 
 `adapt_geant4_events.py` provides the fail-closed mapping. Analyzer version
-2.0.0 now preserves the scintillation, WLS, and Cerenkov counters and uses the
+2.1.0 now preserves the scintillation, WLS, and Cerenkov counters and uses the
 exact total-optical count for arrival bounds and collection-efficiency plots.
 This establishes schema and bookkeeping compatibility; it is not detector
 calibration or real-ROOT physics closure.

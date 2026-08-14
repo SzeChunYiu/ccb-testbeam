@@ -78,7 +78,12 @@ def resolve_repo_source(token: str) -> Path | None:
     path = Path(token)
     if path.is_absolute():
         return None
-    return (REPO / path).resolve()
+    resolved = (REPO / path).resolve()
+    try:
+        resolved.relative_to(REPO.resolve())
+    except ValueError:
+        return None
+    return resolved
 
 
 def current_git_head() -> str | None:
@@ -138,13 +143,15 @@ def main() -> int:
         if row.get("status", "").strip() != "FINAL":
             errors.append(f"{label}: status must be FINAL")
         artifact = PUB / "figures" / rel
+        expected_artifact = row.get("sha256", "").strip().lower()
         if not artifact.is_file():
             errors.append(f"{label}: final artifact missing")
-        elif row.get("sha256", "").strip():
-            observed = sha256_file(artifact)
-            expected = row["sha256"].strip().lower()
-            if observed != expected:
-                errors.append(f"{label}: SHA-256 mismatch")
+        elif not expected_artifact:
+            errors.append(f"{label}: sha256 missing")
+        elif sha256_file(artifact) != expected_artifact:
+            errors.append(f"{label}: SHA-256 mismatch")
+        if not row.get("evidence_class", "").strip():
+            errors.append(f"{label}: evidence_class missing")
 
         source_token = row.get("source_path", "").strip()
         source = resolve_repo_source(source_token)
@@ -201,17 +208,21 @@ def main() -> int:
         if row.get("status", "").strip() != "FINAL":
             errors.append(f"{label}: status must be FINAL")
         artifact = PUB / "tables" / rel
+        expected_artifact = row.get("sha256", "").strip().lower()
         if not artifact.is_file():
             errors.append(f"{label}: final artifact missing")
-        elif row.get("sha256", "").strip():
-            if sha256_file(artifact) != row["sha256"].strip().lower():
-                errors.append(f"{label}: SHA-256 mismatch")
+        elif not expected_artifact:
+            errors.append(f"{label}: sha256 missing")
+        elif sha256_file(artifact) != expected_artifact:
+            errors.append(f"{label}: SHA-256 mismatch")
 
         source_token = row.get("source_path", "").strip()
         source = resolve_repo_source(source_token)
         if source is None or not source.is_file():
             errors.append(f"{label}: source_path is not an existing repository file")
         else:
+            if source.suffix.lower() not in SOURCE_DATA_SUFFIXES:
+                errors.append(f"{label}: source_path is not machine-readable source data")
             expected_source = row.get("source_sha256", "").strip().lower()
             if not expected_source:
                 errors.append(f"{label}: source_sha256 missing")

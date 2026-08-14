@@ -16,14 +16,14 @@ Common trigger phase, sampling phase, reconstruction choices and event condition
 
 Leading-edge timing is amplitude-dependent. Constant-fraction timing also becomes ambiguous for multi-component waveforms if the threshold is defined from the global maximum: changing the fraction can switch the timed physical component. The production method must define the selected pulse component before optimising any timing fraction. Same-sample minimum widths across a fraction scan are exploratory model-selection diagnostics, not performance measurements.
 
-\subsection{Authorising data result}
+\subsection{Current 8-by-16 data diagnostic}
 
-On the located 8-by-16 raw waveform product, a direct B4--B6 CFD analysis yields 5,207 events with valid times and an approximately 38 ns central-68\% residual width after the applied TOF subtraction. Peak positions are multi-modal and frequently lie near waveform boundaries.
+On the located 8-by-16 raw waveform product, the current direct B4--B6 CFD reconstruction returns 5,207 events with valid times and an approximately 38 ns central-68\% residual width after the applied TOF subtraction. Peak positions are multi-modal and frequently lie near waveform boundaries. These counts and widths describe the current reconstruction output; final publication promotion remains conditional on the component-safe rerun, source-bound timing/TOF definitions and run-aware uncertainty required for the final figure.
 
 \begin{evidencebox}
-The 38 ns width is reported as a \textbf{format-/reconstruction-limited residual}. The nominal 10 ns sampling interval alone is not sufficient to explain a 38 ns width; window phase, pulse-component ambiguity, boundary truncation and timing-reference/TOF assumptions remain entangled. No intrinsic stave timing resolution is extracted.
+The 38 ns width is reported as a \textbf{format-/reconstruction-limited pair residual}. The nominal 10 ns sampling interval alone is not sufficient to explain a 38 ns width; window phase, pulse-component ambiguity, boundary truncation and timing-reference/TOF assumptions remain entangled. No intrinsic stave timing resolution is extracted.
 \end{evidencebox}
 
-\PaperFigure{figures/final/timing_b4_b6_residual.pdf}{0.90}{Target B4--B6 residual figure from the authorising 8-by-16 waveform schema.}{PENDING final figure regeneration; caption must state NOT DETECTOR RESOLUTION.}
+\PaperFigure{figures/final/timing_b4_b6_residual.pdf}{0.90}{Target B4--B6 residual figure from the source-bound 8-by-16 waveform schema.}{PENDING final figure regeneration; caption must state NOT DETECTOR RESOLUTION.}
 
 Historical sub-nanosecond values are retained only as provenance history or simulation/method-closure diagnostics and must not appear in the abstract/conclusions as beam-data performance.

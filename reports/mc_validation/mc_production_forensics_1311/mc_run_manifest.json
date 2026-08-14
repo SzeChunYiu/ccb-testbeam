@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0",
+  "campaign_id": "output_krakow_1M_historical_forensic",
+  "verdict": "HISTORICAL_PROVENANCE_GATED",
+  "issue": "#1311",
+  "investigation_date": "2026-08-14",
+  "output_file": {
+    "path": "geant4/data/output_krakow_1M.root",
+    "sha256": "2b62403f0aa7ecc8c6fc8ffb5006b59d833ff1a31a95a8f389f88f45a18542cc",
+    "size_bytes": 677221620,
+    "creation_timestamp": "2026-07-09T11:29:48+02:00",
+    "event_count": 1000000,
+    "tree_name": "hibeam"
+  },
+  "input_digests": {
+    "cross_section_table": {
+      "path": "geant4/src_patch/sigma_pd_cm_190.txt",
+      "sha256": "0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc"
+    },
+    "macro": {
+      "path": "geant4/macros/run_krakow.mac",
+      "note": "Inferred from adjacent files, not bound to git commit"
+    },
+    "config": {
+      "path": "geant4/configs/krakow.config",
+      "note": "Inferred from adjacent files, not bound to git commit"
+    }
+  },
+  "source_measure": {
+    "mode": "LEGACY_WEIGHTED_THETA_LAB",
+    "weight_semantics": "PrimaryWeight = sigma(theta_lab) - DEFECTIVE per #1053",
+    "beam_energy_mev": 190.0,
+    "target_thickness_mm": 2.3,
+    "beamspot_mm": 10.0
+  },
+  "provenance_status": {
+    "git_commit_exact": "NOT_RECOVERED",
+    "executable_hash": "NOT_RECOVERED",
+    "geant4_version": "UNKNOWN",
+    "physics_list": "UNKNOWN",
+    "random_seed": "NOT_RECOVERED",
+    "runtime_host": "NOT_RECOVERED",
+    "geometry_digest": "NOT_RECOVERED"
+  },
+  "search_scope": [
+    "filesystem timestamps",
+    "slurm outputs (~/slurm-*.out)",
+    "bash history (~/.bash_history)",
+    "git log for output_krakow_1M.root",
+    "git log for ScatteringGenerator.cc",
+    "adjacent files in geant4/ directory",
+    "conda environments"
+  ],
+  "known_defects": [
+    "#1053: Legacy PrimaryWeight = sigma(theta_lab), not CM importance weight",
+    "#1057: May lack full 2pi azimuthal coverage",
+    "#1178: Predates direct-CDF sampler implementation",
+    "#1179: No source uncertainty propagation"
+  ],
+  "recommendation": "DO NOT USE as primary publication MC. Regenerate from current validated stack.",
+  "references": [
+    "Issue #1311",
+    "Issue #1053",
+    "Issue #1178",
+    "Issue #1179",
+    "PR #1329"
+  ]
+}

@@ -58,8 +58,8 @@ def test_cli_publishes_current_analyzer_contract(tmp_path: Path):
     )
     assert "downstream_blocker" not in payload
     assert payload["downstream_analyzer_contract"] == {
-        "version": "2.0.0",
-        "policy": "ANALYZER_MUST_PRESERVE_COMPONENT_OPTICAL_COUNTS_AND_USE_EXACT_TOTAL",
+        "version": "2.1.0",
+        "policy": "ANALYZER_MUST_PRESERVE_COMPONENT_OPTICAL_COUNTS_AND_USE_EXACT_TOTAL_AND_DECLARE_EXPLICIT_ENERGY_TARGET",
         "optical_generation_contract": "CURRENT_COMPONENT_SUM",
         "collection_efficiency_denominator": "n_optical_generated_total",
         "acceptance": "SOFTWARE_CONTRACT_VALIDATED_REAL_ROOT_PENDING",

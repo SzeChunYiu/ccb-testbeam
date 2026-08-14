@@ -481,10 +481,16 @@ def write_outputs(
 
     all_tables = []
     all_summaries = []
+    negctl_summaries = []
 
     for energy_target, (test, summary) in results.items():
         if "_negctl" in energy_target:
-            continue  # Don't write separate files for negative control
+            # No separate CSV/figure, but the control metrics MUST be reported:
+            # a control that ran but is absent from result.json is unverifiable.
+            summary = dict(summary)
+            summary["control_key"] = energy_target
+            negctl_summaries.append(summary)
+            continue
 
         table = per_point_table(test, energy_target=energy_target.replace("_negctl", ""))
         all_tables.append(table)
@@ -536,8 +542,19 @@ def write_outputs(
         "tail_threshold_abs_r": TAIL_THRESHOLD,
         "bootstrap_reps": BOOTSTRAP_REPS,
         "negative_controls": {
-            "shuffled_target": "shuffled_target_E_vis" in results,
-            "expected_behavior": "metric must collapse (bias ~0, sigma68 increased)",
+            "shuffled_target": any(k.endswith("_negctl") for k in results),
+            "shuffled_target_expected_behavior": (
+                "reconstruction metrics collapse (sigma68/tail blow up) when the "
+                "train PE-E correlation is destroyed"
+            ),
+            "shuffled_target_summaries": negctl_summaries,
+            "mis_specified_model": "E_raw estimand row",
+            "mis_specified_model_expected_behavior": (
+                "a pooled linear PE-vs-E_raw response mis-specifies the quenched "
+                "light response (PE is linear in E_vis); it must be detected as "
+                "large held-out bias and tail fraction, which the E_raw summary "
+                "reports directly"
+            ),
         },
         "input_bindings": bindings,
         "summaries": all_summaries,

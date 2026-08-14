@@ -251,3 +251,13 @@ def test_real_repo_is_consistent():
     """CI self-enforcement: the actual repository must pass its own checker."""
     result = run_checker(REPO_ROOT)
     assert result.returncode == 0, result.stdout + result.stderr
+
+
+def test_stray_canonical_ledger_backup_fails(tree):
+    """A committed backup/sibling of the canonical ledger is a stale parallel
+    claim-truth surface and must fail, not pass silently."""
+    (tree / "docs" / "claim_ledger.csv.backup_x").write_text(
+        "claim_id,status,allowed_status_validated\nCL-001,VALIDATED,YES\n", encoding="utf-8")
+    result = run_checker(tree)
+    assert result.returncode == 1
+    assert "stray copy" in result.stdout

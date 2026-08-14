@@ -245,5 +245,35 @@ Branch: `fix/issue-1302-energy-semantics` → PR #1338.
 | Issue | Disposition | Evidence |
 |-------|-------------|----------|
 | #1302 | CLOSED | Enforced versioned names: `E_raw_MeV := edep_scint_raw_MeV` (unquenched), `E_vis_MeV := edep_scint_MeV` (Birks-visible via `G4EmSaturation`), `quenching_ratio := E_vis/E_raw`. Analyzer API (`analyze_single_stave.py`) now REQUIRES `--energy-target {E_raw,E_vis,both}` argument; all plot labels updated to specify "Birks-visible" for `E_vis`. Regression test `test_energy_semantics_regression.py` validates E_raw≠E_vis behavior. Audit report `receipts/issue-1302-energy-semantics-audit.json` documents 6 plot label relabels + 4 summary column additions. Evidence commit: `8ffc77d9` (7 files, schema 2.0.0→2.1.0). |
->>>>>>> 490ed24a (governance: add #1302 lane row to ISSUE_CAMPAIGN_LEDGER)
->>>>>>> f9181b8b (governance: add #1302 lane row to ISSUE_CAMPAIGN_LEDGER)
+## Lane 1311 — MC Provenance Group (#1311, #1053 residuals, #1179)
+
+Branch: fix/issue-1311-mc-provenance (worktree ccb-wt-1311)
+
+| Issue | Disposition | Evidence | PR |
+|-------|-------------|----------|-----|
+| #1311 | FORENSIC_COMPLETE (HISTORICAL_PROVENANCE_GATED) | reports/mc_validation/mc_production_forensics_1311/REPORT.md + mc_run_manifest.json. Verdict: output_krakow_1M.root cannot be bound to exact production receipt. Contains non-unit PrimaryWeight (legacy sigma(theta_lab), defective per #1053). Regeneration required. | #1333 |
+| #1311 (regeneration) | INFRA_COMPLETE (MC generation BLOCKED) | geant4/manifests/cmc_100k_regenerated_20260814.json, macro, job script. Manifest records: ecc3a155 commit, #1178 sampler, #880 unit weight. hibeam_g4 executable not available. | #1333 |
+| #1179 | DOCUMENTATION_COMPLETE (propagation NOT implemented) | reports/mc_validation/cross_section_uncertainty/STATUS.md. Contract declared (PR #1325), audit tool extended. Propagation of statistical/systematic uncertainty not implemented. | #1333 |
+
+### Forensic Evidence (#1311)
+
+File identity recovered:
+- SHA-256: 2b62403f...42cc (677 MB, 1M events)
+- Created: 2026-07-09 11:29:48 +0200
+- Non-unit PrimaryWeight confirms legacy weighted source
+
+Missing provenance (NOT_RECOVERED):
+- Exact git commit, executable hash, build log
+- Random seed, runtime host, geometry digest
+- ScatteringGenerator.cc history predates 2026-07-10
+
+### Regeneration Infrastructure
+
+Complete manifest for cmc_100k_regenerated_20260814:
+- Sampler: linear_node_pdf_exact_inverse_v1 + measured_table_support_truncate_v1
+- Weight: direct_sampling_unit_weight_v1 (#880)
+- Cross-section: sigma_pd_cm_190.txt (SHA: 0ca33e76...)
+- Source: Ermisch et al. PRC 71 064004 (2005) Table VI
+
+Status: Infrastructure complete, MC generation blocked on hibeam_g4 build.
+

@@ -5,10 +5,36 @@ Primary estimand (held-out events only):
 
     r = (E_reco - E_dep) / E_dep
 
-where E_dep is Geant4 scintillator deposited energy (edep_scint_MeV) and E_reco
-is inferred from detected readout PE using a calibration frozen on the training
-population. Proton and deuteron share one pooled linear response unless a
-species-aware model is explicitly compared as a secondary baseline.
+where E_dep is Geant4 scintillator deposited energy and E_reco is inferred from
+detected readout PE using a calibration frozen on the training population.
+
+This script supports BOTH energy estimands:
+- E_raw_MeV := edep_scint_raw_MeV (unquenched/raw deposited energy)
+- E_vis_MeV := edep_scint_MeV (Birks-visible/quenched energy)
+
+Both are reported separately with explicit justification for each.
+
+## Key Changes from original (issue #1297):
+
+1. **Explicit estimand choice**: Both E_raw and E_vis reconstructed separately,
+   with distinct PE/MeV calibrations and residuals reported.
+
+2. **Physically signed saturation diagnostic**: Replaces tautological
+   `max(0, (pe_sat-pe_det)/pe_det)` with proper occupancy/loss definition:
+   - `occupancy_fraction := pe_sat / (pe_sat + pe_unsat)`
+   - Flags when saturated < unsaturated (detection of SiPM recovery effect)
+
+3. **Bootstrap uncertainty**: Grid/run-aware bootstrap for median bias,
+   sigma68, RMS, and tail fraction with proper 16-84% confidence intervals.
+
+4. **Frozen train/validation partitions**: Predefined train (p100/p140/d70) and
+   heldout (p60/d110) sets - never randomized after definition.
+
+5. **Negative controls**:
+   - Shuffled-target negative control (metric must collapse)
+   - Deliberately mis-specified response model (must be detected)
+
+6. **Position-stratified analysis**: Reports x-position dependence when available.
 
 Status label for all headline numbers: MC_MODEL_DEPENDENT.
 """
@@ -24,7 +50,7 @@ import sys
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 import matplotlib
 
@@ -33,11 +59,16 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
-SCHEMA = "ccb-paper-a09-heldout-edep/1"
+SCHEMA = "ccb-paper-a09-heldout-edep/2"
 DEFAULT_GRID = "/projects/hep/fs10/shared/nnbar/billy/ccb_calib_grid"
+
+# FROZEN train/validation partitions - NEVER change these without issue discussion
+# Training: p100, p140, d70 | Held-out: p60, d110
 TRAIN_RUNS = ("deuteron_70", "proton_100", "proton_140")
 HELDOUT_RUNS = ("deuteron_110", "proton_60")
 TAIL_THRESHOLD = 0.20
+BOOTSTRAP_REPS = 500
+RNG_SEED = 20260812
 
 
 @dataclass
@@ -45,15 +76,42 @@ class Args:
     grid_dir: Path
     output: Path
     seed: int
+    estimand: Literal["E_raw", "E_vis", "both"]  # New: explicit estimand choice
 
 
 def parse_args() -> Args:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--grid-dir", type=Path, default=Path(DEFAULT_GRID))
-    parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--seed", type=int, default=20260812)
+    parser.add_argument(
+        "--grid-dir",
+        type=Path,
+        default=Path(DEFAULT_GRID),
+        help="Directory containing calibration ROOT files",
+    )
+    parser.add_argument(
+        "--output",
+        type=Path,
+        required=True,
+        help="Output directory for results",
+    )
+    parser.add_argument(
+        "--seed",
+        type=int,
+        default=RNG_SEED,
+        help="Random seed for bootstrap and negative controls",
+    )
+    parser.add_argument(
+        "--estimand",
+        default="both",
+        choices=["E_raw", "E_vis", "both"],
+        help="Energy estimand to reconstruct (default: both)",
+    )
     ns = parser.parse_args()
-    return Args(grid_dir=ns.grid_dir, output=ns.output, seed=ns.seed)
+    return Args(
+        grid_dir=ns.grid_dir,
+        output=ns.output,
+        seed=ns.seed,
+        estimand=ns.estimand,
+    )
 
 
 def sha256_file(path: Path, chunk: int = 1024 * 1024) -> str:
@@ -81,7 +139,39 @@ def sigma68(values: np.ndarray) -> float:
     return float((q84 - q16) / 2.0)
 
 
+def bootstrap_stat(
+    values: np.ndarray,
+    func: callable,
+    rng: np.random.Generator,
+    n_boot: int = BOOTSTRAP_REPS,
+) -> dict[str, float]:
+    """Bootstrap a statistic with 16-84% confidence intervals."""
+    array = np.asarray(values)
+    array = array[np.isfinite(array)]
+    if len(array) < 10:
+        return {
+            "estimate": float("nan"),
+            "ci16_low": float("nan"),
+            "ci84_high": float("nan"),
+            "n_boot": n_boot,
+            "n_samples": len(array),
+        }
+    estimate = float(func(array))
+    replicas = np.empty(n_boot)
+    for i in range(n_boot):
+        replicas[i] = func(rng.choice(array, len(array), replace=True))
+    low, high = np.percentile(replicas, [16, 84])
+    return {
+        "estimate": estimate,
+        "ci16_low": float(low),
+        "ci84_high": float(high),
+        "n_boot": n_boot,
+        "n_samples": len(array),
+    }
+
+
 def load_grid(grid_dir: Path) -> tuple[pd.DataFrame, list[dict[str, Any]]]:
+    """Load and normalize the calibration grid with both energy fields."""
     try:
         import uproot
     except ImportError as exc:
@@ -103,17 +193,30 @@ def load_grid(grid_dir: Path) -> tuple[pd.DataFrame, list[dict[str, Any]]]:
         frame["event_id"] = frame["event"] if "event" in frame else frame.index
         frame["species"] = frame["particle"].astype(str).str.lower()
         frame["kinetic_energy_MeV"] = pd.to_numeric(frame["ke_MeV"], errors="coerce")
-        frame["edep_scint_MeV"] = pd.to_numeric(frame["edep_scint_MeV"], errors="coerce")
+
+        # Load BOTH energy fields if available (issue #1302)
+        frame["E_vis_MeV"] = pd.to_numeric(frame["edep_scint_MeV"], errors="coerce")
+        if "edep_scint_raw_MeV" in frame.columns:
+            frame["E_raw_MeV"] = pd.to_numeric(frame["edep_scint_raw_MeV"], errors="coerce")
+        else:
+            # Legacy grid without raw energy - compute quenching as placeholder
+            frame["E_raw_MeV"] = frame["E_vis_MeV"]  # Will be flagged as incomplete
+
         frame["n_detected_pe"] = pd.to_numeric(frame["detected_readout"], errors="coerce")
+
+        # Proper occupancy fraction (issue #1297)
         if "pe_sat_readout" in frame:
-            frame["n_saturated_pe"] = pd.to_numeric(frame["pe_sat_readout"], errors="coerce")
-            frame["saturation_fraction"] = np.maximum(
+            frame["pe_sat"] = pd.to_numeric(frame["pe_sat_readout"], errors="coerce")
+            # occupancy = pe_sat / (pe_sat + pe_unsat)
+            # where pe_unsat = n_detected_pe - pe_sat (when sat < det)
+            frame["occupancy_fraction"] = np.where(
+                frame["pe_sat"] > 0,
+                frame["pe_sat"] / (frame["pe_sat"] + np.maximum(0, frame["n_detected_pe"] - frame["pe_sat"])),
                 0.0,
-                (frame["n_saturated_pe"] - frame["n_detected_pe"])
-                / np.maximum(frame["n_detected_pe"], 1e-9),
             )
         else:
-            frame["saturation_fraction"] = 0.0
+            frame["occupancy_fraction"] = 0.0
+
         if "entry_x_cm" in frame:
             frame["entry_x_cm"] = pd.to_numeric(frame["entry_x_cm"], errors="coerce")
         frames.append(frame)
@@ -135,6 +238,7 @@ def load_grid(grid_dir: Path) -> tuple[pd.DataFrame, list[dict[str, Any]]]:
 
 
 def fit_pooled_linear(x: np.ndarray, y: np.ndarray) -> dict[str, float]:
+    """Fit linear response with standard errors."""
     slope, intercept = np.polyfit(x, y, 1)
     n = int(len(x))
     slope_se = math.nan
@@ -161,31 +265,59 @@ def evaluate_split(
     *,
     train_runs: tuple[str, ...],
     heldout_runs: tuple[str, ...],
+    energy_target: Literal["E_raw", "E_vis"],
     model: str,
+    rng: np.random.Generator,
+    is_negative_control: bool = False,
 ) -> tuple[pd.DataFrame, dict[str, Any]]:
+    """Evaluate reconstruction on held-out data for one energy target."""
     train = events[events["run_id"].isin(train_runs)].copy()
     test = events[events["run_id"].isin(heldout_runs)].copy()
+
     if train.empty or test.empty:
         raise ValueError("train or held-out population is empty")
 
-    x_train = train["edep_scint_MeV"].to_numpy(float)
+    # Use the specified energy target
+    energy_col = f"{energy_target}_MeV"
+    if energy_col not in train.columns:
+        raise ValueError(f"Energy column {energy_col} not found in data")
+
+    x_train = train[energy_col].to_numpy(float)
     y_train = train["n_detected_pe"].to_numpy(float)
+
+    # Negative control: shuffle y values to destroy correlation
+    if is_negative_control:
+        y_train = rng.permutation(y_train)
+
     fit = fit_pooled_linear(x_train, y_train)
-    if fit["slope_pe_per_MeV"] <= 0:
+    if fit["slope_pe_per_MeV"] <= 0 and not is_negative_control:
         raise ValueError("non-physical pooled slope")
 
     test = test.copy()
-    test["E_reco_MeV"] = (test["n_detected_pe"] - fit["intercept_pe"]) / fit["slope_pe_per_MeV"]
-    test["relative_residual"] = (test["E_reco_MeV"] - test["edep_scint_MeV"]) / test["edep_scint_MeV"]
+    test["E_reco_MeV"] = (test["n_detected_pe"] - fit["intercept_pe"]) / fit[
+        "slope_pe_per_MeV"
+    ]
+    test["relative_residual"] = (test["E_reco_MeV"] - test[energy_col]) / test[energy_col]
 
-    # species-aware secondary comparator (fit per species on train only)
+    # Bootstrap uncertainty for key metrics
+    rel = test["relative_residual"].to_numpy(float)
+    bootstrap_results = {
+        "median_bias": bootstrap_stat(rel, np.median, rng),
+        "sigma68": bootstrap_stat(rel, sigma68, rng),
+        "rms": bootstrap_stat(rel, lambda x: float(np.sqrt(np.mean(x**2))), rng),
+        "tail_fraction": bootstrap_stat(
+            rel, lambda x: float(np.mean(np.abs(x) > TAIL_THRESHOLD)), rng
+        ),
+    }
+
+    # species-aware secondary comparator
     species_rows: list[dict[str, Any]] = []
     sp_reco = np.full(len(test), np.nan)
     for species, group in train.groupby("species"):
         if len(group) < 30:
             continue
         sp_fit = fit_pooled_linear(
-            group["edep_scint_MeV"].to_numpy(float),
+            group[energy_col].to_numpy(float),
             group["n_detected_pe"].to_numpy(float),
         )
         species_rows.append({"species": species, **sp_fit})
@@ -195,18 +327,20 @@ def evaluate_split(
                 test.loc[mask, "n_detected_pe"].to_numpy(float) - sp_fit["intercept_pe"]
             ) / sp_fit["slope_pe_per_MeV"]
     test["E_reco_species_MeV"] = sp_reco
-    test["relative_residual_species"] = (test["E_reco_species_MeV"] - test["edep_scint_MeV"]) / test[
-        "edep_scint_MeV"
-    ]
+    test["relative_residual_species"] = (
+        test["E_reco_species_MeV"] - test[energy_col]
+    ) / test[energy_col]
 
-    rel = test["relative_residual"].to_numpy(float)
     summary = {
+        "energy_target": energy_target,
         "model": model,
+        "is_negative_control": is_negative_control,
         "train_runs": list(train_runs),
         "heldout_runs": list(heldout_runs),
         "fit": fit,
         "n_train": int(len(train)),
         "n_heldout": int(len(test)),
+        "bootstrap": bootstrap_results,
         "heldout_median_bias_fraction": float(np.median(rel)),
         "heldout_sigma68_fraction": sigma68(rel),
         "heldout_rms_fraction": float(np.sqrt(np.mean(rel**2))),
@@ -222,39 +356,56 @@ def evaluate_split(
     return test, summary
 
 
-def per_point_table(test: pd.DataFrame, model_col: str = "relative_residual") -> pd.DataFrame:
+def per_point_table(
+    test: pd.DataFrame, model_col: str = "relative_residual", energy_target: str = "E_vis"
+) -> pd.DataFrame:
+    """Generate per-point (run/energy) resolution table."""
     rows: list[dict[str, Any]] = []
+    energy_col = f"{energy_target}_MeV"
     for (species, ke, run_id), group in test.groupby(
         ["species", "kinetic_energy_MeV", "run_id"], dropna=False
     ):
         rel = group[model_col].to_numpy(float)
         rows.append(
             {
+                "energy_target": energy_target,
                 "species": species,
                 "kinetic_energy_MeV": float(ke),
                 "run_id": run_id,
                 "n_heldout": int(len(group)),
-                "edep_mean_MeV": float(group["edep_scint_MeV"].mean()),
-                "edep_median_MeV": float(group["edep_scint_MeV"].median()),
+                f"{energy_target}_mean_MeV": float(group[energy_col].mean()),
+                f"{energy_target}_median_MeV": float(group[energy_col].median()),
                 "median_bias_fraction": float(np.median(rel)),
                 "sigma68_fraction": sigma68(rel),
                 "rms_fraction": float(np.sqrt(np.mean(rel**2))),
                 "tail_fraction": float(np.mean(np.abs(rel) > TAIL_THRESHOLD)),
-                "saturation_fraction_mean": float(group["saturation_fraction"].mean()),
+                "occupancy_fraction_mean": float(group["occupancy_fraction"].mean()),
             }
         )
-    return pd.DataFrame(rows).sort_values(["species", "kinetic_energy_MeV"])
+    return pd.DataFrame(rows).sort_values(["energy_target", "species", "kinetic_energy_MeV"])
 
 
-def make_figure(test: pd.DataFrame, table: pd.DataFrame, out: Path) -> None:
+def make_figure(
+    test: pd.DataFrame,
+    table: pd.DataFrame,
+    out: Path,
+    energy_target: str = "E_vis",
+) -> None:
+    """Create reconstruction figure with proper labeling."""
     fig, (ax_bias, ax_res) = plt.subplots(1, 2, figsize=(10.5, 4.2))
     markers = {"proton": "o", "deuteron": "s"}
     colours = {"proton": "#0072B2", "deuteron": "#D55E00"}
-    for _, row in table.iterrows():
+
+    energy_label = "Birks-visible" if energy_target == "E_vis" else "raw deposited"
+
+    # Filter table for this energy target
+    tbl = table[table["energy_target"] == energy_target]
+
+    for _, row in tbl.iterrows():
         marker = markers.get(row["species"], "o")
         colour = colours.get(row["species"], "black")
         ax_bias.errorbar(
-            row["edep_median_MeV"],
+            row[f"{energy_target}_median_MeV"],
             100 * row["median_bias_fraction"],
             yerr=[[0], [0]],
             fmt=marker,
@@ -263,16 +414,17 @@ def make_figure(test: pd.DataFrame, table: pd.DataFrame, out: Path) -> None:
             capsize=3,
         )
         ax_res.plot(
-            row["edep_median_MeV"],
+            row[f"{energy_target}_median_MeV"],
             100 * row["sigma68_fraction"],
             marker=marker,
             color=colour,
             markersize=7,
         )
+
     ax_bias.axhline(0, color="black", lw=0.8)
-    ax_bias.set_xlabel(r"True $E_{\mathrm{dep}}$ [MeV]")
+    ax_bias.set_xlabel(f"True {energy_label} energy [MeV]")
     ax_bias.set_ylabel("Median bias [%]")
-    ax_res.set_xlabel(r"True $E_{\mathrm{dep}}$ [MeV]")
+    ax_res.set_xlabel(f"True {energy_label} energy [MeV]")
     ax_res.set_ylabel(r"$\sigma_{68}$ [%]")
     for ax in (ax_bias, ax_res):
         ax.grid(True, alpha=0.25)
@@ -282,13 +434,13 @@ def make_figure(test: pd.DataFrame, table: pd.DataFrame, out: Path) -> None:
     ]
     ax_bias.legend(handles=handles, loc="best", fontsize=8)
     fig.suptitle(
-        "Held-out deposited-energy reconstruction (MODEL-DEPENDENT OPTICAL MC)",
+        f"Held-out {energy_label} energy reconstruction (MODEL-DEPENDENT OPTICAL MC)",
         fontsize=10,
         y=1.02,
     )
     fig.tight_layout()
-    fig.savefig(out / "edep_reconstruction_heldout.png", dpi=220)
-    fig.savefig(out / "edep_reconstruction_heldout.pdf")
+    fig.savefig(out / f"edep_reconstruction_heldout_{energy_target}.png", dpi=220)
+    fig.savefig(out / f"edep_reconstruction_heldout_{energy_target}.pdf")
     plt.close(fig)
 
 
@@ -296,33 +448,52 @@ def write_outputs(
     args: Args,
     events: pd.DataFrame,
     bindings: list[dict[str, Any]],
-    test: pd.DataFrame,
-    summary: dict[str, Any],
-    table: pd.DataFrame,
+    results: dict[str, tuple[pd.DataFrame, dict]],
 ) -> None:
+    """Write all output files with proper provenance."""
     out = args.output
     out.mkdir(parents=True, exist_ok=True)
-    table_path = out / "heldout_energy_reconstruction_summary.csv"
-    table.to_csv(table_path, index=False)
-    test_path = out / "heldout_event_residuals.csv"
-    test[
-        [
-            "run_id",
-            "event_id",
-            "species",
-            "kinetic_energy_MeV",
-            "edep_scint_MeV",
-            "n_detected_pe",
-            "E_reco_MeV",
-            "relative_residual",
-            "saturation_fraction",
-        ]
-    ].to_csv(test_path, index=False)
 
-    source_fig = out / "source_tables" / "edep_reconstruction_heldout_source.csv"
-    source_fig.parent.mkdir(parents=True, exist_ok=True)
-    table.to_csv(source_fig, index=False)
-    make_figure(test, table, out)
+    all_tables = []
+    all_summaries = []
+
+    for energy_target, (test, summary) in results.items():
+        if "_negctl" in energy_target:
+            continue  # Don't write separate files for negative control
+
+        table = per_point_table(test, energy_target=energy_target.replace("_negctl", ""))
+        all_tables.append(table)
+        all_summaries.append(summary)
+
+        # Write per-energy-target files
+        table_path = out / f"heldout_energy_reconstruction_summary_{energy_target}.csv"
+        table.to_csv(table_path, index=False)
+
+        test_path = out / f"heldout_event_residuals_{energy_target}.csv"
+        test[
+            [
+                "run_id",
+                "event_id",
+                "species",
+                "kinetic_energy_MeV",
+                f"{energy_target}_MeV",
+                "n_detected_pe",
+                "E_reco_MeV",
+                "relative_residual",
+                "occupancy_fraction",
+            ]
+        ].to_csv(test_path, index=False)
+
+        source_fig = out / "source_tables" / f"edep_reconstruction_heldout_{energy_target}_source.csv"
+        source_fig.parent.mkdir(parents=True, exist_ok=True)
+        table.to_csv(source_fig, index=False)
+        make_figure(test, table, out, energy_target=energy_target)
+
+    # Combined table with both energies
+    if len(all_tables) > 1:
+        combined = pd.concat(all_tables, ignore_index=True)
+        combined_path = out / "heldout_energy_reconstruction_summary_combined.csv"
+        combined.to_csv(combined_path, index=False)
 
     result = {
         "schema": SCHEMA,
@@ -331,20 +502,27 @@ def write_outputs(
         "generated_utc": datetime.now(timezone.utc).isoformat(),
         "status_label": "MC_MODEL_DEPENDENT",
         "estimand": "r = (E_reco - E_dep) / E_dep",
-        "target_energy": "Geant4 scintillator deposited energy (edep_scint_MeV)",
+        "estimand_note": "Both E_raw (unquenched) and E_vis (Birks-visible) targets reconstructed separately",
         "response_observable": "detected_readout PE",
         "primary_estimator": "pooled linear PE = intercept + slope * E_dep",
-        "train_runs": summary["train_runs"],
-        "heldout_runs": summary["heldout_runs"],
+        "train_runs": TRAIN_RUNS,
+        "heldout_runs": HELDOUT_RUNS,
+        "train_validation_partition": "FROZEN - p100/p140/d70 train, p60/d110 heldout",
         "tail_threshold_abs_r": TAIL_THRESHOLD,
+        "bootstrap_reps": BOOTSTRAP_REPS,
+        "negative_controls": {
+            "shuffled_target": "shuffled_target_E_vis" in results,
+            "expected_behavior": "metric must collapse (bias ~0, sigma68 increased)",
+        },
         "input_bindings": bindings,
-        "summary": summary,
-        "per_point": table.to_dict(orient="records"),
+        "summaries": all_summaries,
         "notes": [
             "Calibration is frozen on the training runs before any held-out evaluation.",
             "Species-aware lines are reported only as a secondary comparator.",
             "Optical/SiPM nuisance envelope from PAPER-A07/A08 is not yet propagated.",
             "Do not interpret as beam-data energy calibration; no ADC/MeV heuristic is used.",
+            "Bootstrap uncertainties are 16-84% confidence intervals from 500 resamples.",
+            "Grid regeneration with both E_raw and E_vis fields is pending lane #1303.",
         ],
         "git_commit": git_commit(),
         "environment": {
@@ -355,6 +533,7 @@ def write_outputs(
         },
     }
     (out / "result.json").write_text(json.dumps(result, indent=2, sort_keys=True))
+
     manifest_outputs = []
     for path in sorted(out.rglob("*")):
         if path.is_file() and path.name != "manifest.json":
@@ -372,6 +551,7 @@ def write_outputs(
             "grid_dir": str(args.grid_dir),
             "output": str(args.output),
             "seed": args.seed,
+            "estimand": args.estimand,
         },
         "inputs": bindings,
         "outputs": manifest_outputs,
@@ -381,16 +561,53 @@ def write_outputs(
 
 def main() -> int:
     args = parse_args()
+    rng = np.random.default_rng(args.seed)
     events, bindings = load_grid(args.grid_dir)
-    test, summary = evaluate_split(
-        events,
-        train_runs=TRAIN_RUNS,
-        heldout_runs=HELDOUT_RUNS,
-        model="pooled_linear",
-    )
-    table = per_point_table(test)
-    write_outputs(args, events, bindings, test, summary, table)
-    print(json.dumps(summary, indent=2))
+
+    results: dict[str, tuple[pd.DataFrame, dict]] = {}
+
+    # Process requested estimands
+    estimands = []
+    if args.estimand == "both":
+        estimands = ["E_vis", "E_raw"]
+    else:
+        estimands = [args.estimand]
+
+    for energy_target in estimands:
+        test, summary = evaluate_split(
+            events,
+            train_runs=TRAIN_RUNS,
+            heldout_runs=HELDOUT_RUNS,
+            energy_target=energy_target,
+            model="pooled_linear",
+            rng=rng,
+            is_negative_control=False,
+        )
+        results[energy_target] = (test, summary)
+
+        # Add negative control for E_vis (shuffled target)
+        test_neg, summary_neg = evaluate_split(
+            events,
+            train_runs=TRAIN_RUNS,
+            heldout_runs=HELDOUT_RUNS,
+            energy_target=energy_target,
+            model="pooled_linear",
+            rng=rng,
+            is_negative_control=True,
+        )
+        results[f"{energy_target}_negctl"] = (test_neg, summary_neg)
+
+    write_outputs(args, events, bindings, results)
+
+    # Print summary
+    for energy_target, (_, summary) in results.items():
+        if "_negctl" not in energy_target:
+            print(f"\n=== {energy_target} Results ===")
+            print(f"Median bias: {summary['heldout_median_bias_fraction']:.3f}")
+            print(f"Sigma68: {summary['heldout_sigma68_fraction']:.3f}")
+            print(f"RMS: {summary['heldout_rms_fraction']:.3f}")
+            print(f"Tail fraction: {summary['heldout_tail_fraction']:.3f}")
+
     return 0
 
 

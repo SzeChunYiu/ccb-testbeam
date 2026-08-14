@@ -35,6 +35,13 @@ def write_csv(path: Path, fieldnames: list[str], rows: list[dict[str, str]]) -> 
         writer.writerows(rows)
 
 
+def read_csv(path: Path) -> tuple[list[str], list[dict[str, str]]]:
+    with path.open(newline="", encoding="utf-8") as stream:
+        reader = csv.DictReader(stream)
+        assert reader.fieldnames is not None
+        return list(reader.fieldnames), list(reader)
+
+
 def build_ready_fixture(root: Path) -> tuple[Path, Path]:
     pub = root / "publication"
     (pub / "figures" / "final").mkdir(parents=True)
@@ -186,3 +193,35 @@ def test_submission_validator_fails_stale_build_head(tmp_path: Path, monkeypatch
 
     assert module.main() == 1
     assert "does not match current HEAD" in capsys.readouterr().out
+
+
+def test_submission_validator_fails_missing_artifact_hash(
+    tmp_path: Path, monkeypatch, capsys
+):
+    module = load_validator()
+    root, pub = build_ready_fixture(tmp_path)
+
+    manifest = pub / "figures" / "MANIFEST.csv"
+    fields, rows = read_csv(manifest)
+    rows[0]["sha256"] = ""
+    write_csv(manifest, fields, rows)
+
+    monkeypatch.setattr(module, "REPO", root)
+    monkeypatch.setattr(module, "PUB", pub)
+    monkeypatch.setattr(module, "current_git_head", lambda: "abc")
+
+    assert module.main() == 1
+    output = capsys.readouterr().out
+    assert "figure final/figure.pdf: sha256 missing" in output
+
+
+def test_resolve_repo_source_rejects_path_escape(tmp_path: Path, monkeypatch):
+    module = load_validator()
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    outside = tmp_path / "outside.csv"
+    outside.write_text("x\n1\n", encoding="utf-8")
+
+    monkeypatch.setattr(module, "REPO", repo)
+
+    assert module.resolve_repo_source("../outside.csv") is None

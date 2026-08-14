@@ -4,6 +4,8 @@ This is the **canonical submission workspace** for the CCB range-stave paper.
 
 The older `docs/latex/` tree is a broader technical/academic report and is **not** the canonical source of this paper. The original 2026-08-12 Markdown draft is retained under `publication/source/` for provenance; active editing is chapterised under `publication/chapters/`.
 
+The current-head section-by-section scientific audit and dependency-ordered finish queue are maintained in [`chatgpt_todo/PAPER_COMPLETION_AUDIT_20260814.md`](../chatgpt_todo/PAPER_COMPLETION_AUDIT_20260814.md).
+
 ## Layout
 
 ```text
@@ -21,7 +23,7 @@ publication/
 ├── scripts/
 │   ├── gated/                   # current producers invalidated by publication audit
 │   ├── utilities/               # plot/build utilities
-│   └── validate_publication.py  # structure/status validator
+│   └── validate_publication.py  # working-package structure/status validator
 ├── tables/
 │   ├── final/                   # authorising publication tables
 │   └── gated/                   # quarantined current tables
@@ -33,9 +35,11 @@ publication/
 
 ## Scientific status
 
-**NOT SUBMISSION READY.** The Cycle-3 audit invalidated promotion of the current #956 ΔE-E bundle and #1297/A09 energy-reconstruction headline and classified the July optical grid as a superseded model diagnostic. The TeX build therefore uses publication-hold blocks and the `figures/gated/` namespace rather than presenting those artifacts as final.
+**NOT SUBMISSION READY.** The Cycle-3 audit invalidated promotion of the current #956 DeltaE-E bundle and #1297/A09 energy-reconstruction headline and classified the July optical grid as a superseded model diagnostic. The TeX build therefore uses publication-hold blocks and the `figures/gated/` namespace rather than presenting those artifacts as final.
 
-The current source of truth for claim status remains `docs/claim_ledger.csv` until #1304 replaces the parallel status surfaces with one fail-closed publication mechanism.
+The 2026-08-14 current-head audit additionally confirms that `figures/final/`, `figures/source_data/` and `tables/final/` contain no non-README authorising scientific artifacts. The deterministic direct-CDF source-sampler defect tracked by #1178 is repaired/closed, but the historical paper MC remains gated by legacy event-measure, source-uncertainty and exact-production-provenance requirements.
+
+The current source of truth for claim status remains `docs/claim_ledger.csv` until #1304 replaces the parallel status surfaces with one fail-closed publication mechanism. Current-facing WIKI text must not override a gated or blocked ledger row.
 
 ## Build
 
@@ -50,10 +54,14 @@ or
 make -C publication
 ```
 
-The build writes `publication/paper.pdf`. Intermediate LaTeX files remain under `publication/build/` and are ignored. On `chatgpt/publication-package-20260812`, the `Publication PDF` GitHub Actions workflow rebuilds the PDF and commits `paper.pdf` plus `BUILD_RECEIPT.json` back to the branch.
+The build writes `publication/paper.pdf`. Intermediate LaTeX files remain under `publication/build/` and are ignored. On the publication working branch, the `Publication PDF` GitHub Actions workflow rebuilds the PDF and commits `paper.pdf` plus `BUILD_RECEIPT.json` back to the branch when configured to do so.
+
+`publication/scripts/validate_publication.py` is intentionally a **working-package structure/hold-state validator**. A green invocation or a green PDF build does not establish scientific submission readiness. Before submission, the stronger Chapter-12 contract must be enforced: final figures/tables and source data present, result/input hashes bound, claim status authorised, units/estimands explicit, uncertainty and MC event measure recorded, and the exact reviewed source head recorded in the build receipt.
 
 ## Editing rule
 
 A result update is not complete until this package is synchronized:
 
 `result/manifest/source table -> claim ledger -> publication figures/tables -> chapter TeX -> paper.pdf -> adversarial review`.
+
+A script returning `PASS`, a PDF compiling, or an issue closing is not by itself physics closure.

@@ -33,6 +33,7 @@ def main():
         "incidence_angle_deg":0.0,
         "track_length_scint_cm":2.0,
         "edep_scint_MeV":edep,
+        "edep_scint_raw_MeV":edep,  # synthetic fixture: raw == visible
         "n_scint_generated":generated,
         "n_end_selected":end,
         "n_detected_pe":pe,

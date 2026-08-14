@@ -13,9 +13,9 @@ from typing import Any
 
 VERSION = "1.1.0"
 POLICY = "ADAPTER_METADATA_MUST_MATCH_CURRENT_ANALYZER_OPTICAL_CONTRACT"
-EXPECTED_ANALYZER_VERSION = "2.0.0"
+EXPECTED_ANALYZER_VERSION = "2.1.0"
 EXPECTED_ANALYZER_POLICY = (
-    "ANALYZER_MUST_PRESERVE_COMPONENT_OPTICAL_COUNTS_AND_USE_EXACT_TOTAL"
+    "ANALYZER_MUST_PRESERVE_COMPONENT_OPTICAL_COUNTS_AND_USE_EXACT_TOTAL_AND_DECLARE_EXPLICIT_ENERGY_TARGET"
 )
 EXPECTED_COMPATIBILITY = "SCHEMA_AND_OPTICAL_BOOKKEEPING_COMPATIBLE"
 EXPECTED_CONTRACT = "CURRENT_COMPONENT_SUM"
@@ -162,11 +162,11 @@ def audit_sources(adapter: str, analyzer: str, contract: str) -> dict[str, Any]:
             )
 
     contract_normalized = " ".join(contract.lower().split())
-    if "analyzer version 2.0.0" not in contract_normalized:
+    if "analyzer version 2.1.0" not in contract_normalized:
         findings.append(
             {
                 "code": "CONTRACT_ANALYZER_VERSION_MISSING",
-                "detail": "EVENT_CONTRACT.md does not bind analyzer version 2.0.0",
+                "detail": "EVENT_CONTRACT.md does not bind analyzer version 2.1.0",
             }
         )
     if "uses the exact total-optical count" not in contract_normalized:

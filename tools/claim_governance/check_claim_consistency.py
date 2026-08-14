@@ -164,6 +164,21 @@ def check_parallel_paper_ledger(root: Path, lines: list) -> None:
                     "(docs/claim_ledger.csv is canonical; delete this file)")
 
 
+def check_stray_ledger_copies(root: Path, lines: list) -> None:
+    """Any sibling of the canonical ledger (backups, -old copies) is a stale
+    parallel claim-truth surface; git history already preserves prior states."""
+    canonical = root / "docs" / "claim_ledger.csv"
+    seen = set()
+    for pattern in ("claim_ledger.csv*", "claim_ledger*.csv"):
+        for path in sorted((root / "docs").glob(pattern)):
+            if path == canonical or path in seen:
+                continue
+            seen.add(path)
+            fail(lines, "{}: stray copy of the canonical claim ledger (git history preserves "
+                        "prior states; never commit backups/siblings)".format(
+                            path.relative_to(root).as_posix()))
+
+
 def check_figures_yaml(root: Path, claims: dict, lines: list, fp_table: list) -> None:
     path = root / "paper" / "figures.yaml"
     if not path.is_file():
@@ -327,6 +342,7 @@ def main(argv=None) -> int:
 
     check_publication_ledger_copy(root, claims, lines)
     check_parallel_paper_ledger(root, lines)
+    check_stray_ledger_copies(root, lines)
     check_figures_yaml(root, claims, lines, fp_table)
     check_wiki_claim_lines(root, claims, lines)
     check_forbidden_promotions(root, claims, fp_table, lines)

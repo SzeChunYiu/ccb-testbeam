@@ -18,7 +18,7 @@
           ],
           "kind": "pdf",
           "ok": true,
-          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/selected_pulse_inventory.pdf",
+          "path": "docs/figures/paper/selected_pulse_inventory.pdf",
           "timestamp_metadata": false
         },
         {
@@ -33,7 +33,7 @@
           ],
           "kind": "svg",
           "ok": true,
-          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/selected_pulse_inventory.svg",
+          "path": "docs/figures/paper/selected_pulse_inventory.svg",
           "timestamp_metadata": false
         },
         {
@@ -52,7 +52,7 @@
           ],
           "kind": "png",
           "ok": true,
-          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/selected_pulse_inventory.png"
+          "path": "docs/figures/paper/selected_pulse_inventory.png"
         }
       ],
       "evidence_class": "DATA_MEASUREMENT",
@@ -75,7 +75,7 @@
           ],
           "kind": "pdf",
           "ok": true,
-          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/claim_status_overview.pdf",
+          "path": "docs/figures/paper/claim_status_overview.pdf",
           "timestamp_metadata": false
         },
         {
@@ -90,7 +90,7 @@
           ],
           "kind": "svg",
           "ok": true,
-          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/claim_status_overview.svg",
+          "path": "docs/figures/paper/claim_status_overview.svg",
           "timestamp_metadata": false
         },
         {
@@ -109,7 +109,7 @@
           ],
           "kind": "png",
           "ok": true,
-          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/claim_status_overview.png"
+          "path": "docs/figures/paper/claim_status_overview.png"
         }
       ],
       "evidence_class": "GOVERNANCE_LEDGER",
@@ -132,7 +132,7 @@
           ],
           "kind": "pdf",
           "ok": true,
-          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/timing_mc_method_closure.pdf",
+          "path": "docs/figures/paper/timing_mc_method_closure.pdf",
           "timestamp_metadata": false
         },
         {
@@ -147,7 +147,7 @@
           ],
           "kind": "svg",
           "ok": true,
-          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/timing_mc_method_closure.svg",
+          "path": "docs/figures/paper/timing_mc_method_closure.svg",
           "timestamp_metadata": false
         },
         {
@@ -166,7 +166,7 @@
           ],
           "kind": "png",
           "ok": true,
-          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/timing_mc_method_closure.png"
+          "path": "docs/figures/paper/timing_mc_method_closure.png"
         }
       ],
       "evidence_class": "MC_METHOD_CLOSURE",
@@ -189,7 +189,7 @@
           ],
           "kind": "pdf",
           "ok": true,
-          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/pid_mc_validation.pdf",
+          "path": "docs/figures/paper/pid_mc_validation.pdf",
           "timestamp_metadata": false
         },
         {
@@ -204,7 +204,7 @@
           ],
           "kind": "svg",
           "ok": true,
-          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/pid_mc_validation.svg",
+          "path": "docs/figures/paper/pid_mc_validation.svg",
           "timestamp_metadata": false
         },
         {
@@ -223,7 +223,7 @@
           ],
           "kind": "png",
           "ok": true,
-          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/pid_mc_validation.png"
+          "path": "docs/figures/paper/pid_mc_validation.png"
         }
       ],
       "evidence_class": "SIMULATION_RESULT",
@@ -246,7 +246,7 @@
           ],
           "kind": "pdf",
           "ok": true,
-          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/adc_mc_calibration.pdf",
+          "path": "docs/figures/paper/adc_mc_calibration.pdf",
           "timestamp_metadata": false
         },
         {
@@ -261,7 +261,7 @@
           ],
           "kind": "svg",
           "ok": true,
-          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/adc_mc_calibration.svg",
+          "path": "docs/figures/paper/adc_mc_calibration.svg",
           "timestamp_metadata": false
         },
         {
@@ -280,7 +280,7 @@
           ],
           "kind": "png",
           "ok": true,
-          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/adc_mc_calibration.png"
+          "path": "docs/figures/paper/adc_mc_calibration.png"
         }
       ],
       "evidence_class": "MC_CLOSURE_PLUS_GATED_DATA_MC_PROXY",
@@ -303,7 +303,7 @@
           ],
           "kind": "pdf",
           "ok": true,
-          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/birks_mc_comparison.pdf",
+          "path": "docs/figures/paper/birks_mc_comparison.pdf",
           "timestamp_metadata": false
         },
         {
@@ -318,7 +318,7 @@
           ],
           "kind": "svg",
           "ok": true,
-          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/birks_mc_comparison.svg",
+          "path": "docs/figures/paper/birks_mc_comparison.svg",
           "timestamp_metadata": false
         },
         {
@@ -337,7 +337,7 @@
           ],
           "kind": "png",
           "ok": true,
-          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/birks_mc_comparison.png"
+          "path": "docs/figures/paper/birks_mc_comparison.png"
         }
       ],
       "evidence_class": "SIMULATION_RESULT",
@@ -360,7 +360,7 @@
           ],
           "kind": "pdf",
           "ok": true,
-          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/pileup_digitizer_mc.pdf",
+          "path": "docs/figures/paper/pileup_digitizer_mc.pdf",
           "timestamp_metadata": false
         },
         {
@@ -375,7 +375,7 @@
           ],
           "kind": "svg",
           "ok": true,
-          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/pileup_digitizer_mc.svg",
+          "path": "docs/figures/paper/pileup_digitizer_mc.svg",
           "timestamp_metadata": false
         },
         {
@@ -394,7 +394,7 @@
           ],
           "kind": "png",
           "ok": true,
-          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/pileup_digitizer_mc.png"
+          "path": "docs/figures/paper/pileup_digitizer_mc.png"
         }
       ],
       "evidence_class": "SIMULATION_RESULT",
@@ -417,7 +417,7 @@
           ],
           "kind": "pdf",
           "ok": true,
-          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/stopping_b8_tension.pdf",
+          "path": "docs/figures/paper/stopping_b8_tension.pdf",
           "timestamp_metadata": false
         },
         {
@@ -432,7 +432,7 @@
           ],
           "kind": "svg",
           "ok": true,
-          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/stopping_b8_tension.svg",
+          "path": "docs/figures/paper/stopping_b8_tension.svg",
           "timestamp_metadata": false
         },
         {
@@ -451,7 +451,7 @@
           ],
           "kind": "png",
           "ok": true,
-          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/stopping_b8_tension.png"
+          "path": "docs/figures/paper/stopping_b8_tension.png"
         }
       ],
       "evidence_class": "LEGACY_DATA_MC_DIAGNOSTIC",
@@ -474,7 +474,7 @@
           ],
           "kind": "pdf",
           "ok": true,
-          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/anomaly_truth_mc.pdf",
+          "path": "docs/figures/paper/anomaly_truth_mc.pdf",
           "timestamp_metadata": false
         },
         {
@@ -489,7 +489,7 @@
           ],
           "kind": "svg",
           "ok": true,
-          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/anomaly_truth_mc.svg",
+          "path": "docs/figures/paper/anomaly_truth_mc.svg",
           "timestamp_metadata": false
         },
         {
@@ -508,7 +508,7 @@
           ],
           "kind": "png",
           "ok": true,
-          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/anomaly_truth_mc.png"
+          "path": "docs/figures/paper/anomaly_truth_mc.png"
         }
       ],
       "evidence_class": "TRUTH_LEVEL_MC_ONLY",
@@ -531,7 +531,7 @@
           ],
           "kind": "pdf",
           "ok": true,
-          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/pca_truth_mc.pdf",
+          "path": "docs/figures/paper/pca_truth_mc.pdf",
           "timestamp_metadata": false
         },
         {
@@ -546,7 +546,7 @@
           ],
           "kind": "svg",
           "ok": true,
-          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/pca_truth_mc.svg",
+          "path": "docs/figures/paper/pca_truth_mc.svg",
           "timestamp_metadata": false
         },
         {
@@ -565,7 +565,7 @@
           ],
           "kind": "png",
           "ok": true,
-          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/pca_truth_mc.png"
+          "path": "docs/figures/paper/pca_truth_mc.png"
         }
       ],
       "evidence_class": "SYNTHETIC_WAVEFORM_MC",
@@ -580,8 +580,7 @@
             75.99999999998528
           ],
           "embedded_fonts": {
-            "/F1": true,
-            "/F2": true
+            "/F1": true
           },
           "expected_mm": [
             89.0,
@@ -589,7 +588,7 @@
           ],
           "kind": "pdf",
           "ok": true,
-          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/systematic_sensitivity_inputs.pdf",
+          "path": "docs/figures/paper/systematic_sensitivity_inputs.pdf",
           "timestamp_metadata": false
         },
         {
@@ -604,7 +603,7 @@
           ],
           "kind": "svg",
           "ok": true,
-          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/systematic_sensitivity_inputs.svg",
+          "path": "docs/figures/paper/systematic_sensitivity_inputs.svg",
           "timestamp_metadata": false
         },
         {
@@ -623,7 +622,7 @@
           ],
           "kind": "png",
           "ok": true,
-          "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/docs/figures/paper/systematic_sensitivity_inputs.png"
+          "path": "docs/figures/paper/systematic_sensitivity_inputs.png"
         }
       ],
       "evidence_class": "SENSITIVITY_INPUTS",

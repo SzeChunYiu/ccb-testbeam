@@ -26,8 +26,8 @@ def _load():
 
 def _analyzer() -> str:
     return '''
-VERSION = "2.0.0"
-POLICY = "ANALYZER_MUST_PRESERVE_COMPONENT_OPTICAL_COUNTS_AND_USE_EXACT_TOTAL"
+VERSION = "2.1.0"
+POLICY = "ANALYZER_MUST_PRESERVE_COMPONENT_OPTICAL_COUNTS_AND_USE_EXACT_TOTAL_AND_DECLARE_EXPLICIT_ENERGY_TARGET"
 OPTICAL_TOTAL = "n_optical_generated_total"
 def generated_optical_denominator(df):
     contract = "CURRENT_COMPONENT_SUM"
@@ -44,7 +44,7 @@ def collection_efficiency_frame(df):
 
 def _contract() -> str:
     return (
-        "Analyzer version 2.0.0 preserves all components and uses the exact "
+        "Analyzer version 2.1.0 preserves all components and uses the exact "
         "total-optical count for collection efficiency."
     )
 
@@ -55,8 +55,8 @@ def main():
     payload = {
         "analysis_compatibility": "SCHEMA_AND_OPTICAL_BOOKKEEPING_COMPATIBLE",
         "downstream_analyzer_contract": {
-            "version": "2.0.0",
-            "policy": "ANALYZER_MUST_PRESERVE_COMPONENT_OPTICAL_COUNTS_AND_USE_EXACT_TOTAL",
+            "version": "2.1.0",
+            "policy": "ANALYZER_MUST_PRESERVE_COMPONENT_OPTICAL_COUNTS_AND_USE_EXACT_TOTAL_AND_DECLARE_EXPLICIT_ENERGY_TARGET",
             "optical_generation_contract": "CURRENT_COMPONENT_SUM",
             "collection_efficiency_denominator": "n_optical_generated_total",
             "acceptance": "SOFTWARE_CONTRACT_VALIDATED_REAL_ROOT_PENDING",
@@ -122,7 +122,7 @@ def test_contract_must_bind_version_and_total_semantics():
 def test_wrapped_contract_prose_is_normalized():
     mod = _load()
     wrapped = (
-        "Analyzer version\n2.0.0 preserves all components and uses the\n"
+        "Analyzer version\n2.1.0 preserves all components and uses the\n"
         "exact total-optical count for collection efficiency."
     )
     result = mod.audit_sources(_corrected_adapter(), _analyzer(), wrapped)

@@ -5,7 +5,7 @@
 **Raw source:** `/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/` (`hrdb_run_*.root`, runs 12–65; 748 MB)
 **Inputs:** canonical S00 table `reports/1781028640.1299.266407ae/s00_selected_b_pulses.csv.gz` (640,737 rows) + raw HRDv waveforms.
 
-> This study was previously **BLOCKED_DATA** ("raw `hrdb_run_*.root` not staged on LUNARC").
+> This study was previously **BLOCKED_DATA** ("raw `hrdb_run_*.root` not staged").
 > The raw data was located on 2026-07-25 at the path above and analysed directly. Every
 > number below is measured from real beam waveforms; caveats are stated explicitly.
 
@@ -49,24 +49,40 @@ producer wrote `digests[:3]`. It is therefore not a complete 33-file digest mani
 producer repair is tracked under #993; the real artifact must be regenerated on the data host
 before full raw-input provenance is claimed.
 
-## 1. VIS-DE-001-DATA — ΔE-E on real beam data
+## 1. VIS-DE-001-DATA — Two-channel B2–B4 amplitude correlation (NOT ΔE–E) **[RELABELLED per #956]**
 
-ADC ΔE-E (E = B2 amplitude, ΔE = B4 amplitude) for events with both staves selected,
-with **composite-key (run,eventno) validation: 0 duplicates** (the corruption mode that
-affects eventno-only joins does not arise here — each (run,eventno,stave) is unique).
+**FIXED (2026-08-14):** This section was previously labeled "ΔE-E on real beam data" but
+describes only a two-channel B2-vs-B4 amplitude correlation. The supervisor contract (#618)
+defines the correct ΔE–E observable as `ΔE = A(B2)`, `E = A(B4)+A(B6)+A(B8)`. The
+B2-vs-B4 plot below is a **diagnostic two-channel correlation**, not the authorising ΔE–E
+observable. See issue #956 for the corrected producer.
 
-| Quantity | DATA | MC (clusterA) |
+ADC B2–B4 correlation (X = B4 amplitude, Y = B2 amplitude) for events with both staves
+selected, with **composite-key (run,eventno) validation: 0 duplicates** (the corruption
+mode that affects eventno-only joins does not arise here — each (run,eventno,stave) is unique).
+
+| Quantity | Value (B2–B4 correlation) |
+|---|---|
+| N events (B2∧B4) | **33,966** |
+| corr(A(B2), A(B4)) | **+0.221** |
+| A(B2) median | 3,385 ADC |
+| A(B4) median | 2,963 ADC |
+
+**Interpretation:** This two-channel correlation shows moderate positive correlation
+(+0.22) between the B2 and B4 ADC amplitudes. This is **not** a ΔE–E particle identification
+observable. The authorising ΔE–E observable (`ΔE = A(B2)`, `E = A(B4)+A(B6)+A(B8)`)
+must be computed from the corrected producer (#956) which includes B6 and B8 contributions.
+The sign reversal versus MC reported below refers to this historical two-channel product
+and does not represent a comparison of the corrected ΔE–E observables.
+
+| For reference (historical MC comparison) | DATA | MC (clusterA) |
 |---|---|---|
-| N events (B2∧B4) | **33,966** | 131,198 |
-| corr(ΔE, E) | **+0.221** | −0.533 |
-| E (B2) median | 3,385 ADC | 101.0 MeV |
-| ΔE (B4) median | 2,963 ADC | 24.1 MeV |
+| corr(ΔE, E) [old definition] | +0.221 | −0.533 |
 
-The sign reversal of the correlation (data +0.22 vs MC −0.53) is the **genuine MC-vs-data
-topology gap**: the data sample is B2-dominated (B2 carries 90% of selected pulses), so
-the ΔE-E band does not populate as the proton-on-CD2 MC predicts. This is consistent with
-the known MV3 material-budget discrepancy (inter-stave dead material missing in GEANT4).
-Figure: `VIS-DE-001-DATA_deltaE_E_real.png`.
+The historical comparison used `E = B2 amplitude, ΔE = B4 amplitude` (a two-channel product)
+and showed a sign reversal versus MC. This comparison is **not authorising** for the corrected
+ΔE–E observable defined in #618. Figure: `VIS-DE-001-DATA_deltaE_E_real.png` (label retained
+for provenance; represents B2–B4 correlation, not ΔE–E).
 
 ## 2. VIS-TIM-DATA — Detector timing resolution: INFEASIBLE on the raw 16-sample format
 
@@ -117,7 +133,7 @@ Figure: `VIS-PU-DATA_occupancy_rmax.png` is descriptive occupancy evidence only.
 
 | Observable | DATA (this study) | MC | Verdict |
 |---|---|---|---|
-| ΔE-E corr(ΔE,E) | +0.221 | −0.533 | **TENSION** (B2-dominated data; material budget) |
+| B2–B4 corr(A(B2), A(B4)) | +0.221 | −0.533 (old MC) | **Two-channel diagnostic only**; corrected ΔE–E pending #956 |
 | Combined timing σ₆₈ | ≥38 ns (format-limited) | 0.089 ns | **INFEASIBLE** on raw 16-sample |
 | Absolute Rmax | withheld | model sensitivities only | **BLOCKED** (`S-STAT-003`) |
 
@@ -129,7 +145,12 @@ Figure: `VIS-PU-DATA_occupancy_rmax.png` is descriptive occupancy evidence only.
 | CL-002..004 (timing σ₆₈) | GATED / data-format-limited | sampling-limited raw-format residual; no detector resolution |
 | CL-005..006 (timing combination/covariance) | BLOCKED | source-bound covariance and uncertainty absent |
 | CL-010 (Rmax) | **BLOCKED** (`S-STAT-003`) | occupancy is descriptive; rate exposure and accepted quality criterion absent |
+| CL-030 (ΔE–E DATA observable) | **GATED** (2026-08-14) | Relabelled B2–B4 as two-channel diagnostic; corrected ΔE–E producer #956 P0-1 fixes applied; pending MC provenance #1311 |
+| CL-031 (ΔE–E MC observable) | **GATED** (2026-08-14) | P0-1 producer fixes applied; disjoint MC samples; entrance-primary species; pending MC provenance #1311 |
+| CL-032 (ΔE–E figures) | **GATED** (2026-08-14) | Pending #1321 final figure package after corrected DATA + MC producers |
+| CL-033 (ΔE–E MC material-budget attribution) | **GATED** (2026-08-14) | Pending corrected observable + nuisance scans + MC provenance |
 
-Artifacts: `metrics.json`, `provenance.json`, `VIS-DE-001-DATA_deltaE_E_real.png`,
+Artifacts: `metrics.json`, `provenance.json`, `VIS-DE-001-DATA_deltaE_E_real.png`
+(two-channel B2–B4 correlation, NOT ΔE–E),
 `VIS-TIM-DATA_sampling_limited.png`, `VIS-PU-DATA_occupancy_rmax.png`,
 `s00_rebuild/` (rebuilt raw table, 709,003 rows, for audit).

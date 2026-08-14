@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "campaign_id": "cmc_100k_regenerated_20260814",
+  "campaign_type": "regenerated_paper_mc",
+  "issue": "#1311",
+  "generation_date": "2026-08-14",
+  "superproject_commit": "ecc3a15587ebc016811947f3389e22b430042efd",
+  "output_file": {
+    "path": "geant4/data/output_krakow_100k_regenerated.root",
+    "expected_events": 100000
+  },
+  "input_digests": {
+    "cross_section_table": {
+      "path": "geant4/src_patch/sigma_pd_cm_190.txt",
+      "sha256": "0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc",
+      "n_points": 28,
+      "source": "Ermisch et al. PRC 71 064004 (2005) Table VI, 190 MeV p-d",
+      "units": "mb/sr"
+    },
+    "macro": {
+      "path": "geant4/macros/run_krakow_100k.mac"
+    },
+    "config": {
+      "path": "geant4/configs/krakow.config"
+    },
+    "geometry": {
+      "path": "krakow_109_8-38deg_4-71deg.root",
+      "source": "hibeam_g4_geobuilder",
+      "note": "External geometry, digest not bound in this manifest"
+    }
+  },
+  "source_measure": {
+    "generator_measure_mode": "MODE_DIRECT_UNIT",
+    "adapter_mode_id": "direct_sampling_unit_weight_v1",
+    "cross_section_interpolation_mode": "linear_node_pdf_exact_inverse_v1",
+    "cross_section_support_mode": "measured_table_support_truncate_v1",
+    "target_distribution": "p(theta) = sigma(theta) * sin(theta) / Z over measured support",
+    "weight_semantics": "unit event weight (direct sampling from target distribution)",
+    "beam_energy_mev": 190.0,
+    "target_thickness_mm": 2.3,
+    "beamspot_mm": 10.0
+  },
+  "uncertainty_contract": {
+    "propagation_status": "not_propagated_issue_1179",
+    "statistical_uncertainty": "encoded in table col 3, not propagated",
+    "systematic_uncertainty": "3% point-to-point + <4.5% total, not propagated"
+  },
+  "geant4_environment": {
+    "version": "from hibeam_g4_250603 conda env",
+    "physics_list": "QGSP_BIC_HP (default for hibeam_g4)",
+    "note": "Executable build receipt not yet bound"
+  },
+  "random_seed": "TO_BE_POPULATED_AT_RUN_TIME",
+  "runtime_host": "LUNARC",
+  "references": [
+    "#1178: Direct-CDF sampler contract",
+    "#880: Weight adapter integration",
+    "#1311: MC provenance gap"
+  ]
+}

@@ -1,0 +1,265 @@
+{
+  "schema_version": "hrd_raw_8x16_v1",
+  "producer_script": "build_8x16_event_product.py",
+  "git_commit": "23c1fc3762926067af899a126d849763096b9c6d",
+  "input_files": [
+    {
+      "run": 31,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0031.root",
+      "sha256": "0986c8263d7445eda3633578fc606902d487a6c8ffb4b4ccd68336e6d140c268",
+      "bytes": 10493094
+    },
+    {
+      "run": 32,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0032.root",
+      "sha256": "6a070aa1881d39ba660f566496503b6e96b104af3594d04ce8ffbfe586820693",
+      "bytes": 10955325
+    },
+    {
+      "run": 33,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0033.root",
+      "sha256": "f08c8e8cf9a6ff53deb1b3a58413e009a00ffbaf5ed13e1cda10304619bcd87a",
+      "bytes": 15148919
+    },
+    {
+      "run": 34,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0034.root",
+      "sha256": "a46d1ef0d4e40a910868b444a0e045cce6ce47937e51385993112534f15bc95c",
+      "bytes": 10553098
+    },
+    {
+      "run": 35,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0035.root",
+      "sha256": "5e21d618e06973a3dfcf41ec0e574c8cfcc226a9cbb69d1ed76efe0b4ab4cd44",
+      "bytes": 7020079
+    },
+    {
+      "run": 36,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0036.root",
+      "sha256": "f1d1cb893fa44be68dc9f7e16611473ab0bd6707d54a9cee431feec372d2d20f",
+      "bytes": 5561341
+    },
+    {
+      "run": 37,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0037.root",
+      "sha256": "80599099bbebd7a5cd7f3627efce2606b23ce92e81de5958aa200d0e13b741f6",
+      "bytes": 12960056
+    },
+    {
+      "run": 39,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0039.root",
+      "sha256": "7c414dc13e0dec570ebaac440bb89d178d17b3ba9b97581658d6fe4a82382d26",
+      "bytes": 7780933
+    },
+    {
+      "run": 40,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0040.root",
+      "sha256": "ea09d9a8e697acaa18ce015790ac4fac0b390c4ec79d395fdb77c2806b84b7cb",
+      "bytes": 8356389
+    },
+    {
+      "run": 41,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0041.root",
+      "sha256": "03db1e99751eceda45d690f288335e9b5fca024f277b142d032cc90c7a63ad0b",
+      "bytes": 8740211
+    },
+    {
+      "run": 42,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0042.root",
+      "sha256": "a710fc1102d1d9a0adf05db34760fe7edc7c2b8530df0d8bb27873835d087f77",
+      "bytes": 8810116
+    },
+    {
+      "run": 44,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0044.root",
+      "sha256": "95bd440c14e82ed69299f199435d99f3f800f364cbf6643abd1152496ff1880e",
+      "bytes": 1107651
+    },
+    {
+      "run": 45,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0045.root",
+      "sha256": "761489cebcc71ede91fa9f3aceaa06f3ddd620a23d68f8f76151e82c3e12fe55",
+      "bytes": 12435030
+    },
+    {
+      "run": 46,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0046.root",
+      "sha256": "13b5dd19686b579bee081c69ff317e5b54f8be684260828674bcf40e1c1945cf",
+      "bytes": 372275
+    },
+    {
+      "run": 47,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0047.root",
+      "sha256": "92a8cdbb6fc4e3ef37bc8b95979274b7aa91d5dfeef1c15a5bd728c604741676",
+      "bytes": 2794293
+    },
+    {
+      "run": 48,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0048.root",
+      "sha256": "55a300b0335a2948c44d3ca68c64664ecdc0f01a258d10d6dfdf4d01c7b17d50",
+      "bytes": 8109481
+    },
+    {
+      "run": 49,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0049.root",
+      "sha256": "6967423d6a273cb8773bb556ff0438ddffeff141697d7063aceb0cacedd55f7f",
+      "bytes": 8298987
+    },
+    {
+      "run": 50,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0050.root",
+      "sha256": "94f53db2dda469cd69d9db63716c26f39555f53116cf82b724aab589aacbe17d",
+      "bytes": 11930230
+    },
+    {
+      "run": 51,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0051.root",
+      "sha256": "8053fe7ecd75bdb61b9819e90fe5a9ae656145cef7edd7def79ddfc65e7e0725",
+      "bytes": 5447385
+    },
+    {
+      "run": 52,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0052.root",
+      "sha256": "0ffbaf269dbb210d578d1ca13bbb10078c5598cdf3d3366bb4b4e1ebab7fdcdf",
+      "bytes": 2654076
+    },
+    {
+      "run": 53,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0053.root",
+      "sha256": "2e922a6807479f33ec159114cf82e8b5bf765109f3623a7d949ea48270c94a6d",
+      "bytes": 10572369
+    },
+    {
+      "run": 54,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0054.root",
+      "sha256": "919d53bf3774dbbed49e8a6dc07c912fad879f4808a77b4c2a2b6077b18a4df3",
+      "bytes": 9978701
+    },
+    {
+      "run": 55,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0055.root",
+      "sha256": "2210ae1b5b4e81b20314c87b583c315dc2c1402f0f78e6349138cf9f26219ac3",
+      "bytes": 6449574
+    },
+    {
+      "run": 56,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0056.root",
+      "sha256": "4ee17a947ca2269056027ad8d3e7efb2132141d2a19074386e5757f6d773ff08",
+      "bytes": 13769970
+    },
+    {
+      "run": 57,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0057.root",
+      "sha256": "1caee44500906ae5887686bbbfa611c3e8745922fe54006b3a0a073b34c03b7b",
+      "bytes": 7995229
+    },
+    {
+      "run": 58,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0058.root",
+      "sha256": "304f9b50c19cee6561aa091e2b9984f4962f1d78f641c77acbc3b4c97b0515b2",
+      "bytes": 8659468
+    },
+    {
+      "run": 59,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0059.root",
+      "sha256": "51b5d63edfa1b5679b070b7bb63387c1243054a57940ea68733960df85a31d84",
+      "bytes": 10822104
+    },
+    {
+      "run": 60,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0060.root",
+      "sha256": "20ba402ba484219627bd4d4fdd2bdf917af5a31c8a01fc3bf933f06cbe056762",
+      "bytes": 9145997
+    },
+    {
+      "run": 61,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0061.root",
+      "sha256": "9db4fcc0098ddb35dcbb268135529280c26eca6ba2ea96dfbb6096aff6f40296",
+      "bytes": 9314446
+    },
+    {
+      "run": 62,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0062.root",
+      "sha256": "bc43abbed1a2bbeacc5a9aeec20d127820caed835c07e4a4248a734fc29613d0",
+      "bytes": 9562318
+    },
+    {
+      "run": 63,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0063.root",
+      "sha256": "c43ed7992ce1e14d8b85e882fd4dbae955589bde6945cb57eafb8b9bf2521239",
+      "bytes": 9448582
+    },
+    {
+      "run": 64,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0064.root",
+      "sha256": "dc79a6d1b6c88872eaf011f36904597ce6fbaa273217e9f6965678fd76e46566",
+      "bytes": 9006475
+    },
+    {
+      "run": 65,
+      "path": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0065.root",
+      "sha256": "8d4c0d1b07453dee70b5cd6082ea3a28e8b4444873a733af86bcbeb95af19702",
+      "bytes": 9526454
+    }
+  ],
+  "total_events": 1096728,
+  "events_by_run": {
+    "31": 39990,
+    "32": 41921,
+    "33": 57173,
+    "34": 39765,
+    "35": 27786,
+    "36": 21764,
+    "37": 50513,
+    "39": 30321,
+    "40": 32613,
+    "41": 33997,
+    "42": 33972,
+    "44": 4294,
+    "45": 48181,
+    "46": 1441,
+    "47": 10970,
+    "48": 31713,
+    "49": 32354,
+    "50": 44804,
+    "51": 20569,
+    "52": 10005,
+    "53": 39612,
+    "54": 37413,
+    "55": 24416,
+    "56": 51823,
+    "57": 31284,
+    "58": 34141,
+    "59": 42303,
+    "60": 36074,
+    "61": 36535,
+    "62": 37584,
+    "63": 37030,
+    "64": 35943,
+    "65": 38424
+  },
+  "events_by_sample": {
+    "I": 798694,
+    "II": 298034
+  },
+  "channel_polarity_source": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1318/configs/channel_polarity_v1.json",
+  "baseline_samples": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "baseline_region_adc": [
+    7045.0,
+    431.5
+  ],
+  "amplitude_estimator": "polarity * (peak - baseline) with peak=max for pol=+1, min for pol=-1",
+  "threshold_scan_adc": [
+    500,
+    750,
+    1000
+  ],
+  "duplicate_events": 0,
+  "corrupt_events": 0,
+  "missing_channels": {}
+}

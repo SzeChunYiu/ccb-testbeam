@@ -1,6 +1,6 @@
 \section{Publication status and open gates}
 
-This appendix is part of the working PDF so that exported copies cannot lose the scientific readiness state.
+This appendix is part of the working PDF so that exported copies cannot lose the scientific readiness state. It is collaboration-review metadata rather than a substitute for the final scientific results narrative; before journal submission, detailed issue bookkeeping should move to supplementary reproducibility material.
 
 \begin{longtable}{p{0.18\linewidth}p{0.72\linewidth}}
 \toprule
@@ -14,13 +14,16 @@ This appendix is part of the working PDF so that exported copies cannot lose the
 \#1296 & Hardware/BOM/run record: source-bind installed stave, channel map, target, trigger and survey/run settings.\\
 \#962 / \#1045 & Run-role and trigger response: prevents over-interpreting Sample-I/Sample-II differences as pure trigger effects.\\
 \#869 / \#954 & Readout-map and waveform polarity: required before authorising event-level amplitude observables.\\
-\#956 & Regenerate beam/MC \(\Delta E\)--\(E\) from the authorising schema and corrected MC layer namespaces.\\
-\#1178 / \#1179 / \#1311 & MC source measure, uncertainty and production provenance.\\
-\#1088 / \#1303 & WLS photophysics and regeneration of the single-stave optical grid after superseded source defects.\\
+\#956 / \#1321 & Regenerate beam/MC \(\Delta E\)--\(E\) from the authorising pre-threshold 8\(\times\)16 event product and corrected MC layer namespaces.\\
+\#1053 / \#1179 / \#1311 & MC event measure, source uncertainty and production provenance. The deterministic direct-CDF sampler defect tracked by \#1178 is repaired/closed; that bounded software closure does not authorise the historical paper MC.\\
+\#1088 / \#1303 / \#1322 & WLS photophysics and regeneration of the single-stave optical grid after superseded source defects, followed by replacement optical/energy figures.\\
 \#1302 / \#1297 & Raw deposited energy vs Birks-visible energy semantics and a corrected held-out reconstruction study.\\
-\#1304 & Single scientific source of truth for claim status across figures, WIKI and manuscript.\\
+\#1317--\#1320 & Final setup, beam-data longitudinal-profile, MC longitudinal-profile and timing figure packages remain pending.\\
+\#1304 / \#1299 & Single scientific source of truth for claim status across figures, WIKI and manuscript, plus stale-document reconciliation.\\
 \#1301 / \#1305 & Umbrella submission and merged-state fail-closed gates.\\
 \bottomrule
 \end{longtable}
 
-The Cycle-3 audit documents the detailed failure modes under \nolinkurl{chatgpt_todo/PAPER_SUBMISSION_AUDIT_CYCLE3_20260812.md} and its addenda.
+As of the 2026-08-14 current-head audit, the authorising final-figure, final-figure-source-data and final-result-table namespaces contain no non-README scientific artifacts. The build validator checks the controlled package structure and hold state; it is not yet a numerical/provenance submission-readiness validator.
+
+The Cycle-3 audit documents the detailed failure modes under \nolinkurl{chatgpt_todo/PAPER_SUBMISSION_AUDIT_CYCLE3_20260812.md} and its addenda. The current-head dependency order and section-by-section review are recorded under \nolinkurl{chatgpt_todo/PAPER_COMPLETION_AUDIT_20260814.md}.

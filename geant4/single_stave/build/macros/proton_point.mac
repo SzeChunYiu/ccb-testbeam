@@ -1,0 +1,13 @@
+# proton_point.mac — single calibration point, proton, normal incidence.
+# Prefer argv for SLURM; this macro shows the messenger equivalent.
+/run/verbose 0
+/event/verbose 0
+/tracking/verbose 0
+/ccb/seed 1
+/ccb/particle proton
+/ccb/energy 100 MeV
+/ccb/hitX 0 cm
+/ccb/hitY 0 cm
+/ccb/thetaDeg 0
+/ccb/birksKB 0.126
+/run/beamOn 1000

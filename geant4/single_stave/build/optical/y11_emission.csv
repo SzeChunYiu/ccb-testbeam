@@ -1,0 +1,16 @@
+# Kuraray Y-11 wavelength-shifting fibre: emission spectrum (WLSCOMPONENT)
+# units_x: nm
+# units_y: rel   (relative emission intensity, arbitrary normalization)
+# source: Kuraray Y-11 product information (emission peak ~476 nm, green), representative shape
+# status: MANUFACTURER_REPRESENTATIVE  (digitize exact datasheet curve for production)
+# wavelength_nm, rel_intensity
+440, 0.02
+460, 0.35
+470, 0.80
+476, 1.00
+485, 0.85
+500, 0.55
+520, 0.30
+540, 0.15
+560, 0.06
+600, 0.01

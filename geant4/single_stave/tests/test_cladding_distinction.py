@@ -56,6 +56,8 @@ def run_simulation(exe: Path, optical_dir: Path, macro: Path) -> str:
     """Run ccb_stave_sim with the geometry-check macro."""
     cmd = [
         str(exe),
+        "--physics-list", "QGSP_BIC",
+        "--neutron-timecut-policy-id", "pin_qgsp_bic_default_10us",
         "--macro", str(macro),
         "--optical-dir", str(optical_dir),
         "--output", "/dev/null"  # We only need stdout

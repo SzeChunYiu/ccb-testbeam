@@ -1,0 +1,2 @@
+/home/scyiu/.conda/envs/hibeam_g4_250603/bin/x86_64-conda-linux-gnu-ar qc libccb_sipm_geant4.a CMakeFiles/ccb_sipm_geant4.dir/adapters/geant4/src/Geant4BoundaryCollector.cc.o
+/home/scyiu/.conda/envs/hibeam_g4_250603/bin/x86_64-conda-linux-gnu-ranlib libccb_sipm_geant4.a

@@ -1,0 +1,474 @@
+Start testing: Aug 14 08:54 CEST
+----------------------------------------------------------
+1/24 Testing: ccb_stave_geometry_smoke
+1/24 Test: ccb_stave_geometry_smoke
+Command: "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/ccb_stave_sim" "--macro" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/macros/geometry_check.mac" "--optical-dir" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/optical" "--output" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/geometry_smoke.root"
+Directory: /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build
+"ccb_stave_geometry_smoke" start time: Aug 14 08:54 CEST
+Output:
+----------------------------------------------------------
+error: --physics-list is required (issue #1006 fail-closed; no silent QGSP_BIC default)
+<end of output>
+Test time =   0.05 sec
+----------------------------------------------------------
+Test Fail Reason:
+Required regular expression not found. Regex=[GEOMETRY_SELFCHECK_PASS
+]
+"ccb_stave_geometry_smoke" end time: Aug 14 08:54 CEST
+"ccb_stave_geometry_smoke" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/24 Testing: ccb_stave_proton_smoke
+2/24 Test: ccb_stave_proton_smoke
+Command: "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/ccb_stave_sim" "--particle" "proton" "--energy" "100" "--nevents" "5" "--seed" "1" "--optical-dir" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/optical" "--output" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/proton_smoke.root"
+Directory: /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build
+"ccb_stave_proton_smoke" start time: Aug 14 08:54 CEST
+Output:
+----------------------------------------------------------
+error: --physics-list is required (issue #1006 fail-closed; no silent QGSP_BIC default)
+<end of output>
+Test time =   0.04 sec
+----------------------------------------------------------
+Test Fail Reason:
+Required regular expression not found. Regex=[CCB_STAVE_END
+]
+"ccb_stave_proton_smoke" end time: Aug 14 08:54 CEST
+"ccb_stave_proton_smoke" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/24 Testing: ccb_stave_wls_profile
+3/24 Test: ccb_stave_wls_profile
+Command: "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/ccb_stave_sim" "--particle" "proton" "--energy" "100" "--nevents" "5" "--seed" "1" "--wls-time-profile" "exponential" "--optical-dir" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/optical" "--output" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/wls_profile.root"
+Directory: /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build
+"ccb_stave_wls_profile" start time: Aug 14 08:54 CEST
+Output:
+----------------------------------------------------------
+error: --physics-list is required (issue #1006 fail-closed; no silent QGSP_BIC default)
+<end of output>
+Test time =   0.04 sec
+----------------------------------------------------------
+Test Fail Reason:
+Required regular expression not found. Regex=[wls_time_profile=exponential
+]
+"ccb_stave_wls_profile" end time: Aug 14 08:54 CEST
+"ccb_stave_wls_profile" time elapsed: 00:00:00
+----------------------------------------------------------
+
+4/24 Testing: ccb_stave_gdml_export
+4/24 Test: ccb_stave_gdml_export
+Command: "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/ccb_stave_sim" "--dump-gdml" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/exported.gdml" "--optical-dir" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/optical" "--output" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/gdml_export.root" "--nevents" "1"
+Directory: /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build
+"ccb_stave_gdml_export" start time: Aug 14 08:54 CEST
+Output:
+----------------------------------------------------------
+error: --physics-list is required (issue #1006 fail-closed; no silent QGSP_BIC default)
+<end of output>
+Test time =   0.05 sec
+----------------------------------------------------------
+Test Fail Reason:
+Required regular expression not found. Regex=[CCB_GDML_WROTE
+]
+"ccb_stave_gdml_export" end time: Aug 14 08:54 CEST
+"ccb_stave_gdml_export" time elapsed: 00:00:00
+----------------------------------------------------------
+
+5/24 Testing: ccb_stave_gpu_optical_capture
+5/24 Test: ccb_stave_gpu_optical_capture
+Command: "/home/scyiu/.conda/envs/hibeam_g4_250603/bin/cmake" "-E" "env" "CCB_GPU_OPTICAL=1" "ccb_stave_sim" "--particle" "proton" "--energy" "100" "--nevents" "1" "--seed" "1" "--optical-dir" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/optical" "--output" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/gpu_optical.root" "--optical-out" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/optical_gpu_ctest"
+Directory: /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build
+"ccb_stave_gpu_optical_capture" start time: Aug 14 08:54 CEST
+Output:
+----------------------------------------------------------
+error: --physics-list is required (issue #1006 fail-closed; no silent QGSP_BIC default)
+<end of output>
+Test time =   0.07 sec
+----------------------------------------------------------
+Test Fail Reason:
+Required regular expression not found. Regex=[CCB_GPU_PHOTONS
+]
+"ccb_stave_gpu_optical_capture" end time: Aug 14 08:54 CEST
+"ccb_stave_gpu_optical_capture" time elapsed: 00:00:00
+----------------------------------------------------------
+
+6/24 Testing: ccb_stave_geometry_report_python
+6/24 Test: ccb_stave_geometry_report_python
+Command: "/home/scyiu/.conda/envs/hibeam_g4_250603/bin/python3" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/tests/check_geometry_report.py" "--exe" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/ccb_stave_sim" "--optical-dir" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/optical" "--macro" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/macros/geometry_check.mac"
+Directory: /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build
+"ccb_stave_geometry_report_python" start time: Aug 14 08:54 CEST
+Output:
+----------------------------------------------------------
+GEOMETRY_REPORT_CHECK: FAIL
+  - missing key: stave_length_cm
+  - missing key: stave_width_cm
+  - missing key: stave_thickness_cm
+  - missing key: normal_path_cm
+  - missing key: fibre_diameter_mm
+  - missing key: hole_diameter_mm
+  - missing key: fibre_separation_cm
+  - fibre_within_hole != 1 (got None)
+  - fibre_protrudes_for_readout != 1 (got None)
+  - holes_contained_y != 1 (got None)
+  - holes_contained_z != 1 (got None)
+  - GEOMETRY_SELFCHECK_PASS not found
+<end of output>
+Test time =   0.13 sec
+----------------------------------------------------------
+Test Failed.
+"ccb_stave_geometry_report_python" end time: Aug 14 08:54 CEST
+"ccb_stave_geometry_report_python" time elapsed: 00:00:00
+----------------------------------------------------------
+
+7/24 Testing: ccb_stave_birks_visible_regression
+7/24 Test: ccb_stave_birks_visible_regression
+Command: "/home/scyiu/.conda/envs/hibeam_g4_250603/bin/python3" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/tests/test_birks_visible_regression.py" "--exe" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/ccb_stave_sim" "--optical-dir" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/optical" "--work-dir" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/birks_regression"
+Directory: /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build
+"ccb_stave_birks_visible_regression" start time: Aug 14 08:54 CEST
+Output:
+----------------------------------------------------------
+RUN: /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/ccb_stave_sim --particle proton --energy 100.0 --nevents 3 --seed 1 --birks-kB 0.126 --optical-dir /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/optical --output /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/birks_regression/birks_on.root
+error: --physics-list is required (issue #1006 fail-closed; no silent QGSP_BIC default)
+
+
+Traceback (most recent call last):
+  File "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/tests/test_birks_visible_regression.py", line 200, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/tests/test_birks_visible_regression.py", line 133, in main
+    run_sim(args, args.birks_on, out_on)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/tests/test_birks_visible_regression.py", line 119, in run_sim
+    raise AssertionError(f"ccb_stave_sim exited {proc.returncode} at birks-kB={birks_kB}")
+AssertionError: ccb_stave_sim exited 2 at birks-kB=0.126
+<end of output>
+Test time =   0.14 sec
+----------------------------------------------------------
+Test Failed.
+"ccb_stave_birks_visible_regression" end time: Aug 14 08:54 CEST
+"ccb_stave_birks_visible_regression" time elapsed: 00:00:00
+----------------------------------------------------------
+
+8/24 Testing: ccb_stave_cladding_distinction
+8/24 Test: ccb_stave_cladding_distinction
+Command: "/home/scyiu/.conda/envs/hibeam_g4_250603/bin/python3" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/tests/test_cladding_distinction.py" "--exe" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/ccb_stave_sim" "--optical-dir" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/optical"
+Directory: /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build
+"ccb_stave_cladding_distinction" start time: Aug 14 08:54 CEST
+Output:
+----------------------------------------------------------
+RUN: /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/ccb_stave_sim --physics-list QGSP_BIC --neutron-timecut-policy-id pin_qgsp_bic_default_10us --macro macros/geometry_check.mac --optical-dir /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/optical --output /dev/null
+clad_inner_rindex: 1.49
+clad_outer_rindex: 1.42
+PASS: Inner and outer cladding are distinct materials with correct RINDEX (inner=1.49, outer=1.42).
+CLADDING_DISTINCTION_PASS
+<end of output>
+Test time =   0.72 sec
+----------------------------------------------------------
+Test Pass Reason:
+Required regular expression found. Regex=[CLADDING_DISTINCTION_PASS]
+"ccb_stave_cladding_distinction" end time: Aug 14 08:54 CEST
+"ccb_stave_cladding_distinction" time elapsed: 00:00:00
+----------------------------------------------------------
+
+9/24 Testing: ccb_stave_production_cut_regression
+9/24 Test: ccb_stave_production_cut_regression
+Command: "/home/scyiu/.conda/envs/hibeam_g4_250603/bin/python3" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/tests/test_production_cut_regression.py" "--exe" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/ccb_stave_sim" "--optical-dir" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/optical" "--work-dir" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/production_cut_regression"
+Directory: /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build
+"ccb_stave_production_cut_regression" start time: Aug 14 08:54 CEST
+Output:
+----------------------------------------------------------
+RUN: /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/ccb_stave_sim --particle proton --energy 100.0 --nevents 5 --seed 1 --production-cut 0.01 --optical-dir /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/optical --output /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/production_cut_regression/cut_fine.root
+error: --physics-list is required (issue #1006 fail-closed; no silent QGSP_BIC default)
+
+
+Traceback (most recent call last):
+  File "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/tests/test_production_cut_regression.py", line 241, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/tests/test_production_cut_regression.py", line 142, in main
+    stdout_fine = run_sim(args, args.cut_fine, out_fine)
+  File "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/tests/test_production_cut_regression.py", line 121, in run_sim
+    raise AssertionError(
+        f"ccb_stave_sim exited {proc.returncode} at production-cut={production_cut_mm}"
+    )
+AssertionError: ccb_stave_sim exited 2 at production-cut=0.01
+<end of output>
+Test time =   0.20 sec
+----------------------------------------------------------
+Test Failed.
+"ccb_stave_production_cut_regression" end time: Aug 14 08:54 CEST
+"ccb_stave_production_cut_regression" time elapsed: 00:00:00
+----------------------------------------------------------
+
+10/24 Testing: ccb_stave_far_end_modes
+10/24 Test: ccb_stave_far_end_modes
+Command: "/home/scyiu/.conda/envs/hibeam_g4_250603/bin/python3" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/tests/test_far_end_modes.py" "--exe" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/ccb_stave_sim" "--optical-dir" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/optical" "--macro" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/macros/geometry_check.mac" "--work-dir" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/far_end_modes"
+Directory: /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build
+"ccb_stave_far_end_modes" start time: Aug 14 08:54 CEST
+Output:
+----------------------------------------------------------
+FAIL  far_end=absorb:
+  - RUN_CONFIG does not contain far_end=absorb
+  - GEOMETRY_SELFCHECK_PASS not found
+FAIL  far_end=open:
+  - RUN_CONFIG does not contain far_end=open
+  - GEOMETRY_SELFCHECK_PASS not found
+FAIL  far_end=mirror:
+  - RUN_CONFIG does not contain far_end=mirror
+  - GEOMETRY_SELFCHECK_PASS not found
+FAIL  far_end=instrumented:
+  - RUN_CONFIG does not contain far_end=instrumented
+  - GEOMETRY_SELFCHECK_PASS not found
+SOME FAR-END MODES FAILED
+<end of output>
+Test time =   0.34 sec
+----------------------------------------------------------
+Test Fail Reason:
+Error regular expression found in output. Regex=[SOME FAR-END MODES FAILED]
+"ccb_stave_far_end_modes" end time: Aug 14 08:54 CEST
+"ccb_stave_far_end_modes" time elapsed: 00:00:00
+----------------------------------------------------------
+
+11/24 Testing: ccb_stave_sipm_arrivals
+11/24 Test: ccb_stave_sipm_arrivals
+Command: "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/ccb_stave_sim" "--particle" "proton" "--energy" "100" "--nevents" "5" "--seed" "1" "--optical-dir" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/optical" "--output" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/sipm_arrivals.root"
+Directory: /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build
+"ccb_stave_sipm_arrivals" start time: Aug 14 08:54 CEST
+Output:
+----------------------------------------------------------
+error: --physics-list is required (issue #1006 fail-closed; no silent QGSP_BIC default)
+<end of output>
+Test time =   0.04 sec
+----------------------------------------------------------
+Test Fail Reason:
+Required regular expression not found. Regex=[SIPM_ARRIVALS.*total=[1-9]
+]
+"ccb_stave_sipm_arrivals" end time: Aug 14 08:54 CEST
+"ccb_stave_sipm_arrivals" time elapsed: 00:00:00
+----------------------------------------------------------
+
+12/24 Testing: ccb_stave_sipm_adc
+12/24 Test: ccb_stave_sipm_adc
+Command: "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/ccb_stave_sim" "--particle" "proton" "--energy" "100" "--nevents" "5" "--seed" "1" "--optical-dir" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/optical" "--output" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/sipm_adc.root"
+Directory: /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build
+"ccb_stave_sipm_adc" start time: Aug 14 08:54 CEST
+Output:
+----------------------------------------------------------
+error: --physics-list is required (issue #1006 fail-closed; no silent QGSP_BIC default)
+<end of output>
+Test time =   0.04 sec
+----------------------------------------------------------
+Test Fail Reason:
+Required regular expression not found. Regex=[SIPM_ADC.*readout=[1-9]
+]
+"ccb_stave_sipm_adc" end time: Aug 14 08:54 CEST
+"ccb_stave_sipm_adc" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/24 Testing: ccb_stave_sipm_env_fail_closed
+13/24 Test: ccb_stave_sipm_env_fail_closed
+Command: "/home/scyiu/.conda/envs/hibeam_g4_250603/bin/python3" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/tests/test_sipm_env_fail_closed.py" "--exe" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/ccb_stave_sim" "--optical-dir" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/optical"
+Directory: /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build
+"ccb_stave_sipm_env_fail_closed" start time: Aug 14 08:54 CEST
+Output:
+----------------------------------------------------------
+Traceback (most recent call last):
+  File "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/tests/test_sipm_env_fail_closed.py", line 106, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/tests/test_sipm_env_fail_closed.py", line 94, in main
+    assert_zero_controls(args.exe, args.optical_dir)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/tests/test_sipm_env_fail_closed.py", line 61, in assert_zero_controls
+    raise AssertionError(f"zero-control run failed with rc={proc.returncode}\n{text}")
+AssertionError: zero-control run failed with rc=2
+
+error: --physics-list is required (issue #1006 fail-closed; no silent QGSP_BIC default)
+
+<end of output>
+Test time =   0.14 sec
+----------------------------------------------------------
+Test Fail Reason:
+Required regular expression not found. Regex=[SIPM_ENV_FAIL_CLOSED_PASS
+]
+"ccb_stave_sipm_env_fail_closed" end time: Aug 14 08:54 CEST
+"ccb_stave_sipm_env_fail_closed" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/24 Testing: ccb_stave_sipm_n_cells_nonsquare_fail
+14/24 Test: ccb_stave_sipm_n_cells_nonsquare_fail
+Command: "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/ccb_stave_sim" "--particle" "proton" "--energy" "100" "--nevents" "1" "--seed" "1" "--sipm-n-cells" "1800" "--optical-dir" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/optical" "--output" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/sipm_nonsquare.root"
+Directory: /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build
+"ccb_stave_sipm_n_cells_nonsquare_fail" start time: Aug 14 08:54 CEST
+Output:
+----------------------------------------------------------
+error: --physics-list is required (issue #1006 fail-closed; no silent QGSP_BIC default)
+<end of output>
+Test time =   0.05 sec
+----------------------------------------------------------
+Test Passed.
+"ccb_stave_sipm_n_cells_nonsquare_fail" end time: Aug 14 08:54 CEST
+"ccb_stave_sipm_n_cells_nonsquare_fail" time elapsed: 00:00:00
+----------------------------------------------------------
+
+15/24 Testing: ccb_stave_optical_schema
+15/24 Test: ccb_stave_optical_schema
+Command: "/home/scyiu/.conda/envs/hibeam_g4_250603/bin/python3" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/tests/test_optical_table_schema.py" "--optical-dir" "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/optical"
+Directory: /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build
+"ccb_stave_optical_schema" start time: Aug 14 08:54 CEST
+Output:
+----------------------------------------------------------
+OPTICAL_SCHEMA_PASS
+<end of output>
+Test time =   0.09 sec
+----------------------------------------------------------
+Test Pass Reason:
+Required regular expression found. Regex=[OPTICAL_SCHEMA_PASS]
+"ccb_stave_optical_schema" end time: Aug 14 08:54 CEST
+"ccb_stave_optical_schema" time elapsed: 00:00:00
+----------------------------------------------------------
+
+16/24 Testing: ccb_stave_strict_optical_missing_table
+16/24 Test: ccb_stave_strict_optical_missing_table
+Command: "/home/scyiu/.conda/envs/hibeam_g4_250603/bin/cmake" "-E" "env" "bash" "-c" "set -e; tmp=$(mktemp -d); cp -R /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/optical/* $tmp/; rm -f $tmp/sipm_pde.csv; /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/ccb_stave_sim --particle proton --energy 100 --nevents 1 --seed 1 --optical-dir $tmp --strict-optical --output $tmp/out.root; ec=$?; rm -rf $tmp; exit $ec"
+Directory: /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build
+"ccb_stave_strict_optical_missing_table" start time: Aug 14 08:54 CEST
+Output:
+----------------------------------------------------------
+error: --physics-list is required (issue #1006 fail-closed; no silent QGSP_BIC default)
+<end of output>
+Test time =   0.14 sec
+----------------------------------------------------------
+Test Passed.
+"ccb_stave_strict_optical_missing_table" end time: Aug 14 08:54 CEST
+"ccb_stave_strict_optical_missing_table" time elapsed: 00:00:00
+----------------------------------------------------------
+
+17/24 Testing: ccb_stave_strict_optical_bad_units
+17/24 Test: ccb_stave_strict_optical_bad_units
+Command: "/home/scyiu/.conda/envs/hibeam_g4_250603/bin/cmake" "-E" "env" "bash" "-c" "set -e; tmp=$(mktemp -d); cp -R /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/optical/* $tmp/; printf '%s
+' '# units_x: angstrom' '# units_y: frac' '# status: BAD' '450, 0.4' > $tmp/sipm_pde.csv; /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/ccb_stave_sim --particle proton --energy 100 --nevents 1 --seed 1 --optical-dir $tmp --strict-optical --output $tmp/out.root; ec=$?; rm -rf $tmp; exit $ec"
+Directory: /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build
+"ccb_stave_strict_optical_bad_units" start time: Aug 14 08:54 CEST
+Output:
+----------------------------------------------------------
+error: --physics-list is required (issue #1006 fail-closed; no silent QGSP_BIC default)
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"ccb_stave_strict_optical_bad_units" end time: Aug 14 08:54 CEST
+"ccb_stave_strict_optical_bad_units" time elapsed: 00:00:00
+----------------------------------------------------------
+
+18/24 Testing: ccb_sipm_core_tests
+18/24 Test: ccb_sipm_core_tests
+Command: "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/sipm/ccb_sipm_tests"
+Directory: /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/sipm
+"ccb_sipm_core_tests" start time: Aug 14 08:54 CEST
+Output:
+----------------------------------------------------------
+All ccb_sipm_core tests passed
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"ccb_sipm_core_tests" end time: Aug 14 08:54 CEST
+"ccb_sipm_core_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+19/24 Testing: ccb_sipm_dark_history_tests
+19/24 Test: ccb_sipm_dark_history_tests
+Command: "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/sipm/ccb_sipm_dark_history_tests"
+Directory: /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/sipm
+"ccb_sipm_dark_history_tests" start time: Aug 14 08:54 CEST
+Output:
+----------------------------------------------------------
+dark-history support OK: history_candidates=5813 window_only_candidates=1926 prewindow_dark_avalanches=3898
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"ccb_sipm_dark_history_tests" end time: Aug 14 08:54 CEST
+"ccb_sipm_dark_history_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+20/24 Testing: ccb_sipm_kernel_history_tests
+20/24 Test: ccb_sipm_kernel_history_tests
+Command: "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/sipm/ccb_sipm_kernel_history_tests"
+Directory: /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/sipm
+"ccb_sipm_kernel_history_tests" start time: Aug 14 08:54 CEST
+Output:
+----------------------------------------------------------
+kernel-history coverage OK
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"ccb_sipm_kernel_history_tests" end time: Aug 14 08:54 CEST
+"ccb_sipm_kernel_history_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+21/24 Testing: ccb_sipm_measured_impulse_tests
+21/24 Test: ccb_sipm_measured_impulse_tests
+Command: "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/sipm/ccb_sipm_measured_impulse_tests"
+Directory: /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/sipm
+"ccb_sipm_measured_impulse_tests" start time: Aug 14 08:54 CEST
+Output:
+----------------------------------------------------------
+measured-impulse/history composition OK
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"ccb_sipm_measured_impulse_tests" end time: Aug 14 08:54 CEST
+"ccb_sipm_measured_impulse_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+22/24 Testing: ccb_sipm_impulse_provenance_state_tests
+22/24 Test: ccb_sipm_impulse_provenance_state_tests
+Command: "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/sipm/ccb_sipm_impulse_provenance_state_tests"
+Directory: /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/sipm
+"ccb_sipm_impulse_provenance_state_tests" start time: Aug 14 08:54 CEST
+Output:
+----------------------------------------------------------
+impulse provenance state contract OK
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"ccb_sipm_impulse_provenance_state_tests" end time: Aug 14 08:54 CEST
+"ccb_sipm_impulse_provenance_state_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+23/24 Testing: ccb_sipm_impulse_digest_tests
+23/24 Test: ccb_sipm_impulse_digest_tests
+Command: "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/sipm/ccb_sipm_impulse_digest_tests"
+Directory: /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/sipm
+"ccb_sipm_impulse_digest_tests" start time: Aug 14 08:54 CEST
+Output:
+----------------------------------------------------------
+impulse digest canonicalization contract OK
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"ccb_sipm_impulse_digest_tests" end time: Aug 14 08:54 CEST
+"ccb_sipm_impulse_digest_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+24/24 Testing: ccb_sipm_impulse_runtime_binding_tests
+24/24 Test: ccb_sipm_impulse_runtime_binding_tests
+Command: "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/sipm/ccb_sipm_impulse_runtime_binding_tests"
+Directory: /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/sipm
+"ccb_sipm_impulse_runtime_binding_tests" start time: Aug 14 08:54 CEST
+Output:
+----------------------------------------------------------
+impulse runtime-kernel provenance binding OK
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"ccb_sipm_impulse_runtime_binding_tests" end time: Aug 14 08:54 CEST
+"ccb_sipm_impulse_runtime_binding_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Aug 14 08:54 CEST

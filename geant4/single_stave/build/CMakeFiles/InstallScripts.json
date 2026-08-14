@@ -1,0 +1,9 @@
+{
+	"InstallScripts" : 
+	[
+		"/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/cmake_install.cmake",
+		"/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/sipm/cmake_install.cmake",
+		"/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/opticks/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

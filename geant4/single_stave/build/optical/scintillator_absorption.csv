@@ -1,0 +1,12 @@
+# Extruded polystyrene plastic scintillator: bulk absorption length (ABSLENGTH)
+# units_x: nm
+# units_y: cm
+# source: representative plastic-scintillator self-absorption (short near emission peak, long in the red)
+# status: MANUFACTURER_REPRESENTATIVE  (measure/verify; controls self-absorption before WLS capture)
+# wavelength_nm, abs_length_cm
+360, 5.0
+400, 40.0
+420, 100.0
+440, 200.0
+460, 300.0
+500, 400.0

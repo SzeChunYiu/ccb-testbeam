@@ -100,7 +100,7 @@ Branch: `fix/issue-1095-step-convergence` (worktree `ccb-wt-lane06`).
 
 | Issue | Disposition | Evidence |
 |-------|-------------|----------|
-| #1095 | CLOSED | Step-convergence fail-closed contract via #1290 (merge 66a94bef, 2026-08-12T19:38:06Z). `configs/transport/step_policy_registry.json` + `require_step_policy` / `authorize_step_convergence_claim` in place; ADR-0005 + ADR-0008; `pin_qgsp_bic_inherited_em_stepfunction` claims_authorized=false until convergence digest. CI green. |
+| #1095 | CLOSED | Step-convergence fail-closed contract via #1290 (merge 66a94bef, 2026-08-12T19:38:06Z). `configs/transport/step_policy_registry.json` + `require_step_convergence` / `authorize_step_convergence_claim` in place; ADR-0005 + ADR-0008; `pin_qgsp_bic_inherited_em_stepfunction` claims_authorized=false until convergence digest. CI green. |
 | #1077 | FIXED | `DigitizerPipeline` executes `effective_stages`; run provenance uses frozen `stage_graph_meta`; hidden `integrate_samples` fallback removed; `tests/test_lane06_step_digitizer_graph.py` + lane04/lane08 regressions |
 
 ## P0 #1007 — Primary stopping MC tracking (#1007)
@@ -127,7 +127,7 @@ Branch: `fix/issue-1164-cluster-identity` (worktree `ccb-wt-lane07`).
 
 | Issue | Disposition | Evidence |
 |-------|-------------|----------|
-| #1164 | CLOSED | v7 OOB cluster-bootstrap null implemented in `_cluster_bootstrap_null_scale_refit()`: per-replicate scale refit on bootstrap Sample II (`scale_r[r] = median(DA_II_boot) / weighted_median(MC_II_boot, w)`), weighted KS D evaluated on OOB clusters, p-value = fraction of replicates with bootstrap D \>= observed D. Requires \>=500 replicates (1000 used), fail-closed when cluster IDs missing or insufficient successful replicates. PR #1313 merged (commit `8fd35141`), CI green, unit + integration + adversarial contract tests passing. `p_value_status` = `NONAUTHORISING_LEGACY_UNIT_WEIGHT_PERMUTATION` retained for provenance under #1049. |
+| #1164 | CLOSED | v7 OOB cluster-bootstrap null implemented in `_cluster_bootstrap_null_scale_refit()`: per-replicate scale refit on bootstrap Sample II (`scale_r[r] = median(DA_II_boot) / weighted_median(MC_II_boot, w)`), weighted KS D evaluated on OOB clusters, p-value = fraction of replicates with bootstrap D >= observed D. Requires >=500 replicates (1000 used), fail-closed when cluster IDs missing or insufficient successful replicates. PR #1313 merged (commit `8fd35141`), CI green, unit + integration + adversarial contract tests passing. `p_value_status` = `NONAUTHORISING_LEGACY_UNIT_WEIGHT_PERMUTATION` retained for provenance under #1049. |
 
 ## Lane 07 wave-A issue disposition (#958-#960 subset)
 
@@ -185,6 +185,7 @@ Branch: `fix/issue-1179-cs-uncertainty` → PR #1325.
 | #1179 | PARTIAL (contract + audit) | Fail-closed contract `CCB_CS_UNCERTAINTY_DISCRIMINANT` declared in `ScatteringGenerator.cc` BuildSigmaCDF (`G4cout` compile-time contract): `uncertainty_contract=not_propagated_issue_1179`. The compiled `LoadCrossSection()` reads only 2 columns (angle, sigma); the third column (per-node statistical uncertainty mb/sr, 28 nodes) is tabulated but NOT propagated. Sampling law unchanged. Audit tool `tools/audit/research_sigma_cm_sampler_contract.py` extended: `_read_table` returns 4-tuple (raw, angles, sigma, stat_uncertainty); new `_statistical_uncertainty_audit` (per-node fractional uncertainty); new `_systematic_uncertainty_envelope_audit` (`sinusoidal_taper_10pct_edges_20pct_center`: `fractional = 0.10 + 0.10·sin(pi·normalized_theta)`, 20% at 90°, 10% at support edges 26.49/169.78 deg); `audit_sampler` output includes `uncertainty` key with `propagation_status=OPEN_ISSUE_1179`. Input validation extended: stat_uncertainty finite + nonnegative. Evidence commit: `70c614e0` (2 files, +96/−3). PR #1325. |
 
 
+
 ## Lane 08 — #956/#1321 ΔE–E producer repair (P0-1 defects)
 
 Branch: `fix/issue-956-deltae-producer` (worktree `ccb-wt-956`).
@@ -211,6 +212,7 @@ Branch: `fix/issue-956-deltae-producer` (worktree `ccb-wt-956`).
 - Event-level product (#1318): pre-threshold 8×16 event-level parquet for DATA side
 - Final figure package generation after both producers are certified
 
+
 ## Lane 10 — #1304 canonical-ledger enforcement
 
 Branch: `fix/issue-1304-claim-governance` (worktree `ccb-wt-1304`).
@@ -227,10 +229,79 @@ Branch:  → PR #1335 (merged `e4552571`).
 |-------|-------------|----------|
 | #1320 | DONE (figure delivered; format-limited) | Authorising 8×16 B4-B6 pair residual with component-safe CFD (issue #1059 mode). Sample II, 7 runs, 10,776 pair events. CFD 20% first_local_peak: sigma68 = 8.748 ns (68% CI [8.295, 9.270]), RMS = 16.962 ns. TOF = 0.312 ns (4 cm spacing, B6 downstream of B4). 6-fraction scan reported (no selection by minimum). Bootstrap 1000 replicates. Validation: wrong-component rejection PASS, synthetic two-pulse FAIL (test expectation incorrect: selector binds to FIRST leading component per #1059, not largest; pair timing unaffected). Figure: `reports/issue_1320_timing/timing_b4_b6_residual_sample_II.pdf` (caption states PAIR RESIDUAL, no √2 deconvolution). Format-limited: 38 ns pair residual dominated by 16-sample 100 MS/s waveform representation, not intrinsic detector resolution. Timing chapter already updated (ch06 inline format-limited qualifier per #1304). Remaining gates: channel-polarity provenance (#954), component identity validation (#1059). |
 
-## Lane 11 — #1320 timing residual figure (PAPER-FINISH-04)
+## P1 #1297 — Held-out energy reconstruction producer rewrite
 
-Branch: fix/issue-1320-timing-residual → PR #1335 (merged e4552571).
+Branch: `fix/issue-1297-heldout-edep-reconstruction` → PR #1339.
 
 | Issue | Disposition | Evidence |
 |-------|-------------|----------|
+| #1297 | CLOSED (producer shipped, rerun pending #1303) | Producer rewritten to explicit `--estimand {E_raw,E_vis,both}` choice. Replaced tautological saturation diagnostic with physically-signed occupancy fraction definition. Implemented real bootstrap uncertainty (500 reps, 16-84% CI). Frozen train/validation partitions: TRAIN=(deuteron_70, proton_100, proton_140), HELDOUT=(deuteron_110, proton_60). Added shuffled-target negative control (must collapse) and mis-specified response-model control framework. Schema v2, frozen RNG seed 20260812. Evidence commit: `c8c99b1e` (producer fully rewritten). Rerun on regenerated optical grid (#1303) pending. |
+
+
+## P1 #1302 — Energy semantics (E_raw vs E_vis) audit + API enforcement
+
+Branch: `fix/issue-1302-energy-semantics` → PR #1338.
+
+| Issue | Disposition | Evidence |
+|-------|-------------|----------|
+| #1302 | CLOSED | Enforced versioned names: `E_raw_MeV := edep_scint_raw_MeV` (unquenched), `E_vis_MeV := edep_scint_MeV` (Birks-visible via `G4EmSaturation`), `quenching_ratio := E_vis/E_raw`. Analyzer API (`analyze_single_stave.py`) now REQUIRES `--energy-target {E_raw,E_vis,both}` argument; all plot labels updated to specify "Birks-visible" for `E_vis`. Regression test `test_energy_semantics_regression.py` validates E_raw≠E_vis behavior. Audit report `receipts/issue-1302-energy-semantics-audit.json` documents 6 plot label relabels + 4 summary column additions. Evidence commit: `8ffc77d9` (7 files, schema 2.0.0→2.1.0). |
+## Lane 1311 — MC Provenance Group (#1311, #1053 residuals, #1179)
+
+Branch: fix/issue-1311-mc-provenance (worktree ccb-wt-1311)
+
+| Issue | Disposition | Evidence | PR |
+|-------|-------------|----------|-----|
+| #1311 | FORENSIC_COMPLETE (HISTORICAL_PROVENANCE_GATED) | reports/mc_validation/mc_production_forensics_1311/REPORT.md + mc_run_manifest.json. Verdict: output_krakow_1M.root cannot be bound to exact production receipt. Contains non-unit PrimaryWeight (legacy sigma(theta_lab), defective per #1053). Regeneration required. | #1333 |
+| #1311 (regeneration) | INFRA_COMPLETE (MC generation BLOCKED) | geant4/manifests/cmc_100k_regenerated_20260814.json, macro, job script. Manifest records: ecc3a155 commit, #1178 sampler, #880 unit weight. hibeam_g4 executable not available. | #1333 |
+| #1179 | DOCUMENTATION_COMPLETE (propagation NOT implemented) | reports/mc_validation/cross_section_uncertainty/STATUS.md. Contract declared (PR #1325), audit tool extended. Propagation of statistical/systematic uncertainty not implemented. | #1333 |
+
+### Forensic Evidence (#1311)
+
+File identity recovered:
+- SHA-256: 2b62403f...42cc (677 MB, 1M events)
+- Created: 2026-07-09 11:29:48 +0200
+- Non-unit PrimaryWeight confirms legacy weighted source
+
+Missing provenance (NOT_RECOVERED):
+- Exact git commit, executable hash, build log
+- Random seed, runtime host, geometry digest
+- ScatteringGenerator.cc history predates 2026-07-10
+
+### Regeneration Infrastructure
+
+Complete manifest for cmc_100k_regenerated_20260814:
+- Sampler: linear_node_pdf_exact_inverse_v1 + measured_table_support_truncate_v1
+- Weight: direct_sampling_unit_weight_v1 (#880)
+- Cross-section: sigma_pd_cm_190.txt (SHA: 0ca33e76...)
+- Source: Ermisch et al. PRC 71 064004 (2005) Table VI
+
+Status: Infrastructure complete, MC generation blocked on hibeam_g4 build.
+
+## Lane 13 — #1296 hardware BOM evidence sweep
+
+Branch: fix/issue-1296-hardware-bom (worktree ccb-wt-1296).
+
+| Issue | Disposition | Evidence |
+|-------|-------------|----------|
+| #1296 | IN_PROGRESS | Evidence report committed. 9 UNKNOWN_EXTERNAL categories. Conflicts resolved: 5cm->2.0cm, 50cm vs ~1m, BC-408, one-fibre. Next: update BOM. |
+
+### Evidence Sources Located
+
+| Category | Source | Status | SHA-256 |
+|----------|--------|--------|----------|
+| Stave geometry | docs/stave_sim/STAVE_SIM_ENERGY_MODEL.md | DESIGN_SPEC | bd2f6948c6a3c00c9ae2643c07c48bffa48bbe37162338d326000a887136105f |
+| Geometry details | docs/stave-geometry.md | DESIGN_SPEC | 5e75d4c9da1bacf7e6df0c4da46641dc66a0ca69970fdc1dfa3ddef535160ecd |
+| Geometry schematics | figures/geometry/ | DESIGN_SPEC | - |
+| Run ledger | configs/daq/run_ledger.yaml | SOURCE_BOUND_CONFIG | - |
+| Channel map | configs/channel_polarity_v1.json | SOURCE_BOUND_CONFIG | - |
+| Geant4 config | geant4/configs/krakow.geoconf | SIM_CONFIG | a2bfda12d722d07ea8993bfd765bf8f43e2921715cced9b1b739fd5ffd3871c7 |
+| Simulation macro | geant4/macros/run_krakow.mac | SIM_CONFIG | f9bb3d5e6e44971a4f52a836ff95aad8b20acc8804f5d44ca5399cd938afd5a7 |
 | #1320 | DONE (figure delivered; format-limited) | Authorising 8x16 B4-B6 pair residual with component-safe CFD (issue #1059 mode). Sample II, 7 runs, 10,776 pair events. CFD 20% first_local_peak: sigma68 = 8.748 ns (68% CI [8.295, 9.270]), RMS = 16.962 ns. TOF = 0.312 ns (4 cm spacing, B6 downstream of B4). 6-fraction scan reported (no selection by minimum). Bootstrap 1000 replicates. Validation: wrong-component rejection PASS, synthetic two-pulse FAIL (test expectation incorrect: selector binds to FIRST leading component per #1059, not largest; pair timing unaffected). Figure: reports/issue_1320_timing/timing_b4_b6_residual_sample_II.pdf (caption states PAIR RESIDUAL, no sqrt(2) deconvolution). Format-limited: 38 ns pair residual dominated by 16-sample 100 MS/s waveform representation, not intrinsic detector resolution. Timing chapter already updated (ch06 inline format-limited qualifier per #1304). Remaining gates: channel-polarity provenance (#954), component identity validation (#1059). |
+
+## Lane 13 — #1318 authorising 8×16 beam-data longitudinal depth profile (PAPER-FINISH-01C/02)
+
+Branch: fix/issue-1318-depth-profile → PR #1341 (in review).
+
+| Issue | Disposition | Evidence |
+|-------|-------------|----------|
+| #1318 | DONE (product + figure delivered) | Pre-threshold 8×16 event-level product builder (33 runs, 1,096,728 events) + longitudinal B-stack depth profile (Sample I vs II). Event table: `reports/studies/paper_1318_depth_profile/event_table_8x16.parquet` with manifest `manifest_8x16.json` (SHA-256 digests per input ROOT file). Amplitude estimator: `polarity * (peak - baseline)` with baseline = median(samples[0:3]). Profile figure: `depth_profile_thresh_0.pdf` (4 panels: absolute occupancy, mean amplitude with 95% CI, normalized profile, Sample II/I ratio). Key finding: Sample I front-loaded (B2=87.4%, B8=0.8%); Sample II shows ~7.6× more deepest-stave activity (B2=72.7%, B8=6.1%). Run-block bootstrap uncertainty (seed 1318, 1000 replicates). Claim CL-1318-001 GATED pending scientific review. Governance: claim_ledger.csv row GATED, ISSUE_CAMPAIGN_LEDGER.md section added, MANIFEST.csv entry GATED, 11 pytest tests pass. |

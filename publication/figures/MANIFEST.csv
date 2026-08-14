@@ -1,8 +1,8 @@
 path,status,source_path,publication_role
 final/stave_geometry.pdf,PENDING,hardware/CAD or source-bound drawing,final setup figure after #1296
-final/data_depth_profile.pdf,PENDING,authorising 8x16 event-level data producer,final beam-data longitudinal topology
+final/data_depth_profile.pdf,GATED,authorising 8x16 event-level data producer,final beam-data longitudinal topology
 final/mc_depth_profile.pdf,PENDING,provenance-bound weighted MC,final data-matched MC topology
-final/timing_b4_b6_residual.pdf,GATED,reports/issue_1320_timing/timing_b4_b6_residual_sample_II.pdf,format-limited pair residual (38 ns width from 16-sample 100 MS/s; not detector resolution)
+final/timing_b4_b6_residual.pdf,GATED,authorising 8x16 timing producer,negative timing-format result
 gated/fig07_data_deltaE_E_per_sample.png,GATED,reports/paper_956_deltaE_E_20260812T103800Z/figures/fig07_data_deltaE_E_per_sample.png,quarantined #956 output
 gated/fig08_mc_deltaE_E_I.png,GATED,reports/paper_956_deltaE_E_20260812T103800Z/figures/fig08_mc_deltaE_E_I.png,quarantined #956 output
 gated/fig08_mc_deltaE_E_II.png,GATED,reports/paper_956_deltaE_E_20260812T103800Z/figures/fig08_mc_deltaE_E_II.png,quarantined #956 output
@@ -14,6 +14,14 @@ model_diagnostics/pid_mc_validation.png,SIMULATION_RESULT,docs/figures/paper/pid
 model_diagnostics/adc_mc_calibration.png,SIMULATION_RESULT,docs/figures/paper/adc_mc_calibration.png,simulation result only
 model_diagnostics/birks_mc_comparison.png,SIMULATION_RESULT,docs/figures/paper/birks_mc_comparison.png,simulation result only
 model_diagnostics/pileup_digitizer_mc.png,SIMULATION_RESULT,docs/figures/paper/pileup_digitizer_mc.png,simulation result only
-illustrative/geometry_tof.png,ILLUSTRATIVE,docs/figures/geometry_tof.png,no measured claim
+illustrative/geometry_tof.png,ILLUSTRATIVE,docs/figures/reports/0000000012.1.truthtiming/figures/geometry_tof.png,no measured claim
 illustrative/06_timewalk_explained.png,ILLUSTRATIVE,docs/figures/06_timewalk_explained.png,no measured claim
 illustrative/03_waveform_annotated.png,ILLUSTRATIVE,docs/figures/03_waveform_annotated.png,no measured claim
+final/618_mc_truth_full_I.pdf,SIMULATION_RESULT,reports/paper_618_species_penetration_2m_20260814T1449Z/figures/618_mc_truth_full_I.pdf,#618 species-resolved MC truth (full downstream sum, Sample I)
+final/618_mc_truth_full_II.pdf,SIMULATION_RESULT,reports/paper_618_species_penetration_2m_20260814T1449Z/figures/618_mc_truth_full_II.pdf,#618 species-resolved MC truth (full downstream sum, Sample II)
+final/618_mc_truth_4layer_I.pdf,SIMULATION_RESULT,reports/paper_618_species_penetration_2m_20260814T1449Z/figures/618_mc_truth_4layer_I.pdf,#618 species-resolved MC truth (data-matched 4-layer, Sample I)
+final/618_mc_truth_4layer_II.pdf,SIMULATION_RESULT,reports/paper_618_species_penetration_2m_20260814T1449Z/figures/618_mc_truth_4layer_II.pdf,#618 species-resolved MC truth (data-matched 4-layer, Sample II)
+final/618_penetration_I.pdf,SIMULATION_RESULT,reports/paper_618_species_penetration_2m_20260814T1449Z/figures/618_penetration_I.pdf,#618 species-resolved MC truth (L_stop per species, Sample I)
+final/618_penetration_II.pdf,SIMULATION_RESULT,reports/paper_618_species_penetration_2m_20260814T1449Z/figures/618_penetration_II.pdf,#618 species-resolved MC truth (L_stop per species, Sample II)
+gated/618_data_amplitude_I_II.png,GATED,reports/paper_618_species_penetration_2m_20260814T1449Z/figures/618_data_amplitude_I_II.png,#618 beam-data amplitude proxy dE-E, Samples I+II
+gated/618_data_penetration_I_II.png,GATED,reports/paper_618_species_penetration_2m_20260814T1449Z/figures/618_data_penetration_I_II.png,#618 beam-data stopping-layer overlay, amplitude domain

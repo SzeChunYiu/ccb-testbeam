@@ -104,6 +104,7 @@ def digest_raw_input(path: Path, block_size: int = 1 << 20) -> dict[str, object]
     before_state = (
         before.st_dev,
         before.st_ino,
+        before.st_nlink,
         before.st_size,
         before.st_mtime_ns,
         before.st_ctime_ns,
@@ -111,12 +112,29 @@ def digest_raw_input(path: Path, block_size: int = 1 << 20) -> dict[str, object]
     after_state = (
         after.st_dev,
         after.st_ino,
+        after.st_nlink,
         after.st_size,
         after.st_mtime_ns,
         after.st_ctime_ns,
     )
     if before_state != after_state or byte_count != after.st_size:
         raise RawInputProvenanceError(f"raw input changed while being digested: {path}")
+    # Timestamp advancement of the unlinked inode is not observable on
+    # every filesystem (LUNARC probe: identical ctime_ns after a mid-read
+    # os.replace), so the fd-state tuple alone can miss a path
+    # replacement on such filesystems. Re-resolve the path and require it
+    # to still name the digested inode; fail closed if it vanished or was
+    # rotated to a different inode instead.
+    try:
+        resolved = os.stat(path)
+    except OSError as exc:
+        raise RawInputProvenanceError(
+            f"raw input vanished while being digested: {path} ({exc})"
+        ) from exc
+    if (resolved.st_dev, resolved.st_ino) != (after.st_dev, after.st_ino):
+        raise RawInputProvenanceError(
+            f"raw input changed while being digested: {path} (open fd ino {after.st_ino}, path now resolves to ino {resolved.st_ino})"
+        )
 
     return {
         "sha256": digest.hexdigest(),

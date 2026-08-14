@@ -22,6 +22,7 @@
 | See where ML helps (or doesn't) | [§6 Pulse Shape & Machine Learning](#6-pulse-shape--machine-learning) |
 | Check the methodology | [§12 Methodology Appendix](#12-methodology-appendix) |
 | Find what's still missing | [§11 Open Questions](#11-open-questions--next-steps) and [`STUDY_GAPS.md`](STUDY_GAPS.md) |
+| Publication evidence and paper status | [Evidence matrix](chatgpt_todo/PAPER_EVIDENCE_FIGURE_MATRIX_20260812.md) · [Open atoms](chatgpt_todo/PAPER_OPEN_ATOMS_20260812.md) · [Claim evidence](chatgpt_todo/CLAIM_EVIDENCE_MATRIX.md) |
 | Browse all studies with proper names | [Study Catalogue](#study-catalogue) |
 
 ---
@@ -165,7 +166,7 @@ Where this table and [`docs/claim_ledger.csv`](docs/claim_ledger.csv) disagree,
 | PID p-vs-d AUC (truth ceiling HGB) | 0.986 | TRUTH_LEVEL_MC_ONLY | 🟡 GATED | CL-017 (BLK-MV1-001) |
 | PID on beam data | deferred | BLOCKED_DATA | ⛔ BLOCKED_DATA | raw `hrdb_run_*.root` not staged |
 | ADC calibration (digitizer gain) | 119.17 ADC/MeV | SIMULATION_RESULT | ✅ PASS | clusterC #917 (`VIS-ENE-001`) |
-| ADC gain (data/MC proxy, MV0) | 110 ADC/MeV (±30%) | DATA_MC_PROXY | 🟡 GATED | CL-013 (BLK-MV0-001) |
+| ADC gain (data/MC proxy, MV0) | 92 ADC/MeV with 28 ADC/MeV heuristic envelope | DATA_MC_PROXY | 🟡 GATED | CL-013 (BLK-MV0-001) |
 | Birks kB (per-track dE/dx fit) | 0.0156 cm/MeV | SIMULATION_RESULT | ✅ PASS | clusterC #917 (`VIS-ENE-002`) |
 | Anomaly / C12 identity | truth-MC only; data anomaly **not** ID'd as C12 | TRUTH_LEVEL_MC_ONLY | ⛔ BLOCKED | CL-022 (AUD-ANOM-001) |
 | Stopping-depth data/MC closure | χ²/ndf ≈ 6.8e4 — FAIL | MC_DIAGNOSTIC | 🟠 TENSION | CL-021 (BLK-MV3-LEGACY-001) |

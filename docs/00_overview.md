@@ -35,11 +35,11 @@ decoupled cross-check (see [08_astack.md](08_astack.md)).
 | Quantity | Value | Source |
 |---|---|---|
 | Reproduced B-stack selected-pulse count | **640,737** raw `HRDv` pulse records with `A>1000 ADC` | S00 gate |
-| Downstream single-stave timing | B6 ≈ 0.68–0.75 ns, B8 ≈ 0.93 ns, B4 ≈ 1.4–1.5 ns | variance decomposition |
-| Combined 3-stave (B4+B6+B8) event time | σ_comb ≈ 0.54 ns (I) / 0.56 ns (II) | App. E |
+| Downstream single-stave timing | Withheld pending BLK-MV4-LEGACY-001 | CL-002..004 |
+| Combined 3-stave (B4+B6+B8) event time | Withheld pending BLK-MV4-LEGACY-001 | CL-004..006 |
 | Two-ended-readout projection | σ ≈ 0.6–1.0 ns (factor √2) | §13.6 |
 | A-stack A1–A3 residual | robust width 1.43 ns, core σ 1.41 ns | §15 |
-| Pile-up tolerance with measured live-time | R_max ≈ 3.05 MHz for the same occupancy criterion once τ_eff≈124.8 ns is measured instead of assumed 90 ns | S10 |
+| Pile-up tolerance (canonical Rmax) | Withheld pending S-STAT-003 | CL-010 |
 | Current-dependent beam pile-up excess @ 20 nA | ≈ 9.2% downstream after subtracting current-independent baseline | App. G / S10 |
 | Strongest accepted ML wins | duplicate-readout amplitude/charge, artificial saturation recovery, compact pulse-shape closure | ML closure studies |
 

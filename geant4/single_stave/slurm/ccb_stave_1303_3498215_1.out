@@ -1,0 +1,2218 @@
+point idx=1 part=proton E=100 MeV x=0 y=0 theta=0 phi=0 seed=1 nev=2000 threads=4
+CCB_BEAM_PREFLIGHT intersects=1 enters_neg_z=1 path_cm=2 reason=ok
+
+**************************************************************
+ Geant4 version Name: geant4-11-03-patch-02 [MT]   (25-April-2025)
+  << in Multi-threaded mode >> 
+                       Copyright : Geant4 Collaboration
+                      References : NIM A 506 (2003), 250-303
+                                 : IEEE-TNS 53 (2006), 270-278
+                                 : NIM A 835 (2016), 186-225
+                             WWW : http://geant4.org/
+**************************************************************
+
+CCB_STAVE_START particle=proton KE_MeV=100 nevents=2000 threads_requested=4 threads_effective=4 g4_force_threads=unset seed=1 hit_x_cm=0 hit_y_cm=0 theta_deg=0 phi_deg=0 allow_miss=0 birks_kB=0.126 quenching_model_id=birks_geant4 quenching_model_status=HYPOTHESIS quenching_claims_authorized=false production_cut_mm=0.1 physics_list=QGSP_BIC neutron_timecut_policy_id=pin_qgsp_bic_default_10us neutron_time_cut_us=10 neutron_tracking_time_cut_configured=1 reflectivity_scale=1 attenuation_scale(deprecated)=1 scintillator_absorption_scale=1 y11_bulk_attenuation_scale=1 pde_scale=1 collection_efficiency=1 optical_interface_model=UNKNOWN_EXTERNAL far_end=instrumented wls_time_profile=exponential mode=optical optical_dir=/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/optical strict_optical=1 output=/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/results/1303_grid_regen/20260814_104928/stave_proton_100MeV_x0_y0_th0_ph0_s1.root gpu_optical=0 optical_out= dump_gdml=
+G4PhysListFactory::GetReferencePhysList <QGSP_BIC>  EMoption= 0
+<<< Geant4 Physics List simulation engine: QGSP_BIC
+
+
+Checking overlaps for volume Coating:0 (G4SubtractionSolid) ... OK! 
+Checking overlaps for volume Scintillator:0 (G4SubtractionSolid) ... OK! 
+Checking overlaps for volume OuterClad_F1:0 (G4Tubs) ... OK! 
+Checking overlaps for volume InnerClad_F1:0 (G4Tubs) ... OK! 
+Checking overlaps for volume Core_F1:0 (G4Tubs) ... OK! 
+Checking overlaps for volume Sensor_F1_PlusX:0 (G4Tubs) ... OK! 
+Checking overlaps for volume Sensor_F1_MinusX:1 (G4Tubs) ... OK! 
+Checking overlaps for volume OuterClad_F2:1 (G4Tubs) ... OK! 
+Checking overlaps for volume InnerClad_F2:1 (G4Tubs) ... OK! 
+Checking overlaps for volume Core_F2:1 (G4Tubs) ... OK! 
+Checking overlaps for volume Sensor_F2_PlusX:2 (G4Tubs) ... OK! 
+Checking overlaps for volume Sensor_F2_MinusX:3 (G4Tubs) ... OK! 
+GEOMETRY_REPORT_BEGIN
+stave_length_cm 50
+stave_width_cm 5.18
+stave_thickness_cm 2
+normal_path_cm 2
+fibre_diameter_mm 1.8
+hole_diameter_mm 2
+fibre_separation_cm 2
+fibre_within_hole 1
+fibre_protrudes_for_readout 1
+holes_contained_y 1
+holes_contained_z 1
+geometry_hash e323b92195f9a6288944f0738dbadccf9386422f076362ca172fd0b6d119d1e1
+physics_hash 695755f15879c60b7dbc23f5ad7f972d0ec3d9710fa2ec357d17a3b37c48faee
+optical_hash 84c699d6bbc7b3f55adbef3231414e8b2552e602fd4cf36203c484ac880dd836
+clad_inner_rindex 1.49
+clad_outer_rindex 1.42
+GEOMETRY_REPORT_END
+GEOMETRY_SELFCHECK_PASS
+### Adding tracking cuts for neutron  TimeCut(ns)= 10000  KinEnergyCut(MeV)= 0
+### Birks coefficients used in run time
+   G4_POLYSTYRENE     0.07943 mm/MeV     0.00841958 g/cm^2/MeV  massFactor=  504.5 effCharge= 18.5
+   CCB_Scintillator     0.126 mm/MeV     0.013356 g/cm^2/MeV  massFactor=  504.5 effCharge= 18.5
+=======================================================================
+======                 Electromagnetic Physics Parameters      ========
+=======================================================================
+LPM effect enabled                                 1
+Enable creation and use of sampling tables         0
+Apply cuts on all EM processes                     0
+Use combined TransportationWithMsc                 Disabled
+Use general process                                1
+Enable linear polarisation for gamma               0
+Enable photoeffect sampling below K-shell          1
+Enable sampling of quantum entanglement            0
+X-section factor for integral approach             0.8
+Min kinetic energy for tables                      100 eV 
+Max kinetic energy for tables                      100 TeV
+Number of bins per decade of a table               7
+Verbose level                                      1
+Verbose level for worker thread                    0
+Bremsstrahlung energy threshold above which 
+  primary e+- is added to the list of secondary    100 TeV
+Bremsstrahlung energy threshold above which primary
+  muon/hadron is added to the list of secondary    100 TeV
+Positron annihilation at rest model                SimplePositronium
+Enable 3 gamma annihilation on fly                 0
+Lowest triplet kinetic energy                      1 MeV
+Enable sampling of gamma linear polarisation       0
+5D gamma conversion model type                     0
+5D gamma conversion model on isolated ion          0
+Use Ricardo-Gerardo pair production model          0
+Livermore data directory                           epics_2017
+=======================================================================
+======                 Ionisation Parameters                   ========
+=======================================================================
+Step function for e+-                              (0.2, 1 mm)
+Step function for muons/hadrons                    (0.2, 0.1 mm)
+Step function for light ions                       (0.2, 0.1 mm)
+Step function for general ions                     (0.2, 0.1 mm)
+Lowest e+e- kinetic energy                         1 keV
+Lowest muon/hadron kinetic energy                  1 keV
+Use ICRU90 data                                    0
+Fluctuations of dE/dx are enabled                  1
+Type of fluctuation model for leptons and hadrons  Urban
+Use built-in Birks satuaration                     1
+Build CSDA range enabled                           0
+Use cut as a final range enabled                   0
+Enable angular generator interface                 0
+Max kinetic energy for CSDA tables                 1 GeV
+Max kinetic energy for NIEL computation            0 eV 
+Linear loss limit                                  0.01
+Read data from file for e+e- pair production by mu 0
+=======================================================================
+======                 Multiple Scattering Parameters          ========
+=======================================================================
+Type of msc step limit algorithm for e+-           1
+Type of msc step limit algorithm for muons/hadrons 0
+Msc lateral displacement for e+- enabled           1
+Msc lateral displacement for muons and hadrons     0
+Urban msc model lateral displacement alg96         1
+Range factor for msc step limit for e+-            0.04
+Range factor for msc step limit for muons/hadrons  0.2
+Geometry factor for msc step limitation of e+-     2.5
+Safety factor for msc step limit for e+-           0.6
+Skin parameter for msc step limitation of e+-      1
+Lambda limit for msc step limit for e+-            1 mm
+Use Mott correction for e- scattering              0
+Factor used for dynamic computation of angular 
+  limit between single and multiple scattering     1
+Fixed angular limit between single 
+  and multiple scattering                          3.1416 rad
+Upper energy limit for e+- multiple scattering     100 MeV
+Type of electron single scattering model           0
+Type of nuclear form-factor                        1
+Screening factor                                   1
+=======================================================================
+
+phot:  for gamma SubType=12 BuildTable=0
+      LambdaPrime table from 200 keV to 100 TeV in 61 bins 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+ LivermorePhElectric : Emin=    0 eV  Emax=  100 TeV  SauterGavrila Fluo
+
+compt:  for gamma SubType=13 BuildTable=1
+      Lambda table from 100 eV  to 1 MeV, 7 bins/decade, spline: 1
+      LambdaPrime table from 1 MeV to 100 TeV in 56 bins 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+       Klein-Nishina : Emin=    0 eV  Emax=  100 TeV
+
+conv:  for gamma SubType=14 BuildTable=1
+      Lambda table from 1.022 MeV to 100 TeV, 18 bins/decade, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+     BetheHeitlerLPM : Emin=    0 eV  Emax=  100 TeV  ModifiedTsai
+
+Rayl:  for gamma SubType=11 BuildTable=1
+      Lambda table from 100 eV  to 150 keV, 7 bins/decade, spline: 0
+      LambdaPrime table from 150 keV to 100 TeV in 62 bins 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+   LivermoreRayleigh : Emin=    0 eV  Emax=  100 TeV  CullenGenerator
+
+msc:  for e-  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            UrbanMsc : Emin=    0 eV  Emax=  100 MeV Nbins=42 100 eV  - 100 MeV
+          StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
+        WentzelVIUni : Emin=  100 MeV Emax=  100 TeV Nbins=42 100 MeV - 100 TeV
+          StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
+
+eIoni:  for e-  XStype:3  SubType=2
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      StepFunction=(0.2, 1 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        MollerBhabha : Emin=    0 eV  Emax=  100 TeV
+
+eBrem:  for e-  XStype:4  SubType=3
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      LPM flag: 1 for E > 1 GeV,  VertexHighEnergyTh(GeV)= 100000
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+             eBremSB : Emin=    0 eV  Emax=    1 GeV  ModifiedTsai
+            eBremLPM : Emin=    1 GeV Emax=  100 TeV  ModifiedTsai
+
+CoulombScat:  for e- XStype:1 SubType=1 BuildTable=1
+      Lambda table from 100 MeV to 100 TeV, 7 bins/decade, spline: 0
+      ThetaMin(p) < Theta(degree) < 180, pLimit(GeV^1)= 0.139531
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  eCoulombScattering : Emin=  100 MeV Emax=  100 TeV
+
+msc:  for e+  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            UrbanMsc : Emin=    0 eV  Emax=  100 MeV Nbins=42 100 eV  - 100 MeV
+          StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
+        WentzelVIUni : Emin=  100 MeV Emax=  100 TeV Nbins=42 100 MeV - 100 TeV
+          StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
+
+eIoni:  for e+  XStype:3  SubType=2
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      StepFunction=(0.2, 1 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        MollerBhabha : Emin=    0 eV  Emax=  100 TeV
+
+eBrem:  for e+  XStype:4  SubType=3
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      LPM flag: 1 for E > 1 GeV,  VertexHighEnergyTh(GeV)= 100000
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+             eBremSB : Emin=    0 eV  Emax=    1 GeV  ModifiedTsai
+            eBremLPM : Emin=    1 GeV Emax=  100 TeV  ModifiedTsai
+
+annihil:  for e+ XStype:2 SubType=5 AtRestModel:Simple BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            eplus2gg : Emin=    0 eV  Emax=  100 TeV
+
+CoulombScat:  for e+ XStype:1 SubType=1 BuildTable=1
+      Lambda table from 100 MeV to 100 TeV, 7 bins/decade, spline: 0
+      ThetaMin(p) < Theta(degree) < 180, pLimit(GeV^1)= 0.139531
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  eCoulombScattering : Emin=  100 MeV Emax=  100 TeV
+
+msc:  for proton  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        WentzelVIUni : Emin=    0 eV  Emax=  100 TeV Nbins=84 100 eV  - 100 TeV
+          StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:0 Skin=1 Llim=1 mm
+
+hIoni:  for proton  XStype:3  SubType=2
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      StepFunction=(0.2, 0.1 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               Bragg : Emin=    0 eV  Emax=    2 MeV
+          BetheBloch : Emin=    2 MeV Emax=  100 TeV
+
+hBrems:  for proton  XStype:1  SubType=3
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               hBrem : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
+
+hPairProd:  for proton  XStype:1  SubType=4
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      Sampling table 17x1001; from 7.50618 GeV to 100 TeV 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+           hPairProd : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
+
+CoulombScat:  for proton XStype:1 SubType=1 BuildTable=1
+      Lambda table from threshold  to 100 TeV, 7 bins/decade, spline: 0
+      ThetaMin(p) < Theta(degree) < 180, pLimit(GeV^1)= 0.139531
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  eCoulombScattering : Emin=    0 eV  Emax=  100 TeV
+
+msc:  for GenericIon  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            UrbanMsc : Emin=    0 eV  Emax=  100 TeV
+          StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:0 Skin=1 Llim=1 mm
+
+ionIoni:  for GenericIon  XStype:3  SubType=2
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      StepFunction=(0.2, 0.1 mm), integ: 3, fluct: 1, linLossLim= 0.02
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               Bragg : Emin=    0 eV  Emax=    2 MeV
+          BetheBloch : Emin=    2 MeV Emax=  100 TeV
+
+msc:  for alpha  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            UrbanMsc : Emin=    0 eV  Emax=  100 TeV
+          StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:0 Skin=1 Llim=1 mm
+
+ionIoni:  for alpha  XStype:3  SubType=2
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      StepFunction=(0.2, 0.1 mm), integ: 3, fluct: 1, linLossLim= 0.02
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            BraggIon : Emin=    0 eV  Emax=7.9452 MeV
+          BetheBloch : Emin=7.9452 MeV Emax=  100 TeV
+
+msc:  for anti_proton  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        WentzelVIUni : Emin=    0 eV  Emax=  100 TeV Nbins=84 100 eV  - 100 TeV
+          StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:0 Skin=1 Llim=1 mm
+
+hIoni:  for anti_proton  XStype:3  SubType=2
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      StepFunction=(0.2, 0.1 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            ICRU73QO : Emin=    0 eV  Emax=    2 MeV
+          BetheBloch : Emin=    2 MeV Emax=  100 TeV
+
+hBrems:  for anti_proton  XStype:1  SubType=3
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               hBrem : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
+
+hPairProd:  for anti_proton  XStype:1  SubType=4
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      Sampling table 17x1001; from 7.50618 GeV to 100 TeV 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+           hPairProd : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
+
+CoulombScat:  for anti_proton XStype:1 SubType=1 BuildTable=1
+      Lambda table from threshold  to 100 TeV, 7 bins/decade, spline: 0
+      ThetaMin(p) < Theta(degree) < 180, pLimit(GeV^1)= 0.139531
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  eCoulombScattering : Emin=    0 eV  Emax=  100 TeV
+
+msc:  for kaon+  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        WentzelVIUni : Emin=    0 eV  Emax=  100 TeV Nbins=84 100 eV  - 100 TeV
+          StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:0 Skin=1 Llim=1 mm
+
+hIoni:  for kaon+  XStype:3  SubType=2
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      StepFunction=(0.2, 0.1 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               Bragg : Emin=    0 eV  Emax=1.05231 MeV
+          BetheBloch : Emin=1.05231 MeV Emax=  100 TeV
+
+hBrems:  for kaon+  XStype:1  SubType=3
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               hBrem : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
+
+hPairProd:  for kaon+  XStype:1  SubType=4
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      Sampling table 18x1001; from 3.94942 GeV to 100 TeV 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+           hPairProd : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
+
+CoulombScat:  for kaon+ XStype:1 SubType=1 BuildTable=1
+      Lambda table from threshold  to 100 TeV, 7 bins/decade, spline: 0
+      ThetaMin(p) < Theta(degree) < 180, pLimit(GeV^1)= 0.139531
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  eCoulombScattering : Emin=    0 eV  Emax=  100 TeV
+
+msc:  for kaon-  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        WentzelVIUni : Emin=    0 eV  Emax=  100 TeV Nbins=84 100 eV  - 100 TeV
+          StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:0 Skin=1 Llim=1 mm
+
+hIoni:  for kaon-  XStype:3  SubType=2
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      StepFunction=(0.2, 0.1 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            ICRU73QO : Emin=    0 eV  Emax=1.05231 MeV
+          BetheBloch : Emin=1.05231 MeV Emax=  100 TeV
+
+hBrems:  for kaon-  XStype:1  SubType=3
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               hBrem : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
+
+hPairProd:  for kaon-  XStype:1  SubType=4
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      Sampling table 18x1001; from 3.94942 GeV to 100 TeV 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+           hPairProd : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
+
+CoulombScat:  for kaon- XStype:1 SubType=1 BuildTable=1
+      Used Lambda table of kaon+
+      ThetaMin(p) < Theta(degree) < 180, pLimit(GeV^1)= 0.139531
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  eCoulombScattering : Emin=    0 eV  Emax=  100 TeV
+
+msc:  for mu+  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        WentzelVIUni : Emin=    0 eV  Emax=  100 TeV Nbins=84 100 eV  - 100 TeV
+          StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:0 Skin=1 Llim=1 mm
+
+muIoni:  for mu+  XStype:3  SubType=2
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      StepFunction=(0.2, 0.1 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               Bragg : Emin=    0 eV  Emax=  200 keV
+        MuBetheBloch : Emin=  200 keV Emax=  100 TeV
+
+muBrems:  for mu+  XStype:1  SubType=3
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+              MuBrem : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
+
+muPairProd:  for mu+  XStype:1  SubType=4
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      Sampling table 21x1001; from 0.85 GeV to 100 TeV 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+          muPairProd : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
+
+CoulombScat:  for mu+ XStype:1 SubType=1 BuildTable=1
+      Lambda table from threshold  to 100 TeV, 7 bins/decade, spline: 0
+      ThetaMin(p) < Theta(degree) < 180, pLimit(GeV^1)= 0.139531
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  eCoulombScattering : Emin=    0 eV  Emax=  100 TeV
+
+msc:  for mu-  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        WentzelVIUni : Emin=    0 eV  Emax=  100 TeV Nbins=84 100 eV  - 100 TeV
+          StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:0 Skin=1 Llim=1 mm
+
+muIoni:  for mu-  XStype:3  SubType=2
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      StepFunction=(0.2, 0.1 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            ICRU73QO : Emin=    0 eV  Emax=  200 keV
+        MuBetheBloch : Emin=  200 keV Emax=  100 TeV
+
+muBrems:  for mu-  XStype:1  SubType=3
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+              MuBrem : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
+
+muPairProd:  for mu-  XStype:1  SubType=4
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      Sampling table 21x1001; from 0.85 GeV to 100 TeV 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+          muPairProd : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
+
+CoulombScat:  for mu- XStype:1 SubType=1 BuildTable=1
+      Used Lambda table of mu+
+      ThetaMin(p) < Theta(degree) < 180, pLimit(GeV^1)= 0.139531
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  eCoulombScattering : Emin=    0 eV  Emax=  100 TeV
+
+msc:  for pi+  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        WentzelVIUni : Emin=    0 eV  Emax=  100 TeV Nbins=84 100 eV  - 100 TeV
+          StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:0 Skin=1 Llim=1 mm
+
+hIoni:  for pi+  XStype:3  SubType=2
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      StepFunction=(0.2, 0.1 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               Bragg : Emin=    0 eV  Emax=297.505 keV
+          BetheBloch : Emin=297.505 keV Emax=  100 TeV
+
+hBrems:  for pi+  XStype:1  SubType=3
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               hBrem : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
+
+hPairProd:  for pi+  XStype:1  SubType=4
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      Sampling table 20x1001; from 1.11656 GeV to 100 TeV 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+           hPairProd : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
+
+CoulombScat:  for pi+ XStype:1 SubType=1 BuildTable=1
+      Lambda table from threshold  to 100 TeV, 7 bins/decade, spline: 0
+      ThetaMin(p) < Theta(degree) < 180, pLimit(GeV^1)= 0.139531
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  eCoulombScattering : Emin=    0 eV  Emax=  100 TeV
+
+msc:  for pi-  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        WentzelVIUni : Emin=    0 eV  Emax=  100 TeV Nbins=84 100 eV  - 100 TeV
+          StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:0 Skin=1 Llim=1 mm
+
+hIoni:  for pi-  XStype:3  SubType=2
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      StepFunction=(0.2, 0.1 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            ICRU73QO : Emin=    0 eV  Emax=297.505 keV
+          BetheBloch : Emin=297.505 keV Emax=  100 TeV
+
+hBrems:  for pi-  XStype:1  SubType=3
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               hBrem : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
+
+hPairProd:  for pi-  XStype:1  SubType=4
+      dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      Sampling table 20x1001; from 1.11656 GeV to 100 TeV 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+           hPairProd : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
+
+CoulombScat:  for pi- XStype:1 SubType=1 BuildTable=1
+      Used Lambda table of pi+
+      ThetaMin(p) < Theta(degree) < 180, pLimit(GeV^1)= 0.139531
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  eCoulombScattering : Emin=    0 eV  Emax=  100 TeV
+
+====================================================================
+                  HADRONIC PROCESSES SUMMARY (verbose level 1)
+-----------------------------------------------------------------------
+                           Hadronic Processes for neutron
+  Process: hadElastic
+        Model:             hElasticCHIPS: 0 eV  ---> 100 TeV
+     Cr_sctns:        G4NeutronElasticXS: 0 eV  ---> 100 TeV
+  Process: neutronInelastic
+        Model:                      QGSP: 12 GeV ---> 100 TeV
+        Model:                      FTFP: 3 GeV ---> 25 GeV
+        Model:            Binary Cascade: 0 eV  ---> 6 GeV
+     Cr_sctns:      G4NeutronInelasticXS: 0 eV  ---> 100 TeV
+  Process: nCapture
+        Model:               nRadCapture: 0 eV  ---> 100 TeV
+     Cr_sctns:        G4NeutronCaptureXS: 0 eV  ---> 100 TeV
+  Process: nKiller
+-----------------------------------------------------------------------
+                           Hadronic Processes for GenericIon
+  Process: ionElastic
+        Model:          NNDiffuseElastic: 0 eV /n ---> 100 TeV/n
+     Cr_sctns:  Glauber-Gribov Nucl-nucl: 0 eV  ---> 25.6 PeV
+  Process: ionInelastic
+        Model:  Binary Light Ion Cascade: 0 eV /n ---> 6 GeV/n
+        Model:                      FTFP: 3 GeV/n ---> 100 TeV/n
+     Cr_sctns:  Glauber-Gribov Nucl-nucl: 0 eV  ---> 25.6 PeV
+-----------------------------------------------------------------------
+                           Hadronic Processes for He3
+  Process: hadElastic
+        Model:              hElasticLHEP: 0 eV /n ---> 100 TeV/n
+     Cr_sctns:  Glauber-Gribov Nucl-nucl: 0 eV  ---> 25.6 PeV
+  Process: He3Inelastic
+        Model:  Binary Light Ion Cascade: 0 eV /n ---> 6 GeV/n
+        Model:                      FTFP: 3 GeV/n ---> 100 TeV/n
+     Cr_sctns:  Glauber-Gribov Nucl-nucl: 0 eV  ---> 25.6 PeV
+-----------------------------------------------------------------------
+                           Hadronic Processes for alpha
+  Process: hadElastic
+        Model:              hElasticLHEP: 0 eV /n ---> 100 TeV/n
+     Cr_sctns:  Glauber-Gribov Nucl-nucl: 0 eV  ---> 25.6 PeV
+  Process: alphaInelastic
+        Model:  Binary Light Ion Cascade: 0 eV /n ---> 6 GeV/n
+        Model:                      FTFP: 3 GeV/n ---> 100 TeV/n
+     Cr_sctns:  Glauber-Gribov Nucl-nucl: 0 eV  ---> 25.6 PeV
+-----------------------------------------------------------------------
+                           Hadronic Processes for anti_He3
+  Process: hadElastic
+        Model:              hElasticLHEP: 0 eV /n ---> 100.1 MeV/n
+        Model:              AntiAElastic: 100 MeV/n ---> 100 TeV/n
+     Cr_sctns:              AntiAGlauber: 0 eV  ---> 25.6 PeV
+  Process: anti_He3Inelastic
+        Model:                      FTFP: 0 eV /n ---> 100 TeV/n
+     Cr_sctns:              AntiAGlauber: 0 eV  ---> 25.6 PeV
+  Process: hFritiofCaptureAtRest
+-----------------------------------------------------------------------
+                           Hadronic Processes for anti_alpha
+  Process: hadElastic
+        Model:              hElasticLHEP: 0 eV /n ---> 100.1 MeV/n
+        Model:              AntiAElastic: 100 MeV/n ---> 100 TeV/n
+     Cr_sctns:              AntiAGlauber: 0 eV  ---> 25.6 PeV
+  Process: anti_alphaInelastic
+        Model:                      FTFP: 0 eV /n ---> 100 TeV/n
+     Cr_sctns:              AntiAGlauber: 0 eV  ---> 25.6 PeV
+  Process: hFritiofCaptureAtRest
+-----------------------------------------------------------------------
+                           Hadronic Processes for anti_deuteron
+  Process: hadElastic
+        Model:              hElasticLHEP: 0 eV /n ---> 100.1 MeV/n
+        Model:              AntiAElastic: 100 MeV/n ---> 100 TeV/n
+     Cr_sctns:              AntiAGlauber: 0 eV  ---> 25.6 PeV
+  Process: anti_deuteronInelastic
+        Model:                      FTFP: 0 eV /n ---> 100 TeV/n
+     Cr_sctns:              AntiAGlauber: 0 eV  ---> 25.6 PeV
+  Process: hFritiofCaptureAtRest
+-------------------------------------------------------------------------
+                           Hadronic Processes for anti_hypertriton
+  Process: hFritiofCaptureAtRest
+-----------------------------------------------------------------------
+                           Hadronic Processes for anti_lambda
+  Process: hadElastic
+        Model:              hElasticLHEP: 0 eV  ---> 100 TeV
+     Cr_sctns:            Glauber-Gribov: 0 eV  ---> 100 TeV
+  Process: anti_lambdaInelastic
+        Model:                      QGSP: 12 GeV ---> 100 TeV
+        Model:                      FTFP: 0 eV  ---> 25 GeV
+     Cr_sctns:            Glauber-Gribov: 0 eV  ---> 100 TeV
+  Process: hFritiofCaptureAtRest
+-----------------------------------------------------------------------
+                           Hadronic Processes for anti_neutron
+  Process: hadElastic
+        Model:              hElasticLHEP: 0 eV  ---> 100.1 MeV
+        Model:              AntiAElastic: 100 MeV ---> 100 TeV
+     Cr_sctns:              AntiAGlauber: 0 eV  ---> 25.6 PeV
+  Process: anti_neutronInelastic
+        Model:                      FTFP: 0 eV  ---> 100 TeV
+     Cr_sctns:              AntiAGlauber: 0 eV  ---> 25.6 PeV
+  Process: hFritiofCaptureAtRest
+-----------------------------------------------------------------------
+                           Hadronic Processes for anti_proton
+  Process: hadElastic
+        Model:              hElasticLHEP: 0 eV  ---> 100.1 MeV
+        Model:              AntiAElastic: 100 MeV ---> 100 TeV
+     Cr_sctns:              AntiAGlauber: 0 eV  ---> 25.6 PeV
+  Process: anti_protonInelastic
+        Model:                      FTFP: 0 eV  ---> 100 TeV
+     Cr_sctns:              AntiAGlauber: 0 eV  ---> 25.6 PeV
+  Process: hFritiofCaptureAtRest
+-----------------------------------------------------------------------
+                           Hadronic Processes for anti_triton
+  Process: hadElastic
+        Model:              hElasticLHEP: 0 eV /n ---> 100.1 MeV/n
+        Model:              AntiAElastic: 100 MeV/n ---> 100 TeV/n
+     Cr_sctns:              AntiAGlauber: 0 eV  ---> 25.6 PeV
+  Process: anti_tritonInelastic
+        Model:                      FTFP: 0 eV /n ---> 100 TeV/n
+     Cr_sctns:              AntiAGlauber: 0 eV  ---> 25.6 PeV
+  Process: hFritiofCaptureAtRest
+-----------------------------------------------------------------------
+                           Hadronic Processes for deuteron
+  Process: hadElastic
+        Model:              hElasticLHEP: 0 eV /n ---> 100 TeV/n
+     Cr_sctns:  Glauber-Gribov Nucl-nucl: 0 eV  ---> 25.6 PeV
+  Process: dInelastic
+        Model:  Binary Light Ion Cascade: 0 eV /n ---> 6 GeV/n
+        Model:                      FTFP: 3 GeV/n ---> 100 TeV/n
+     Cr_sctns:  Glauber-Gribov Nucl-nucl: 0 eV  ---> 25.6 PeV
+-----------------------------------------------------------------------
+                           Hadronic Processes for e+
+  Process: positronNuclear
+        Model:   G4ElectroVDNuclearModel: 0 eV  ---> 1 PeV
+     Cr_sctns:          ElectroNuclearXS: 0 eV  ---> 100 TeV
+-----------------------------------------------------------------------
+                           Hadronic Processes for e-
+  Process: electronNuclear
+        Model:   G4ElectroVDNuclearModel: 0 eV  ---> 1 PeV
+     Cr_sctns:          ElectroNuclearXS: 0 eV  ---> 100 TeV
+-----------------------------------------------------------------------
+                           Hadronic Processes for gamma
+  Process: photonNuclear
+        Model:               GammaNPreco: 0 eV  ---> 200 MeV
+        Model:            BertiniCascade: 199 MeV ---> 6 GeV
+        Model:           TheoFSGenerator: 3 GeV ---> 100 TeV
+     Cr_sctns:            GammaNuclearXS: 0 eV  ---> 100 TeV
+-----------------------------------------------------------------------
+                           Hadronic Processes for kaon+
+  Process: hadElastic
+        Model:              hElasticLHEP: 0 eV  ---> 100 TeV
+     Cr_sctns:            Glauber-Gribov: 0 eV  ---> 100 TeV
+  Process: kaon+Inelastic
+        Model:                      QGSP: 12 GeV ---> 100 TeV
+        Model:                      FTFP: 3 GeV ---> 25 GeV
+        Model:            BertiniCascade: 0 eV  ---> 6 GeV
+     Cr_sctns:            Glauber-Gribov: 0 eV  ---> 100 TeV
+-----------------------------------------------------------------------
+                           Hadronic Processes for kaon-
+  Process: hadElastic
+        Model:              hElasticLHEP: 0 eV  ---> 100 TeV
+     Cr_sctns:            Glauber-Gribov: 0 eV  ---> 100 TeV
+  Process: kaon-Inelastic
+        Model:                      QGSP: 12 GeV ---> 100 TeV
+        Model:                      FTFP: 3 GeV ---> 25 GeV
+        Model:            BertiniCascade: 0 eV  ---> 6 GeV
+     Cr_sctns:            Glauber-Gribov: 0 eV  ---> 100 TeV
+  Process: hBertiniCaptureAtRest
+-----------------------------------------------------------------------
+                           Hadronic Processes for lambda
+  Process: hadElastic
+        Model:              hElasticLHEP: 0 eV  ---> 100 TeV
+     Cr_sctns:            Glauber-Gribov: 0 eV  ---> 100 TeV
+  Process: lambdaInelastic
+        Model:                      QGSP: 12 GeV ---> 100 TeV
+        Model:                      FTFP: 3 GeV ---> 25 GeV
+        Model:            BertiniCascade: 0 eV  ---> 6 GeV
+     Cr_sctns:            Glauber-Gribov: 0 eV  ---> 100 TeV
+-----------------------------------------------------------------------
+                           Hadronic Processes for mu+
+  Process: muonNuclear
+        Model:      G4MuonVDNuclearModel: 0 eV  ---> 1 PeV
+     Cr_sctns:     KokoulinMuonNuclearXS: 0 eV  ---> 100 TeV
+-----------------------------------------------------------------------
+                           Hadronic Processes for mu-
+  Process: muonNuclear
+        Model:      G4MuonVDNuclearModel: 0 eV  ---> 1 PeV
+     Cr_sctns:     KokoulinMuonNuclearXS: 0 eV  ---> 100 TeV
+  Process: muMinusCaptureAtRest
+-----------------------------------------------------------------------
+                           Hadronic Processes for pi+
+  Process: hadElastic
+        Model:           hElasticGlauber: 0 eV  ---> 100 TeV
+     Cr_sctns:  BarashenkovGlauberGribov: 0 eV  ---> 100 TeV
+  Process: pi+Inelastic
+        Model:                      QGSP: 12 GeV ---> 100 TeV
+        Model:                      FTFP: 3 GeV ---> 25 GeV
+        Model:            BertiniCascade: 0 eV  ---> 6 GeV
+     Cr_sctns:  BarashenkovGlauberGribov: 0 eV  ---> 100 TeV
+-----------------------------------------------------------------------
+                           Hadronic Processes for pi-
+  Process: hadElastic
+        Model:           hElasticGlauber: 0 eV  ---> 100 TeV
+     Cr_sctns:  BarashenkovGlauberGribov: 0 eV  ---> 100 TeV
+  Process: pi-Inelastic
+        Model:                      QGSP: 12 GeV ---> 100 TeV
+        Model:                      FTFP: 3 GeV ---> 25 GeV
+        Model:            BertiniCascade: 0 eV  ---> 6 GeV
+     Cr_sctns:  BarashenkovGlauberGribov: 0 eV  ---> 100 TeV
+  Process: hBertiniCaptureAtRest
+-----------------------------------------------------------------------
+                           Hadronic Processes for proton
+  Process: hadElastic
+        Model:             hElasticCHIPS: 0 eV  ---> 100 TeV
+     Cr_sctns:  BarashenkovGlauberGribov: 0 eV  ---> 100 TeV
+  Process: protonInelastic
+        Model:                      QGSP: 12 GeV ---> 100 TeV
+        Model:                      FTFP: 3 GeV ---> 25 GeV
+        Model:            Binary Cascade: 0 eV  ---> 6 GeV
+     Cr_sctns:  BarashenkovGlauberGribov: 0 eV  ---> 100 TeV
+-----------------------------------------------------------------------
+                           Hadronic Processes for sigma-
+  Process: hadElastic
+        Model:              hElasticLHEP: 0 eV  ---> 100 TeV
+     Cr_sctns:            Glauber-Gribov: 0 eV  ---> 100 TeV
+  Process: sigma-Inelastic
+        Model:                      QGSP: 12 GeV ---> 100 TeV
+        Model:                      FTFP: 3 GeV ---> 25 GeV
+        Model:            BertiniCascade: 0 eV  ---> 6 GeV
+     Cr_sctns:            Glauber-Gribov: 0 eV  ---> 100 TeV
+  Process: hBertiniCaptureAtRest
+-----------------------------------------------------------------------
+                           Hadronic Processes for triton
+  Process: hadElastic
+        Model:              hElasticLHEP: 0 eV /n ---> 100 TeV/n
+     Cr_sctns:  Glauber-Gribov Nucl-nucl: 0 eV  ---> 25.6 PeV
+  Process: tInelastic
+        Model:  Binary Light Ion Cascade: 0 eV /n ---> 6 GeV/n
+        Model:                      FTFP: 3 GeV/n ---> 100 TeV/n
+     Cr_sctns:  Glauber-Gribov Nucl-nucl: 0 eV  ---> 25.6 PeV
+=======================================================================
+======       Geant4 Native Pre-compound Model Parameters       ========
+=======================================================================
+Type of pre-compound inverse x-section              1
+Pre-compound model active                           1
+Pre-compound excitation low energy                  100 keV
+Pre-compound excitation high energy                 30 MeV
+Angular generator for pre-compound model            1
+Use NeverGoBack option for pre-compound model       0
+Use SoftCutOff option for pre-compound model        0
+Use CEM transitions for pre-compound model          1
+Use GNASH transitions for pre-compound model        0
+Use HETC submodel for pre-compound model            0
+=======================================================================
+======       Nuclear De-excitation Module Parameters           ========
+=======================================================================
+Type of de-excitation inverse x-section             3
+Type of de-excitation factory                       Evaporation+GEM
+Number of de-excitation channels                    68
+Min excitation energy                               10 eV 
+Min energy per nucleon for multifragmentation       200 GeV
+Limit excitation energy for Fermi BreakUp           20 MeV
+Level density (1/MeV)                               0.075
+Use simple level density model                      1
+Use discrete excitation energy of the residual      0
+Time limit for long lived isomeres                  1 ns 
+Isomer production flag                              1
+Internal e- conversion flag                         1
+Store e- internal conversion data                   1
+Correlated gamma emission flag                      0
+Max 2J for sampling of angular correlations         10
+=======================================================================
+
+=========================================================================
+--> G4TaskRunManager::CreateAndStartWorkers() --> Initializing workers...
+=========================================================================
+
+SIPM_CONFIG cells=3600 cells_x=60 cells_y=60 active_mm=3x3 recovery_ns=30 dcr_hz=500000 dark_enabled=1 crosstalk=0.03 afterpulse_fast=0.01 window_start_ns=-20 window_end_ns=250 sample_dt_ns=0.5 adc_bits=12 adc_lsb_pe=0.01 baseline_adc=200 overvoltage_V=3 temperature_C=25 trigger_recovery_model=EXPONENTIAL gain_recovery_model=EXPONENTIAL_H1_SHARED
+SIPM_CONFIG cells=3600 cells_x=60 cells_y=60 active_mm=3x3 recovery_ns=30 dcr_hz=500000 dark_enabled=1 crosstalk=0.03 afterpulse_fast=0.01 window_start_ns=-20 window_end_ns=250 sample_dt_ns=0.5 adc_bits=12 adc_lsb_pe=0.01 baseline_adc=200 overvoltage_V=3 temperature_C=25 trigger_recovery_model=EXPONENTIAL gain_recovery_model=EXPONENTIAL_H1_SHARED
+SIPM_CONFIG cells=3600 cells_x=60 cells_y=60 active_mm=3x3 recovery_ns=30 dcr_hz=500000 dark_enabled=1 crosstalk=0.03 afterpulse_fast=0.01 window_start_ns=-20 window_end_ns=250 sample_dt_ns=0.5 adc_bits=12 adc_lsb_pe=0.01 baseline_adc=200 overvoltage_V=3 temperature_C=25 trigger_recovery_model=EXPONENTIAL gain_recovery_model=EXPONENTIAL_H1_SHARED
+SIPM_CONFIG cells=3600 cells_x=60 cells_y=60 active_mm=3x3 recovery_ns=30 dcr_hz=500000 dark_enabled=1 crosstalk=0.03 afterpulse_fast=0.01 window_start_ns=-20 window_end_ns=250 sample_dt_ns=0.5 adc_bits=12 adc_lsb_pe=0.01 baseline_adc=200 overvoltage_V=3 temperature_C=25 trigger_recovery_model=EXPONENTIAL gain_recovery_model=EXPONENTIAL_H1_SHARED
+CCB_NEUTRON_TIMECUT policy_id=pin_qgsp_bic_default_10us time_cut_us=10 status=PINNED_REFERENCE_DEFAULT
+RUN_CONFIG particle=proton KE_MeV=100 nevents=2000 threads_requested=4 threads_effective=4 g4_force_threads=unset seed=1 hit_x_cm=0 hit_y_cm=0 theta_deg=0 phi_deg=0 allow_miss=0 birks_kB=0.126 quenching_model_id=birks_geant4 quenching_model_status=HYPOTHESIS quenching_claims_authorized=false production_cut_mm=0.1 physics_list=QGSP_BIC neutron_timecut_policy_id=pin_qgsp_bic_default_10us neutron_time_cut_us=10 neutron_tracking_time_cut_configured=1 reflectivity_scale=1 attenuation_scale(deprecated)=1 scintillator_absorption_scale=1 y11_bulk_attenuation_scale=1 pde_scale=1 collection_efficiency=1 optical_interface_model=UNKNOWN_EXTERNAL far_end=instrumented wls_time_profile=exponential mode=optical optical_dir=/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/single_stave/build/optical strict_optical=1 output=/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/results/1303_grid_regen/20260814_104928/stave_proton_100MeV_x0_y0_th0_ph0_s1.root gpu_optical=0 optical_out= dump_gdml= geometry_hash=e323b92195f9a6288944f0738dbadccf9386422f076362ca172fd0b6d119d1e1
+
+==========================================================================================
+--> G4TaskRunManager::CreateAndStartWorkers() --> Creating 45 tasks with 44 events/task...
+==========================================================================================
+
+SIPM_ARRIVALS event=132 total=2180
+SIPM_ADC event=132 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=88 total=2138
+SIPM_ADC event=88 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=0 total=2368
+SIPM_ADC event=0 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=44 total=2413
+SIPM_ADC event=44 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=1 total=2220
+SIPM_ADC event=1 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=133 total=2309
+SIPM_ADC event=133 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=89 total=2196
+SIPM_ADC event=89 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=45 total=2271
+SIPM_ADC event=45 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=2 total=2311
+SIPM_ADC event=2 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=90 total=2284
+SIPM_ADC event=90 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=46 total=2234
+SIPM_ADC event=46 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=134 total=2385
+SIPM_ADC event=134 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=3 total=2367
+SIPM_ADC event=3 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=135 total=2196
+SIPM_ADC event=135 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=47 total=2184
+SIPM_ADC event=47 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=91 total=2412
+SIPM_ADC event=91 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=4 total=2176
+SIPM_ADC event=4 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=48 total=2118
+SIPM_ADC event=48 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=136 total=2369
+SIPM_ADC event=136 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=92 total=2352
+SIPM_ADC event=92 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=49 total=2190
+SIPM_ADC event=49 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=5 total=2360
+SIPM_ADC event=5 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=137 total=2292
+SIPM_ADC event=137 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=93 total=2174
+SIPM_ADC event=93 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=50 total=2417
+SIPM_ADC event=50 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=138 total=2236
+SIPM_ADC event=138 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=6 total=2330
+SIPM_ADC event=6 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=94 total=2386
+SIPM_ADC event=94 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=51 total=2416
+SIPM_ADC event=51 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=139 total=2250
+SIPM_ADC event=139 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=7 total=2334
+SIPM_ADC event=7 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=95 total=2521
+SIPM_ADC event=95 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=52 total=2345
+SIPM_ADC event=52 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=8 total=2316
+SIPM_ADC event=8 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=140 total=2485
+SIPM_ADC event=140 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=96 total=2289
+SIPM_ADC event=96 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=53 total=2246
+SIPM_ADC event=53 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=141 total=2043
+SIPM_ADC event=141 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=9 total=2250
+SIPM_ADC event=9 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=97 total=2282
+SIPM_ADC event=97 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=54 total=2245
+SIPM_ADC event=54 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=142 total=2303
+SIPM_ADC event=142 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=10 total=2328
+SIPM_ADC event=10 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=98 total=2241
+SIPM_ADC event=98 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=55 total=2311
+SIPM_ADC event=55 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=143 total=2432
+SIPM_ADC event=143 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=11 total=2219
+SIPM_ADC event=11 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=99 total=2328
+SIPM_ADC event=99 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=56 total=2206
+SIPM_ADC event=56 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=144 total=2324
+SIPM_ADC event=144 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=12 total=2318
+SIPM_ADC event=12 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=100 total=2235
+SIPM_ADC event=100 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=57 total=2245
+SIPM_ADC event=57 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=145 total=2284
+SIPM_ADC event=145 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=13 total=2453
+SIPM_ADC event=13 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=101 total=2335
+SIPM_ADC event=101 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=58 total=2324
+SIPM_ADC event=58 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=146 total=2295
+SIPM_ADC event=146 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=14 total=2332
+SIPM_ADC event=14 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=102 total=2317
+SIPM_ADC event=102 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=59 total=2329
+SIPM_ADC event=59 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=147 total=2280
+SIPM_ADC event=147 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=15 total=2204
+SIPM_ADC event=15 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=103 total=2334
+SIPM_ADC event=103 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=60 total=2297
+SIPM_ADC event=60 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=148 total=2408
+SIPM_ADC event=148 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=16 total=2276
+SIPM_ADC event=16 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=104 total=2194
+SIPM_ADC event=104 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=61 total=2357
+SIPM_ADC event=61 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=149 total=2339
+SIPM_ADC event=149 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=17 total=2238
+SIPM_ADC event=17 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=105 total=2277
+SIPM_ADC event=105 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=62 total=2360
+SIPM_ADC event=62 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=150 total=2360
+SIPM_ADC event=150 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=18 total=2299
+SIPM_ADC event=18 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=106 total=2379
+SIPM_ADC event=106 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=151 total=2329
+SIPM_ADC event=151 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=63 total=2399
+SIPM_ADC event=63 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=19 total=2368
+SIPM_ADC event=19 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=107 total=2295
+SIPM_ADC event=107 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=152 total=2253
+SIPM_ADC event=152 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=64 total=2249
+SIPM_ADC event=64 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=20 total=2254
+SIPM_ADC event=20 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=108 total=2356
+SIPM_ADC event=108 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=153 total=2134
+SIPM_ADC event=153 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=21 total=2249
+SIPM_ADC event=21 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=109 total=2300
+SIPM_ADC event=109 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=65 total=2392
+SIPM_ADC event=65 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=154 total=2239
+SIPM_ADC event=154 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=110 total=2196
+SIPM_ADC event=110 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=22 total=2466
+SIPM_ADC event=22 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=66 total=2302
+SIPM_ADC event=66 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=155 total=2411
+SIPM_ADC event=155 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=23 total=2237
+SIPM_ADC event=23 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=67 total=2183
+SIPM_ADC event=67 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=111 total=2338
+SIPM_ADC event=111 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=156 total=2217
+SIPM_ADC event=156 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=24 total=2267
+SIPM_ADC event=24 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=68 total=2265
+SIPM_ADC event=68 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=112 total=2326
+SIPM_ADC event=112 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=157 total=2338
+SIPM_ADC event=157 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=25 total=2256
+SIPM_ADC event=25 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=69 total=2414
+SIPM_ADC event=69 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=113 total=2472
+SIPM_ADC event=113 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=158 total=2232
+SIPM_ADC event=158 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=70 total=2217
+SIPM_ADC event=70 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=26 total=2393
+SIPM_ADC event=26 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=114 total=2175
+SIPM_ADC event=114 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=159 total=2142
+SIPM_ADC event=159 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=27 total=2378
+SIPM_ADC event=27 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=115 total=2334
+SIPM_ADC event=115 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=71 total=2590
+SIPM_ADC event=71 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=160 total=2405
+SIPM_ADC event=160 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=28 total=2359
+SIPM_ADC event=28 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=116 total=2366
+SIPM_ADC event=116 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=72 total=2114
+SIPM_ADC event=72 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=161 total=2283
+SIPM_ADC event=161 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=29 total=2285
+SIPM_ADC event=29 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=117 total=2161
+SIPM_ADC event=117 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=73 total=2377
+SIPM_ADC event=73 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=162 total=2306
+SIPM_ADC event=162 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=30 total=2228
+SIPM_ADC event=30 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=118 total=2361
+SIPM_ADC event=118 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=74 total=2291
+SIPM_ADC event=74 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=163 total=2298
+SIPM_ADC event=163 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=31 total=2348
+SIPM_ADC event=31 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=119 total=2315
+SIPM_ADC event=119 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=75 total=2287
+SIPM_ADC event=75 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=164 total=2045
+SIPM_ADC event=164 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=32 total=2290
+SIPM_ADC event=32 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=120 total=2247
+SIPM_ADC event=120 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=76 total=2309
+SIPM_ADC event=76 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=165 total=2304
+SIPM_ADC event=165 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=121 total=2236
+SIPM_ADC event=121 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=33 total=2401
+SIPM_ADC event=33 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=77 total=2362
+SIPM_ADC event=77 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=166 total=2189
+SIPM_ADC event=166 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=34 total=2261
+SIPM_ADC event=34 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=122 total=2438
+SIPM_ADC event=122 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=78 total=2442
+SIPM_ADC event=78 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=167 total=2258
+SIPM_ADC event=167 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=35 total=2354
+SIPM_ADC event=35 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=123 total=2336
+SIPM_ADC event=123 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=79 total=2383
+SIPM_ADC event=79 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=168 total=2192
+SIPM_ADC event=168 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=124 total=2291
+SIPM_ADC event=124 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=36 total=2260
+SIPM_ADC event=36 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=80 total=2228
+SIPM_ADC event=80 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=169 total=2287
+SIPM_ADC event=169 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=125 total=2307
+SIPM_ADC event=125 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=37 total=2402
+SIPM_ADC event=37 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=81 total=2343
+SIPM_ADC event=81 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=170 total=2325
+SIPM_ADC event=170 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=126 total=2290
+SIPM_ADC event=126 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=38 total=2330
+SIPM_ADC event=38 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=82 total=2257
+SIPM_ADC event=82 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=171 total=2487
+SIPM_ADC event=171 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=127 total=2203
+SIPM_ADC event=127 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=39 total=2548
+SIPM_ADC event=39 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=83 total=2380
+SIPM_ADC event=83 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=172 total=2386
+SIPM_ADC event=172 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=128 total=2280
+SIPM_ADC event=128 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=40 total=2345
+SIPM_ADC event=40 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=84 total=2348
+SIPM_ADC event=84 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=173 total=2342
+SIPM_ADC event=173 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=129 total=2154
+SIPM_ADC event=129 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=41 total=2279
+SIPM_ADC event=41 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=85 total=2305
+SIPM_ADC event=85 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=174 total=2351
+SIPM_ADC event=174 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=130 total=2280
+SIPM_ADC event=130 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=42 total=2231
+SIPM_ADC event=42 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=86 total=2270
+SIPM_ADC event=86 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=175 total=2374
+SIPM_ADC event=175 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=131 total=2240
+SIPM_ADC event=131 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=43 total=2428
+SIPM_ADC event=43 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=87 total=2286
+SIPM_ADC event=87 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=176 total=2434
+SIPM_ADC event=176 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=220 total=2118
+SIPM_ADC event=220 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=264 total=2357
+SIPM_ADC event=264 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=308 total=2343
+SIPM_ADC event=308 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=221 total=2316
+SIPM_ADC event=221 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=177 total=2359
+SIPM_ADC event=177 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=265 total=2274
+SIPM_ADC event=265 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=309 total=2356
+SIPM_ADC event=309 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=178 total=2201
+SIPM_ADC event=178 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=222 total=2243
+SIPM_ADC event=222 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=266 total=2538
+SIPM_ADC event=266 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=310 total=2238
+SIPM_ADC event=310 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=223 total=2380
+SIPM_ADC event=223 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=179 total=2305
+SIPM_ADC event=179 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=267 total=2275
+SIPM_ADC event=267 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=311 total=2297
+SIPM_ADC event=311 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=224 total=2323
+SIPM_ADC event=224 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=180 total=2284
+SIPM_ADC event=180 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=268 total=2346
+SIPM_ADC event=268 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=312 total=2206
+SIPM_ADC event=312 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=225 total=2296
+SIPM_ADC event=225 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=181 total=2345
+SIPM_ADC event=181 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=313 total=2323
+SIPM_ADC event=313 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=269 total=2359
+SIPM_ADC event=269 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=226 total=2451
+SIPM_ADC event=226 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=182 total=2322
+SIPM_ADC event=182 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=314 total=2302
+SIPM_ADC event=314 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=270 total=2373
+SIPM_ADC event=270 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=227 total=2244
+SIPM_ADC event=227 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=183 total=2225
+SIPM_ADC event=183 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=315 total=2415
+SIPM_ADC event=315 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=271 total=2305
+SIPM_ADC event=271 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=228 total=2223
+SIPM_ADC event=228 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=184 total=2176
+SIPM_ADC event=184 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=316 total=2399
+SIPM_ADC event=316 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=272 total=2314
+SIPM_ADC event=272 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=229 total=2379
+SIPM_ADC event=229 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=185 total=2340
+SIPM_ADC event=185 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=317 total=2312
+SIPM_ADC event=317 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=273 total=2303
+SIPM_ADC event=273 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=230 total=2285
+SIPM_ADC event=230 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=186 total=2310
+SIPM_ADC event=186 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=274 total=2283
+SIPM_ADC event=274 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=318 total=2420
+SIPM_ADC event=318 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=231 total=2280
+SIPM_ADC event=231 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=187 total=2354
+SIPM_ADC event=187 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=275 total=2239
+SIPM_ADC event=275 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=319 total=2356
+SIPM_ADC event=319 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=232 total=2388
+SIPM_ADC event=232 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=188 total=2339
+SIPM_ADC event=188 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=276 total=2278
+SIPM_ADC event=276 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=320 total=2341
+SIPM_ADC event=320 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=233 total=2306
+SIPM_ADC event=233 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=277 total=1488
+SIPM_ADC event=277 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=189 total=2381
+SIPM_ADC event=189 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=321 total=2261
+SIPM_ADC event=321 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=234 total=2286
+SIPM_ADC event=234 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=278 total=2311
+SIPM_ADC event=278 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=190 total=2301
+SIPM_ADC event=190 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=322 total=2199
+SIPM_ADC event=322 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=235 total=2297
+SIPM_ADC event=235 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=279 total=2450
+SIPM_ADC event=279 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=191 total=2309
+SIPM_ADC event=191 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=323 total=2266
+SIPM_ADC event=323 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=236 total=2380
+SIPM_ADC event=236 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=280 total=2362
+SIPM_ADC event=280 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=192 total=2293
+SIPM_ADC event=192 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=324 total=2287
+SIPM_ADC event=324 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=237 total=2535
+SIPM_ADC event=237 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=281 total=2297
+SIPM_ADC event=281 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=193 total=2210
+SIPM_ADC event=193 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=325 total=2271
+SIPM_ADC event=325 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=238 total=2438
+SIPM_ADC event=238 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=282 total=2290
+SIPM_ADC event=282 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=194 total=2270
+SIPM_ADC event=194 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=326 total=2257
+SIPM_ADC event=326 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=239 total=2306
+SIPM_ADC event=239 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=283 total=2291
+SIPM_ADC event=283 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=195 total=2388
+SIPM_ADC event=195 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=327 total=2274
+SIPM_ADC event=327 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=240 total=2370
+SIPM_ADC event=240 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=284 total=2359
+SIPM_ADC event=284 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=196 total=2238
+SIPM_ADC event=196 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=241 total=2282
+SIPM_ADC event=241 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=285 total=2296
+SIPM_ADC event=285 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=197 total=2399
+SIPM_ADC event=197 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=328 total=4411
+SIPM_ADC event=328 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=242 total=2094
+SIPM_ADC event=242 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=286 total=2363
+SIPM_ADC event=286 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=198 total=2327
+SIPM_ADC event=198 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=329 total=2336
+SIPM_ADC event=329 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=243 total=2465
+SIPM_ADC event=243 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=287 total=2223
+SIPM_ADC event=287 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=199 total=2294
+SIPM_ADC event=199 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=330 total=2243
+SIPM_ADC event=330 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=244 total=2276
+SIPM_ADC event=244 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=288 total=2311
+SIPM_ADC event=288 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=200 total=2255
+SIPM_ADC event=200 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=331 total=2338
+SIPM_ADC event=331 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=245 total=2357
+SIPM_ADC event=245 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=289 total=2369
+SIPM_ADC event=289 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=201 total=2422
+SIPM_ADC event=201 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=332 total=2233
+SIPM_ADC event=332 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=246 total=2403
+SIPM_ADC event=246 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=290 total=2354
+SIPM_ADC event=290 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=202 total=2328
+SIPM_ADC event=202 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=333 total=2368
+SIPM_ADC event=333 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=247 total=2262
+SIPM_ADC event=247 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=291 total=2341
+SIPM_ADC event=291 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=203 total=2232
+SIPM_ADC event=203 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=334 total=2237
+SIPM_ADC event=334 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=248 total=2221
+SIPM_ADC event=248 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=292 total=2203
+SIPM_ADC event=292 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=204 total=2327
+SIPM_ADC event=204 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=335 total=2406
+SIPM_ADC event=335 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=293 total=2247
+SIPM_ADC event=293 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=249 total=2268
+SIPM_ADC event=249 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=205 total=2376
+SIPM_ADC event=205 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=336 total=2422
+SIPM_ADC event=336 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=294 total=2247
+SIPM_ADC event=294 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=250 total=2361
+SIPM_ADC event=250 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=206 total=2164
+SIPM_ADC event=206 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=337 total=2079
+SIPM_ADC event=337 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=295 total=2336
+SIPM_ADC event=295 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=251 total=2365
+SIPM_ADC event=251 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=207 total=2430
+SIPM_ADC event=207 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=338 total=2327
+SIPM_ADC event=338 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=252 total=2287
+SIPM_ADC event=252 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=296 total=2273
+SIPM_ADC event=296 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=339 total=2247
+SIPM_ADC event=339 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=208 total=2263
+SIPM_ADC event=208 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=297 total=2267
+SIPM_ADC event=297 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=253 total=2353
+SIPM_ADC event=253 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=254 total=910
+SIPM_ADC event=254 readout=3718 f1far=3213 f2near=3193 f2far=3555
+SIPM_ARRIVALS event=209 total=2460
+SIPM_ADC event=209 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=340 total=2322
+SIPM_ADC event=340 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=298 total=2302
+SIPM_ADC event=298 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=255 total=2525
+SIPM_ADC event=255 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=210 total=2360
+SIPM_ADC event=210 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=341 total=2716
+SIPM_ADC event=341 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=299 total=2312
+SIPM_ADC event=299 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=256 total=2404
+SIPM_ADC event=256 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=211 total=2331
+SIPM_ADC event=211 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=342 total=2398
+SIPM_ADC event=342 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=300 total=2289
+SIPM_ADC event=300 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=257 total=2140
+SIPM_ADC event=257 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=212 total=2427
+SIPM_ADC event=212 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=343 total=2315
+SIPM_ADC event=343 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=301 total=2330
+SIPM_ADC event=301 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=258 total=2386
+SIPM_ADC event=258 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=213 total=2237
+SIPM_ADC event=213 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=344 total=2456
+SIPM_ADC event=344 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=302 total=2501
+SIPM_ADC event=302 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=259 total=2179
+SIPM_ADC event=259 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=214 total=2322
+SIPM_ADC event=214 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=345 total=2296
+SIPM_ADC event=345 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=303 total=2393
+SIPM_ADC event=303 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=260 total=2330
+SIPM_ADC event=260 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=215 total=2214
+SIPM_ADC event=215 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=346 total=2334
+SIPM_ADC event=346 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=304 total=2272
+SIPM_ADC event=304 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=261 total=2297
+SIPM_ADC event=261 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=216 total=2434
+SIPM_ADC event=216 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=347 total=2212
+SIPM_ADC event=347 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=305 total=2177
+SIPM_ADC event=305 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=262 total=2453
+SIPM_ADC event=262 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=217 total=2215
+SIPM_ADC event=217 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=348 total=2261
+SIPM_ADC event=348 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=306 total=2145
+SIPM_ADC event=306 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=263 total=2437
+SIPM_ADC event=263 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=218 total=2251
+SIPM_ADC event=218 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=349 total=2402
+SIPM_ADC event=349 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=307 total=2344
+SIPM_ADC event=307 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=352 total=2381
+SIPM_ADC event=352 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=219 total=2312
+SIPM_ADC event=219 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=350 total=2471
+SIPM_ADC event=350 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=396 total=2300
+SIPM_ADC event=396 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=353 total=2226
+SIPM_ADC event=353 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=440 total=2226
+SIPM_ADC event=440 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=351 total=2274
+SIPM_ADC event=351 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=397 total=2334
+SIPM_ADC event=397 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=354 total=2166
+SIPM_ADC event=354 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=441 total=2260
+SIPM_ADC event=441 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=484 total=2408
+SIPM_ADC event=484 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=398 total=2275
+SIPM_ADC event=398 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=355 total=2086
+SIPM_ADC event=355 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=442 total=2184
+SIPM_ADC event=442 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=485 total=2174
+SIPM_ADC event=485 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=399 total=2355
+SIPM_ADC event=399 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=356 total=2324
+SIPM_ADC event=356 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=443 total=2429
+SIPM_ADC event=443 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=486 total=2323
+SIPM_ADC event=486 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=400 total=2250
+SIPM_ADC event=400 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=357 total=2273
+SIPM_ADC event=357 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=444 total=2209
+SIPM_ADC event=444 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=487 total=2264
+SIPM_ADC event=487 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=401 total=2436
+SIPM_ADC event=401 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=358 total=2295
+SIPM_ADC event=358 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=445 total=2357
+SIPM_ADC event=445 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=488 total=2231
+SIPM_ADC event=488 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=402 total=2329
+SIPM_ADC event=402 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=359 total=2325
+SIPM_ADC event=359 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=489 total=2085
+SIPM_ADC event=489 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=446 total=2551
+SIPM_ADC event=446 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=403 total=2300
+SIPM_ADC event=403 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=360 total=2318
+SIPM_ADC event=360 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=490 total=2249
+SIPM_ADC event=490 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=447 total=2386
+SIPM_ADC event=447 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=404 total=2297
+SIPM_ADC event=404 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=361 total=2355
+SIPM_ADC event=361 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=491 total=2403
+SIPM_ADC event=491 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=448 total=2239
+SIPM_ADC event=448 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=405 total=2362
+SIPM_ADC event=405 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=362 total=2385
+SIPM_ADC event=362 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=492 total=2212
+SIPM_ADC event=492 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=449 total=2472
+SIPM_ADC event=449 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=406 total=2131
+SIPM_ADC event=406 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=363 total=2288
+SIPM_ADC event=363 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=493 total=2264
+SIPM_ADC event=493 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=407 total=2411
+SIPM_ADC event=407 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=450 total=2431
+SIPM_ADC event=450 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=364 total=2344
+SIPM_ADC event=364 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=494 total=2359
+SIPM_ADC event=494 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=451 total=2293
+SIPM_ADC event=451 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=408 total=2464
+SIPM_ADC event=408 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=365 total=2315
+SIPM_ADC event=365 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=495 total=2499
+SIPM_ADC event=495 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=409 total=2259
+SIPM_ADC event=409 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=452 total=2319
+SIPM_ADC event=452 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=366 total=2624
+SIPM_ADC event=366 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=496 total=2264
+SIPM_ADC event=496 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=453 total=2183
+SIPM_ADC event=453 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=410 total=2230
+SIPM_ADC event=410 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=367 total=2418
+SIPM_ADC event=367 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=497 total=2306
+SIPM_ADC event=497 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=411 total=2333
+SIPM_ADC event=411 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=454 total=2279
+SIPM_ADC event=454 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=368 total=2251
+SIPM_ADC event=368 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=498 total=2260
+SIPM_ADC event=498 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=455 total=2425
+SIPM_ADC event=455 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=412 total=2506
+SIPM_ADC event=412 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=499 total=2272
+SIPM_ADC event=499 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=369 total=2347
+SIPM_ADC event=369 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=456 total=2368
+SIPM_ADC event=456 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=413 total=2291
+SIPM_ADC event=413 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=500 total=2250
+SIPM_ADC event=500 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=370 total=2290
+SIPM_ADC event=370 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=414 total=2398
+SIPM_ADC event=414 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=457 total=2392
+SIPM_ADC event=457 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=501 total=2280
+SIPM_ADC event=501 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=371 total=2263
+SIPM_ADC event=371 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=415 total=2394
+SIPM_ADC event=415 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=458 total=2198
+SIPM_ADC event=458 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=372 total=2200
+SIPM_ADC event=372 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=502 total=2537
+SIPM_ADC event=502 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=459 total=2203
+SIPM_ADC event=459 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=416 total=2246
+SIPM_ADC event=416 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=373 total=2268
+SIPM_ADC event=373 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=503 total=2335
+SIPM_ADC event=503 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=460 total=2202
+SIPM_ADC event=460 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=417 total=2293
+SIPM_ADC event=417 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=374 total=2323
+SIPM_ADC event=374 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=461 total=2257
+SIPM_ADC event=461 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=418 total=2275
+SIPM_ADC event=418 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=375 total=2301
+SIPM_ADC event=375 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=462 total=2335
+SIPM_ADC event=462 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=504 total=5549
+SIPM_ADC event=504 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=419 total=3581
+SIPM_ADC event=419 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=376 total=2358
+SIPM_ADC event=376 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=463 total=2346
+SIPM_ADC event=463 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=505 total=2285
+SIPM_ADC event=505 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=420 total=2159
+SIPM_ADC event=420 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=377 total=2371
+SIPM_ADC event=377 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=464 total=2189
+SIPM_ADC event=464 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=506 total=2338
+SIPM_ADC event=506 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=421 total=2426
+SIPM_ADC event=421 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=378 total=2240
+SIPM_ADC event=378 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=465 total=2351
+SIPM_ADC event=465 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=507 total=2408
+SIPM_ADC event=507 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=422 total=2296
+SIPM_ADC event=422 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=379 total=2349
+SIPM_ADC event=379 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=508 total=2401
+SIPM_ADC event=508 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=423 total=2223
+SIPM_ADC event=423 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=380 total=2309
+SIPM_ADC event=380 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=509 total=2373
+SIPM_ADC event=509 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=424 total=2127
+SIPM_ADC event=424 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=381 total=2260
+SIPM_ADC event=381 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=510 total=2336
+SIPM_ADC event=510 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=425 total=2222
+SIPM_ADC event=425 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=382 total=2294
+SIPM_ADC event=382 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=466 total=8248
+SIPM_ADC event=466 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=511 total=2320
+SIPM_ADC event=511 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=426 total=2336
+SIPM_ADC event=426 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=383 total=2239
+SIPM_ADC event=383 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=467 total=2332
+SIPM_ADC event=467 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=512 total=2436
+SIPM_ADC event=512 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=427 total=2276
+SIPM_ADC event=427 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=384 total=2348
+SIPM_ADC event=384 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=468 total=2304
+SIPM_ADC event=468 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=513 total=2190
+SIPM_ADC event=513 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=428 total=2294
+SIPM_ADC event=428 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=385 total=2338
+SIPM_ADC event=385 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=469 total=2204
+SIPM_ADC event=469 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=514 total=2339
+SIPM_ADC event=514 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=429 total=2230
+SIPM_ADC event=429 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=386 total=2362
+SIPM_ADC event=386 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=470 total=2366
+SIPM_ADC event=470 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=515 total=2335
+SIPM_ADC event=515 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=430 total=2204
+SIPM_ADC event=430 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=387 total=2301
+SIPM_ADC event=387 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=471 total=2332
+SIPM_ADC event=471 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=516 total=2167
+SIPM_ADC event=516 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=431 total=2469
+SIPM_ADC event=431 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=472 total=2284
+SIPM_ADC event=472 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=388 total=2393
+SIPM_ADC event=388 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=517 total=2240
+SIPM_ADC event=517 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=432 total=2254
+SIPM_ADC event=432 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=389 total=2289
+SIPM_ADC event=389 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=473 total=2311
+SIPM_ADC event=473 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=518 total=2272
+SIPM_ADC event=518 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=433 total=2363
+SIPM_ADC event=433 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=474 total=2258
+SIPM_ADC event=474 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=390 total=2393
+SIPM_ADC event=390 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=434 total=2337
+SIPM_ADC event=434 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=519 total=2388
+SIPM_ADC event=519 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=391 total=2193
+SIPM_ADC event=391 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=475 total=2390
+SIPM_ADC event=475 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=520 total=2294
+SIPM_ADC event=520 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=392 total=2340
+SIPM_ADC event=392 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=435 total=2423
+SIPM_ADC event=435 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=476 total=2246
+SIPM_ADC event=476 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=393 total=2348
+SIPM_ADC event=393 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=521 total=2325
+SIPM_ADC event=521 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=436 total=2338
+SIPM_ADC event=436 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=477 total=2228
+SIPM_ADC event=477 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=394 total=2318
+SIPM_ADC event=394 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=522 total=2223
+SIPM_ADC event=522 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=437 total=2369
+SIPM_ADC event=437 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=478 total=2289
+SIPM_ADC event=478 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=523 total=2300
+SIPM_ADC event=523 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=395 total=2256
+SIPM_ADC event=395 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=438 total=2301
+SIPM_ADC event=438 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=479 total=2229
+SIPM_ADC event=479 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=524 total=2210
+SIPM_ADC event=524 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=528 total=2222
+SIPM_ADC event=528 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=439 total=2317
+SIPM_ADC event=439 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=480 total=2261
+SIPM_ADC event=480 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=525 total=2384
+SIPM_ADC event=525 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=572 total=2239
+SIPM_ADC event=572 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=529 total=2419
+SIPM_ADC event=529 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=481 total=2339
+SIPM_ADC event=481 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=530 total=2122
+SIPM_ADC event=530 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=526 total=2278
+SIPM_ADC event=526 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=573 total=2221
+SIPM_ADC event=573 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=482 total=2345
+SIPM_ADC event=482 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=531 total=2219
+SIPM_ADC event=531 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=527 total=2299
+SIPM_ADC event=527 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=574 total=2198
+SIPM_ADC event=574 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=483 total=2276
+SIPM_ADC event=483 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=532 total=2351
+SIPM_ADC event=532 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=575 total=2318
+SIPM_ADC event=575 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=616 total=2308
+SIPM_ADC event=616 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=660 total=2325
+SIPM_ADC event=660 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=533 total=2263
+SIPM_ADC event=533 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=576 total=2230
+SIPM_ADC event=576 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=617 total=2277
+SIPM_ADC event=617 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=661 total=2293
+SIPM_ADC event=661 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=534 total=2368
+SIPM_ADC event=534 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=577 total=2340
+SIPM_ADC event=577 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=662 total=2369
+SIPM_ADC event=662 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=535 total=2351
+SIPM_ADC event=535 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=578 total=2460
+SIPM_ADC event=578 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=663 total=2313
+SIPM_ADC event=663 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=618 total=5547
+SIPM_ADC event=618 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=536 total=2281
+SIPM_ADC event=536 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=579 total=2341
+SIPM_ADC event=579 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=664 total=2241
+SIPM_ADC event=664 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=619 total=2370
+SIPM_ADC event=619 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=537 total=2282
+SIPM_ADC event=537 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=580 total=2316
+SIPM_ADC event=580 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=665 total=2399
+SIPM_ADC event=665 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=620 total=2300
+SIPM_ADC event=620 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=538 total=2248
+SIPM_ADC event=538 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=581 total=2286
+SIPM_ADC event=581 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=666 total=2329
+SIPM_ADC event=666 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=621 total=2241
+SIPM_ADC event=621 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=539 total=2250
+SIPM_ADC event=539 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=582 total=2538
+SIPM_ADC event=582 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=667 total=2312
+SIPM_ADC event=667 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=622 total=2321
+SIPM_ADC event=622 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=540 total=2285
+SIPM_ADC event=540 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=583 total=2375
+SIPM_ADC event=583 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=668 total=2389
+SIPM_ADC event=668 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=623 total=2430
+SIPM_ADC event=623 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=584 total=2277
+SIPM_ADC event=584 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=669 total=2353
+SIPM_ADC event=669 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=624 total=2313
+SIPM_ADC event=624 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=585 total=2307
+SIPM_ADC event=585 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=670 total=2254
+SIPM_ADC event=670 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=625 total=2441
+SIPM_ADC event=625 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=541 total=6598
+SIPM_ADC event=541 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=586 total=2313
+SIPM_ADC event=586 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=671 total=2325
+SIPM_ADC event=671 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=626 total=2281
+SIPM_ADC event=626 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=542 total=2252
+SIPM_ADC event=542 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=587 total=2246
+SIPM_ADC event=587 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=672 total=2195
+SIPM_ADC event=672 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=627 total=2295
+SIPM_ADC event=627 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=543 total=2402
+SIPM_ADC event=543 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=588 total=2206
+SIPM_ADC event=588 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=673 total=2409
+SIPM_ADC event=673 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=628 total=2357
+SIPM_ADC event=628 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=544 total=2183
+SIPM_ADC event=544 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=589 total=2197
+SIPM_ADC event=589 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=674 total=2127
+SIPM_ADC event=674 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=629 total=2290
+SIPM_ADC event=629 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=545 total=2245
+SIPM_ADC event=545 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=590 total=2286
+SIPM_ADC event=590 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=675 total=2323
+SIPM_ADC event=675 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=630 total=2270
+SIPM_ADC event=630 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=546 total=2188
+SIPM_ADC event=546 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=591 total=2292
+SIPM_ADC event=591 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=676 total=2295
+SIPM_ADC event=676 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=631 total=2296
+SIPM_ADC event=631 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=547 total=2350
+SIPM_ADC event=547 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=592 total=2198
+SIPM_ADC event=592 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=677 total=2156
+SIPM_ADC event=677 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=632 total=2203
+SIPM_ADC event=632 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=548 total=2261
+SIPM_ADC event=548 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=593 total=2411
+SIPM_ADC event=593 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=678 total=2287
+SIPM_ADC event=678 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=633 total=2393
+SIPM_ADC event=633 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=549 total=2278
+SIPM_ADC event=549 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=594 total=2179
+SIPM_ADC event=594 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=679 total=2268
+SIPM_ADC event=679 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=634 total=2352
+SIPM_ADC event=634 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=550 total=2310
+SIPM_ADC event=550 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=595 total=2293
+SIPM_ADC event=595 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=680 total=2438
+SIPM_ADC event=680 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=635 total=2385
+SIPM_ADC event=635 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=551 total=2241
+SIPM_ADC event=551 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=596 total=2294
+SIPM_ADC event=596 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=681 total=2308
+SIPM_ADC event=681 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=636 total=2223
+SIPM_ADC event=636 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=552 total=2169
+SIPM_ADC event=552 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=597 total=2284
+SIPM_ADC event=597 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=682 total=2252
+SIPM_ADC event=682 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=637 total=2164
+SIPM_ADC event=637 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=553 total=2348
+SIPM_ADC event=553 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=598 total=2230
+SIPM_ADC event=598 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=683 total=2191
+SIPM_ADC event=683 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=638 total=2313
+SIPM_ADC event=638 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=554 total=2460
+SIPM_ADC event=554 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=599 total=2431
+SIPM_ADC event=599 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=684 total=2345
+SIPM_ADC event=684 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=639 total=2261
+SIPM_ADC event=639 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=555 total=2304
+SIPM_ADC event=555 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=600 total=2273
+SIPM_ADC event=600 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=685 total=2213
+SIPM_ADC event=685 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=640 total=2194
+SIPM_ADC event=640 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=556 total=2297
+SIPM_ADC event=556 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=601 total=2283
+SIPM_ADC event=601 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=686 total=2201
+SIPM_ADC event=686 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=641 total=2082
+SIPM_ADC event=641 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=557 total=2286
+SIPM_ADC event=557 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=602 total=2303
+SIPM_ADC event=602 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=687 total=2324
+SIPM_ADC event=687 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=642 total=2277
+SIPM_ADC event=642 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=558 total=2246
+SIPM_ADC event=558 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=603 total=2080
+SIPM_ADC event=603 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=688 total=2244
+SIPM_ADC event=688 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=643 total=2423
+SIPM_ADC event=643 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=604 total=2183
+SIPM_ADC event=604 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=559 total=2221
+SIPM_ADC event=559 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=689 total=2434
+SIPM_ADC event=689 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=644 total=2299
+SIPM_ADC event=644 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=560 total=2211
+SIPM_ADC event=560 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=605 total=2344
+SIPM_ADC event=605 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=690 total=2176
+SIPM_ADC event=690 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=645 total=2335
+SIPM_ADC event=645 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=561 total=2273
+SIPM_ADC event=561 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=606 total=2415
+SIPM_ADC event=606 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=691 total=2314
+SIPM_ADC event=691 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=646 total=2391
+SIPM_ADC event=646 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=562 total=2154
+SIPM_ADC event=562 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=607 total=2220
+SIPM_ADC event=607 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=692 total=2217
+SIPM_ADC event=692 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=647 total=2329
+SIPM_ADC event=647 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=563 total=2331
+SIPM_ADC event=563 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=608 total=2216
+SIPM_ADC event=608 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=693 total=2399
+SIPM_ADC event=693 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=648 total=2368
+SIPM_ADC event=648 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=609 total=2362
+SIPM_ADC event=609 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=564 total=2331
+SIPM_ADC event=564 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=694 total=2240
+SIPM_ADC event=694 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=649 total=2407
+SIPM_ADC event=649 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=565 total=2118
+SIPM_ADC event=565 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=610 total=2223
+SIPM_ADC event=610 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=695 total=2359
+SIPM_ADC event=695 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=566 total=2204
+SIPM_ADC event=566 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=650 total=2264
+SIPM_ADC event=650 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=611 total=2229
+SIPM_ADC event=611 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=696 total=2348
+SIPM_ADC event=696 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=567 total=2413
+SIPM_ADC event=567 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=651 total=2266
+SIPM_ADC event=651 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=612 total=2257
+SIPM_ADC event=612 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=697 total=2252
+SIPM_ADC event=697 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=568 total=2188
+SIPM_ADC event=568 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=613 total=2342
+SIPM_ADC event=613 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=652 total=2384
+SIPM_ADC event=652 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=698 total=2370
+SIPM_ADC event=698 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=569 total=2271
+SIPM_ADC event=569 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=653 total=2227
+SIPM_ADC event=653 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=614 total=2404
+SIPM_ADC event=614 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=699 total=2561
+SIPM_ADC event=699 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=570 total=2321
+SIPM_ADC event=570 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=615 total=2232
+SIPM_ADC event=615 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=654 total=2349
+SIPM_ADC event=654 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=700 total=2301
+SIPM_ADC event=700 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=571 total=2439
+SIPM_ADC event=571 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=704 total=2269
+SIPM_ADC event=704 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=655 total=2229
+SIPM_ADC event=655 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=701 total=2055
+SIPM_ADC event=701 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=656 total=2216
+SIPM_ADC event=656 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=705 total=2307
+SIPM_ADC event=705 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=702 total=2213
+SIPM_ADC event=702 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=657 total=2114
+SIPM_ADC event=657 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=706 total=2247
+SIPM_ADC event=706 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=703 total=2305
+SIPM_ADC event=703 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=658 total=2266
+SIPM_ADC event=658 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=707 total=2343
+SIPM_ADC event=707 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=792 total=2450
+SIPM_ADC event=792 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=748 total=8443
+SIPM_ADC event=748 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=659 total=2227
+SIPM_ADC event=659 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=708 total=2341
+SIPM_ADC event=708 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=793 total=2190
+SIPM_ADC event=793 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=749 total=2260
+SIPM_ADC event=749 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=836 total=2396
+SIPM_ADC event=836 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=709 total=2250
+SIPM_ADC event=709 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=794 total=2379
+SIPM_ADC event=794 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=750 total=2349
+SIPM_ADC event=750 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=837 total=2221
+SIPM_ADC event=837 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=710 total=2299
+SIPM_ADC event=710 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=795 total=2286
+SIPM_ADC event=795 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=751 total=2198
+SIPM_ADC event=751 readout=3895 f1far=3895 f2near=3895 f2far=3895
+SIPM_ARRIVALS event=838 total=2191
+SIPM_ADC event=838 readout=3895 f1far=3895 f2near=3895 f2far=3895

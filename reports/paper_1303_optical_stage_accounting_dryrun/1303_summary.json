@@ -1,0 +1,435 @@
+{
+ "schema": "ccb-paper-1303-optical-stage-accounting/1",
+ "status_label": "MC_MODEL_DEPENDENT",
+ "grid_dir": "geant4/results/1303_grid_regen_v2",
+ "n_points": 4,
+ "points": [
+  {
+   "species": "deuteron",
+   "ke_MeV": 110,
+   "seed": 1,
+   "n_events": 2000.0,
+   "E_vis_mean_MeV": 23.163410088937507,
+   "E_raw_mean_MeV": 28.624137022779212,
+   "E_vis_sem": 0.06715742881793949,
+   "E_raw_sem": 0.20058250037418562,
+   "quench_ratio_Evis_over_Eraw": 0.8092264954749191,
+   "pe_per_mev_E_vis": {
+    "mean": 11.833361277444485,
+    "ci16": 11.817487023937247,
+    "ci84": 11.848684021055673,
+    "pe_mean": 274.101,
+    "ed_mean": 23.163410088937507
+   },
+   "pe_per_mev_E_raw": {
+    "mean": 9.575869476235011,
+    "ci16": 9.519285348189744,
+    "ci84": 9.632086842845524,
+    "pe_mean": 274.101,
+    "ed_mean": 28.624137022779212
+   },
+   "channels": {
+    "readout": {
+     "scint_generated_mean": 231659.604,
+     "wls_generated_mean": 43228.19,
+     "arrival_mean": 907.0565,
+     "detected_mean": 274.101,
+     "pe_sat_mean": 263.722220845446,
+     "adc_mean": 3893.295,
+     "eps_wls_capture": 0.18660219241331347,
+     "eps_transport": 0.020982985871025366,
+     "eps_detect_given_arrival": 0.30218734996111046,
+     "pe_sat_over_detected": 0.9621352014237307,
+     "adc_over_detected": 14.203870106274694
+    },
+    "f1far": {
+     "scint_generated_mean": 231659.604,
+     "wls_generated_mean": 43228.19,
+     "arrival_mean": 906.4945,
+     "detected_mean": 273.4195,
+     "pe_sat_mean": 263.0949381711359,
+     "adc_mean": 3893.0925,
+     "eps_wls_capture": 0.18660219241331347,
+     "eps_transport": 0.020969985095374108,
+     "eps_detect_given_arrival": 0.3016229000837843,
+     "pe_sat_over_detected": 0.962239116709437,
+     "adc_over_detected": 14.238532730840339
+    },
+    "f2near": {
+     "scint_generated_mean": 231659.604,
+     "wls_generated_mean": 43228.19,
+     "arrival_mean": 906.8265,
+     "detected_mean": 273.545,
+     "pe_sat_mean": 263.2074143991663,
+     "adc_mean": 3893.486,
+     "eps_wls_capture": 0.18660219241331347,
+     "eps_transport": 0.02097766526889051,
+     "eps_detect_given_arrival": 0.30165086706222194,
+     "pe_sat_over_detected": 0.9622088299883613,
+     "adc_over_detected": 14.233438739512694
+    },
+    "f2far": {
+     "scint_generated_mean": 231659.604,
+     "wls_generated_mean": 43228.19,
+     "arrival_mean": 907.0985,
+     "detected_mean": 274.2045,
+     "pe_sat_mean": 263.8162659530387,
+     "adc_mean": 3893.352,
+     "eps_wls_capture": 0.18660219241331347,
+     "eps_transport": 0.020983957459241295,
+     "eps_detect_given_arrival": 0.30228745830800074,
+     "pe_sat_over_detected": 0.9621150125291114,
+     "adc_over_detected": 14.198716651258458
+    }
+   }
+  },
+  {
+   "species": "proton",
+   "ke_MeV": 100,
+   "seed": 1,
+   "n_events": 2000.0,
+   "E_vis_mean_MeV": 14.90585990923428,
+   "E_raw_mean_MeV": 16.768530819135783,
+   "E_vis_sem": 0.051607822373670426,
+   "E_raw_sem": 0.1170948375905267,
+   "quench_ratio_Evis_over_Eraw": 0.8889186578125333,
+   "pe_per_mev_E_vis": {
+    "mean": 11.791973161582554,
+    "ci16": 11.773478455230544,
+    "ci84": 11.814015139388689,
+    "pe_mean": 175.7695,
+    "ed_mean": 14.90585990923428
+   },
+   "pe_per_mev_E_raw": {
+    "mean": 10.482104955755378,
+    "ci16": 10.433792762649505,
+    "ci84": 10.53166869792862,
+    "pe_mean": 175.7695,
+    "ed_mean": 16.768530819135783
+   },
+   "channels": {
+    "readout": {
+     "scint_generated_mean": 149063.846,
+     "wls_generated_mean": 27820.8135,
+     "arrival_mean": 583.72,
+     "detected_mean": 175.7695,
+     "pe_sat_mean": 171.43466887141943,
+     "adc_mean": 3894.689,
+     "eps_wls_capture": 0.18663689584394597,
+     "eps_transport": 0.020981413789355943,
+     "eps_detect_given_arrival": 0.3011195436168026,
+     "pe_sat_over_detected": 0.975337978838305,
+     "adc_over_detected": 22.15793411257357
+    },
+    "f1far": {
+     "scint_generated_mean": 149063.846,
+     "wls_generated_mean": 27820.8135,
+     "arrival_mean": 585.068,
+     "detected_mean": 176.2025,
+     "pe_sat_mean": 171.83882728848204,
+     "adc_mean": 3894.098,
+     "eps_wls_capture": 0.18663689584394597,
+     "eps_transport": 0.021029866721905887,
+     "eps_detect_given_arrival": 0.30116584738867963,
+     "pe_sat_over_detected": 0.9752348989854404,
+     "adc_over_detected": 22.100129112810546
+    },
+    "f2near": {
+     "scint_generated_mean": 149063.846,
+     "wls_generated_mean": 27820.8135,
+     "arrival_mean": 584.962,
+     "detected_mean": 176.617,
+     "pe_sat_mean": 172.23611405482595,
+     "adc_mean": 3894.436,
+     "eps_wls_capture": 0.18663689584394597,
+     "eps_transport": 0.021026056624835934,
+     "eps_detect_given_arrival": 0.3019290141923749,
+     "pe_sat_over_detected": 0.9751955590618454,
+     "adc_over_detected": 22.050176370338075
+    },
+    "f2far": {
+     "scint_generated_mean": 149063.846,
+     "wls_generated_mean": 27820.8135,
+     "arrival_mean": 583.2135,
+     "detected_mean": 176.3715,
+     "pe_sat_mean": 171.9963854804171,
+     "adc_mean": 3894.71,
+     "eps_wls_capture": 0.18663689584394597,
+     "eps_transport": 0.020963207995337737,
+     "eps_detect_given_arrival": 0.30241326718260125,
+     "pe_sat_over_detected": 0.9751937556828463,
+     "adc_over_detected": 22.082422613630886
+    }
+   }
+  },
+  {
+   "species": "proton",
+   "ke_MeV": 140,
+   "seed": 1,
+   "n_events": 2000.0,
+   "E_vis_mean_MeV": 11.732440485933735,
+   "E_raw_mean_MeV": 13.110397694621733,
+   "E_vis_sem": 0.06379684505866513,
+   "E_raw_sem": 0.1448300169697873,
+   "quench_ratio_Evis_over_Eraw": 0.8948958497839254,
+   "pe_per_mev_E_vis": {
+    "mean": 11.817703244796421,
+    "ci16": 11.795912045860907,
+    "ci84": 11.840294393333258,
+    "pe_mean": 138.6505,
+    "ed_mean": 11.732440485933735
+   },
+   "pe_per_mev_E_raw": {
+    "mean": 10.575613587746348,
+    "ci16": 10.507815068231396,
+    "ci84": 10.64594588598545,
+    "pe_mean": 138.6505,
+    "ed_mean": 13.110397694621733
+   },
+   "channels": {
+    "readout": {
+     "scint_generated_mean": 117320.533,
+     "wls_generated_mean": 21901.456,
+     "arrival_mean": 459.2395,
+     "detected_mean": 138.6505,
+     "pe_sat_mean": 135.84660405398373,
+     "adc_mean": 3894.3405,
+     "eps_wls_capture": 0.18668050203965575,
+     "eps_transport": 0.020968446116093834,
+     "eps_detect_given_arrival": 0.3019132718331067,
+     "pe_sat_over_detected": 0.9797772388414303,
+     "adc_over_detected": 28.08746091791952
+    },
+    "f1far": {
+     "scint_generated_mean": 117320.533,
+     "wls_generated_mean": 21901.456,
+     "arrival_mean": 459.2005,
+     "detected_mean": 138.5335,
+     "pe_sat_mean": 135.73692459115048,
+     "adc_mean": 3894.497,
+     "eps_wls_capture": 0.18668050203965575,
+     "eps_transport": 0.020966665412564353,
+     "eps_detect_given_arrival": 0.3016841227307026,
+     "pe_sat_over_detected": 0.9798130025672526,
+     "adc_over_detected": 28.112312184417487
+    },
+    "f2near": {
+     "scint_generated_mean": 117320.533,
+     "wls_generated_mean": 21901.456,
+     "arrival_mean": 459.62,
+     "detected_mean": 138.893,
+     "pe_sat_mean": 136.0821378515169,
+     "adc_mean": 3893.912,
+     "eps_wls_capture": 0.18668050203965575,
+     "eps_transport": 0.0209858193902725,
+     "eps_detect_given_arrival": 0.30219094034202165,
+     "pe_sat_over_detected": 0.9797623915641314,
+     "adc_over_detected": 28.035336554038
+    },
+    "f2far": {
+     "scint_generated_mean": 117320.533,
+     "wls_generated_mean": 21901.456,
+     "arrival_mean": 460.1165,
+     "detected_mean": 138.838,
+     "pe_sat_mean": 136.02835826854235,
+     "adc_mean": 3894.0655,
+     "eps_wls_capture": 0.18668050203965575,
+     "eps_transport": 0.021008489115974756,
+     "eps_detect_given_arrival": 0.30174531884859596,
+     "pe_sat_over_detected": 0.979763164757072,
+     "adc_over_detected": 28.047548221668418
+    }
+   }
+  },
+  {
+   "species": "proton",
+   "ke_MeV": 60,
+   "seed": 1,
+   "n_events": 2000.0,
+   "E_vis_mean_MeV": 23.506057026426845,
+   "E_raw_mean_MeV": 28.302038754718506,
+   "E_vis_sem": 0.04404347503708686,
+   "E_raw_sem": 0.08731775818456107,
+   "quench_ratio_Evis_over_Eraw": 0.8305428888054195,
+   "pe_per_mev_E_vis": {
+    "mean": 11.835183573630978,
+    "ci16": 11.820301948988979,
+    "ci84": 11.850493778437789,
+    "pe_mean": 278.1985,
+    "ed_mean": 23.506057026426845
+   },
+   "pe_per_mev_E_raw": {
+    "mean": 9.82962755478592,
+    "ci16": 9.797420388099642,
+    "ci84": 9.861595769418088,
+    "pe_mean": 278.1985,
+    "ed_mean": 28.302038754718506
+   },
+   "channels": {
+    "readout": {
+     "scint_generated_mean": 235055.1215,
+     "wls_generated_mean": 43869.628,
+     "arrival_mean": 920.526,
+     "detected_mean": 278.1985,
+     "pe_sat_mean": 267.6168375005012,
+     "adc_mean": 3894.936,
+     "eps_wls_capture": 0.18663549094376997,
+     "eps_transport": 0.020983218731647324,
+     "eps_detect_given_arrival": 0.30221688469418573,
+     "pe_sat_over_detected": 0.9619636248955376,
+     "adc_over_detected": 14.000564345242696
+    },
+    "f1far": {
+     "scint_generated_mean": 235055.1215,
+     "wls_generated_mean": 43869.628,
+     "arrival_mean": 919.057,
+     "detected_mean": 277.274,
+     "pe_sat_mean": 266.7575754072023,
+     "adc_mean": 3894.6085,
+     "eps_wls_capture": 0.18663549094376997,
+     "eps_transport": 0.02094973315023323,
+     "eps_detect_given_arrival": 0.30169401897814824,
+     "pe_sat_over_detected": 0.9620720854000098,
+     "adc_over_detected": 14.046064542654559
+    },
+    "f2near": {
+     "scint_generated_mean": 235055.1215,
+     "wls_generated_mean": 43869.628,
+     "arrival_mean": 921.7845,
+     "detected_mean": 278.371,
+     "pe_sat_mean": 267.76831076839403,
+     "adc_mean": 3894.4515,
+     "eps_wls_capture": 0.18663549094376997,
+     "eps_transport": 0.021011906004764845,
+     "eps_detect_given_arrival": 0.3019914090549364,
+     "pe_sat_over_detected": 0.9619116602246428,
+     "adc_over_detected": 13.990148039846105
+    },
+    "f2far": {
+     "scint_generated_mean": 235055.1215,
+     "wls_generated_mean": 43869.628,
+     "arrival_mean": 920.4875,
+     "detected_mean": 277.6355,
+     "pe_sat_mean": 267.0942724293674,
+     "adc_mean": 3894.1665,
+     "eps_wls_capture": 0.18663549094376997,
+     "eps_transport": 0.02098234113131755,
+     "eps_detect_given_arrival": 0.30161789269273076,
+     "pe_sat_over_detected": 0.9620321336045548,
+     "adc_over_detected": 14.02618361124568
+    }
+   }
+  }
+ ],
+ "pooled_calibration_E_vis": {
+  "slope_PE_per_MeV_E_vis": 11.84709086420156,
+  "offset_PE": -0.44107068725987286,
+  "r2": 0.9526141884136952,
+  "n_events": 8000
+ },
+ "provenance": [
+  {
+   "file": null,
+   "species": "deuteron",
+   "ke_MeV": 110,
+   "git_commit": "533d58e8d2f826ab2255f519adb9b61b34f11c84",
+   "geometry_hash": "e323b92195f9a6288944f0738dbadccf9386422f076362ca172fd0b6d119d1e1",
+   "physics_hash": "695755f15879c60b7dbc23f5ad7f972d0ec3d9710fa2ec357d17a3b37c48faee",
+   "optical_hash": "84c699d6bbc7b3f55adbef3231414e8b2552e602fd4cf36203c484ac880dd836",
+   "strict_optical": true,
+   "authorising_absolute_light_yield_claims": false,
+   "model_status_flags": {
+    "wls_fluorescence_status": "ASSUMPTION_UNIT_YIELD",
+    "tio2_reflection_model_status": "EXPLICIT_LAMBERTIAN_HYPOTHESIS",
+    "scintillator_material_status": "BLOCKED_UNVERIFIED_HARDWARE",
+    "hrd_fibre_count_status": "UNRESOLVED_HARDWARE_CONTRADICTION",
+    "attenuation_identifiability_status": "UNRESOLVED",
+    "y11_direct_scint_status": "OMISSION_UNKNOWN_EXTERNAL",
+    "step_size_convergence_status": "BLOCKED_ISSUE_1095"
+   }
+  },
+  {
+   "file": null,
+   "species": "proton",
+   "ke_MeV": 100,
+   "git_commit": "533d58e8d2f826ab2255f519adb9b61b34f11c84",
+   "geometry_hash": "e323b92195f9a6288944f0738dbadccf9386422f076362ca172fd0b6d119d1e1",
+   "physics_hash": "695755f15879c60b7dbc23f5ad7f972d0ec3d9710fa2ec357d17a3b37c48faee",
+   "optical_hash": "84c699d6bbc7b3f55adbef3231414e8b2552e602fd4cf36203c484ac880dd836",
+   "strict_optical": true,
+   "authorising_absolute_light_yield_claims": false,
+   "model_status_flags": {
+    "wls_fluorescence_status": "ASSUMPTION_UNIT_YIELD",
+    "tio2_reflection_model_status": "EXPLICIT_LAMBERTIAN_HYPOTHESIS",
+    "scintillator_material_status": "BLOCKED_UNVERIFIED_HARDWARE",
+    "hrd_fibre_count_status": "UNRESOLVED_HARDWARE_CONTRADICTION",
+    "attenuation_identifiability_status": "UNRESOLVED",
+    "y11_direct_scint_status": "OMISSION_UNKNOWN_EXTERNAL",
+    "step_size_convergence_status": "BLOCKED_ISSUE_1095"
+   }
+  },
+  {
+   "file": null,
+   "species": "proton",
+   "ke_MeV": 140,
+   "git_commit": "533d58e8d2f826ab2255f519adb9b61b34f11c84",
+   "geometry_hash": "e323b92195f9a6288944f0738dbadccf9386422f076362ca172fd0b6d119d1e1",
+   "physics_hash": "695755f15879c60b7dbc23f5ad7f972d0ec3d9710fa2ec357d17a3b37c48faee",
+   "optical_hash": "84c699d6bbc7b3f55adbef3231414e8b2552e602fd4cf36203c484ac880dd836",
+   "strict_optical": true,
+   "authorising_absolute_light_yield_claims": false,
+   "model_status_flags": {
+    "wls_fluorescence_status": "ASSUMPTION_UNIT_YIELD",
+    "tio2_reflection_model_status": "EXPLICIT_LAMBERTIAN_HYPOTHESIS",
+    "scintillator_material_status": "BLOCKED_UNVERIFIED_HARDWARE",
+    "hrd_fibre_count_status": "UNRESOLVED_HARDWARE_CONTRADICTION",
+    "attenuation_identifiability_status": "UNRESOLVED",
+    "y11_direct_scint_status": "OMISSION_UNKNOWN_EXTERNAL",
+    "step_size_convergence_status": "BLOCKED_ISSUE_1095"
+   }
+  },
+  {
+   "file": null,
+   "species": "proton",
+   "ke_MeV": 60,
+   "git_commit": "533d58e8d2f826ab2255f519adb9b61b34f11c84",
+   "geometry_hash": "e323b92195f9a6288944f0738dbadccf9386422f076362ca172fd0b6d119d1e1",
+   "physics_hash": "695755f15879c60b7dbc23f5ad7f972d0ec3d9710fa2ec357d17a3b37c48faee",
+   "optical_hash": "84c699d6bbc7b3f55adbef3231414e8b2552e602fd4cf36203c484ac880dd836",
+   "strict_optical": true,
+   "authorising_absolute_light_yield_claims": false,
+   "model_status_flags": {
+    "wls_fluorescence_status": "ASSUMPTION_UNIT_YIELD",
+    "tio2_reflection_model_status": "EXPLICIT_LAMBERTIAN_HYPOTHESIS",
+    "scintillator_material_status": "BLOCKED_UNVERIFIED_HARDWARE",
+    "hrd_fibre_count_status": "UNRESOLVED_HARDWARE_CONTRADICTION",
+    "attenuation_identifiability_status": "UNRESOLVED",
+    "y11_direct_scint_status": "OMISSION_UNKNOWN_EXTERNAL",
+    "step_size_convergence_status": "BLOCKED_ISSUE_1095"
+   }
+  }
+ ],
+ "superseded_july_values": {
+  "proton|60": {
+   "pe": 282.0,
+   "pe_per_mev": 9.85
+  },
+  "proton|100": {
+   "pe": 177.0,
+   "pe_per_mev": 10.9
+  },
+  "proton|140": {
+   "pe": 140.0,
+   "pe_per_mev": 11.0
+  },
+  "deuteron|70": {
+   "pe": 432.0,
+   "pe_per_mev": 8.7
+  },
+  "deuteron|110": {
+   "pe": 276.0,
+   "pe_per_mev": 9.6
+  }
+ },
+ "notes": "PE/MeV reported on both denominators: E_vis (Birks-visible, historical definition) and E_raw (unquenched). pe_sat_* is an independent diagnostic draw (#1084), adc_* is the ccb-sipm-core response branch. No absolute light-yield claim."
+}

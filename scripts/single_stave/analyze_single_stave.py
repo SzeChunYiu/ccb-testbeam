@@ -16,6 +16,22 @@ and defines ``n_optical_generated_total`` as their exact sum. Legacy tables
 without those fields remain readable but are explicitly labelled
 ``LEGACY_SCINTILLATION_ONLY`` and are not evidence for current-track optical
 bookkeeping.
+
+## Energy semantics (issue #1302)
+
+Geant4 produces TWO distinct energy quantities:
+
+- ``E_raw_MeV := edep_scint_raw_MeV``: unquenched Geant4 total energy deposit
+  in scintillator (raw physical energy before Birks quenching).
+- ``E_vis_MeV := edep_scint_MeV``: Birks-visible/quenched energy from
+  ``G4EmSaturation::VisibleEnergyDepositionAtAStep`` (after Birks quenching).
+
+The quenching ratio is ``quenching_ratio := E_vis / E_raw`` (where E_raw > 0).
+
+This script REQUIRES an explicit ``--energy-target`` argument (``E_raw``, ``E_vis``,
+or ``both``) and will refuse to proceed with ambiguous bare "Edep" labels in the
+code-facing API. All plot axes, table columns, and output labels use precise
+"raw deposited" or "Birks-visible" wording.
 """
 from __future__ import annotations
 
@@ -28,19 +44,20 @@ import sys
 from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Callable, Sequence
+from typing import Callable, Literal, Sequence
 
 import numpy as np
 import pandas as pd
 
-VERSION = "2.0.0"
-POLICY = "ANALYZER_MUST_PRESERVE_COMPONENT_OPTICAL_COUNTS_AND_USE_EXACT_TOTAL"
+VERSION = "2.1.0"
+POLICY = "ANALYZER_MUST_PRESERVE_COMPONENT_OPTICAL_COUNTS_AND_USE_EXACT_TOTAL_AND_DECLARE_EXPLICIT_ENERGY_TARGET"
 
 BASE_REQUIRED = {
     "event_id",
     "particle_pdg",
     "kinetic_energy_MeV",
     "edep_scint_MeV",
+    "edep_scint_raw_MeV",
     "n_scint_generated",
     "n_end_selected",
     "n_detected_pe",
@@ -88,6 +105,7 @@ class ArgsRecord:
     input: str
     output: str
     tree: str | None
+    energy_target: Literal["E_raw", "E_vis", "both"]
     seed: int
     bins: int
     max_display_points: int
@@ -100,6 +118,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--input", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--tree", default=None, help="ROOT tree name")
+    parser.add_argument(
+        "--energy-target",
+        required=True,
+        choices=["E_raw", "E_vis", "both"],
+        help="Energy target: E_raw (raw deposited MeV), E_vis (Birks-visible MeV), or both"
+    )
     parser.add_argument("--seed", type=int, default=20260720)
     parser.add_argument("--bins", type=int, default=12)
     parser.add_argument("--max-display-points", type=int, default=100_000)
@@ -236,6 +260,7 @@ def normalize_schema(df: pd.DataFrame) -> pd.DataFrame:
         "particle_pdg",
         "kinetic_energy_MeV",
         "edep_scint_MeV",
+        "edep_scint_raw_MeV",
         "n_scint_generated",
         "n_end_selected",
         "n_detected_pe",
@@ -612,7 +637,7 @@ def make_plots(
         )
         profile.to_csv(tabdir / "G4S-01_source.csv", index=False)
     fig.colorbar(image, ax=ax, label="log10(events/bin)")
-    ax.set_xlabel("Deposited energy in scintillator [MeV]")
+    ax.set_xlabel("Birks-visible deposited energy in scintillator [MeV]")
     ax.set_ylabel("Photons arriving at selected fibre end [count]")
     ax.legend()
     savefig(fig, figdir / "G4S-01_edep_vs_end_photons")
@@ -639,7 +664,7 @@ def make_plots(
         )
         profile.to_csv(tabdir / "G4S-02_source.csv", index=False)
     fig.colorbar(image, ax=ax, label="log10(events/bin)")
-    ax.set_xlabel("Deposited energy in scintillator [MeV]")
+    ax.set_xlabel("Birks-visible deposited energy in scintillator [MeV]")
     ax.set_ylabel("Detected primary photoelectrons [count]")
     savefig(fig, figdir / "G4S-02_edep_vs_pe")
     records.append({"plot_id": "G4S-02", "source_data": "tables/G4S-02_source.csv"})
@@ -657,7 +682,7 @@ def make_plots(
         profile["optical_generation_contract"] = contract
     fig, ax = plt.subplots(figsize=(8, 5))
     _write_profile_plot(ax, profile, tabdir / "G4S-03_source.csv")
-    ax.set_xlabel("Deposited energy [MeV]")
+    ax.set_xlabel("Birks-visible deposited energy [MeV]")
     ax.set_ylabel(f"Selected-end photons / {denominator}")
     savefig(fig, figdir / "G4S-03_collection_efficiency")
     records.append(
@@ -688,7 +713,7 @@ def make_plots(
     else:
         _write_profile_plot(ax, profile, tabdir / "G4S-04_source.csv")
     ax.set_xlabel("Hit position along stave x [cm]")
-    ax.set_ylabel("Detected PE / deposited MeV")
+    ax.set_ylabel("Detected PE / Birks-visible deposited MeV")
     savefig(fig, figdir / "G4S-04_position_response")
     records.append({"plot_id": "G4S-04", "source_data": "tables/G4S-04_source.csv"})
 
@@ -741,7 +766,7 @@ def make_plots(
                 if len(group) >= 10:
                     rows.append(
                         {
-                            "edep_median_MeV": float(
+                            "E_vis_median_MeV": float(
                                 group["edep_scint_MeV"].median()
                             ),
                             "bias_median_percent": float(
@@ -764,7 +789,7 @@ def make_plots(
             )
         if not resolution.empty:
             ax_resolution.plot(
-                resolution["edep_median_MeV"],
+                resolution["E_vis_median_MeV"],
                 resolution["resolution_sigma68_percent"],
                 marker="o",
             )
@@ -805,7 +830,7 @@ def make_plots(
             tabdir / "species_response_source.csv",
             index=False,
         )
-    ax.set_xlabel("Deposited energy [MeV]")
+    ax.set_xlabel("Birks-visible deposited energy [MeV]")
     ax.set_ylabel("Detected PE")
     ax.legend()
     savefig(fig, figdir / "species_response")
@@ -839,7 +864,7 @@ def make_plots(
                 row["birks_kB_mm_per_MeV"] = float(value)
                 rows.append(row)
         pd.DataFrame(rows).to_csv(tabdir / "G4S-09_source.csv", index=False)
-        ax.set_xlabel("Deposited energy [MeV]")
+        ax.set_xlabel("Birks-visible deposited energy [MeV]")
         ax.set_ylabel("Detected PE")
         ax.legend()
         savefig(fig, figdir / "G4S-09_birks_scan")
@@ -858,9 +883,13 @@ def _species_summary(df: pd.DataFrame) -> pd.DataFrame:
             "species": species,
             "kinetic_energy_MeV": float(kinetic_energy),
             "n_events": int(len(group)),
-            "edep_mean_MeV": float(group["edep_scint_MeV"].mean()),
-            "edep_median_MeV": float(group["edep_scint_MeV"].median()),
-            "edep_sigma68_MeV": sigma68(group["edep_scint_MeV"]),
+            "E_vis_mean_MeV": float(group["edep_scint_MeV"].mean()),
+            "E_vis_median_MeV": float(group["edep_scint_MeV"].median()),
+            "E_vis_sigma68_MeV": sigma68(group["edep_scint_MeV"]),
+            "E_raw_mean_MeV": float(group["edep_scint_raw_MeV"].mean()),
+            "E_raw_median_MeV": float(group["edep_scint_raw_MeV"].median()),
+            "E_raw_sigma68_MeV": sigma68(group["edep_scint_raw_MeV"]),
+            "quenching_ratio_median": float((group["edep_scint_MeV"] / group["edep_scint_raw_MeV"]).median()),
             "generated_optical_denominator": denominator,
             "optical_generation_contract": contract,
             "generated_optical_mean": float(group[denominator].mean()),
@@ -924,10 +953,12 @@ def main() -> int:
         "git_commit": git_commit(),
         "command": sys.argv,
         "args": asdict(
-            ArgsRecord(
+            
+    ArgsRecord(
                 input=str(args.input),
                 output=str(args.output),
                 tree=args.tree,
+                energy_target=args.energy_target,
                 seed=args.seed,
                 bins=args.bins,
                 max_display_points=args.max_display_points,

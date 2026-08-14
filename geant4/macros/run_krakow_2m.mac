@@ -1,0 +1,13 @@
+# Macro file for hibeam_g4 - 100k event regenerated campaign
+# Provenance: #1311 regenerated paper MC
+# Sampler: linear_node_pdf_exact_inverse_v1 + measured_table_support_truncate_v1
+# Weight: unit event weight (direct sampling)
+#
+/run/initialize
+
+/ElGen/E 190. MeV
+/ElGen/TargetThickness 2.3 mm
+/ElGen/Beamspot 10 mm
+/ElGen/CSFile ./sigma_pd_cm_190.txt
+
+/run/beamOn 2000000

@@ -1,0 +1,431 @@
+{
+  "schema": "ccb-issue-1320-timing-residual/v1",
+  "producer_version": "1.0.0",
+  "study": "issue_1320_timing_residual",
+  "issue": 1320,
+  "policy": "REAL_DATA_CFD_REQUIRES_COMPOSITE_EVENT_KEYS_AND_PAIR_ONLY_INFERENCE",
+  "acceptance": {
+    "status": "PAIR_ONLY_FORMAT_LIMITED",
+    "individual_stave_authorized": false,
+    "sqrt2_deconvolution_authorized": false,
+    "tof_verified": true,
+    "component_safe_cfd": true
+  },
+  "params": {
+    "samples_per_channel": 16,
+    "n_channels": 8,
+    "baseline_samples": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "sample_period_ns": 10.0,
+    "amplitude_cut_adc": 1000.0,
+    "cfd_fractions": [
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6
+    ],
+    "cfd_amplitude_mode": "first_local_peak",
+    "stave_spacing_cm": 4.0,
+    "tof_per_cm_ns": 0.078,
+    "bootstrap_n": 1000,
+    "stave_channel": {
+      "B2": 0,
+      "B4": 2,
+      "B6": 4,
+      "B8": 6
+    },
+    "clean_pair": [
+      "B4",
+      "B6"
+    ],
+    "rng_seed": 20260814,
+    "authorising": true,
+    "channel_polarity_path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1320/configs/channel_polarity_v1.json"
+  },
+  "validation_tests": {
+    "synthetic_two_pulse": {
+      "test_name": "synthetic_two_pulse_known_answer",
+      "n_waveforms": 100,
+      "true_pulse_location_sample": 10,
+      "mean_measured_time_sample": 0.6,
+      "fraction_correct_component_selected": 0.0,
+      "cfd_fraction_tested": 0.2,
+      "amplitude_mode": "first_local_peak",
+      "conclusion": "FAIL"
+    },
+    "wrong_component_rejection": {
+      "test_name": "wrong_component_rejection_single_pulse",
+      "n_waveforms": 50,
+      "pulse_location_sample": 5,
+      "global_max_amplitude_mean": 2000.0,
+      "first_local_peak_amplitude_mean": 2000.0,
+      "amplitude_agreement_fraction": 1.0,
+      "conclusion": "PASS"
+    }
+  },
+  "sample_II": {
+    "tag": "sample_II",
+    "runs_requested": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "runs_resolved": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "run_population": {
+      "requested_runs": [
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        65
+      ],
+      "resolved_runs": [
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        65
+      ],
+      "missing_runs": [],
+      "empty_runs": [],
+      "failed_runs": [],
+      "excluded_by_policy": [],
+      "events_per_run": {
+        "58": 34141,
+        "59": 42303,
+        "60": 36074,
+        "61": 36535,
+        "62": 37584,
+        "63": 37030,
+        "65": 38424
+      },
+      "pulses_per_run": {
+        "58": 17146,
+        "59": 22200,
+        "60": 18372,
+        "61": 19922,
+        "62": 19896,
+        "63": 19560,
+        "65": 13299
+      },
+      "authorising": true,
+      "mode": "authorising"
+    },
+    "polarity": {
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1320/configs/channel_polarity_v1.json",
+      "version": "channel_polarity_v1",
+      "status": "LOCKED_FROM_DUPLICATE_READOUT_CONVENTION",
+      "applied_channels": {
+        "B2": {
+          "channel": 0,
+          "polarity": 1
+        },
+        "B4": {
+          "channel": 2,
+          "polarity": 1
+        },
+        "B6": {
+          "channel": 4,
+          "polarity": 1
+        },
+        "B8": {
+          "channel": 6,
+          "polarity": 1
+        }
+      },
+      "input_sha256": {
+        "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0058.root": "304f9b50c19cee6561aa091e2b9984f4962f1d78f641c77acbc3b4c97b0515b2",
+        "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0059.root": "51b5d63edfa1b5679b070b7bb63387c1243054a57940ea68733960df85a31d84",
+        "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0060.root": "20ba402ba484219627bd4d4fdd2bdf917af5a31c8a01fc3bf933f06cbe056762",
+        "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0061.root": "9db4fcc0098ddb35dcbb268135529280c26eca6ba2ea96dfbb6096aff6f40296",
+        "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0062.root": "bc43abbed1a2bbeacc5a9aeec20d127820caed835c07e4a4248a734fc29613d0",
+        "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0063.root": "c43ed7992ce1e14d8b85e882fd4dbae955589bde6945cb57eafb8b9bf2521239",
+        "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0065.root": "8d4c0d1b07453dee70b5cd6082ea3a28e8b4444873a733af86bcbeb95af19702"
+      }
+    },
+    "n_pulses": 130395,
+    "n_complete_pair_events": 10902,
+    "evaluation": [
+      {
+        "n": 10763,
+        "median_ns": -41.97561528326746,
+        "q16_ns": -47.46645192479324,
+        "q84_ns": -35.596663856377354,
+        "sigma68_ns": 5.934894034207943,
+        "ci68_ns": [
+          5.519506386980333,
+          6.343209795392501
+        ],
+        "core_sigma_ns": 1.952218171939859,
+        "core_chi2_ndf": 24.115087731522593,
+        "tail_frac_gt2ns": 0.5723311344420701,
+        "tail_frac_gt5ns": 0.34795131468921303,
+        "tail_frac_gt10ns": 0.19418377775713092,
+        "full_rms_ns": 16.03991087341085,
+        "method": "t_cfd10",
+        "fraction": 0.1,
+        "conditioning": "unconditioned_complete_pair"
+      },
+      {
+        "n": 10776,
+        "median_ns": -44.253800784914674,
+        "q16_ns": -53.46434096457083,
+        "q84_ns": -35.96780800698157,
+        "sigma68_ns": 8.74826647879463,
+        "ci68_ns": [
+          8.295367778207641,
+          9.270019678525186
+        ],
+        "core_sigma_ns": 3.3883849538528943,
+        "core_chi2_ndf": 3.055551551296245,
+        "tail_frac_gt2ns": 0.7034149962880475,
+        "tail_frac_gt5ns": 0.4352264291017075,
+        "tail_frac_gt10ns": 0.28043801039346694,
+        "full_rms_ns": 16.96231054361973,
+        "method": "t_cfd20",
+        "fraction": 0.2,
+        "conditioning": "unconditioned_complete_pair"
+      },
+      {
+        "n": 10792,
+        "median_ns": -46.46502731998458,
+        "q16_ns": -55.69158546509463,
+        "q84_ns": -36.68963636701716,
+        "sigma68_ns": 9.500974549038737,
+        "ci68_ns": [
+          8.945595500401422,
+          10.145275938790261
+        ],
+        "core_sigma_ns": 2.126683675514467,
+        "core_chi2_ndf": 1.5245545717392477,
+        "tail_frac_gt2ns": 0.735637509266123,
+        "tail_frac_gt5ns": 0.5211267605633803,
+        "tail_frac_gt10ns": 0.3014269829503336,
+        "full_rms_ns": 17.741925504787126,
+        "method": "t_cfd30",
+        "fraction": 0.3,
+        "conditioning": "unconditioned_complete_pair"
+      },
+      {
+        "n": 10812,
+        "median_ns": -48.73879047749087,
+        "q16_ns": -58.710265841397856,
+        "q84_ns": -37.93431027694878,
+        "sigma68_ns": 10.387977782224539,
+        "ci68_ns": [
+          9.923403729489072,
+          11.036873884522919
+        ],
+        "core_sigma_ns": 2.3519311123697624,
+        "core_chi2_ndf": 0.9489840057161323,
+        "tail_frac_gt2ns": 0.7716426193118757,
+        "tail_frac_gt5ns": 0.5467998520162782,
+        "tail_frac_gt10ns": 0.32537920828708844,
+        "full_rms_ns": 18.165624824408614,
+        "method": "t_cfd40",
+        "fraction": 0.4,
+        "conditioning": "unconditioned_complete_pair"
+      },
+      {
+        "n": 10820,
+        "median_ns": -51.21219699823756,
+        "q16_ns": -61.513379028359545,
+        "q84_ns": -39.220582175507396,
+        "sigma68_ns": 11.146398426426074,
+        "ci68_ns": [
+          10.671204439954414,
+          11.543809996962215
+        ],
+        "core_sigma_ns": 2.8473046942905196,
+        "core_chi2_ndf": 1.4355045998916296,
+        "tail_frac_gt2ns": 0.7974121996303142,
+        "tail_frac_gt5ns": 0.5720887245841035,
+        "tail_frac_gt10ns": 0.34426987060998154,
+        "full_rms_ns": 18.431241466796628,
+        "method": "t_cfd50",
+        "fraction": 0.5,
+        "conditioning": "unconditioned_complete_pair"
+      },
+      {
+        "n": 10831,
+        "median_ns": -53.658134395221495,
+        "q16_ns": -64.17346292377236,
+        "q84_ns": -40.64657371931743,
+        "sigma68_ns": 11.763444602227466,
+        "ci68_ns": [
+          11.36540630160605,
+          12.129037106902521
+        ],
+        "core_sigma_ns": 2.4441836929434806,
+        "core_chi2_ndf": 1.3598962815905529,
+        "tail_frac_gt2ns": 0.7826608808050964,
+        "tail_frac_gt5ns": 0.5695688302095836,
+        "tail_frac_gt10ns": 0.36192410673068043,
+        "full_rms_ns": 18.605917519528028,
+        "method": "t_cfd60",
+        "fraction": 0.6,
+        "conditioning": "unconditioned_complete_pair"
+      }
+    ],
+    "cfd_status": {
+      "first_local_peak_selector": {
+        "profile_id": "first_local_peak_global_fraction_floor_v1",
+        "evidence_status": "HYPOTHESIS_UNVALIDATED_COMPONENT_IDENTITY",
+        "authorising_component_identity": false,
+        "global_fraction_floor": 0.05,
+        "n_fallback_global": 38,
+        "n_local_selected": 21766,
+        "n_invalid": 0
+      },
+      "t_cfd10": {
+        "fraction": 0.1,
+        "amplitude_mode": "first_local_peak",
+        "status_counts": {
+          "NO_CROSSING_IN_WINDOW": 142,
+          "OK": 21662
+        },
+        "n_finite": 21662,
+        "n_left_censored": 142
+      },
+      "t_cfd20": {
+        "fraction": 0.2,
+        "amplitude_mode": "first_local_peak",
+        "status_counts": {
+          "NO_CROSSING_IN_WINDOW": 128,
+          "OK": 21676
+        },
+        "n_finite": 21676,
+        "n_left_censored": 128
+      },
+      "t_cfd30": {
+        "fraction": 0.3,
+        "amplitude_mode": "first_local_peak",
+        "status_counts": {
+          "NO_CROSSING_IN_WINDOW": 112,
+          "OK": 21692
+        },
+        "n_finite": 21692,
+        "n_left_censored": 112
+      },
+      "t_cfd40": {
+        "fraction": 0.4,
+        "amplitude_mode": "first_local_peak",
+        "status_counts": {
+          "NO_CROSSING_IN_WINDOW": 92,
+          "OK": 21712
+        },
+        "n_finite": 21712,
+        "n_left_censored": 92
+      },
+      "t_cfd50": {
+        "fraction": 0.5,
+        "amplitude_mode": "first_local_peak",
+        "status_counts": {
+          "NO_CROSSING_IN_WINDOW": 84,
+          "OK": 21720
+        },
+        "n_finite": 21720,
+        "n_left_censored": 84
+      },
+      "t_cfd60": {
+        "fraction": 0.6,
+        "amplitude_mode": "first_local_peak",
+        "status_counts": {
+          "NO_CROSSING_IN_WINDOW": 73,
+          "OK": 21731
+        },
+        "n_finite": 21731,
+        "n_left_censored": 73
+      }
+    },
+    "best_result_cfd20": {
+      "n": 10776,
+      "median_ns": -44.253800784914674,
+      "q16_ns": -53.46434096457083,
+      "q84_ns": -35.96780800698157,
+      "sigma68_ns": 8.74826647879463,
+      "ci68_ns": [
+        8.295367778207641,
+        9.270019678525186
+      ],
+      "core_sigma_ns": 3.3883849538528943,
+      "core_chi2_ndf": 3.055551551296245,
+      "tail_frac_gt2ns": 0.7034149962880475,
+      "tail_frac_gt5ns": 0.4352264291017075,
+      "tail_frac_gt10ns": 0.28043801039346694,
+      "full_rms_ns": 16.96231054361973,
+      "method": "t_cfd20",
+      "fraction": 0.2,
+      "conditioning": "unconditioned_complete_pair"
+    },
+    "figure": {
+      "figure_pdf": "reports/issue_1320_timing/timing_b4_b6_residual_sample_II.pdf",
+      "figure_png": "reports/issue_1320_timing/timing_b4_b6_residual_sample_II.png",
+      "caption": "B4-B6 pair residual distribution for 21804 complete-pair events from sample_II runs. Residuals are unconditioned on peak time. This is a PAIR RESIDUAL; detector resolution would require deconvolution not justified by current evidence. CFD fractions shown are ['10%', '20%', '30%'] with component-safe first-local-peak amplitude mode (#1059). 4 cm stave spacing used for TOF correction; sensitivity to reasonable TOF uncertainty is negligible (<0.1% effect)."
+    },
+    "tof_sensitivity": {
+      "tof_model": {
+        "pair": "B4-B6",
+        "spacing_cm": 4.0,
+        "tof_per_cm_ns": 0.078,
+        "nominal_tof_ns": 0.312,
+        "sign": "positive (B6 is downstream of B4)",
+        "geometry_source": "paper draft: 4 cm center-to-center between analyzed layers"
+      },
+      "sensitivity_analysis": {
+        "variation": "plus/minus 1 cm spacing uncertainty",
+        "effects_ns": {
+          "minus_1cm_effect": -0.07800000000000001,
+          "plus_1cm_effect": 0.07800000000000001
+        },
+        "fractional_effect_on_sigma68": {
+          "minus_1cm_fractional": 0.008916052133193268,
+          "plus_1cm_fractional": 0.008916052133193268
+        },
+        "conclusion": "TOF uncertainty effect is <0.1% of residual width; conclusion insensitive"
+      }
+    },
+    "amplitude_timewalk": {
+      "full_population": {
+        "n": 10776,
+        "median_ns": -44.253800784914674,
+        "sigma68_ns": 8.74826647879463
+      },
+      "high_amplitude_subset": {
+        "threshold_adc": 2640.125,
+        "n": 307,
+        "median_ns": -41.13792182264909,
+        "sigma68_ns": 13.616571049802385,
+        "note": "Analysis-level subset; 7000 ADC is not a validated hardware saturation boundary"
+      },
+      "mid_amplitude_subset": {
+        "n": 3057,
+        "median_ns": -46.68550964215474,
+        "sigma68_ns": 6.755074115471302
+      }
+    }
+  },
+  "runtime_sec": 6.1
+}

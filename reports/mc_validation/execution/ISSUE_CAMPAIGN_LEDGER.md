@@ -212,6 +212,7 @@ Branch: `fix/issue-956-deltae-producer` (worktree `ccb-wt-956`).
 - Event-level product (#1318): pre-threshold 8×16 event-level parquet for DATA side
 - Final figure package generation after both producers are certified
 
+
 ## Lane 10 — #1304 canonical-ledger enforcement
 
 Branch: `fix/issue-1304-claim-governance` (worktree `ccb-wt-1304`).
@@ -235,3 +236,14 @@ Branch: `fix/issue-1297-heldout-edep-reconstruction` → PR #1339.
 | Issue | Disposition | Evidence |
 |-------|-------------|----------|
 | #1297 | CLOSED (producer shipped, rerun pending #1303) | Producer rewritten to explicit `--estimand {E_raw,E_vis,both}` choice. Replaced tautological saturation diagnostic with physically-signed occupancy fraction definition. Implemented real bootstrap uncertainty (500 reps, 16-84% CI). Frozen train/validation partitions: TRAIN=(deuteron_70, proton_100, proton_140), HELDOUT=(deuteron_110, proton_60). Added shuffled-target negative control (must collapse) and mis-specified response-model control framework. Schema v2, frozen RNG seed 20260812. Evidence commit: `c8c99b1e` (producer fully rewritten). Rerun on regenerated optical grid (#1303) pending. |
+
+
+## P1 #1302 — Energy semantics (E_raw vs E_vis) audit + API enforcement
+
+Branch: `fix/issue-1302-energy-semantics` → PR #1338.
+
+| Issue | Disposition | Evidence |
+|-------|-------------|----------|
+| #1302 | CLOSED | Enforced versioned names: `E_raw_MeV := edep_scint_raw_MeV` (unquenched), `E_vis_MeV := edep_scint_MeV` (Birks-visible via `G4EmSaturation`), `quenching_ratio := E_vis/E_raw`. Analyzer API (`analyze_single_stave.py`) now REQUIRES `--energy-target {E_raw,E_vis,both}` argument; all plot labels updated to specify "Birks-visible" for `E_vis`. Regression test `test_energy_semantics_regression.py` validates E_raw≠E_vis behavior. Audit report `receipts/issue-1302-energy-semantics-audit.json` documents 6 plot label relabels + 4 summary column additions. Evidence commit: `8ffc77d9` (7 files, schema 2.0.0→2.1.0). |
+>>>>>>> 490ed24a (governance: add #1302 lane row to ISSUE_CAMPAIGN_LEDGER)
+>>>>>>> f9181b8b (governance: add #1302 lane row to ISSUE_CAMPAIGN_LEDGER)

@@ -116,7 +116,7 @@ def test_analyze_produces_artifacts(tmp_path: Path):
     assert _make_fixture(fixture, n=500, seed=20260720).returncode == 0
 
     report = tmp_path / "report"
-    proc = _run_cli([ANALYZE_CLI, "--input", fixture, "--output", report, "--bins", 6])
+    proc = _run_cli([ANALYZE_CLI, "--input", fixture, "--output", report, "--bins", 6, "--energy-target", "both"])
     assert proc.returncode == 0, proc.stderr
 
     # normalized event table (parquet, or csv.gz fallback)
@@ -172,7 +172,7 @@ def test_analyze_rejects_inequality_violation(
     df.to_csv(bad, index=False)
 
     report = tmp_path / f"report_{column}"
-    proc = _run_cli([ANALYZE_CLI, "--input", bad, "--output", report, "--bins", 6])
+    proc = _run_cli([ANALYZE_CLI, "--input", bad, "--output", report, "--bins", 6, "--energy-target", "both"])
 
     # the analyzer must reject: nonzero exit AND a failure recorded in result.json
     assert proc.returncode != 0, "analyzer accepted an impossible photon count"

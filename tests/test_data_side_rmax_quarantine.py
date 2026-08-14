@@ -125,6 +125,30 @@ def test_same_open_stream_rejects_path_replacement_during_read(tmp_path, monkeyp
     assert source.read_bytes() == payload_b
 
 
+def test_same_open_stream_rejects_path_vanish_mid_read(tmp_path, monkeypatch):
+    """A mid-read unlink (no replacement) must also be caught: nlink
+    drops to 0 even on filesystems where the unlinked inode's timestamps
+    never advance."""
+    module = load_module()
+    source = tmp_path / "raw.root"
+    source.write_bytes(b"abcdef")
+
+    real_read = module.os.read
+    vanished = False
+
+    def unlinking_read(descriptor, size):
+        nonlocal vanished
+        block = real_read(descriptor, size)
+        if block and not vanished:
+            source.unlink()
+            vanished = True
+        return block
+
+    monkeypatch.setattr(module.os, "read", unlinking_read)
+    with pytest.raises(module.RawInputProvenanceError, match="changed while being digested"):
+        module.digest_raw_input(source, block_size=2)
+
+
 def test_same_open_stream_rejects_in_place_mutation_during_read(tmp_path, monkeypatch):
     module = load_module()
     source = tmp_path / "raw.root"

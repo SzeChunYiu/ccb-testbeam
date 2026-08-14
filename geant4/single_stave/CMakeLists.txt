@@ -220,6 +220,20 @@ if(CCB_PYTHON3)
     FAIL_REGULAR_EXPRESSION "defect 2 has regressed")
 endif()
 
+# 11) Cladding distinction regression (issue #1303). Proves inner/outer cladding are
+#     distinct G4Material/MPT objects with intended RINDEX values.
+if(CCB_PYTHON3)
+  add_test(
+    NAME ccb_stave_cladding_distinction
+    COMMAND ${CCB_PYTHON3}
+            "${PROJECT_SOURCE_DIR}/tests/test_cladding_distinction.py"
+            --exe "$<TARGET_FILE:ccb_stave_sim>"
+            --optical-dir "${CMAKE_BINARY_DIR}/optical")
+  set_tests_properties(ccb_stave_cladding_distinction PROPERTIES
+    TIMEOUT 300
+    PASS_REGULAR_EXPRESSION "CLADDING_DISTINCTION_PASS")
+endif()
+
 # 1089) Production-cut regression (issue #1089). Proves --production-cut is
 #    wired through the CLI, the RUN_CONFIG line, and the .meta.json sidecar, and
 #    that it changes the explicit secondary population enough to move the

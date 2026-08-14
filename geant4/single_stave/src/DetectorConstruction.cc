@@ -529,6 +529,8 @@ void DetectorConstruction::PrintGeometryReport() const {
             << "geometry_hash " << geometry_hash_ << "\n"
             << "physics_hash " << physics_hash_ << "\n"
             << "optical_hash " << optical_hash_ << "\n"
+            << "clad_inner_rindex " << cfg_.clad_inner_rindex << "\n"
+            << "clad_outer_rindex " << cfg_.clad_outer_rindex << "\n"
             << "GEOMETRY_REPORT_END\n";
 
   const bool ok = fibre_within && fibre_protrudes && holes_in_y && holes_in_z &&

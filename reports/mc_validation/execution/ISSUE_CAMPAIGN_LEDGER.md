@@ -185,6 +185,7 @@ Branch: `fix/issue-1179-cs-uncertainty` → PR #1325.
 | #1179 | PARTIAL (contract + audit) | Fail-closed contract `CCB_CS_UNCERTAINTY_DISCRIMINANT` declared in `ScatteringGenerator.cc` BuildSigmaCDF (`G4cout` compile-time contract): `uncertainty_contract=not_propagated_issue_1179`. The compiled `LoadCrossSection()` reads only 2 columns (angle, sigma); the third column (per-node statistical uncertainty mb/sr, 28 nodes) is tabulated but NOT propagated. Sampling law unchanged. Audit tool `tools/audit/research_sigma_cm_sampler_contract.py` extended: `_read_table` returns 4-tuple (raw, angles, sigma, stat_uncertainty); new `_statistical_uncertainty_audit` (per-node fractional uncertainty); new `_systematic_uncertainty_envelope_audit` (`sinusoidal_taper_10pct_edges_20pct_center`: `fractional = 0.10 + 0.10·sin(pi·normalized_theta)`, 20% at 90°, 10% at support edges 26.49/169.78 deg); `audit_sampler` output includes `uncertainty` key with `propagation_status=OPEN_ISSUE_1179`. Input validation extended: stat_uncertainty finite + nonnegative. Evidence commit: `70c614e0` (2 files, +96/−3). PR #1325. |
 
 
+
 ## Lane 08 — #956/#1321 ΔE–E producer repair (P0-1 defects)
 
 Branch: `fix/issue-956-deltae-producer` (worktree `ccb-wt-956`).
@@ -211,6 +212,7 @@ Branch: `fix/issue-956-deltae-producer` (worktree `ccb-wt-956`).
 - Event-level product (#1318): pre-threshold 8×16 event-level parquet for DATA side
 - Final figure package generation after both producers are certified
 
+
 ## Lane 10 — #1304 canonical-ledger enforcement
 
 Branch: `fix/issue-1304-claim-governance` (worktree `ccb-wt-1304`).
@@ -227,10 +229,21 @@ Branch:  → PR #1335 (merged `e4552571`).
 |-------|-------------|----------|
 | #1320 | DONE (figure delivered; format-limited) | Authorising 8×16 B4-B6 pair residual with component-safe CFD (issue #1059 mode). Sample II, 7 runs, 10,776 pair events. CFD 20% first_local_peak: sigma68 = 8.748 ns (68% CI [8.295, 9.270]), RMS = 16.962 ns. TOF = 0.312 ns (4 cm spacing, B6 downstream of B4). 6-fraction scan reported (no selection by minimum). Bootstrap 1000 replicates. Validation: wrong-component rejection PASS, synthetic two-pulse FAIL (test expectation incorrect: selector binds to FIRST leading component per #1059, not largest; pair timing unaffected). Figure: `reports/issue_1320_timing/timing_b4_b6_residual_sample_II.pdf` (caption states PAIR RESIDUAL, no √2 deconvolution). Format-limited: 38 ns pair residual dominated by 16-sample 100 MS/s waveform representation, not intrinsic detector resolution. Timing chapter already updated (ch06 inline format-limited qualifier per #1304). Remaining gates: channel-polarity provenance (#954), component identity validation (#1059). |
 
-## Lane 11 — #1320 timing residual figure (PAPER-FINISH-04)
+## P1 #1297 — Held-out energy reconstruction producer rewrite
 
-Branch: fix/issue-1320-timing-residual → PR #1335 (merged e4552571).
+Branch: `fix/issue-1297-heldout-edep-reconstruction` → PR #1339.
 
 | Issue | Disposition | Evidence |
 |-------|-------------|----------|
-| #1320 | DONE (figure delivered; format-limited) | Authorising 8x16 B4-B6 pair residual with component-safe CFD (issue #1059 mode). Sample II, 7 runs, 10,776 pair events. CFD 20% first_local_peak: sigma68 = 8.748 ns (68% CI [8.295, 9.270]), RMS = 16.962 ns. TOF = 0.312 ns (4 cm spacing, B6 downstream of B4). 6-fraction scan reported (no selection by minimum). Bootstrap 1000 replicates. Validation: wrong-component rejection PASS, synthetic two-pulse FAIL (test expectation incorrect: selector binds to FIRST leading component per #1059, not largest; pair timing unaffected). Figure: reports/issue_1320_timing/timing_b4_b6_residual_sample_II.pdf (caption states PAIR RESIDUAL, no sqrt(2) deconvolution). Format-limited: 38 ns pair residual dominated by 16-sample 100 MS/s waveform representation, not intrinsic detector resolution. Timing chapter already updated (ch06 inline format-limited qualifier per #1304). Remaining gates: channel-polarity provenance (#954), component identity validation (#1059). |
+| #1297 | CLOSED (producer shipped, rerun pending #1303) | Producer rewritten to explicit `--estimand {E_raw,E_vis,both}` choice. Replaced tautological saturation diagnostic with physically-signed occupancy fraction definition. Implemented real bootstrap uncertainty (500 reps, 16-84% CI). Frozen train/validation partitions: TRAIN=(deuteron_70, proton_100, proton_140), HELDOUT=(deuteron_110, proton_60). Added shuffled-target negative control (must collapse) and mis-specified response-model control framework. Schema v2, frozen RNG seed 20260812. Evidence commit: `c8c99b1e` (producer fully rewritten). Rerun on regenerated optical grid (#1303) pending. |
+
+
+## P1 #1302 — Energy semantics (E_raw vs E_vis) audit + API enforcement
+
+Branch: `fix/issue-1302-energy-semantics` → PR #1338.
+
+| Issue | Disposition | Evidence |
+|-------|-------------|----------|
+| #1302 | CLOSED | Enforced versioned names: `E_raw_MeV := edep_scint_raw_MeV` (unquenched), `E_vis_MeV := edep_scint_MeV` (Birks-visible via `G4EmSaturation`), `quenching_ratio := E_vis/E_raw`. Analyzer API (`analyze_single_stave.py`) now REQUIRES `--energy-target {E_raw,E_vis,both}` argument; all plot labels updated to specify "Birks-visible" for `E_vis`. Regression test `test_energy_semantics_regression.py` validates E_raw≠E_vis behavior. Audit report `receipts/issue-1302-energy-semantics-audit.json` documents 6 plot label relabels + 4 summary column additions. Evidence commit: `8ffc77d9` (7 files, schema 2.0.0→2.1.0). |
+>>>>>>> 490ed24a (governance: add #1302 lane row to ISSUE_CAMPAIGN_LEDGER)
+>>>>>>> f9181b8b (governance: add #1302 lane row to ISSUE_CAMPAIGN_LEDGER)

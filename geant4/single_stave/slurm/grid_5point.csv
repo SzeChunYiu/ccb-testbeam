@@ -1,0 +1,7 @@
+# 5-point optical calibration grid (issue #1303 regeneration)
+# particle,energy_MeV,hit_x_cm,hit_y_cm,seed,nevents,theta_deg,phi_deg
+proton,60,0,0,1,2000,0,0
+proton,100,0,0,1,2000,0,0
+proton,140,0,0,1,2000,0,0
+deuteron,70,0,0,1,2000,0,0
+deuteron,110,0,0,1,2000,0,0

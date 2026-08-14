@@ -63,7 +63,12 @@ def validate(root: Path, manifest_path: Path) -> dict[str, Any]:
                 check = checker(output, width_mm=width, height_mm=height, dpi=600)
             else:
                 check = checker(output, width_mm=width, height_mm=height)
-            checks.append({"kind": kind, "path": str(output), "ok": check.ok, **check.details})
+            output_path = (
+                output.relative_to(root).as_posix()
+                if output.is_relative_to(root)
+                else str(output)
+            )
+            checks.append({"kind": kind, "path": output_path, "ok": check.ok, **check.details})
             if not check.ok:
                 failures.append(f"{figure_id}: {kind} dimension/content check failed")
             expected_hash = str(outputs[kind]["sha256"])

@@ -22,6 +22,7 @@
 | See where ML helps (or doesn't) | [§6 Pulse Shape & Machine Learning](#6-pulse-shape--machine-learning) |
 | Check the methodology | [§12 Methodology Appendix](#12-methodology-appendix) |
 | Find what's still missing | [§11 Open Questions](#11-open-questions--next-steps) and [`STUDY_GAPS.md`](STUDY_GAPS.md) |
+| Publication evidence and paper status | [Evidence matrix](chatgpt_todo/PAPER_EVIDENCE_FIGURE_MATRIX_20260812.md) · [Open atoms](chatgpt_todo/PAPER_OPEN_ATOMS_20260812.md) · [Claim evidence](chatgpt_todo/CLAIM_EVIDENCE_MATRIX.md) |
 | Browse all studies with proper names | [Study Catalogue](#study-catalogue) |
 
 ---

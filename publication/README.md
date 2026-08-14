@@ -4,7 +4,7 @@ This is the **canonical submission workspace** for the CCB range-stave paper.
 
 The older `docs/latex/` tree is a broader technical/academic report and is **not** the canonical source of this paper. The original 2026-08-12 Markdown draft is retained under `publication/source/` for provenance; active editing is chapterised under `publication/chapters/`.
 
-The current-head section-by-section scientific audit and dependency-ordered finish queue are maintained in [`chatgpt_todo/PAPER_COMPLETION_AUDIT_20260814.md`](../chatgpt_todo/PAPER_COMPLETION_AUDIT_20260814.md).
+The current-head section-by-section scientific audit and dependency-ordered finish queue are maintained in [`chatgpt_todo/PAPER_COMPLETION_AUDIT_20260814.md`](../chatgpt_todo/PAPER_COMPLETION_AUDIT_20260814.md). The public-data correction/addendum is maintained in [`chatgpt_todo/PAPER_COMPLETION_AUDIT_HF_DATA_ADDENDUM_20260814.md`](../chatgpt_todo/PAPER_COMPLETION_AUDIT_HF_DATA_ADDENDUM_20260814.md).
 
 ## Layout
 
@@ -23,7 +23,8 @@ publication/
 ├── scripts/
 │   ├── gated/                   # current producers invalidated by publication audit
 │   ├── utilities/               # plot/build utilities
-│   └── validate_publication.py  # working-package structure/status validator
+│   ├── validate_publication.py  # working-package structure/status validator
+│   └── validate_submission_readiness.py # strict final evidence gate
 ├── tables/
 │   ├── final/                   # authorising publication tables
 │   └── gated/                   # quarantined current tables
@@ -41,6 +42,8 @@ The 2026-08-14 current-head audit additionally confirms that `figures/final/`, `
 
 The current source of truth for claim status remains `docs/claim_ledger.csv` until #1304 replaces the parallel status surfaces with one fail-closed publication mechanism. Current-facing WIKI text must not override a gated or blocked ledger row.
 
+A public HRD mirror exists at `https://huggingface.co/datasets/billyyiu747/ccb-testbeam`. Its dataset card identifies `ccb_data_hrd.zip` as containing the HRD LMD and ROOT runs mirrored from the LUNARC CCB data area. Before publication use, the archive and member-file SHA-256 values must be checked against the authorising LUNARC raw-file set; the exact verification contract is documented in the Hugging Face data addendum linked above.
+
 ## Build
 
 ```bash
@@ -56,7 +59,7 @@ make -C publication
 
 The build writes `publication/paper.pdf`. Intermediate LaTeX files remain under `publication/build/` and are ignored. On the publication working branch, the `Publication PDF` GitHub Actions workflow rebuilds the PDF and commits `paper.pdf` plus `BUILD_RECEIPT.json` back to the branch when configured to do so.
 
-`publication/scripts/validate_publication.py` is intentionally a **working-package structure/hold-state validator**. A green invocation or a green PDF build does not establish scientific submission readiness. Before submission, the stronger Chapter-12 contract must be enforced: final figures/tables and source data present, result/input hashes bound, claim status authorised, units/estimands explicit, uncertainty and MC event measure recorded, and the exact reviewed source head recorded in the build receipt.
+`publication/scripts/validate_publication.py` is intentionally a **working-package structure/hold-state validator**. A green invocation or a green PDF build does not establish scientific submission readiness. Before submission, `publication/scripts/validate_submission_readiness.py` must additionally enforce the stronger Chapter-12 contract: final figures/tables and source data present, result/input hashes bound, claim status authorised, units/estimands explicit, uncertainty and MC event measure recorded, and the exact reviewed source head recorded in the build receipt. Passing that mechanical gate still does not replace independent physics/statistics review.
 
 ## Editing rule
 

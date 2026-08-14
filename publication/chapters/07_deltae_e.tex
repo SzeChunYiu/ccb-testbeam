@@ -31,3 +31,47 @@ The quarantined plots are kept under \nolinkurl{publication/figures/gated/} to p
 \GatedFigure{figures/gated/fig07_data_deltaE_E_per_sample.png}{0.92}{Quarantined current beam-data amplitude $\Delta E$--$E$ plot.}{GATED by Cycle-3 audit; do not cite as final result.}
 
 The final Figure~7/8 production must start from an event-level table that contains all four reconstructed channel amplitudes before analysis-threshold censoring, then apply declared threshold scans; import the source-bound readout map; keep physical-layer and readout namespaces distinct; and use a production MC whose source measure and run provenance are authorising.
+
+\subsection{Species-resolved topology and penetration deliverables (\#618)}
+
+The supervisor-requested species and penetration set is delivered from the
+corrected event tables of the regenerated-campaign producer. Species-resolved
+\(\Delta E\)--\(E\) panels (proton truth, deuteron truth, colour-coded
+proton+deuteron, and all particles) are produced for Sample~I and Sample~II in
+both the full downstream-sum and the data-matched four-layer definitions.
+Penetration-depth distributions (\(L_{\rm stop}\): deepest physical layer with
+a deposit above a stated threshold, with a threshold-stability scan) are
+produced per species and per sample, together with the fraction of events
+reaching each downstream readout position (B4/B6/B8) and the beam-data
+Sample~I versus Sample~II stopping-layer overlay from the producer's
+threshold-pass logic. Beam-data axes remain amplitude proxies (not calibrated
+energy); B2 saturation is shown only as the analysis-contract flag, with no
+numeric hardware level asserted.
+
+The MC panels are Geant4 deposited-energy truth views from a 2{,}000{,}000-event
+scale-up of the regenerated campaign
+(\nolinkurl{geant4/manifests/cmc\_2m\_regenerated\_20260814.json}; identical
+sampler, geometry and runtime stack as the authorising 100{,}000-event
+campaign). Because both campaigns run the default engine seed over the same
+sequential stream, the scale-up replicates the authorising campaign as a
+verified sequential prefix: the leading B-stack-entrance event rows are
+identical event-by-event, and the added statistics only densify the same
+truth topology. The set is descriptive truth topology, not a detector-response
+prediction: readout thresholds, light collection and digitisation are not in
+the loop, so no numeric agreement with the amplitude-domain data figures is
+claimed or implied. Beam-data figures remain GATED under the same Cycle-3
+gates as Figure~7/8; the MC truth views carry SIMULATION\_RESULT status and
+promote no quarantined number. Artifact bundles:
+\nolinkurl{reports/paper\_618\_species\_penetration\_2m\_20260814T1449Z/}
+(final set) and
+\nolinkurl{reports/paper\_618\_species\_penetration\_20260814T1615Z/}
+(authorising 100k thin-sample record).
+
+\GatedFigure{figures/final/618_mc_truth_full_I.pdf}{0.95}{MC truth $\Delta E$--$E$, Sample I, full downstream sum; proton/deuteron/combined/all panels (\#618, SIMULATION\_RESULT).}{Species-resolved truth topology from the 2M regenerated campaign; descriptive MC only, not a detector-response prediction.}
+\GatedFigure{figures/final/618_mc_truth_full_II.pdf}{0.95}{MC truth $\Delta E$--$E$, Sample II, full downstream sum; same panel structure (\#618, SIMULATION\_RESULT).}{Same provenance as the Sample~I figure; unweighted event counts shown on panels.}
+\GatedFigure{figures/final/618_mc_truth_4layer_I.pdf}{0.95}{MC truth $\Delta E$--$E$, Sample I, data-matched four-layer definition (\#618, SIMULATION\_RESULT).}{Uses only the same physical readout positions as the data (B2/B4/B6/B8).}
+\GatedFigure{figures/final/618_mc_truth_4layer_II.pdf}{0.95}{MC truth $\Delta E$--$E$, Sample II, data-matched four-layer definition (\#618, SIMULATION\_RESULT).}{Same definition as the Sample~I data-matched view.}
+\GatedFigure{figures/final/618_penetration_I.pdf}{0.95}{MC penetration depth $L_{\rm stop}$, Sample I: proton, deuteron, shape-normalised overlay, all particles (\#618, SIMULATION\_RESULT).}{Threshold-stability scan and reaching fractions recorded in the artifact bundle.}
+\GatedFigure{figures/final/618_penetration_II.pdf}{0.95}{MC penetration depth $L_{\rm stop}$, Sample II, same panel structure (\#618, SIMULATION\_RESULT).}{Deepest-layer threshold and its stability variants documented in the bundle tables.}
+\GatedFigure{figures/gated/618_data_amplitude_I_II.png}{0.95}{Beam-data amplitude analogue $\Delta E$--$E$, Samples I and II on identical axes (\#618, GATED).}{Amplitude proxies, not calibrated energy; B2 saturation shown as the analysis-contract flag only; Cycle-3 gates apply as for Figure~7/8.}
+\GatedFigure{figures/gated/618_data_penetration_I_II.png}{0.95}{Beam-data stopping-layer overlay, Sample I versus II, amplitude domain (\#618, GATED).}{Uses the producer's threshold-pass logic; no new ADC cut is introduced here.}

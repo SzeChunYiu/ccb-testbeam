@@ -14,6 +14,6 @@ model_diagnostics/pid_mc_validation.png,SIMULATION_RESULT,docs/figures/paper/pid
 model_diagnostics/adc_mc_calibration.png,SIMULATION_RESULT,docs/figures/paper/adc_mc_calibration.png,simulation result only
 model_diagnostics/birks_mc_comparison.png,SIMULATION_RESULT,docs/figures/paper/birks_mc_comparison.png,simulation result only
 model_diagnostics/pileup_digitizer_mc.png,SIMULATION_RESULT,docs/figures/paper/pileup_digitizer_mc.png,simulation result only
-illustrative/geometry_tof.png,ILLUSTRATIVE,docs/figures/geometry_tof.png,no measured claim
+illustrative/geometry_tof.png,ILLUSTRATIVE,docs/figures/reports/0000000012.1.truthtiming/figures/geometry_tof.png,no measured claim
 illustrative/06_timewalk_explained.png,ILLUSTRATIVE,docs/figures/06_timewalk_explained.png,no measured claim
 illustrative/03_waveform_annotated.png,ILLUSTRATIVE,docs/figures/03_waveform_annotated.png,no measured claim

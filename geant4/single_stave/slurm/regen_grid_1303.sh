@@ -4,7 +4,7 @@ set -euo pipefail
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${HERE}/../.." && pwd)"
-BUILD="${REPO_ROOT}/geant4/single_stave/build"
+BUILD="${REPO_ROOT}/single_stave/build"
 POINTS="${HERE}/grid_5point.csv"
 OUTDIR="${REPO_ROOT}/results/1303_grid_regen"
 
@@ -36,10 +36,10 @@ echo "Found ${N} calibration points"
 echo "Submitting SLURM array job..."
 cd "${HERE}"
 JOBID=$(sbatch --array=0-$((N-1)) \
-  --partition=hep \
-  --account=lu2025-2-51 \
+  --partition=lu48 \
+  --account=lu2026-2-51 \
   --cpus-per-task=4 \
-  --time=04:00:00 \
+  --time=06:00:00 \
   submit_calibration_1303.sh "${BUILD}" "${POINTS}" "${OUTDIR}" | awk '{print $NF}')
 
 echo ""

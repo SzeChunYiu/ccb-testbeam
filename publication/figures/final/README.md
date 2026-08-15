@@ -20,3 +20,8 @@ B4--B6 pair timing residual (Sample II). Copied verbatim from `reports/issue_132
 - Result: sigma68 8.748 ns (bootstrap 8.295--9.270 ns), median -44.254 ns, 10,776 events, 7 runs (58--63, 65)
 - Producer: `scripts/issue_1320_timing_residual.py` @ `e455257127d598d6d8b86788e7722f108b5ea181`
 - Gate: synthetic two-pulse component recovery failed (0.0%); PAIR RESIDUAL, not detector resolution; no sqrt(2) deconvolution
+- 1303_stage_accounting.pdf -- #1303 optical stage accounting (MC_MODEL_DEPENDENT)
+- 1303_pe_per_mev.pdf -- #1303 per-point PE/MeV_vis + PE/MeV_raw yields (MC_MODEL_DEPENDENT)
+- 1303_edep_vs_pe.pdf -- #1303 detected PE vs deposited energy scatter (MC_MODEL_DEPENDENT)
+- edep_reconstruction_heldout_E_vis.pdf -- #1303/#1297 held-out E_vis reconstruction (GATED)
+- edep_reconstruction_heldout_E_raw.pdf -- #1303/#1297 held-out E_raw negative control (GATED)

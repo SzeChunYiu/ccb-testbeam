@@ -220,21 +220,61 @@ SYST-BUDGET:                 # CL-026 -- systematic uncertainty budget
     covariance, hash-bound inputs, or coverage study. Component estimates are not
     blanket authorisation (CL-026).
 
-EDEP-RECO-MC:                # PAPER-A09 / #1297 -- held-out Edep reconstruction
-  result: reports/paper_a09_heldout_edep_reconstruction/result.json
-  value_key: summary/heldout_sigma68_fraction
-  source_figure: docs/figures/paper/edep_reconstruction_heldout.png
+EDEP-RECO-MC:                # PAPER-A09 / #1297 + #1303 regenerated grid -- held-out E_vis reconstruction
+  result: reports/paper_1303_optical_campaign_20260815T2209Z/result.json
+  value_key: summaries/0/heldout_sigma68_fraction
+  source_figure: publication/figures/final/edep_reconstruction_heldout_E_vis.pdf
   claim_id: CL-029
   evidence_class: MC_MODEL_DEPENDENT
   status: MC_MODEL_DEPENDENT
   kind: quantitative
   caption: >-
-    Held-out single-stave deposited-energy reconstruction on the SHA-256-bound
-    optical calibration grid. Pooled linear PE-to-Edep fit on train runs
-    (deuteron_70, proton_100, proton_140); held-out deuteron_110 + proton_60:
-    median bias +10.1%, sigma68 8.9%, RMS 17.8%, tail fraction 15% (|r|>0.20).
-    MODEL-DEPENDENT OPTICAL MC; NOT a beam-data energy calibration. Optical/SiPM
-    nuisance envelope NOT_EVALUATED pending PAPER-A07/A08.
+    Held-out single-stave energy reconstruction on the REGENERATED #1303
+    five-point optical grid (SHA-256-bound, distinct cladding materials,
+    current source). Separate estimands: E_vis (Birks-visible) and E_raw
+    (unquenched). Pooled linear PE-to-E_vis fit frozen on train runs
+    (deuteron_70, proton_100, proton_140; n=6000); held-out deuteron_110 +
+    proton_60 (n=4000): E_vis median bias +0.5% [0.29,0.62], sigma68 6.26%
+    [6.16,6.35], tail 0.2%; E_raw median bias +10.4%, sigma68 9.0%, tail 16.9%
+    (mis-specified response control). Bootstrap 16-84% CIs, 500 resamples.
+    Shuffled-target control reported in result.json. MODEL-DEPENDENT OPTICAL
+    MC; NOT a beam-data energy calibration. Optical/SiPM nuisance envelope
+    NOT_EVALUATED pending PAPER-A07/A08. Supersedes the July-grid 8.9%
+    edep_scint result (SUPERSEDED_MODEL_DIAGNOSTIC).
+
+OPTICAL-STAGE-1303:          # #1303 -- optical stage accounting, regenerated grid
+  result: reports/paper_1303_optical_campaign_20260815T2209Z/1303_summary.json
+  value_key: pooled_calibration_E_vis/slope_PE_per_MeV_E_vis
+  source_figure: publication/figures/final/1303_stage_accounting.pdf
+  claim_id: "#1303"
+  evidence_class: MC_MODEL_DEPENDENT
+  status: MC_MODEL_DEPENDENT
+  kind: quantitative
+  caption: >-
+    Optical stage accounting on the regenerated #1303 five-point grid:
+    per-point mean scintillation photons, WLS capture (eps~0.19), transport
+    (eps~0.021), sensor arrivals, detected PE, saturated-PE occupancy and ADC,
+    with explicit denominators. Pooled E_vis light yield 11.78 PE/MeV_vis
+    (offset 0.65 PE, r^2=0.976, n=10000); per-point 11.78-11.84 PE/MeV_vis;
+    E_raw yields 8.6-10.6 PE/MeV carry Birks quenching (quench ratio
+    E_vis/E_raw ~ 0.81 at d110). July-grid ~9-11 PE/"MeV" values are
+    SUPERSEDED_MODEL_DIAGNOSTIC (Birks-visible denominator, aliased
+    claddings). MODEL-DEPENDENT OPTICAL MC; nuisance envelope NOT_EVALUATED.
+
+PE-PER-MEV-1303:             # #1303 -- per-point light yield, regenerated grid
+  result: reports/paper_1303_optical_campaign_20260815T2209Z/1303_summary.json
+  value_key: points/0/pe_per_mev_E_vis/mean
+  source_figure: publication/figures/final/1303_pe_per_mev.pdf
+  claim_id: "#1303"
+  evidence_class: MC_MODEL_DEPENDENT
+  status: MC_MODEL_DEPENDENT
+  kind: quantitative
+  caption: >-
+    Per-point detected-PE yield versus visible and raw deposited energy for
+    the five regenerated calibration points (p60/p100/p140/d70/d110, 2000
+    events each, seed-bound, SHA-256-bound inputs). E_vis yields are flat
+    within CI across species/energy; E_raw yields split by species through
+    the Birks quenching ratio. MODEL-DEPENDENT OPTICAL MC.
 
 # === Synthesis figures (cluster E) -- status mirrors the claim dashboard ======
 

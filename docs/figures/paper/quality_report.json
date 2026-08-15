@@ -57,7 +57,7 @@
       ],
       "evidence_class": "DATA_MEASUREMENT",
       "figure_id": "FIG-WIKI-001",
-      "status": "VALIDATED"
+      "status": "GATED"
     },
     {
       "checks": [

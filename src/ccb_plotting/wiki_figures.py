@@ -633,8 +633,8 @@ SPECS: tuple[FigureSpec, ...] = (
         "selected_pulse_inventory",
         "Selected-pulse inventory",
         "How are the exact S00 analysis pulses distributed across samples and staves?",
-        "Exact S00 reproduction. Sample I is dominated by B2; Sample II reaches deeper staves more often. Counts are deterministic for the fixed raw inputs and selection.",  # noqa: E501
-        "VALIDATED",
+        "Exact S00 reproduction. Sample I is dominated by B2; Sample II reaches deeper staves more often. Counts are deterministic for the fixed raw inputs and selection; CL-001 remains GATED pending data-contract closure (#952/#953/#954), so this figure is not an authorising ledger row.",  # noqa: E501
+        "GATED",
         "DATA_MEASUREMENT",
         "single",
         49.0,
@@ -646,7 +646,7 @@ SPECS: tuple[FigureSpec, ...] = (
         "claim_status_overview",
         "Claim ledger is mostly gated or blocked",
         "What fraction of the project claim surface is currently publication-authorized?",
-        "Status counts from the canonical 26-row claim ledger. Only one row is VALIDATED; visual polish must not promote gated, blocked, flawed or superseded evidence.",  # noqa: E501
+        "Status counts from the canonical claim ledger (docs/claim_ledger.csv). Visual polish must not promote gated, blocked, flawed or superseded evidence.",  # noqa: E501
         "REVIEW",
         "GOVERNANCE_LEDGER",
         "single",

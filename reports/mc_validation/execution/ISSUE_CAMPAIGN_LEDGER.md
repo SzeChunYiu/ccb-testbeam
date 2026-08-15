@@ -223,7 +223,7 @@ Branch: `fix/issue-1304-claim-governance` (worktree `ccb-wt-1304`).
 
 ## Lane 11 — #1320 timing residual figure (PAPER-FINISH-04)
 
-Branch:  → PR #1335 (merged `e4552571`).
+Branch: `fix/issue-1320-timing-residual` → PR #1335 (merged `e4552571`).
 
 | Issue | Disposition | Evidence |
 |-------|-------------|----------|

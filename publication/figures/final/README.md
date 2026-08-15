@@ -25,3 +25,4 @@ B4--B6 pair timing residual (Sample II). Copied verbatim from `reports/issue_132
 - 1303_edep_vs_pe.pdf -- #1303 detected PE vs deposited energy scatter (MC_MODEL_DEPENDENT)
 - edep_reconstruction_heldout_E_vis.pdf -- #1303/#1297 held-out E_vis reconstruction (GATED)
 - edep_reconstruction_heldout_E_raw.pdf -- #1303/#1297 held-out E_raw negative control (GATED)
+- mc_depth_profile.pdf -- #1319 MC depth profile, species-resolved + B2/B4/B6/B8 parity nuisance (SIMULATION_RESULT)

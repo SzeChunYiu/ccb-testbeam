@@ -7,7 +7,7 @@
       "column": "single",
       "environment": {
         "matplotlib": "3.10.8",
-        "python": "3.11.5"
+        "python": ">=3.11 (requires-python floor; patch version not stamped)"
       },
       "evidence_class": "DATA_MEASUREMENT",
       "figure_id": "FIG-WIKI-001",
@@ -102,7 +102,7 @@
       "column": "single",
       "environment": {
         "matplotlib": "3.10.8",
-        "python": "3.11.5"
+        "python": ">=3.11 (requires-python floor; patch version not stamped)"
       },
       "evidence_class": "GOVERNANCE_LEDGER",
       "figure_id": "FIG-WIKI-002",
@@ -197,7 +197,7 @@
       "column": "single",
       "environment": {
         "matplotlib": "3.10.8",
-        "python": "3.11.5"
+        "python": ">=3.11 (requires-python floor; patch version not stamped)"
       },
       "evidence_class": "MC_METHOD_CLOSURE",
       "figure_id": "FIG-WIKI-003",
@@ -292,7 +292,7 @@
       "column": "single",
       "environment": {
         "matplotlib": "3.10.8",
-        "python": "3.11.5"
+        "python": ">=3.11 (requires-python floor; patch version not stamped)"
       },
       "evidence_class": "SIMULATION_RESULT",
       "figure_id": "FIG-WIKI-004",
@@ -387,7 +387,7 @@
       "column": "single",
       "environment": {
         "matplotlib": "3.10.8",
-        "python": "3.11.5"
+        "python": ">=3.11 (requires-python floor; patch version not stamped)"
       },
       "evidence_class": "MC_CLOSURE_PLUS_GATED_DATA_MC_PROXY",
       "figure_id": "FIG-WIKI-005",
@@ -483,7 +483,7 @@
       "column": "single",
       "environment": {
         "matplotlib": "3.10.8",
-        "python": "3.11.5"
+        "python": ">=3.11 (requires-python floor; patch version not stamped)"
       },
       "evidence_class": "SIMULATION_RESULT",
       "figure_id": "FIG-WIKI-006",
@@ -578,7 +578,7 @@
       "column": "single",
       "environment": {
         "matplotlib": "3.10.8",
-        "python": "3.11.5"
+        "python": ">=3.11 (requires-python floor; patch version not stamped)"
       },
       "evidence_class": "SIMULATION_RESULT",
       "figure_id": "FIG-WIKI-007",
@@ -673,7 +673,7 @@
       "column": "single",
       "environment": {
         "matplotlib": "3.10.8",
-        "python": "3.11.5"
+        "python": ">=3.11 (requires-python floor; patch version not stamped)"
       },
       "evidence_class": "LEGACY_DATA_MC_DIAGNOSTIC",
       "figure_id": "FIG-WIKI-008",
@@ -768,7 +768,7 @@
       "column": "single",
       "environment": {
         "matplotlib": "3.10.8",
-        "python": "3.11.5"
+        "python": ">=3.11 (requires-python floor; patch version not stamped)"
       },
       "evidence_class": "TRUTH_LEVEL_MC_ONLY",
       "figure_id": "FIG-WIKI-009",
@@ -863,7 +863,7 @@
       "column": "single",
       "environment": {
         "matplotlib": "3.10.8",
-        "python": "3.11.5"
+        "python": ">=3.11 (requires-python floor; patch version not stamped)"
       },
       "evidence_class": "SYNTHETIC_WAVEFORM_MC",
       "figure_id": "FIG-WIKI-010",
@@ -958,7 +958,7 @@
       "column": "single",
       "environment": {
         "matplotlib": "3.10.8",
-        "python": "3.11.5"
+        "python": ">=3.11 (requires-python floor; patch version not stamped)"
       },
       "evidence_class": "SENSITIVITY_INPUTS",
       "figure_id": "FIG-WIKI-011",

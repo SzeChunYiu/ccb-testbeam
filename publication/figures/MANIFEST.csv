@@ -25,7 +25,6 @@ final/618_penetration_I.pdf,SIMULATION_RESULT,reports/paper_618_species_penetrat
 final/618_penetration_II.pdf,SIMULATION_RESULT,reports/paper_618_species_penetration_2m_20260814T1449Z/figures/618_penetration_II.pdf,#618 species-resolved MC truth (L_stop per species, Sample II)
 gated/618_data_amplitude_I_II.png,GATED,reports/paper_618_species_penetration_2m_20260814T1449Z/figures/618_data_amplitude_I_II.png,#618 beam-data amplitude proxy dE-E, Samples I+II
 gated/618_data_penetration_I_II.png,GATED,reports/paper_618_species_penetration_2m_20260814T1449Z/figures/618_data_penetration_I_II.png,#618 beam-data stopping-layer overlay, amplitude domain
-
 final/1303_stage_accounting.pdf,SIMULATION_RESULT,reports/paper_1303_optical_campaign_20260815T2209Z/figures/1303_stage_accounting.pdf,#1303 optical stage accounting (regenerated grid)
 final/1303_pe_per_mev.pdf,SIMULATION_RESULT,reports/paper_1303_optical_campaign_20260815T2209Z/figures/1303_pe_per_mev.pdf,#1303 per-point PE/MeV_vis and PE/MeV_raw yields (regenerated grid)
 final/1303_edep_vs_pe.pdf,SIMULATION_RESULT,reports/paper_1303_optical_campaign_20260815T2209Z/figures/1303_edep_vs_pe.pdf,#1303 detected PE vs E_vis/E_raw (regenerated grid)

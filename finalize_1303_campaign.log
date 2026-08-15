@@ -1,0 +1,28 @@
+complete points: 5
+OK stave_deuteron_110MeV_x0_y0_th0_ph0_s1.root: n=2000.0
+OK stave_deuteron_70MeV_x0_y0_th0_ph0_s1.root: n=2000.0
+OK stave_proton_100MeV_x0_y0_th0_ph0_s1.root: n=2000.0
+OK stave_proton_140MeV_x0_y0_th0_ph0_s1.root: n=2000.0
+OK stave_proton_60MeV_x0_y0_th0_ph0_s1.root: n=2000.0
+WROTE /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/reports/paper_1303_optical_campaign_20260815T2209Z
+
+=== E_vis Results ===
+Median bias: 0.005
+Sigma68: 0.063
+RMS: 0.063
+Tail fraction: 0.002
+
+=== E_raw Results ===
+Median bias: 0.104
+Sigma68: 0.090
+RMS: 0.162
+Tail fraction: 0.169
+BUNDLE=/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/reports/paper_1303_optical_campaign_20260815T2209Z
+=== headline numbers for chapter wiring ===
+pooled E_vis cal: {'slope_PE_per_MeV_E_vis': 11.78058391651389, 'offset_PE': 0.6546758753980285, 'r2': 0.9764532325069082, 'n_events': 10000}
+deuteron 110 MeV  PE/MeV_vis=11.833 [11.817,11.849]  PE/MeV_raw=9.576
+deuteron  70 MeV  PE/MeV_vis=11.785 [11.774,11.799]  PE/MeV_raw=8.590
+proton   100 MeV  PE/MeV_vis=11.792 [11.773,11.814]  PE/MeV_raw=10.482
+proton   140 MeV  PE/MeV_vis=11.818 [11.796,11.840]  PE/MeV_raw=10.576
+proton    60 MeV  PE/MeV_vis=11.835 [11.820,11.850]  PE/MeV_raw=9.830
+A09: {"bootstrap_reps": 500, "environment": {"numpy": "2.4.6", "pandas": "2.3.1", "platform": "Linux-5.14.0-687.24.1.el9_8.x86_64-x86_64-with-glibc2.34", "python": "3.11.14 | packaged by conda-forge | (main, Jan 26 2026, 23:48:32) [GCC 14.3.0]"}, "estimand": "r = (E_reco - E_dep) / E_dep", "estimand_note": "Both E_raw (unquenched) and E_vis (Birks-visible) targets reconstructed separately", "generated_utc": "2026-08-15T22:10:07.525109+00:00", "git_commit": "42e67cadfe0077b80174f95dc4ae5c3b9dd9829d", "heldout_runs": ["deuteron_110", "proton_60"], "input_bindings": [{"bytes": 231501138, "git_commit": "533d58e8d2f826ab2255f519adb9b61b34f11c84", "kinetic_energy_MeV": 110, "meta_path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/results/1303_grid_regen_v2/stave_deuteron_110MeV_x0_y0_th

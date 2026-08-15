@@ -15,8 +15,8 @@ n_ok=0
 for r in "$GRID"/stave_*.root; do
   m="$r.meta.json"
   [ -f "$m" ] || { echo "INCOMPLETE (no meta): $r"; continue; }
-  n=$($PY -c "import uproot,sys; print(uproot.open(sys.argv[1])['events'].num_entries)" "$r" 2>/dev/null || echo 0)
-  req=$($PY -c "import json,sys; print(json.load(open(sys.argv[1])).get('n_events_requested',0))" "$m")
+  n=$($PY -c "import uproot,sys; print(int(uproot.open(sys.argv[1])['events'].num_entries))" "$r" 2>/dev/null || echo 0)
+  req=$($PY -c "import json,sys; print(int(round(float(json.load(open(sys.argv[1])).get('n_events_requested',0)))))" "$m")
   if [ "$n" -ge "$req" ] && [ "$req" -gt 0 ]; then n_ok=$((n_ok+1)); else echo "INCOMPLETE ($n/$req): $r"; fi
 done
 echo "complete points: $n_ok"

@@ -1,0 +1,415 @@
+{
+  "bootstrap_reps": 500,
+  "environment": {
+    "numpy": "2.4.6",
+    "pandas": "2.3.1",
+    "platform": "Linux-5.14.0-687.24.1.el9_8.x86_64-x86_64-with-glibc2.34",
+    "python": "3.11.14 | packaged by conda-forge | (main, Jan 26 2026, 23:48:32) [GCC 14.3.0]"
+  },
+  "estimand": "r = (E_reco - E_dep) / E_dep",
+  "estimand_note": "Both E_raw (unquenched) and E_vis (Birks-visible) targets reconstructed separately",
+  "generated_utc": "2026-08-15T22:10:07.525109+00:00",
+  "git_commit": "42e67cadfe0077b80174f95dc4ae5c3b9dd9829d",
+  "heldout_runs": [
+    "deuteron_110",
+    "proton_60"
+  ],
+  "input_bindings": [
+    {
+      "bytes": 231501138,
+      "git_commit": "533d58e8d2f826ab2255f519adb9b61b34f11c84",
+      "kinetic_energy_MeV": 110,
+      "meta_path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/results/1303_grid_regen_v2/stave_deuteron_110MeV_x0_y0_th0_ph0_s1.root.meta.json",
+      "meta_sha256": "8b2993fb5168bf2d062e1e91374c934d459521c008c661be92173a05c2c3894b",
+      "n_events": 2000,
+      "particle": "deuteron",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/results/1303_grid_regen_v2/stave_deuteron_110MeV_x0_y0_th0_ph0_s1.root",
+      "sha256": "881d9caa792eea85ebba601f4451f11ebbf097fb8480baaa801d66823bcac28a"
+    },
+    {
+      "bytes": 364137143,
+      "git_commit": "42e67cadfe0077b80174f95dc4ae5c3b9dd9829d",
+      "kinetic_energy_MeV": 70,
+      "meta_path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/results/1303_grid_regen_v2/stave_deuteron_70MeV_x0_y0_th0_ph0_s1.root.meta.json",
+      "meta_sha256": "8a1178b448bdb83b0ed9c74cb3e58223f8d4c5c445a5509dbc977191307bdd39",
+      "n_events": 2000,
+      "particle": "deuteron",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/results/1303_grid_regen_v2/stave_deuteron_70MeV_x0_y0_th0_ph0_s1.root",
+      "sha256": "362b2b66ca0cf4e64e7ab1eb8b7974d659da194b4bae02f71cdaffe86f2cb6cb"
+    },
+    {
+      "bytes": 149277539,
+      "git_commit": "533d58e8d2f826ab2255f519adb9b61b34f11c84",
+      "kinetic_energy_MeV": 100,
+      "meta_path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/results/1303_grid_regen_v2/stave_proton_100MeV_x0_y0_th0_ph0_s1.root.meta.json",
+      "meta_sha256": "f11d1b7d23231a2cd2ecd696fa096faca9e169588eb69be1e52440c8b064a524",
+      "n_events": 2000,
+      "particle": "proton",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/results/1303_grid_regen_v2/stave_proton_100MeV_x0_y0_th0_ph0_s1.root",
+      "sha256": "75b262b4af3ecbe0512e152a326bd46059176f0abc5e1d0e5baf1e76b77c158f"
+    },
+    {
+      "bytes": 117498239,
+      "git_commit": "533d58e8d2f826ab2255f519adb9b61b34f11c84",
+      "kinetic_energy_MeV": 140,
+      "meta_path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/results/1303_grid_regen_v2/stave_proton_140MeV_x0_y0_th0_ph0_s1.root.meta.json",
+      "meta_sha256": "38a23a8998662bcd99649f1701f9a85b5c4acd85da1414337bde3da4f286a4b4",
+      "n_events": 2000,
+      "particle": "proton",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/results/1303_grid_regen_v2/stave_proton_140MeV_x0_y0_th0_ph0_s1.root",
+      "sha256": "f6f1edf8f3bcdaba25ac9b94fdceda65e036147b7f543e8d4ac178276a784e00"
+    },
+    {
+      "bytes": 234963050,
+      "git_commit": "533d58e8d2f826ab2255f519adb9b61b34f11c84",
+      "kinetic_energy_MeV": 60,
+      "meta_path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/results/1303_grid_regen_v2/stave_proton_60MeV_x0_y0_th0_ph0_s1.root.meta.json",
+      "meta_sha256": "2c27116277b8de4670253a47063b4a23af7fd73e0ca87d5a5e13e074902f1476",
+      "n_events": 2000,
+      "particle": "proton",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/results/1303_grid_regen_v2/stave_proton_60MeV_x0_y0_th0_ph0_s1.root",
+      "sha256": "b537e0cece568b661394fc3dbccdc792d056a70ff7b1349123a2e2ebd3fb3e5a"
+    }
+  ],
+  "issue": "#1297",
+  "negative_controls": {
+    "mis_specified_model": "E_raw estimand row",
+    "mis_specified_model_expected_behavior": "a pooled linear PE-vs-E_raw response mis-specifies the quenched light response (PE is linear in E_vis); it must be detected as large held-out bias and tail fraction, which the E_raw summary reports directly",
+    "shuffled_target": true,
+    "shuffled_target_expected_behavior": "reconstruction metrics collapse (sigma68/tail blow up) when the train PE-E correlation is destroyed",
+    "shuffled_target_summaries": [
+      {
+        "bootstrap": {
+          "median_bias": {
+            "ci16_low": -10.452894279487316,
+            "ci84_high": -10.170563075758544,
+            "estimate": -10.345089401671217,
+            "n_boot": 500,
+            "n_samples": 4000
+          },
+          "rms": {
+            "ci16_low": 18.386391734665647,
+            "ci84_high": 22.361443697083875,
+            "estimate": 20.44147280804031,
+            "n_boot": 500,
+            "n_samples": 4000
+          },
+          "sigma68": {
+            "ci16_low": 7.522085432622671,
+            "ci84_high": 7.780444080782081,
+            "estimate": 7.726810335812989,
+            "n_boot": 500,
+            "n_samples": 4000
+          },
+          "tail_fraction": {
+            "ci16_low": 0.99075,
+            "ci84_high": 0.99325,
+            "estimate": 0.992,
+            "n_boot": 500,
+            "n_samples": 4000
+          }
+        },
+        "control_key": "E_vis_negctl",
+        "energy_target": "E_vis",
+        "fit": {
+          "intercept_pe": 250.29294184628472,
+          "intercept_se": 3.663458296383093,
+          "n_train": 6000,
+          "slope_pe_per_MeV": -0.11002451328025659,
+          "slope_se": 0.1530639761543874
+        },
+        "heldout_median_bias_fraction": -10.345089401671217,
+        "heldout_rms_fraction": 20.44147280804031,
+        "heldout_runs": [
+          "deuteron_110",
+          "proton_60"
+        ],
+        "heldout_sigma68_fraction": 7.726810335812989,
+        "heldout_tail_fraction": 0.992,
+        "is_negative_control": true,
+        "model": "pooled_linear",
+        "n_heldout": 4000,
+        "n_train": 6000,
+        "species_aware_fits": [
+          {
+            "intercept_pe": -0.18360177922022092,
+            "intercept_se": 4.258415937031455,
+            "n_train": 2000,
+            "slope_pe_per_MeV": 11.79007158377445,
+            "slope_se": 0.11610436872926713,
+            "species": "deuteron"
+          },
+          {
+            "intercept_pe": 2.009207804440434,
+            "intercept_se": 0.9191983197642611,
+            "n_train": 4000,
+            "slope_pe_per_MeV": 11.652454540509032,
+            "slope_se": 0.06728189175611818,
+            "species": "proton"
+          }
+        ],
+        "species_aware_heldout_median_bias_fraction": 0.006966232242853244,
+        "species_aware_heldout_sigma68_fraction": 0.06298386752430823,
+        "train_runs": [
+          "deuteron_70",
+          "proton_100",
+          "proton_140"
+        ]
+      },
+      {
+        "bootstrap": {
+          "median_bias": {
+            "ci16_low": 57.19254383544776,
+            "ci84_high": 58.84115938361473,
+            "estimate": 57.961819595974475,
+            "n_boot": 500,
+            "n_samples": 4000
+          },
+          "rms": {
+            "ci16_low": 80.26297113737064,
+            "ci84_high": 86.53884926265263,
+            "estimate": 83.61209332256016,
+            "n_boot": 500,
+            "n_samples": 4000
+          },
+          "sigma68": {
+            "ci16_low": 42.219254032353476,
+            "ci84_high": 43.508759697802724,
+            "estimate": 43.0895828387473,
+            "n_boot": 500,
+            "n_samples": 4000
+          },
+          "tail_fraction": {
+            "ci16_low": 0.99075,
+            "ci84_high": 0.9935,
+            "estimate": 0.99225,
+            "n_boot": 500,
+            "n_samples": 4000
+          }
+        },
+        "control_key": "E_raw_negctl",
+        "energy_target": "E_raw",
+        "fit": {
+          "intercept_pe": 247.540887565687,
+          "intercept_se": 3.187906010419918,
+          "n_train": 6000,
+          "slope_pe_per_MeV": 0.016466703003072028,
+          "slope_se": 0.10008257306906597
+        },
+        "heldout_median_bias_fraction": 57.961819595974475,
+        "heldout_rms_fraction": 83.61209332256016,
+        "heldout_runs": [
+          "deuteron_110",
+          "proton_60"
+        ],
+        "heldout_sigma68_fraction": 43.0895828387473,
+        "heldout_tail_fraction": 0.99225,
+        "is_negative_control": true,
+        "model": "pooled_linear",
+        "n_heldout": 4000,
+        "n_train": 6000,
+        "species_aware_fits": [
+          {
+            "intercept_pe": 198.5424517175244,
+            "intercept_se": 11.768625191582638,
+            "n_train": 2000,
+            "slope_pe_per_MeV": 4.61954064155419,
+            "slope_se": 0.23437202856383957,
+            "species": "deuteron"
+          },
+          {
+            "intercept_pe": 80.86673406243087,
+            "intercept_se": 0.8599485962807015,
+            "n_train": 4000,
+            "slope_pe_per_MeV": 5.110174275654989,
+            "slope_se": 0.05320882731788164,
+            "species": "proton"
+          }
+        ],
+        "species_aware_heldout_median_bias_fraction": -0.09335930189642719,
+        "species_aware_heldout_sigma68_fraction": 0.47308170734278565,
+        "train_runs": [
+          "deuteron_70",
+          "proton_100",
+          "proton_140"
+        ]
+      }
+    ]
+  },
+  "notes": [
+    "Calibration is frozen on the training runs before any held-out evaluation.",
+    "Species-aware lines are reported only as a secondary comparator.",
+    "Optical/SiPM nuisance envelope from PAPER-A07/A08 is not yet propagated.",
+    "Do not interpret as beam-data energy calibration; no ADC/MeV heuristic is used.",
+    "Bootstrap uncertainties are 16-84% confidence intervals from 500 resamples.",
+    "Grid regeneration with both E_raw and E_vis fields is pending lane #1303."
+  ],
+  "paper_atom": "PAPER-A09",
+  "primary_estimator": "pooled linear PE = intercept + slope * E_dep",
+  "response_observable": "detected_readout PE",
+  "schema": "ccb-paper-a09-heldout-edep/2",
+  "status_label": "MC_MODEL_DEPENDENT",
+  "summaries": [
+    {
+      "bootstrap": {
+        "median_bias": {
+          "ci16_low": 0.002887329010548616,
+          "ci84_high": 0.006152007700966953,
+          "estimate": 0.0048016634389103224,
+          "n_boot": 500,
+          "n_samples": 4000
+        },
+        "rms": {
+          "ci16_low": 0.06201809372423414,
+          "ci84_high": 0.06340126938737525,
+          "estimate": 0.0627052097048599,
+          "n_boot": 500,
+          "n_samples": 4000
+        },
+        "sigma68": {
+          "ci16_low": 0.06155443352106246,
+          "ci84_high": 0.06347884321051704,
+          "estimate": 0.06261039872036721,
+          "n_boot": 500,
+          "n_samples": 4000
+        },
+        "tail_fraction": {
+          "ci16_low": 0.00125,
+          "ci84_high": 0.00275,
+          "estimate": 0.002,
+          "n_boot": 500,
+          "n_samples": 4000
+        }
+      },
+      "energy_target": "E_vis",
+      "fit": {
+        "intercept_pe": 0.49049523285773405,
+        "intercept_se": 0.4389457105098568,
+        "n_train": 6000,
+        "slope_pe_per_MeV": 11.769423738661718,
+        "slope_se": 0.018339713552324152
+      },
+      "heldout_median_bias_fraction": 0.0048016634389103224,
+      "heldout_rms_fraction": 0.0627052097048599,
+      "heldout_runs": [
+        "deuteron_110",
+        "proton_60"
+      ],
+      "heldout_sigma68_fraction": 0.06261039872036721,
+      "heldout_tail_fraction": 0.002,
+      "is_negative_control": false,
+      "model": "pooled_linear",
+      "n_heldout": 4000,
+      "n_train": 6000,
+      "species_aware_fits": [
+        {
+          "intercept_pe": -0.18360177922022092,
+          "intercept_se": 4.258415937031455,
+          "n_train": 2000,
+          "slope_pe_per_MeV": 11.79007158377445,
+          "slope_se": 0.11610436872926713,
+          "species": "deuteron"
+        },
+        {
+          "intercept_pe": 2.009207804440434,
+          "intercept_se": 0.9191983197642611,
+          "n_train": 4000,
+          "slope_pe_per_MeV": 11.652454540509032,
+          "slope_se": 0.06728189175611818,
+          "species": "proton"
+        }
+      ],
+      "species_aware_heldout_median_bias_fraction": 0.006966232242853244,
+      "species_aware_heldout_sigma68_fraction": 0.06298386752430823,
+      "train_runs": [
+        "deuteron_70",
+        "proton_100",
+        "proton_140"
+      ]
+    },
+    {
+      "bootstrap": {
+        "median_bias": {
+          "ci16_low": 0.10196367203830621,
+          "ci84_high": 0.10538538555959302,
+          "estimate": 0.10381636134933729,
+          "n_boot": 500,
+          "n_samples": 4000
+        },
+        "rms": {
+          "ci16_low": 0.15968222997310452,
+          "ci84_high": 0.16447957137856148,
+          "estimate": 0.16214164784131038,
+          "n_boot": 500,
+          "n_samples": 4000
+        },
+        "sigma68": {
+          "ci16_low": 0.08896989501648146,
+          "ci84_high": 0.0919751335316227,
+          "estimate": 0.09025234430084864,
+          "n_boot": 500,
+          "n_samples": 4000
+        },
+        "tail_fraction": {
+          "ci16_low": 0.16275,
+          "ci84_high": 0.17475,
+          "estimate": 0.16875,
+          "n_boot": 500,
+          "n_samples": 4000
+        }
+      },
+      "energy_target": "E_raw",
+      "fit": {
+        "intercept_pe": 49.00038173026658,
+        "intercept_se": 0.8461786326750579,
+        "n_train": 6000,
+        "slope_pe_per_MeV": 7.473050355804283,
+        "slope_se": 0.026565317345422165
+      },
+      "heldout_median_bias_fraction": 0.10381636134933729,
+      "heldout_rms_fraction": 0.16214164784131038,
+      "heldout_runs": [
+        "deuteron_110",
+        "proton_60"
+      ],
+      "heldout_sigma68_fraction": 0.09025234430084864,
+      "heldout_tail_fraction": 0.16875,
+      "is_negative_control": false,
+      "model": "pooled_linear",
+      "n_heldout": 4000,
+      "n_train": 6000,
+      "species_aware_fits": [
+        {
+          "intercept_pe": 198.5424517175244,
+          "intercept_se": 11.768625191582638,
+          "n_train": 2000,
+          "slope_pe_per_MeV": 4.61954064155419,
+          "slope_se": 0.23437202856383957,
+          "species": "deuteron"
+        },
+        {
+          "intercept_pe": 80.86673406243087,
+          "intercept_se": 0.8599485962807015,
+          "n_train": 4000,
+          "slope_pe_per_MeV": 5.110174275654989,
+          "slope_se": 0.05320882731788164,
+          "species": "proton"
+        }
+      ],
+      "species_aware_heldout_median_bias_fraction": -0.09335930189642719,
+      "species_aware_heldout_sigma68_fraction": 0.47308170734278565,
+      "train_runs": [
+        "deuteron_70",
+        "proton_100",
+        "proton_140"
+      ]
+    }
+  ],
+  "tail_threshold_abs_r": 0.2,
+  "train_runs": [
+    "deuteron_70",
+    "proton_100",
+    "proton_140"
+  ],
+  "train_validation_partition": "FROZEN - p100/p140/d70 train, p60/d110 heldout"
+}

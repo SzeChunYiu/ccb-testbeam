@@ -34,9 +34,12 @@ cp -r "$BUNDLE/a09"/* "$BUNDLE"/ 2>/dev/null || true   # flatten for MANIFEST pa
 # 3) stage final figures + tables
 PUB=$WT/publication
 mkdir -p "$PUB/figures/final" "$PUB/tables/final"
-for f in 1303_stage_accounting 1303_pe_per_mev 1303_edep_vs_pe \
-         edep_reconstruction_heldout_E_vis edep_reconstruction_heldout_E_raw; do
+for f in 1303_stage_accounting 1303_pe_per_mev 1303_edep_vs_pe; do
   [ -f "$BUNDLE/figures/$f.pdf" ] && cp "$BUNDLE/figures/$f.pdf" "$PUB/figures/final/$f.pdf"
+done
+mkdir -p "$PUB/figures/gated"
+for f in edep_reconstruction_heldout_E_vis edep_reconstruction_heldout_E_raw; do
+  [ -f "$BUNDLE/figures/$f.pdf" ] && cp "$BUNDLE/figures/$f.pdf" "$PUB/figures/gated/$f.pdf"
 done
 cp "$BUNDLE/tables/1303_stage_accounting.csv" "$BUNDLE/tables/1303_pe_per_mev.csv" "$PUB/tables/final/"
 cp "$BUNDLE/a09/heldout_energy_reconstruction_summary_E_vis.csv" "$PUB/tables/final/heldout_energy_reconstruction_summary_E_vis.csv"

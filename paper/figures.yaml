@@ -223,7 +223,7 @@ SYST-BUDGET:                 # CL-026 -- systematic uncertainty budget
 EDEP-RECO-MC:                # PAPER-A09 / #1297 + #1303 regenerated grid -- held-out E_vis reconstruction
   result: reports/paper_1303_optical_campaign_20260815T2209Z/result.json
   value_key: summaries/0/heldout_sigma68_fraction
-  source_figure: publication/figures/final/edep_reconstruction_heldout_E_vis.pdf
+  source_figure: publication/figures/gated/edep_reconstruction_heldout_E_vis.pdf
   claim_id: CL-029
   evidence_class: MC_MODEL_DEPENDENT
   status: MC_MODEL_DEPENDENT

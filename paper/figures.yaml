@@ -62,11 +62,13 @@ PID-MC:                      # clusterA #921, VIS-PID-001 -- realistic-chain PID
   status: SIMULATION_RESULT
   kind: quantitative
   caption: >-
-    Proton/deuteron PID on the realistic dE-E chain (MC), full AUC = 0.953
-    (5-fold 0.953 +/- 0.01; AP 0.75; Brier 0.013). The legacy 0.986 HGB truth
-    ceiling is GATED (CL-017) and is NOT this number.
-    Re-derived on output_krakow_1M_authorising.root (sha256 19cd97c1…) with
-    corrected generator (CL-021 authorising run).
+    Proton/deuteron PID on the realistic dE-E chain (MC) re-derived on the
+    authorising corrected-source MC (CL-021), full AUC = 0.953 (AP 0.750; Brier
+    0.013). 5-fold pseudo-run stratification yields 3 valid folds (0.964, 0.934,
+    0.962; mean 0.953); folds 4-5 have no-evaluation due to class imbalance on
+    the authorising Sample-I population (n=5432 vs 64,762 from the broken MC).
+    Source: output_krakow_1M_authorising.root (sha256 19cd97c1…). The legacy
+    0.986 HGB truth ceiling is GATED (CL-017) and is NOT this number.
 
 ADC-MC:                      # clusterC #917, VIS-ENE-001 -- digitizer gain
   result: reports/studies/clusterC/metrics.json

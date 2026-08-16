@@ -1,0 +1,19 @@
+{
+  "ticket_id": "2431",
+  "git_commit": "e911cfc59b772e150beb5dd2c080b020066a3bd4",
+  "command": "python scripts/s46a_2431_wavelet_template_timing_pedestal.py",
+  "runtime_seconds": 30.203943014144897,
+  "outputs_sha256": {
+    "REPORT.md": "8e131e1e7e0d8d50056863e2a5d77fe02908708e2fd0d2ad8d2c83a5860ddd1c",
+    "bootstrap_cis.csv": "072a8fb8409c71606461a0300619a312303fed765df9faf85eb86303c1ff3ce0",
+    "claimed_ticket.txt": "5072ca7541bc5c08a5709f3d7b3080a279945cf97dc7e7c2301ade597e3c30a7",
+    "event_predictions.csv": "404a562d56e88f433490a3f1d0cb49dadd363a07b49a197df54ad2a061bcc6cf",
+    "input_sha256.csv": "18a5555d24842b7cb1ccf74ef66f2603477ca6a08c91568e22745563a75c25b7",
+    "method_metrics.csv": "b9b97d097e242aa09baa0a1b6e9e5c62bf26a177213576dfa4101a29b028dd12",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "9da1db2c7474d56f90d9ad2b938415aa6e0f7d098712248c7ff29ed071e8d82c",
+    "run_heldout_metrics.csv": "344f1d94717ec94669100b066fbb4f34eabf431ebdeab5317ef1072482da0de7",
+    "strata_metrics.csv": "b032293351bde768001cab4c06190553c1b6f0d500d43df45cfa50a313652bb6",
+    "template_summary.csv": "e095c79c77f58adb16b03df560209632b540190e584eb5f600099aee189e8dfd"
+  }
+}

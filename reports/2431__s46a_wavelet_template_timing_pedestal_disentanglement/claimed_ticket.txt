@@ -1,0 +1,2 @@
+#2431 S46a: Wavelet-template pulse morphology timing-pedestal disentanglement
+Claim recovery: required command `tn-ticket claim testbeam-laptop-2 --project testbeam` was run once and returned `null`; worker label was applied manually without rerunning claim.

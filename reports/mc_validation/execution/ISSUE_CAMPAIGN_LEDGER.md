@@ -178,11 +178,12 @@ Branch: `close/1178-python38-compat` → PR #1315 (merged `8cd32b1e`).
 
 ## P0 #1179 — CS statistical/systematic uncertainty propagation audit (derived from #1178)
 
-Branch: `fix/issue-1179-cs-uncertainty` → PR #1325.
+Branch: `fix/issue-1179-cs-uncertainty` → PR #1325 (contract+audit). RESOLVED (source level) via branch `fix/1179-cs-source-uncertainty-sampled-closure`: study S46a.
 
 | Issue | Disposition | Evidence |
 |-------|-------------|----------|
-| #1179 | PARTIAL (contract + audit) | Fail-closed contract `CCB_CS_UNCERTAINTY_DISCRIMINANT` declared in `ScatteringGenerator.cc` BuildSigmaCDF (`G4cout` compile-time contract): `uncertainty_contract=not_propagated_issue_1179`. The compiled `LoadCrossSection()` reads only 2 columns (angle, sigma); the third column (per-node statistical uncertainty mb/sr, 28 nodes) is tabulated but NOT propagated. Sampling law unchanged. Audit tool `tools/audit/research_sigma_cm_sampler_contract.py` extended: `_read_table` returns 4-tuple (raw, angles, sigma, stat_uncertainty); new `_statistical_uncertainty_audit` (per-node fractional uncertainty); new `_systematic_uncertainty_envelope_audit` (`sinusoidal_taper_10pct_edges_20pct_center`: `fractional = 0.10 + 0.10·sin(pi·normalized_theta)`, 20% at 90°, 10% at support edges 26.49/169.78 deg); `audit_sampler` output includes `uncertainty` key with `propagation_status=OPEN_ISSUE_1179`. Input validation extended: stat_uncertainty finite + nonnegative. Evidence commit: `70c614e0` (2 files, +96/−3). PR #1325. |
+| #1179 | RESOLVED_SOURCE_LEVEL (S46a sampled closure; campaign/detector propagation remains CL-026 scope) |
+| #1179 (prior) | PARTIAL (contract + audit) | Fail-closed contract `CCB_CS_UNCERTAINTY_DISCRIMINANT` declared in `ScatteringGenerator.cc` BuildSigmaCDF (`G4cout` compile-time contract): `uncertainty_contract=not_propagated_issue_1179`. The compiled `LoadCrossSection()` reads only 2 columns (angle, sigma); the third column (per-node statistical uncertainty mb/sr, 28 nodes) is tabulated but NOT propagated. Sampling law unchanged. Audit tool `tools/audit/research_sigma_cm_sampler_contract.py` extended: `_read_table` returns 4-tuple (raw, angles, sigma, stat_uncertainty); new `_statistical_uncertainty_audit` (per-node fractional uncertainty); new `_systematic_uncertainty_envelope_audit` (`sinusoidal_taper_10pct_edges_20pct_center`: `fractional = 0.10 + 0.10·sin(pi·normalized_theta)`, 20% at 90°, 10% at support edges 26.49/169.78 deg); `audit_sampler` output includes `uncertainty` key with `propagation_status=OPEN_ISSUE_1179`. Input validation extended: stat_uncertainty finite + nonnegative. Evidence commit: `70c614e0` (2 files, +96/−3). PR #1325. |
 
 
 
@@ -253,7 +254,7 @@ Branch: fix/issue-1311-mc-provenance (worktree ccb-wt-1311)
 |-------|-------------|----------|-----|
 | #1311 | FORENSIC_COMPLETE (HISTORICAL_PROVENANCE_GATED) | reports/mc_validation/mc_production_forensics_1311/REPORT.md + mc_run_manifest.json. Verdict: output_krakow_1M.root cannot be bound to exact production receipt. Contains non-unit PrimaryWeight (legacy sigma(theta_lab), defective per #1053). Regeneration required. | #1333 |
 | #1311 (regeneration) | INFRA_COMPLETE (MC generation BLOCKED) | geant4/manifests/cmc_100k_regenerated_20260814.json, macro, job script. Manifest records: ecc3a155 commit, #1178 sampler, #880 unit weight. hibeam_g4 executable not available. | #1333 |
-| #1179 | DOCUMENTATION_COMPLETE (propagation NOT implemented) | reports/mc_validation/cross_section_uncertainty/STATUS.md. Contract declared (PR #1325), audit tool extended. Propagation of statistical/systematic uncertainty not implemented. | #1333 |
+| #1179 | DOCUMENTATION_COMPLETE (superseded by S46a) | reports/mc_validation/cross_section_uncertainty/STATUS.md (contract, PR #1325). RESOLVED at source level by reports/1786866977.1138000.3f71d0b1__s46a_cs_source_uncertainty_sampled_closure/REPORT.md + results/research/sigma_cm_source_uncertainty_v2.json (12 gates green: sampler KAT vs repo inverse 1.1e-16, v1 envelope reproduced 2.2e-16, 5M common-RN sampled closure, 4 negative controls, row-stat replicas validate delta method ratio 1.078, exact θlab bands [38.806, 39.886] deg). Campaign+detector propagation remains CL-026 scope. | S46a PR |
 
 ### Forensic Evidence (#1311)
 

@@ -64,7 +64,7 @@ These figures are generated from tracked evidence, not hand-entered headline val
 
 ![Selected-pulse inventory](docs/figures/paper/selected_pulse_inventory.png)
 
-**GATED · DATA_MEASUREMENT.** Exact S00 reproduction. Sample I is dominated by B2; Sample II reaches deeper staves more often. Counts are deterministic for the fixed raw inputs and selection; CL-001 remains GATED pending data-contract closure (#952/#953/#954), so this figure is not an authorising ledger row.
+**VALIDATED · DATA_MEASUREMENT.** Exact S00 reproduction. Sample I is dominated by B2; Sample II reaches deeper staves more often. Counts are deterministic for the fixed raw inputs and selection. CL-001 is VALIDATED: the corrected 144-word staging reproduces all 17 quantities at delta=0/tolerance=0 (total 640,737) and the cell-exact sorted-waveform identity gate (#952 desync detector) PASSes; data-contract gates #952/#953/#954 and lineage #993 are closed.
 
 #### Claim ledger is mostly gated or blocked
 

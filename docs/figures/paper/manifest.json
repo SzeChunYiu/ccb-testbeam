@@ -3,7 +3,7 @@
   "figure_count": 11,
   "figures": [
     {
-      "caption": "Exact S00 reproduction. Sample I is dominated by B2; Sample II reaches deeper staves more often. Counts are deterministic for the fixed raw inputs and selection; CL-001 remains GATED pending data-contract closure (#952/#953/#954), so this figure is not an authorising ledger row.",
+      "caption": "Exact S00 reproduction. Sample I is dominated by B2; Sample II reaches deeper staves more often. Counts are deterministic for the fixed raw inputs and selection. CL-001 is VALIDATED: the corrected 144-word staging reproduces all 17 quantities at delta=0/tolerance=0 (total 640,737) and the cell-exact sorted-waveform identity gate (#952 desync detector) PASSes; data-contract gates #952/#953/#954 and lineage #993 are closed.",
       "column": "single",
       "environment": {
         "matplotlib": "3.10.8",
@@ -84,15 +84,15 @@
           "sha256": "896e2e8e71f61c0faca7260c7411fd3a6478d1073e766078fad9d74eae02e978"
         }
       },
-      "plotted_data_sha256": "d93f87272f7eebdc8bff8ebef1d717d656f0dc06a9053dd7d72706f809924802",
+      "plotted_data_sha256": "3d2b105e1a5c53428096675af49c329f0f8dfa52ff4d39aad94c9322efa66b36",
       "qa_issues": [],
       "question": "How are the exact S00 analysis pulses distributed across samples and staves?",
       "source_paths": [
-        "reports/S00_data_integrity_pipeline_reproduction/count_match_table.csv"
+        "reports/studies/data_side/s00_rebuild/count_match_table.csv"
       ],
       "source_table": "docs/figures/paper/source_tables/selected_pulse_inventory_source.csv",
-      "source_table_sha256": "d93f87272f7eebdc8bff8ebef1d717d656f0dc06a9053dd7d72706f809924802",
-      "status": "GATED",
+      "source_table_sha256": "3d2b105e1a5c53428096675af49c329f0f8dfa52ff4d39aad94c9322efa66b36",
+      "status": "VALIDATED",
       "stem": "selected_pulse_inventory",
       "title": "Selected-pulse inventory",
       "width_mm": 89.0
@@ -164,29 +164,29 @@
       "height_mm": 70.0,
       "outputs": {
         "pdf": {
-          "bytes": 14306,
+          "bytes": 14375,
           "path": "docs/figures/paper/claim_status_overview.pdf",
-          "sha256": "e5f8d97de383d0eec56363fcd0f5f37e2bffe988e8136634165c818628e354c0"
+          "sha256": "abb00ee0f74dcefcb09fa619c60fde36b6a56dfda40d1c86ae33d9a7ab6803eb"
         },
         "png": {
-          "bytes": 115102,
+          "bytes": 118336,
           "path": "docs/figures/paper/claim_status_overview.png",
-          "sha256": "8564a2767c039e94f6e6ea349d6c5bcc9448278f1f470924f193d0c465236dc0"
+          "sha256": "3e16acd52744008bccd366625f4faa30f9ad830d350848db4462f2b53843f6f3"
         },
         "svg": {
-          "bytes": 16858,
+          "bytes": 17045,
           "path": "docs/figures/paper/claim_status_overview.svg",
-          "sha256": "905d944c1f4d25ea9e52cef75c88cbe094ea815ba4765c7bdd3d9a0c41bb8fac"
+          "sha256": "dfe223557e25db5896ed12acbaa8dc95c0bb9b3ca8476795f84c316c7a14b1d7"
         }
       },
-      "plotted_data_sha256": "7c4ddacfdf5255fdfb3ba1d19c08be9b3d869b219bb4fffe7a19838a71c85497",
+      "plotted_data_sha256": "d3c4da6010ce1facf493bc36f486bf91b9d278bb62d804f320959acae2dbab66",
       "qa_issues": [],
       "question": "What fraction of the project claim surface is currently publication-authorized?",
       "source_paths": [
         "docs/claim_ledger.csv"
       ],
       "source_table": "docs/figures/paper/source_tables/claim_status_overview_source.csv",
-      "source_table_sha256": "7c4ddacfdf5255fdfb3ba1d19c08be9b3d869b219bb4fffe7a19838a71c85497",
+      "source_table_sha256": "d3c4da6010ce1facf493bc36f486bf91b9d278bb62d804f320959acae2dbab66",
       "status": "REVIEW",
       "stem": "claim_status_overview",
       "title": "Claim ledger is mostly gated or blocked",

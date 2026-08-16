@@ -1,0 +1,6 @@
+method,train_target_mae_ns
+ridge,1.5996389155045454
+hist_gradient_boosted_trees,1.348250133510834
+mlp,1.454321136703372
+one_dimensional_cnn,
+gated_cnn_residual,

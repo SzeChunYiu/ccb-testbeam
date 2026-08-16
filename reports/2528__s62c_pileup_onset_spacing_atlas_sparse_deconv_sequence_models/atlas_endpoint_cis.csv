@@ -1,0 +1,50 @@
+method,endpoint,description,metric,value,ci95_low,ci95_high,unit
+saturation_residual_fusion_new,pulse_shape,matched-filter residual/pulse-shape closure proxy,energy_residual_sigma68,0.0648811966215261,0.0592441968725789,0.0754573970009703,fractional sigma68
+saturation_residual_fusion_new,hit_timing,leading-edge hit timing shift,leading_timing_shift_sigma68_ns,5.051975035163891,4.549432916112144,5.981446642735573,ns sigma68
+saturation_residual_fusion_new,pileup_separation,two-pulse spacing recovery,pileup_separation_sigma68_ns,10.851162560285577,9.43571777267487,12.317531536019324,ns sigma68
+saturation_residual_fusion_new,saturation_recovery,clipped-pulse energy recovery,saturation_onset_energy_sigma68,0.0630183970860737,0.0162097211894376,0.0900945114133108,fractional sigma68
+saturation_residual_fusion_new,pedestal_excursions,pedestal-state false-split span,pedestal_shift_false_split_span,0.0507273877292852,0.0055254169178219,0.1168400652794777,rate span
+saturation_residual_fusion_new,energy_transfer,total injected charge transfer,energy_residual_sigma68,0.0648811966215261,0.0592441968725789,0.0754573970009703,fractional sigma68
+saturation_residual_fusion_new,pid_stability,stave/PID-proxy energy-bias span,pid_energy_bias_span,0.0550834652861315,0.0347909723650881,0.0722387779385521,fractional span
+ridge,pulse_shape,matched-filter residual/pulse-shape closure proxy,energy_residual_sigma68,0.0694684653726487,0.0645739675302123,0.0749054474640163,fractional sigma68
+ridge,hit_timing,leading-edge hit timing shift,leading_timing_shift_sigma68_ns,6.279612408115774,5.878334561283161,6.737418891584794,ns sigma68
+ridge,pileup_separation,two-pulse spacing recovery,pileup_separation_sigma68_ns,14.005782795626429,12.264989500051518,15.20835464237854,ns sigma68
+ridge,saturation_recovery,clipped-pulse energy recovery,saturation_onset_energy_sigma68,0.0552846794377326,0.0184594389833121,0.0668726478871955,fractional sigma68
+ridge,pedestal_excursions,pedestal-state false-split span,pedestal_shift_false_split_span,0.0440227703984819,0.0043067662930676,0.0843023255813953,rate span
+ridge,energy_transfer,total injected charge transfer,energy_residual_sigma68,0.0694684653726487,0.0645739675302123,0.0749054474640163,fractional sigma68
+ridge,pid_stability,stave/PID-proxy energy-bias span,pid_energy_bias_span,0.0683963165745877,0.0585278739413634,0.0928895481479271,fractional span
+gradient_boosted_trees,pulse_shape,matched-filter residual/pulse-shape closure proxy,energy_residual_sigma68,0.0704281075400476,0.0642345744699982,0.0754256689444741,fractional sigma68
+gradient_boosted_trees,hit_timing,leading-edge hit timing shift,leading_timing_shift_sigma68_ns,5.62289195142446,4.957283176668611,6.434814398185262,ns sigma68
+gradient_boosted_trees,pileup_separation,two-pulse spacing recovery,pileup_separation_sigma68_ns,11.31596670173458,9.76470770336449,12.790395502153372,ns sigma68
+gradient_boosted_trees,saturation_recovery,clipped-pulse energy recovery,saturation_onset_energy_sigma68,0.0645353049703606,0.0112168362201967,0.0884100032964004,fractional sigma68
+gradient_boosted_trees,pedestal_excursions,pedestal-state false-split span,pedestal_shift_false_split_span,0.0947501581277672,0.0020681031165833,0.213989207139892,rate span
+gradient_boosted_trees,energy_transfer,total injected charge transfer,energy_residual_sigma68,0.0704281075400476,0.0642345744699982,0.0754256689444741,fractional sigma68
+gradient_boosted_trees,pid_stability,stave/PID-proxy energy-bias span,pid_energy_bias_span,0.0632589471638951,0.0482593022747896,0.0780701609003987,fractional span
+mlp,pulse_shape,matched-filter residual/pulse-shape closure proxy,energy_residual_sigma68,0.0824096633400247,0.0681588083065994,0.0926375299844333,fractional sigma68
+mlp,hit_timing,leading-edge hit timing shift,leading_timing_shift_sigma68_ns,7.735451125495798,7.151397033151164,8.577645187596431,ns sigma68
+mlp,pileup_separation,two-pulse spacing recovery,pileup_separation_sigma68_ns,16.213033071073724,14.090886131027728,18.193986731369225,ns sigma68
+mlp,saturation_recovery,clipped-pulse energy recovery,saturation_onset_energy_sigma68,0.0633281447158114,0.0295234417849711,0.087731617252925,fractional sigma68
+mlp,pedestal_excursions,pedestal-state false-split span,pedestal_shift_false_split_span,0.1429475015812776,0.0036434612882238,0.2345371523453715,rate span
+mlp,energy_transfer,total injected charge transfer,energy_residual_sigma68,0.0824096633400247,0.0681588083065994,0.0926375299844333,fractional sigma68
+mlp,pid_stability,stave/PID-proxy energy-bias span,pid_energy_bias_span,0.0522448398211027,0.0386499371806202,0.0863081794932989,fractional span
+analytic_clipped_template_sideband_traditional,pulse_shape,matched-filter residual/pulse-shape closure proxy,energy_residual_sigma68,0.0897010776295393,0.0811662876049441,0.1071903714635301,fractional sigma68
+analytic_clipped_template_sideband_traditional,hit_timing,leading-edge hit timing shift,leading_timing_shift_sigma68_ns,8.241204837871964,6.634704724106278,8.96712759691654,ns sigma68
+analytic_clipped_template_sideband_traditional,pileup_separation,two-pulse spacing recovery,pileup_separation_sigma68_ns,15.99999999999998,12.500000000000004,22.5,ns sigma68
+analytic_clipped_template_sideband_traditional,saturation_recovery,clipped-pulse energy recovery,saturation_onset_energy_sigma68,0.0232864575815992,0.0049215444978393,0.0521635033249311,fractional sigma68
+analytic_clipped_template_sideband_traditional,pedestal_excursions,pedestal-state false-split span,pedestal_shift_false_split_span,0.1025932953826691,0.0333646616541353,0.1667325792928893,rate span
+analytic_clipped_template_sideband_traditional,energy_transfer,total injected charge transfer,energy_residual_sigma68,0.0897010776295393,0.0811662876049441,0.1071903714635301,fractional sigma68
+analytic_clipped_template_sideband_traditional,pid_stability,stave/PID-proxy energy-bias span,pid_energy_bias_span,0.0844011152335793,0.0756747218105944,0.1312719452687337,fractional span
+tiny_sequence_transformer,pulse_shape,matched-filter residual/pulse-shape closure proxy,energy_residual_sigma68,0.0971032091537199,0.0805026487705265,0.105822593578904,fractional sigma68
+tiny_sequence_transformer,hit_timing,leading-edge hit timing shift,leading_timing_shift_sigma68_ns,11.095210484475096,10.726746183337909,12.04275085035416,ns sigma68
+tiny_sequence_transformer,pileup_separation,two-pulse spacing recovery,pileup_separation_sigma68_ns,19.1571702003479,16.607301712036126,22.395026683807373,ns sigma68
+tiny_sequence_transformer,saturation_recovery,clipped-pulse energy recovery,saturation_onset_energy_sigma68,0.0426843869463897,0.0085409703963637,0.0845711532895211,fractional sigma68
+tiny_sequence_transformer,pedestal_excursions,pedestal-state false-split span,pedestal_shift_false_split_span,0.0748893105629348,0.0111628594662526,0.1520140664961637,rate span
+tiny_sequence_transformer,energy_transfer,total injected charge transfer,energy_residual_sigma68,0.0971032091537199,0.0805026487705265,0.105822593578904,fractional sigma68
+tiny_sequence_transformer,pid_stability,stave/PID-proxy energy-bias span,pid_energy_bias_span,0.0968601516926919,0.0752263512430203,0.14413893004577,fractional span
+1d_cnn,pulse_shape,matched-filter residual/pulse-shape closure proxy,energy_residual_sigma68,0.1115488138307161,0.0976848358977817,0.1212745923374674,fractional sigma68
+1d_cnn,hit_timing,leading-edge hit timing shift,leading_timing_shift_sigma68_ns,9.225500330160688,7.742369382927243,10.128231484150614,ns sigma68
+1d_cnn,pileup_separation,two-pulse spacing recovery,pileup_separation_sigma68_ns,17.367855072021484,16.69225902557373,19.449892044067383,ns sigma68
+1d_cnn,saturation_recovery,clipped-pulse energy recovery,saturation_onset_energy_sigma68,0.0796473326499245,0.0226309531185673,0.1024241992677303,fractional sigma68
+1d_cnn,pedestal_excursions,pedestal-state false-split span,pedestal_shift_false_split_span,0.0411132194813409,0.0126945131730881,0.1396304375282047,rate span
+1d_cnn,energy_transfer,total injected charge transfer,energy_residual_sigma68,0.1115488138307161,0.0976848358977817,0.1212745923374674,fractional sigma68
+1d_cnn,pid_stability,stave/PID-proxy energy-bias span,pid_energy_bias_span,0.1139259189188774,0.0553476944823656,0.181630886281606,fractional span

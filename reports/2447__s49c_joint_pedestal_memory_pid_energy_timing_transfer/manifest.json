@@ -1,0 +1,21 @@
+{
+  "ticket_id": "2447",
+  "git_commit": "af494ae77556752a14626b34e490bd74050ac9ba",
+  "command": "/home/billy/.cache/uv/builds-v0/.tmpxJsAd4/bin/python scripts/s49c_2447_joint_pedestal_memory_pid_energy_timing_transfer.py",
+  "runtime_seconds": 37.01170492172241,
+  "python": "3.13.12 (main, Feb  3 2026, 22:52:12) [Clang 21.1.4 ]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+  "outputs_sha256": {
+    "REPORT.md": "32991d0ccd9e336d389248b1de3036b3f961ae365fa4a846e5f1d68144c980e3",
+    "claimed_ticket.txt": "f77fee99317c1ba17bf5ae55c523c1b903aa37a386bb2baabaf003977265aff4",
+    "event_predictions.csv": "0b1034457d2f71b36f904ad63c06cb5c40170e1bc6e986a14d7d53f86a0a0bd4",
+    "input_sha256.csv": "cc17da0dcd3e7e732b81a17f3c35833f026fdec912538d28d7d71b9af71a46f6",
+    "method_metrics.csv": "5240747a10e859f82b3c09a4465057d3466f78cd292576b7bdb2d8913a252137",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "2417f1fe77a2993767708d2cbdf49e6a9ee8e27a8cdd9935736cd4100b72053e",
+    "run_heldout_metrics.csv": "711e32f2b1e53606f27fb452b537ec1ba860bb5d37e3ee656852f4e2b05933f7",
+    "strata_metrics.csv": "ebc325dc4117b765a356046462b74f8f57ec678e9919e880e7fa984c9f64d7ed",
+    "template_summary.csv": "70811c144799226d495253dcf99ec44c6cea6b9a7de91249cd5ea72526581b13",
+    "winner_ranked_metrics.csv": "b738fdf2df81fe46bd3240fb46fbaa97a8b35adaf2a68993970d03c4e3596b84"
+  }
+}

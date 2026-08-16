@@ -1,0 +1,7 @@
+#2399 P10: Conditional generative pulse templates
+
+Worker: testbeam-laptop-1
+Claim note: `tn-ticket claim testbeam-laptop-1 --project testbeam` was invoked once and returned a null ticket body without assigning `worker:testbeam-laptop-1`. After verifying no open claimed issue had that worker label, issue #2399 was manually label-claimed with the same `factory:open` to `factory:claimed` transition to recover a single real claim.
+
+Body:
+cVAE/normalising-flow template family over (logA,stave); vs median-combine amplitude-binned template (S01); benchmark q_template + timing residuals. See studies/STUDIES.md for full spec. RULES: reproduce-first where a number exists; BOTH traditional AND ML with fair benchmark; atomic; pre-register metric; provenance manifest; data READ-ONLY at ./data; write only your own reports/<id> dir; use STUDY_TEMPLATE.md. Needs S00 (done).

@@ -37,7 +37,7 @@ from ccb_mc_validation.truth.geometry import GeometryRegistry
 from ccb_mc_validation.truth.track_builder import build_track_records, STOP_KE_THRESHOLD_MEV_DEFAULT
 from ccb_mc_validation.truth.pdg import species_label
 
-ROOT = "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root"
+ROOT = os.environ.get("CLUSTER_MC_ROOT", "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root")
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT  = os.path.normpath(os.path.join(HERE, "..", "..", "reports", "studies", "clusterA"))
 os.makedirs(OUT, exist_ok=True)

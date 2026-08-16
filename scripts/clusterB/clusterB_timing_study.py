@@ -47,7 +47,7 @@ plt.rcParams.update({"figure.dpi": 130, "savefig.dpi": 150, "font.size": 10, "ax
 
 STAVE_DIR = "/projects/hep/fs10/shared/nnbar/billy/ccb-runs/i885_v1"
 BIRKS_DIR = "/projects/hep/fs10/shared/nnbar/billy/ccb-runs/an3/sys_birks_smoke2"
-KRAKOW = "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root"
+KRAKOW = os.environ.get("CLUSTER_MC_ROOT", "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root")
 
 def parse_stave_name(path):
     b = os.path.basename(path)

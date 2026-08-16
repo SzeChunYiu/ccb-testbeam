@@ -1,0 +1,30 @@
+{
+  "ticket_id": "2426",
+  "git_commit": "784cb9e2817df87e7b94e60d71a395c582794228",
+  "command": "/home/billy/anaconda3/bin/python scripts/s45c_2426_overlap_energy_pid_disentanglement.py",
+  "runtime_seconds": 107.32466101646423,
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "outputs_sha256": {
+    "REPORT.md": "1b4561c1eb9b1639611060e514e8bad43d4b425aa5cf1c9acd8c722d2554ecf8",
+    "ablation_stress_slices.csv": "6d1997ea66ae0de9b0c57fc1dd926610fe3d80098e834ca1352c1f1f13562361",
+    "ablation_window_metrics.csv": "0c93b14d1d1b50b5166021b12ffa5616f74f9ef302859896e5ce846a8866ba27",
+    "claimed_ticket.txt": "1748d219e2d6bf48bc85a298947264910695502e272f9992a76210da6e57d57b",
+    "detector_heldout_event_predictions.csv": "f111454f9a325c5ee7478bb5619f843baa4a8bf4f5cdb7dbbd63a20ca99a4089",
+    "detector_heldout_ranked_metrics.csv": "00d74d6691de346e8e2931be09196666240c328ddd23c0cd0d9825b678d6ce51",
+    "endpoint_metrics_ci.csv": "f2234a5b86add0d9affa6801954eabe41adf1fb7bd2fa45e6ec36c02c32978be",
+    "event_predictions.csv": "ac64f4e51d22055e54f873553988a359027b4259f7a2ee41924fdb0bb83c3219",
+    "fixed_fpr_recall_ci.csv": "dddb5379558c92e48ba0c9f081f765c48270a832ce22faceb881319bdecd260f",
+    "input_sha256.csv": "cc17da0dcd3e7e732b81a17f3c35833f026fdec912538d28d7d71b9af71a46f6",
+    "method_metrics.csv": "573488f1a73666bbb4499ebb94f57c7d789817d4123d16a10c6b23d66235c081",
+    "real_sideband_validation.csv": "85b5df038bd8475f4f3c9668a1ba5c7318936aed784395d1c311a6ca46f057e0",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "a88d3f19f430decd05ae59b865a5fe40a35194bdcd3c195e1c6f3958ae550942",
+    "run_heldout_metrics.csv": "34897d23abe5aa40778eb2bfa179692b9bfd5c15b0c940b938297c67172d46b0",
+    "strata_metrics.csv": "97f03194e976ff970c46e3749d5eade1b5b9dda56214c40e2e4e664c804ab844",
+    "template_summary.csv": "70811c144799226d495253dcf99ec44c6cea6b9a7de91249cd5ea72526581b13",
+    "winner_ranked_metrics.csv": "66494c109fd629d1b689339ccf826cd3a6442758211c29604d564d9bb88403b9"
+  },
+  "study_id": "S45c",
+  "config": "configs/s45c_2426_overlap_energy_pid_disentanglement.json"
+}

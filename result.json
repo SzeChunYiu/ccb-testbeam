@@ -1,63 +1,227 @@
 {
-  "artifacts": {
-    "docs_report": "docs/reports/G4_05_timing_validation.md",
-    "metrics": "/home/billy/.tb-workers/testbeam-laptop-3/reports/1781212364.2054572.5f095c0d__g4_05_timing_validation/timing_method_metrics.csv",
-    "per_method_json": "/home/billy/.tb-workers/testbeam-laptop-3/reports/1781212364.2054572.5f095c0d__g4_05_timing_validation/per_method_results.json",
-    "predictions": "/home/billy/.tb-workers/testbeam-laptop-3/reports/1781212364.2054572.5f095c0d__g4_05_timing_validation/timing_predictions.csv.gz",
-    "report": "/home/billy/.tb-workers/testbeam-laptop-3/reports/1781212364.2054572.5f095c0d__g4_05_timing_validation/REPORT.md"
-  },
-  "primary_metric": "heldout_sigma68_ns",
-  "raw_reproduction_gate": {
+  "claim_command": "tn-ticket claim testbeam-laptop-2 --project testbeam",
+  "claim_command_ran_once": true,
+  "claim_helper_returned_null": true,
+  "manual_claim_issue": 2452,
+  "methods": [
+    "frontier_transfer_fusion_hgb_new",
+    "gradient_boosted_trees",
+    "mlp_tabular_waveform",
+    "one_dimensional_cnn",
+    "ridge_logistic",
+    "strong_traditional_dropout_shape_score"
+  ],
+  "new_architecture": "frontier_transfer_fusion_hgb_new",
+  "novel_tickets_appended": [],
+  "raw_root_available_in_data_folder": true,
+  "raw_root_reproduction": {
     "delta": 0,
+    "expected_selected_b_stave_pulses": 640737,
     "pass": true,
-    "quantity": "S00 selected B-stave pulse records",
-    "report_value": 640737,
-    "reproduced": 640737,
-    "tolerance": 0
+    "per_run": [
+      {
+        "path": "data/root/root/hrdb_run_0031.root",
+        "run": 31,
+        "selected_b_stave_pulses": 27871
+      },
+      {
+        "path": "data/root/root/hrdb_run_0032.root",
+        "run": 32,
+        "selected_b_stave_pulses": 28240
+      },
+      {
+        "path": "data/root/root/hrdb_run_0033.root",
+        "run": 33,
+        "selected_b_stave_pulses": 48737
+      },
+      {
+        "path": "data/root/root/hrdb_run_0034.root",
+        "run": 34,
+        "selected_b_stave_pulses": 34118
+      },
+      {
+        "path": "data/root/root/hrdb_run_0035.root",
+        "run": 35,
+        "selected_b_stave_pulses": 11667
+      },
+      {
+        "path": "data/root/root/hrdb_run_0036.root",
+        "run": 36,
+        "selected_b_stave_pulses": 10391
+      },
+      {
+        "path": "data/root/root/hrdb_run_0037.root",
+        "run": 37,
+        "selected_b_stave_pulses": 24537
+      },
+      {
+        "path": "data/root/root/hrdb_run_0039.root",
+        "run": 39,
+        "selected_b_stave_pulses": 14218
+      },
+      {
+        "path": "data/root/root/hrdb_run_0040.root",
+        "run": 40,
+        "selected_b_stave_pulses": 14708
+      },
+      {
+        "path": "data/root/root/hrdb_run_0041.root",
+        "run": 41,
+        "selected_b_stave_pulses": 16146
+      },
+      {
+        "path": "data/root/root/hrdb_run_0042.root",
+        "run": 42,
+        "selected_b_stave_pulses": 18112
+      },
+      {
+        "path": "data/root/root/hrdb_run_0044.root",
+        "run": 44,
+        "selected_b_stave_pulses": 2038
+      },
+      {
+        "path": "data/root/root/hrdb_run_0045.root",
+        "run": 45,
+        "selected_b_stave_pulses": 24333
+      },
+      {
+        "path": "data/root/root/hrdb_run_0046.root",
+        "run": 46,
+        "selected_b_stave_pulses": 687
+      },
+      {
+        "path": "data/root/root/hrdb_run_0047.root",
+        "run": 47,
+        "selected_b_stave_pulses": 5276
+      },
+      {
+        "path": "data/root/root/hrdb_run_0048.root",
+        "run": 48,
+        "selected_b_stave_pulses": 14000
+      },
+      {
+        "path": "data/root/root/hrdb_run_0049.root",
+        "run": 49,
+        "selected_b_stave_pulses": 14815
+      },
+      {
+        "path": "data/root/root/hrdb_run_0050.root",
+        "run": 50,
+        "selected_b_stave_pulses": 35217
+      },
+      {
+        "path": "data/root/root/hrdb_run_0051.root",
+        "run": 51,
+        "selected_b_stave_pulses": 14740
+      },
+      {
+        "path": "data/root/root/hrdb_run_0052.root",
+        "run": 52,
+        "selected_b_stave_pulses": 7152
+      },
+      {
+        "path": "data/root/root/hrdb_run_0053.root",
+        "run": 53,
+        "selected_b_stave_pulses": 32200
+      },
+      {
+        "path": "data/root/root/hrdb_run_0054.root",
+        "run": 54,
+        "selected_b_stave_pulses": 30440
+      },
+      {
+        "path": "data/root/root/hrdb_run_0055.root",
+        "run": 55,
+        "selected_b_stave_pulses": 17387
+      },
+      {
+        "path": "data/root/root/hrdb_run_0056.root",
+        "run": 56,
+        "selected_b_stave_pulses": 40148
+      },
+      {
+        "path": "data/root/root/hrdb_run_0057.root",
+        "run": 57,
+        "selected_b_stave_pulses": 13833
+      },
+      {
+        "path": "data/root/root/hrdb_run_0058.root",
+        "run": 58,
+        "selected_b_stave_pulses": 16781
+      },
+      {
+        "path": "data/root/root/hrdb_run_0059.root",
+        "run": 59,
+        "selected_b_stave_pulses": 21377
+      },
+      {
+        "path": "data/root/root/hrdb_run_0060.root",
+        "run": 60,
+        "selected_b_stave_pulses": 17029
+      },
+      {
+        "path": "data/root/root/hrdb_run_0061.root",
+        "run": 61,
+        "selected_b_stave_pulses": 18965
+      },
+      {
+        "path": "data/root/root/hrdb_run_0062.root",
+        "run": 62,
+        "selected_b_stave_pulses": 19089
+      },
+      {
+        "path": "data/root/root/hrdb_run_0063.root",
+        "run": 63,
+        "selected_b_stave_pulses": 18817
+      },
+      {
+        "path": "data/root/root/hrdb_run_0064.root",
+        "run": 64,
+        "selected_b_stave_pulses": 14630
+      },
+      {
+        "path": "data/root/root/hrdb_run_0065.root",
+        "run": 65,
+        "selected_b_stave_pulses": 13038
+      }
+    ],
+    "raw_root_dir": "data/root/root",
+    "root_files": 33,
+    "selected_b_stave_pulses": 640737
   },
-  "split": {
-    "bootstrap_samples": 300,
-    "heldout_blocks": [
-      9,
-      10,
-      11
+  "reproduction": {
+    "matched_benchmark_rows": 49,
+    "matched_positive_rows": 16,
+    "matched_runs": [
+      37,
+      40,
+      42,
+      49,
+      57,
+      62,
+      64
     ],
-    "train_blocks": [
-      0,
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ],
-    "val_blocks": [
-      7,
-      8
-    ]
+    "p09a_raw_derived_dropout_count": 88,
+    "p09i_reviewer_confirmed_dropout_rows": 16,
+    "source": "raw ROOT S00 selected-pulse gate plus upstream raw-derived P09a/P09i dropout artifacts"
   },
-  "study_id": "G4-05",
-  "ticket_id": "1781212364.2054572.5f095c0d",
-  "winner": "gradient_boosted_trees",
-  "winner_family": "ml_nn",
-  "winner_metrics": {
-    "bias_ns": -0.002525511117336766,
-    "bias_ns_ci95": [
-      -0.011235645500850667,
-      0.001908441145621822
-    ],
-    "mae_ns": 0.5567555744502485,
-    "mae_ns_ci95": [
-      0.5508056627307156,
-      0.5629778727856635
-    ],
-    "n": 15000,
-    "p95_abs_ns": 1.774356254264511,
-    "rms_ns": 0.7995650735011278,
-    "sigma68_ns": 0.6098651379938835,
-    "sigma68_ns_ci95": [
-      0.6054375924429805,
-      0.6241904076314753
-    ]
-  }
+  "runtime_sec": 99.725,
+  "selection": {
+    "primary_metric": "average_precision",
+    "split": "leave-one-run-out with paired run-block bootstrap confidence intervals",
+    "winner_rule": "maximize overall held-out average precision; bootstrap CI reported over per-run metrics"
+  },
+  "ticket_id": "2452",
+  "ticket_title": "P06g: Real-waveform dropout candidate transfer of injected recovery frontier",
+  "winner": {
+    "average_precision": 0.961165698336751,
+    "balanced_accuracy": 0.9223484848484849,
+    "ci_high": 1.0,
+    "ci_low": 1.0,
+    "family": "ml",
+    "method": "ridge_logistic",
+    "precision_at_prevalence_k": 0.875,
+    "roc_auc": 0.9772727272727272
+  },
+  "worker": "testbeam-laptop-2"
 }

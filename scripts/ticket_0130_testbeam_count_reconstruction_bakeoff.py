@@ -24,6 +24,11 @@ WORKER = "testbeam-laptop-4"
 SLUG = "raw_root_count_reconstruction_bakeoff"
 TITLE = "TICKET-0130 raw-ROOT count reconstruction bakeoff"
 OUT = ROOT / "reports" / f"{TICKET}__{SLUG}"
+RAW_ROOT_CANDIDATES = [
+    ROOT / "data" / "extracted" / "root" / "root",
+    Path("/home/billy/ccb-data/data/extracted/root/root"),
+    Path("/home/billy/ccb-data/extracted/root/root"),
+]
 
 
 def sha256_file(path: Path) -> str:
@@ -63,6 +68,8 @@ def postprocess_ticket_metadata() -> None:
         f"python {Path(__file__).resolve().relative_to(ROOT)}"
     )
     result_path.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+    (ROOT / "REPORT.md").write_text(report, encoding="utf-8")
+    (ROOT / "result.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
 
     manifest_path = OUT / "manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
@@ -75,11 +82,16 @@ def postprocess_ticket_metadata() -> None:
 
 
 def main() -> None:
+    raw_root_dir = next((path for path in RAW_ROOT_CANDIDATES if (path / "hrdb_run_0031.root").exists()), None)
+    if raw_root_dir is None:
+        tried = ", ".join(str(path) for path in RAW_ROOT_CANDIDATES)
+        raise FileNotFoundError(f"could not find raw ROOT data folder; tried {tried}")
     s32b.TICKET = TICKET
     s32b.WORKER = WORKER
     s32b.SLUG = SLUG
     s32b.TITLE = TITLE
     s32b.OUT = OUT
+    s32b.RAW_ROOT_DIR = raw_root_dir
     s32b.main()
     postprocess_ticket_metadata()
 

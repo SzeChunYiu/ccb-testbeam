@@ -14,7 +14,7 @@ CI [`0.0605`,
 
 ## Raw ROOT Reproduction
 
-Raw files are read from `/home/billy/ccb-data/extracted/root/root`.  For each run, `h101/HRDv` is
+Raw files are read from `/home/billy/ccb-data/data/extracted/root/root`.  For each run, `h101/HRDv` is
 reshaped to `(event, channel, sample)` with 18 samples per channel.  The B-stack
 selection uses B2/B4/B6/B8, pedestal
 
@@ -342,4 +342,4 @@ uncertainty propagation.  The analytic clipped-template method remains the
 auditable fallback when deterministic extrapolation is more important than the
 observed held-out score gain.
 
-Runtime was `46.8` s on `Linux-5.15.0-139-generic-x86_64-with-glibc2.35`.
+Runtime was `46.0` s on `Linux-5.15.0-139-generic-x86_64-with-glibc2.35`.

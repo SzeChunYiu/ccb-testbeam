@@ -86,7 +86,7 @@ Branch: `chatgpt/paper-draft-20260812` (paper PR #1298); software branch `fix/is
 | Issue | Disposition | Evidence |
 |-------|-------------|----------|
 | #1059 | CLOSED | Software binding + measurand docs; beam-data timing format-limited only |
-| #968 | PARTIAL (contract) / BLOCKED (physics) | `src/ccb_mc_validation/timing/b2_broad_residual_mechanisms.py` fail-closes microscopic `pile-up-like` wording until AF-020 discriminants are `SATISFIED` |
+| #968 | EXECUTED on raw data (S29a: 5/8 discriminants) / pile-up wording BLOCKED (fail-closed, unchanged) | `reports/1786863177.1383050.cfc84ffc__s29a_b2_residual_mechanism_discriminants/` — 640,737/640,737 s25b pulses reproduced, observables bit-exact vs contract module. Pile-up unsupported (no positive rate dependence in any proxy: slopes −0.27/−0.004/−0.44, all CIs span 0; within-run terciles flat to <0.1%). Single-chain electronics excluded (duplicate-chain parity φ=0.52–0.69, even-only ≤5.6%); digital clipping 0/640,737 (ADC-word defect excluded). B2 secondary-peak delay late-shifted vs downstream (KS D=0.268) and saturation-coupled (51→60 ns unsat→sat) ⇒ effective representation = sensor/light-side structure; NOT a microscopic mechanism ID. Authorization remains BLOCKED: `track_tpc_association` (structurally unavailable), `injected_correlated_noise_mc` + `electronics_impulse_response` (follow-up studies), closure PARTIAL (0.7% gaps, quantified) |
 | #1060 | FIXED | Left-censored crossings report `NO_CROSSING_IN_WINDOW`, never `t=0` |
 | #1061 | FIXED | Leave-one-run-out template phase in producer |
 | #1062 | FIXED (policy) | Same-sample minimum sigma68 is `SAME_SAMPLE_MINIMUM_EXPLORATORY_ONLY`; not authorising |

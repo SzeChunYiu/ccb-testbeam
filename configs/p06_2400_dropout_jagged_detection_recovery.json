@@ -1,0 +1,75 @@
+{
+  "study_id": "P06",
+  "ticket_id": "2400",
+  "worker": "testbeam-laptop-2",
+  "title": "dropout and jagged waveform recovery benchmark",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/2400__p06_dropout_jagged_detection_recovery",
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "cfd_fraction": 0.2,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "expected_counts": {
+    "total_selected_pulses": 640737,
+    "sample_ii_analysis": {
+      "selected_pulses": 125096,
+      "B2": 88213,
+      "B4": 21229,
+      "B6": 11148,
+      "B8": 4506
+    }
+  },
+  "split": {
+    "train_runs": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 58, 59, 60, 61],
+    "validation_runs": [54, 55, 62, 64],
+    "heldout_runs": [56, 57, 63, 65]
+  },
+  "injection": {
+    "random_seed": 240006,
+    "max_pulses_per_run": 1600,
+    "dropout_widths": [1, 2, 3],
+    "dropout_depth_range": [0.0, 0.20],
+    "jagged_overshoot_fraction_range": [0.05, 0.20],
+    "noise_adc": 3.0
+  },
+  "models": {
+    "random_seed": 240006,
+    "bootstrap_samples": 300,
+    "ridge_alphas": [0.1, 1.0, 10.0, 100.0],
+    "hgb_max_iter": 180,
+    "hgb_learning_rate": 0.045,
+    "hgb_max_leaf_nodes": 31,
+    "mlp_hidden_layer_sizes": [96, 48],
+    "mlp_alpha": 0.0005,
+    "mlp_max_iter": 180,
+    "torch_epochs": 12,
+    "torch_batch_size": 512,
+    "torch_learning_rate": 0.0015,
+    "torch_weight_decay": 0.0001
+  },
+  "primary_metric": "heldout_mae_ns",
+  "pre_registered": {
+    "reproduction": "exact S00 selected B-stave pulse count from raw h101/HRDv ROOT",
+    "metric": "run-heldout MAE of recovered CFD20 timing error after injected dropout or jagged sample corruption; sigma68_ns is reported as a secondary robust-width diagnostic",
+    "win_rule": "lowest heldout MAE among recovery methods; require the same heldout runs and paired run-block bootstrap CIs for all methods"
+  },
+  "next_tickets": [
+    {
+      "title": "P06g: Real-waveform dropout candidate transfer of injected recovery frontier",
+      "body": "Apply the P06 injected-dropout recovery frontier to naturally occurring dropout/jagged candidates, matched by run, stave, amplitude, peak phase, and anomaly taxon. Expected information gain: separates recovery methods that only repair synthetic masks from methods that transfer to real electronics pathologies."
+    }
+  ]
+}

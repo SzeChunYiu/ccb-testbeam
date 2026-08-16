@@ -1,0 +1,78 @@
+{
+  "ticket_id": "2455",
+  "study_id": "S51c",
+  "generated_at_unix": 1786882978.5493295,
+  "command": "/home/billy/anaconda3/bin/python scripts/s32c_1783884181_2159_4b0d44ea_pid_energy_uncertainty_tail_pedestal_memory.py --config configs/s51c_2455_pedestal_memory_pid_energy_transfer.json",
+  "artifacts": [
+    {
+      "path": "reports/2455__s51c_pedestal_memory_pid_energy_transfer/REPORT.md",
+      "sha256": "530ae4ee88a74202810f27ad4aeb52a21a2e1993183b15b4cc977fdb9bc67084",
+      "bytes": 43005
+    },
+    {
+      "path": "reports/2455__s51c_pedestal_memory_pid_energy_transfer/calibration_ece.csv",
+      "sha256": "6dbcae1d8f8bd2aea96f6563ebb780ed8f5a7899796b371500a3c56e2ef8d029",
+      "bytes": 5972
+    },
+    {
+      "path": "reports/2455__s51c_pedestal_memory_pid_energy_transfer/claimed_ticket.txt",
+      "sha256": "c1211d8bb9123fb88df7359d0116f4f0cf6fde9014b512823833358c79b845ae",
+      "bytes": 406
+    },
+    {
+      "path": "reports/2455__s51c_pedestal_memory_pid_energy_transfer/endpoint_method_summary.csv",
+      "sha256": "0238d46fedf83be9fba9141881bbe0b795135889ab6683de4469cec79ea0e614",
+      "bytes": 10581
+    },
+    {
+      "path": "reports/2455__s51c_pedestal_memory_pid_energy_transfer/feature_family_audit.csv",
+      "sha256": "c635a2d72a26444f81cf00e9d9beab6ec2de60cbf2dc8e79874ff9ef08fcefa7",
+      "bytes": 1425
+    },
+    {
+      "path": "reports/2455__s51c_pedestal_memory_pid_energy_transfer/heldout_predictions.csv.gz",
+      "sha256": "72fa5e558d29ddce2bf19db7ee15e12d223206896bb3ae8537baad1be45a4964",
+      "bytes": 1965381
+    },
+    {
+      "path": "reports/2455__s51c_pedestal_memory_pid_energy_transfer/heldout_strata_assignments.csv",
+      "sha256": "aa2895c7eae29455ed5e09b78c48d2ab347fc42eda1b9112fe5e08b41e7e96a1",
+      "bytes": 956138
+    },
+    {
+      "path": "reports/2455__s51c_pedestal_memory_pid_energy_transfer/joint_scoreboard.csv",
+      "sha256": "567eb476f6720756857b0c1daf6df81bdc59167c43d040b73f783b5a4caea8e0",
+      "bytes": 2388
+    },
+    {
+      "path": "reports/2455__s51c_pedestal_memory_pid_energy_transfer/leakage_audit.csv",
+      "sha256": "3c9aa924920b3ff2a513b7339c15d8f225ba60d1265ead8d58b4108538dfc893",
+      "bytes": 2920
+    },
+    {
+      "path": "reports/2455__s51c_pedestal_memory_pid_energy_transfer/paired_bootstrap_deltas.csv",
+      "sha256": "535d5660f5e605a16e9ba3d2ff947bb54edcfdfa63ef384beb3f2479d6adfc9b",
+      "bytes": 10256
+    },
+    {
+      "path": "reports/2455__s51c_pedestal_memory_pid_energy_transfer/reproduction_counts_by_run.csv",
+      "sha256": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+      "bytes": 1896
+    },
+    {
+      "path": "reports/2455__s51c_pedestal_memory_pid_energy_transfer/reproduction_match_table.csv",
+      "sha256": "30c27e630bc2f37a7e26cf4f3fac0ad2db556913c9a3725097ba16731535f2cf",
+      "bytes": 135
+    },
+    {
+      "path": "reports/2455__s51c_pedestal_memory_pid_energy_transfer/result.json",
+      "sha256": "8d2fb8830d7f133caa86c59381060c4e919b0df8aa1599ecc74db376ef15f4ec",
+      "bytes": 2670
+    },
+    {
+      "path": "reports/2455__s51c_pedestal_memory_pid_energy_transfer/strata_metrics.csv",
+      "sha256": "11fe96013c551d3fd6ae907167284006fd03c3a4826a437b8f2d0dfea45b1708",
+      "bytes": 136953
+    }
+  ]
+}

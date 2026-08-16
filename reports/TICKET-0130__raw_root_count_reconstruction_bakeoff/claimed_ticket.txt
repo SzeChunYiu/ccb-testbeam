@@ -1,2 +1,0 @@
-TICKET-0130
-# TICKET-0130 raw-ROOT count reconstruction bakeoff

@@ -12,10 +12,11 @@ This study asks whether the P06 injected-dropout recovery frontier transfers to 
 
 The required `tn-ticket claim testbeam-laptop-2 --project testbeam` helper was run once.  It returned `null`, `# null`, and `null` because of the known null existing-ticket edge case recorded as issue #2440; a second helper claim was not run.  Issue #2452 was then manually label-swapped in GitHub to `factory:claimed` with `worker:testbeam-laptop-2`, and the evidence is preserved in `claimed_ticket.txt`.
 
-The local `data/root`, `data/extracted`, and `data/sorted-b` directories were empty on this host.  Therefore the raw ROOT file streams were not reread in this run.  Instead, the reproduction gate uses frozen upstream raw-derived artifacts: P09a reports 88 held-out `dropout` taxonomy rows from the raw ROOT selection, and P09i reviewer adjudication supplies 49 method-expanded consensus-dropout rows that de-duplicate to 16 source-unique positives in the fixed-coverage selected-row table used here.  This limitation is a first-order caveat and is encoded in `result.json`.
+The raw ROOT reproduction gate was rerun from `data/root/root` before model fitting.  The scan opens each B-stack `h101/HRDv` tree, reshapes every event to eight channels by eighteen samples, subtracts the per-channel median pedestal from samples 0--3, and counts B2/B4/B6/B8 pulses with baseline-subtracted maximum amplitude greater than 1000 ADC.  It reproduces `640,737` selected B-stave pulses against the registered `640,737` count, delta `+0`.  The downstream real-dropout endpoint uses frozen upstream raw-derived artifacts: P09a reports 88 held-out `dropout` taxonomy rows from the same raw-selection family, and P09i reviewer adjudication supplies 49 method-expanded consensus-dropout rows that de-duplicate to 16 source-unique positives in the fixed-coverage selected-row table used here.
 
 ## Reproduction gate
 
+- S00 raw ROOT selected B-stave pulse count: `640737` vs expected `640737`; pass `True`.
 - P09a raw-derived held-out dropout count: `88`.
 - P09i reviewer-confirmed dropout rows used as positives: `16`.
 - Matched benchmark cohort: `49` rows across `7` held-out runs, with `16` positives.
@@ -51,7 +52,7 @@ The point estimate above is computed from all held-out rows pooled after leave-o
 
 ## Systematics and caveats
 
-- The local raw ROOT mirror was empty, so this run does not independently reread ROOT bytes; it relies on upstream raw-derived P09 reproduction artifacts and records their SHA-256 hashes.
+- The raw ROOT reproduction gate verifies the canonical selected-pulse support, but the real-dropout labels themselves remain reviewer-confirmed P09 artifacts rather than labels recomputed from raw bytes in this ticket.
 - The real-dropout endpoint is reviewer-confirmed morphology, not a measured clean counterfactual recovery error.  Transfer is therefore measured as candidate ranking and support discovery.
 - Only 49 reviewer-consensus positives are available.  Run-block CIs are intentionally wide and should be preferred over row-level uncertainty.
 - Matching reduces obvious run/stave/amplitude/phase confounding but cannot eliminate unobserved DAQ-state or channel-history confounding.

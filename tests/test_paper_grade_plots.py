@@ -22,7 +22,7 @@ def _manifest_by_id(manifest: dict[str, object]) -> dict[str, dict[str, object]]
 
 def test_builds_all_evidence_bound_figures(tmp_path: Path) -> None:
     manifest = build_all(REPO_ROOT, tmp_path / "paper")
-    assert manifest["schema"] == "ccb-paper-grade-wiki-figures/1"
+    assert manifest["schema"] == "ccb-paper-grade-wiki-figures/2"
     assert manifest["figure_count"] == 11
     by_id = _manifest_by_id(manifest)
     assert set(by_id) == {f"FIG-WIKI-{index:03d}" for index in range(1, 12)}

@@ -1,0 +1,2 @@
+quantity,expected,reproduced,delta,pass,source,source_sha256
+S00 selected B-stave pulse records,640737,640737,0,True,/home/billy/ccb-data/data/extracted/root/root,648c32d0109fb05cdf04b2a0d2817044067e8741c70a53f540308a1c038a8b2f

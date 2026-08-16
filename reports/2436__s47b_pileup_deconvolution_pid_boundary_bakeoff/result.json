@@ -1,0 +1,97 @@
+{
+  "ticket_id": 2436,
+  "ticket_key": "S47b",
+  "title": "Pile-up deconvolution PID boundary robustness bakeoff",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-1",
+  "status": "complete",
+  "claim_command": "tn-ticket claim testbeam-laptop-1 --project testbeam",
+  "claim_note": "The claim helper returned null on the first and only invocation; issue #2436 was manually label-swapped to factory:claimed + worker:testbeam-laptop-1 without rerunning claim.",
+  "raw_root_reproduction": {
+    "passed": true,
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+    "s00_table": "/home/billy/ccb-testbeam/reports/1780917628.449525.085b2dc0__s01b_s00_selected_table_manifest/s00_selected_b_pulses.csv.gz",
+    "s00_table_sha256": "648c32d0109fb05cdf04b2a0d2817044067e8741c70a53f540308a1c038a8b2f",
+    "method": "direct h101/HRDv scan, channels 0/2/4/6, median(samples 0..3) baseline, max-baseline > 1000 ADC"
+  },
+  "source_prediction_table": "/home/billy/ccb-testbeam/reports/1784176179.839.48902217__s39c_likelihood_pid_boundaries_multitask_classifiers/source_event_predictions_selected_methods.csv.gz",
+  "evaluation_design": {
+    "split": "train/heldout disjoint by source_run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "bootstrap_unit": "held-out source_run",
+    "bootstrap_replicates": 600,
+    "n_rows": 7392
+  },
+  "required_method_coverage": {
+    "traditional": "deltaE_over_E_likelihood_template",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "sequence_model": "joint_sequence_transformer",
+    "new_architecture": "template_residual_boosted_stack_new"
+  },
+  "winner": {
+    "name": "template_residual_boosted_stack_new",
+    "family": "new_hybrid_architecture",
+    "criterion": "minimum held-out PID-energy-timing-pileup-saturation boundary robustness score",
+    "winner_score": 0.21570829770840913,
+    "pid_auc": 0.8946330872774642,
+    "pid_auc_ci95": [
+      0.8696314102564102,
+      0.9112081607780976
+    ],
+    "pid_balanced_accuracy": 0.8320017368649588,
+    "energy_sigma68_frac": 0.20143523731807,
+    "energy_sigma68_ci95": [
+      0.18223662466735274,
+      0.23319256692720783
+    ],
+    "timing_sigma68_ns": 7.3571696417949335,
+    "timing_sigma68_ci95": [
+      6.464171879214433,
+      7.828382266305463
+    ],
+    "pileup_miss_rate": 0.3125,
+    "saturation_auc_loss": 0.0,
+    "boundary_disagreement_rate": 0.19791666666666666
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "result": "result.json",
+    "manifest": "manifest.json",
+    "method_metrics": "method_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "method_deltas": "method_deltas_vs_traditional.csv",
+    "reproduction": "reproduction_match_table.csv",
+    "raw_counts_by_run": "reproduction_counts_by_run.csv",
+    "input_sha256": "input_sha256.csv",
+    "claimed_ticket": "claimed_ticket.txt"
+  },
+  "novel_tickets_appended": [
+    2470
+  ],
+  "runtime_sec": 44.138402223587036,
+  "git_commit": "9ab65609d64f0dbcf302619882a3e05eca65fda1",
+  "python": "3.11.14"
+}

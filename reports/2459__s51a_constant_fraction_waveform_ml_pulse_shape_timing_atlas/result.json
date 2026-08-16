@@ -1,0 +1,96 @@
+{
+  "ticket_id": "2459",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-1",
+  "title": "S51a: Constant-fraction timing versus waveform ML for pile-up aware pulse-shape atlas",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-1 --project testbeam",
+  "manual_claim_repair": "tn-ticket claim returned null|null|null because its existing-claim jq emits null fields; issue #2459 was label-swapped once with gh.",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "run_block_bootstrap": "held-out source_run percentile 95% CI",
+    "source_unit_bootstrap": "source_run:stave:is_overlap:spacing_bin:ratio_bin percentile 95% CI",
+    "bootstrap_replicates": 400,
+    "negative_control": "clean single-pulse controls with matched source-run distribution",
+    "winner_score": "S51a timing atlas score: sigma1/18 + sigmaDelta/24 + 1.35*shape + 2.5*energy + penalties for miss, false split, pedestal, and stave/PID proxy bias"
+  },
+  "required_method_coverage": {
+    "traditional": "two_pulse_template_cfd_baseline",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "temporal_convolution_tcn": "temporal_convolution_tcn",
+    "sequence_transformer": "tiny_sequence_transformer",
+    "new_architecture": "pileup_mask_transformer_new",
+    "hybrid_new_architecture": "template_residual_boosted_stack_new"
+  },
+  "winner": {
+    "name": "template_residual_boosted_stack_new",
+    "criterion": "minimum S51a run-held-out timing-atlas composite score with bootstrap CIs reported",
+    "winner_score": 2.1521383606884887,
+    "leading_edge_time_sigma68_ns": 4.7131829326923125,
+    "leading_edge_time_sigma68_ci95": [
+      3.7361808133441414,
+      5.336300029968388
+    ],
+    "secondary_pulse_delay_sigma68_ns": 9.692358110374599,
+    "secondary_pulse_delay_sigma68_ci95": [
+      9.424620393508821,
+      10.468900532587494
+    ],
+    "shape_residual_proxy_median": 0.5329268068212737,
+    "time_sigma68_ns": 6.796479181698658,
+    "energy_proxy_distortion_sigma68": 0.07345380935953014,
+    "pileup_miss_rate": 0.36578947368421055,
+    "false_split_rate": 0.1368421052631579
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "endpoint_metrics_ci": "endpoint_metrics_ci.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "injection_source_bootstrap_ci": "injection_source_bootstrap_ci.csv",
+    "uncertainty_calibration": "uncertainty_calibration.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv"
+  },
+  "novel_tickets_appended": [],
+  "caveats": [
+    "Truth comes from controlled injections into raw-ROOT-derived clean pulses.",
+    "Saturation onset is represented by an amplitude-ceiling proxy rather than electronics flags.",
+    "PID deltas use stave-conditioned energy-bias movement because external species truth is absent.",
+    "Run-block bootstrap covers observed held-out runs, not unobserved beam configurations."
+  ]
+}

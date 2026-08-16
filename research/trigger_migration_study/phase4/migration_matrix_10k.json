@@ -1,0 +1,145 @@
+{
+  "proxy_config": {
+    "input_file": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/ccb-wt-1045-phase2/output_krakow_phase2_10k.root",
+    "mode": "proxy",
+    "thresholds_mev": [
+      0.5,
+      1.0,
+      2.0,
+      5.0
+    ],
+    "coincidence_windows_ns": [
+      5.0,
+      10.0,
+      15.0,
+      20.0,
+      30.0
+    ],
+    "max_events": null
+  },
+  "hardware_config": {
+    "input_file": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/ccb-wt-1045-phase2/output_krakow_phase2_10k.root",
+    "mode": "hardware",
+    "thresholds_mev": [
+      0.5,
+      1.0,
+      2.0,
+      5.0
+    ],
+    "coincidence_windows_ns": [
+      5.0,
+      10.0,
+      15.0,
+      20.0,
+      30.0
+    ],
+    "max_events": null
+  },
+  "reference_threshold_mev": 1.0,
+  "reference_coinc_ns": 15.0,
+  "species_migration": {
+    "deuteron": {
+      "species": "deuteron",
+      "quadrants": {
+        "both": 0,
+        "neither": 8,
+        "proxy_only": 4,
+        "hardware_only": 0
+      },
+      "proxy_efficiency": 0.3333333333333333,
+      "hardware_efficiency": 0.0,
+      "migration_loss_fraction": 1.0
+    },
+    "proton": {
+      "species": "proton",
+      "quadrants": {
+        "both": 0,
+        "neither": 58,
+        "proxy_only": 0,
+        "hardware_only": 0
+      },
+      "proxy_efficiency": 0.0,
+      "hardware_efficiency": 0.0,
+      "migration_loss_fraction": 0.0
+    },
+    "electron": {
+      "species": "electron",
+      "quadrants": {
+        "both": 0,
+        "neither": 1,
+        "proxy_only": 0,
+        "hardware_only": 0
+      },
+      "proxy_efficiency": 0.0,
+      "hardware_efficiency": 0.0,
+      "migration_loss_fraction": 0.0
+    }
+  },
+  "aggregate_migration": {
+    "total_events": 71,
+    "quadrants": {
+      "both": 0,
+      "neither": 67,
+      "proxy_only": 4,
+      "hardware_only": 0
+    },
+    "proxy_efficiency": 0.056338028169014086,
+    "hardware_efficiency": 0.0,
+    "migration_loss_fraction": 1.0
+  },
+  "efficiency_vs_threshold": {
+    "0.5": {
+      "deuteron": 0.0,
+      "proton": 0.0,
+      "electron": 0.0
+    },
+    "1.0": {
+      "deuteron": 0.0,
+      "proton": 0.0,
+      "electron": 0.0
+    },
+    "2.0": {
+      "deuteron": 0.0,
+      "proton": 0.0,
+      "electron": 0.0
+    },
+    "5.0": {
+      "deuteron": 0.0,
+      "proton": 0.0,
+      "electron": 0.0
+    }
+  },
+  "efficiency_vs_coincidence": {
+    "5.0": {
+      "deuteron": 0.0,
+      "proton": 0.0,
+      "electron": 0.0
+    },
+    "10.0": {
+      "deuteron": 0.0,
+      "proton": 0.0,
+      "electron": 0.0
+    },
+    "15.0": {
+      "deuteron": 0.0,
+      "proton": 0.0,
+      "electron": 0.0
+    },
+    "20.0": {
+      "deuteron": 0.0,
+      "proton": 0.0,
+      "electron": 0.0
+    },
+    "30.0": {
+      "deuteron": 0.0,
+      "proton": 0.0,
+      "electron": 0.0
+    }
+  },
+  "headline_metrics": {
+    "migration_loss_percent": 100.0,
+    "proxy_efficiency_percent": 5.633802816901409,
+    "hardware_efficiency_percent": 0.0,
+    "dominant_loss_species": "deuteron"
+  }
+}

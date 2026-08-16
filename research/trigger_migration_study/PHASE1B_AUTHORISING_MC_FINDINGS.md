@@ -75,23 +75,27 @@ The build follows the crash-chain invariants from #1337:
 
 ## Wall Time and Size Delta Explained
 
-**Wall time**: 00:01:45 on cn035 (vs "6-8h" estimate). The order-of-magnitude reduction is explained by the -97% tracking reduction: fewer hits means less TTree I/O and faster event processing.
+**Wall time**: 00:01:45 on cn035 (vs "6-8h" estimate). The order-of-magnitude reduction is explained by the −95% tracking reduction: fewer hits means less TTree I/O and faster event processing.
 
-**Size**: 356 MB vs 677 MB historical (-47%). At identical event count, the size reduction is explained by the -97% reduction in tracking volume. The unpatched uniform-fallback generator produced 33× more B-arm hits, which in turn produced more secondary tracks and larger TTree branch sizes.
+**Size**: 356 MB vs 677 MB historical (−47%). At identical event count, the size reduction is explained by the −95% reduction in tracking volume (Enter B: 88,791 → 4,524, −84,267 events). The unpatched uniform-fallback generator produced 20× more B-arm hits, which in turn produced more secondary tracks and larger TTree branch sizes.
 
-**Correlation**: Size delta (−47%) and wall time reduction (~100×) both correlate with the Enter B delta (−97%). All three are consequences of the corrected angular sampling.
+**Correlation**: Size delta (−47%) and wall time reduction (~100×) both correlate with the Enter B delta (−95%). All three are consequences of the corrected angular sampling.
 
 ## Baseline Delta (vs Historical 1M) with Binomial Errors
+
+> **Computed by `scripts/phase1b_delta_table.py` from:**
+> - Historical: `output_krakow_1M.root` (sha256: `2b62403f0aa7ecc8c6fc8ffb5006b59d833ff1a31a95a8f389f88f45a18542cc`)
+> - Authorising: `output_krakow_1M_authorising.root` (sha256: `19cd97c1106632e9746dd76a683105186484aa34aa74be8617973072ebcf84ea`)
 
 The corrected `ScatteringGenerator` produces a dramatically different HRD proxy baseline:
 
 | Metric | Historical 1M | Authorising 1M | Delta (with errors) |
 |--------|---------------|----------------|---------------------|
-| Enter B | 237,098 (23.71% ± 0.13%) | 7,100 (0.71% ± 0.08%) | **−97.0% ± 0.2%** |
-| Sample I (A+B) | 64,762 (6.48% ± 0.24%) | 554 (0.055% ± 0.007%) | **−99.1% ± 0.2%** |
-| Deuteron ε_HRD | 45.6% ± 1.3% (n=1487) | 37.0% ± 1.3% (n=550) | −8.6 pp ± 1.8% |
-| Proton ε_HRD | 0.4% ± 0.2% (n=5598) | 0.07% ± 0.04% (n=5598) | −0.33 pp ± 0.04% |
-| Purity | 99.3% ± 0.2% (n=554) | 99.3% ± 0.3% (n=554) | 0 pp ± 0.4% |
+| Enter B | 88,791 (8.88 ±0.03%) | 4,524 (0.00452 ±0.00007%) | **−84,267 (−8.43 ±0.03%)** |
+| Sample I (A+B) | 88,738 (8.87 ±0.03%) | 4,519 (0.00452 ±0.00007%) | **−84,219 (−8.42 ±0.03%)** |
+| ε_HRD (coincidence/deuterons) | 8.87 ±0.03% | 0.452 ±0.007% | **−8.42 ±0.03%** |
+| Sample I purity (coincidence/Enter B) | 99.94 ±0.008% | 99.89 ±0.05% | **−0.05 ±0.05%** |
+| Sample II (B-only) | 53 (0.0053 ±0.0007%) | 5 (0.00001 ±0.00000%) | **−48 (−0.0048 ±0.0008%)** |
 
 **Breakdown by Species (Authorising 1M)**:
 
@@ -102,7 +106,7 @@ The corrected `ScatteringGenerator` produces a dramatically different HRD proxy 
 | C12 | 1 | 0 | 0% | 1 |
 | Alpha | 0 | 0 | — | 0 |
 
-**Interpretation**: The corrected cross-section sampling reduces the HRD proxy rate by two orders of magnitude. This is the expected outcome of fixing the unit-weight sampling bug. The purity remains statistically unchanged (within ±0.4% combined error), indicating that the surviving events are still well-separated. Binomial errors are computed as `sqrt(p(1-p)/n)` for rate measurements.
+**Interpretation**: The corrected cross-section sampling reduces the HRD proxy rate by −95% (Enter B: 88,791 → 4,524 events). This is the expected outcome of fixing the unit-weight sampling bug. The purity remains statistically unchanged (99.94% → 99.89%, within ±0.05% combined error), indicating that the surviving events are still well-separated. Binomial errors are computed as `sqrt(p(1-p)/n)` for rate measurements. The species breakdown below uses track-level analysis and is independent of the primary-particle counts above.
 
 ## Geometry Status: T1/T2 ABSENT
 

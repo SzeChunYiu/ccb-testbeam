@@ -1,0 +1,88 @@
+{
+  "ticket_id": "2545",
+  "study_id": "S66a",
+  "worker": "testbeam-laptop-4",
+  "generated_at_unix": 1786918740.7157445,
+  "claim_command": "tn-ticket claim testbeam-laptop-4 --project testbeam",
+  "done_command": "tn-ticket done 2545",
+  "result_winner": "traditional_median_template_cfd_timewalk_shape",
+  "artifacts": [
+    {
+      "path": "REPORT.md",
+      "bytes": 89139,
+      "sha256": "d4d1c88cb6f4bd7494850382903f244cfe81fcc2a2e5384d4ca2cef1b718d0de"
+    },
+    {
+      "path": "ablations.csv",
+      "bytes": 1118,
+      "sha256": "aa6beec58ed8141091f90fe057ad0c410e5423e6d151b54a2a0260267c22ae46"
+    },
+    {
+      "path": "by_run.csv",
+      "bytes": 9322,
+      "sha256": "8892b778f3ab82cb903e10a404c91d06e401bca704af849458251ac4addb0ee9"
+    },
+    {
+      "path": "claimed_ticket.txt",
+      "bytes": 1131,
+      "sha256": "a32c16ce6b434205237512390c011ec2c538c1e96ddc4926345f0b0918a954ae"
+    },
+    {
+      "path": "cluster_stability.csv",
+      "bytes": 1813,
+      "sha256": "602180f3da22a7968a816550c2d186a3ffc6469a72531f4c1bbae6640e4faaa3"
+    },
+    {
+      "path": "frontier_axis_summary.csv",
+      "bytes": 9010,
+      "sha256": "c6aeb682fc7eb8ee80da70ab7a0c8dade52a842fa92ccdd59f9b7d57da673dc0"
+    },
+    {
+      "path": "input_sha256.csv",
+      "bytes": 4993,
+      "sha256": "9d1630c332196186416292bc75bba0238b8007fd1975f90e78916995e3b486e1"
+    },
+    {
+      "path": "latent_cluster_summary.csv",
+      "bytes": 4141,
+      "sha256": "c08841f983ad76601bc50b69161e6d59fc60225d1c1897f4a9f570d88d061ba5"
+    },
+    {
+      "path": "method_deltas.csv",
+      "bytes": 2533,
+      "sha256": "4f45fc5f8b6e54f7cd073ac7b4a85cb9c888bb5e7c57c9078d69d98b46326ca1"
+    },
+    {
+      "path": "metrics.csv",
+      "bytes": 3802,
+      "sha256": "af3b962e2cf020d18932302954778184548556aece14509b8b0d53a114c71590"
+    },
+    {
+      "path": "reproduction.csv",
+      "bytes": 299,
+      "sha256": "962a281223ae2d6280d815498dfe7f7042b684acc1de55aa6fee4e305eb9fb24"
+    },
+    {
+      "path": "result.json",
+      "bytes": 64792,
+      "sha256": "33292b76c18ea9d323455d98f41ba0f0191ac57bb00ce2e4cb5382678c699e36"
+    },
+    {
+      "path": "run_family_summary.csv",
+      "bytes": 5263,
+      "sha256": "6e3218e169abd2fa601ed64e37d30bfcd4a164a0c5811006eb9998fc77243335"
+    },
+    {
+      "path": "slice_robustness.csv",
+      "bytes": 13187,
+      "sha256": "c1d92e14ad75d6d1b9a3dd8c7871e050d1ce4cb112b94b901e8d195f0794f451"
+    },
+    {
+      "path": "strata.csv",
+      "bytes": 49016,
+      "sha256": "678a419d6dafdd5e02bf026e2f71975a540b45e9bd2f19418bbc53440cfb9db7"
+    }
+  ],
+  "issue_number": 2545,
+  "latent_cluster_winner": "traditional_median_template_cfd_timewalk_shape"
+}

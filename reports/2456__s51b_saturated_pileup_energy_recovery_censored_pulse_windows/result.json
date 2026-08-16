@@ -1,15 +1,15 @@
 {
-  "ticket_id": "TICKET-0130",
+  "ticket_id": "2456",
   "project": "testbeam",
   "worker": "testbeam-laptop-4",
-  "title": "TICKET-0130 raw-ROOT count reconstruction bakeoff",
+  "title": "S51b: Saturated pile-up energy recovery from censored pulse windows",
   "status": "complete",
   "claimed_once": true,
   "claim_command": "tn-ticket claim testbeam-laptop-4 --project testbeam",
-  "claimed_ticket_text": "TICKET-0130 raw-ROOT count reconstruction bakeoff",
+  "claimed_ticket_text": "S51b: Saturated pile-up energy recovery from censored pulse windows",
   "raw_root_reproduction": {
     "passed": true,
-    "raw_root_glob": "/home/billy/ccb-data/extracted/root/root/hrdb_run_*.root",
+    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
     "expected_selected_pulses": 640737,
     "reproduced_selected_pulses": 640737,
     "delta": 0,
@@ -85,5 +85,14 @@
     "ADC clipping is an explicit benchmark stressor rather than decoded electronics metadata.",
     "Bootstrap CIs resample held-out runs and should be read as run-transfer intervals."
   ],
-  "execution_command": "MPLCONFIGDIR=/tmp/matplotlib-ticket0130 uv run --index-strategy unsafe-best-match --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple --with uproot --with awkward --with numpy --with pandas --with scikit-learn --with tabulate --with 'torch==2.5.1+cpu' python scripts/ticket_0130_testbeam_count_reconstruction_bakeoff.py"
+  "factory_issue": 2456,
+  "ticket_workflow": {
+    "claim_command": "tn-ticket claim testbeam-laptop-4 --project testbeam",
+    "claim_artifact": "reports/2456__s51b_saturated_pileup_energy_recovery_censored_pulse_windows/claimed_ticket.txt",
+    "done_command_attempted": "tn-ticket done 2456",
+    "done_command_status": "success_already_closed",
+    "done_command_output": "Issue SzeChunYiu/factory-tickets#2456 (S51b: Saturated pile-up energy recovery from censored pulse windows) is already closed",
+    "factory_issue_url": "https://github.com/SzeChunYiu/factory-tickets/issues/2456"
+  },
+  "execution_command": "MPLCONFIGDIR=/tmp/matplotlib-2456-s51b uv run --index-strategy unsafe-best-match --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple --with uproot --with awkward --with numpy --with pandas --with scikit-learn --with tabulate --with 'torch==2.5.1+cpu' python scripts/ticket_2456_s51b_saturated_pileup_energy_recovery.py"
 }

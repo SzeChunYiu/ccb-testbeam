@@ -1,0 +1,7 @@
+check,passed,detail
+raw_root_reproduction_pass,True,delta=0; reproduced=640737
+run_split_disjoint,True,"train=[50, 51, 52, 53, 54, 55, 56, 57]; heldout=[58, 60, 62, 64, 65]"
+no_event_id_crosses_split,True,max_splits_per_event=1
+no_train_rows_from_heldout_runs,True,train rows contain no held-out source runs
+no_heldout_rows_from_train_runs,True,held-out rows contain no train source runs
+required_methods_present,True,missing=[]

@@ -1,0 +1,6 @@
+#2539 NEW S64b censored saturation and pile-up energy recovery with pedestal-state calibration
+claim_helper_command: tn-ticket claim testbeam-laptop-3 --project testbeam
+claim_helper_output: null / # null / null
+manual_claim_command: gh issue edit 2539 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-3 --remove-label factory:open
+manual_claim_evidence: issue #2539 labels include factory:claimed, project:testbeam, worker:testbeam-laptop-3
+done_command: tn-ticket done 2539

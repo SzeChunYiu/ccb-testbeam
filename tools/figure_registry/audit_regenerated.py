@@ -42,7 +42,6 @@ from __future__ import annotations
 import argparse
 import json
 import subprocess
-import sys
 from pathlib import Path
 
 # Derived-text outputs: pure functions of the source tables, never of the

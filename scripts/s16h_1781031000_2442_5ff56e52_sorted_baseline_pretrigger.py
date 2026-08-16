@@ -606,7 +606,7 @@ def write_report(outdir: Path, config: dict, repro: pd.DataFrame, summary: pd.Da
 
 - **Ticket:** {ticket}
 - **Author:** {worker}
-- **Date:** 2026-06-10
+- **Date:** {date}
 - **Depends on:** S00, S16, S16b/S16d
 - **Input checksums:** `input_sha256.csv`
 - **Git commit:** `{commit}`
@@ -624,7 +624,7 @@ where `x` is the raw `HRDv` waveform for one selected B stave. The main scientif
 
 ## 1. Reproduction from raw ROOT
 
-The reproduction gate reruns the S00 B-stave selected-pulse count from raw `data/root/root/hrdb_run_NNNN.root`, with B2/B4/B6/B8 channels, median samples 0-3 as the seed pedestal, and the fixed `A > 1000 ADC` gate. The sorted tree is matched entry-by-entry through `raw EVT == sorted hrdEvtNo`; any mismatch aborts the script.
+The reproduction gate reruns the S00 B-stave selected-pulse count from raw `{raw_root_dir}/hrdb_run_NNNN.root`, with B2/B4/B6/B8 channels, median samples 0-3 as the seed pedestal, and the fixed `A > 1000 ADC` gate. The sorted tree is matched entry-by-entry through `raw EVT == sorted hrdEvtNo`; any mismatch aborts the script.
 
 {repro_table}
 
@@ -708,15 +708,17 @@ Proposed follow-up, queued at most once by this worker: use the sorted-baseline 
 ## 9. Reproducibility
 
 ```bash
-/home/billy/anaconda3/bin/python scripts/s16h_1781031000_2442_5ff56e52_sorted_baseline_pretrigger.py --config configs/s16h_1781031000_2442_5ff56e52_sorted_baseline_pretrigger.json
+/home/billy/anaconda3/bin/python scripts/s16h_1781031000_2442_5ff56e52_sorted_baseline_pretrigger.py --config {config_path}
 ```
 
 Outputs: `REPORT.md`, `result.json`, `manifest.json`, `input_sha256.csv`, `reproduction_match_table.csv`, `heldout_predictions.csv`, `heldout_method_metrics.csv`, `heldout_by_run.csv`, `hgb_cv_scan.csv`, `leakage_checks.csv`, and two PNG figures.
 """.format(
         ticket=config["ticket"],
         worker=config["worker"],
+        date=config.get("date", "2026-08-16"),
         commit=result["git_commit"],
-        config_path=CONFIG_DEFAULT,
+        config_path=config.get("_config_path", CONFIG_DEFAULT),
+        raw_root_dir=config["raw_root_dir"],
         repro_table=md_table(repro),
         heldout=config["heldout_runs"],
         calib=config["calibration_runs"],
@@ -775,6 +777,7 @@ def main() -> None:
     args = parser.parse_args()
     config_path = Path(args.config)
     config = json.loads(config_path.read_text())
+    config["_config_path"] = str(config_path)
     outdir = Path(config["output_dir"])
     outdir.mkdir(parents=True, exist_ok=True)
     command = ["/home/billy/anaconda3/bin/python", "scripts/s16h_1781031000_2442_5ff56e52_sorted_baseline_pretrigger.py", "--config", str(config_path)]

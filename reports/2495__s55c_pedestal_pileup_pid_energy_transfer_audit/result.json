@@ -1,0 +1,102 @@
+{
+  "ticket_id": "2495",
+  "factory_issue": 2495,
+  "project": "testbeam",
+  "worker": "testbeam-laptop-1",
+  "title": "S55c: Pedestal-pileup PID boundary stability and energy transfer audit",
+  "status": "complete",
+  "claim_command": "tn-ticket claim testbeam-laptop-1 --project testbeam",
+  "claim_command_stdout": "# null\n\nnull",
+  "claim_command_stderr": "null",
+  "manual_claim_repair": "Applied factory:claimed and worker:testbeam-laptop-1 to issue 2495 after tn-ticket claim returned null without labeling the issue.",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "adc_clip": 11800.0,
+    "bootstrap": "held-out run-block percentile 95% CI",
+    "bootstrap_replicates": 450,
+    "calibration": "10-bin held-out pile-up probability calibration with ECE and Brier score",
+    "winner_score": "energy_residual_sigma68 + 0.20*abs(energy_residual_bias) + 0.004*pileup_separation_sigma68_ns + 0.004*leading_timing_shift_sigma68_ns + 0.05*pileup_miss_rate + 0.05*false_split_rate + 0.08*pedestal_shift_false_split_span + 0.08*pid_energy_bias_span"
+  },
+  "required_method_coverage": {
+    "traditional": "analytic_clipped_template_sideband_traditional",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "tabular_plus_waveform_transformer": "tiny_sequence_transformer",
+    "new_architecture": "saturation_residual_fusion_new"
+  },
+  "winner": {
+    "name": "gradient_boosted_trees",
+    "criterion": "minimum registered S55c held-out energy-plus-pileup composite score with run-block bootstrap CIs",
+    "winner_score": 0.15809887896217864,
+    "energy_residual_bias": 0.0007235304109564056,
+    "energy_residual_sigma68": 0.06607627331323648,
+    "energy_residual_sigma68_ci95": [
+      0.05948738567454055,
+      0.07879572937336697
+    ],
+    "saturation_onset_energy_sigma68": 0.06294082027796669,
+    "pileup_separation_sigma68_ns": 10.464630226837976,
+    "pileup_separation_sigma68_ci95": [
+      9.63688000544839,
+      11.13934850003396
+    ],
+    "leading_timing_shift_sigma68_ns": 5.315959627398202,
+    "pedestal_shift_false_split_span": 0.011528635996419151,
+    "pid_energy_bias_span": 0.043938343148885006,
+    "pileup_miss_rate": 0.2863636363636364,
+    "false_split_rate": 0.2,
+    "ece": 0.09515586250944022,
+    "brier": 0.17355705051763468
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "endpoint_metrics_ci": "endpoint_metrics_ci.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "calibration_ece": "calibration_ece.csv",
+    "calibration_curve": "calibration_curve.csv",
+    "counterfactual_ablation_summary": "counterfactual_ablation_summary.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv"
+  },
+  "novel_tickets_appended": [],
+  "caveats": [
+    "Truth comes from controlled injections into raw-ROOT-derived clean pulses.",
+    "ADC clipping is a benchmark stressor, not decoded electronics metadata.",
+    "PID-dependent failure is represented by stave and charge-support proxies.",
+    "Counterfactual ablations are fixed-model sensitivity slices, not retrained feature-drop models.",
+    "Bootstrap CIs resample held-out runs and quantify run-transfer uncertainty."
+  ]
+}

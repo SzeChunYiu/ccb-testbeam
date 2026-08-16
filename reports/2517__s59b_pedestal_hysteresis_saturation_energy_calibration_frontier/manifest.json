@@ -1,0 +1,27 @@
+{
+  "ticket_id": "2517",
+  "git_commit": "cec9edc28257e0699c70c17fa9b2e8d806a3d42a",
+  "command": "/home/billy/.cache/uv/builds-v0/.tmpUuklN2/bin/python scripts/ticket_2517_s59b_pedestal_hysteresis_saturation_energy_calibration.py",
+  "runtime_seconds": 56.78862810134888,
+  "python": "3.11.14 (main, Feb  3 2026, 22:51:56) [Clang 21.1.4 ]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+  "outputs_sha256": {
+    "REPORT.md": "91acf3a6a6eff0245e070dc1b24897820b36183fb285ceb588b25aa560532af3",
+    "bias_dominance_metrics.csv": "f46b4bd0eb1b76d2ac7e8b6499e8c983a5261e5d1ac63405f7ec5d173148370d",
+    "claimed_ticket.txt": "dfdea4f009fe6eff8626428f1cbc38c272dad41800105f55bfc4b53675aad6fe",
+    "current_regime_transfer.csv": "a8e5ff661b0309c46f8cf4a377daa9211627ed788696e16c02cb22d527844596",
+    "endpoint_metrics_ci.csv": "a91f581a4cbbb2dfab3dae43e1328816f9f7047148e82beac87607874de010d6",
+    "event_predictions.csv": "0c9f868a66b5935156e50f714d26ac845a4da787b499d746e6e591d5a13968ab",
+    "input_sha256.csv": "cc17da0dcd3e7e732b81a17f3c35833f026fdec912538d28d7d71b9af71a46f6",
+    "method_metrics.csv": "45c5125392a9a32685851e5aa337893a8326acf13aa671849459a76da9143374",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "2077fb064d93261251660f620445b64ddd02ec30bafc5b5a95c074c5818f3b9f",
+    "run_heldout_metrics.csv": "3cbdf879caad7906f6c349151c180e4d7bfce657634e68ff7f2e3b422fe3f573",
+    "saturation_knee_metrics.csv": "842e4878092566ff46ecbb5a641498483bed70412b33b64116b47c94f93c9ac0",
+    "strata_metrics.csv": "b05f55e2f0f931ee728043b7abdaba6731a0249d7fc540342708e72591ef537e",
+    "template_summary.csv": "70811c144799226d495253dcf99ec44c6cea6b9a7de91249cd5ea72526581b13",
+    "winner_ranked_metrics.csv": "147760fc03c257dcc6dadabb8573e312ea4abd316c6c6f29dca7acbf6a5c4ed1"
+  },
+  "factory_issue": 2517,
+  "worker": "testbeam-laptop-3"
+}

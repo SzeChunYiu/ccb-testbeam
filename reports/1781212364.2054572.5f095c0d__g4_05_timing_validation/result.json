@@ -1,10 +1,10 @@
 {
   "artifacts": {
     "docs_report": "docs/reports/G4_05_timing_validation.md",
-    "metrics": "/home/billy/.tb-workers/testbeam-laptop-3/reports/1781212364.2054572.5f095c0d__g4_05_timing_validation/timing_method_metrics.csv",
-    "per_method_json": "/home/billy/.tb-workers/testbeam-laptop-3/reports/1781212364.2054572.5f095c0d__g4_05_timing_validation/per_method_results.json",
-    "predictions": "/home/billy/.tb-workers/testbeam-laptop-3/reports/1781212364.2054572.5f095c0d__g4_05_timing_validation/timing_predictions.csv.gz",
-    "report": "/home/billy/.tb-workers/testbeam-laptop-3/reports/1781212364.2054572.5f095c0d__g4_05_timing_validation/REPORT.md"
+    "metrics": "reports/1781212364.2054572.5f095c0d__g4_05_timing_validation/timing_method_metrics.csv",
+    "per_method_json": "reports/1781212364.2054572.5f095c0d__g4_05_timing_validation/per_method_results.json",
+    "predictions": "reports/1781212364.2054572.5f095c0d__g4_05_timing_validation/timing_predictions.csv.gz",
+    "report": "reports/1781212364.2054572.5f095c0d__g4_05_timing_validation/REPORT.md"
   },
   "primary_metric": "heldout_sigma68_ns",
   "raw_reproduction_gate": {

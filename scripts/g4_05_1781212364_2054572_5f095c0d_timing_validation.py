@@ -672,11 +672,11 @@ def main():
             "bootstrap_samples": config["truth"]["bootstrap_samples"],
         },
         "artifacts": {
-            "report": str(out / "REPORT.md"),
+            "report": str(Path(config["output_dir"]) / "REPORT.md"),
             "docs_report": config["docs_report"],
-            "metrics": str(out / "timing_method_metrics.csv"),
-            "per_method_json": str(out / "per_method_results.json"),
-            "predictions": str(out / "timing_predictions.csv.gz"),
+            "metrics": str(Path(config["output_dir"]) / "timing_method_metrics.csv"),
+            "per_method_json": str(Path(config["output_dir"]) / "per_method_results.json"),
+            "predictions": str(Path(config["output_dir"]) / "timing_predictions.csv.gz"),
         },
     }
     (out / "result.json").write_text(json.dumps(result, indent=2, sort_keys=True), encoding="utf-8")

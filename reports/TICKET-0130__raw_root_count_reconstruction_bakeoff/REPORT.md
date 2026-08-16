@@ -5,16 +5,16 @@
 Ticket `TICKET-0130` asks for an academic-grade comparison of a strong traditional
 multi-pulse analytic method against ridge, gradient-boosted trees, MLP, 1D-CNN,
 transformer sequence models, and a sensible new architecture for energy
-reconstruction under pile-up and ADC saturation.  The worker is `testbeam-laptop-4`.  The
+reconstruction under pile-up and ADC saturation.  The worker is `testbeam-laptop-2`.  The
 winner is **`saturation_residual_fusion_new`**, selected by held-out run-block energy closure:
-fractional energy sigma68 `0.06688` with 95%
-CI [`0.0605`,
-`0.07067`].  Its composite score is
-`0.154`.
+fractional energy sigma68 `0.06839` with 95%
+CI [`0.06184`,
+`0.07519`].  Its composite score is
+`0.1517`.
 
 ## Raw ROOT Reproduction
 
-Raw files are read from `/home/billy/ccb-data/extracted/root/root`.  For each run, `h101/HRDv` is
+Raw files are read from `/home/billy/.tb-workers/testbeam-laptop-2/data/root/root`.  For each run, `h101/HRDv` is
 reshaped to `(event, channel, sample)` with 18 samples per channel.  The B-stack
 selection uses B2/B4/B6/B8, pedestal
 
@@ -117,18 +117,18 @@ runs.
 
 | method                                         |   winner_score |   energy_fractional_bias |   energy_fractional_sigma68 |   energy_fractional_sigma68_ci_low |   energy_fractional_sigma68_ci_high |   time_bias_ns |   time_sigma68_ns |   time_sigma68_ns_ci_low |   time_sigma68_ns_ci_high |   pileup_miss_rate |   false_split_rate |
 |:-----------------------------------------------|---------------:|-------------------------:|----------------------------:|-----------------------------------:|------------------------------------:|---------------:|------------------:|-------------------------:|--------------------------:|-------------------:|-------------------:|
-| saturation_residual_fusion_new                 |         0.154  |               -0.00549   |                     0.06688 |                            0.0605  |                             0.07067 |        -0.2155 |             8.368 |                    7.756 |                     8.747 |             0.341  |            0.1359  |
+| saturation_residual_fusion_new                 |         0.1517 |               -0.002907  |                     0.06839 |                            0.06184 |                             0.07519 |        -0.2714 |             8.024 |                    7.365 |                     8.669 |             0.3256 |            0.1385  |
 | gradient_boosted_trees                         |         0.16   |               -0.004337  |                     0.07328 |                            0.06523 |                             0.08059 |        -0.3938 |             8.231 |                    7.863 |                     8.439 |             0.3538 |            0.1462  |
 | ridge                                          |         0.1695 |               -0.01034   |                     0.06713 |                            0.05628 |                             0.07009 |        -1.051  |            10.34  |                    9.307 |                    11     |             0.3051 |            0.1333  |
 | 1d_cnn                                         |         0.2168 |                0.04774   |                     0.09965 |                            0.09021 |                             0.1066  |        -1.768  |            11.03  |                   10.33  |                    11.42  |             0.2667 |            0.2179  |
-| analytic_clipped_template_sideband_traditional |         0.2234 |                0.07918   |                     0.1006  |                            0.09114 |                             0.1148  |         0.5086 |             9.454 |                    8.482 |                    10.46  |             0.5846 |            0.1974  |
+| analytic_clipped_template_sideband_traditional |         0.2234 |                0.07918   |                     0.1006  |                            0.09114 |                             0.1148  |         0.5086 |             9.454 |                    8.518 |                    10.46  |             0.5846 |            0.1974  |
 | tiny_sequence_transformer                      |         0.2713 |                0.0006918 |                     0.1027  |                            0.08737 |                             0.1139  |       -15.75   |            17.75  |                   16.96  |                    19.41  |             0.5949 |            0.06923 |
 | mlp                                            |         0.2756 |               -0.02341   |                     0.1571  |                            0.1433  |                             0.1622  |         0.3222 |            11.84  |                   10.46  |                    13.39  |             0.3846 |            0.09231 |
 
 The traditional comparator has energy sigma68 `0.1006`
 and score `0.2234`.  The selected winner changes energy
-sigma68 by `-0.03375`
-and timing sigma68 by `-1.086` ns.
+sigma68 by `-0.03224`
+and timing sigma68 by `-1.43` ns.
 
 ## Run-Held-Out Stability
 
@@ -143,7 +143,7 @@ and timing sigma68 by `-1.086` ns.
 | analytic_clipped_template_sideband_traditional |            60 |                 0.1035   |                     0.1049  |       2.624    |             7.291 |             0.6026 |            0.1923  |
 | analytic_clipped_template_sideband_traditional |            62 |                 0.08827  |                     0.114   |       0.7759   |            11.39  |             0.5897 |            0.2051  |
 | analytic_clipped_template_sideband_traditional |            64 |                 0.06412  |                     0.06839 |       0.3945   |             7.361 |             0.5385 |            0.1282  |
-| analytic_clipped_template_sideband_traditional |            65 |                 0.08165  |                     0.0913  |      -1        |             9.479 |             0.6282 |            0.2436  |
+| analytic_clipped_template_sideband_traditional |            65 |                 0.08165  |                     0.0913  |      -1        |             9.997 |             0.6282 |            0.2436  |
 | gradient_boosted_trees                         |            58 |                 0.01035  |                     0.06828 |      -0.4859   |             7.496 |             0.2821 |            0.1538  |
 | gradient_boosted_trees                         |            60 |                 0.003428 |                     0.07901 |       0.6314   |             8.349 |             0.3077 |            0.1795  |
 | gradient_boosted_trees                         |            62 |                -0.001499 |                     0.06871 |      -1.548    |             8.259 |             0.3974 |            0.1282  |
@@ -159,11 +159,11 @@ and timing sigma68 by `-1.086` ns.
 | ridge                                          |            62 |                 0.001731 |                     0.06261 |      -3.103    |            11.26  |             0.3718 |            0.141   |
 | ridge                                          |            64 |                -0.02938  |                     0.05241 |      -0.7281   |             9.295 |             0.2436 |            0.1026  |
 | ridge                                          |            65 |                -0.006805 |                     0.05437 |      -2.533    |             9.576 |             0.3846 |            0.1282  |
-| saturation_residual_fusion_new                 |            58 |                 0.005321 |                     0.05853 |      -0.2345   |             7.703 |             0.2949 |            0.1923  |
-| saturation_residual_fusion_new                 |            60 |                -0.004446 |                     0.06835 |       0.8193   |             7.791 |             0.2692 |            0.08974 |
-| saturation_residual_fusion_new                 |            62 |                 0.01592  |                     0.05712 |      -1.745    |             8.53  |             0.4103 |            0.141   |
-| saturation_residual_fusion_new                 |            64 |                -0.037    |                     0.06486 |      -0.9396   |             7.563 |             0.3333 |            0.1026  |
-| saturation_residual_fusion_new                 |            65 |                -0.001895 |                     0.06979 |       0.3526   |             8.137 |             0.3974 |            0.1538  |
+| saturation_residual_fusion_new                 |            58 |                 0.001794 |                     0.06272 |       0.1602   |             7.283 |             0.2564 |            0.1667  |
+| saturation_residual_fusion_new                 |            60 |                 0.005086 |                     0.07569 |       0.5078   |             7.735 |             0.2949 |            0.1667  |
+| saturation_residual_fusion_new                 |            62 |                 0.0287   |                     0.06522 |      -1.508    |             8.79  |             0.3462 |            0.1154  |
+| saturation_residual_fusion_new                 |            64 |                -0.03486  |                     0.05366 |      -0.7482   |             7.792 |             0.3205 |            0.1538  |
+| saturation_residual_fusion_new                 |            65 |                -0.01018  |                     0.07301 |       0.1934   |             7.984 |             0.4103 |            0.08974 |
 | tiny_sequence_transformer                      |            58 |                -0.007738 |                     0.1248  |     -14.53     |            16.72  |             0.5128 |            0.03846 |
 | tiny_sequence_transformer                      |            60 |                 0.02831  |                     0.09785 |     -13.86     |            19.2   |             0.5513 |            0.1026  |
 | tiny_sequence_transformer                      |            62 |                -0.003341 |                     0.08162 |     -18.25     |            17.33  |             0.6538 |            0.0641  |
@@ -197,10 +197,10 @@ pulse morphology, amplitude ratio, stave, and a PID proxy class.
 | spacing_bin      | (10.0, 25.0]      | ridge                                          |                0.001731  |                    0.0556   |       0.2933   |             7.308 |            0.3523  |
 | spacing_bin      | (25.0, 45.0]      | ridge                                          |               -0.01192   |                    0.05848  |      -3.865    |             9.06  |            0.2949  |
 | spacing_bin      | (45.0, 70.0]      | ridge                                          |               -0.0523    |                    0.06381  |      -2.512    |            13.3   |            0.1848  |
-| spacing_bin      | (-0.001, 10.0]    | saturation_residual_fusion_new                 |                0.009857  |                    0.06808  |       0.799    |             7.403 |            0.447   |
-| spacing_bin      | (10.0, 25.0]      | saturation_residual_fusion_new                 |                0.03112   |                    0.047    |       0.2419   |             7.499 |            0.4432  |
-| spacing_bin      | (25.0, 45.0]      | saturation_residual_fusion_new                 |               -0.01091   |                    0.06535  |      -1.447    |             8.646 |            0.2308  |
-| spacing_bin      | (45.0, 70.0]      | saturation_residual_fusion_new                 |               -0.04174   |                    0.05886  |      -0.6743   |             9.623 |            0.1848  |
+| spacing_bin      | (-0.001, 10.0]    | saturation_residual_fusion_new                 |                0.01636   |                    0.06854  |       0.2542   |             7.469 |            0.4242  |
+| spacing_bin      | (10.0, 25.0]      | saturation_residual_fusion_new                 |                0.03361   |                    0.04364  |       0.6541   |             7.852 |            0.3977  |
+| spacing_bin      | (25.0, 45.0]      | saturation_residual_fusion_new                 |                0.001794  |                    0.06553  |      -1.451    |             9.025 |            0.2308  |
+| spacing_bin      | (45.0, 70.0]      | saturation_residual_fusion_new                 |               -0.04433   |                    0.06021  |      -0.6275   |             9.272 |            0.1957  |
 | spacing_bin      | (-0.001, 10.0]    | tiny_sequence_transformer                      |                0.05655   |                    0.06687  |     -12.61     |             9.402 |            0.75    |
 | spacing_bin      | (10.0, 25.0]      | tiny_sequence_transformer                      |                0.05505   |                    0.05662  |     -16.3      |             8.701 |            0.7386  |
 | spacing_bin      | (25.0, 45.0]      | tiny_sequence_transformer                      |               -0.01376   |                    0.06152  |     -19.58     |            16.85  |            0.5256  |
@@ -225,10 +225,10 @@ pulse morphology, amplitude ratio, stave, and a PID proxy class.
 | ratio_bin        | (0.35, 0.625]     | ridge                                          |                0.006447  |                    0.06693  |      -2.412    |             9.546 |            0.3486  |
 | ratio_bin        | (0.625, 0.875]    | ridge                                          |               -0.01654   |                    0.06095  |       0.4883   |             8.309 |            0.2472  |
 | ratio_bin        | (0.875, 1.05]     | ridge                                          |               -0.0178    |                    0.06286  |       1.238    |            10.23  |            0.1858  |
-| ratio_bin        | (-0.001, 0.35]    | saturation_residual_fusion_new                 |               -0.02641   |                    0.05611  |      -3.129    |             9.218 |            0.5316  |
-| ratio_bin        | (0.35, 0.625]     | saturation_residual_fusion_new                 |               -0.001895  |                    0.06766  |      -1.026    |             8.998 |            0.3486  |
-| ratio_bin        | (0.625, 0.875]    | saturation_residual_fusion_new                 |               -0.008678  |                    0.07181  |      -0.8698   |             7.184 |            0.3146  |
-| ratio_bin        | (0.875, 1.05]     | saturation_residual_fusion_new                 |                0.001228  |                    0.06171  |       1.545    |             6.981 |            0.2212  |
+| ratio_bin        | (-0.001, 0.35]    | saturation_residual_fusion_new                 |               -0.02048   |                    0.06721  |      -3.37     |            10.58  |            0.5316  |
+| ratio_bin        | (0.35, 0.625]     | saturation_residual_fusion_new                 |                0.01452   |                    0.07227  |      -1.03     |             8.99  |            0.367   |
+| ratio_bin        | (0.625, 0.875]    | saturation_residual_fusion_new                 |               -0.004919  |                    0.06446  |      -0.5656   |             6.481 |            0.2809  |
+| ratio_bin        | (0.875, 1.05]     | saturation_residual_fusion_new                 |               -0.003736  |                    0.0653   |       1.604    |             7.339 |            0.177   |
 | ratio_bin        | (-0.001, 0.35]    | tiny_sequence_transformer                      |                0.01343   |                    0.0955   |     -14.89     |            13.68  |            0.6835  |
 | ratio_bin        | (0.35, 0.625]     | tiny_sequence_transformer                      |                0.02227   |                    0.1048   |     -18.45     |            17.65  |            0.6055  |
 | ratio_bin        | (0.625, 0.875]    | tiny_sequence_transformer                      |               -0.009782  |                    0.1125   |     -16.47     |            18.29  |            0.618   |
@@ -248,9 +248,9 @@ pulse morphology, amplitude ratio, stave, and a PID proxy class.
 | saturation_bin   | 0                 | ridge                                          |               -0.009765  |                    0.06717  |      -1.051    |            10.29  |            0.3123  |
 | saturation_bin   | 1-2               | ridge                                          |               -0.002575  |                    0.07896  |      -4.294    |             9.566 |            0       |
 | saturation_bin   | 3-5               | ridge                                          |               -0.04979   |                    0.01396  |       4.854    |             7.93  |            0       |
-| saturation_bin   | 0                 | saturation_residual_fusion_new                 |               -0.005245  |                    0.06708  |      -0.1746   |             8.373 |            0.3491  |
-| saturation_bin   | 1-2               | saturation_residual_fusion_new                 |               -0.01139   |                    0.08318  |      -2.313    |             9.944 |            0       |
-| saturation_bin   | 3-5               | saturation_residual_fusion_new                 |               -0.00549   |                    0.01253  |       0.1982   |             3.813 |            0       |
+| saturation_bin   | 0                 | saturation_residual_fusion_new                 |               -0.002582  |                    0.06902  |      -0.2951   |             7.98  |            0.3333  |
+| saturation_bin   | 1-2               | saturation_residual_fusion_new                 |               -0.002311  |                    0.07841  |      -3.286    |            10.16  |            0       |
+| saturation_bin   | 3-5               | saturation_residual_fusion_new                 |               -0.01081   |                    0.01219  |       1.577    |             4.333 |            0       |
 | saturation_bin   | 0                 | tiny_sequence_transformer                      |                0.004608  |                    0.1016   |     -15.75     |            17.93  |            0.6063  |
 | saturation_bin   | 1-2               | tiny_sequence_transformer                      |               -0.03803   |                    0.09451  |     -20.55     |            11.93  |            0       |
 | saturation_bin   | 3-5               | tiny_sequence_transformer                      |               -0.1398    |                    0.02932  |      -8.485    |             8.047 |            0.2     |
@@ -264,8 +264,8 @@ pulse morphology, amplitude ratio, stave, and a PID proxy class.
 | pedestal_state   | shifted           | mlp                                            |                0.008483  |                    0.1733   |      -0.9066   |            12.76  |            0.4039  |
 | pedestal_state   | nominal           | ridge                                          |               -0.01825   |                    0.04632  |       0.5808   |             9.145 |            0.2815  |
 | pedestal_state   | shifted           | ridge                                          |               -0.001909  |                    0.07223  |      -2.307    |            10.8   |            0.3176  |
-| pedestal_state   | nominal           | saturation_residual_fusion_new                 |               -0.006911  |                    0.058    |       0.7153   |             6.871 |            0.3259  |
-| pedestal_state   | shifted           | saturation_residual_fusion_new                 |               -0.004851  |                    0.07185  |      -0.9396   |             8.661 |            0.349   |
+| pedestal_state   | nominal           | saturation_residual_fusion_new                 |               -0.004569  |                    0.05744  |       0.5801   |             6.93  |            0.3185  |
+| pedestal_state   | shifted           | saturation_residual_fusion_new                 |               -0.002258  |                    0.07072  |      -0.7335   |             8.42  |            0.3294  |
 | pedestal_state   | nominal           | tiny_sequence_transformer                      |               -0.02244   |                    0.08921  |     -15.61     |            19.22  |            0.5111  |
 | pedestal_state   | shifted           | tiny_sequence_transformer                      |                0.01552   |                    0.1034   |     -15.79     |            16.55  |            0.6392  |
 | morphology_state | late_tail_high    | 1d_cnn                                         |                0.06138   |                    0.08727  |      -3.408    |            10.82  |            0.3295  |
@@ -278,22 +278,22 @@ pulse morphology, amplitude ratio, stave, and a PID proxy class.
 | morphology_state | late_tail_low     | mlp                                            |               -0.02084   |                    0.1771   |       0.05644  |            14.88  |            0.3502  |
 | morphology_state | late_tail_high    | ridge                                          |               -0.008094  |                    0.06133  |       0.3451   |             8.467 |            0.3584  |
 | morphology_state | late_tail_low     | ridge                                          |               -0.01095   |                    0.07013  |      -2.136    |            11.4   |            0.2627  |
-| morphology_state | late_tail_high    | saturation_residual_fusion_new                 |                0.01181   |                    0.05655  |       0.2404   |             7.369 |            0.4162  |
-| morphology_state | late_tail_low     | saturation_residual_fusion_new                 |               -0.02239   |                    0.06846  |      -0.5279   |             9.167 |            0.2811  |
+| morphology_state | late_tail_high    | saturation_residual_fusion_new                 |                0.01914   |                    0.05938  |      -0.05415  |             7.487 |            0.3757  |
+| morphology_state | late_tail_low     | saturation_residual_fusion_new                 |               -0.02076   |                    0.07207  |      -0.4335   |             8.696 |            0.2857  |
 | morphology_state | late_tail_high    | tiny_sequence_transformer                      |                0.02674   |                    0.07685  |     -19.02     |            14.75  |            0.711   |
 | morphology_state | late_tail_low     | tiny_sequence_transformer                      |               -0.01404   |                    0.1094   |     -13.35     |            18.36  |            0.5023  |
 | pid_proxy_class  | inner_high_charge | 1d_cnn                                         |               -0.02363   |                    0.06256  |      -7.135    |            11.66  |            0.2917  |
 | pid_proxy_class  | other             | 1d_cnn                                         |                0.05285   |                    0.09746  |      -1.451    |            10.97  |            0.265   |
 | pid_proxy_class  | inner_high_charge | analytic_clipped_template_sideband_traditional |                0.07949   |                    0.06167  |       3.535    |            12.8   |            0.5417  |
-| pid_proxy_class  | other             | analytic_clipped_template_sideband_traditional |                0.07887   |                    0.1034   |       0.2891   |             8.975 |            0.5874  |
+| pid_proxy_class  | other             | analytic_clipped_template_sideband_traditional |                0.07887   |                    0.1034   |       0.2891   |             8.984 |            0.5874  |
 | pid_proxy_class  | inner_high_charge | gradient_boosted_trees                         |               -0.05084   |                    0.08205  |      -4.985    |             9.13  |            0.1667  |
 | pid_proxy_class  | other             | gradient_boosted_trees                         |               -0.003038  |                    0.06894  |      -0.1418   |             8.083 |            0.3661  |
 | pid_proxy_class  | inner_high_charge | mlp                                            |               -0.08423   |                    0.07343  |      -0.8013   |            15.14  |            0.08333 |
 | pid_proxy_class  | other             | mlp                                            |               -0.009771  |                    0.1605   |       0.4354   |            11.48  |            0.4044  |
 | pid_proxy_class  | inner_high_charge | ridge                                          |               -0.04979   |                    0.05878  |      -5.357    |            11.57  |            0.04167 |
 | pid_proxy_class  | other             | ridge                                          |               -0.007556  |                    0.06558  |      -0.6305   |             9.802 |            0.3224  |
-| pid_proxy_class  | inner_high_charge | saturation_residual_fusion_new                 |               -0.03109   |                    0.07284  |      -3.165    |            10.03  |            0.1667  |
-| pid_proxy_class  | other             | saturation_residual_fusion_new                 |               -0.001895  |                    0.06637  |      -0.06267  |             8.215 |            0.3525  |
+| pid_proxy_class  | inner_high_charge | saturation_residual_fusion_new                 |               -0.03909   |                    0.08857  |      -3.494    |             9.808 |            0.1667  |
+| pid_proxy_class  | other             | saturation_residual_fusion_new                 |                0.001582  |                    0.06814  |      -0.1505   |             7.704 |            0.3361  |
 | pid_proxy_class  | inner_high_charge | tiny_sequence_transformer                      |               -0.06351   |                    0.07445  |     -16.43     |            17.47  |            0.2917  |
 | pid_proxy_class  | other             | tiny_sequence_transformer                      |                0.01115   |                    0.1023   |     -15.59     |            17.81  |            0.6148  |
 | stave            | B2                | 1d_cnn                                         |               -0.04387   |                    0.09841  |      -7.131    |            12.1   |            0.4505  |
@@ -316,10 +316,10 @@ pulse morphology, amplitude ratio, stave, and a PID proxy class.
 | stave            | B4                | ridge                                          |                0.01905   |                    0.07085  |      -3.677    |             8.73  |            0.3271  |
 | stave            | B6                | ridge                                          |               -0.01034   |                    0.05717  |       0.2165   |             7.772 |            0.3529  |
 | stave            | B8                | ridge                                          |               -0.01622   |                    0.06035  |       3.231    |             7.464 |            0.215   |
-| stave            | B2                | saturation_residual_fusion_new                 |               -0.04882   |                    0.07231  |      -5.876    |            10.09  |            0.4066  |
-| stave            | B4                | saturation_residual_fusion_new                 |                0.01637   |                    0.06939  |      -1.407    |             8.442 |            0.3178  |
-| stave            | B6                | saturation_residual_fusion_new                 |               -0.003692  |                    0.05845  |       0.6375   |             5.176 |            0.3882  |
-| stave            | B8                | saturation_residual_fusion_new                 |                0.0009253 |                    0.05262  |       1.731    |             5.98  |            0.271   |
+| stave            | B2                | saturation_residual_fusion_new                 |               -0.04592   |                    0.07768  |      -5.703    |             9.309 |            0.3956  |
+| stave            | B4                | saturation_residual_fusion_new                 |                0.01619   |                    0.06897  |      -1.421    |             7.93  |            0.2991  |
+| stave            | B6                | saturation_residual_fusion_new                 |               -0.0002057 |                    0.06089  |       0.5724   |             5.521 |            0.3647  |
+| stave            | B8                | saturation_residual_fusion_new                 |                0.004243  |                    0.05155  |       1.908    |             6.136 |            0.2617  |
 | stave            | B2                | tiny_sequence_transformer                      |               -0.04693   |                    0.07852  |     -18.16     |            19.89  |            0.7363  |
 | stave            | B4                | tiny_sequence_transformer                      |                0.02227   |                    0.1156   |     -16.26     |            19.69  |            0.6355  |
 | stave            | B6                | tiny_sequence_transformer                      |               -0.02059   |                    0.1035   |     -15.94     |            18.8   |            0.5529  |
@@ -342,4 +342,4 @@ uncertainty propagation.  The analytic clipped-template method remains the
 auditable fallback when deterministic extrapolation is more important than the
 observed held-out score gain.
 
-Runtime was `46.8` s on `Linux-5.15.0-139-generic-x86_64-with-glibc2.35`.
+Runtime was `42.7` s on `Linux-5.15.0-139-generic-x86_64-with-glibc2.35`.

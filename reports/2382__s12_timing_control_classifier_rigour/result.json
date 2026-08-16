@@ -1,0 +1,165 @@
+{
+  "study": "S12",
+  "ticket": "2382",
+  "worker": "testbeam-laptop-2",
+  "title": "timing-control-region classifier rigour",
+  "reproduced": true,
+  "repro_tolerance": "exact guarded gross D_t count match",
+  "winner": {
+    "metric": "run-held-out ROC AUC on D_t extreme labels",
+    "method": "traditional D_t cut baseline",
+    "family": "traditional",
+    "value": 1.0,
+    "ci": [
+      0.9999999999999999,
+      1.0
+    ],
+    "average_precision": 1.0
+  },
+  "traditional": {
+    "metric": "run-held-out ROC AUC on D_t extreme labels",
+    "method": "traditional D_t cut baseline",
+    "value": 1.0,
+    "ci": [
+      0.9999999999999999,
+      1.0
+    ]
+  },
+  "best_nontraditional": {
+    "metric": "run-held-out ROC AUC on D_t extreme labels",
+    "method": "shape_only_random_forest_reference",
+    "family": "ML",
+    "value": 0.9987174529517918,
+    "ci": [
+      0.9977736338914239,
+      0.9992397196206305
+    ],
+    "average_precision": 0.9647692114442399
+  },
+  "ml_beats_baseline": false,
+  "falsification": {
+    "label_self_reference": "traditional D_t is label-defining and reaches AUC/AP 1 by construction",
+    "topology_only_auc": 0.603393271461717,
+    "amplitude_only_auc": 0.8212490332559939,
+    "shuffle_auc": 0.5192639855632895,
+    "slot_shape_auc": 0.998904356792988
+  },
+  "best_ml_fixed_efficiency": {
+    "clean_efficiency_target": 0.95,
+    "method": "shape_only_random_forest_reference",
+    "gross_rejection_mean": 1.0,
+    "traditional_gross_rejection_mean": 1.0
+  },
+  "details": {
+    "n_control_events": 10156,
+    "n_extreme_events": 2227,
+    "n_clean": 2155,
+    "n_gross": 72,
+    "gross_documented_dt_gt_50": 74,
+    "gross_guarded_dt_gt_51": 72,
+    "strict_shape_feature_count": 72,
+    "cnn_feature_count": 28,
+    "hybrid_feature_count": 103
+  },
+  "methods_ranked": [
+    {
+      "method": "traditional D_t cut baseline",
+      "roc_auc": 1.0,
+      "roc_auc_ci_low": 0.9999999999999999,
+      "roc_auc_ci_high": 1.0,
+      "average_precision": 1.0,
+      "ap_ci_low": 0.9999999999999998,
+      "ap_ci_high": 1.0000000000000002,
+      "brier": 0.0,
+      "notes": "Direct label-defining span score; equivalent to the D_t cut baseline.",
+      "family": "traditional"
+    },
+    {
+      "method": "shape_only_random_forest_reference",
+      "roc_auc": 0.9987174529517918,
+      "roc_auc_ci_low": 0.9977736338914239,
+      "roc_auc_ci_high": 0.9992397196206305,
+      "average_precision": 0.9647692114442399,
+      "ap_ci_low": 0.9345193720964997,
+      "ap_ci_high": 0.9814623091861963,
+      "brier": 0.006118330364716417,
+      "notes": "Reference S07b-style RF; best params={'n_estimators': 500, 'max_depth': 7, 'min_samples_leaf': 8}.",
+      "family": "ML"
+    },
+    {
+      "method": "timing_shape_hybrid_new",
+      "roc_auc": 0.9976475895849446,
+      "roc_auc_ci_low": 0.9966075365349941,
+      "roc_auc_ci_high": 0.9989139102654006,
+      "average_precision": 0.9350220985377303,
+      "ap_ci_low": 0.9097553123470096,
+      "ap_ci_high": 0.9691136069851586,
+      "brier": 0.0071613100348531305,
+      "notes": "New hybrid residual stack fusing shape, compact convolutional responses, and non-label curvature.",
+      "family": "new"
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "roc_auc": 0.9974413508636246,
+      "roc_auc_ci_low": 0.9961856821867222,
+      "roc_auc_ci_high": 0.9988958425406445,
+      "average_precision": 0.9476783699265985,
+      "ap_ci_low": 0.9257515794256969,
+      "ap_ci_high": 0.9750396447449126,
+      "brier": 0.006650513505468297,
+      "notes": "Histogram gradient boosting on the same strict shape summaries.",
+      "family": "ML"
+    },
+    {
+      "method": "ridge",
+      "roc_auc": 0.99328435163702,
+      "roc_auc_ci_low": 0.9816631210143199,
+      "roc_auc_ci_high": 0.9991023782992281,
+      "average_precision": 0.9373278556425375,
+      "ap_ci_low": 0.8881130703443159,
+      "ap_ci_high": 0.9742223289217992,
+      "brier": 0.006979098451148486,
+      "notes": "L2 logistic regression on strict normalized shape summaries.",
+      "family": "ML"
+    },
+    {
+      "method": "mlp",
+      "roc_auc": 0.9798466099510182,
+      "roc_auc_ci_low": 0.9514796673156883,
+      "roc_auc_ci_high": 0.9945337678081986,
+      "average_precision": 0.8904946025681194,
+      "ap_ci_low": 0.8221694618480324,
+      "ap_ci_high": 0.9468404074838142,
+      "brier": 0.009213308034469169,
+      "notes": "Two-layer MLP on standardized strict shape summaries.",
+      "family": "NN"
+    },
+    {
+      "method": "1d_cnn",
+      "roc_auc": 0.6732276359886569,
+      "roc_auc_ci_low": 0.5786776052604161,
+      "roc_auc_ci_high": 0.7590019727142052,
+      "average_precision": 0.204761071885002,
+      "ap_ci_low": 0.09140761442181994,
+      "ap_ci_high": 0.3506145473418718,
+      "brier": 0.03246844759278573,
+      "notes": "Compact neural head over fixed 1D convolutional response features.",
+      "family": "NN"
+    },
+    {
+      "method": "curvature-only traditional cross-check",
+      "roc_auc": 0.6563225058004641,
+      "roc_auc_ci_low": 0.6110090025517654,
+      "roc_auc_ci_high": 0.6806510633625849,
+      "average_precision": 0.3315026235368737,
+      "ap_ci_low": 0.23302828170620513,
+      "ap_ci_high": 0.3784905655587038,
+      "brier": 0.24773968670314864,
+      "notes": "Uses |C_t| where available; not label-defining for events missing one downstream stave.",
+      "family": "traditional"
+    }
+  ],
+  "input_sha256": "122dfe2e7f3693596b8287ea689aa2e46548839ae00f4791384953648132efee",
+  "git_commit": "68374937a0026eba71394446c496390ef51afa18",
+  "next_tickets": []
+}

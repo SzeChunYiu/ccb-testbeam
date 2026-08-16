@@ -199,7 +199,7 @@ The analysis programme is suitable for submission to a peer-reviewed journal upo
 **Alternative journals:** Journal of Instrumentation (JINST) for open-access publication with a focus on detector commissioning methodology; Physical Review Accelerators and Beams (PRAB) if the emphasis is on the ESS operational implications.
 
 **Main findings for the cover letter:**
-1. Sub-nanosecond timing resolution (540 ps combined) achieved with one-ended WLS fibre readout — competitive with two-ended systems at a fraction of the hardware complexity.
+1. A one-ended WLS fibre readout timing study whose historical 540 ps combined value is withheld as source-absent (CL-004/CL-005); the defensible timing statement on the located 8×16 raw product is the format-limited B4–B6 pair residual of 8.7 ns (CL-1320-001), with the one-ended configuration's cost/simplicity advantage independent of any validated resolution number.
 2. Validated pile-up tolerance of 3.05 MHz, correcting a 4.22 MHz error in the original analysis note that arose from an incorrect effective live-time assumption.
 3. Systematic Monte Carlo validation programme (MV0-MV6) providing truth-bridged assessment of every physics claim.
 4. Methodological finding: rigorous leakage controls (target shuffle, LORO, event-block shuffle) are essential for evaluating machine learning in detector physics — 230+ studies, multiple corrected claims.

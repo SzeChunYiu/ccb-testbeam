@@ -1,0 +1,7 @@
+endpoint,heldout_value,ci_low,ci_high,interpretation
+energy_proxy_bias,-2898.0,-3042.1375,-2793.45,"raw waveform sideband proxy, common support for all supervised timing methods"
+energy_proxy_sigma68,1558.3000000000002,1379.761,1791.0212499999996,"raw waveform sideband proxy, common support for all supervised timing methods"
+pileup_flag_rate,0.5177059276366436,0.48091177030385174,0.560582508793861,"raw waveform sideband proxy, common support for all supervised timing methods"
+saturation_onset_rate,0.27424942263279445,0.251165070226261,0.30132816773645876,"raw waveform sideband proxy, common support for all supervised timing methods"
+pid_boundary_sideband_rate,0.3125481139337952,0.27901735358950314,0.35550162217043657,"raw waveform sideband proxy, common support for all supervised timing methods"
+pedestal_high_rate,0.3275596612779061,0.29340112608149665,0.3601597758952773,"raw waveform sideband proxy, common support for all supervised timing methods"

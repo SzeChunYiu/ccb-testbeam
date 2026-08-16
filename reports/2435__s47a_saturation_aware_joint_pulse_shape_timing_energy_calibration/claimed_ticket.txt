@@ -1,0 +1,3 @@
+#2435 S47a: Saturation-aware joint pulse-shape timing-energy calibration
+
+Academic-grade study: quantify how saturation onset distorts pulse shape, timing pickoff, pedestal subtraction, energy reconstruction, pile-up flags, and PID boundaries. Compare traditional CFD/template-fit/optimal-filter baselines with ridge, gradient-boosted trees, MLP, 1D-CNN, and a compact waveform transformer where apt. Report bootstrap confidence intervals for bias, resolution, calibration transfer, and failure modes across runs and amplitudes.

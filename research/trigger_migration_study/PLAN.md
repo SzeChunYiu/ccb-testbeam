@@ -4,61 +4,56 @@
 
 **Objective**: Replace the HRD first-stack-layer charged-hit proxy with a validated hardware-trigger response model by adding T1/T2 trigger scintillator volumes to the MC geometry and computing migration matrices.
 
-**Current Status**: BLOCKED - HRD proxy is diagnostic only, not validated hardware trigger reproduction.
+**Current Status**: Phase 1 COMPLETE, Phase 2 IMPLEMENTATION COMPLETE (awaiting LUNARC execution)
 
 **Evidence State**: MC_TRIGGER_PROXY / UNKNOWN_EXTERNAL per docs/contracts/TRIGGER_HARDWARE_RESPONSE.json
 
-## Current Proxy Implementation
+## Phase Status Summary
 
-### HRD_FIRST_STACK_LAYER_CHARGED_HIT
-- **Definition**: ENTER B = any charged hit in first B-stack layer; ENTER A = any charged hit in first A-stack layer; Sample I additionally requires |min(t_A)-min(t_B)| < coinc_ns
-- **Code Surface**: src/ccb_mc_validation/truth/trigger.py (lines 63-197)
-- **Semantics**:
-  - Sample II: charged B first-layer hit
-  - Sample I: charged B AND charged A with |tA - tB| < coinc_ns (default 15 ns)
-- **Provenance**: trigger_provenance() returns BLOCKED state
+| Phase | Name | Status | Commit |
+|-------|------|--------|--------|
+| 1 | Baseline HRD Proxy Characterization | **COMPLETE** | f6f22dfd |
+| 2 | Truth-Trigger Volume Addition | **IMPLEMENTATION COMPLETE** | a223b807, 92b9e24c |
+| 3 | Threshold/Coincidence SCAN | PENDING | — |
+| 4 | Migration Matrix Analysis | PENDING | — |
+| 5 | MC Regeneration (conditional) | PENDING | — |
+| 6 | Contract Bump | PENDING | — |
 
-### Known Issues
-1. **Geometry**: T1/T2 trigger scintillators NOT in any G4 geometry (only CV bars use PSci material)
-2. **MC Output**: ROOT files record only HRDv_digitized (no trigger EDep/times)
-3. **Run Ledger**: Has trigger semantics but NO hardware parameters (threshold, discriminator, coincidence window)
-4. **External Source**: MATTHIAS_RESPONSE.md claims "In source since 2026-01-26" - UNVERIFIED (LUNARC not a git repo)
+## Phase 1: Baseline HRD Proxy Characterization ✅ COMPLETE
 
-## Migration Study Design
+**Results**:
+- Sample I is 99.3% deuteron with ε_HRD = 45.6%
+- Protons suppressed to 0.4% efficiency
+- Established baseline for migration matrix comparison
 
-### Phase 1: Baseline HRD Proxy Characterization
-**Objective**: Quantify current proxy acceptance vs species, energy, angle, multiplicity
+**Deliverables**:
+- `scripts/trigger_baseline_characterization.py`
+- `research/trigger_migration_study/PHASE1_COMPLETE_FINDINGS.md`
+- `research/trigger_migration_study/PHASE1_SUMMARY.md`
 
-**Steps**:
-1. Process existing 1M-event MC (output_krakow_1M.root) at coinc_ns = 15 ns
-2. Compute efficiency matrix ε_HRD[species, energy_bin, angle_bin]
-3. Document reference distributions for:
-   - Species: p, d, α, ¹²C (primary contributors)
-   - Energy: 0-50, 50-100, 100-150, 150-200 MeV
-   - Angle: Lab θ bins (0-30°, 30-60°, 60-90° for B arm)
-   - Multiplicity: 1, 2, 3+ hits per event
+## Phase 2: Truth-Trigger Volume Addition 🔄 IMPLEMENTATION COMPLETE
 
-**Output**: research/trigger_migration_study/baseline_hrd_proxy.json
+**Status**: Implementation committed, awaiting LUNARC execution of `test_phase2_simulation.sh`
 
-### Phase 2: Truth-Trigger Volume Addition
-**Objective**: Add T1/T2 trigger scintillator volumes to LUNARC HIBEAM geometry
+**Decision**: Option A — Direct GDML modification (fastest approach)
 
-**Geometry Specifications** (from MATTHIAS_RESPONSE.md):
-- T1: 1 cm thick PSci at A-arm position (71.5° from beam)
-- T2: 1 cm thick PSci at B-arm position (-38° from beam)
-- Material: PSci (ρ=1.032 g/cm³, C/H composition - already in GDML)
-- Position: Upstream of HRD stacks, covering beam spot
+**Geometry Specifications**:
+- T1: A-arm trigger at 71.5°, 10×10×1 cm (PSci material)
+- T2: B-arm trigger at -38°, 15×15×1 cm (PSci material)
 
-**Implementation**:
-1. Modify hibeam_wasa_geom.gdml (LUNARC) or create new geometry file
-2. Add sensitive detectors for trigger volumes
-3. Record per-event: T1_EDep, T1_Time, T2_EDep, T2_Time, T1_optical_photons, T2_optical_photons
-4. Re-compile HIBEAM simulation on LUNARC
+**Deliverables**:
+- `scripts/trigger_phase2/patch_gdml_trigger_volumes.py`
+- `scripts/trigger_phase2/TriggerSensitiveDetector.hh/.cc`
+- `scripts/trigger_phase2/patch_detector_construction.md`
+- `scripts/trigger_phase2/test_phase2_simulation.sh`
+- `research/trigger_migration_study/phase2/PLAN.md`
+- `research/trigger_migration_study/phase2/STATUS.md`
 
-**Test**: 50k events (statistical sufficiency for migration matrices)
+**Blocking**: Requires LUNARC execution (write access to shared GDML, compilation, simulation)
 
-### Phase 3: Threshold/Coincidence Window SCAN
-**Objective**: Scan hardware parameter space to find optimal values
+## Phase 3: Threshold/Coincidence SCAN ⏳ PENDING
+
+**Depends on**: Phase 2 simulation output
 
 **Scan Bands** (preregistered):
 - **Threshold**: 0.5, 1.0, 2.0, 5.0 MeV (4 values)
@@ -66,56 +61,58 @@
 - **Total configs**: 4 × 5 = 20 combinations
 
 **For each (threshold, coinc_window)**:
-1. Apply to truth-trigger response: ENTER T1 = T1_EDep > threshold, ENTER T2 = T2_EDep > threshold
-2. Compute coincidence: |T1_Time - T2_Time| < coinc_window
-3. Compute efficiency matrix: ε_truth[species, energy_bin, angle_bin]
-4. Calculate migration ratio: M = ε_truth / ε_HRD
+1. Apply to truth-trigger response from Phase 2 output
+2. Compute efficiency matrix: ε_truth[species, energy_bin, angle_bin]
+3. Calculate migration ratio: M = ε_truth / ε_HRD
 
-**Output**: research/trigger_migration_study/scan_results_*.json
+**Output**: `research/trigger_migration_study/scan_results_*.json`
 
-### Phase 4: Migration Matrices and Decision
-**Objective**: Quantify proxy bias and decide on MC regeneration
+## Phase 4: Migration Matrices and Decision ⏳ PENDING
+
+**Depends on**: Phase 3 scan results
 
 **Decision Criteria**:
 - **If M ≈ 1 (±10%)**: HRD proxy validated → no regeneration needed
 - **If M varies 10-20%**: Quantify bias, document systematic uncertainty
 - **If M varies >20%**: Proxy irrecoverable → full MC regeneration required
 
-**Output**: research/trigger_migration_study/MIGRATION_MATRIX_REPORT.md
+**Output**: `research/trigger_migration_study/MIGRATION_MATRIX_REPORT.md`
 
-### Phase 5: MC Regeneration (if needed)
-**Objective**: Regenerate 1M events with validated trigger geometry
+## Phase 5: MC Regeneration (if needed) ⏳ PENDING
+
+**Conditional**: Only if Phase 4 shows proxy irrecoverable
 
 **Cost Estimate** (LUNARC):
 - Events: 1M
 - Runtime: ~10 hours
 - Storage: ~5 GB per 1M-event ROOT file
 
-## Contract Bump
+## Phase 6: Contract Bump ⏳ PENDING
 
-Upon completion, update docs/contracts/TRIGGER_HARDWARE_RESPONSE.json:
+**Deliverable**: Update `docs/contracts/TRIGGER_HARDWARE_RESPONSE.json`
 - Set evidence_state to "MIGRATION_VALIDATED" or "FULL_REGENERATION_COMPLETED"
 - Add trigger_hardware_schema with validated geometry/material/threshold/time response
 
-## Timeline Estimate
+## Timeline Estimate (Remaining Work)
 
-- Phase 1 (Baseline): 2-4 hours
-- Phase 2 (Geometry): 4-8 hours (including compilation)
-- Phase 3 (Scan): 1-2 hours (analysis) + ~40h LUNARC runtime
-- Phase 4 (Analysis): 2-4 hours
-- Phase 5 (Regeneration): ~10h LUNARC (if needed)
+- Phase 2 execution (LUNARC): 2-4 hours (mostly runtime)
+- Phase 3 analysis: 1-2 hours
+- Phase 4 analysis: 2-4 hours
+- Phase 5 (if needed): ~10h LUNARC runtime
+- Phase 6: 1-2 hours
 
-**Total**: ~55-70 hours (mostly LUNARC runtime, can be parallelized)
+**Total remaining**: ~15-25 hours (mostly LUNARC runtime, can be parallelized)
 
 ## Success Criteria
 
-1. T1/T2 trigger volumes added to geometry with sensitive detectors
-2. Per-event trigger quantities recorded in MC output
-3. Migration matrices computed across all scan bands
-4. Decision document with clear recommendation on MC regeneration
-5. Contract updated with evidence_state change
+1. ✅ Phase 1: Baseline HRD proxy characterized
+2. 🔄 Phase 2: T1/T2 volumes added to geometry with sensitive detectors (implementation complete, execution pending)
+3. ⏳ Phase 3: Migration matrices computed across all scan bands
+4. ⏳ Phase 4: Decision document with clear recommendation
+5. ⏳ Phase 5: MC regenerated (if needed)
+6. ⏳ Phase 6: Contract updated with evidence_state change
 
 ---
-**Created**: 2026-08-16
-**Issue**: #1045
-**Status**: PLANNING → IMPLEMENTATION
+**Issue**: #1045 (P0)
+**Updated**: 2026-08-16
+**Status**: Phase 1 COMPLETE, Phase 2 IMPLEMENTATION COMPLETE (awaiting LUNARC execution)

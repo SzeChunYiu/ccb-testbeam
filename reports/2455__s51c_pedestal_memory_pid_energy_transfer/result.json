@@ -1,0 +1,81 @@
+{
+  "ticket_id": "2455",
+  "study_id": "S51c",
+  "worker": "testbeam-laptop-2",
+  "title": "Pedestal-memory PID and energy transfer under pulse-state nuisance",
+  "raw_root_dir": "data/root/root",
+  "git_commit": "634b439de6c5daf1a79ec812d3beb969d82f136b",
+  "runtime_sec": 301.3109633922577,
+  "python": "3.7.6",
+  "claim_command": "tn-ticket claim testbeam-laptop-2 --project testbeam",
+  "claim_note": "The required claim command was run once; it returned a null issue despite open project tickets, so issue #2455 was claimed by a single manual GitHub label swap to factory:claimed plus worker:testbeam-laptop-2.",
+  "claimed_ticket_number": 2455,
+  "reproduction": {
+    "selected_pulses": 640737,
+    "expected_selected_pulses": 640737,
+    "delta": 0,
+    "passed": true,
+    "samples_per_channel": 18
+  },
+  "split": {
+    "heldout_runs": [
+      42,
+      50,
+      57,
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "particle_holdout_family": "high_amplitude_tail_family",
+    "sampled_rows": 14609,
+    "bootstrap_replicates": 320
+  },
+  "primary_methods": [
+    "traditional_dE_E_tail_pedestal_likelihood",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "1d_cnn",
+    "spectral_transformer_new"
+  ],
+  "joint_score_weights": {
+    "pid_auc_loss": 0.32,
+    "energy_sigma68": 0.24,
+    "pileup_auc_loss": 0.12,
+    "saturation_auc_loss": 0.1,
+    "pedestal_auc_loss": 0.12,
+    "tail_harmonic_auc_loss": 0.1
+  },
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "mean_joint_loss": 0.04195360432814193,
+    "selection_rule": "minimum mean registered joint loss across run-heldout and proxy particle-heldout splits"
+  },
+  "winner_details": {
+    "split_name": "particle_heldout",
+    "method": "gradient_boosted_trees",
+    "joint_loss": 0.058314220537847336,
+    "pid_separation": 0.9588006230529594,
+    "energy_scale": 0.10315984378479176,
+    "pileup_sideband": 0.9987963377094898,
+    "saturation_clipping": 0.9999267721148213,
+    "pedestal_noise_color": 0.8315686034492138,
+    "pulse_shape_harmonics": 0.9999147244302911,
+    "mean_joint_loss": 0.04195360432814193
+  },
+  "artifacts": {
+    "REPORT.md": "academic report",
+    "joint_scoreboard.csv": "winner table",
+    "endpoint_method_summary.csv": "bootstrap endpoint CIs",
+    "paired_bootstrap_deltas.csv": "paired bootstrap vs traditional",
+    "calibration_ece.csv": "PID/proxy calibration",
+    "strata_metrics.csv": "tail/pedestal/pulse/timing/pileup/saturation/energy strata",
+    "leakage_audit.csv": "cross-task leakage audit",
+    "claimed_ticket.txt": "claim provenance"
+  },
+  "next_tickets": [],
+  "novel_tickets_appended": [],
+  "status": "complete"
+}

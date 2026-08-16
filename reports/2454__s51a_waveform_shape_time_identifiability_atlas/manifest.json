@@ -1,0 +1,71 @@
+{
+  "ticket_id": "2454",
+  "study_id": "S51a",
+  "worker": "testbeam-laptop-1",
+  "generated_at_unix": 1786883887.6525977,
+  "claim_command": "tn-ticket claim testbeam-laptop-1 --project testbeam",
+  "done_command": "tn-ticket done 2454 --project testbeam",
+  "result_winner": "traditional_median_template_cfd_timewalk_shape",
+  "artifacts": [
+    {
+      "path": "REPORT.md",
+      "bytes": 50030,
+      "sha256": "417e71dfec79e2b5f77839823045cb0bfe9bd0c34ff0ce32ce525a0fa8d4a97b"
+    },
+    {
+      "path": "ablations.csv",
+      "bytes": 1125,
+      "sha256": "66165a14e04ad681fb84186b4a8bfb1d7e6702fd6f5252944e58c39f5df5981a"
+    },
+    {
+      "path": "by_run.csv",
+      "bytes": 9360,
+      "sha256": "f0e9f3094c7748cae56c7f28bf1027e6e96bdac2175d549674af6e03a5600299"
+    },
+    {
+      "path": "claimed_ticket.txt",
+      "bytes": 1389,
+      "sha256": "08b46f1e981a7a5b24b9ffa346701fe350796a9fc2075fd4990a75987d619c37"
+    },
+    {
+      "path": "frontier_axis_summary.csv",
+      "bytes": 9028,
+      "sha256": "8911f3a2ca5f3ec3f2e998c0fdf8843674a96924e49297cd7795f5820f60c3b4"
+    },
+    {
+      "path": "input_sha256.csv",
+      "bytes": 4993,
+      "sha256": "9d1630c332196186416292bc75bba0238b8007fd1975f90e78916995e3b486e1"
+    },
+    {
+      "path": "method_deltas.csv",
+      "bytes": 2526,
+      "sha256": "fde5f690b38cf94425719a25e2b06fc20ee1f6c209d1a29749435fec3cb74166"
+    },
+    {
+      "path": "metrics.csv",
+      "bytes": 3792,
+      "sha256": "8ce6cf6db63e1334b91478fa9778b0ae9426cbc47a44e952a8d0490b3c906260"
+    },
+    {
+      "path": "reproduction.csv",
+      "bytes": 299,
+      "sha256": "962a281223ae2d6280d815498dfe7f7042b684acc1de55aa6fee4e305eb9fb24"
+    },
+    {
+      "path": "result.json",
+      "bytes": 58261,
+      "sha256": "2347ee961307f78cccbf631f8a680f4e6431578c638be95901174370ad8ef054"
+    },
+    {
+      "path": "run_family_summary.csv",
+      "bytes": 5258,
+      "sha256": "859d78cc61df3f8de2e29ddea257eeb2628510286d1d93fc04e77e109fad5d64"
+    },
+    {
+      "path": "strata.csv",
+      "bytes": 49117,
+      "sha256": "ae5fbca3d0a8062cfb84222a1f4b2b010883a307440ef3c35ef746b922c95ebd"
+    }
+  ]
+}

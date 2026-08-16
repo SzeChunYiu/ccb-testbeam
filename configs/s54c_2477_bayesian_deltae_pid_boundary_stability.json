@@ -1,0 +1,43 @@
+{
+  "study_id": "S54c",
+  "ticket_id": "2477",
+  "title": "S54c Bayesian deltaE-E PID templates versus multitask waveform ML boundary stability",
+  "worker": "testbeam-laptop-2",
+  "raw_root_dir": "data/root/root",
+  "output_dir": "reports/2477__s54c_bayesian_deltae_pid_boundary_stability",
+  "random_seed": 202608162477,
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "expected_counts": {
+    "total_selected_pulses": 640737,
+    "sample_ii_analysis": {
+      "selected_pulses": 125096,
+      "B2": 88213,
+      "B4": 21229,
+      "B6": 11148,
+      "B8": 4506
+    }
+  },
+  "benchmark_runs": {
+    "train": [58, 59, 60, 61, 62],
+    "heldout": [63, 65]
+  },
+  "max_events_per_run": 900,
+  "ml": {
+    "bootstrap_samples": 600,
+    "max_iter": 350,
+    "nn_epochs": 55,
+    "nn_batch_size": 128,
+    "learning_rate": 0.0015,
+    "weight_decay": 0.0001
+  }
+}

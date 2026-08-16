@@ -1,0 +1,98 @@
+{
+  "ticket_id": "2503",
+  "study_id": "S55c",
+  "worker": "testbeam-laptop-4",
+  "title": "S55c pedestal-memory energy PID disentanglement benchmark",
+  "raw_root_dir": "data/root/root",
+  "git_commit": "634b439de6c5daf1a79ec812d3beb969d82f136b",
+  "runtime_sec": 301.3109633922577,
+  "python": "3.7.6",
+  "claim_command": "tn-ticket claim testbeam-laptop-4 --project testbeam",
+  "claim_note": "The required claim command was run once but returned null; after concurrent races on #2501 and #2502, this worker held exactly #2503 via one final manual label repair.",
+  "claimed_ticket_number": 2503,
+  "reproduction": {
+    "selected_pulses": 640737,
+    "expected_selected_pulses": 640737,
+    "delta": 0,
+    "passed": true,
+    "samples_per_channel": 18
+  },
+  "split": {
+    "heldout_runs": [
+      42,
+      50,
+      57,
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "particle_holdout_family": "high_amplitude_tail_family",
+    "sampled_rows": 14609,
+    "bootstrap_replicates": 320,
+    "pedestal_holdout_state": "pedestal_memory",
+    "pedestal_state_heldout_rows": 64116,
+    "pedestal_state_heldout_definition": "post-fit stress split over held-out rows with run-block bootstrap CIs"
+  },
+  "primary_methods": [
+    "traditional_dE_E_tail_pedestal_likelihood",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "1d_cnn",
+    "spectral_transformer_new"
+  ],
+  "joint_score_weights": {
+    "pid_auc_loss": 0.32,
+    "energy_sigma68": 0.24,
+    "pileup_auc_loss": 0.12,
+    "saturation_auc_loss": 0.1,
+    "pedestal_auc_loss": 0.12,
+    "tail_harmonic_auc_loss": 0.1
+  },
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "mean_joint_loss": 0.04195360432814193,
+    "selection_rule": "minimum mean registered joint loss across run-heldout and proxy particle-heldout splits"
+  },
+  "winner_details": {
+    "split_name": "particle_heldout",
+    "method": "gradient_boosted_trees",
+    "joint_loss": 0.058314220537847336,
+    "pid_separation": 0.9588006230529594,
+    "energy_scale": 0.10315984378479176,
+    "pileup_sideband": 0.9987963377094898,
+    "saturation_clipping": 0.9999267721148213,
+    "pedestal_noise_color": 0.8315686034492138,
+    "pulse_shape_harmonics": 0.9999147244302911,
+    "mean_joint_loss": 0.04195360432814193
+  },
+  "artifacts": {
+    "REPORT.md": "academic report",
+    "joint_scoreboard.csv": "winner table",
+    "endpoint_method_summary.csv": "bootstrap endpoint CIs",
+    "paired_bootstrap_deltas.csv": "paired bootstrap vs traditional",
+    "calibration_ece.csv": "PID/proxy calibration",
+    "strata_metrics.csv": "tail/pedestal/pulse/timing/pileup/saturation/energy strata",
+    "leakage_audit.csv": "cross-task leakage audit",
+    "claimed_ticket.txt": "claim provenance",
+    "pedestal_state_heldout_bootstrap.csv": "pedestal-state-held-out stress CIs",
+    "negative_control_pedestal_shuffles.csv": "run-preserving pedestal shuffle null",
+    "calibration_curves.csv": "ten-bin reliability curves",
+    "attribution_ablation_table.csv": "nuisance-axis attribution/ablation spans",
+    "heldout_predictions_with_strata.csv.gz": "prediction rows joined to nuisance strata"
+  },
+  "next_tickets": [],
+  "novel_tickets_appended": [],
+  "status": "complete",
+  "ticket_number": 2503,
+  "ticket_scope": "pedestal-memory energy PID disentanglement benchmark",
+  "wrapper_runtime_sec": 370.5483434200287,
+  "extra_s55c_outputs": {
+    "pedestal_state_heldout_split": "pedestal_state_heldout_bootstrap.csv",
+    "negative_control_pedestal_shuffles": "negative_control_pedestal_shuffles.csv",
+    "calibration_curves": "calibration_curves.csv",
+    "attribution_ablation_table": "attribution_ablation_table.csv"
+  }
+}

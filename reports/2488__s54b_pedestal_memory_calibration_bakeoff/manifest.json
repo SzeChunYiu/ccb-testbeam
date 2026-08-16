@@ -1,0 +1,23 @@
+{
+  "ticket_id": "2488",
+  "worker": "testbeam-laptop-1",
+  "command": "/home/billy/.cache/uv/builds-v0/.tmp9QYUDa/bin/python scripts/ticket_2488_s54b_pedestal_memory_calibration_bakeoff.py",
+  "git_commit": "bcb7c94c53d027096c53fb0ef3d2c7a1f331b372",
+  "runtime_sec": 109.19065117835999,
+  "outputs_sha256": {
+    "REPORT.md": "b0b6c9ba76e1194ecb745c7782ed420035492c22f6b257cd9565fa3012e2d94f",
+    "ablations.csv": "d8b2cbeb1777b78cb07950ef58f1fead837073b962e5f73f9e766518a2cd5c1c",
+    "auxiliary_method_summary.csv": "9d2fb220164cba26bb9716621f1ecf6b6fa1481698072290c21bc2e0fc8b3782",
+    "auxiliary_run_metrics.csv": "87c5f369fe20f3c82a821d906e1493d3e1554860fb58a0edd9b4d938b63e48bd",
+    "auxiliary_strata_metrics.csv": "3cb1e9d81125e26730df82d9f06a1ea9b4d79f85e2f8cb2606c126ef3c8f9d2f",
+    "benchmark_rows.parquet": "1e8387c1a9ec82abd053f915678ae719d40f1741718b61c63758886805d17eb2",
+    "by_run.csv": "cd483f2b02fa23cebdd9120dec1031f5a495afdeaf0a9bc3e98749aeb454c502",
+    "claimed_ticket.txt": "dfa3296fe73edd8e2d04f1fff7de3284e574aaab02041690334fa422b16f6812",
+    "method_deltas.csv": "0543f5f83d4126be78244cd124529c9c54292e9d75b6df07a572b084d7e2bb0c",
+    "metrics.csv": "53d90f1a645517c8adf1db3cf0de9e512857216c478bd7ec50d858b2ae0fd45e",
+    "predictions.parquet": "a26888650f33ef0a1ca38961518fa897fb4c71f26ee3b28513a104110efbffb4",
+    "reproduction.csv": "962a281223ae2d6280d815498dfe7f7042b684acc1de55aa6fee4e305eb9fb24",
+    "result.json": "a9cf9050ebd847a1356f7288e4f2957db230e17aa43855ef46acff15359372ea",
+    "strata.csv": "4390c9f9bdb5a36e8b70d2686caf8abae48279ec3152f8af328a2ab52cb287c7"
+  }
+}

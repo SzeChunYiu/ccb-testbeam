@@ -1,0 +1,83 @@
+{
+  "ticket_id": "2510",
+  "issue_number": 2510,
+  "issue_url": "https://github.com/SzeChunYiu/factory-tickets/issues/2510",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-3",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-3 --project testbeam",
+  "claim_note": "The single permitted tn-ticket claim invocation returned the known null pseudo-ticket; issue #2510 was then label-swapped manually without rerunning claim.",
+  "title": "S57c pedestal-hysteresis PID energy calibration: likelihood templates vs multitask waveform nets",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "source_artifact": "reports/1783809265.5764.0f2a2dda__s29a_digitized_g4_multitask_truth_benchmark",
+  "split": {
+    "scheme": "held-out by source run",
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "n_heldout_events_per_method": 660
+  },
+  "methods": {
+    "traditional": "deltaE_over_E_likelihood_template",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "cnn_1d": "1d_cnn",
+    "transformer": "joint_sequence_transformer",
+    "new_architecture": "template_residual_boosted_stack_new"
+  },
+  "winner": {
+    "method": "template_residual_boosted_stack_new",
+    "score": 0.24826484541920796,
+    "selection_rule": "minimum S57c composite loss including PID, energy, pedestal-memory, pile-up, late-tail, and saturation penalties",
+    "pid_balanced_accuracy": 0.8488282397884219,
+    "pid_balanced_accuracy_ci": [
+      0.8127824722395589,
+      0.8749402771141901
+    ],
+    "energy_fractional_sigma68": 0.0829301698208934,
+    "energy_fractional_sigma68_ci": [
+      0.0727206675029793,
+      0.0938307457216636
+    ],
+    "time_sigma68_ns": 8.0962810871496,
+    "time_sigma68_ns_ci": [
+      7.478793736287673,
+      9.023262168139604
+    ],
+    "pileup_miss_rate": 0.3393939393939394,
+    "false_split_rate": 0.2484848484848484,
+    "pedestal_memory_sensitivity": 0.014,
+    "saturation_censoring_sensitivity": 0.01,
+    "pedestal_boundary_max_abs": 0.33694578174167183,
+    "pid_bacc_pedestal_range": 0.02970969089390152
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "method_metrics": "method_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "pid_confusion_by_stratum": "pid_confusion_by_stratum.csv",
+    "boundary_displacement": "boundary_displacement.csv",
+    "shortcut_diagnostics": "shortcut_diagnostics.csv",
+    "pedestal_hysteresis_sensitivity": "pedestal_hysteresis_sensitivity.csv",
+    "method_pair_deltas_vs_traditional": "method_pair_deltas_vs_traditional.csv",
+    "source_strata_metrics": "source_strata_metrics.csv",
+    "input_sha256": "input_sha256.csv"
+  },
+  "git_commit": "49e6d8ec20bba57f7218a2be8e361486515c170f",
+  "python": "3.11.14",
+  "elapsed_seconds": 5.9357428550720215,
+  "done_command": "tn-ticket done 2510"
+}

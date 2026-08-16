@@ -1,0 +1,12 @@
+2505
+# NEW S56a derivative-template timing vs waveform ML for pedestal-shape disentanglement
+
+Academic-grade study: quantify how pedestal-memory drift changes pulse shape and timing estimates across runs and amplitudes.
+
+Traditional method: derivative-enhanced template fit with constant-fraction timing and AR(1) pedestal correction.
+
+Compare against ridge regression on engineered waveform moments, gradient-boosted trees on rise/fall/tail features, MLP on normalized samples, 1D-CNN waveform encoder, and a compact transformer over sample tokens where statistics permit.
+
+Require held-out-run evaluation, amplitude/current/pedestal strata, residual pulse-shape diagnostics, timing-bias curves, and stratified bootstrap 95% CIs for timing resolution, bias, and shape residual metrics.
+
+Deliver short report and CSV tables that identify which waveform regions carry pedestal-induced timing bias.

@@ -1,0 +1,5 @@
+Academic-grade study: quantify whether phase-conditioned pulse morphology improves timing resolution and pulse-shape interpretation across runs.
+
+Compare a traditional constant-fraction discriminator plus analytic template/time-walk correction against ridge, gradient-boosted trees, MLP, 1D-CNN, and a compact waveform transformer. Report run-held-out metrics with bootstrap CIs for timing residuals, shape latent stability, pedestal sensitivity, and energy-stratified bias.
+
+Required outputs: leakage checks, bootstrap confidence intervals, ablations over pretrigger pedestal windows, pile-up veto strata, and saturation masks; concise report explaining what pulse features each model uses.

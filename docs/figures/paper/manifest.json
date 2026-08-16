@@ -6,7 +6,7 @@
       "caption": "Exact S00 reproduction. Sample I is dominated by B2; Sample II reaches deeper staves more often. Counts are deterministic for the fixed raw inputs and selection; CL-001 remains GATED pending data-contract closure (#952/#953/#954), so this figure is not an authorising ledger row.",
       "column": "single",
       "environment": {
-        "matplotlib": "3.10.8",
+        "matplotlib": "3.11.1",
         "python": ">=3.11 (requires-python floor; patch version not stamped)"
       },
       "evidence_class": "DATA_MEASUREMENT",
@@ -69,19 +69,19 @@
       "height_mm": 49.0,
       "outputs": {
         "pdf": {
-          "bytes": 11534,
+          "bytes": 11674,
           "path": "docs/figures/paper/selected_pulse_inventory.pdf",
-          "sha256": "a8cf5a28ed6d97ec7511ece4a1123944cae3b35a410f4440ca6013df4947727e"
+          "sha256": "e3572b9ab0beb5ce7674c54a608ec5f2e40953beb04e01aecfffed876b449eb6"
         },
         "png": {
-          "bytes": 65347,
+          "bytes": 73080,
           "path": "docs/figures/paper/selected_pulse_inventory.png",
-          "sha256": "1ca9bc7db4862582ae0a3671015248477f937f17cd3a77fb921f8005799f5f03"
+          "sha256": "cae2e4d48c328661cfe67e89bd702d6dab718ce3f99428a1cc0284ce660adba6"
         },
         "svg": {
-          "bytes": 13490,
+          "bytes": 13511,
           "path": "docs/figures/paper/selected_pulse_inventory.svg",
-          "sha256": "896e2e8e71f61c0faca7260c7411fd3a6478d1073e766078fad9d74eae02e978"
+          "sha256": "2ce3f728bc4f309fbd664b2393aaaa278cbd7b1282eedfa6543421f6ed41e274"
         }
       },
       "plotted_data_sha256": "d93f87272f7eebdc8bff8ebef1d717d656f0dc06a9053dd7d72706f809924802",
@@ -101,7 +101,7 @@
       "caption": "Status counts from the canonical claim ledger (docs/claim_ledger.csv). Visual polish must not promote gated, blocked, flawed or superseded evidence.",
       "column": "single",
       "environment": {
-        "matplotlib": "3.10.8",
+        "matplotlib": "3.11.1",
         "python": ">=3.11 (requires-python floor; patch version not stamped)"
       },
       "evidence_class": "GOVERNANCE_LEDGER",
@@ -164,19 +164,19 @@
       "height_mm": 70.0,
       "outputs": {
         "pdf": {
-          "bytes": 14306,
+          "bytes": 14674,
           "path": "docs/figures/paper/claim_status_overview.pdf",
-          "sha256": "e5f8d97de383d0eec56363fcd0f5f37e2bffe988e8136634165c818628e354c0"
+          "sha256": "65f17a05cf221854c5fb77af31548cabf421d87759dba9e364543138adcbbde4"
         },
         "png": {
-          "bytes": 115102,
+          "bytes": 106821,
           "path": "docs/figures/paper/claim_status_overview.png",
-          "sha256": "8564a2767c039e94f6e6ea349d6c5bcc9448278f1f470924f193d0c465236dc0"
+          "sha256": "70372b40ba85a4bfc1243abfb841610191e78c3e18868accd20515a24ba2368d"
         },
         "svg": {
-          "bytes": 16858,
+          "bytes": 16777,
           "path": "docs/figures/paper/claim_status_overview.svg",
-          "sha256": "905d944c1f4d25ea9e52cef75c88cbe094ea815ba4765c7bdd3d9a0c41bb8fac"
+          "sha256": "335cd8327cbb2ae62991c912164de21d3ce300ea840b29e7da93c883cfb5360c"
         }
       },
       "plotted_data_sha256": "7c4ddacfdf5255fdfb3ba1d19c08be9b3d869b219bb4fffe7a19838a71c85497",
@@ -196,7 +196,7 @@
       "caption": "Krakow MC method closure. The combined four-sensor estimator reaches \u03c368 = 0.089 ns; this is not a detector timing measurement on beam data.",
       "column": "single",
       "environment": {
-        "matplotlib": "3.10.8",
+        "matplotlib": "3.11.1",
         "python": ">=3.11 (requires-python floor; patch version not stamped)"
       },
       "evidence_class": "MC_METHOD_CLOSURE",
@@ -259,19 +259,19 @@
       "height_mm": 53.0,
       "outputs": {
         "pdf": {
-          "bytes": 12799,
+          "bytes": 12989,
           "path": "docs/figures/paper/timing_mc_method_closure.pdf",
-          "sha256": "be1c2852abf5162f0d6498f6e469b22670e4e38a7b980454dcc5c4b9fc5f34fe"
+          "sha256": "9e20ffb90c884f5c173516455ecd6873ad8b7268fc18035598b1e7a894050a67"
         },
         "png": {
-          "bytes": 86869,
+          "bytes": 89464,
           "path": "docs/figures/paper/timing_mc_method_closure.png",
-          "sha256": "3b7ac03fa277f735e8e497ba03e2a2a95f4f6f0e5fa3ce77b583b151d1cc712a"
+          "sha256": "5719ce0ecbd829669bf309b538b001de78947806d4223f5d53e372289abcc78c"
         },
         "svg": {
-          "bytes": 15388,
+          "bytes": 15386,
           "path": "docs/figures/paper/timing_mc_method_closure.svg",
-          "sha256": "9e5930f6f46906b0f54d0bcf577c459bc7ff43cb10c27a5e5cab52266fec20f8"
+          "sha256": "eb03c52434151416dfaf7134e45a4d5f437318c3bc3d6ebc13aba3bffd70e08a"
         }
       },
       "plotted_data_sha256": "9837ea9481e7f4595328fc4a8358505346ce0a6ea56ee26521cc8e96f84ca06e",
@@ -291,7 +291,7 @@
       "caption": "Five contiguous event-block folds from the realistic \u0394E\u2013E MC chain. Fold ordering is categorical, so points are deliberately not connected. Transfer to beam data remains unvalidated.",
       "column": "single",
       "environment": {
-        "matplotlib": "3.10.8",
+        "matplotlib": "3.11.1",
         "python": ">=3.11 (requires-python floor; patch version not stamped)"
       },
       "evidence_class": "SIMULATION_RESULT",
@@ -354,29 +354,29 @@
       "height_mm": 51.0,
       "outputs": {
         "pdf": {
-          "bytes": 13075,
+          "bytes": 13492,
           "path": "docs/figures/paper/pid_mc_validation.pdf",
-          "sha256": "4e0a8d969974c00d3ab119ade668a61d5d0532a0b794e7c2c01a00d12f56e981"
+          "sha256": "4d6fcbd748b4995c632172c77cacc20ad175d30fcf1dac4fc96631215a4687ed"
         },
         "png": {
-          "bytes": 89725,
+          "bytes": 85668,
           "path": "docs/figures/paper/pid_mc_validation.png",
-          "sha256": "6c82c34f4c52654fea4ffa6c57379e6cf0c8e5f7979f38e8e2a56645bbdfd19e"
+          "sha256": "f6cc9e6cb8e5f75a9c4c7e26a6426ebc850209c494516463874598022357888a"
         },
         "svg": {
-          "bytes": 11122,
+          "bytes": 10861,
           "path": "docs/figures/paper/pid_mc_validation.svg",
-          "sha256": "c95f7c5366fc1d13d49851bdb9da1dbf0f0a4e0a50d04ff289c8f4cfe0266b38"
+          "sha256": "0a0dedacf7cf21db6317a110c979b4d6998995dd55442d0ac34c355955ad215e"
         }
       },
-      "plotted_data_sha256": "623251cd82feb1567238067ea1ae5fe528dea8f797eb2c7e561c00004b69d842",
+      "plotted_data_sha256": "c114bdcac8e58557716f820b416a957a2ba256486b2534686f70c34357f3c6f2",
       "qa_issues": [],
       "question": "Is the realistic-chain proton/deuteron AUC stable across grouped folds?",
       "source_paths": [
         "reports/studies/clusterA/counts.json"
       ],
       "source_table": "docs/figures/paper/source_tables/pid_mc_validation_source.csv",
-      "source_table_sha256": "623251cd82feb1567238067ea1ae5fe528dea8f797eb2c7e561c00004b69d842",
+      "source_table_sha256": "c114bdcac8e58557716f820b416a957a2ba256486b2534686f70c34357f3c6f2",
       "status": "SIMULATION_RESULT",
       "stem": "pid_mc_validation",
       "title": "Grouped-fold PID stability on MC",
@@ -386,7 +386,7 @@
       "caption": "MC fits recover 119.168 ADC/MeV for both species near the configured 120 ADC/MeV. The separate MV0 proxy is 92 ADC/MeV with a 28 ADC/MeV heuristic systematic envelope, not a confidence interval, and remains gated.",
       "column": "single",
       "environment": {
-        "matplotlib": "3.10.8",
+        "matplotlib": "3.11.1",
         "python": ">=3.11 (requires-python floor; patch version not stamped)"
       },
       "evidence_class": "MC_CLOSURE_PLUS_GATED_DATA_MC_PROXY",
@@ -449,19 +449,19 @@
       "height_mm": 50.0,
       "outputs": {
         "pdf": {
-          "bytes": 12380,
+          "bytes": 12708,
           "path": "docs/figures/paper/adc_mc_calibration.pdf",
-          "sha256": "39b9cc603d7e1cb0964c46ca985e9007ec57b4d13745e6a26170931148c01122"
+          "sha256": "0b57f3d0c078d534ac4921afd72aae920e00b0524a7b61045d33f1df00c0ed1e"
         },
         "png": {
-          "bytes": 90056,
+          "bytes": 87843,
           "path": "docs/figures/paper/adc_mc_calibration.png",
-          "sha256": "a68d0c71c6833a136b1f465673bf5e08c6435477c0238cbcde32dcb30c6f9401"
+          "sha256": "14d81f4aa58106b6bb6dfdf090f1f2fbd55c851c58644f3719371df3744b1e49"
         },
         "svg": {
-          "bytes": 11665,
+          "bytes": 11646,
           "path": "docs/figures/paper/adc_mc_calibration.svg",
-          "sha256": "f2d9f1a5e3d603abe3599e9a9c39e9d638feec654d50bd20492ba441bc29697f"
+          "sha256": "f1d6b06a37a3af9db284b57a5b2dee0000c0c4fc12700ae741097c50cf606976"
         }
       },
       "plotted_data_sha256": "a06f751b0feb624ce099f907603a34fde1f11c7dc2f8f89440ce5d76f672cddf",
@@ -482,7 +482,7 @@
       "caption": "The per-track dE/dx fit gives kB = 0.0156 cm/MeV, above both the total-deposit proxy and the digitizer default. The spread is model dependence, not a confidence interval.",
       "column": "single",
       "environment": {
-        "matplotlib": "3.10.8",
+        "matplotlib": "3.11.1",
         "python": ">=3.11 (requires-python floor; patch version not stamped)"
       },
       "evidence_class": "SIMULATION_RESULT",
@@ -545,19 +545,19 @@
       "height_mm": 48.0,
       "outputs": {
         "pdf": {
-          "bytes": 13718,
+          "bytes": 13933,
           "path": "docs/figures/paper/birks_mc_comparison.pdf",
-          "sha256": "6d76d663398396fcdd95b9e223be5657252ebc6a22cb427de5b65bfeda2e53d0"
+          "sha256": "561beca055a64a52ccaa8a77fb12599d0ce30fe79a4eed1a79b48794bea57ed2"
         },
         "png": {
-          "bytes": 87083,
+          "bytes": 87630,
           "path": "docs/figures/paper/birks_mc_comparison.png",
-          "sha256": "8a49cfa71d1e0bd691b13b6638028ffa171588023d78440b4fdf9a2a9e9829be"
+          "sha256": "34c1a62a69a3219a88cbe06bb9f02314a2b77c7635a2fcc7061565196ee2e14d"
         },
         "svg": {
-          "bytes": 15170,
+          "bytes": 15216,
           "path": "docs/figures/paper/birks_mc_comparison.svg",
-          "sha256": "fb9f10f9782b128891564ca6cc0223ac60e5a5f78e7794fcd6ad0607b22c4b5e"
+          "sha256": "ced67fb5ba0500c5a5273d2904220f4dbf920b0a9260106955e0840bbb424793"
         }
       },
       "plotted_data_sha256": "d3ed09e387d95bb90d58406cc43baff73f14d6da58ba4895b5bc1ac48eeeaf22",
@@ -577,7 +577,7 @@
       "caption": "Poisson overlap for the 180 ns acquisition window. The stored nearest scan points are 0.289 MHz (5.06%, not exactly 5%) and 0.605 MHz (10.31%, not exactly 10%). These are simulation-domain criteria; canonical detector Rmax remains blocked.",
       "column": "single",
       "environment": {
-        "matplotlib": "3.10.8",
+        "matplotlib": "3.11.1",
         "python": ">=3.11 (requires-python floor; patch version not stamped)"
       },
       "evidence_class": "SIMULATION_RESULT",
@@ -640,19 +640,19 @@
       "height_mm": 54.0,
       "outputs": {
         "pdf": {
-          "bytes": 13529,
+          "bytes": 13941,
           "path": "docs/figures/paper/pileup_digitizer_mc.pdf",
-          "sha256": "abdfc859f349e89d2ca32eef3601e8767fcdd49bdbf6bb85f47d9ea07dc98162"
+          "sha256": "39a697b4796ed44caf20bba530e7c9f92b65cf29ccfcdb58d77d9f8909f6671f"
         },
         "png": {
-          "bytes": 148211,
+          "bytes": 142824,
           "path": "docs/figures/paper/pileup_digitizer_mc.png",
-          "sha256": "2c24202c9bf7b5a290ecf61b8043c9b1a055ecdde8444312a180b1e9ec90aff8"
+          "sha256": "82858d491e6e2568444fbf3a8b5e9ff09a334bb596d34da75fd4ba346333c662"
         },
         "svg": {
-          "bytes": 14221,
+          "bytes": 14200,
           "path": "docs/figures/paper/pileup_digitizer_mc.svg",
-          "sha256": "41ffc893e01c71fca699aede9368bce903ddb888c1cd81dd02ac9ba23c0e8994"
+          "sha256": "f948f4f5251b006d6b265c3700830e7e5256ab37d286afc32bf12bdd1518f2a5"
         }
       },
       "plotted_data_sha256": "71517e94b20f26951de838543c89f5693737c0e4ffc936d28463a820ba40ea5b",
@@ -672,7 +672,7 @@
       "caption": "Exact tracked counts give 2.30% in selected data and 22.29% in thresholded MC. Wilson intervals show counting uncertainty only; unresolved geometry, trigger, gain and selection transfer dominate the scientific interpretation.",
       "column": "single",
       "environment": {
-        "matplotlib": "3.10.8",
+        "matplotlib": "3.11.1",
         "python": ">=3.11 (requires-python floor; patch version not stamped)"
       },
       "evidence_class": "LEGACY_DATA_MC_DIAGNOSTIC",
@@ -735,19 +735,19 @@
       "height_mm": 43.0,
       "outputs": {
         "pdf": {
-          "bytes": 11465,
+          "bytes": 11771,
           "path": "docs/figures/paper/stopping_b8_tension.pdf",
-          "sha256": "a19562127d79cc7e6ab54b45e2d43c4fca9c048a12a0e488f9d97c7b5a71bcef"
+          "sha256": "22606a18c58c2cc11727eaba8b70fd1b1eec220821eb5c5d8a89c64a654904fe"
         },
         "png": {
-          "bytes": 79692,
+          "bytes": 71317,
           "path": "docs/figures/paper/stopping_b8_tension.png",
-          "sha256": "d6d053445355bd4a8ad91d8c627ece02adcef4efcba52ab4d13350c93251fc1d"
+          "sha256": "b4041127de4c20e1a8c75c2432f513833066fb40c9be2d95f99c876e93a38525"
         },
         "svg": {
-          "bytes": 9605,
+          "bytes": 9609,
           "path": "docs/figures/paper/stopping_b8_tension.svg",
-          "sha256": "570115cacd92f925a7dc46d3f395e65d27ea5431d51f7df0ca7865e6be69b5b6"
+          "sha256": "18dc5aeebd52529c2a971932013056f51d16f90e33f09680c9d1a85869d668ac"
         }
       },
       "plotted_data_sha256": "8194cec832f2d22199b3a7260282966535b57cb050c1c07342ad53f9c1fab257",
@@ -767,7 +767,7 @@
       "caption": "Truth-labelled MC rates with Wilson 95% intervals: 283/87,555 overall and 156/7,302 within C12. C12 forms 156/283 early-peak tracks, but the separate beam-data anomaly is not identified as C12.",
       "column": "single",
       "environment": {
-        "matplotlib": "3.10.8",
+        "matplotlib": "3.11.1",
         "python": ">=3.11 (requires-python floor; patch version not stamped)"
       },
       "evidence_class": "TRUTH_LEVEL_MC_ONLY",
@@ -830,19 +830,19 @@
       "height_mm": 46.0,
       "outputs": {
         "pdf": {
-          "bytes": 11634,
+          "bytes": 12000,
           "path": "docs/figures/paper/anomaly_truth_mc.pdf",
-          "sha256": "dc2077347455d0384ee53541a59b237c5a0cbd1b79a79187297d7f9996d2b062"
+          "sha256": "2479eb1f75c9b5b97a9f68fe2157a3349c6021147ad29de72fb30901d7e24d9a"
         },
         "png": {
-          "bytes": 78449,
+          "bytes": 77266,
           "path": "docs/figures/paper/anomaly_truth_mc.png",
-          "sha256": "50ab05fc3c282f963eda358fe25c0b68b5f33876e567158aaa0a4fd29e9b87ff"
+          "sha256": "35d7130fe2427622087d14647f212496dec4bdd443262c45e5b953bf1311ba9a"
         },
         "svg": {
-          "bytes": 9646,
+          "bytes": 9653,
           "path": "docs/figures/paper/anomaly_truth_mc.svg",
-          "sha256": "abf9690e7c89ddc12fd6c9b61b2d3dbdc2dc13dc1812c12258edff0fa778be7b"
+          "sha256": "727413568206e31643f96c6dadaf61ad5c3739cc0662bda741b0c3aa5bd1217a"
         }
       },
       "plotted_data_sha256": "53336883e9bff0602775f1b8e8f9a47157d7e6895521b1d6f27ebb71c8f61405",
@@ -862,7 +862,7 @@
       "caption": "Fixed synthetic-waveform MC output: three components explain 72.5% and eight explain 82.2%. These values supersede stale 0.89/0.997 statements and are not beam-data PCA results.",
       "column": "single",
       "environment": {
-        "matplotlib": "3.10.8",
+        "matplotlib": "3.11.1",
         "python": ">=3.11 (requires-python floor; patch version not stamped)"
       },
       "evidence_class": "SYNTHETIC_WAVEFORM_MC",
@@ -925,19 +925,19 @@
       "height_mm": 48.0,
       "outputs": {
         "pdf": {
-          "bytes": 13261,
+          "bytes": 13570,
           "path": "docs/figures/paper/pca_truth_mc.pdf",
-          "sha256": "8358d165d3649600673d78ce8e33509ea5798900269ceeee3e31fac10f057e3c"
+          "sha256": "9de78d3ddcb8da5d7def1942a8e87704d3782cf8cc6c741316b9766d69f51b51"
         },
         "png": {
-          "bytes": 121036,
+          "bytes": 113729,
           "path": "docs/figures/paper/pca_truth_mc.png",
-          "sha256": "9fb8fbb8b5be28ab07fb25d7a295b873da9e3c96486c9599fb2610f7a3705346"
+          "sha256": "fe8da858e7464396481774d6cebaf7444f011587a3140e86f48db404fbd733ce"
         },
         "svg": {
-          "bytes": 9696,
+          "bytes": 9703,
           "path": "docs/figures/paper/pca_truth_mc.svg",
-          "sha256": "f97b6b49df03c2978f6b9b6fad20ef1c898d899384127bc03035e316c72a7b6f"
+          "sha256": "e2445440810972ba76926c4ac9ef26f3ce1d90a0f9074297a9ee2abb0f559b5b"
         }
       },
       "plotted_data_sha256": "f991cd1ec3c5699b5761a1164e9682c0d1a8e8d05e585b95e4ef32b1e90e03b1",
@@ -957,7 +957,7 @@
       "caption": "Dimensionless cluster-D ADC-response elasticities only. Mixed-unit rows (gain envelope, kB span and missing material) are excluded rather than combined. This is a sensitivity inventory, not a propagated uncertainty budget.",
       "column": "single",
       "environment": {
-        "matplotlib": "3.10.8",
+        "matplotlib": "3.11.1",
         "python": ">=3.11 (requires-python floor; patch version not stamped)"
       },
       "evidence_class": "SENSITIVITY_INPUTS",
@@ -970,7 +970,8 @@
               75.99999999998528
             ],
             "embedded_fonts": {
-              "/F1": true
+              "/F1": true,
+              "/F2": true
             },
             "expected_mm": [
               89.0,
@@ -1020,19 +1021,19 @@
       "height_mm": 76.0,
       "outputs": {
         "pdf": {
-          "bytes": 12618,
+          "bytes": 16686,
           "path": "docs/figures/paper/systematic_sensitivity_inputs.pdf",
-          "sha256": "f041cbad2c3b505bd2207a9147e6bd0b101d3769a6b0f44fb99883354f8b0b12"
+          "sha256": "6fd52d0a13353bde16991e184fe9760fb21aab494e2937eebc27157926669652"
         },
         "png": {
-          "bytes": 143733,
+          "bytes": 131614,
           "path": "docs/figures/paper/systematic_sensitivity_inputs.png",
-          "sha256": "f986d1a037e1cf0fb6949ac7da2678d853750c5623d87c351bf26176ea3845f5"
+          "sha256": "aee3949bcdb745cd9dc59fdd0bdae76f9ae12ddd3ef70f58910c5f1bafca9378"
         },
         "svg": {
-          "bytes": 20129,
+          "bytes": 20140,
           "path": "docs/figures/paper/systematic_sensitivity_inputs.svg",
-          "sha256": "6f081544b86acb309ad8f9840ef4d3f2d8a298326f462954844f141879dbdb63"
+          "sha256": "794e71a186b4150210963fdff59aa7e704f082e975aa91880bd684daa6221887"
         }
       },
       "plotted_data_sha256": "9b50fc74d879a318e62313148040730acb6323e5d6b1468b2cb79ebd9c502952",

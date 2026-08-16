@@ -1,0 +1,70 @@
+study_id: P10-2404
+title: conditional generative pulse templates
+
+raw_root_dir: /home/billy/ccb-data/data/extracted/root/root
+output_dir: reports/2404_p10_conditional_template_bakeoff
+ticket_id: "2404"
+worker: testbeam-laptop-3
+
+random_seed: 20260816
+amplitude_cut_adc: 1000.0
+baseline_samples: [0, 1, 2, 3]
+samples_per_channel: 18
+sample_period_ns: 10.0
+cfd_fraction: 0.2
+aligned_relative_grid: [-3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+expected_selected_pulses: 640737
+
+staves:
+  B2: 0
+  B4: 2
+  B6: 4
+  B8: 6
+
+run_groups:
+  sample_i_calib: [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42]
+  sample_i_analysis: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+  sample_ii_calib: [64]
+  sample_ii_analysis: [58, 59, 60, 61, 62, 63, 65]
+
+family_folds:
+  - name: holdout_sample_i
+    train_runs: [64]
+    eval_runs: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+  - name: holdout_sample_ii
+    train_runs: [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42]
+    eval_runs: [58, 59, 60, 61, 62, 63, 65]
+
+timing:
+  downstream_staves: [B2, B4, B6, B8]
+  tof_per_cm_ns: 0.033356
+  spacing_cm: 2.0
+
+template_amplitude_edges_adc: [1000, 1500, 2200, 3200, 4700, 6800, 10000, 15000, 25000]
+phase_edges: [0.0, 0.33, 0.66, 1.01]
+rise_edges_samples: [-999.0, 1.15, 1.75, 999.0]
+tail_edges: [-999.0, 4.0, 6.0, 999.0]
+template_min_bin_pulses: 25
+handle_min_bin_pulses: 20
+
+max_train_rows_per_fold: 18000
+max_eval_rows_per_fold: 50000
+bootstrap_iterations: 700
+
+ridge_alpha: 100.0
+gradient_boosting:
+  n_estimators: 80
+  max_depth: 2
+  learning_rate: 0.05
+  subsample: 0.75
+  min_samples_leaf: 30
+  random_state: 20260816
+torch:
+  max_train_rows: 12000
+  batch_size: 768
+  mlp_epochs: 8
+  cnn_epochs: 6
+  learning_rate: 0.001
+  weight_decay: 0.0002
+  hidden_dim: 64
+  cnn_channels: 24

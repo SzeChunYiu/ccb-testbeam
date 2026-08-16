@@ -289,6 +289,7 @@ def test_real_data_fraction_transition_blocked_until_schema_gate():
 def test_polarity_config_is_versioned_json():
     payload = json.loads((ROOT / "configs" / "channel_polarity_v2.json").read_text(encoding="utf-8"))
     assert payload["version"] == "channel_polarity_v2"
-    assert payload["status"] == "MEASURED_202608_RUNS31_65_UNANIMOUS_BOTH_ESTIMATORS"
+    assert payload["status"] == "RETRACTED_20260816_TRUNCATED_STAGING_DESYNC"
+    assert "retraction" in payload["provenance"]
     assert set(payload["channel_polarity"]) >= {"0", "1", "4", "6"}
 

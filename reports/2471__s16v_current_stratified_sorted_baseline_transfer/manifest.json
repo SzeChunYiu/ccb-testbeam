@@ -1,0 +1,29 @@
+{
+  "command": "python3 scripts/ticket_2471_s16v_current_stratified_sorted_baseline_transfer.py --config configs/ticket_2471_s16v_current_stratified_sorted_baseline_transfer.json",
+  "created_utc": "2026-08-16T15:38:05Z",
+  "files": {
+    "REPORT.md": "e2cea29a9e631406889939065f93b5417efadd0e1edaf4965d2db006b684bb47",
+    "claimed_ticket.txt": "8bf96fc44d72f018fe104605a0173ebd8c952314eaffb35b459ae8648d55ae59",
+    "claimed_ticket_body.txt": "1cc59bb36e36b5ce23cb05ccf22c52d5ad63c8eba677e7d8113aa2671879fd35",
+    "config.json": "42386dd448f18b258176d2ae94728da9e3af3335b2198c308e8f90248e93f3da",
+    "current_family_winners.png": "a3236f8025aab33ae857c23b7bcad91cf038bcd80dda25e2cb70c0bd4f071cf1",
+    "current_stratified_method_metrics.csv": "0b5b484d28761fb04b5f3679dfa3e91abda7fc1109085b43d4c20053ff074d7a",
+    "input_sha256.csv": "02d93529768bbc10ab14f4609df885f1436ca6dcf3de81ace1297dbf4d85a9e1",
+    "method_metrics.csv": "006635d44080db74bcc8a4b9ef6e379ceab8364184b250efb66fba7f528605ec",
+    "method_predictions.csv.gz": "bd4a67864e7a861c7b4870d4e40d9d642d3b69ef9a65d0fd2da34b1c018181f3",
+    "pair_rows.csv.gz": "c44162ee1050890a9ad3c3af8f86cc48907be94fa9e82eaf503cd0f4ebc17512",
+    "per_run_metrics.csv": "d8630a2e396933d95e6334ec3baafa7e12ab10bc1d7d9f5b593c5818a52d642f",
+    "pooled_method_benchmark.png": "211547106a2a5e99f45e70645f3ff83619906d3b2e64a32469f2338cef935448",
+    "proxy_coefficient_sign_transfer.csv": "f01f67f05b653a032dc1263fc207594fd5c02303ce2d70ffaa2defe583411354",
+    "proxy_coefficient_sign_transfer.png": "99281239abb0549bbe0a706b0709abcb36b87fbc007176f120bcf62c5c21c451",
+    "reproduction_counts.csv": "77f4e2793437c8db86df7f076e5d870fc3401b5df6a2b11e292b86ac0a2f485d",
+    "result.json": "2506dae9f270f16037dd160a4dc5cf213af265ffa79be9c7456cfd6b4842192e",
+    "sample_i_method_predictions.csv.gz": "dfa4907efafdab68ebe89f0ac9366afdd8121c328426847d970f06dccc5db5da",
+    "sample_i_pair_rows.csv.gz": "5511f8f922e9bc7218a6d2873a7792c0badbfaba6b6b74e50889f18e8f2c7de6",
+    "sample_ii_method_predictions.csv.gz": "a76d29324cc524874f9409b6592ceca93b060690ae8cee94fd9bba36c1ff35f1",
+    "sample_ii_pair_rows.csv.gz": "5567bb3ee7606fd997ecca8622fbf3f935fbd3859d6e1c6f05c6edc03381e9f8"
+  },
+  "git_commit": "30ffd0c257768d8a1e64f40e3306c256af5b3768",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "python": "3.7.6"
+}

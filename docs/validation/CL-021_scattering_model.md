@@ -1,6 +1,6 @@
 # CL-021 — MV3 scattering-model (p+CD2 CM-angle cross-section weighting)
 
-**Status: CENTRAL_VALUE_ONLY — primary source covariance unavailable (blocker preserved per #1179).**
+**Status: SOURCE_LEVEL_ENVELOPE_CLOSED (S46a, #1179) / CENTRAL_VALUE_ONLY at campaign+detector level — the source-level ±3% node-box envelope and row-statistical bands now exist (`results/research/sigma_cm_source_uncertainty_v2.json`, 12 sampled/analytic gates green); production campaigns still generate central values, and detector-level propagation remains the separate blocked scope of CL-026.**
 
 The exact `sigma_pd_cm_190.txt` bytes are source-bound to Table VI of
 K. Ermisch et al., *Physical Review C* **71**, 064004 (2005), DOI
@@ -94,8 +94,13 @@ mean-angle standard uncertainty `0.02252797870713097` degrees for the current
 interpolation. Under the alternative interpolation these become
 `0.0004435837618530407` and `0.022356857259092505` degrees. Those calculations
 are conditional on independent row statistical errors and do not replace the
-missing systematic covariance. #1179 remains open for a defensible nuisance
-model and generator/downstream propagation.
+missing systematic covariance. #1179's source-level scope is now CLOSED (S46a,
+reports/1786866977.1138000.3f71d0b1__s46a_cs_source_uncertainty_sampled_closure): a ±3% per-node box envelope (mapped to the source's stated 3% point-to-point
+systematic) with sampled closure over 5M common-random-number draws, all four issue-required
+negative controls gated green, row-statistical replicas validating the delta method (ratio
+1.078) via exact analytic means, and exact θ_cm→θ_lab propagation of the envelope (mean θ_lab
+39.345 deg, band [38.806, 39.886] deg). Generator-campaign and downstream detector propagation
+remain open and are the separate blocked scope (CL-026).
 
 The earlier central-value MV3 result remains a **nonauthorising source-model
 diagnostic**: B2 changed from 0.475 (uniform) to 0.253 (the superseded direct-CS

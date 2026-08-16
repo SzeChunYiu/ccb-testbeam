@@ -430,8 +430,7 @@ def main():
     with open(output_path, "w") as f:
         json.dump(output_data, f, indent=2)
     
-    print(f"\n{"="*60}")
-    print(f"Threshold scan complete!")
+    print()
     print(f"Results saved to: {config.output_file}")
     print(f"\nSummary:")
     print(f"  Total configurations scanned: {len(results)}")
@@ -439,7 +438,7 @@ def main():
     # Print efficiency table
     print(f"\nEfficiency table:")
     print(f"  Threshold (MeV) | Coinc (ns) | Efficiency")
-    print(f"  {-*45}")
+    print("  " + "-" * 45)
     for r in results:
         print(f"  {r.threshold_mev:13.1f} | {r.coinc_ns:10.0f} | {r.efficiency:.4f}")
 

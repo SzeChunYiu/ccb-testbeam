@@ -1,9 +1,9 @@
 {
   "schema": "ccb-publication-build-receipt-v1",
   "scientific_status": "FAIL_CLOSED_NOT_SUBMISSION_READY",
-  "source_repository_head": "966baa9c2f9ef9b77c171ee3f28621319d55a013",
+  "source_repository_head": "2d8e3f91eedee1d46423dbe0f8918acbbbcc71df",
   "source_date_epoch": "1786533311",
-  "built_utc": "2026-08-16T00:47:23.631138+00:00",
+  "built_utc": "2026-08-16T01:00:01.927918+00:00",
   "entrypoint": "publication/build.sh",
   "master_tex": "publication/main.tex",
   "output": "publication/paper.pdf",

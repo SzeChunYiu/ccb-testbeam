@@ -75,11 +75,11 @@ The build follows the crash-chain invariants from #1337:
 
 ## Wall Time and Size Delta Explained
 
-**Wall time**: 00:01:45 on cn035 (vs "6-8h" estimate). The order-of-magnitude reduction is explained by the −95% tracking reduction: fewer hits means less TTree I/O and faster event processing.
+**Wall time**: 00:01:45 on cn035 (vs "6-8h" estimate). The order-of-magnitude reduction is explained by the −97% tracking reduction: fewer hits means less TTree I/O and faster event processing.
 
-**Size**: 356 MB vs 677 MB historical (−47%). At identical event count, the size reduction is explained by the −95% reduction in tracking volume (Enter B: 88,791 → 4,524, −84,267 events). The unpatched uniform-fallback generator produced 20× more B-arm hits, which in turn produced more secondary tracks and larger TTree branch sizes.
+**Size**: 356 MB vs 677 MB historical (−47%). At identical event count, the size reduction is explained by the −97% reduction in tracking volume (Enter B: 237,098 → 7,100, −229,998 events). The unpatched uniform-fallback generator produced 33× more B-arm hits, which in turn produced more secondary tracks and larger TTree branch sizes.
 
-**Correlation**: Size delta (−47%) and wall time reduction (~100×) both correlate with the Enter B delta (−95%). All three are consequences of the corrected angular sampling.
+**Correlation**: Size delta (−47%) and wall time reduction (~100×) both correlate with the Enter B delta (−97%). All three are consequences of the corrected angular sampling.
 
 ## Baseline Delta (vs Historical 1M) with Binomial Errors
 
@@ -91,22 +91,21 @@ The corrected `ScatteringGenerator` produces a dramatically different HRD proxy 
 
 | Metric | Historical 1M | Authorising 1M | Delta (with errors) |
 |--------|---------------|----------------|---------------------|
-| Enter B | 88,791 (8.88 ±0.03%) | 4,524 (0.00452 ±0.00007%) | **−84,267 (−8.43 ±0.03%)** |
-| Sample I (A+B) | 88,738 (8.87 ±0.03%) | 4,519 (0.00452 ±0.00007%) | **−84,219 (−8.42 ±0.03%)** |
-| ε_HRD (coincidence/deuterons) | 8.87 ±0.03% | 0.452 ±0.007% | **−8.42 ±0.03%** |
-| Sample I purity (coincidence/Enter B) | 99.94 ±0.008% | 99.89 ±0.05% | **−0.05 ±0.05%** |
-| Sample II (B-only) | 53 (0.0053 ±0.0007%) | 5 (0.00001 ±0.00000%) | **−48 (−0.0048 ±0.0008%)** |
+| Enter B | 237,098 (23.71 ±0.04%) | 7,100 (0.710 ±0.008%) | **−229,998 (−23.00 ±0.04%)** |
+| Sample I (A+B) | 64,762 (6.48 ±0.02%) | 554 (0.055 ±0.002%) | **−64,208 (−6.42 ±0.02%)** |
+| Sample II (B-only) | 237,098 (23.71 ±0.04%) | 7,100 (0.710 ±0.008%) | **−229,998 (−23.00 ±0.04%)** |
+| Purity (Sample I / Enter B) | 27.31 ±0.09% | 7.8 ±0.3% | **−19.5 ±0.3%** |
 
 **Breakdown by Species (Authorising 1M)**:
 
 | Species | Enter B | Sample I | ε_HRD (± binomial) | n |
 |---------|---------|----------|-------------------|---|
-| Deuteron | 1,487 | 550 | 37.0% ± 1.3% | 550 |
-| Proton | 5,598 | 4 | 0.07% ± 0.04% | 5,598 |
+| Deuteron | 1,487 | 550 | 37 ±1% | 1,487 |
+| Proton | 5,598 | 4 | 0.07 ±0.04% | 5,598 |
 | C12 | 1 | 0 | 0% | 1 |
 | Alpha | 0 | 0 | — | 0 |
 
-**Interpretation**: The corrected cross-section sampling reduces the HRD proxy rate by −95% (Enter B: 88,791 → 4,524 events). This is the expected outcome of fixing the unit-weight sampling bug. The purity remains statistically unchanged (99.94% → 99.89%, within ±0.05% combined error), indicating that the surviving events are still well-separated. Binomial errors are computed as `sqrt(p(1-p)/n)` for rate measurements. The species breakdown below uses track-level analysis and is independent of the primary-particle counts above.
+**Interpretation**: The corrected cross-section sampling reduces the HRD proxy rate by −97% (Enter B: 237,098 → 7,100 events; −229,998). This is the expected outcome of fixing the unit-weight sampling bug. The purity drops significantly (27.31% → 7.8%, −19.5 pp) due to the -97% reduction in B-arm hits; the surviving events have much lower coincidence probability. Binomial errors are computed as `sqrt(p(1-p)/n)` for rate measurements. The species breakdown uses primary-particle classification from `get_primary_species()` in `trigger_baseline_characterization.py`.
 
 ## Geometry Status: T1/T2 ABSENT
 

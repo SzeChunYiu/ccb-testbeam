@@ -23,17 +23,18 @@ def test_polarity_locked_map_is_authorising():
     assert report["authorising_waveform_amplitude_claims"] is True
 
 
-def test_polarity_v2_measured_map_is_authorising():
-    """The #954 measured 33-run unanimous map must authorise the S00/B-pulse
-    amplitude path (channel_polarity_v2.json status), matching the 8x16
-    builder allowlist from #1382."""
+def test_polarity_v2_retracted_map_is_not_authorising():
+    """channel_polarity_v2 is RETRACTED (measured on the 128-word truncated
+    LUNARC staging read as 8x16) and must NOT authorise amplitude claims;
+    v1 (LOCKED_FROM_DUPLICATE_READOUT_CONVENTION) is the operative map."""
     import json
 
     status = json.loads(
         Path("configs/channel_polarity_v2.json").read_text()
     )["status"]
+    assert status.startswith("RETRACTED_")
     report = gates.polarity_authorisation_report(status)
-    assert report["authorising_waveform_amplitude_claims"] is True
+    assert report["authorising_waveform_amplitude_claims"] is False
 
 
 def test_polarity_unknown_status_is_non_authorising():

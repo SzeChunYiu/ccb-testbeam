@@ -14,11 +14,11 @@ ROOT = Path(__file__).resolve().parents[1]
 AUTHORISING_POLARITY_STATUSES = {
     "LOCKED_FROM_DUPLICATE_READOUT_CONVENTION",
     "LOCKED_FROM_MEASUREMENT",
-    # Measured 33-run unanimous two-estimator map (#954, channel_polarity_v2);
-    # same authority class as LOCKED_FROM_MEASUREMENT. Added so the S00
-    # B-pulse builder amplitude path can run under the v2 map — the 8x16
-    # builder allowlisted this status in #1382; this gate had not been updated.
-    "MEASURED_202608_RUNS31_65_UNANIMOUS_BOTH_ESTIMATORS",
+    # MEASURED_202608_RUNS31_65_UNANIMOUS_BOTH_ESTIMATORS (channel_polarity_v2)
+    # was REMOVED 2026-08-16: that map is RETRACTED_20260816_TRUNCATED_STAGING_DESYNC
+    # — it was measured on the 128-word-truncated LUNARC staging read as 8x16
+    # (see the retraction block in configs/channel_polarity_v2.json). v1
+    # (LOCKED_FROM_DUPLICATE_READOUT_CONVENTION) is the operative map.
 }
 
 

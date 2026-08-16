@@ -4,7 +4,7 @@
 
 **Objective**: Replace the HRD first-stack-layer charged-hit proxy with a validated hardware-trigger response model by adding T1/T2 trigger scintillator volumes to the MC geometry and computing migration matrices.
 
-**Current Status**: Phase 1 COMPLETE, Phase 2 IMPLEMENTATION COMPLETE (awaiting LUNARC execution)
+**Current Status**: Phase 1 COMPLETE as HISTORICAL DIAGNOSTIC (non-authorising MC — see PHASE1B_NONAUTHORISING_MC_NOTICE.md), Phase 1B REQUIRED, Phase 2 IMPLEMENTATION COMPLETE (awaiting LUNARC execution)
 
 **Evidence State**: MC_TRIGGER_PROXY / UNKNOWN_EXTERNAL per docs/contracts/TRIGGER_HARDWARE_RESPONSE.json
 
@@ -12,14 +12,22 @@
 
 | Phase | Name | Status | Commit |
 |-------|------|--------|--------|
-| 1 | Baseline HRD Proxy Characterization | **COMPLETE** | f6f22dfd |
+| 1 | Baseline HRD Proxy Characterization | **COMPLETE — historical diagnostic only** (non-authorising MC) | f6f22dfd |
+| 1B | Baseline on Authorising Corrected-Source MC | **REQUIRED** (CL-021 chain) | — |
 | 2 | Truth-Trigger Volume Addition | **IMPLEMENTATION COMPLETE** | a223b807, 92b9e24c |
 | 3 | Threshold/Coincidence SCAN | PENDING | — |
 | 4 | Migration Matrix Analysis | PENDING | — |
 | 5 | MC Regeneration (conditional) | PENDING | — |
 | 6 | Contract Bump | PENDING | — |
 
-## Phase 1: Baseline HRD Proxy Characterization ✅ COMPLETE
+## Phase 1: Baseline HRD Proxy Characterization ⚠️ COMPLETE (historical diagnostic)
+
+**Provenance caveat (2026-08-16)**: the input `output_krakow_1M.root` is a product of the
+superseded uniform-source generator and is NONAUTHORISING per `geant4/REPRODUCTION_STATUS.md`.
+The numbers below are diagnostics of that MC, retained as the pipeline shakedown and the
+Phase-1B comparison point — they must not be quoted as validated efficiencies. The earlier
+truncated-data diagnosis was wrong: Phase 1 reads only MC truth branches and never consumed
+the ccb_data staged waveforms. See `PHASE1B_NONAUTHORISING_MC_NOTICE.md`.
 
 **Results**:
 - Sample I is 99.3% deuteron with ε_HRD = 45.6%
@@ -53,7 +61,7 @@
 
 ## Phase 3: Threshold/Coincidence SCAN ⏳ PENDING
 
-**Depends on**: Phase 2 simulation output
+**Depends on**: Phase 2 simulation output AND Phase 1B (the ε_HRD denominator must come from an authorising MC)
 
 **Scan Bands** (preregistered):
 - **Threshold**: 0.5, 1.0, 2.0, 5.0 MeV (4 values)
@@ -95,7 +103,8 @@
 
 ## Timeline Estimate (Remaining Work)
 
-- Phase 2 execution (LUNARC): 2-4 hours (mostly runtime)
+- Phase 1B (authorising corrected-source MC): dominated by the CL-021 chain (src_patch install + pinned build + 1M-event run)
+- Phase 2 execution (LUNARC): 2-4 hours (mostly runtime, parallel-safe with 1B)
 - Phase 3 analysis: 1-2 hours
 - Phase 4 analysis: 2-4 hours
 - Phase 5 (if needed): ~10h LUNARC runtime
@@ -105,7 +114,8 @@
 
 ## Success Criteria
 
-1. ✅ Phase 1: Baseline HRD proxy characterized
+1. ⚠️ Phase 1: Baseline HRD proxy characterized — historical diagnostic only (non-authorising MC)
+1b. 🔥 Phase 1B: Baseline rebuilt on an authorising corrected-source MC (CL-021 chain)
 2. 🔄 Phase 2: T1/T2 volumes added to geometry with sensitive detectors (implementation complete, execution pending)
 3. ⏳ Phase 3: Migration matrices computed across all scan bands
 4. ⏳ Phase 4: Decision document with clear recommendation
@@ -115,4 +125,4 @@
 ---
 **Issue**: #1045 (P0)
 **Updated**: 2026-08-16
-**Status**: Phase 1 COMPLETE, Phase 2 IMPLEMENTATION COMPLETE (awaiting LUNARC execution)
+**Status**: Phase 1 complete as historical diagnostic; Phase 1B REQUIRED; Phase 2 implementation complete (awaiting LUNARC execution)

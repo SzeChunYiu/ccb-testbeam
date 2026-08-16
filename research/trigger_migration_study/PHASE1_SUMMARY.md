@@ -7,6 +7,10 @@
 **Events Processed**: 1,000,000
 **Processing Time**: ~2-3 minutes on LUNARC
 
+> **HISTORICAL DIAGNOSTIC (2026-08-16)**: this MC is NONAUTHORISING (superseded uniform-source
+> generator; see `geant4/REPRODUCTION_STATUS.md` and `PHASE1B_NONAUTHORISING_MC_NOTICE.md`).
+> All numbers below are diagnostics of that MC, pending the Phase-1B authorising rebuild.
+
 ## Results
 
 ### Overall Statistics

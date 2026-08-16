@@ -2,11 +2,17 @@
 
 **Issue**: #1045 (P0)
 **Date**: 2026-08-16
-**Status**: COMPLETE
+**Status**: COMPLETE — HISTORICAL DIAGNOSTIC (non-authorising MC; see PHASE1B_NONAUTHORISING_MC_NOTICE.md)
 
 ## Executive Summary
 
 Phase 1 successfully characterized the baseline HRD proxy on 1,000,000 MC events. Key findings:
+
+> **Provenance caveat (2026-08-16)**: the input MC is a product of the superseded uniform-source
+> generator (NONAUTHORISING per `geant4/REPRODUCTION_STATUS.md`). The efficiencies below are
+> historical diagnostics of that MC — retained as the pipeline shakedown and the Phase-1B
+> comparison point — and must not be quoted as validated efficiencies. (The earlier
+> truncated-data diagnosis was wrong: this analysis reads only MC truth branches.)
 - Sample I (A+B coincidence within 15ns) is **99.3% deuteron**, validating the p+d conjugate-kinematics signature
 - ε_HRD[deuteron] = 45.6%, ε_HRD[proton] = 0.4% — the coincidence requirement strongly suppresses protons
 - T1/T2 trigger scintillators are **NOT present** in the HIBEAM geometry — the MATTHIAS_RESPONSE.md "In source since 2026-01-26" claim is contradicted

@@ -8,9 +8,10 @@
 
 | Phase | Status | Commit(s) | Notes |
 |-------|--------|-----------|-------|
-| 1 | **COMPLETE** | f6f22dfd | Baseline HRD proxy characterized on 1M events |
+| 1 | **COMPLETE (historical diagnostic)** | f6f22dfd | 1M events on NONAUTHORISING MC — numbers demoted per PHASE1B_NONAUTHORISING_MC_NOTICE.md |
+| 1B | **REQUIRED** | — | Rebuild on authorising corrected-source MC (CL-021 chain); NOT a staging re-run |
 | 2 | **IMPLEMENTATION COMPLETE** | a223b807, 92b9e24c, 4605eab2 | Awaiting LUNARC execution |
-| 3 | **PREPARATION COMPLETE** | c066105e | Awaiting Phase 2 simulation output |
+| 3 | **PREPARATION COMPLETE** | c066105e | Blocked on 1B for the ε_HRD denominator |
 | 4 | PENDING | — | Awaiting Phase 3 scan results |
 | 5 | PENDING | — | Conditional (depends on Phase 4 decision) |
 | 6 | PENDING | — | Final contract update |

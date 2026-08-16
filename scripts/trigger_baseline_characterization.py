@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
-"""Baseline HRD Proxy Characterization for Issue #1045 Trigger Migration Study."""
+"""Baseline HRD Proxy Characterization for Issue #1045 Trigger Migration Study.
+
+Provenance contract: efficiencies produced from a legacy MC (e.g. the June-era
+output_krakow_1M.root, a superseded uniform-source product) are HISTORICAL
+DIAGNOSTICS, not validated efficiencies — see geant4/REPRODUCTION_STATUS.md and
+research/trigger_migration_study/PHASE1B_NONAUTHORISING_MC_NOTICE.md. An
+authorising baseline requires the Phase-1B corrected-source MC.
+"""
 
 import json
 import sys
@@ -144,13 +151,28 @@ def process_mc_file(file_path, max_events=None):
     
     return stats
 
+# Defaults are the historical Phase-1 inputs (a NONAUTHORISING MC -- pass the
+# Phase-1B corrected-source file explicitly once it exists).
+DEFAULT_MC = "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root"
+DEFAULT_OUTPUT = "research/trigger_migration_study/baseline_hrd_proxy.json"
+
+
 def main():
-    mc_file = "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root"
-    output_file = "research/trigger_migration_study/baseline_hrd_proxy.json"
+    import argparse
+
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--input", default=DEFAULT_MC, help="truth-level MC ROOT file")
+    parser.add_argument("--output", default=DEFAULT_OUTPUT, help="output JSON path (repo-relative)")
+    parser.add_argument("--repo-root", default="/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam",
+                        help="repository root the output path is resolved against")
+    args = parser.parse_args()
+
+    mc_file = args.input
+    output_file = args.output
     
     stats = process_mc_file(mc_file)
     
-    output_path = Path("/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam") / output_file
+    output_path = Path(args.repo_root) / output_file
     output_path.parent.mkdir(parents=True, exist_ok=True)
     
     with open(output_path, "w") as f:

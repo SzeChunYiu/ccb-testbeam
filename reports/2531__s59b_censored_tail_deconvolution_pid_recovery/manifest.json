@@ -1,0 +1,33 @@
+{
+  "ticket_id": "2531",
+  "git_commit": "cec9edc28257e0699c70c17fa9b2e8d806a3d42a",
+  "command": "/home/billy/.cache/uv/builds-v0/.tmpAkOIO7/bin/python scripts/s32b_1783884181_2140_09a136f2_analytic_pileup_saturation_energy_closure_bakeoff.py",
+  "runtime_seconds": 42.95747900009155,
+  "python": "3.13.12 (main, Feb  3 2026, 22:52:12) [Clang 21.1.4 ]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+  "outputs_sha256": {
+    "REPORT.md": "52a3afe0438f01af2ab1f43ed4755c2c43cea2b2f7a0abda850f6beab5286508",
+    "censored_tail_recovery.csv": "e65b63a6e353b451a4f82ba202cd3ecff17eb095957427de8176d3fec20e0ab6",
+    "claimed_ticket.txt": "db3c509bbfc468820c23304f0c0d06f2730909380c67775601416b2536de71c1",
+    "event_predictions.csv": "0b1034457d2f71b36f904ad63c06cb5c40170e1bc6e986a14d7d53f86a0a0bd4",
+    "input_sha256.csv": "cc17da0dcd3e7e732b81a17f3c35833f026fdec912538d28d7d71b9af71a46f6",
+    "method_metrics.csv": "5240747a10e859f82b3c09a4465057d3466f78cd292576b7bdb2d8913a252137",
+    "pedestal_sensitivity.csv": "5d5ee7230b2401029f67b2b7726ba33916e529e3417ae6b26264a850e7425465",
+    "pid_event_scores.csv": "424097a8c466f31186ebed26f9892c3392fe977f9cfe3b498fa06914bd67ffdd",
+    "pid_metrics.csv": "a71ec45634d6154dfa37c80aea1dfd059fa6bc80cb83725a9b2942b5ccc90426",
+    "pileup_separation.csv": "d43ccdf155fef65017b84ea3065881562a8d4b6f9f4674434ebc7e8467670a56",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "1d58a8a80ad841cac6789f484a9e670f0d67484f192bd7526ef46124dc563144",
+    "run_heldout_metrics.csv": "711e32f2b1e53606f27fb452b537ec1ba860bb5d37e3ee656852f4e2b05933f7",
+    "saturation_stratified_calibration.csv": "92c26f604e8f081fa0fc52862cde7b88a40e951d416dc806f66f21e02777ccf9",
+    "strata_metrics.csv": "ebc325dc4117b765a356046462b74f8f57ec678e9919e880e7fa984c9f64d7ed",
+    "template_summary.csv": "70811c144799226d495253dcf99ec44c6cea6b9a7de91249cd5ea72526581b13",
+    "winner_ranked_metrics.csv": "b738fdf2df81fe46bd3240fb46fbaa97a8b35adaf2a68993970d03c4e3596b84"
+  },
+  "issue_number": 2531,
+  "worker": "testbeam-laptop-1",
+  "claim_command_run_once": "tn-ticket claim testbeam-laptop-1 --project testbeam",
+  "claim_command_output": "null / # null / null",
+  "manual_claim_recovery": "gh issue edit 2531 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-1 --remove-label factory:open",
+  "done_command": "tn-ticket done 2531"
+}

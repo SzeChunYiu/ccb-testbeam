@@ -1,0 +1,117 @@
+{
+  "ticket_id": "2527",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-1",
+  "title": "S62b: Clipped-tail saturation energy and PID recovery with pedestal-informed censoring",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-1 --project testbeam",
+  "claimed_ticket_text": "2527\n# NEW S62b clipped-tail saturation energy and PID recovery with pedestal-informed censoring\n\nAcademic-grade study: compare censored Landau-Gaussian/template likelihood\nenergy fits with ridge, gradient-boosted trees, MLP, 1D-CNN, and transformer\nmodels for clipped or saturated pulses. Use bootstrap CIs across run, pile-up\nspacing, saturation depth, pedestal drift, pulse-shape class, energy bias, and\nPID confusion strata.",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "adc_clip": 11800.0,
+    "bootstrap": "held-out run-block percentile 95% CI",
+    "bootstrap_replicates": 400,
+    "negative_control": "clipped clean single-pulse controls with matched source-run distribution",
+    "winner_score": "energy_fractional_sigma68 + 0.20*abs(energy_fractional_bias) + 0.008*time_sigma68_ns + 0.04*pileup_miss_rate + 0.04*false_split_rate"
+  },
+  "required_method_coverage": {
+    "traditional": "analytic_clipped_template_sideband_traditional",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "transformer_sequence_model": "tiny_sequence_transformer",
+    "new_architecture": "saturation_residual_fusion_new"
+  },
+  "winner": {
+    "name": "ridge",
+    "criterion": "minimum registered S62b clipped-tail energy/PID score with run-block bootstrap CIs",
+    "method": "ridge",
+    "n_heldout_overlap": 390.0,
+    "energy_fractional_sigma68": 0.07248602068887902,
+    "energy_fractional_sigma68_ci_low": 0.06455252398111125,
+    "energy_fractional_sigma68_ci_high": 0.08291437924873886,
+    "median_weighted_abs_energy_residual": 0.04257442320263426,
+    "median_weighted_abs_energy_residual_ci_low": 0.03958686813297953,
+    "median_weighted_abs_energy_residual_ci_high": 0.04897938515955494,
+    "pid_proxy_auc": 0.9935109289617486,
+    "pid_proxy_auc_ci_low": 0.9912302371541503,
+    "pid_proxy_auc_ci_high": 0.9975322642249791,
+    "pid_proxy_f1": 0.8333333333333334,
+    "tail_censored_fraction": 0.41025641025641024,
+    "registered_s62b_score": 0.10321752722081967
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv",
+    "clipped_tail_method_summary": "clipped_tail_method_summary.csv",
+    "bootstrap_strata_ci": "bootstrap_strata_ci.csv"
+  },
+  "novel_tickets_appended": [],
+  "caveats": [
+    "Truth comes from controlled injections into raw-ROOT-derived clean pulses.",
+    "ADC clipping is an explicit benchmark stressor rather than decoded electronics metadata.",
+    "Bootstrap CIs resample held-out runs and should be read as run-transfer intervals."
+  ],
+  "factory_issue": 2527,
+  "issue_url": "https://github.com/SzeChunYiu/factory-tickets/issues/2527",
+  "claim_command_output": "null\n# null\n\nnull",
+  "manual_claim_repair": "gh issue edit 2527 --repo SzeChunYiu/factory-tickets --remove-label factory:open --add-label factory:claimed --add-label worker:testbeam-laptop-1",
+  "done_command": "tn-ticket done 2527",
+  "s62b_endpoint": {
+    "method_summary": "clipped_tail_method_summary.csv",
+    "bootstrap_strata_ci": "bootstrap_strata_ci.csv",
+    "strata": [
+      "run",
+      "pileup_spacing",
+      "saturation_depth",
+      "pedestal_drift",
+      "pulse_shape_class",
+      "energy_bias",
+      "pid_confusion"
+    ],
+    "pid_proxy": "B2/B4 and true combined injected amplitude > 9000 ADC",
+    "censoring_weight": "1/(1 + 0.18*n_clip + 0.08*max(plateau_width-2,0) + 0.06*I[pedestal shifted])"
+  },
+  "queue_provenance": {
+    "claim_command_run_once": "tn-ticket claim testbeam-laptop-1 --project testbeam",
+    "claim_command_output": "null\n# null\n\nnull",
+    "manual_claim_repair": "gh issue edit 2527 --repo SzeChunYiu/factory-tickets --remove-label factory:open --add-label factory:claimed --add-label worker:testbeam-laptop-1",
+    "reran_tn_ticket_claim": false,
+    "novel_tickets_appended": []
+  }
+}

@@ -32,9 +32,12 @@ STATUS_TAG = {
     "DESIGN_SPEC": "D",
     "SIM_CONFIG": "S",
     "UNKNOWN_EXTERNAL": "U",
+    "EXTERNAL_COLLABORATION_SOURCE": "E",
 }
 STATUS_LEGEND = (
-    "M = MEASURED, D = DESIGN_SPEC, S = SIM_CONFIG, U = UNKNOWN_EXTERNAL\n"
+    "M = MEASURED, D = DESIGN_SPEC, S = SIM_CONFIG, U = UNKNOWN_EXTERNAL,\n"
+    "E = EXTERNAL_COLLABORATION_SOURCE (Rataj 2026, campaign identity not\n"
+    "established with B-stack runs; issues #1296/#962)\n"
     "(publication hardware BOM, issue #1296)"
 )
 

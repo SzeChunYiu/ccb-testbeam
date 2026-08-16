@@ -14,7 +14,11 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[1]
 BOM_COLUMNS = ["component", "quantity", "value", "unit", "status",
                "evidence_path", "evidence_sha", "claim_ids", "notes"]
-ALLOWED_STATUS = {"MEASURED", "DESIGN_SPEC", "SIM_CONFIG", "UNKNOWN_EXTERNAL"}
+# EXTERNAL_COLLABORATION_SOURCE (#962): measured/published facts about the
+# external Rataj 2026 CCB campaign that the B-stack run record cannot adopt
+# as its own hardware truth (campaign identity not established, #1296).
+ALLOWED_STATUS = {"MEASURED", "DESIGN_SPEC", "SIM_CONFIG", "UNKNOWN_EXTERNAL",
+                  "EXTERNAL_COLLABORATION_SOURCE"}
 BOM_PATHS = (REPO_ROOT / "publication" / "tables" / "hardware_bom.csv",
              REPO_ROOT / "paper" / "hardware_bom.csv")
 
@@ -56,3 +60,12 @@ def test_evidence_sha_wellformed_when_present():
             sha = row[6]
             assert sha == "" or re.fullmatch(r"[0-9a-f]{64}", sha), (
                 path.name, row[0], sha)
+
+
+def test_bom_copies_identical():
+    # paper/hardware_bom.csv is a distribution copy of the publication table;
+    # it drifted once (#962) and must stay byte-identical.
+    pub = BOM_PATHS[0].read_bytes()
+    paper = BOM_PATHS[1].read_bytes()
+    assert pub == paper, "paper/hardware_bom.csv has drifted from publication/tables/hardware_bom.csv"
+

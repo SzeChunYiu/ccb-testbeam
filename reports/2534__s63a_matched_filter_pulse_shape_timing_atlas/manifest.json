@@ -1,0 +1,91 @@
+{
+  "ticket_id": "2534",
+  "study_id": "S63a",
+  "worker": "testbeam-laptop-1",
+  "generated_at_unix": 1786913795.6237109,
+  "claim_command": "tn-ticket claim testbeam-laptop-1 --project testbeam",
+  "done_command": "tn-ticket done 2534",
+  "result_winner": "traditional_cfd_template_derivative",
+  "artifacts": [
+    {
+      "path": "REPORT.md",
+      "bytes": 42873,
+      "sha256": "5c6b00c287dfb4d64e64638e59b08bff11f97796570d6428996d21e1255bc0f2"
+    },
+    {
+      "path": "ablations.csv",
+      "bytes": 1124,
+      "sha256": "d40df420b2a4b91e746d957bc6334a271b76fca663d05d4e8229280df472a5c2"
+    },
+    {
+      "path": "by_run.csv",
+      "bytes": 6653,
+      "sha256": "cf0cb8d7e887290e572dbb84605acbc04e66574ce92eaf290ede855cbbde4c26"
+    },
+    {
+      "path": "claimed_ticket.txt",
+      "bytes": 1122,
+      "sha256": "924103bb6c75b27847a814d572fbccf468759e12b69159336abf09d8d096221b"
+    },
+    {
+      "path": "claimed_ticket_body.txt",
+      "bytes": 835,
+      "sha256": "5d5427c6a673219f9a824054a6834fe62d55e2b534e375b7c8616330531b1296"
+    },
+    {
+      "path": "frontier_axis_summary.csv",
+      "bytes": 7210,
+      "sha256": "7fca3ca9dfdd8fd04258241ea32d87825df8a727298fce4f75fdc728b5fd0dff"
+    },
+    {
+      "path": "input_sha256.csv",
+      "bytes": 4993,
+      "sha256": "9d1630c332196186416292bc75bba0238b8007fd1975f90e78916995e3b486e1"
+    },
+    {
+      "path": "method_deltas.csv",
+      "bytes": 2455,
+      "sha256": "ac6606bb8ce7a15135a2f847f089286827ae71300eb24e54167012d6ac320533"
+    },
+    {
+      "path": "metrics.csv",
+      "bytes": 2439,
+      "sha256": "3afaf2a8f0a9cbb5e94e49da73b39d2c52b1c794a85de5111918c8b5ad8aabbf"
+    },
+    {
+      "path": "pulse_shape_timing_atlas.csv",
+      "bytes": 44113,
+      "sha256": "642e27efe639b37890ed5ece718a1dd38a786d911fea00ecfb21bf0eda9d6f0e"
+    },
+    {
+      "path": "reproduction.csv",
+      "bytes": 299,
+      "sha256": "962a281223ae2d6280d815498dfe7f7042b684acc1de55aa6fee4e305eb9fb24"
+    },
+    {
+      "path": "result.json",
+      "bytes": 46968,
+      "sha256": "3dcd9f2aa15d17ec095463676ed24f3d6a7bf30c36dd924882f7c341f2c81143"
+    },
+    {
+      "path": "run_family_summary.csv",
+      "bytes": 3756,
+      "sha256": "d6442e0ae0246d6b3e0b449c39465c35ca2da45d44a28ea2eba9d85542d830df"
+    },
+    {
+      "path": "strata.csv",
+      "bytes": 28870,
+      "sha256": "00ae3e3b2232345c67d91183903ca9e98bf0ad1666d21f5afa0d73753878beaa"
+    },
+    {
+      "path": "surrogate_detector_metrics.csv",
+      "bytes": 713,
+      "sha256": "e9d5670433706505f33c9a3d866e19414b606e0f52464c9962e640a6cc14f478"
+    },
+    {
+      "path": "systematics_summary.csv",
+      "bytes": 1557,
+      "sha256": "0cc6e01c08cb5c4528467cd5f444cb9c034f9a766a16281ef51d6e6a6d107795"
+    }
+  ]
+}

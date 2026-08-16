@@ -300,7 +300,7 @@ DASHBOARD-OVERVIEW:
 # === Illustrative schematics (kept SEPARATE from quantitative figures) =======
 
 SCH-01:
-  source_figure: docs/figures/geometry_tof.png
+  source_figure: publication/figures/illustrative/geometry_tof.png
   status: ILLUSTRATIVE
   kind: illustrative
   caption: Beamline / detector geometry schematic. Carries no measured numbers.

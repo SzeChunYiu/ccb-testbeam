@@ -1,0 +1,36 @@
+{
+  "ticket_id": "2501",
+  "study": "S55a",
+  "worker": "testbeam-laptop-3",
+  "command": "scripts/ticket_2501_s55a_phase_conditioned_timing.py --config configs/ticket_2501_s55a_phase_conditioned_timing.json",
+  "script": "scripts/ticket_2501_s55a_phase_conditioned_timing.py",
+  "config": "configs/ticket_2501_s55a_phase_conditioned_timing.json",
+  "git_commit": "b3627abca9fdc535eb8ae51a0791c6c23fe9a688",
+  "python": "3.8.10",
+  "packages": {
+    "uproot": "5.4.2",
+    "numpy": "1.24.3",
+    "pandas": "2.0.3",
+    "torch": "2.4.1+cpu"
+  },
+  "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+  "input_file_count": 33,
+  "reproduction_passed": true,
+  "outputs": {
+    "REPORT.md": "5fc947b3015f3709baee7613680f6416e99b96d64ef5bc08a2529e05071959fc",
+    "claimed_ticket.txt": "62cebd46d80f8c4a16554a20d90b689480621dfeef677f62b397451e17e68a9f",
+    "claimed_ticket_body.txt": "efef0507adb58e4467a80339666062da830578b994a3ed6b56d5861a435a59d4",
+    "heldout_pair_residuals.csv": "c1b050db66e5fe18753a7b72fe685f7139db35f312cfab4ada0c9b59fdf04d6a",
+    "input_sha256.csv": "6e2e4a924403c2dc070c509f98323147b6f2d5cc6220076489925ae6270e93b3",
+    "leakage_checks.csv": "748ab22a6926280fb71e79a68c10957f19c33875d2441e6cb041816d8568fa5b",
+    "method_summary.csv": "c7f1cd49b8949f861b719207fbbca19ef560790053e208912d9f73855e64afe4",
+    "pretrigger_pedestal_window_ablation.csv": "a14e680d08e9ce85d3b04014e1db8b24eb9f9d376aaa5167a9428af6721407e6",
+    "pretrigger_pedestal_window_counts_by_run.csv": "06bf2bb5029bc412fd69ec1b69590564e1dc248f4289ef8ba8df4335a4ea4b9b",
+    "reproduction_counts_by_run.csv": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+    "reproduction_match_table.csv": "e70f583e1fd72a6ff544cbf9253ee1f265c694da1d93ee26ada9f644caef0755",
+    "result.json": "35d28022b7941b36a2080eb19c403770036f9c1a5ad6b1370f4dc62cf2a661c1",
+    "saturation_mask_ablation.csv": "7d951be88a99a0b5131bfdf55338021ecd5870523ebfe95bbb7e532799807761",
+    "stratified_errors.csv": "08679e54f42382c33d714c96ac3c097a850fa1486a60aa465a84ed1689e7b8d1",
+    "training_summary.csv": "d468060d023b9a6201e111d922ad4fba56d21f1fbd0ddf66e798c79ad791c039"
+  }
+}

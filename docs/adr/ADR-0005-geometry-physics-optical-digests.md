@@ -18,7 +18,7 @@ Emit three versioned digests:
 1. `geometry_hash` / `ccb-geometry-config/1` — mass geometry extents, coating
    and sensor thickness, fibre radii, `far_end_mode`, material identity labels.
 2. `physics_hash` / `ccb-physics-config/1` — Birks `kB` (mm/MeV).
-3. `optical_hash` / `ccb-optical-config/1` — optical interface model, WLS/Y11
+3. `optical_hash` / `ccb-optical-config/2` (`schema=optical_v2`, #1088: adds `wls_fluorescence_model` + `wls_fluorescence_yield`; v1 grids 533d58e8/42e67cad carried Poisson(1) multiplicity under a default-one label — v2 makes the digest mode-complete so that cannot recur) — optical interface model, WLS/Y11
    yield knobs, TiO2 finish parameters, attenuation form, strict-optical flag.
 
 Serialization uses named fields, scientific float formatting, and an explicit

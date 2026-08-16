@@ -90,6 +90,10 @@ void AppConfig::PrintUsage(const char* prog) {
 	    "                               (default UNKNOWN_EXTERNAL)\n"
     "  --far-end MODE           absorb|open|mirror|instrumented (default instrumented)\n"
     "  --wls-time-profile P     exponential|delta           (default exponential)\n"
+    "  --wls-fluorescence-model M  geant4_default_one_secondary|geant4_poisson_mean|bernoulli_thinned\n"
+    "                               (default geant4_default_one_secondary)\n"
+    "  --wls-fluorescence-yield Q  Bernoulli re-emission q for bernoulli_thinned (default 0.70)\n"
+    "  --wls-mean-number-photons MU  Poisson mean for geant4_poisson_mean (default 1.0)\n"
     "  --mode MODE              optical                     (default; fast kernel not yet implemented)\n"
     "  --optical-dir DIR        optical CSV table directory (default optical)\n"
     "  --strict-optical         abort if required optical tables are missing/malformed (or CCB_STRICT_OPTICAL=1)\n"
@@ -136,6 +140,8 @@ std::string AppConfig::Describe() const {
 	     << " optical_interface_model=" << optical_interface_model
      << " far_end=" << far_end_mode
      << " wls_time_profile=" << wls_time_profile
+     << " wls_fluorescence_model=" << wls_fluorescence_model
+     << " wls_fluorescence_yield=" << wls_fluorescence_yield
      << " mode=" << (mode == SimMode::kOpticalCalibration ? "optical" : "fast")
      << " optical_dir=" << optical_dir
      << " strict_optical=" << (strict_optical ? 1 : 0)
@@ -192,6 +198,15 @@ bool AppConfig::ParseArgs(int argc, char** argv) {
       else if (eq(v, "delta")) wls_time_profile = "delta";
       else { std::cerr << "error: --wls-time-profile must be exponential|delta\n"; return false; }
     }
+    else if (eq(a, "--wls-fluorescence-model")) {
+      if(!(v=need(i)))return false;
+      if (eq(v, "geant4_default_one_secondary") || eq(v, "geant4_poisson_mean") ||
+          eq(v, "bernoulli_thinned"))
+        wls_fluorescence_model = v;
+      else { std::cerr << "error: --wls-fluorescence-model must be geant4_default_one_secondary|geant4_poisson_mean|bernoulli_thinned\n"; return false; }
+    }
+    else if (eq(a, "--wls-fluorescence-yield")) { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --wls-fluorescence-yield requires a finite number, got '"<<v<<"'\n";return false;} wls_fluorescence_yield = t; }
+    else if (eq(a, "--wls-mean-number-photons")) { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --wls-mean-number-photons requires a finite number, got '"<<v<<"'\n";return false;} wls_mean_number_photons = t; }
     else if (eq(a, "--mode")) {
       if(!(v=need(i)))return false;
       if (eq(v, "optical")) mode = SimMode::kOpticalCalibration;
@@ -230,6 +245,28 @@ bool AppConfig::ParseArgs(int argc, char** argv) {
   if (sipm_n_cells <= 0)      { std::cerr << "error: --sipm-n-cells must be > 0\n"; return false; }
   if (collection_efficiency < 0 || collection_efficiency > 1) {
     std::cerr << "error: --collection-efficiency must be in [0,1]\n"; return false;
+  }
+  // WLS fluorescence multiplicity contract (#1088): fail-closed mode/parameter
+  // validation, and derive the status tag from the selected mode so run
+  // metadata can never disagree with the actual multiplicity mechanism.
+  if (wls_fluorescence_model != "geant4_default_one_secondary" &&
+      wls_fluorescence_model != "geant4_poisson_mean" &&
+      wls_fluorescence_model != "bernoulli_thinned") {
+    std::cerr << "error: --wls-fluorescence-model must be geant4_default_one_secondary|geant4_poisson_mean|bernoulli_thinned\n";
+    return false;
+  }
+  if (wls_fluorescence_model == "geant4_poisson_mean") {
+    if (wls_mean_number_photons <= 0) {
+      std::cerr << "error: --wls-mean-number-photons must be > 0 for geant4_poisson_mean\n";
+      return false;
+    }
+    wls_fluorescence_status = "EXPLICIT_POISSON_MEAN";
+  } else if (wls_fluorescence_model == "bernoulli_thinned") {
+    if (wls_fluorescence_yield < 0.0 || wls_fluorescence_yield > 1.0) {
+      std::cerr << "error: --wls-fluorescence-yield must be in [0,1] for bernoulli_thinned\n";
+      return false;
+    }
+    wls_fluorescence_status = "EXTERNAL_QE_PRIOR";
   }
   if (pde_scale < 0 || reflectivity_scale < 0 || attenuation_scale < 0 ||
       scintillator_absorption_scale < 0 || y11_bulk_attenuation_scale < 0) {

@@ -83,6 +83,7 @@ void RunAction::DefineNtuples() {
   am->CreateNtupleIColumn("n_scint_generated");
   am->CreateNtupleIColumn("n_wls_generated");
   am->CreateNtupleIColumn("n_cerenkov_generated");
+  am->CreateNtupleIColumn("n_wls_absorbed");      // ended by OpWLS (#1088)
   // Four conceptual channels (readout + three controls).
   am->CreateNtupleIColumn("arrival_readout");
   am->CreateNtupleIColumn("arrival_f1far");
@@ -207,6 +208,7 @@ void RunAction::FillEvent(const EventData& e, int event_id) {
   am->FillNtupleIColumn(nt_event_, c++, (int)e.n_scint_generated);
   am->FillNtupleIColumn(nt_event_, c++, (int)e.n_wls_generated);
   am->FillNtupleIColumn(nt_event_, c++, (int)e.n_cerenkov_generated);
+  am->FillNtupleIColumn(nt_event_, c++, (int)e.n_wls_absorbed);
   for (int i = 0; i < kNSensors; ++i)
     am->FillNtupleIColumn(nt_event_, c++, (int)e.n_end_arrival[i]);
   for (int i = 0; i < kNSensors; ++i)
@@ -344,6 +346,7 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
      << "  \"coating_material\": " << j(cfg_.coating_material) << ",\n"
      << "  \"coating_material_status\": " << j(cfg_.coating_material_status) << ",\n"
      << "  \"wls_mean_number_photons\": " << cfg_.wls_mean_number_photons << ",\n"
+     << "  \"wls_fluorescence_yield\": " << cfg_.wls_fluorescence_yield << ",\n"
      << "  \"wls_fluorescence_model\": " << j(cfg_.wls_fluorescence_model) << ",\n"
      << "  \"wls_fluorescence_status\": " << j(cfg_.wls_fluorescence_status) << ",\n"
      << "  \"y11_direct_scint_yield_per_MeV\": " << cfg_.y11_direct_scint_yield_per_MeV << ",\n"

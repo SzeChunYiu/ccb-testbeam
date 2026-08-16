@@ -1,0 +1,6 @@
+quantity,value
+audited_bstack_root_files,53
+files_with_nonbeam_trigger_code,0
+unique_trigger_values,1.0
+keyword_root_files,0
+p11d_control_policy,no dedicated forced/random B-stack control is used as a supervised target; pretrigger-only controls are retained as support diagnostics

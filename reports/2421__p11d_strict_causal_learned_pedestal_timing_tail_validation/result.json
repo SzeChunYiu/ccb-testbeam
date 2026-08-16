@@ -1,0 +1,97 @@
+{
+  "ticket_number": 2421,
+  "project": "testbeam",
+  "worker": "testbeam-laptop-3",
+  "title": "P11d: strictly causal learned-pedestal timing-tail validation",
+  "status": "complete",
+  "claim_command": "tn-ticket claim testbeam-laptop-3 --project testbeam",
+  "claimed_once": true,
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "bootstrap": "held-out run-block percentile 95% CI",
+    "bootstrap_replicates": 360,
+    "winner_score": "energy_fractional_sigma68 + 0.01*time_sigma68_ns + 0.25*(1-pid_balanced_accuracy) + 0.05*pileup_miss_rate + 0.05*false_split_rate"
+  },
+  "required_method_coverage": {
+    "strong_traditional": "deltaE_over_E_likelihood_template",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "new_architecture": "template_residual_boosted_stack_new",
+    "additional_sequence_architecture": "joint_sequence_transformer"
+  },
+  "winner": {
+    "name": "gradient_boosted_trees",
+    "criterion": "minimum held-out composite timing/PID/energy/pileup score",
+    "winner_score": 0.2231620756407839,
+    "pid_auc": 0.9383186705767352,
+    "pid_balanced_accuracy": 0.8686705767350928,
+    "energy_fractional_sigma68": 0.0876422857063611,
+    "energy_fractional_sigma68_ci95": [
+      0.073102056304863,
+      0.1050539864738965
+    ],
+    "time_sigma68_ns": 7.799993411819607,
+    "time_sigma68_ci95": [
+      7.338082355304576,
+      8.552006705537947
+    ],
+    "delta_time_sigma68_vs_traditional_ns": -3.5809630238427452,
+    "pileup_miss_rate": 0.296875,
+    "false_split_rate": 0.196875
+  },
+  "strict_causal_controls": {
+    "pretrigger_samples": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "posttrigger_target_leakage": "excluded by design for pedestal estimate",
+    "forced_random_control_audit": "forced_random_control_audit.csv",
+    "direct_forced_random_target_available": false
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "result": "result.json",
+    "manifest": "manifest.json",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_benchmark": "method_benchmark_with_ci.csv",
+    "s02_s04_propagation": "s02_s04_timing_tail_propagation.csv",
+    "sidebands": "causal_control_sidebands.csv",
+    "run_heldout": "run_heldout_metrics.csv",
+    "input_sha256": "input_sha256.csv"
+  },
+  "novel_tickets_appended": [],
+  "caveats": [
+    "Model benchmark is derived from the checked-in S31b causal benchmark because its GEANT4 source ROOT is absent.",
+    "Forced/random B-stack ROOT controls are audited but not available as direct supervised labels.",
+    "Bootstrap intervals resample held-out runs and do not include detector-material or physics-list uncertainty."
+  ]
+}

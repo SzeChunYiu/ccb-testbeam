@@ -1,0 +1,39 @@
+{
+  "ticket_id": "2380",
+  "issue_title": "S09: Event-level GNN over 4-stave graph",
+  "worker": "testbeam-laptop-1",
+  "study_id": "S09",
+  "slug": "s09_event_level_graph_timing",
+  "raw_root_candidates": [
+    "/home/billy/ccb-data/data/extracted/root/root",
+    "/home/billy/ccb-data/extracted/root/root",
+    "data/root/root"
+  ],
+  "output_dir": "reports/2380__s09_event_level_graph_timing",
+  "samples_per_channel": 18,
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "stave_z_cm": {"B2": 0.0, "B4": 2.0, "B6": 4.0, "B8": 6.0},
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "expected_selected_pulses": 640737,
+  "event_min_selected_staves": 3,
+  "clean_span_ns": 5.0,
+  "heldout_runs": [58, 60, 62, 64, 65],
+  "validation_runs": [55, 56, 57],
+  "max_events_per_run": 25000,
+  "random_seed": 20260816,
+  "bootstrap_samples": 500,
+  "primary_metric": "heldout_time_sigma68_ns_plus_2x_clean_brier",
+  "manual_claim_recovery": {
+    "original_required_claim_command": "tn-ticket claim testbeam-laptop-1 --project testbeam",
+    "original_claim_output": "null / # null / null",
+    "reason": "local tn-ticket null pseudo-ticket bug; issue #2413 documents same failure mode",
+    "manual_recovery": "gh issue edit 2380 --add-label factory:claimed --add-label worker:testbeam-laptop-1 --remove-label factory:open"
+  }
+}

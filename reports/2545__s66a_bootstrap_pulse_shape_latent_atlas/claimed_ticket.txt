@@ -1,0 +1,15 @@
+claim_helper_command: tn-ticket claim testbeam-laptop-4 --project testbeam
+claim_helper_output:
+null
+# null
+
+null
+manual_claim_issue: 2545
+manual_claim_command: gh issue edit 2545 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-4 --remove-label factory:open
+manual_claim_evidence: issue #2545 labels include factory:claimed, project:testbeam, worker:testbeam-laptop-4
+
+#2545 NEW S66a bootstrap pulse-shape latent atlas from spline-template residuals versus waveform encoders
+
+Academic-grade study: build a pulse-shape latent atlas that separates scintillation-shape variation, pedestal memory, pile-up tails, and mild saturation effects across energy and PID slices.
+
+Compare a traditional spline-template residual/PCA mixture baseline against ridge regression, gradient-boosted trees, MLP, 1D-CNN autoencoder/classifier heads, and a masked waveform transformer. Report bootstrap 95% CIs for cluster stability, reconstruction error, timing/energy/PID downstream deltas, and slice-level robustness. Include held-out-run checks, leakage controls, calibration plots, and failure modes.

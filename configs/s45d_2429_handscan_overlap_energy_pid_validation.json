@@ -1,0 +1,43 @@
+{
+  "study_id": "S45d",
+  "ticket_id": "2429",
+  "worker": "testbeam-laptop-2",
+  "title": "S45d hand-scanned overlap-aware energy/PID validation for the S45c winner",
+  "s45c_reference_result": "reports/2426__s45c_overlap_energy_pid_disentanglement/result.json",
+  "s45c_winner": "template_residual_boosted_stack_new",
+  "base_runner": "scripts/s42b_1784181983_717_7f5e7d65_overlapping_pulse_deconvolution_timing_pid_frontier.py",
+  "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+  "candidate_surface": {
+    "policy": "hand-scan ledgers freeze the real high-current candidate surface; exact per-pulse timing and energy labels are still controlled overlays on raw high-current residuals",
+    "handscan_provenance_sources": [
+      "reports/1781146783.955.745c6984__s11h_blinded_real_current_waveform_adjudication/blinded_gallery_adjudication.csv",
+      "reports/1781191650.1263.35bb131f__p05g_blinded_handscan_validation/blinded_candidate_ledger.csv",
+      "reports/1783605034.12126.04fe4a38__s01j_external_handscan_transfer/handscan_feature_table.csv"
+    ]
+  },
+  "benchmark_runs": {
+    "train": [50, 51, 52, 53, 54, 55, 56, 57],
+    "heldout": [58, 60, 62, 64, 65]
+  },
+  "selection": {
+    "bstack_channels": ["B2", "B4", "B6", "B8"],
+    "pedestal_samples": [0, 1, 2, 3],
+    "amplitude_threshold_adc": 1000
+  },
+  "methods_required": [
+    "two_pulse_template_likelihood_traditional",
+    "leading_edge_cfd_traditional",
+    "residual_tail_veto_traditional",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "1d_cnn",
+    "tiny_sequence_transformer",
+    "causal_window_transformer_new",
+    "template_residual_boosted_stack_new"
+  ],
+  "primary_metric": "S45d deployment score for the S45c winner on fixed-FPR recall, recovered-energy stability, and PID-proxy boundary drift",
+  "bootstrap_unit": "held-out source run",
+  "bootstrap_replicates": 120,
+  "random_seed": 2026081629
+}

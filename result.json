@@ -10,8 +10,17 @@
   "ticket_backend": {
     "claim_output_summary": "The required single claim command returned null / # null instead of a numeric factory issue id.",
     "open_worker_claim_after_claim": false,
-    "done_attempt": "tn-ticket done TICKET-0130",
-    "done_result": "failed: invalid issue format: \"TICKET-0130\"",
+    "done_attempts": [
+      {
+        "command": "tn-ticket done TICKET-0130",
+        "result": "failed: invalid issue format: \"TICKET-0130\""
+      },
+      {
+        "command": "tn-ticket done null",
+        "result": "failed: invalid issue format: \"null\""
+      }
+    ],
+    "done_result": "failed: invalid issue format for both the artifact ticket id and the claim-emitted null id",
     "reason_not_closed": "No open project:testbeam issue is labeled worker:testbeam-laptop-4; closing any numeric issue would risk closing an unrelated ticket."
   },
   "raw_root_reproduction": {

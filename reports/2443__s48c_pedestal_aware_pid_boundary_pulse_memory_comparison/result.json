@@ -1,0 +1,128 @@
+{
+  "study": "S48c",
+  "ticket_id": "2443",
+  "worker": "testbeam-laptop-1",
+  "status": "complete",
+  "claim_command": "tn-ticket claim testbeam-laptop-1 --project testbeam",
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "split": {
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      64
+    ],
+    "heldout_runs": [
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ]
+  },
+  "required_method_coverage": {
+    "traditional": "traditional_charge_ratio_template/Gaussian charge-depth calibration",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "new_architecture": "tiny_transformer_multitask and pedestal_tail_fusion_new"
+  },
+  "winner": {
+    "method": "mlp",
+    "family": "neural_tabular",
+    "criterion": "minimum joint PID-energy-timing held-out score",
+    "winner_score": 0.021387754148546063,
+    "pid_auc": 0.9999567209484314,
+    "pid_auc_ci95": [
+      0.999933693200137,
+      0.9999780508362203
+    ],
+    "energy_sigma68_frac": 0.019060559836840758,
+    "energy_sigma68_ci95": [
+      0.01336032812080388,
+      0.03096869745132855
+    ],
+    "energy_bias_frac": 0.0150909799814211,
+    "timing_sigma68_ns": 0.06841378319890358,
+    "timing_sigma68_ci95": [
+      0.05066146946307104,
+      0.09989001571458954
+    ]
+  },
+  "pid_proxy": {
+    "source": "duplicate odd-readout charge-depth weak label",
+    "positive_name": "deuteron_like_high_ionization_shallow_range",
+    "negative_name": "proton_like_low_ionization_penetrating",
+    "low_quantile": 0.35,
+    "high_quantile": 0.65,
+    "low_threshold": 10.513969935597421,
+    "high_threshold": 10.869866631512323,
+    "caveat": "No particle-truth branch exists in real HRD ROOT; PID metrics are weak-label robustness diagnostics."
+  },
+  "uncertainty_coverage_90pct": {
+    "nominal": 0.9,
+    "empirical": 0.5855635537716463,
+    "abs_error": 0.31443644622835376,
+    "n": 332852
+  },
+  "null_controls": {
+    "null_label_pid_auc_against_true_heldout_labels": 0.8343510991969505,
+    "permuted_feature_energy_sigma68": 0.050524787880103596
+  },
+  "novel_tickets_appended": [],
+  "artifacts": [
+    "REPORT.md",
+    "result.json",
+    "method_metrics.csv",
+    "run_heldout_metrics.csv",
+    "strata_metrics.csv",
+    "reproduction_match_table.csv",
+    "null_permutation_controls.csv",
+    "input_sha256.csv"
+  ],
+  "runtime_sec": 327.9,
+  "issue_number": 2443,
+  "issue_url": "https://github.com/SzeChunYiu/factory-tickets/issues/2443",
+  "title": "S48c: Pedestal-aware PID boundary and pulse-memory comparison",
+  "done_command": "tn-ticket done 2443",
+  "manual_claim_recovery": {
+    "reason": "tn-ticket claim returned a null pseudo-ticket despite a non-empty testbeam queue",
+    "manual_recovery": "gh issue edit 2443 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-1 --remove-label factory:open",
+    "reran_claim": false
+  },
+  "claim_helper_output": {
+    "stderr": "null",
+    "stdout": "# null\n\nnull",
+    "note": "single required claim command returned the known null edge case tracked as factory-ticket #2440; issue #2443 was manually label-swapped to worker:testbeam-laptop-1 without rerunning claim"
+  }
+}

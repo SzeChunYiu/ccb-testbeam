@@ -250,9 +250,9 @@ def main() -> None:
     preds["gradient_boosted_trees"] = {"method": "gradient_boosted_trees", "energy": np.exp(gbr_e.predict(x)), "timing": gbr_t.predict(x), "pid": gbc.predict_proba(x)[:, 1]}
     families["gradient_boosted_trees"] = "tree_ml"
 
-    mlp_e = make_pipeline(StandardScaler(), MLPRegressor((48, 24), alpha=1e-3, max_iter=int(cfg["mlp_max_iter"]) * 8, random_state=int(cfg["random_seed"]) + 4)).fit(x[train], np.log(y_energy[train]))
-    mlp_t = make_pipeline(StandardScaler(), MLPRegressor((48, 24), alpha=1e-3, max_iter=int(cfg["mlp_max_iter"]) * 8, random_state=int(cfg["random_seed"]) + 5)).fit(x[train], y_timing[train])
-    mlp_c = make_pipeline(StandardScaler(), MLPClassifier((48, 24), alpha=1e-3, max_iter=int(cfg["mlp_max_iter"]) * 8, random_state=int(cfg["random_seed"]) + 6)).fit(x[train_idx], labels[train_idx])
+    mlp_e = make_pipeline(StandardScaler(), MLPRegressor(hidden_layer_sizes=(48, 24), alpha=1e-3, max_iter=int(cfg["mlp_max_iter"]) * 8, random_state=int(cfg["random_seed"]) + 4)).fit(x[train], np.log(y_energy[train]))
+    mlp_t = make_pipeline(StandardScaler(), MLPRegressor(hidden_layer_sizes=(48, 24), alpha=1e-3, max_iter=int(cfg["mlp_max_iter"]) * 8, random_state=int(cfg["random_seed"]) + 5)).fit(x[train], y_timing[train])
+    mlp_c = make_pipeline(StandardScaler(), MLPClassifier(hidden_layer_sizes=(48, 24), alpha=1e-3, max_iter=int(cfg["mlp_max_iter"]) * 8, random_state=int(cfg["random_seed"]) + 6)).fit(x[train_idx], labels[train_idx])
     preds["mlp"] = {"method": "mlp", "energy": np.exp(mlp_e.predict(x)), "timing": mlp_t.predict(x), "pid": mlp_c.predict_proba(x)[:, 1]}
     families["mlp"] = "neural_tabular"
 

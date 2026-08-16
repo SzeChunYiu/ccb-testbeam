@@ -1,0 +1,102 @@
+{
+  "ticket_id": "2458",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-2",
+  "title": "S51b: Analytic deconvolution versus neural saturation recovery for energy and PID closure",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-2 --project testbeam",
+  "claimed_ticket_text": "#2458 S51b: Analytic deconvolution versus neural saturation recovery for energy and PID closure",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "adc_clip": 11800.0,
+    "bootstrap": "held-out run-block percentile 95% CI",
+    "bootstrap_replicates": 400,
+    "negative_control": "clipped clean single-pulse controls with matched source-run distribution",
+    "winner_score": "energy_fractional_sigma68 + 0.20*abs(energy_fractional_bias) + 0.008*time_sigma68_ns + 0.04*pileup_miss_rate + 0.04*false_split_rate"
+  },
+  "required_method_coverage": {
+    "traditional": "analytic_clipped_template_sideband_traditional",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "transformer_sequence_model": "tiny_sequence_transformer",
+    "new_architecture": "saturation_residual_fusion_new"
+  },
+  "winner": {
+    "name": "saturation_residual_fusion_new",
+    "criterion": "minimum held-out composite saturation-energy closure score with run-block bootstrap CIs reported",
+    "winner_score": 0.15172443008737868,
+    "energy_fractional_bias": -0.002906610021787798,
+    "energy_fractional_sigma68": 0.068387783415775,
+    "energy_fractional_sigma68_ci95": [
+      0.06183707932660469,
+      0.0751855124441164
+    ],
+    "time_sigma68_ns": 8.023902762892945,
+    "time_sigma68_ci95": [
+      7.365407249564567,
+      8.669358478772935
+    ],
+    "pileup_miss_rate": 0.32564102564102565,
+    "false_split_rate": 0.13846153846153847
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv"
+  },
+  "novel_tickets_appended": [],
+  "caveats": [
+    "Truth comes from controlled injections into raw-ROOT-derived clean pulses.",
+    "ADC clipping is an explicit benchmark stressor rather than decoded electronics metadata.",
+    "Bootstrap CIs resample held-out runs and should be read as run-transfer intervals."
+  ],
+  "issue_number": 2458,
+  "issue_url": "https://github.com/SzeChunYiu/factory-tickets/issues/2458",
+  "done_command": "tn-ticket done 2458",
+  "manual_claim_recovery": {
+    "reason": "tn-ticket claim returned a null pseudo-ticket despite a non-empty testbeam queue",
+    "manual_recovery": "gh issue edit 2458 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-2 --remove-label factory:open",
+    "reran_claim": false
+  },
+  "claim_helper_output": {
+    "stderr": "null",
+    "stdout": "# null\n\nnull",
+    "note": "tn-ticket claim returned the known null edge case tracked as factory-ticket #2440; open issue #2458 was manually label-swapped to worker:testbeam-laptop-2 without rerunning claim"
+  },
+  "execution_command": "MPLCONFIGDIR=/tmp/matplotlib-ticket2458 UV_PROJECT_ENVIRONMENT=/tmp/ticket0130-uv-venv uv run --frozen --index-strategy unsafe-best-match --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple --with uproot --with awkward --with numpy --with pandas --with scikit-learn --with tabulate --with 'torch==2.5.1+cpu' python scripts/s51b_2458_analytic_deconvolution_neural_saturation_recovery_bakeoff.py"
+}

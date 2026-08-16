@@ -1,104 +1,282 @@
 {
-  "ticket_id": "2502",
-  "issue_number": 2502,
-  "project": "testbeam",
+  "study": "P11",
+  "ticket": "2401",
   "worker": "testbeam-laptop-2",
-  "status": "complete",
-  "winner": "saturation_residual_fusion_new",
-  "winner_metrics": {
-    "name": "saturation_residual_fusion_new",
-    "criterion": "minimum held-out composite saturation-energy closure score with run-block bootstrap CIs reported",
-    "winner_score": 0.15172443008737868,
-    "energy_fractional_bias": -0.002906610021787798,
-    "energy_fractional_sigma68": 0.068387783415775,
-    "energy_fractional_sigma68_ci95": [
-      0.06183707932660469,
-      0.0751855124441164
-    ],
-    "time_sigma68_ns": 8.023902762892945,
-    "time_sigma68_ci95": [
-      7.365407249564567,
-      8.669358478772935
-    ],
-    "pileup_miss_rate": 0.32564102564102565,
-    "false_split_rate": 0.13846153846153847,
-    "uncertainty_calibration": {
-      "method": "saturation_residual_fusion_new",
-      "n_valid_doublets": 263.0,
-      "median_abs_energy_residual": 0.04730265759532487,
-      "p68_abs_energy_residual": 0.0694272959931502,
-      "nominal_68_proxy_width": 0.034999999999999996,
-      "coverage_abs_resid_le_proxy": 0.3688212927756654,
-      "coverage_abs_resid_le_2proxy": 0.7034220532319392,
-      "calibration_ratio_p68_over_proxy": 1.9836370283757203
-    }
+  "title": "learned baseline/pedestal estimation from sorted ROOT metadata",
+  "git_commit": "3f71d0b1d84d9778aa0096cd3d24b9cd562e16a6",
+  "reproduced": true,
+  "repro_tolerance": "exact selected-pulse count and zero raw/sorted event mismatches",
+  "traditional": {
+    "metric": "heldout_raw_pretrigger_median_mae_adc",
+    "method": "traditional_calibrated_sorted_baseline",
+    "value": 190.2336347735477,
+    "ci": [
+      118.92207393772051,
+      257.44683004409745
+    ]
   },
-  "raw_root_reproduction": {
+  "ml": {
+    "metric": "heldout_raw_pretrigger_median_mae_adc",
+    "method": "hist_gradient_boosted_trees",
+    "value": 20.365871262254963,
+    "ci": [
+      15.218042815745806,
+      25.217847499194725
+    ]
+  },
+  "ml_beats_baseline": true,
+  "falsification": {
+    "preregistered_metric": "held-out raw pretrigger median MAE in ADC on runs 57 and 65, with low-amplitude-pulse bias as a secondary gate",
+    "p_value": null,
+    "n_tries": 7,
+    "note": "benchmark ranking with paired run-block bootstrap deltas rather than a null-hypothesis p-value",
+    "low_amplitude_secondary_metric": "mean prediction bias and MAE in the lowest held-out raw-amplitude quartile"
+  },
+  "input_sha256": "input_sha256.csv",
+  "critic": "pending",
+  "reproduction": {
     "passed": true,
-    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
+    "selected_pulses": 640737,
     "expected_selected_pulses": 640737,
-    "reproduced_selected_pulses": 640737,
-    "delta": 0,
-    "evidence_table": "reproduction_match_table.csv"
+    "non_beam_selected_entries": 0
   },
   "split": {
-    "split": "train and held-out sets are disjoint by source run",
     "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
       50,
       51,
       52,
       53,
       54,
       55,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63
+    ],
+    "calibration_runs": [
       56,
-      57
+      64
     ],
     "heldout_runs": [
-      58,
-      60,
-      62,
-      64,
+      57,
       65
     ],
-    "adc_clip": 11800.0,
-    "bootstrap": "held-out run-block percentile 95% CI",
-    "bootstrap_replicates": 400,
-    "negative_control": "clipped clean single-pulse controls with matched source-run distribution",
-    "winner_score": "energy_fractional_sigma68 + 0.20*abs(energy_fractional_bias) + 0.008*time_sigma68_ns + 0.04*pileup_miss_rate + 0.04*false_split_rate"
+    "bootstrap": "500 run-block replicates"
   },
-  "required_method_coverage": {
-    "traditional": "analytic_clipped_template_sideband_traditional",
-    "ridge": "ridge",
-    "gradient_boosted_trees": "gradient_boosted_trees",
-    "mlp": "mlp",
-    "one_dimensional_cnn": "1d_cnn",
-    "transformer_sequence_model": "tiny_sequence_transformer",
-    "new_architecture": "saturation_residual_fusion_new"
+  "traditional_baseline": {
+    "method": "traditional_calibrated_sorted_baseline",
+    "family": "traditional",
+    "n": 26871,
+    "mae_adc": 190.2336347735477,
+    "mae_ci_low_adc": 118.92207393772051,
+    "mae_ci_high_adc": 257.44683004409745,
+    "bias_adc": -121.31807524840906,
+    "rmse_adc": 886.8969076950555,
+    "q05_residual_adc": -708.5,
+    "q95_residual_adc": 7.5
   },
-  "required_outputs": {
-    "injected_overlap_closure": "method_metrics.csv, run_heldout_metrics.csv, event_predictions.csv",
-    "real_data_sideband_validation": "real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "saturation_mask_ablation.csv",
-    "uncertainty_calibration": "uncertainty_calibration.csv",
-    "traditional_vs_neural_failure_interpretation": "REPORT.md"
+  "winner": {
+    "method": "hist_gradient_boosted_trees",
+    "family": "ml",
+    "n": 26871,
+    "mae_adc": 20.365871262254963,
+    "mae_ci_low_adc": 15.218042815745806,
+    "mae_ci_high_adc": 25.217847499194725,
+    "bias_adc": 0.14115192935930526,
+    "rmse_adc": 93.10736331548276,
+    "q05_residual_adc": -34.82941232371559,
+    "q95_residual_adc": 37.266496763118084
   },
-  "artifacts": {
-    "report": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/REPORT.md",
-    "result": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/result.json",
-    "method_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/method_metrics.csv",
-    "run_heldout_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/run_heldout_metrics.csv",
-    "real_data_sideband_validation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/saturation_mask_ablation.csv",
-    "uncertainty_calibration": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/uncertainty_calibration.csv"
+  "winner_delta_vs_traditional": {
+    "method": "hist_gradient_boosted_trees",
+    "delta_mae_vs_traditional_adc": -169.86776351129262,
+    "ci_low_adc": -232.22898254490272,
+    "ci_high_adc": -103.70403112197471
   },
-  "queue_provenance": {
-    "claimed_once": true,
-    "claim_command_run_once": "tn-ticket claim testbeam-laptop-2 --project testbeam",
-    "claim_command_output": "null / # null / null",
-    "manual_claim_recovery": "gh issue edit 2502 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-2 --remove-label factory:open",
-    "done_command": "tn-ticket done 2502",
-    "novel_tickets_appended": []
-  },
-  "done_command": "tn-ticket done 2502",
-  "novel_tickets_appended": []
+  "low_amplitude_bias": [
+    {
+      "method": "hist_gradient_boosted_trees",
+      "family": "ml",
+      "n_low_amplitude": 6719,
+      "amplitude_q25_adc": 2234.0,
+      "low_amp_bias_adc": -2.7604248559425133,
+      "low_amp_mae_adc": 25.945149180111226,
+      "low_amp_q05_residual_adc": -70.0683257699091,
+      "low_amp_q95_residual_adc": 63.23142622737402
+    },
+    {
+      "method": "mlp",
+      "family": "ml",
+      "n_low_amplitude": 6719,
+      "amplitude_q25_adc": 2234.0,
+      "low_amp_bias_adc": -13.156162891797129,
+      "low_amp_mae_adc": 45.10138629478073,
+      "low_amp_q05_residual_adc": -79.12010530934384,
+      "low_amp_q95_residual_adc": 88.87511044242139
+    },
+    {
+      "method": "traditional_calibrated_sorted_baseline",
+      "family": "traditional",
+      "n_low_amplitude": 6719,
+      "amplitude_q25_adc": 2234.0,
+      "low_amp_bias_adc": -132.41572406608125,
+      "low_amp_mae_adc": 171.18875576722726,
+      "low_amp_q05_residual_adc": -1060.175,
+      "low_amp_q95_residual_adc": 12.5
+    },
+    {
+      "method": "sorted_residual_net",
+      "family": "new_architecture",
+      "n_low_amplitude": 6719,
+      "amplitude_q25_adc": 2234.0,
+      "low_amp_bias_adc": -153.4015486487712,
+      "low_amp_mae_adc": 199.54210330255154,
+      "low_amp_q05_residual_adc": -1571.3652343749998,
+      "low_amp_q95_residual_adc": 71.31342773437493
+    },
+    {
+      "method": "ridge",
+      "family": "ml",
+      "n_low_amplitude": 6719,
+      "amplitude_q25_adc": 2234.0,
+      "low_amp_bias_adc": 55.874273551395675,
+      "low_amp_mae_adc": 245.3733601735264,
+      "low_amp_q05_residual_adc": -701.1182785892896,
+      "low_amp_q95_residual_adc": 298.11203453225306
+    },
+    {
+      "method": "one_dimensional_cnn",
+      "family": "ml",
+      "n_low_amplitude": 6719,
+      "amplitude_q25_adc": 2234.0,
+      "low_amp_bias_adc": -158.30361530152368,
+      "low_amp_mae_adc": 248.31859134311281,
+      "low_amp_q05_residual_adc": -2125.123046875,
+      "low_amp_q95_residual_adc": 118.8548828125
+    },
+    {
+      "method": "sorted_baseline_direct",
+      "family": "traditional",
+      "n_low_amplitude": 6719,
+      "amplitude_q25_adc": 2234.0,
+      "low_amp_bias_adc": -602.7757850870665,
+      "low_amp_mae_adc": 602.7757850870665,
+      "low_amp_q05_residual_adc": -4137.25,
+      "low_amp_q95_residual_adc": -2.0
+    }
+  ],
+  "ml_beats_traditional": true,
+  "method_table": [
+    {
+      "method": "hist_gradient_boosted_trees",
+      "family": "ml",
+      "n": 26871,
+      "mae_adc": 20.365871262254963,
+      "mae_ci_low_adc": 15.218042815745806,
+      "mae_ci_high_adc": 25.217847499194725,
+      "bias_adc": 0.14115192935930526,
+      "rmse_adc": 93.10736331548276,
+      "q05_residual_adc": -34.82941232371559,
+      "q95_residual_adc": 37.266496763118084
+    },
+    {
+      "method": "mlp",
+      "family": "ml",
+      "n": 26871,
+      "mae_adc": 35.17265840839822,
+      "mae_ci_low_adc": 28.732020133567946,
+      "mae_ci_high_adc": 41.24314505823857,
+      "bias_adc": -2.0908586477586617,
+      "rmse_adc": 126.76063918116272,
+      "q05_residual_adc": -52.042797450706985,
+      "q95_residual_adc": 65.25680672631552
+    },
+    {
+      "method": "sorted_residual_net",
+      "family": "new_architecture",
+      "n": 26871,
+      "mae_adc": 86.29084628656939,
+      "mae_ci_low_adc": 40.241694724674986,
+      "mae_ci_high_adc": 129.69349488513654,
+      "bias_adc": -31.843867659227186,
+      "rmse_adc": 412.58203297723094,
+      "q05_residual_adc": -42.228759765625,
+      "q95_residual_adc": 61.568359375
+    },
+    {
+      "method": "one_dimensional_cnn",
+      "family": "ml",
+      "n": 26871,
+      "mae_adc": 120.4032787183732,
+      "mae_ci_low_adc": 71.38261644597762,
+      "mae_ci_high_adc": 166.6066615498265,
+      "bias_adc": -21.12460468316796,
+      "rmse_adc": 469.0781199771216,
+      "q05_residual_adc": -86.899169921875,
+      "q95_residual_adc": 145.967529296875
+    },
+    {
+      "method": "ridge",
+      "family": "ml",
+      "n": 26871,
+      "mae_adc": 169.7680373396079,
+      "mae_ci_low_adc": 157.9406489714932,
+      "mae_ci_high_adc": 180.9156907440374,
+      "bias_adc": 13.303434074136838,
+      "rmse_adc": 294.73821836045863,
+      "q05_residual_adc": -365.3927962430198,
+      "q95_residual_adc": 278.13669330286893
+    },
+    {
+      "method": "traditional_calibrated_sorted_baseline",
+      "family": "traditional",
+      "n": 26871,
+      "mae_adc": 190.2336347735477,
+      "mae_ci_low_adc": 118.92207393772051,
+      "mae_ci_high_adc": 257.44683004409745,
+      "bias_adc": -121.31807524840906,
+      "rmse_adc": 886.8969076950555,
+      "q05_residual_adc": -708.5,
+      "q95_residual_adc": 7.5
+    },
+    {
+      "method": "sorted_baseline_direct",
+      "family": "traditional",
+      "n": 26871,
+      "mae_adc": 332.9617989654274,
+      "mae_ci_low_adc": 202.24006749501459,
+      "mae_ci_high_adc": 456.17078724788547,
+      "bias_adc": -332.9617989654274,
+      "rmse_adc": 1226.8178090319684,
+      "q05_residual_adc": -2389.0,
+      "q95_residual_adc": -2.0
+    }
+  ],
+  "conclusion": "hist_gradient_boosted_trees wins the held-out benchmark with MAE 20.366 ADC; the calibrated sorted-baseline traditional method has MAE 190.234 ADC.",
+  "next_tickets": [
+    {
+      "title": "P11c: learned pedestal residual as a timing-tail nuisance",
+      "body": "Use the P11 learned-pedestal residual proxy in S02/S04 timing fits, split by run with paired bootstrap CIs, to test whether pedestal recoverability explains timing tails beyond amplitude and peak-time controls. Expected information gain: connects pedestal estimation quality to the physics timing endpoint rather than only to a reconstruction diagnostic."
+    }
+  ],
+  "runtime_seconds": 214.86039900779724
 }

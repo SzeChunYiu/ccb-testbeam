@@ -1,0 +1,4 @@
+quantity,report_value,reproduced,delta,tolerance,pass
+total selected B-stave pulses from raw HRDv,640737,640737,0,0,True
+non-beam trigger entries among selected pulses,0,0,0,0,True
+raw EVT to sorted hrdEvtNo mismatches,0,0,0,0,True

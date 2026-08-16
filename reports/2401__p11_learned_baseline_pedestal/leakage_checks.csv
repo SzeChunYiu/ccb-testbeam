@@ -1,0 +1,4 @@
+check,status,detail
+excluded_exact_reconstruction_features,pass,"models do not use hrd.sample, raw pretrigger values, run id, event ids, or target residuals as features"
+raw_sorted_entry_alignment,pass,raw EVT was equal to sorted hrdEvtNo for every loaded entry; mismatches would raise before outputs
+direct_baseline_not_exact_target,pass,"direct sorted-baseline held-out MAE 332.962 ADC, best method MAE 20.366 ADC"

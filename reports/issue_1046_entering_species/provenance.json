@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0",
+  "study": "issue_1046_entering_species_paper_closure",
+  "date": "2026-08-16",
+  "campaign_id": "cmc_2m_regenerated_20260814",
+  "input": {
+    "path": "geant4/data/output_krakow_2m_regenerated.root",
+    "physical_path": "/projects/hep/fs10/shared/nnbar/billy/ccb-coord-1350/geant4/data/output_krakow_2m_regenerated.root",
+    "sha256": "0d8c827502b3ce8f5bbe419e1c11a2905db55015b94a741a11ec7e52f292afe1",
+    "size_bytes": 711988750,
+    "n_events": 2000000,
+    "random_seed": 3500420,
+    "weighting": "MODE_DIRECT_UNIT (per-event weights identically 1)",
+    "campaign_manifest": "geant4/manifests/cmc_2m_regenerated_20260814.json"
+  },
+  "producer": {
+    "path": "scripts/mc01_trigger_split_truth.py",
+    "sha256": "4c006b869cdf199df13a3dbdb344287511d5a3aa2eb706b472c531b8b54979fe",
+    "statistical_unit_primary": "unique_truth_track (H2)",
+    "estimators_emitted": [
+      "H2_unique_track_flux",
+      "H3_event_presence",
+      "H4_edep_contribution"
+    ],
+    "estimator_module": "src/ccb_mc_validation/truth/entering_species.py (CONTRACT_VERSION 2026.0-waveB-lane03-entering-species-v1)",
+    "bootstrap": {
+      "unit": "mc_event",
+      "n_boot": 1000,
+      "seed": 1046,
+      "level": 68
+    }
+  },
+  "model": {
+    "geant4_executable_sha256": "055c9e8e44bfb953ce660ec2b38cd370d2eece5b0b3bf090ee82b86556142d40",
+    "generator_lineage": "#1183 direct-CDF sampler + #1182 fail-closed worker init + #1057 phi fix",
+    "cross_section_table_sha256": "0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc"
+  },
+  "execution": {
+    "slurm_job_id": "3505136",
+    "runtime_env": "LUNARC hep partition, packages/hibeam_env",
+    "result_path": "reports/issue_1046_entering_species/cmc_2m_regenerated_20260814/mc_trigger_split_summary.json",
+    "result_sha256": "899167bf61a529c9dcb999b8d2a7743f00daddeab96b764b5fc73348814e0b2a",
+    "refactor_verification": "20k-event smoke outputs byte-identical before/after module-scope hoist of bootstrap_enter_fractions"
+  },
+  "gating": {
+    "status": "GATED",
+    "label": "MC_TRIGGER_PROXY",
+    "reason": "software coincidence proxy on MC transport; hardware trigger response model open",
+    "blocked_by": [
+      1045,
+      1179
+    ]
+  }
+}

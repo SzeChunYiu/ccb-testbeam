@@ -1,0 +1,8 @@
+feature,standardized_ridge_coef_ns_Sample-I,standardized_ridge_coef_ns_Sample-II,sign_Sample-I,sign_Sample-II,n_pairs_Sample-I,n_pairs_Sample-II,sign_transfers
+nuisance_abs_max_adc,-5.1531427591412795,-6.596797062729978,negative,negative,3430,18098,True
+nuisance_abs_mean_adc,1.213055455316917,1.546648599483981,positive,positive,3430,18098,True
+nuisance_signed_diff_adc,0.5621093598404928,0.9876160558969196,positive,positive,3430,18098,True
+sorted_baseline_abs_residual_adc_a,0.9407930903710875,1.1452170159628294,positive,positive,3430,18098,True
+sorted_baseline_abs_residual_adc_b,1.381594289939271,1.7573917498033662,positive,positive,3430,18098,True
+sorted_baseline_residual_adc_a,-0.9407930903710598,-1.1452170159634054,negative,negative,3430,18098,True
+sorted_baseline_residual_adc_b,-1.3815942899393983,-1.7573917498029135,negative,negative,3430,18098,True

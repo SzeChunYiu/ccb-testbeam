@@ -1,0 +1,1 @@
+Repeat the sorted-baseline residual timing-tail nuisance test on Sample-I runs with identical S02/S04 controls and compare transfer of the proxy coefficient signs across Sample-I and Sample-II. Expected information gain: separates a run-local pedestal recoverability diagnostic from a detector-period-specific timing artifact.

@@ -62,7 +62,9 @@
   "pid_oof_auc_5fold": [
     0.9644933598463032,
     0.9339235216772639,
-    0.9618834080717489
+    0.9618834080717489,
+    NaN,
+    NaN
   ],
   "pid_oof_auc_5fold_mean": 0.9534334298651054,
   "pid_split_note": "MC has no run column; contiguous 2000-event blocks as pseudo-runs, 5-fold (ML-002 run-disjoint proxy).",
@@ -127,10 +129,5 @@
       "escape": 0.0,
       "censored": 5.0
     }
-  },
-  "mc_input_provenance": {
-    "filename": "output_krakow_1M_authorising.root",
-    "sha256": "19cd97c1106632e9746dd76a683105186484aa34aa74be8617973072ebcf84ea",
-    "note": "corrected generator source (CL-021 authorising run)"
   }
 }

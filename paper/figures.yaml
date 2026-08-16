@@ -42,14 +42,16 @@ TIMING-MC:                   # clusterB #918, VIS-TIM-005 -- combined timing clo
   source_figure: docs/figures/paper/timing_mc_method_closure.png
   claim_id: clusterB/#918
   evidence_class: MC_METHOD_CLOSURE
-  status: OK
+  status: MC_METHOD_CLOSURE
   kind: quantitative
   caption: >-
-    4-sensor inverse-variance combined timing resolution on the Krakow MC,
-    sigma68 = 0.089 ns (RMS 0.112 ns, condition kappa~1.2, leave-one-sensor-out
-    ~0.10 ns, pull |z|<1 = 0.683 exact). MC closure; NOT a beam-data timing result.
-    Re-derived on output_krakow_1M_authorising.root (sha256 19cd97c1…) with
-    corrected generator (CL-021 authorising run).
+    4-sensor inverse-variance combined timing resolution (σ68 = 0.089 ns, RMS 0.112 ns,
+    condition κ~1.2, leave-one-sensor-out ~0.10 ns, pull |z|<1 = 0.683 exact) derives from
+    the i885 single-stave chain (input-independent of Krakow file — unchanged).
+    Krakow topology truth-anchor VIS-TIM-004b WAS re-derived on output_krakow_1M_authorising.root
+    (sha256 19cd97c1…) with corrected generator (CL-021 authorising run):
+    max_deposit_time_ns 8.247→2.758 ns; frac_deposits_at_t0 0.97880→0.97821. MC closure;
+    NOT a beam-data timing result.
 
 PID-MC:                      # clusterA #921, VIS-PID-001 -- realistic-chain PID
   result: reports/studies/clusterA/counts.json
@@ -57,7 +59,7 @@ PID-MC:                      # clusterA #921, VIS-PID-001 -- realistic-chain PID
   source_figure: docs/figures/paper/pid_mc_validation.png
   claim_id: clusterA/#921
   evidence_class: SIMULATION_RESULT
-  status: OK
+  status: SIMULATION_RESULT
   kind: quantitative
   caption: >-
     Proton/deuteron PID on the realistic dE-E chain (MC), full AUC = 0.953

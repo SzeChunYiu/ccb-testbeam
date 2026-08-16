@@ -275,6 +275,8 @@ def vis_pid_001():
         te=folds==k
         if y[te].sum()>0 and (1-y[te]).sum()>0:
             r=roc_pr(y[te],oof[te],ww[te]); pf.append(r["auc"] if r else np.nan)
+        else:
+            pf.append(np.nan)  # Preserve 5-fold structure even if fold is class-imbalanced
     counts["pid_oof_auc_5fold"]=[float(x) for x in pf]
     counts["pid_oof_auc_5fold_mean"]=float(np.nanmean(pf)) if pf else None
     counts["pid_split_note"]="MC has no run column; contiguous 2000-event blocks as pseudo-runs, 5-fold (ML-002 run-disjoint proxy)."

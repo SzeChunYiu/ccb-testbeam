@@ -48,7 +48,7 @@ N_CHANNELS = 8
 EXPECTED_WORDS_PER_EVENT = N_CHANNELS * SAMPLES_PER_CHANNEL  # 128
 
 # Polarity contract
-POLARITY_CONFIG = Path(__file__).parent.parent.parent / "configs" / "channel_polarity_v1.json"
+POLARITY_CONFIG = Path(__file__).parent.parent.parent / "configs" / "channel_polarity_v2.json"
 
 # Channel state constants
 CHAN_PRESENT_MEASURED = "PRESENT_MEASURED"

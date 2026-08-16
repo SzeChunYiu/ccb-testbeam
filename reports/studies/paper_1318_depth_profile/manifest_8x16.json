@@ -1,7 +1,7 @@
 {
   "schema_version": "hrd_raw_8x16_v1",
   "producer_script": "build_8x16_event_product.py",
-  "git_commit": "23c1fc3762926067af899a126d849763096b9c6d",
+  "git_commit": "c5b19f752d31a50f9639d5fb148d5de9e6cd0259",
   "input_files": [
     {
       "run": 31,
@@ -242,7 +242,7 @@
     "I": 798694,
     "II": 298034
   },
-  "channel_polarity_source": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1318/configs/channel_polarity_v1.json",
+  "channel_polarity_source": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/configs/channel_polarity_v2.json",
   "baseline_samples": [
     0,
     1,

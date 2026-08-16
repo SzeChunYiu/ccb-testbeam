@@ -2,9 +2,9 @@ path,status,source_path,publication_role
 final/stave_geometry.pdf,DESIGN_SPEC,reports/paper_1317_setup_figures_20260815T2301Z/stave_geometry.pdf,#1317 stave geometry from BOM-audited producer (#796 spec)
 final/ccb_layout.pdf,SIM_CONFIG,reports/paper_1317_setup_figures_20260815T2301Z/ccb_layout.pdf,#1317 two-arm layout schematic (BOM-annotated)
 final/channel_map.pdf,SIM_CONFIG,reports/paper_1317_setup_figures_20260815T2301Z/channel_map.pdf,#1317 channel-to-layer map with #869 parity caveat
-final/data_depth_profile.pdf,GATED,authorising 8x16 event-level data producer,final beam-data longitudinal topology
+final/data_depth_profile.pdf,GATED,authorising 8x16 event-level data producer (measured polarity v2 #1383),final beam-data longitudinal topology
 final/mc_depth_profile.pdf,SIMULATION_RESULT,reports/paper_1319_mc_depth_profile_20260816T0030Z/mc_depth_profile.pdf,#1319 MC depth profile + sparse-readout parity envelope (proxy trigger)
-final/timing_b4_b6_residual.pdf,GATED,reports/issue_1320_timing/timing_b4_b6_residual_sample_II.pdf,format-limited pair residual (38 ns width from 16-sample 100 MS/s; not detector resolution)
+final/timing_b4_b6_residual.pdf,GATED,reports/issue_1320_timing/timing_b4_b6_residual_sample_II.pdf,pair residual under measured polarity v2 (0.146 ns width, -9.7 ns channel-skew offset; not detector resolution)
 gated/fig07_data_deltaE_E_per_sample.png,GATED,reports/paper_956_deltaE_E_20260812T103800Z/figures/fig07_data_deltaE_E_per_sample.png,quarantined #956 output
 gated/fig08_mc_deltaE_E_I.png,GATED,reports/paper_956_deltaE_E_20260812T103800Z/figures/fig08_mc_deltaE_E_I.png,quarantined #956 output
 gated/fig08_mc_deltaE_E_II.png,GATED,reports/paper_956_deltaE_E_20260812T103800Z/figures/fig08_mc_deltaE_E_II.png,quarantined #956 output

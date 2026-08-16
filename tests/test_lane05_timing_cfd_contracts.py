@@ -135,14 +135,16 @@ def test_complete_pair_vs_intime_conditioning():
     assert n_intime < n_complete
 
 
-def test_polarity_map_locks_even_positive_odd_negative():
+def test_polarity_map_measured_v2_signs():
+    """#954: measured polarity v2 -- even ch0=+1/ch1=-1 kept, ch2-7 pair-alternating."""
     polarity_map = channel_polarity.load_polarity_map(
-        ROOT / "configs" / "channel_polarity_v1.json"
+        ROOT / "configs" / "channel_polarity_v2.json"
     )
-    assert polarity_map.polarity_for_channel(0) == 1
-    assert polarity_map.polarity_for_channel(1) == -1
+    measured = {0: 1, 1: -1, 2: -1, 3: 1, 4: -1, 5: 1, 6: -1, 7: 1}
+    for ch, sign in measured.items():
+        assert polarity_map.polarity_for_channel(ch) == sign
     raw = np.zeros((1, 8, 4), dtype=float)
-    raw[0, 1, :] = -5.0  # odd channel negative-going pulse
+    raw[0, 1, :] = -5.0  # ch1 negative-going pulse under v2
     base_corrected = raw.copy()
     flipped = channel_polarity.apply_polarity(base_corrected, polarity_map)
     assert flipped[0, 1].max() == 5.0
@@ -285,7 +287,8 @@ def test_real_data_fraction_transition_blocked_until_schema_gate():
 
 
 def test_polarity_config_is_versioned_json():
-    payload = json.loads((ROOT / "configs" / "channel_polarity_v1.json").read_text(encoding="utf-8"))
-    assert payload["version"] == "channel_polarity_v1"
+    payload = json.loads((ROOT / "configs" / "channel_polarity_v2.json").read_text(encoding="utf-8"))
+    assert payload["version"] == "channel_polarity_v2"
+    assert payload["status"] == "MEASURED_202608_RUNS31_65_UNANIMOUS_BOTH_ESTIMATORS"
     assert set(payload["channel_polarity"]) >= {"0", "1", "4", "6"}
 

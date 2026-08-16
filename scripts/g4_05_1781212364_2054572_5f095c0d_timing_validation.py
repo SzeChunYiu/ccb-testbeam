@@ -657,6 +657,7 @@ def main():
     winner = metrics.iloc[0].to_dict()
     make_figures(out, pred_df, metrics, str(winner["method"]))
 
+    report_dir = out.relative_to(ROOT)
     result = {
         "ticket_id": config["ticket_id"],
         "study_id": config["study_id"],
@@ -672,11 +673,11 @@ def main():
             "bootstrap_samples": config["truth"]["bootstrap_samples"],
         },
         "artifacts": {
-            "report": str(out / "REPORT.md"),
+            "report": str(report_dir / "REPORT.md"),
             "docs_report": config["docs_report"],
-            "metrics": str(out / "timing_method_metrics.csv"),
-            "per_method_json": str(out / "per_method_results.json"),
-            "predictions": str(out / "timing_predictions.csv.gz"),
+            "metrics": str(report_dir / "timing_method_metrics.csv"),
+            "per_method_json": str(report_dir / "per_method_results.json"),
+            "predictions": str(report_dir / "timing_predictions.csv.gz"),
         },
     }
     (out / "result.json").write_text(json.dumps(result, indent=2, sort_keys=True), encoding="utf-8")

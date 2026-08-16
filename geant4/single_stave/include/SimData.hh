@@ -17,6 +17,21 @@ struct PhotonHit {
   bool detected = false; // passed PDE * coupling
 };
 
+// #1091 ladder: one sparse row per neutron step (kind 0, any volume) or per
+// late (>kLateDepositThresholdNS) scintillator deposit by any non-optical
+// track (kind 1). Prompt scintillator deposits are, by construction, beam-
+// induced; late non-optical deposits are neutron-delayed (capture gammas,
+// inelastic secondaries). Enables neutron interaction/deposit-time spectra
+// and cumulative Edep(<T) curves from real transport.
+struct NeutronStepRecord {
+  int kind = 0;             // 0 = neutron step, 1 = late scintillator deposit
+  double t_ns = 0.0;        // pre-step global time
+  double edep_MeV = 0.0;    // total (unquenched) step deposit
+  double ke_MeV = 0.0;      // pre-step kinetic energy
+  int in_scint = 0;
+  int pdg = 2112;
+};
+
 struct EventData {
   // Charged / non-optical energy accounting in the scintillator.
   // Event-total over all non-optical tracks in the scintillator (#1007).
@@ -63,6 +78,7 @@ struct EventData {
   // Positions in mm, time in ns, wavelength in nm (matches the GDML/CSGFoundry).
   std::vector<float> gpu_photons;
   long n_gpu_photons = 0;
+  std::vector<NeutronStepRecord> neutron_steps;  // #1091 diagnostics
 
   void Reset() {
     edep_scint_MeV = edep_scint_raw_MeV = track_len_scint_mm = 0.0;
@@ -80,6 +96,7 @@ struct EventData {
     photons.clear();
     gpu_photons.clear();
     n_gpu_photons = 0;
+    neutron_steps.clear();
   }
 };
 

@@ -72,18 +72,17 @@
     "false_split_rate": 0.2121951219512195
   },
   "artifacts": {
-    "report": "reports/2425__s45b_censored_saturation_information_boundary/REPORT.md",
-    "manifest": "reports/2425__s45b_censored_saturation_information_boundary/manifest.json",
-    "claimed_ticket": "reports/2425__s45b_censored_saturation_information_boundary/claimed_ticket.txt",
-    "raw_reproduction": "reports/2425__s45b_censored_saturation_information_boundary/reproduction_match_table.csv",
-    "method_metrics": "reports/2425__s45b_censored_saturation_information_boundary/method_metrics.csv",
-    "endpoint_metrics_ci": "reports/2425__s45b_censored_saturation_information_boundary/endpoint_metrics_ci.csv",
-    "winner_ranked_metrics": "reports/2425__s45b_censored_saturation_information_boundary/winner_ranked_metrics.csv",
-    "run_heldout_metrics": "reports/2425__s45b_censored_saturation_information_boundary/run_heldout_metrics.csv",
-    "strata_metrics": "reports/2425__s45b_censored_saturation_information_boundary/strata_metrics.csv",
-    "event_predictions": "reports/2425__s45b_censored_saturation_information_boundary/event_predictions.csv",
-    "input_sha256": "reports/2425__s45b_censored_saturation_information_boundary/input_sha256.csv",
-    "root_report": "REPORT.md"
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "endpoint_metrics_ci": "endpoint_metrics_ci.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv"
   },
   "novel_tickets_appended": [],
   "caveats": [
@@ -104,6 +103,5 @@
     "new_architecture_when_sensible": "saturation_residual_fusion_new",
     "information_boundary": "winner_ranked_metrics.csv plus strata_metrics.csv",
     "graceful_failure_regions": "strata_metrics.csv"
-  },
-  "artifact_root": "reports/2425__s45b_censored_saturation_information_boundary"
+  }
 }

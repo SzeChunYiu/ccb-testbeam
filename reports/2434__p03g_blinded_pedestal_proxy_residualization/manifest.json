@@ -1,0 +1,24 @@
+{
+  "study": "P03g",
+  "ticket": "#2434",
+  "issue_url": "https://github.com/SzeChunYiu/factory-tickets/issues/2434",
+  "worker": "testbeam-laptop-3",
+  "source_reused_from_ticket": "1781097097.1022.02db7832",
+  "config": "configs/p03g_1781097097_1022_02db7832_pedestal_residualized_samples.json",
+  "command": "/home/billy/anaconda3/bin/python scripts/p03g_1781097097_1022_02db7832_pedestal_residualized_samples.py --config configs/p03g_1781097097_1022_02db7832_pedestal_residualized_samples.json",
+  "elapsed_s": 365.12098956108093,
+  "git_commit": "e911cfc59b772e150beb5dd2c080b020066a3bd4",
+  "hostname": "billy",
+  "outputs": {
+    "REPORT.md": "98517c13c6fa0b38fa95967cb605195728deae030997aa9171983d9edcf7ad1c",
+    "fig_pooled_benchmark.png": "da2957917c3b7b8e7770c72a3569b5ef89dffa534b764db8e0610f8a77fe660f",
+    "fig_residual_distributions.png": "9311e3bf2fe98d263775a26a052aa0ddd241a45a747ca00c54b1191a37571345",
+    "heldout_run_summary.csv": "2819135186d53f67d060ff6bd38448c61f379d4101dc3149db871da4e5b0cc8d",
+    "input_sha256.csv": "54ffe78258dd00839e9ea3c1ccfe7fd98cf2ad263e3d399c8e18c0f3ced439f7",
+    "leakage_checks.csv": "d332c7c52be8c6af837c949ac6e3bb2ffd7c71f31ce4da916581e599b1ced207",
+    "model_diagnostics.csv": "264bd4832d66333acf52dde0266720953a8cad6bc30cc2b8a6e9638b1bb20098",
+    "pooled_run_block_summary.csv": "d0ba0621c925514c36e401deb935cf3a62d779fabcb71220095c26661f2e815a",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "e625e48a1dde43dea08d835cee08d3aeefdb5858531350ccef5fb5f64777b729"
+  }
+}

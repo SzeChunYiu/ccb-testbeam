@@ -2,8 +2,8 @@
 
 | Task | Status | Evidence |
 |---|---|---|
-| Ticket inventory | done | `tn-ticket list testbeam --project testbeam` initially reported `open=0 claimed=0 done=762 failed=44`. |
-| New study tickets | done | Appended `1784352976.837.09047a5a`, `1784352987.909.0ee450e1`, and `1784352987.976.7c012fa8`. |
-| Academic scope | done | Tickets cover pulse shape/timing/pedestal, pile-up/saturation/energy, and pedestal/pile-up/energy/PID using traditional methods versus ridge, gradient-boosted trees, MLP, 1D-CNN, transformer-family models, and bootstrap CIs. |
-| Current board | done | Current audit: `open=0 claimed=3 done=762 failed=44`; the three new ticket files exist in claimed state. |
+| Ticket inventory | done | `tn-ticket list testbeam --project testbeam` initially reported `open=15 claimed=1 done=64`. |
+| New study tickets | done | Appended `#2466`, `#2467`, and `#2468` as S53a-S53c. |
+| Academic scope | done | Tickets compare traditional methods with ridge, gradient-boosted trees, MLP, 1D-CNN, and transformer-family models, using bootstrap CIs across pulse shape, timing, pile-up, saturation, pedestal, energy, and PID questions. |
+| Current board | done | Latest audit: `open=17 claimed=2 done=65`; `#2466`-`#2468` remain open `testbeam` tickets. |
 | Report hygiene | done | Scoreboard-only summary, under 200 lines, no log section. |

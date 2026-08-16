@@ -1,0 +1,4 @@
+source,exists,bytes,role
+reports/1781146783.955.745c6984__s11h_blinded_real_current_waveform_adjudication/blinded_gallery_adjudication.csv,True,271029,freezes high-current real candidate surface; not used as exact constituent timing truth
+reports/1781191650.1263.35bb131f__p05g_blinded_handscan_validation/blinded_candidate_ledger.csv,True,285565,freezes high-current real candidate surface; not used as exact constituent timing truth
+reports/1783605034.12126.04fe4a38__s01j_external_handscan_transfer/handscan_feature_table.csv,True,172459,freezes high-current real candidate surface; not used as exact constituent timing truth

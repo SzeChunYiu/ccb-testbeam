@@ -1,11 +1,11 @@
 {
-  "ticket_id": "2429",
+  "ticket_id": "2426",
   "project": "testbeam",
-  "worker": "testbeam-laptop-2",
-  "title": "S45d hand-scanned overlap-aware energy/PID validation for the S45c winner",
+  "worker": "testbeam-laptop-3",
+  "title": "S45c overlap-aware waveform energy and PID disentanglement benchmark",
   "status": "complete",
   "claimed_once": true,
-  "claim_command": "tn-ticket claim testbeam-laptop-2 --project testbeam",
+  "claim_command": "tn-ticket claim testbeam-laptop-3 --project testbeam",
   "raw_root_reproduction": {
     "passed": true,
     "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
@@ -37,7 +37,7 @@
     "detector_heldout": "nominal predictions evaluated on B8 as detector-slice stress test, with source-run bootstrap on B8",
     "bootstrap_replicates": 120,
     "negative_control": "clean single-pulse controls with matched source-run distribution",
-    "winner_score": "S45d deployment score for the frozen S45c winner plus the inherited S45c full-panel endpoint score",
+    "winner_score": "registered S45c endpoint score over timing, overlap, energy, PID-proxy, and calibration-drift terms",
     "fixed_fpr_thresholds": "thresholds frozen on train clean controls and evaluated on held-out source runs",
     "real_sideband_validation": "held-out clean raw-ROOT control slices by source run and stave",
     "ablations": [
@@ -46,12 +46,6 @@
       "high summed-amplitude synthetic-over-real injected pile-up slice",
       "shuffled second-pulse phase sentinel slice",
       "amplitude-only high-charge sentinel slice"
-    ],
-    "candidate_surface": "hand-scan-defined high-current overlap-candidate surface with exact overlay labels on raw residuals",
-    "handscan_provenance_sources": [
-      "reports/1781146783.955.745c6984__s11h_blinded_real_current_waveform_adjudication/blinded_gallery_adjudication.csv",
-      "reports/1781191650.1263.35bb131f__p05g_blinded_handscan_validation/blinded_candidate_ledger.csv",
-      "reports/1783605034.12126.04fe4a38__s01j_external_handscan_transfer/handscan_feature_table.csv"
     ]
   },
   "required_method_coverage": {
@@ -69,7 +63,7 @@
   },
   "winner": {
     "name": "template_residual_boosted_stack_new",
-    "criterion": "frozen S45c winner validated by fixed-FPR recall, accepted recovered-energy sigma68, clean-sideband false splitting, and PID-proxy boundary drift",
+    "criterion": "minimum registered S45c endpoint score with source-run bootstrap CIs; fixed-FPR recall and clean-sideband false splitting reported as deployment gates",
     "winner_score": 1.7276659471971414,
     "leading_edge_time_bias_ns": 0.8570218725765955,
     "leading_edge_time_sigma68_ns": 4.943650638185607,
@@ -110,22 +104,6 @@
       "accepted_energy_sigma68_ci_high": 0.08162385797912261,
       "n_predicted_positive_ci_low": 419.875,
       "n_predicted_positive_ci_high": 474.0
-    },
-    "s45d_deployment_gate": {
-      "s45c_winner": "template_residual_boosted_stack_new",
-      "fixed_fpr_target": 0.05,
-      "heldout_pileup_recall": 0.8289473684210527,
-      "heldout_pileup_recall_ci_low": 0.794671052631579,
-      "heldout_pileup_recall_ci_high": 0.8658552631578947,
-      "accepted_energy_sigma68": 0.07789885433786042,
-      "accepted_energy_sigma68_ci_low": 0.07319331536524265,
-      "accepted_energy_sigma68_ci_high": 0.08162385797912261,
-      "real_clean_sideband_false_split_rate": 0.3368421052631579,
-      "real_clean_sideband_false_split_rate_ci_low": 0.29736842105263156,
-      "real_clean_sideband_false_split_rate_ci_high": 0.3843421052631578,
-      "pid_proxy_stave_bias_span": 0.020993955062789553,
-      "deployment_score": 0.6151581573496867,
-      "bootstrap_unit": "heldout source_run"
     }
   },
   "artifacts": {
@@ -146,24 +124,22 @@
     "detector_heldout_event_predictions": "detector_heldout_event_predictions.csv",
     "ablation_window_metrics": "ablation_window_metrics.csv",
     "ablation_stress_slices": "ablation_stress_slices.csv",
-    "config": "../../configs/s45d_2429_handscan_overlap_energy_pid_validation.json",
-    "s45c_winner_deployment_gate": "s45c_winner_deployment_gate.csv",
-    "handscan_candidate_surface_audit": "handscan_candidate_surface_audit.csv"
+    "config": "../../configs/s45c_2426_overlap_energy_pid_disentanglement.json"
   },
-  "next_tickets": [],
-  "novel_tickets_appended": [],
+  "next_tickets": [
+    {
+      "ticket_id": "2429",
+      "title": "S45d: hand-scanned overlap-aware energy/PID validation for the S45c winner",
+      "body": "Question: does the S45c winner keep its fixed-FPR recall, recovered-energy stability, and PID-proxy boundary advantage on hand-scanned real high-current overlap candidates rather than controlled synthetic-over-real doublets? Expected information gain: validates or falsifies deployment of the overlap-aware waveform disentanglement benchmark on real pile-up-like data."
+    }
+  ],
+  "novel_tickets_appended": [
+    "2429"
+  ],
   "caveats": [
     "Truth comes from controlled injections into raw-ROOT-derived clean pulses.",
     "Saturation is represented by an amplitude-ceiling proxy rather than electronics saturation flags.",
     "PID confusion is a stave-conditioned energy-bias proxy, not particle truth."
   ],
-  "study_id": "S45d",
-  "claim_repair_note": "The required single tn-ticket claim invocation returned a malformed null payload; #2429 was then label-swapped once to repair the claim state.",
-  "s45c_reference": {
-    "source": "reports/2426__s45c_overlap_energy_pid_disentanglement/result.json",
-    "ticket_id": "2426",
-    "winner": "template_residual_boosted_stack_new",
-    "winner_score": 1.7276659471971414,
-    "pr": "SzeChunYiu/ccb-testbeam#1430"
-  }
+  "study_id": "S45c"
 }

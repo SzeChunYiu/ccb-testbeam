@@ -1,0 +1,44 @@
+{
+  "study": "s1091_neutron_timecut_ladder",
+  "issue": 1091,
+  "ladder_dir": "/projects/hep/fs10/shared/nnbar/billy/ccb_1091_ladder/runs",
+  "binary_commit": "e2baa589",
+  "seed": 2,
+  "threads": 8,
+  "policies": {
+    "pin": "pin_qgsp_bic_default_10us",
+    "ext": "diagnostic_extended_or_disabled",
+    "cut1ns": "wiring_test_1ns"
+  },
+  "grid_points": {
+    "p60":  {"pin": "p60_pin2000",  "ext": "p60_ext2000",  "particle": "proton",   "ke_MeV": 60},
+    "p100": {"pin": "p100_pin2000", "ext": "p100_ext2000", "particle": "proton",   "ke_MeV": 100},
+    "p140": {"pin": "p140_pin2000", "ext": "p140_ext2000", "particle": "proton",   "ke_MeV": 140},
+    "d70":  {"pin": "d70_pin2000",  "ext": "d70_ext2000",  "particle": "deuteron", "ke_MeV": 70},
+    "d110": {"pin": "d110_pin2000", "ext": "d110_ext2000", "particle": "deuteron", "ke_MeV": 110}
+  },
+  "events_per_grid_run": 2000,
+  "wiring": {
+    "particle": "proton",
+    "ke_MeV": 1000,
+    "events": 1000,
+    "cut1ns": "w1gev_cut1ns1000",
+    "pin": "w1gev_pin1000",
+    "ext": "w1gev_ext1000",
+    "fallback_500evt_tags": ["w1gev_cut1ns500", "w1gev_pin500", "w1gev_ext500"]
+  },
+  "observables": [
+    "edep_scint_MeV", "edep_scint_raw_MeV", "primary_edep_scint_MeV",
+    "n_scint_generated", "n_wls_generated", "detected_readout",
+    "pe_sat_readout", "adc_readout"
+  ],
+  "time_partition_ns": [1, 10, 100, 180, 1000, 10000, 100000, 10000000],
+  "daq_window_ns": 180,
+  "gates": {
+    "z_max": 3.0,
+    "wiring_cut_epsilon_ns": 0.001,
+    "wiring_min_rows_beyond_1ns": 10,
+    "wiring_min_edep_MeV_beyond_1ns": 1e-9
+  },
+  "notes": "Pairing by event id is exact because per-run seeds, primaries and thread counts are identical; events whose neutron history ends before the shorter cut of a pair must be bitwise identical, so per-event deltas isolate the delayed-neutron population. T=180 ns marks the #1090 DAQ window; T=10000 ns the pinned 10 us cut."
+}

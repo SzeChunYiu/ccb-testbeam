@@ -23,3 +23,6 @@ B4--B6 pair timing residual (Sample II). Copied verbatim from `reports/issue_132
 - 1303_stage_accounting.pdf -- #1303 optical stage accounting (MC_MODEL_DEPENDENT)
 - 1303_pe_per_mev.pdf -- #1303 per-point PE/MeV_vis + PE/MeV_raw yields (MC_MODEL_DEPENDENT)
 - 1303_edep_vs_pe.pdf -- #1303 detected PE vs deposited energy scatter (MC_MODEL_DEPENDENT)
+- ccb_layout.pdf -- #1317 two-arm CCB layout schematic, BOM-annotated (SIM_CONFIG)
+- stave_geometry.pdf -- #1317 B-stack stave geometry, BOM-annotated (DESIGN_SPEC)
+- channel_map.pdf -- #1317 B2/B4/B6/B8 channel-to-layer map with #869 parity caveat (SIM_CONFIG)

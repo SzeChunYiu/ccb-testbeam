@@ -1,0 +1,29 @@
+{
+  "command": "python scripts/issue_2378_s06_resolution_amplitude_energy_timescale.py",
+  "config": "configs/s06b_1781054026_2063_38d35ceb_amplitude_energy_support_closure.json",
+  "git_commit": "3f71d0b1d84d9778aa0096cd3d24b9cd562e16a6",
+  "outputs": {
+    "REPORT.md": "043edd50ad510626ebe09cf07e51a3b45c9f2c3442ccfbae9266d2970b12edc3",
+    "action_band_composition.csv": "05316fdc459d1be042701200227d90f23b6869b3d38cceba806fe960e1088b81",
+    "action_band_summary.csv": "dc156ec8acd589a9604ce0afa777db2ac26b06298771baa1b873621fbfd721ef",
+    "amplitude_charge_delta_vs_traditional.csv": "b13d895407bc52cb657469a9bc956a3609281f9743ec4d27e1c39c2341cb9265",
+    "amplitude_charge_support_summary.csv": "24e097714ea8c897c6b6c2018c4c2fc3633d46384772279943ed325eb47b4a65",
+    "input_sha256.csv": "70618da2c8c3086c63004834292496726bbd83cdb6763181892624dda99f584b",
+    "leakage_checks.csv": "422761960a0baa5d43eace66aabbd99fc71a67ad34502aae6b0ca76553246e9d",
+    "monotonicity_audit.csv": "fc2aa5964c7a20f83be725110f2b7fc78d5e5757046cddbd45b5018b1b3148f9",
+    "pair_residual_rows_with_pulls.csv.gz": "e1e7640880c70e23dc50e03eb8411d99f115a78efe69676595444397c051d06b",
+    "per_run_bootstrap_summary.csv": "0dcba80880883920919af86edb18095b1b2173d7a0196834c40245fd9ca47786",
+    "pooled_method_summary.csv": "dee36ff12b49fea38572f0f917197574e36a310d06f34e3e6e3f5b7272713fb9",
+    "raw_root_counts_by_run.csv": "6133ba23f7b5f5f5852f321e8c5ec7e0470296e28b3d7139f4bb51ede4ae48e8",
+    "reproduction_match_table.csv": "c812e797b767ee9c679dd7550d9ee9252f121517d3ef984f547160e16d5ccaf7",
+    "result.json": "6f308c49a661cce51fb61d535e54193dbffbe4b3da8d62ada40f1888182ddc02",
+    "s03a_reproduction_benchmark.csv": "c78320f7eb801a3c605d26e6fa7b3a2513d5c633aa2226da0dfc886c913d0b19",
+    "sentinel_checks.csv": "5cafebc74409c5cd5309b2df63a37713c5fb8e446e1faac96ee6735debdf6389",
+    "source_benchmark_rows.json": "b6a773147b52666ccc95ec76351ee4ecd6403bf6d034cac0fd22ff99d4d0a623"
+  },
+  "root_dir": "/home/billy/ccb-data/data/extracted/sorted-b",
+  "source_benchmark": "reports/1781054026.2063.38d35ceb__s06b_amplitude_energy_timing_support_closure",
+  "study": "S06",
+  "ticket": 2378,
+  "worker": "testbeam-laptop-4"
+}

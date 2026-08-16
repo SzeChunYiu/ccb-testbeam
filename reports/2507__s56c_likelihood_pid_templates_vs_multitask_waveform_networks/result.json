@@ -1,0 +1,77 @@
+{
+  "ticket_id": "2507",
+  "issue_number": 2507,
+  "issue_url": "https://github.com/SzeChunYiu/factory-tickets/issues/2507",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-2",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-2 --project testbeam",
+  "claim_note": "The single permitted tn-ticket claim invocation returned the known null pseudo-ticket; issue #2507 was then label-swapped manually without rerunning claim.",
+  "title": "S56c likelihood PID templates vs multitask waveform networks under pedestal and pile-up",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "source_artifact": "reports/1783809265.5764.0f2a2dda__s29a_digitized_g4_multitask_truth_benchmark",
+  "split": {
+    "scheme": "held-out by source run",
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "n_heldout_events_per_method": 660
+  },
+  "methods": {
+    "traditional": "deltaE_over_E_likelihood_template",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "cnn_1d": "1d_cnn",
+    "transformer": "joint_sequence_transformer",
+    "new_architecture": "template_residual_boosted_stack_new"
+  },
+  "winner": {
+    "method": "template_residual_boosted_stack_new",
+    "score": 0.23346518124014076,
+    "selection_rule": "minimum S56c composite loss",
+    "pid_balanced_accuracy": 0.8488282397884219,
+    "pid_balanced_accuracy_ci": [
+      0.8127824722395589,
+      0.8749402771141901
+    ],
+    "energy_fractional_sigma68": 0.0829301698208934,
+    "energy_fractional_sigma68_ci": [
+      0.0727206675029793,
+      0.0938307457216636
+    ],
+    "time_sigma68_ns": 8.0962810871496,
+    "time_sigma68_ns_ci": [
+      7.478793736287673,
+      9.023262168139604
+    ],
+    "pileup_miss_rate": 0.3393939393939394,
+    "false_split_rate": 0.2484848484848484
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "method_metrics": "method_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "pid_confusion_by_stratum": "pid_confusion_by_stratum.csv",
+    "boundary_displacement": "boundary_displacement.csv",
+    "shortcut_diagnostics": "shortcut_diagnostics.csv",
+    "source_strata_metrics": "source_strata_metrics.csv",
+    "input_sha256": "input_sha256.csv"
+  },
+  "git_commit": "b3627abca9fdc535eb8ae51a0791c6c23fe9a688",
+  "python": "3.13.12",
+  "elapsed_seconds": 8.256494522094727,
+  "done_command": "tn-ticket done 2507"
+}

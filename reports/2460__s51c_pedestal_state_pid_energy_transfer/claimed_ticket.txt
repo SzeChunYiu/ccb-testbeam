@@ -1,0 +1,10 @@
+Manual claim after single allowed command hit known tn-ticket null pseudo-ticket branch.
+
+Command run once:
+tn-ticket claim testbeam-laptop-2 --project testbeam
+
+Claimed issue:
+#2460 S51c: Pedestal-state matched filtering versus multitask waveform networks for PID energy transfer
+
+Claim label state verified:
+factory:claimed, project:testbeam, worker:testbeam-laptop-2

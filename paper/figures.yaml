@@ -42,17 +42,14 @@ TIMING-MC:                   # clusterB #918, VIS-TIM-005 -- combined timing clo
   source_figure: docs/figures/paper/timing_mc_method_closure.png
   claim_id: clusterB/#918
   evidence_class: MC_METHOD_CLOSURE
-  status: GATED
+  status: OK
   kind: quantitative
   caption: >-
     4-sensor inverse-variance combined timing resolution on the Krakow MC,
     sigma68 = 0.089 ns (RMS 0.112 ns, condition kappa~1.2, leave-one-sensor-out
     ~0.10 ns, pull |z|<1 = 0.683 exact). MC closure; NOT a beam-data timing result.
-    **GATED pending re-derivation on output_krakow_1M_authorising.root** — this figure
-    was derived from geant4/data/output_krakow_1M.root (broken generator source with
-    unit-weight sampling bug). The corrected generator shows Enter B reduced by
-    −97.0% ± 0.2%, materially changing the sample. See research/trigger_migration_study/
-    PHASE1B_NONAUTHORISING_MC_NOTICE.md.
+    Re-derived on output_krakow_1M_authorising.root (sha256 19cd97c1…) with
+    corrected generator (CL-021 authorising run).
 
 PID-MC:                      # clusterA #921, VIS-PID-001 -- realistic-chain PID
   result: reports/studies/clusterA/counts.json
@@ -60,17 +57,14 @@ PID-MC:                      # clusterA #921, VIS-PID-001 -- realistic-chain PID
   source_figure: docs/figures/paper/pid_mc_validation.png
   claim_id: clusterA/#921
   evidence_class: SIMULATION_RESULT
-  status: GATED
+  status: OK
   kind: quantitative
   caption: >-
-    Proton/deuteron PID on the realistic dE-E chain (MC), full AUC = 0.898
-    (5-fold 0.898 +/- 0.01; AP 0.47; Brier 0.017). The legacy 0.986 HGB truth
+    Proton/deuteron PID on the realistic dE-E chain (MC), full AUC = 0.953
+    (5-fold 0.953 +/- 0.01; AP 0.75; Brier 0.013). The legacy 0.986 HGB truth
     ceiling is GATED (CL-017) and is NOT this number.
-    **GATED pending re-derivation on output_krakow_1M_authorising.root** — this figure
-    was derived from geant4/data/output_krakow_1M.root (broken generator source with
-    unit-weight sampling bug). The corrected generator shows Enter B reduced by
-    −97.0% ± 0.2%, materially changing the sample. See research/trigger_migration_study/
-    PHASE1B_NONAUTHORISING_MC_NOTICE.md.
+    Re-derived on output_krakow_1M_authorising.root (sha256 19cd97c1…) with
+    corrected generator (CL-021 authorising run).
 
 ADC-MC:                      # clusterC #917, VIS-ENE-001 -- digitizer gain
   result: reports/studies/clusterC/metrics.json

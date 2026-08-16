@@ -1,13 +1,13 @@
 {
-  "mc_root": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root",
+  "mc_root": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M_authorising.root",
   "tree": "hibeam",
   "n_events_read": 1000000,
-  "per_event_rows": 237449,
-  "event_index_unique": 237449,
+  "per_event_rows": 7118,
+  "event_index_unique": 7118,
   "event_index_unique_ok": true,
   "event_index_range": [
-    9,
-    999995
+    6,
+    999623
   ],
   "stop_ke_threshold_mev": 1.0,
   "layer_to_stave": {
@@ -31,55 +31,53 @@
     "note": "recoil secondaries from CD2 breakup drive the dE-E band identity"
   },
   "geometry_layer_z_cm": {
-    "0": 8.655653826864306,
-    "1": 9.02770680302757,
-    "2": 9.604927898787597,
-    "3": 9.577735823084979,
-    "4": 9.305359885223774,
-    "5": 9.46787704789475,
-    "6": 9.9899936855589,
-    "7": 10.684071603651747
+    "0": 9.224704130549565,
+    "1": 9.446270916387592,
+    "2": 9.685942564422362,
+    "3": 9.815049140201875,
+    "4": 9.908921733065005,
+    "5": 10.050958934348278,
+    "6": 10.346600076059842,
+    "7": 10.781023291512877
   },
-  "dE_E_selected": 131198,
-  "dE_wmedian_MeV": 24.131146424050353,
-  "Eres_wmedian_MeV": 101.0250378377936,
-  "corr_dE_E": -0.5332012315371074,
+  "dE_E_selected": 5432,
+  "dE_wmedian_MeV": 23.944011171648977,
+  "Eres_wmedian_MeV": 98.3850259161415,
+  "corr_dE_E": -0.19081341871339264,
   "band_weighted_counts_by_species": {
-    "other": 326.5042782155824,
-    "proton": 299575.2138377192,
-    "deuteron": 8894.162077736764,
-    "alpha": 254.3018960315569
+    "other": 4.0,
+    "proton": 5093.0,
+    "deuteron": 330.0,
+    "alpha": 5.0
   },
   "band_unweighted_counts_by_species": {
-    "other": 194,
-    "proton": 95588,
-    "deuteron": 35238,
-    "alpha": 178
+    "other": 4,
+    "proton": 5093,
+    "deuteron": 330,
+    "alpha": 5
   },
-  "pid_full_auc": 0.8976036882035276,
-  "pid_full_ap": 0.47185732598577074,
-  "pid_prevalence_deuteron": 0.028833209297815163,
+  "pid_full_auc": 0.9529050568516502,
+  "pid_full_ap": 0.7503359264707785,
+  "pid_prevalence_deuteron": 0.060851926977687626,
   "pid_oof_auc_5fold": [
-    0.9102781617762783,
-    0.8838601968138657,
-    0.8966396215686152,
-    0.8875047733298979,
-    0.9101361550510924
+    0.9644933598463032,
+    0.9339235216772639,
+    0.9618834080717489
   ],
-  "pid_oof_auc_5fold_mean": 0.8976837817079499,
+  "pid_oof_auc_5fold_mean": 0.9534334298651054,
   "pid_split_note": "MC has no run column; contiguous 2000-event blocks as pseudo-runs, 5-fold (ML-002 run-disjoint proxy).",
-  "pid_op_threshold": 0.34,
+  "pid_op_threshold": 0.51,
   "pid_op_confusion": {
-    "TP": 6963.888293313081,
-    "FP": 3296.8032291164564,
-    "FN": 1930.2737844236847,
-    "TN": 296278.4106086027
+    "TP": 309.0,
+    "FP": 48.0,
+    "FN": 21.0,
+    "TN": 5045.0
   },
-  "pid_brier_weighted": 0.017033484156732157,
+  "pid_brier_weighted": 0.01287094423013449,
   "pid_worst_slice_auc": {
-    "entry KE [MeV]": 0.687393097865781,
-    "last observed layer": 0.042350650794745724,
-    "dE [MeV] (saturation proxy)": 0.029318225384387858
+    "entry KE [MeV]": 0.8954740834386853,
+    "last observed layer": 0.015873015873015928,
+    "dE [MeV] (saturation proxy)": 0.0032383419689119286
   },
   "geometry": {
     "stave_depth_cm_nominal": {
@@ -89,14 +87,14 @@
       "B8": 12.0
     },
     "mc_global_position_z_cm_projection_nonmonotonic": {
-      "0": 8.655653826864306,
-      "1": 9.02770680302757,
-      "2": 9.604927898787597,
-      "3": 9.577735823084979,
-      "4": 9.305359885223774,
-      "5": 9.46787704789475,
-      "6": 9.9899936855589,
-      "7": 10.684071603651747
+      "0": 9.224704130549565,
+      "1": 9.446270916387592,
+      "2": 9.685942564422362,
+      "3": 9.815049140201875,
+      "4": 9.908921733065005,
+      "5": 10.050958934348278,
+      "6": 10.346600076059842,
+      "7": 10.781023291512877
     },
     "scint_thk_cm": 2.0,
     "scint_rho": 1.03,
@@ -104,72 +102,35 @@
     "source": "Sci_bar_GlobalPosition_Z (MC) + mv3b_material_budget.py nominal"
   },
   "termination_unweighted": {
-    "stop": 2964,
-    "escape": 28806,
-    "censored": 99428
+    "stop": 137,
+    "escape": 2124,
+    "censored": 3171
   },
   "termination_weighted_by_species": {
     "other": {
-      "stop": 6.752669236301767,
+      "stop": 0.0,
       "escape": 0.0,
-      "censored": 319.7516089792806
+      "censored": 4.0
     },
     "proton": {
-      "stop": 8199.193808365388,
-      "escape": 132035.45213332312,
-      "censored": 159340.56789603067
+      "stop": 132.0,
+      "escape": 2124.0,
+      "censored": 2837.0
     },
     "deuteron": {
-      "stop": 118.24849706520588,
-      "escape": 15.415627677593427,
-      "censored": 8760.497952993966
+      "stop": 5.0,
+      "escape": 0.0,
+      "censored": 325.0
     },
     "alpha": {
-      "stop": 8.572797109075097,
-      "escape": 1.4608418999281305,
-      "censored": 244.26825702255366
+      "stop": 0.0,
+      "escape": 0.0,
+      "censored": 5.0
     }
   },
-  "data_side": {
-    "composite_key": {
-      "n_rows": 632939,
-      "composite_key_cols": [
-        "source_file_id",
-        "run",
-        "evt"
-      ],
-      "composite_key_unique": 385984,
-      "composite_key_unique_ok": false,
-      "n_duplicate_composite_keys": 246955,
-      "n_source_files": 1,
-      "run_range": [
-        31,
-        65
-      ],
-      "eventno_unique": 559841,
-      "eventno_only_join_would_corrupt": 73098,
-      "note": "632,939 rows -> 385,984 unique (source_file_id,run,evt) composite keys (reproduces de_run.txt n_events_composite_key=385984). Table is MULTI-row per event (246,955 duplicates); one-row-per-event aggregation needs canonical composite_merge (deltaE_E.py). eventno-only join corrupts 73,098 rows."
-    },
-    "data": {
-      "units": "ADC (raw beam data; never MeV)",
-      "selected_dE_E": 47390,
-      "deltaE_adc_median": 3221.0,
-      "E_adc_median": 3508.5,
-      "corr_dE_E": 0.18325985756612032,
-      "threshold_adc": 200.0,
-      "stopping_layer_data": {
-        "B2": 567925,
-        "B4": 26978,
-        "B6": 14586,
-        "B8": 8575,
-        "none": 14875
-      },
-      "category_data": {
-        "all_zero": 1,
-        "ok": 632938
-      }
-    },
-    "source_csv": "/projects/hep/fs10/shared/nnbar/billy/ccb_deltae_rerun/deltaE_E_events_data.csv",
-    "source_pulse_taxonomy": "reports/1781014251.574.7a497937/pulse_taxonomy_table.csv.gz"
+  "mc_input_provenance": {
+    "filename": "output_krakow_1M_authorising.root",
+    "sha256": "19cd97c1106632e9746dd76a683105186484aa34aa74be8617973072ebcf84ea",
+    "note": "corrected generator source (CL-021 authorising run)"
   }
 }

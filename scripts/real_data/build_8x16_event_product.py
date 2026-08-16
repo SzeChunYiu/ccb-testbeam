@@ -92,14 +92,15 @@ class ProductManifest:
 
 
 # Fail-closed allowlist of polarity-map statuses (issue #954).
-# v1 (LOCKED_FROM_DUPLICATE_READOUT_CONVENTION) was falsified for channels 2-7
-# by the measured study reports/studies/paper_954_polarity/: under v1 the B4/B6/B8
-# amplitudes are noise-side maxima, not pulse heights. v1 stays accepted ONLY so
-# legacy artifacts remain bit-for-bit reproducible; new products must use
-# configs/channel_polarity_v2.json.
+# v1 (LOCKED_FROM_DUPLICATE_READOUT_CONVENTION) is the operative map.
+# channel_polarity_v2 was RETRACTED 2026-08-16: its "falsification" of v1 for
+# channels 2-7 was measured on the 128-word-truncated LUNARC staging read as
+# 8x16 (desync +2 words/channel; the "pulses" were even/odd pedestal offsets).
+# See the retraction block in configs/channel_polarity_v2.json. NOTE: this
+# 8x16 builder itself parses the truncated layout; do not use it on ccb_data
+# staging without the corrected 144-word re-staging.
 ACCEPTED_POLARITY_STATUSES = {
     "LOCKED_FROM_DUPLICATE_READOUT_CONVENTION",
-    "MEASURED_202608_RUNS31_65_UNANIMOUS_BOTH_ESTIMATORS",
 }
 
 

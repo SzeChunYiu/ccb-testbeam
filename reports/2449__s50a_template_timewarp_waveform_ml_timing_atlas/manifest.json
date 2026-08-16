@@ -1,0 +1,31 @@
+{
+  "ticket_id": "2449",
+  "study": "S50a",
+  "worker": "testbeam-laptop-2",
+  "command": "scripts/s50a_2449_template_timewarp_waveform_ml_timing_atlas.py --config configs/s50a_2449_template_timewarp_waveform_ml_timing_atlas.json",
+  "script": "scripts/s50a_2449_template_timewarp_waveform_ml_timing_atlas.py",
+  "config": "configs/s50a_2449_template_timewarp_waveform_ml_timing_atlas.json",
+  "git_commit": "847ec659e8145e498d977a85278082934fe2d262",
+  "python": "3.8.10",
+  "packages": {
+    "uproot": "5.4.2",
+    "numpy": "1.24.3",
+    "pandas": "2.0.3",
+    "torch": "2.4.1+cpu"
+  },
+  "raw_root_dir": "data/root/root",
+  "input_file_count": 33,
+  "reproduction_passed": true,
+  "outputs": {
+    "REPORT.md": "d964e2e9a00047723f08322065d1c1668154074f5fc591f6664beef8d78e35db",
+    "heldout_pair_residuals.csv": "440a9c5b3a4ff333e6a0bc159430b8665a97a32f25a374188375e283e8541879",
+    "input_sha256.csv": "cd3f048457d7f847fe9caec1fcb36352b90c9e8595300b7193a3575afcfec2ce",
+    "leakage_checks.csv": "1794171c60f854ad88971ee76825610ec893daf2f06a2b9a140e011a81b248bf",
+    "method_summary.csv": "66b21c909a56fa78b9e9a30fd708090d3d95085628001d95c96e6f11ff40941e",
+    "reproduction_counts_by_run.csv": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+    "reproduction_match_table.csv": "e70f583e1fd72a6ff544cbf9253ee1f265c694da1d93ee26ada9f644caef0755",
+    "result.json": "d7bd3e80d5829723256767134864d457ed37391837f982e2cc549f2c661dfbf4",
+    "stratified_errors.csv": "33df9bb5589cc59680f5261f66281a88b8c5da5c3c73b272956395ddd05f52aa",
+    "training_summary.csv": "c39397bfe1267a3268d067efd93847fb1bb4fc5bd9b24aa95e452a0b221d1e26"
+  }
+}

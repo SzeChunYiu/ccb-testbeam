@@ -1,0 +1,11 @@
+{
+  "ticket_id": "1786863177.1383050.cfc84ffc",
+  "study_id": "S29a",
+  "worker": "testbeam-laptop",
+  "issue": 968,
+  "git_commit": "cfc84ffc12926fe2fca17b0a32418b9557a5054d",
+  "config_sha256": "04576667769b26143adf852f66cc7310bf77143f8258e2c2c42a5cceee43cca4",
+  "config": "configs/1786863177.1383050.cfc84ffc_b2_residual_discriminants.json",
+  "output_dir": "reports/1786863177.1383050.cfc84ffc__s29a_b2_residual_mechanism_discriminants",
+  "raw_dir": "/home/billy/ccb-data/data/extracted/root/root"
+}

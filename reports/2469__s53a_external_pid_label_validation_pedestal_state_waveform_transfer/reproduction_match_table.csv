@@ -1,0 +1,2 @@
+quantity,report_value,reproduced,delta,pass
+selected B-stave pulses with baseline-subtracted amplitude > 1000 ADC,640737,640737,0,True

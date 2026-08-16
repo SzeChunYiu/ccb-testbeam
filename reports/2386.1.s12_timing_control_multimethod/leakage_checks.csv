@@ -1,0 +1,5 @@
+probe,roc_auc,average_precision,interpretation
+documented App.I headline,0.958,0.614,Prior note value; this run reproduces the target count and uses stricter run-heldout scoring.
+topology-only,0.5184390306780098,0.03363679071693032,Presence pattern alone has limited information and is excluded from main aggregate models.
+absolute curvature,0.6563225058004641,0.3315026235368737,C_t is partially independent but missing for two-downstream events.
+traditional self-reference ceiling,1.0,1.0,D_t defines y; perfect discrimination is circular but expected.

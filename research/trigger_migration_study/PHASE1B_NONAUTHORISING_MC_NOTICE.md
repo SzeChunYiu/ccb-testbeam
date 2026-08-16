@@ -148,6 +148,12 @@ Full sweep results from `git grep -n "output_krakow" main -- | grep -v "_authori
 
 Non-paper-facing hits (preflight artifacts, execution receipts) are historical records and are not modified.
 
+## CL-021 Ledger vs Geant4 Chain Clarification
+
+The authorising MC delivery (`cmc_1M_authorising_1045b`) satisfies the **geant4 authorising-chain contract** (the 7-item checklist in `geant4/REPRODUCTION_STATUS.md`). This is a statement about the corrected-source MC provenance and physics truth.
+
+The **claim ledger row CL-021** (MV3 Pearson chi2/ndf diagnostic) remains **FLAWED** and is NOT flipped by this delivery. CL-021 will stay FLAWED until the MV3 profile is re-derived on the authorising MC — that is follow-up work under the #1045 Phase 2+ program. These are separate artifacts: one is the source-level truth chain, the other is a data-MC comparison figure derived from it.
+
 ## Recommendation
 
 1. **Phase 1 must be re-run** on the authorising baseline to establish the corrected HRD proxy characterization

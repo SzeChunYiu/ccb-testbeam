@@ -54,7 +54,7 @@ The active compiled/provenance parent is #1182; source-support and source-uncert
 The 7-item authorising contract is **SATISFIED** by `cmc_1M_authorising_1045b` (manifest `geant4/manifests/cmc_1M_authorising_1045b.json`):
 
 1. ✅ **Pinned git clone of hibeam_g4** — commit `b73ea2a`, origin URL recorded, clean working tree
-2. ✅ **Exact installed ScatteringGenerator.cc/.hh identity** — verification-only (upstream PR #1 already contains the corrected implementation), sha256 recorded
+2. ✅ **Exact installed ScatteringGenerator.cc/.hh identity** — corrected patch applied to pinned clone (DIRTY BUILD), upstream-at-HEAD and post-patch sha256 both recorded
 3. ✅ **Compiler, Geant4, VGM, CMake/build configuration, executable identity** — ROOT 6.32 (ldd gate passed), executable sha256 `51acee35...`, build env fully specified
 4. ✅ **Content identities for all inputs** — geometry, config, macro, sigma table (sha256 `0ca33e76...`), dedx table (sha256 `2ba99eb7...`) all recorded
 5. ✅ **Explicit random-engine/seed state, event count, source/interpolation/support/weight model IDs** — MixMax state vector recorded, 1M events, MODE_DIRECT_UNIT + direct_sampling_unit_weight_v1 + linear_node_pdf_exact_inverse_v1 + measured_table_support_truncate_v1

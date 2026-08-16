@@ -1,0 +1,9 @@
+#2433 S46c: Pedestal-tail memory joint PID-energy calibration benchmark
+
+Academic-grade study: test whether late-tail memory and run-level pedestal drift bias joint particle-ID and energy inference beyond what standard range/deltaE-E calibration captures.
+
+Traditional method: deltaE-E/range-cut PID with likelihood-template charge calibration and run-wise pedestal correction from pre-trigger sidebands.
+
+ML/NN comparison panel: ridge/logistic baselines on charge, range, and baseline summaries; gradient-boosted trees on calibrated tabular features; MLP on engineered pulse descriptors; 1D-CNN on per-stave waveform stacks; and a cross-stave transformer where apt for event-level context.
+
+Required outputs: group-held-out run and material/PID strata, bootstrap 95% CIs for PID AUC/F1, energy bias/MAE, pedestal residual, pile-up contamination sensitivity, and saturation-tail failure rates; ablation ledger for removing pedestal, shape, timing, and pile-up features; short report stating which pulse-memory features matter for PID versus energy.

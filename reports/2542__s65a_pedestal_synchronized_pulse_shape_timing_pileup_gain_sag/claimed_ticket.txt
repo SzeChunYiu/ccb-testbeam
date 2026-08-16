@@ -1,0 +1,16 @@
+2542
+# NEW S65a pedestal-synchronized pulse-shape timing under pile-up and gain sag
+
+Academic-grade study: compare a constant-fraction discriminator with template cross-correlation and analytic time-walk correction against ridge regression, gradient-boosted trees, MLP waveform regressors, 1D-CNN encoders, and a compact transformer where sequence length supports attention.
+
+Quantify pulse-shape, leading-edge timing, pedestal-memory, pile-up spacing, and saturation/gain-sag effects using run-blocked splits, leakage checks, and bootstrap confidence intervals on timing bias, sigma68, tail risk, and energy/PID-conditioned residuals.
+
+claim_helper_command: tn-ticket claim testbeam-laptop-3 --project testbeam
+claim_helper_output:
+null
+# null
+
+null
+
+manual_claim_workaround:
+gh issue edit 2542 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-3 --remove-label factory:open

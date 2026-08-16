@@ -430,7 +430,7 @@ def main():
     with open(output_path, "w") as f:
         json.dump(output_data, f, indent=2)
     
-    print(f"\n{=*60}")
+    print(f"\n{"="*60}")
     print(f"Threshold scan complete!")
     print(f"Results saved to: {config.output_file}")
     print(f"\nSummary:")

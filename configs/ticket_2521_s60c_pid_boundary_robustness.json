@@ -1,0 +1,35 @@
+{
+  "ticket_id": "2521",
+  "study_id": "S60c",
+  "worker": "testbeam-laptop-3",
+  "title": "S60c PID boundary robustness from pedestal-saturation pulse manifolds",
+  "output_dir": "reports/2521__s60c_pid_boundary_robustness_pedestal_saturation_manifolds",
+  "source_output_dir": "reports/2503__s55c_pedestal_memory_energy_pid_disentanglement",
+  "claim_command": "tn-ticket claim testbeam-laptop-3 --project testbeam",
+  "claim_helper_output": "null / # null / null",
+  "manual_claim_issue": 2521,
+  "manual_claim_command": "gh issue edit 2521 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-3 --remove-label factory:open",
+  "raw_root_dir": "data/extracted/root/root",
+  "expected_total_selected_pulses": 640737,
+  "bootstrap_replicates": 240,
+  "random_seed": 2521,
+  "fixed_purity": 0.95,
+  "robustness_axes": [
+    "pedestal_history_bin",
+    "saturation_flag",
+    "pileup_flag",
+    "energy_bin",
+    "timing_residual_bin",
+    "pulse_shape_bin",
+    "tail_amplitude_bin",
+    "proxy_particle_family"
+  ],
+  "primary_methods": [
+    "traditional_dE_E_tail_pedestal_likelihood",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "1d_cnn",
+    "spectral_transformer_new"
+  ]
+}

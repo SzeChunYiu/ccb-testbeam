@@ -47,7 +47,9 @@ This audit documents the reconciliation of `WIKI.md` and `docs/academic_chapters
 
 **Evidence:** Issue #993, CL-002..CL-006, PAPER_SUBMISSION_AUDIT_CYCLE3_20260812.md
 
-**Action:** NONE (already fixed in PR #1353)
+**Action:** PR #1353 fixed WIKI.md.
+
+**2026-08-16 re-audit addendum (#1299):** the original clearance above was effectively scoped to WIKI.md (the finding header said so, but "Result" claimed repo-wide coverage). A fresh sweep found the withheld values still presented as current results in `docs/academic_chapters/04_timing_analysis.md` (title, intro, per-stave/combined result tables, "Current headline" estimator row), `docs/academic_chapters/03_data_pipeline.md` (timing-branch summary) and `docs/academic_chapters/11_open_questions.md` (cover-letter findings list): 0.54–0.56 ns / "540 ps" (CL-004/CL-005) and B6 0.68–0.75 ns (CL-002/CL-003). All sites are quarantined in this PR with legacy/withheld markers bound to CL-002..CL-006; this category is cleared only as of this PR's merge head.
 
 ---
 

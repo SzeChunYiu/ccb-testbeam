@@ -1,0 +1,31 @@
+{
+  "ticket_id": "2445",
+  "study": "S49a",
+  "worker": "testbeam-laptop-2",
+  "command": "scripts/s49a_2445_phase_local_pulse_shape_timing_pedestal_drift_benchmark.py",
+  "script": "scripts/s49a_2445_phase_local_pulse_shape_timing_pedestal_drift_benchmark.py",
+  "config": "configs/s49a_2445_phase_local_pulse_shape_timing_pedestal_drift_benchmark.json",
+  "git_commit": "af494ae77556752a14626b34e490bd74050ac9ba",
+  "python": "3.8.10",
+  "packages": {
+    "uproot": "5.4.2",
+    "numpy": "1.24.3",
+    "pandas": "2.0.3",
+    "torch": "2.4.1+cpu"
+  },
+  "raw_root_dir": "data/root/root",
+  "input_file_count": 33,
+  "reproduction_passed": true,
+  "outputs": {
+    "REPORT.md": "4cbc74aa9dc175d2e45569c7a6fe57eff228e4d8bc8c3c17635808bbabc6758d",
+    "heldout_pair_residuals.csv": "fa9754d7b6aa4a02b69e07cfe5e6441a36784fb48b1d8a77e8d31ef74239b25f",
+    "input_sha256.csv": "cd3f048457d7f847fe9caec1fcb36352b90c9e8595300b7193a3575afcfec2ce",
+    "leakage_checks.csv": "b89a5b9654c03703b3dbf4380d5c9b3ac78145818088c5fbec590cf151e4f40d",
+    "method_summary.csv": "d37ba7b010fdb434e22fb7111b5fec5935871acd04dc0720c98b7afd8239664c",
+    "reproduction_counts_by_run.csv": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+    "reproduction_match_table.csv": "e70f583e1fd72a6ff544cbf9253ee1f265c694da1d93ee26ada9f644caef0755",
+    "result.json": "1706b939e29afab397c8a70b46611732526ff002b1f10dab9373732cf0ccc2ee",
+    "stratified_errors.csv": "ebca52566cf0f5705c497f3d11d3de4c44bde27d3b38cd2ec942574a715420cf",
+    "training_summary.csv": "b6a9e608a824444ec5bd5c17291f0a1bcd2a47dd2f1c4ae4188d88122c040268"
+  }
+}

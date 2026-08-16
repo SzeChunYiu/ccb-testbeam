@@ -1,0 +1,46 @@
+{
+  "ticket_id": "2516",
+  "ticket_number": 2516,
+  "study_id": "S59a",
+  "worker": "testbeam-laptop-1",
+  "title": "reference-pulser pulse-shape timing transfer benchmark",
+  "claimed_ticket_text": "2516\n# NEW S59a reference-pulser pulse-shape timing transfer benchmark\n\nCompare a traditional CFD plus parametric CR-RC/log-normal template fit against ridge, gradient-boosted trees, MLP, 1D-CNN, and a compact waveform transformer for pulse-shape and timing transfer across run/current blocks.\n\nRequire leakage-proof run/source splits, pedestal-state stratification, pile-up and saturation flags, bootstrap 95% CIs for timing bias/resolution and shape residuals, and ablations for pedestal subtraction and censored samples. Deliver short tables identifying where ML deepens or falsifies pulse-shape/timing understanding rather than only improving score.\n",
+  "claim_command_output": "null\n# null\n\nnull\n",
+  "manual_claim_workaround": {
+    "reason": "tn-ticket claim returned malformed null output because the helper renders an empty existing-claim query as null|null|null; no issue was claimed by the helper.",
+    "issue": 2516,
+    "command": "gh issue edit 2516 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-1 --remove-label factory:open"
+  },
+  "output_dir": "reports/2516__s59a_reference_pulser_pulse_shape_timing_transfer",
+  "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+  "samples_per_channel": 18,
+  "baseline_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "duplicate_readout_channels": {"B2": 1, "B4": 3, "B6": 5, "B8": 7},
+  "expected_selected_pulses": 640737,
+  "expected_group_counts": {
+    "sample_i_calib": 248745,
+    "sample_i_analysis": 252266,
+    "sample_ii_calib": 14630,
+    "sample_ii_analysis": 125096
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "heldout_runs": [42, 50, 57, 58, 60, 62, 64, 65],
+  "max_per_run_stave": 180,
+  "bootstrap_replicates": 500,
+  "random_seed": 20590016,
+  "mlp_max_iter": 35,
+  "nn": {
+    "epochs": 6,
+    "transformer_epochs": 5,
+    "batch_size": 1024,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001
+  }
+}

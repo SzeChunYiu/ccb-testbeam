@@ -1,0 +1,6 @@
+2516
+# NEW S59a reference-pulser pulse-shape timing transfer benchmark
+
+Compare a traditional CFD plus parametric CR-RC/log-normal template fit against ridge, gradient-boosted trees, MLP, 1D-CNN, and a compact waveform transformer for pulse-shape and timing transfer across run/current blocks.
+
+Require leakage-proof run/source splits, pedestal-state stratification, pile-up and saturation flags, bootstrap 95% CIs for timing bias/resolution and shape residuals, and ablations for pedestal subtraction and censored samples. Deliver short tables identifying where ML deepens or falsifies pulse-shape/timing understanding rather than only improving score.

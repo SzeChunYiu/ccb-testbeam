@@ -1,0 +1,125 @@
+{
+  "ticket_id": "2502",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-2",
+  "title": "S55b: Pile-Up Saturation Energy Recovery Likelihood-vs-Neural Bakeoff",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-2 --project testbeam",
+  "claimed_ticket_text": "#2502 NEW s55b pile-up saturation energy recovery likelihood-vs-neural bakeoff",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "adc_clip": 11800.0,
+    "bootstrap": "held-out run-block percentile 95% CI",
+    "bootstrap_replicates": 400,
+    "negative_control": "clipped clean single-pulse controls with matched source-run distribution",
+    "winner_score": "energy_fractional_sigma68 + 0.20*abs(energy_fractional_bias) + 0.008*time_sigma68_ns + 0.04*pileup_miss_rate + 0.04*false_split_rate"
+  },
+  "required_method_coverage": {
+    "traditional": "analytic_clipped_template_sideband_traditional",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "transformer_sequence_model": "tiny_sequence_transformer",
+    "new_architecture": "saturation_residual_fusion_new"
+  },
+  "winner": {
+    "name": "saturation_residual_fusion_new",
+    "criterion": "minimum held-out composite saturation-energy closure score with run-block bootstrap CIs reported",
+    "winner_score": 0.15172443008737868,
+    "energy_fractional_bias": -0.002906610021787798,
+    "energy_fractional_sigma68": 0.068387783415775,
+    "energy_fractional_sigma68_ci95": [
+      0.06183707932660469,
+      0.0751855124441164
+    ],
+    "time_sigma68_ns": 8.023902762892945,
+    "time_sigma68_ci95": [
+      7.365407249564567,
+      8.669358478772935
+    ],
+    "pileup_miss_rate": 0.32564102564102565,
+    "false_split_rate": 0.13846153846153847,
+    "uncertainty_calibration": {
+      "method": "saturation_residual_fusion_new",
+      "n_valid_doublets": 263.0,
+      "median_abs_energy_residual": 0.04730265759532487,
+      "p68_abs_energy_residual": 0.0694272959931502,
+      "nominal_68_proxy_width": 0.034999999999999996,
+      "coverage_abs_resid_le_proxy": 0.3688212927756654,
+      "coverage_abs_resid_le_2proxy": 0.7034220532319392,
+      "calibration_ratio_p68_over_proxy": 1.9836370283757203
+    }
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv",
+    "real_data_sideband_validation": "real_data_sideband_validation.csv",
+    "saturation_mask_ablation": "saturation_mask_ablation.csv",
+    "uncertainty_calibration": "uncertainty_calibration.csv"
+  },
+  "novel_tickets_appended": [],
+  "caveats": [
+    "Truth comes from controlled injections into raw-ROOT-derived clean pulses.",
+    "ADC clipping is an explicit benchmark stressor rather than decoded electronics metadata.",
+    "Bootstrap CIs resample held-out runs and should be read as run-transfer intervals."
+  ],
+  "issue_number": 2502,
+  "issue_url": "https://github.com/SzeChunYiu/factory-tickets/issues/2502",
+  "claim_command_output": "null / # null / null",
+  "done_command": "tn-ticket done 2502",
+  "manual_claim_recovery": {
+    "reason": "tn-ticket claim returned a null pseudo-ticket despite a non-empty testbeam queue",
+    "manual_recovery": "gh issue edit 2502 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-2 --remove-label factory:open",
+    "reran_claim": false
+  },
+  "required_outputs": {
+    "injected_overlap_closure": "method_metrics.csv, run_heldout_metrics.csv, event_predictions.csv",
+    "real_data_sideband_validation": "real_data_sideband_validation.csv",
+    "saturation_mask_ablation": "saturation_mask_ablation.csv",
+    "uncertainty_calibration": "uncertainty_calibration.csv",
+    "traditional_vs_neural_failure_interpretation": "REPORT.md"
+  },
+  "queue_provenance": {
+    "claimed_once": true,
+    "claim_command_run_once": "tn-ticket claim testbeam-laptop-2 --project testbeam",
+    "claim_command_output": "null / # null / null",
+    "manual_claim_recovery": "gh issue edit 2502 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-2 --remove-label factory:open",
+    "done_command": "tn-ticket done 2502",
+    "novel_tickets_appended": []
+  }
+}

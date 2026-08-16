@@ -1,0 +1,25 @@
+source,run_id,entries,event_key_branches,truth_like_branches,joinable_event_level_pid_truth,verdict
+/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0044.root,44,4294,"EVENTNO, EVT",,False,no event-level PID/truth branch in real HRD tree
+/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0045.root,45,48181,"EVENTNO, EVT",,False,no event-level PID/truth branch in real HRD tree
+/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0046.root,46,1441,"EVENTNO, EVT",,False,no event-level PID/truth branch in real HRD tree
+/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0047.root,47,10970,"EVENTNO, EVT",,False,no event-level PID/truth branch in real HRD tree
+/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0048.root,48,31713,"EVENTNO, EVT",,False,no event-level PID/truth branch in real HRD tree
+/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0049.root,49,32354,"EVENTNO, EVT",,False,no event-level PID/truth branch in real HRD tree
+/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0050.root,50,44804,"EVENTNO, EVT",,False,no event-level PID/truth branch in real HRD tree
+/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0051.root,51,20569,"EVENTNO, EVT",,False,no event-level PID/truth branch in real HRD tree
+/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0052.root,52,10005,"EVENTNO, EVT",,False,no event-level PID/truth branch in real HRD tree
+/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0053.root,53,39612,"EVENTNO, EVT",,False,no event-level PID/truth branch in real HRD tree
+/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0054.root,54,37413,"EVENTNO, EVT",,False,no event-level PID/truth branch in real HRD tree
+/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0055.root,55,24416,"EVENTNO, EVT",,False,no event-level PID/truth branch in real HRD tree
+/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0056.root,56,51823,"EVENTNO, EVT",,False,no event-level PID/truth branch in real HRD tree
+/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0057.root,57,31284,"EVENTNO, EVT",,False,no event-level PID/truth branch in real HRD tree
+/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0058.root,58,34141,"EVENTNO, EVT",,False,no event-level PID/truth branch in real HRD tree
+/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0059.root,59,42303,"EVENTNO, EVT",,False,no event-level PID/truth branch in real HRD tree
+/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0060.root,60,36074,"EVENTNO, EVT",,False,no event-level PID/truth branch in real HRD tree
+/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0061.root,61,36535,"EVENTNO, EVT",,False,no event-level PID/truth branch in real HRD tree
+/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0062.root,62,37584,"EVENTNO, EVT",,False,no event-level PID/truth branch in real HRD tree
+/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0063.root,63,37030,"EVENTNO, EVT",,False,no event-level PID/truth branch in real HRD tree
+/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0064.root,64,35943,"EVENTNO, EVT",,False,no event-level PID/truth branch in real HRD tree
+/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0065.root,65,38424,"EVENTNO, EVT",,False,no event-level PID/truth branch in real HRD tree
+/home/billy/.tb-workers/testbeam-laptop-1/reports/paper_956_deltaE_E_20260814T090700Z/deltaE_E_events_data.csv.gz,table,sampled,"run_id, event_id",,False,real data table has no truth label
+/home/billy/.tb-workers/testbeam-laptop-1/reports/paper_956_deltaE_E_20260814T090700Z/deltaE_E_events_mc.csv.gz,table,sampled,"run_id, event_id","truth_pdg, truth_species",True,simulation truth only; event ids are not real HRD event keys

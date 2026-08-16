@@ -1,0 +1,7 @@
+{
+  "number": 2518,
+  "title": "NEW S59c causal pile-up PID energy disentanglement study",
+  "worker": "testbeam-laptop-4",
+  "claim_command": "tn-ticket claim testbeam-laptop-4 --project testbeam",
+  "claim_note": "The single permitted tn-ticket claim invocation returned the known null pseudo-ticket; issue #2518 was then label-swapped manually without rerunning claim."
+}

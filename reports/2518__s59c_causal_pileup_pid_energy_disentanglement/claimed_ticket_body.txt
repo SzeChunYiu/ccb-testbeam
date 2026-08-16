@@ -1,0 +1,3 @@
+Compare a traditional sparse nonnegative template deconvolution plus Bayesian deltaE-E PID likelihood against ridge, gradient-boosted trees, MLP, 1D-CNN, and a sequence transformer for overlapping-pulse PID and energy inference.
+
+Require controlled synthetic overlays plus real high-rate sidebands, run-block bootstrap 95% CIs for PID AUC/purity, energy bias, timing separation, and pile-up recovery. Include negative controls for pedestal leakage, saturation masking, and source-run memorization, with concise conclusions about causal pulse timing, pile-up, saturation, pedestal, energy, and PID behavior.

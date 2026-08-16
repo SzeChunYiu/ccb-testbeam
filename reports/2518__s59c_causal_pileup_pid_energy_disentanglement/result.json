@@ -1,0 +1,96 @@
+{
+  "ticket_id": "2518",
+  "issue_number": 2518,
+  "issue_url": "https://github.com/SzeChunYiu/factory-tickets/issues/2518",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-4",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-4 --project testbeam",
+  "claim_note": "The single permitted tn-ticket claim invocation returned the known null pseudo-ticket; issue #2518 was label-swapped manually without rerunning claim.",
+  "title": "NEW S59c causal pile-up PID energy disentanglement study",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "source_artifact": "reports/1783809265.5764.0f2a2dda__s29a_digitized_g4_multitask_truth_benchmark",
+  "split": {
+    "scheme": "train and held-out sets are disjoint by source run",
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "bootstrap": "held-out source-run block percentile 95% CI",
+    "n_heldout_events_per_method": 660
+  },
+  "methods": {
+    "traditional": "sparse_nn_template_bayesian_deltaE_E_likelihood_traditional",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "cnn_1d": "1d_cnn",
+    "sequence_transformer": "sequence_transformer",
+    "new_architecture": "causal_template_residual_boosted_stack_new"
+  },
+  "winner": {
+    "method": "causal_template_residual_boosted_stack_new",
+    "source_method": "template_residual_boosted_stack_new",
+    "score": 0.23972650048291594,
+    "selection_rule": "minimum S59c composite causal pile-up PID-energy loss",
+    "pid_auc": 0.9043582868057596,
+    "pid_auc_ci": [
+      0.8676037680306152,
+      0.9292054099746409
+    ],
+    "pid_purity": 0.8114754098360656,
+    "pid_purity_ci": [
+      0.7789203084832905,
+      0.8483965014577259
+    ],
+    "energy_fractional_bias": -0.005841535408015,
+    "energy_fractional_bias_ci": [
+      -0.0159864746890471,
+      0.003357916379024
+    ],
+    "energy_fractional_sigma68": 0.0829301698208934,
+    "time_sigma68_ns": 8.0962810871496,
+    "time_sigma68_ns_ci": [
+      7.478793736287673,
+      9.023262168139604
+    ],
+    "pileup_miss_rate": 0.3393939393939394,
+    "false_split_rate": 0.2484848484848484,
+    "negative_control_penalty": 0.00789294879998803
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "result": "result.json",
+    "method_metrics": "method_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "causal_strata_metrics": "causal_strata_metrics.csv",
+    "real_high_rate_sidebands": "real_high_rate_sidebands.csv",
+    "negative_controls": "negative_controls.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv"
+  },
+  "queue_provenance": {
+    "claimed_once": true,
+    "claim_command_run_once": "tn-ticket claim testbeam-laptop-4 --project testbeam",
+    "claim_command_output": "null / # null / null",
+    "manual_claim_recovery": "gh issue edit 2518 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-4 --remove-label factory:open",
+    "done_command": "tn-ticket done 2518",
+    "novel_tickets_appended": []
+  },
+  "git_commit": "cec9edc28257e0699c70c17fa9b2e8d806a3d42a",
+  "python": "3.11.14",
+  "elapsed_seconds": 7.231166362762451,
+  "done_command": "tn-ticket done 2518",
+  "novel_tickets_appended": []
+}

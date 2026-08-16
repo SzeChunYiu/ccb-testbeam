@@ -1,0 +1,24 @@
+{
+  "ticket_id": "2518",
+  "worker": "testbeam-laptop-4",
+  "script": "scripts/s59c_2518_causal_pileup_pid_energy_disentanglement.py",
+  "created_unix": 1786904766.2935205,
+  "source": "reports/1783809265.5764.0f2a2dda__s29a_digitized_g4_multitask_truth_benchmark",
+  "outputs_sha256": {
+    "REPORT.md": "158f4513c9c0a684fd5a5b794f4c173db99215f1341af873b6d3f45b368ef5a4",
+    "causal_strata_metrics.csv": "f47863123dd420baa3e5ba7d4d9c1656206653d7400416ecd648a5cfb220b17e",
+    "claimed_ticket.json": "1158ea8b91adeb57f67502bbc364a9c159596e6ac9c2b64c0b4ab4bf7233332d",
+    "claimed_ticket.txt": "6d273b824d79860cf3e2264727b209b7bc0d97f8f57c2314562704994e653962",
+    "claimed_ticket_body.txt": "703286f86eb08eb4e75bb6026e23511b8e7c9b76e6edff91f3a55dd375f2e637",
+    "event_predictions.csv": "b6b6cd557c5f8a70bfa99529813a2fe1fb4b0d57ea50fc89a1089919ba308052",
+    "input_sha256.csv": "9a3274df4276df777d8efad021c8919d50a9d9210369e6b52a81c216a38bba72",
+    "method_metrics.csv": "6528d87f09768627bf9a4226a5d00eae779f0226771d508dc41669f311c2ba8b",
+    "negative_controls.csv": "b6fb663cc860b94ea9ac6d9f58c5e4d3d4dd49679396894ccbf2640def8025d6",
+    "real_high_rate_sidebands.csv": "14733bfa9d1435bde3290f4bb5cad7e3b3a3893ac6ffc5a1f987868e408e0345",
+    "reproduction_counts_by_run.csv": "6f5a2c5fbd8805fdd462204535903eae8479abf31059c5d933ab988b4343ac5b",
+    "reproduction_match_table.csv": "c8bfba74c8d39f9d9adb02559bcd6b2a433d75285e641530f69757974674a53c",
+    "result.json": "a18173fdaa6dd69a51d3a0dd06afedcf2a83c8d909499217938a6ff1a9e54aa2",
+    "run_heldout_metrics.csv": "8feba0238ff6443c7145006ddf06dc895c91003e7c22a1501d8b987f9c40d71d",
+    "source_strata_metrics.csv": "a3c1418f049cf64293db319e707c316d0b37c030ea33160638ca295fcb0b1f1b"
+  }
+}

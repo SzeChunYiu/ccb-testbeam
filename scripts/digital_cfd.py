@@ -6,7 +6,10 @@ component-selection policy, and status codes stay synchronized (#1063).
 """
 from __future__ import annotations
 
-from typing import Literal
+try:
+    from typing import Literal
+except ImportError:  # Python 3.7 compatibility for the analysis environment.
+    from typing_extensions import Literal
 
 import numpy as np
 

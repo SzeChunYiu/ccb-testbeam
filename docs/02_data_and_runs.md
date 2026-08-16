@@ -1,7 +1,11 @@
 # 02 — Data and runs
 
 ## Inputs
-- **Raw ROOT:** `data/extracted/root/root/{hrda,hrdb}_run_NNNN.root` (110 files).
+- **Raw ROOT:** resolve with `python -m ccb_mc_validation raw-root-probe --repo-root .`.
+  The current worker-visible canonical path is
+  `/home/billy/ccb-data/data/extracted/root/root/{hrda,hrdb}_run_NNNN.root`;
+  `data/extracted/root/root` is the repo-local alias, and
+  `/home/billy/ccb-data/extracted/root/root` is legacy-only.
 - **Sorted ROOT:** `data/extracted/sorted-{a,b}/*-sorted.root` — the B-stack notes are built
   from `sorted-b`.
 - **Pulse table:** a selected-pulse table of **640,737 B-stave pulse records** produced by

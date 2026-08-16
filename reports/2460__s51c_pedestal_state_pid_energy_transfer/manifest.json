@@ -1,0 +1,72 @@
+{
+  "ticket_id": "2460",
+  "study_id": "s51c_pedestal_state_pid_energy_transfer",
+  "generated_at_unix": 1786884248.686752,
+  "artifacts": [
+    {
+      "path": "reports/2460__s51c_pedestal_state_pid_energy_transfer/REPORT.md",
+      "sha256": "dc8415026d0b9bbb57abe7e19c80eaffec7133cf0fc1c19964a2b4ff6f39f353",
+      "bytes": 8364
+    },
+    {
+      "path": "reports/2460__s51c_pedestal_state_pid_energy_transfer/benchmark_sample_meta.csv",
+      "sha256": "94386d9f9f323043081c04fafafd06fa23085ab28573efca691730be16e534b3",
+      "bytes": 4429136
+    },
+    {
+      "path": "reports/2460__s51c_pedestal_state_pid_energy_transfer/claimed_ticket.txt",
+      "sha256": "b3cb6055dd7d10b75375d4febba41f3af9454442546f9e8442fdeda369fdefea",
+      "bytes": 370
+    },
+    {
+      "path": "reports/2460__s51c_pedestal_state_pid_energy_transfer/feature_families.csv",
+      "sha256": "2d9407638c9cbf98002846025d8725ecb2ef72055abfaa6f829feda81a96c6ad",
+      "bytes": 618
+    },
+    {
+      "path": "reports/2460__s51c_pedestal_state_pid_energy_transfer/heldout_per_run_metrics.csv",
+      "sha256": "e151b1375469afc31aaa244605953b9ff72a481f3e52da3997a0071c2d94ec36",
+      "bytes": 3966
+    },
+    {
+      "path": "reports/2460__s51c_pedestal_state_pid_energy_transfer/heldout_predictions.csv.gz",
+      "sha256": "b28f8b020154d68d25eb3a6dd8b9dfab216f36609e959988fd360d5fa9ff031d",
+      "bytes": 2498920
+    },
+    {
+      "path": "reports/2460__s51c_pedestal_state_pid_energy_transfer/input_sha256.csv",
+      "sha256": "2093bc7d4809d7d39bf444fddea81623ef195b00c4efb3bc4bb86cca64140fb9",
+      "bytes": 3279
+    },
+    {
+      "path": "reports/2460__s51c_pedestal_state_pid_energy_transfer/method_rmse_ci.png",
+      "sha256": "2475fc8a0a3a229d8d469fe510d91c28503784fcc8d4858910f7cbc79d5db98c",
+      "bytes": 43691
+    },
+    {
+      "path": "reports/2460__s51c_pedestal_state_pid_energy_transfer/method_summary.csv",
+      "sha256": "dca37d1f4f86c52187bf64f1977bb28649bbcceb5a0fa3081227873935bd6fa0",
+      "bytes": 1416
+    },
+    {
+      "path": "reports/2460__s51c_pedestal_state_pid_energy_transfer/reproduction_counts_by_run.csv",
+      "sha256": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+      "bytes": 1896
+    },
+    {
+      "path": "reports/2460__s51c_pedestal_state_pid_energy_transfer/reproduction_match_table.csv",
+      "sha256": "30c27e630bc2f37a7e26cf4f3fac0ad2db556913c9a3725097ba16731535f2cf",
+      "bytes": 135
+    },
+    {
+      "path": "reports/2460__s51c_pedestal_state_pid_energy_transfer/result.json",
+      "sha256": "24a575082c6206c04c85a556f7f072c608ee9678369ff870fabe424c8330d390",
+      "bytes": 3166
+    },
+    {
+      "path": "reports/2460__s51c_pedestal_state_pid_energy_transfer/stratum_summary.csv",
+      "sha256": "3d2a043850d4d13000d1b4deba0dd07f3107c926a31d8a371cc27b05ba5c3f5a",
+      "bytes": 1924
+    }
+  ]
+}

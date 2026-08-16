@@ -26,3 +26,4 @@ B4--B6 pair timing residual (Sample II). Copied verbatim from `reports/issue_132
 - ccb_layout.pdf -- #1317 two-arm CCB layout schematic, BOM-annotated (SIM_CONFIG)
 - stave_geometry.pdf -- #1317 B-stack stave geometry, BOM-annotated (DESIGN_SPEC)
 - channel_map.pdf -- #1317 B2/B4/B6/B8 channel-to-layer map with #869 parity caveat (SIM_CONFIG)
+- mc_depth_profile.pdf -- #1319 MC depth profile, species-resolved + B2/B4/B6/B8 parity nuisance (SIMULATION_RESULT)

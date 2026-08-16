@@ -1,0 +1,2 @@
+#2370 S07: ML rigour pass (cross-cutting)
+Claimed by worker:testbeam-laptop-2. Body: add probability calibration, run-held-out ML-vs-traditional classifier scoreboard, PR/AP and bootstrap CIs.

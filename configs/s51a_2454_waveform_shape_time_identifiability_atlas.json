@@ -1,0 +1,39 @@
+{
+  "ticket_id": "2454",
+  "study_id": "S51a",
+  "worker": "testbeam-laptop-1",
+  "title": "waveform shape-time identifiability atlas with template and NN bakeoff",
+  "claimed_ticket_text": "claim_helper_command: tn-ticket claim testbeam-laptop-1 --project testbeam\nclaim_helper_output:\nnull\n# null\n\nnull\nmanual_claim_issue: 2454\nmanual_claim_command: gh issue edit 2454 --add-label factory:claimed --add-label worker:testbeam-laptop-1 --remove-label factory:open\nmanual_claim_evidence: issue #2454 labels include factory:claimed, project:testbeam, worker:testbeam-laptop-1\n\n# S51a: Waveform shape-time identifiability atlas with template and NN bakeoff\n\nAcademic-grade study: build a pulse shape and timing identifiability atlas across stave, run family, amplitude, peak phase, pedestal state, and mild pile-up strata.\n\nTraditional method: aligned median-template fitting with CFD/optimal-filter timing and explicit time-walk terms.\n\nML/NN comparison: ridge regression on hand pulse-shape features, gradient-boosted trees on waveform summaries, MLP on normalized windows, 1D-CNN on raw samples, and a compact waveform transformer when support permits.\n\nMetrics: timing residual RMS/core width, bias vs amplitude and pedestal, q_template/shape reconstruction error, calibration slope, and failure/abstention rate. Report run-block and source-run bootstrap 95% CIs plus method-minus-template deltas.\n\nPulse-understanding target: separate genuine pulse-shape variation from timing pickoff, pedestal drift, and unresolved pile-up without letting ML exploit run or amplitude leakage.\n",
+  "output_dir": "reports/2454__s51a_waveform_shape_time_identifiability_atlas",
+  "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+  "samples_per_channel": 18,
+  "baseline_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "duplicate_readout_channels": {"B2": 1, "B4": 3, "B6": 5, "B8": 7},
+  "expected_selected_pulses": 640737,
+  "expected_group_counts": {
+    "sample_i_calib": 248745,
+    "sample_i_analysis": 252266,
+    "sample_ii_calib": 14630,
+    "sample_ii_analysis": 125096
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "heldout_runs": [42, 50, 57, 58, 60, 62, 64, 65],
+  "max_per_run_stave": 160,
+  "bootstrap_replicates": 300,
+  "random_seed": 24545101,
+  "mlp_max_iter": 35,
+  "nn": {
+    "epochs": 6,
+    "transformer_epochs": 5,
+    "batch_size": 1024,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "ticket_id": "2480",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-1",
+  "title": "S54d: external PID truth join for S54c boundary validation",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-1 --project testbeam",
+  "claim_helper_output": {
+    "stderr": "null",
+    "stdout": "# null\n\nnull"
+  },
+  "manual_claim_recovery": {
+    "reason": "tn-ticket claim returned null pseudo-ticket while project queue was non-empty",
+    "manual_recovery": "gh issue edit 2480 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-1 --remove-label factory:open",
+    "reran_claim": false
+  },
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "real_data_truth_join": {
+    "event_level_pid_truth_join_feasible": false,
+    "joinable_real_rows": 0,
+    "audit_table": "truth_join_audit.csv"
+  },
+  "evaluation_design": {
+    "scope": "GEANT4 truth rows only; real-data validation blocked by absent PID join",
+    "split": "GroupKFold by deterministic GEANT4 pseudo-run shard",
+    "bootstrap": "pseudo-run-block percentile 95% CI",
+    "bootstrap_replicates": 600
+  },
+  "required_method_coverage": {
+    "traditional": "bayesian_deltae_e_template_traditional",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "transformer_sequence_model": "tiny_transformer",
+    "new_architecture": "deltae_residual_fusion_new"
+  },
+  "winner": {
+    "name": "gradient_boosted_trees",
+    "criterion": "maximum simulation-side ROC/AP/balanced-accuracy composite with group bootstrap CIs",
+    "winner_score": 1.34970513833369,
+    "roc_auc": 0.9998845000000001,
+    "roc_auc_ci95": [
+      0.9997137814750174,
+      0.9999976987805888
+    ],
+    "average_precision": 0.9998539819061885,
+    "average_precision_ci95": [
+      0.9996310289464516,
+      0.9999976360029204
+    ],
+    "balanced_accuracy": 0.9992857142857143,
+    "balanced_accuracy_ci95": [
+      0.9988390534750783,
+      0.9996467817458877
+    ],
+    "real_data_pid_validation_status": "blocked_no_event_level_pid_truth_join"
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "truth_join_audit": "truth_join_audit.csv",
+    "method_metrics": "method_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv"
+  },
+  "novel_tickets_appended": [],
+  "caveats": [
+    "No real-data event-level PID truth source is joinable in the current mirror.",
+    "The benchmark winner is simulation-side only.",
+    "Pseudo-run bootstrap intervals approximate transfer uncertainty but are not DAQ-run CIs."
+  ],
+  "issue_number": 2480,
+  "issue_url": "https://github.com/SzeChunYiu/factory-tickets/issues/2480",
+  "done_command": "tn-ticket done 2480"
+}

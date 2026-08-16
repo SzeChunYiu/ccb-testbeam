@@ -1,0 +1,22 @@
+{
+  "ticket_id": "2463",
+  "git_commit": "6fa77fd58f8f6c65ef4b42675de0793c404f1eca",
+  "command": "/home/billy/.cache/uv/builds-v0/.tmpvXirb8/bin/python scripts/ticket_2463_s52b_sparse_deconvolution_neural_pileup_saturation.py",
+  "runtime_seconds": 45.189696073532104,
+  "python": "3.11.14 (main, Feb  3 2026, 22:51:56) [Clang 21.1.4 ]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+  "outputs_sha256": {
+    "REPORT.md": "24bc147a6831d7037286bca1a5ae8aa4703406ad3d5996522ad44d5e1e227b1a",
+    "claimed_ticket.txt": "38842c2d8bcd465d9e2622660fa3072847ef5eeb489f820346ab09d400cf21a2",
+    "event_predictions.csv": "0c9f868a66b5935156e50f714d26ac845a4da787b499d746e6e591d5a13968ab",
+    "input_sha256.csv": "cc17da0dcd3e7e732b81a17f3c35833f026fdec912538d28d7d71b9af71a46f6",
+    "method_metrics.csv": "45c5125392a9a32685851e5aa337893a8326acf13aa671849459a76da9143374",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "c2073b3e179cd83c0840995910604c2b7ee37dfe482d76923c090683e271b806",
+    "run_heldout_metrics.csv": "3cbdf879caad7906f6c349151c180e4d7bfce657634e68ff7f2e3b422fe3f573",
+    "strata_metrics.csv": "b05f55e2f0f931ee728043b7abdaba6731a0249d7fc540342708e72591ef537e",
+    "template_summary.csv": "70811c144799226d495253dcf99ec44c6cea6b9a7de91249cd5ea72526581b13",
+    "winner_ranked_metrics.csv": "147760fc03c257dcc6dadabb8573e312ea4abd316c6c6f29dca7acbf6a5c4ed1"
+  },
+  "factory_issue": 2463
+}

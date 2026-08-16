@@ -1,0 +1,3 @@
+# S15c: external PID truth join feasibility gate
+
+Question: can any beamline, GEANT4, or external detector metadata provide event-level PID truth for the S15/P08 weak-label rows? Expected information gain: separates real proton/deuteron PID validation from support-proxy closure before PID scores are reused or promoted beyond weak-label diagnostics. Follow-up from ticket #2376 / P08 waveform-only weak-label PID bakeoff.

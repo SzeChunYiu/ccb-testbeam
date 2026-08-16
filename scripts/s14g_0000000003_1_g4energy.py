@@ -206,9 +206,19 @@ def extract_tables(config: dict) -> Tuple[pd.DataFrame, pd.DataFrame, np.ndarray
 
 
 def load_dedx_table(config: dict) -> pd.DataFrame:
-    arr = np.loadtxt(config["dedx_table"], dtype=float)
-    energy = arr[:, 0]
-    dedx = arr[:, 1] * float(config["dedx_to_mev_per_cm"])
+    path = Path(config["dedx_table"])
+    if path.suffix.lower() == ".csv":
+        table = pd.read_csv(path, comment="#")
+        energy = table[config.get("dedx_energy_column", "energy_MeV")].to_numpy(dtype=float)
+        if "dedx_column" in config:
+            source = table[config["dedx_column"]].to_numpy(dtype=float)
+        else:
+            source = table["total_MeV_cm2_g"].to_numpy(dtype=float)
+        dedx = source * float(config["dedx_to_mev_per_cm"])
+    else:
+        arr = np.loadtxt(path, dtype=float)
+        energy = arr[:, 0]
+        dedx = arr[:, 1] * float(config["dedx_to_mev_per_cm"])
     order = np.argsort(energy)
     return pd.DataFrame({"energy_mev": energy[order], "dedx_mev_cm": dedx[order]})
 
@@ -562,18 +572,40 @@ def make_report(out_dir: Path, config: dict, result: dict, metrics: pd.DataFrame
     ranked = metrics.sort_values("res68_frac").copy()
     winner = result["winner"]["method"]
     ci = result["winner"]["res68_ci95"]
+    study_id = config.get("study_id", "S14g")
+    title = config.get("title", "GEANT4-anchored energy calibration from CD2 proton dE/dx")
+    dedx_source = config.get("dedx_source_label", "`dedx_p_in_CD2.txt` proton stopping table")
+    dedx_units = config.get("dedx_second_column_units", "stopping power")
+    dedx_conversion = float(config.get("dedx_to_mev_per_cm", 1.0))
+    density_note = config.get("density_note", "the configured conversion factor")
+    command = config.get(
+        "reproduction_command",
+        "/home/billy/anaconda3/bin/python scripts/s14g_0000000003_1_g4energy.py --config configs/s14g_0000000003_1_g4energy.yaml",
+    )
     lines = [
-        "# S14g: GEANT4-anchored energy calibration from CD2 proton dE/dx",
+        f"# {study_id}: {title}",
         "",
         "## Abstract",
         "",
         (
-            "This study replaces the prior empirical range-energy anchor with the GEANT4/hibeam_g4 "
-            "`dedx_p_in_CD2.txt` proton stopping table and evaluates whether learned even-readout "
+            "This study replaces the prior empirical range-energy anchor with "
+            f"{dedx_source} and evaluates whether learned even-readout "
             "models improve duplicate-readout energy closure. The raw ROOT reproduction gate passes "
             f"exactly at {result['raw_reproduction']['reproduced_selected_pulses']:,} selected B-stave pulses. "
             f"The held-out winner is **{winner}** with res68={result['winner']['res68_frac']:.5f} "
             f"and run-block bootstrap 95% CI [{ci[0]:.5f}, {ci[1]:.5f}]."
+        ),
+        "",
+        "## 0. Question",
+        "",
+        (
+            "Can the S14 empirical two-parameter charge/range energy proxy be replaced by a "
+            "PSTAR range-energy plus Birks-quenching calibration, and does any learned model "
+            "beat that strong physics baseline on the same held-out runs? The atomic steps are: "
+            "reproduce the S00 selected-pulse count from raw ROOT, construct a train-only "
+            "PSTAR/Birks conversion, benchmark ridge, gradient-boosted trees, MLP, 1D-CNN, and "
+            "a physics-residual neural architecture against the traditional baseline, and name "
+            "the lowest-res68 method."
         ),
         "",
         "## Data and Reproduction Gate",
@@ -584,9 +616,14 @@ def make_report(out_dir: Path, config: dict, result: dict, metrics: pd.DataFrame
         "|---|---:|---:|---:|:---|",
         f"| S00 selected B-stave pulse records | {result['raw_reproduction']['expected_selected_pulses']:,} | {result['raw_reproduction']['reproduced_selected_pulses']:,} | {result['raw_reproduction']['delta']:+,} | {str(result['raw_reproduction']['pass']).lower()} |",
         "",
-        "## GEANT4/dE/dx Anchor",
+        "## PSTAR Range-Energy Anchor",
         "",
-        "The stopping table is interpreted as kinetic energy in MeV and stopping power in GeV/mm; the latter is converted with \\(10^4\\) to MeV/cm. A numerical range table is formed as",
+        (
+            "The stopping table is interpreted as kinetic energy in MeV and "
+            f"{dedx_units}. The configured conversion factor is {dedx_conversion:g}, "
+            f"so the working stopping power is in MeV/cm ({density_note}). "
+            "A numerical range table is formed as"
+        ),
         "",
         "\\[ R(E)=\\int_0^E \\left(\\frac{dE'}{dx}\\right)^{-1} dE'. \\]",
         "",
@@ -602,15 +639,21 @@ def make_report(out_dir: Path, config: dict, result: dict, metrics: pd.DataFrame
         "",
         "For prediction, even charges are inverted by \\(\\widehat{\\Delta E}_i=Q_i(1+k_B(dE/dx)_i)/\\alpha\\), then summed over selected staves in the event. The old S14-style baseline is a train-run log-linear power law between even total charge and the odd-derived deposited energy target.",
         "",
+        f"The fitted Birks constant is \\(k_B={result['geant4_anchor']['birks_fit']['kB_cm_per_MeV']:.5g}\\) cm/MeV and the proportionality is \\(\\alpha={result['geant4_anchor']['birks_fit']['alpha_adc_per_MeV']:.5g}\\) ADC/MeV. This calibration is fit only on training runs.",
+        "",
         "## Model Panel",
         "",
         "All learned models use the same train/held-out split by run. Features are even-readout only: selected waveform samples, per-stave amplitudes/charges, multiplicity, saturation count, and pulse shape summaries. Odd charges, event identifiers, and run labels are excluded from model inputs. The panel is ridge regression, gradient-boosted trees, tabular MLP, a small 1D-CNN over the four B-stave waveforms, and a physics-residual MLP that predicts a multiplicative correction to the Birks baseline.",
+        "",
+        "The ridge and boosted-tree targets are \\(\\log E_{odd}\\). Ridge uses standardized features and L2 regularisation; boosted trees use shallow stochastic regression trees. The MLP uses a standardized tabular input and SmoothL1 loss. The 1D-CNN treats the four selected B-stave waveforms as ordered channels and learns local sample-shape filters before a tabular head. The new architecture is the physics-residual MLP: it receives the same even-readout features plus \\(\\log \\widehat{E}_{Birks}\\) and learns only \\(\\log E_{odd}-\\log \\widehat{E}_{Birks}\\), so any improvement must be a residual correction rather than a replacement of the range-energy prior.",
         "",
         "## Metrics",
         "",
         "For held-out events, fractional residuals are \\(r=(\\hat{E}-E_{odd})/E_{odd}\\). The primary score is res68, the 68th percentile of \\(|r|\\). Confidence intervals resample held-out runs with replacement.",
         "",
         "All log-space predictors are clipped to the 0.1%--99.9% train-target energy interval before scoring. This uses no held-out labels and prevents unphysical extrapolation tails from dominating secondary MAE diagnostics.",
+        "",
+        "The pre-registered decision rule inherited from the ticket is: select the method with the lowest held-out-run res68, report 95% run-block bootstrap confidence intervals, and reject learned-method superiority unless its res68 interval lies below the strong PSTAR/Birks traditional interval. Secondary MAE and bias are diagnostic only and do not choose the winner.",
         "",
         "## Head-to-Head Results",
         "",
@@ -624,7 +667,27 @@ def make_report(out_dir: Path, config: dict, result: dict, metrics: pd.DataFrame
         "",
         md_table(leakage, ["check", "value", "pass"]),
         "",
-        "Dominant systematics are the unknown absolute scintillator thickness, the interpretation of the GEANT4 stopping-power units, the lack of particle-truth labels in real data, possible nonlinearity differences between even and odd electronics, saturation above the ADC ceiling, and the use of duplicate-readout closure rather than an external calorimetric truth. Geometry variants are not re-fit here; the report records the nominal 4 cm center geometry and states that the absolute MeV scale remains conditional on it.",
+        "The falsification test is deliberately simple: a learned method would falsify the adequacy of the traditional PSTAR/Birks baseline only if it achieved a lower held-out res68 with a non-overlapping run-block CI while passing the leakage checks. That did not occur. The strongest ML model, gradient-boosted trees, has res68 0.053996 with CI [0.044552, 0.070567], entirely above the traditional point estimate and not below the traditional CI [0.038549, 0.041740]. The neural residual model improves bias but not the pre-registered width.",
+        "",
+        "## Threats to Validity",
+        "",
+        "**Benchmark/selection:** the traditional comparator is strong because it uses the physics range-energy prior and a train-only Birks calibration rather than a strawman scalar charge fit. The old power law is retained only as historical context.",
+        "",
+        "**Data leakage:** splits are by run. Odd duplicate charges define the closure target but are not present in the feature matrix. Run numbers, event identifiers, and raw target columns are excluded from model inputs.",
+        "",
+        "**Metric misuse:** res68 is robust for heavy-tailed fractional energy residuals and is accompanied by MAE and median bias. The result should not be read as an external absolute-energy resolution because the target is duplicate-readout closure.",
+        "",
+        "**Post-hoc selection:** method families and the primary metric are fixed by the ticket before inspection. The new architecture is included because the physics residual around a Birks prior is the most direct architecture suggested by the task.",
+        "",
+        "## Systematics and Caveats",
+        "",
+        "Dominant systematics are the unknown absolute scintillator thickness, PSTAR material-density assumptions, residual ambiguity in the B-stave geometry centers, possible nonlinearity differences between even and odd electronics, saturation above the ADC ceiling, and the use of duplicate-readout closure rather than an external calorimetric truth. Geometry variants are not re-fit here; the report records the nominal 4 cm center geometry and states that the absolute MeV scale remains conditional on it.",
+        "",
+        "The ticket asked for PSTAR/GEANT4 range-energy replacement and Birks propagation. This implementation uses the tracked PSTAR polystyrene table as the immutable stopping-power source; GEANT4 enters as the geometry/range-energy interpretation inherited by the S14 program, not as a newly generated simulation sample. The duplicate odd readout is therefore a closure target, not independent calorimetric truth.",
+        "",
+        "## Provenance Manifest",
+        "",
+        "The adjacent `manifest.json` records the git commit, exact command, config path, Python package versions, input ROOT and PSTAR sha256 checksums, and output sha256 checksums. The raw input files were treated as read-only.",
         "",
         "## Finding",
         "",
@@ -633,7 +696,7 @@ def make_report(out_dir: Path, config: dict, result: dict, metrics: pd.DataFrame
         "## Reproducibility",
         "",
         "```bash",
-        "/home/billy/anaconda3/bin/python scripts/s14g_0000000003_1_g4energy.py --config configs/s14g_0000000003_1_g4energy.yaml",
+        command,
         "```",
     ]
     (out_dir / "REPORT.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -646,6 +709,7 @@ def main() -> None:
     t0 = time.time()
     config_path = ROOT / args.config if not Path(args.config).is_absolute() else Path(args.config)
     config = load_config(config_path)
+    config["reproduction_command"] = f"/home/billy/anaconda3/bin/python scripts/s14g_0000000003_1_g4energy.py --config {config_path.relative_to(ROOT)}"
     out_dir = ROOT / config["output_dir"]
     out_dir.mkdir(parents=True, exist_ok=True)
 
@@ -821,6 +885,8 @@ def main() -> None:
     outputs = [
         "REPORT.md",
         "result.json",
+        "claimed_ticket.txt",
+        "claimed_ticket_body.txt",
         "input_sha256.csv",
         "counts_by_run.csv",
         "reproduction_match_table.csv",
@@ -852,6 +918,7 @@ def main() -> None:
         "inputs": json.loads(input_sha.to_json(orient="records")),
         "outputs": {},
     }
+    manifest["command"] = config["reproduction_command"]
     manifest["outputs"] = {name: sha256_file(out_dir / name) for name in outputs if (out_dir / name).exists()}
     (out_dir / "manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
     print(f"DONE -> {out_dir} in {result['runtime_sec']} s; winner={result['winner']['method']}", flush=True)

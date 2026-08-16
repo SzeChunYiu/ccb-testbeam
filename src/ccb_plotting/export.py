@@ -5,7 +5,6 @@ from __future__ import annotations
 import hashlib
 import json
 import os
-import platform
 import tempfile
 from pathlib import Path
 from typing import Any
@@ -106,7 +105,11 @@ def export_figure(
             for key, path in outputs.items()
         },
         "environment": {
-            "python": platform.python_version(),
+            # Byte-stability contract: docs/figures/paper/manifest.json is
+            # compared byte-for-byte by CI (git diff --exit-code after
+            # regeneration), so the stamp records the project requires-python
+            # floor (pyproject.toml), never the running patch version.
+            "python": ">=3.11 (requires-python floor; patch version not stamped)",
             "matplotlib": matplotlib.__version__,
         },
     }

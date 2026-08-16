@@ -1,0 +1,202 @@
+{
+  "study": "P03-ticket-2389",
+  "ticket": "2389",
+  "worker": "testbeam-laptop-2",
+  "title": "P03 deep timing regression with per-pulse uncertainty calibration",
+  "reproduced_raw_root_counts": true,
+  "split_by_run": true,
+  "heldout_runs": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "traditional_method": {
+    "method": "s02b_global_template_timewalk",
+    "sigma68_ns": 1.6877998733857371,
+    "ci": [
+      1.499462849857257,
+      1.9776744994742212
+    ],
+    "note": "Best fold-local traditional CFD/OF/template-family baseline."
+  },
+  "winner": {
+    "method": "hgb_full",
+    "family": "ml",
+    "sigma68_ns": 1.1628405889181714,
+    "ci": [
+      1.1240600339113274,
+      1.2104513805799981
+    ],
+    "delta_vs_traditional_ns": -0.5249592844675659,
+    "delta_ci": [
+      -0.8269189565566175,
+      -0.32127615336343784
+    ]
+  },
+  "early_sample_ablation": {
+    "best_full": {
+      "method": "hgb_full",
+      "sigma68_ns": 1.1628405889181714
+    },
+    "best_no_samples_0_3": {
+      "method": "hgb_no_samples_0_3",
+      "sigma68_ns": 1.1633236907505862
+    },
+    "best_only_samples_0_3": {
+      "method": "hgb_only_samples_0_3",
+      "sigma68_ns": 1.1804084115094393
+    }
+  },
+  "controls": {
+    "shuffled_target_failures": 6,
+    "run_family_control_best_sigma68_ns": 1.2001145870086993,
+    "max_train_heldout_event_overlap": 0
+  },
+  "uncertainty_calibration": {
+    "best_pull_width_method": "early_late_gated_no_samples_0_3",
+    "best_pull_width68_empirical": 0.8330152494515044,
+    "median_pull_width68_empirical": 0.6208166352621314
+  },
+  "verdict": "Samples 0-3 are not required for the best residual correction; gains persist when they are removed, so the early samples are mainly nuisance/run-structure diagnostics rather than a causal timing source. 6 shuffled-target checks beat their nominal model and are flagged as stability caveats.",
+  "next_tickets": [
+    "P03g: blinded pedestal-proxy residualization of samples 0-3 before repeating the P03f multimodel ablation"
+  ],
+  "git_commit": "e911cfc59b772e150beb5dd2c080b020066a3bd4",
+  "claim_command": "tn-ticket claim testbeam-laptop-2 --project testbeam",
+  "claim_note": "The single tn-ticket claim invocation returned null due to a local CLI empty-existing-claim bug; issue #2389 was claimed by equivalent gh label swap without running claim again.",
+  "ticket_issue": 2389,
+  "artifacts": {
+    "report": "reports/2389__p03_deep_timing_sigma/REPORT.md",
+    "result": "reports/2389__p03_deep_timing_sigma/result.json",
+    "manifest": "reports/2389__p03_deep_timing_sigma/manifest.json",
+    "pooled_summary": "reports/2389__p03_deep_timing_sigma/pooled_run_block_summary.csv",
+    "uncertainty_calibration": "reports/2389__p03_deep_timing_sigma/uncertainty_calibration.csv",
+    "traditional_s02_baselines": "reports/2389__p03_deep_timing_sigma/traditional_s02_baselines.csv"
+  },
+  "traditional_s02_baselines": [
+    {
+      "method": "s02b_global_template_timewalk",
+      "family": "traditional",
+      "n_heldout_runs": 7,
+      "n_pair_residuals": 11460,
+      "sigma68_ns": 1.6877998733857371,
+      "ci_low": 1.499462849857257,
+      "ci_high": 1.9776744994742212,
+      "delta_vs_s02b_template_timewalk_ns": 0.0
+    },
+    {
+      "method": "template_phase",
+      "family": "traditional",
+      "n_heldout_runs": 7,
+      "n_pair_residuals": 11460,
+      "sigma68_ns": 2.7364977403872874,
+      "ci_low": 2.6808109129566127,
+      "ci_high": 2.964722528524863,
+      "delta_vs_s02b_template_timewalk_ns": 1.04869786700155
+    },
+    {
+      "method": "cfd20",
+      "family": "traditional",
+      "n_heldout_runs": 7,
+      "n_pair_residuals": 11442,
+      "sigma68_ns": 3.148394817330977,
+      "ci_low": 3.0263643518972496,
+      "ci_high": 3.273244993760524,
+      "delta_vs_s02b_template_timewalk_ns": 1.4605949439452397
+    },
+    {
+      "method": "cfd10",
+      "family": "traditional",
+      "n_heldout_runs": 7,
+      "n_pair_residuals": 11418,
+      "sigma68_ns": 3.224020186361681,
+      "ci_low": 3.1262364922409955,
+      "ci_high": 3.316130173003368,
+      "delta_vs_s02b_template_timewalk_ns": 1.5362203129759442
+    },
+    {
+      "method": "cfd30",
+      "family": "traditional",
+      "n_heldout_runs": 7,
+      "n_pair_residuals": 11448,
+      "sigma68_ns": 3.247221160515817,
+      "ci_low": 3.092121612399728,
+      "ci_high": 3.3869396917212486,
+      "delta_vs_s02b_template_timewalk_ns": 1.55942128713008
+    },
+    {
+      "method": "optimal_filter_4_12",
+      "family": "traditional",
+      "n_heldout_runs": 7,
+      "n_pair_residuals": 11460,
+      "sigma68_ns": 3.367108636654955,
+      "ci_low": 3.2715353993464555,
+      "ci_high": 3.4789379063637056,
+      "delta_vs_s02b_template_timewalk_ns": 1.6793087632692176
+    },
+    {
+      "method": "cfd40",
+      "family": "traditional",
+      "n_heldout_runs": 7,
+      "n_pair_residuals": 11448,
+      "sigma68_ns": 3.408615814996621,
+      "ci_low": 3.2418782180541705,
+      "ci_high": 3.53768354939199,
+      "delta_vs_s02b_template_timewalk_ns": 1.720815941610884
+    },
+    {
+      "method": "optimal_filter_1_9",
+      "family": "traditional",
+      "n_heldout_runs": 7,
+      "n_pair_residuals": 11460,
+      "sigma68_ns": 3.4140179936539603,
+      "ci_low": 3.3180430985872142,
+      "ci_high": 3.5420375210413493,
+      "delta_vs_s02b_template_timewalk_ns": 1.726218120268223
+    },
+    {
+      "method": "optimal_filter_3_11",
+      "family": "traditional",
+      "n_heldout_runs": 7,
+      "n_pair_residuals": 11460,
+      "sigma68_ns": 3.4378252546537875,
+      "ci_low": 3.334305292845996,
+      "ci_high": 3.543531576102513,
+      "delta_vs_s02b_template_timewalk_ns": 1.7500253812680502
+    },
+    {
+      "method": "optimal_filter_2_10",
+      "family": "traditional",
+      "n_heldout_runs": 7,
+      "n_pair_residuals": 11460,
+      "sigma68_ns": 3.459946246459882,
+      "ci_low": 3.3576856158560187,
+      "ci_high": 3.579063219237073,
+      "delta_vs_s02b_template_timewalk_ns": 1.7721463730741445
+    },
+    {
+      "method": "cfd50",
+      "family": "traditional",
+      "n_heldout_runs": 7,
+      "n_pair_residuals": 11451,
+      "sigma68_ns": 3.5980733467067125,
+      "ci_low": 3.437209152014474,
+      "ci_high": 3.746613549606375,
+      "delta_vs_s02b_template_timewalk_ns": 1.9102734733209752
+    },
+    {
+      "method": "leading_edge_500adc",
+      "family": "traditional",
+      "n_heldout_runs": 7,
+      "n_pair_residuals": 11448,
+      "sigma68_ns": 4.166564777023639,
+      "ci_low": 3.893188419656344,
+      "ci_high": 4.417033442173864,
+      "delta_vs_s02b_template_timewalk_ns": 2.4787649036379023
+    }
+  ]
+}

@@ -261,11 +261,14 @@ def _pid_mc_validation(root: Path) -> tuple[Figure, pd.DataFrame]:
     folds = counts.get("pid_oof_auc_5fold")
     if not isinstance(folds, list) or len(folds) != 5:
         raise ValueError("clusterA pid_oof_auc_5fold must contain five values")
-    fold_values = [
-        _finite(value, label=f"PID fold {index}") for index, value in enumerate(folds, start=1)
-    ]
+    fold_values = []
+    fold_indices = []
+    for index, value in enumerate(folds, start=1):
+        if isinstance(value, (int, float)) and math.isfinite(value):
+            fold_values.append(_finite(value, label=f"PID fold {index}"))
+            fold_indices.append(index)
     full_auc = _finite(counts.get("pid_full_auc"), label="PID full AUC")
-    table = pd.DataFrame({"fold": np.arange(1, 6), "auc": fold_values})
+    table = pd.DataFrame({"fold": fold_indices, "auc": fold_values})
     table["full_auc"] = full_auc
 
     spec = SPECS_BY_ID["FIG-WIKI-004"]

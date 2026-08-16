@@ -25,7 +25,6 @@ except ImportError as e:
 # Try to import uproot for tree creation
 try:
     import uproot
-    import uproot.write
 except ImportError as e:
     print(f"Missing uproot: {e}", file=sys.stderr)
     sys.exit(2)

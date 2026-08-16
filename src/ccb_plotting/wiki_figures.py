@@ -861,7 +861,7 @@ def build_all(repo_root: Path, output_dir: Path) -> dict[str, Any]:
             )
 
     manifest = {
-        "schema": "ccb-paper-grade-wiki-figures/1",
+        "schema": "ccb-paper-grade-wiki-figures/2",
         "evidence_policy": "NO_HAND_ENTERED_HEADLINES_FAIL_CLOSED_SOURCE_TABLE_PER_FIGURE",
         "repository_head": os.environ.get("CCB_SOURCE_COMMIT"),
         "figure_count": len(records),

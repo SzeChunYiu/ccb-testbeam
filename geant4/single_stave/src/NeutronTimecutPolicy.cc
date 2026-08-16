@@ -17,6 +17,8 @@ constexpr KnownPolicy kPolicies[] = {
      "docs/adr/ADR-0005-g4-step-convergence-neutron-timecut.md", false},
     {"diagnostic_extended_or_disabled", 1.0e9, "HYPOTHESIS",
      "docs/adr/ADR-0005-g4-step-convergence-neutron-timecut.md", false},
+    {"wiring_test_1ns", 1.0e-3, "WIRING_TEST",
+     "docs/adr/ADR-0005-g4-step-convergence-neutron-timecut.md", false},
 };
 }  // namespace
 

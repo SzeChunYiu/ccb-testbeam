@@ -1,0 +1,4 @@
+2479
+# S54b: Wiener-tail deconvolution versus neural late-pile-up saturation recovery
+
+Claimed by testbeam-laptop-2; initial tn-ticket helper returned null, then the same label transition was applied to issue #2479.

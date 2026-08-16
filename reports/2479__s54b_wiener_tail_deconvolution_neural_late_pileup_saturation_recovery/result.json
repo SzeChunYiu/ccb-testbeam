@@ -1,0 +1,105 @@
+{
+  "ticket_id": "2479",
+  "github_issue": 2479,
+  "project": "testbeam",
+  "worker": "testbeam-laptop-2",
+  "title": "S54b: Wiener-tail deconvolution versus neural late-pile-up saturation recovery",
+  "status": "complete",
+  "claim_command": "tn-ticket claim testbeam-laptop-2 --project testbeam",
+  "claim_note": "The helper command was run once and returned null; issue #2479 was then claimed by applying the intended factory:open to factory:claimed plus worker label transition.",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56
+    ],
+    "heldout_runs": [
+      50,
+      57,
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "bootstrap": "held-out source_run percentile 95% CI",
+    "bootstrap_replicates": 180,
+    "negative_control": "clean single-pulse controls with matched source-run distribution",
+    "strata": [
+      "delta_t",
+      "clipped/saturated proxy",
+      "pedestal/false split",
+      "deposited-energy proxy",
+      "PID/stave proxy"
+    ]
+  },
+  "required_method_coverage": {
+    "strong_traditional": "wiener_tail_deconvolution_traditional",
+    "traditional_template": "two_pulse_template_likelihood_traditional",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "transformer_encoder": "tiny_sequence_transformer",
+    "new_architecture": "causal_window_transformer_new",
+    "new_hybrid_architecture": "template_residual_boosted_stack_new"
+  },
+  "winner": {
+    "name": "gradient_boosted_trees",
+    "criterion": "minimum S54b composite late-pileup saturation recovery score with run-block bootstrap CIs",
+    "winner_score": 1.1931936195779462,
+    "late_pileup_delay_sigma68_ns": 8.973723692114234,
+    "late_pileup_delay_sigma68_ci95": [
+      8.39945053567856,
+      9.811064109345233
+    ],
+    "saturated_sample_energy_recovery_sigma68": 0.04303253586275821,
+    "saturated_sample_energy_recovery_sigma68_ci95": [
+      0.02787973222323673,
+      0.06225496722196671
+    ],
+    "tail_residual_sigma68": 0.06343667995877658,
+    "failure_tail_rate": 0.2653061224489796,
+    "false_split_rate": 0.2193877551020408
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "endpoint_metrics_ci": "endpoint_metrics_ci.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv",
+    "ablation_window_metrics": "ablation_window_metrics.csv",
+    "ablation_stress_slices": "ablation_stress_slices.csv"
+  },
+  "novel_tickets_appended": [],
+  "caveats": [
+    "Truth labels come from controlled injections into raw-ROOT-derived clean pulses.",
+    "Saturation is a high summed-amplitude proxy, not a hardware saturation flag.",
+    "PID behavior is represented by stave-conditioned energy-boundary proxies.",
+    "The 18-sample waveform imposes a sampling floor on sub-sample deconvolution."
+  ]
+}

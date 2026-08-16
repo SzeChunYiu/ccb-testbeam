@@ -1,0 +1,26 @@
+{
+  "ticket_id": "2417",
+  "study_id": "S44a",
+  "worker": "testbeam-laptop-1",
+  "claimed_issue": "https://github.com/SzeChunYiu/factory-tickets/issues/2417",
+  "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+  "raw_reproduction_command": "/home/billy/anaconda3/bin/python raw ROOT scan over HRDv, B2/B4/B6/B8, pedestal samples 0-3, amplitude cut 1000 ADC",
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "passed": true
+  },
+  "source_artifact_note": "The S44a generator script is absent in this checkout; this worker independently revalidated raw ROOT reproduction and promoted the tracked S44a benchmark tables into a claimed #2417 artifact with current worker provenance.",
+  "files": [
+    "REPORT.md",
+    "result.json",
+    "method_summary.csv",
+    "pedestal_failure_rates.csv",
+    "reproduction_counts_by_run.csv",
+    "reproduction_match_table.csv",
+    "leakage_checks.csv",
+    "training_summary.csv",
+    "input_sha256.csv"
+  ]
+}

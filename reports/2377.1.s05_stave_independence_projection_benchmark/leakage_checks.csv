@@ -1,0 +1,8 @@
+check,value,flag
+forbidden_feature_overlap,,False
+train_heldout_run_overlap,0.0,False
+nominal_width_minus_shuffled_control_ns,0.521002631368435,True
+nominal_width_minus_pool_label_control_ns,-0.8475785978730279,False
+nominal_cov_minus_waveform_only_control_ns2,9.112355374934765,True
+random_row_split_r2,0.9378601081946122,False
+group_cv_ridge_rmse_ns,10.076830355003562,False

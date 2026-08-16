@@ -1,0 +1,38 @@
+{
+  "ticket_id": "2519",
+  "study": "S60a",
+  "worker": "testbeam-laptop-4",
+  "command": "scripts/ticket_2519_s60a_template_residual_pulse_shape_timing_atlas.py --config /home/billy/.tb-workers/testbeam-laptop-4/configs/ticket_2519_s60a_template_residual_pulse_shape_timing_atlas.json",
+  "script": "scripts/ticket_2501_s55a_phase_conditioned_timing.py",
+  "config": "/home/billy/.tb-workers/testbeam-laptop-4/configs/ticket_2519_s60a_template_residual_pulse_shape_timing_atlas.json",
+  "git_commit": "cec9edc28257e0699c70c17fa9b2e8d806a3d42a",
+  "python": "3.11.14",
+  "packages": {
+    "uproot": "5.6.9",
+    "numpy": "2.4.6",
+    "pandas": "3.0.5",
+    "torch": "2.13.0+cpu"
+  },
+  "raw_root_dir": "data/root/root",
+  "input_file_count": 33,
+  "reproduction_passed": true,
+  "outputs": {
+    "REPORT.md": "df07fd212a43574cd135f0aefe3930eefa57346f1d3dc752f2a1dc28b62c52ee",
+    "claimed_ticket.txt": "f9a3b50803f779219b78973d56b0b78ae9b27e29202055bc14689ef04d71a22c",
+    "claimed_ticket_body.txt": "ea51edba8ded9844e8e4771f4aac2d8367cd2a58914284dbc929afb22b7d0ee5",
+    "heldout_pair_residuals.csv": "de89977d2f81e93179857b7d42a5eca89616426a58798a1c64eea3a192832852",
+    "input_sha256.csv": "cd3f048457d7f847fe9caec1fcb36352b90c9e8595300b7193a3575afcfec2ce",
+    "leakage_checks.csv": "17b0ae0b3ed919a8bce58bc69bbe12f83473b930f4a6f3606cb0c25917fcb44a",
+    "method_summary.csv": "dcc8781cdaee5d67a0d553bd655d9ffb2d2531f2ed471d45f8bcba4d18ac6374",
+    "pretrigger_pedestal_window_ablation.csv": "a14e680d08e9ce85d3b04014e1db8b24eb9f9d376aaa5167a9428af6721407e6",
+    "pretrigger_pedestal_window_counts_by_run.csv": "06bf2bb5029bc412fd69ec1b69590564e1dc248f4289ef8ba8df4335a4ea4b9b",
+    "reproduction_counts_by_run.csv": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+    "reproduction_match_table.csv": "e70f583e1fd72a6ff544cbf9253ee1f265c694da1d93ee26ada9f644caef0755",
+    "result.json": "a2214a2fb3e20057f984a9621c62452de7ffd311745c304fa5b2c44990b6cd23",
+    "saturation_mask_ablation.csv": "6aee36bcfee7de316a3e4fa4778a49c9b108609d4e690e26ac9c05517b0594b2",
+    "stratified_errors.csv": "e64e490a1a10f378c2111131e37fd92d20ed854aace6afa5d14950498cacba29",
+    "tail_fraction_shape_cluster_atlas.csv": "a8d7a4dbb980df645a319f0edb70d2c593145206048537638a0b370cbf1d6f02",
+    "training_summary.csv": "3143e6c5421b7262d8cd9da9cd0efb1826fa56fa94cafdca50fc3d8bcb913255"
+  },
+  "postprocess_script": "scripts/ticket_2519_postprocess_atlas_diagnostics.py"
+}

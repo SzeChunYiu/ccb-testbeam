@@ -1,0 +1,92 @@
+{
+  "ticket_id": "2483",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-3",
+  "title": "S55b: Censored Landau-Gaussian energy fit versus neural saturation recovery",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-3 --project testbeam",
+  "claim_recovery_note": "The required claim command was run once and returned malformed null output; issue #2483 was recovered by applying the same factory:open to factory:claimed label transition without rerunning claim.",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "bootstrap": "held-out run-block percentile 95% CI",
+    "bootstrap_replicates": 500,
+    "negative_control": "clean single-pulse controls with matched source-run distribution",
+    "winner_score": "energy_fractional_sigma68 + 0.6*abs(saturation_onset_bias) + 0.015*time_sigma68_ns + 0.04*abs(calibration_slope-1) + 0.05*pileup_miss_rate + 0.05*false_split_rate + 0.12*(1-pid_macro_f1)"
+  },
+  "required_method_coverage": {
+    "traditional": "two_pulse_template_cfd_baseline",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "transformer": "tiny_sequence_transformer",
+    "new_architecture": "template_residual_boosted_stack_new"
+  },
+  "winner": {
+    "name": "template_residual_boosted_stack_new",
+    "criterion": "minimum registered censored-energy/PID/calibration score with run-block bootstrap CIs",
+    "winner_score": 0.2749174066205896,
+    "energy_fractional_sigma68": 0.062213372204218714,
+    "energy_fractional_sigma68_ci95": [
+      0.060663605984917476,
+      0.07272382548267622
+    ],
+    "saturation_onset_bias": -0.04138932315237094,
+    "saturation_onset_bias_ci95": [
+      -0.0644529065585376,
+      0.004488245278959221
+    ],
+    "pid_macro_f1": 0.6357443390525337,
+    "pid_auc": 0.752173207759616,
+    "calibration_slope": 0.9334928286375013,
+    "time_sigma68_ns": 7.757859693958935,
+    "pileup_miss_rate": 0.3157894736842105,
+    "false_split_rate": 0.1868421052631579
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "claimed_ticket_body": "claimed_ticket_body.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv"
+  },
+  "novel_tickets_appended": [],
+  "caveats": [
+    "Truth comes from controlled injections into raw-ROOT-derived clean pulses.",
+    "Saturation is represented by an amplitude-ceiling proxy rather than electronics saturation flags.",
+    "PID is a stave/energy macro proxy rather than external particle truth.",
+    "Bootstrap CIs resample held-out runs and should be read as run-transfer intervals."
+  ]
+}

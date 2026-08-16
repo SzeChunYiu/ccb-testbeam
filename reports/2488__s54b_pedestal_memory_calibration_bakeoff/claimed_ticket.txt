@@ -1,0 +1,15 @@
+manual_claim_issue: 2488
+manual_claim_command: gh issue edit 2488 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-1 --remove-label factory:open
+claim_helper_command: tn-ticket claim testbeam-laptop-1 --project testbeam
+
+# S54b: pedestal-memory calibration bakeoff for energy timing and PID stability
+
+Academic-grade study: measure how pedestal drift and baseline memory propagate into pulse timing, charge/energy calibration, pile-up tagging, saturation flags, and PID operating points under run-held-out and stave-held-out transfer.
+
+Traditional method: rolling pedestal subtraction, AR(1)/state-space baseline model, GLS energy calibration, and template residual cuts with explicit time-walk and saturation terms.
+
+ML/NN comparison: ridge regression on pedestal and pulse-shape summaries, gradient-boosted trees for calibrated energy/PID, MLP multitask heads, 1D-CNN waveform encoders, and a masked waveform transformer where event support is adequate.
+
+Metrics: pedestal residual bias, energy scale/resolution, timing residual sigma68, PID AUC/AP and fixed-purity efficiency, pile-up false-positive rate, and saturation-tag calibration. Provide run-block and bootstrap 95% CIs plus method-minus-traditional deltas.
+
+Pulse-understanding target: determine whether learned models correct physical baseline memory or exploit nuisance run structure, and identify where pedestal state changes pulse shape, timing, energy, and PID conclusions.

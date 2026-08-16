@@ -171,6 +171,42 @@ def infer_termination(last_observed_layer, ekin_last_mev, *, n_b_layers):
     return "censored"
 
 
+def bootstrap_enter_fractions(records, n_boot=1000, seed=1046, level=68):
+    """Event-level bootstrap over unique-track (H2) entering-species fractions.
+
+    The MC event is the sampling unit; resampling events with replacement
+    propagates generator-level statistical uncertainty into per-species
+    entering fractions for each arm.
+    """
+    rng = np.random.default_rng(seed)
+    out = {}
+    for arm in ("B", "A"):
+        ev = [r.get(arm, {}) for r in records if r.get(arm)]
+        if not ev:
+            continue
+        species = sorted({lab for d in ev for lab in d})
+        mat = np.array([[float(d.get(lab, 0.0)) for lab in species] for d in ev])
+        n = len(ev)
+        idx = rng.integers(0, n, size=(n_boot, n))
+        sums = mat[idx].sum(axis=1)
+        tot = sums.sum(axis=1, keepdims=True)
+        safe = np.where(tot > 0, tot, 1.0)
+        fr = np.where(tot > 0, sums / safe, np.nan)
+        alpha = (100.0 - level) / 2.0
+        lo = np.nanpercentile(fr, alpha, axis=0)
+        hi = np.nanpercentile(fr, 100.0 - alpha, axis=0)
+        pt = mat.sum(axis=0) / (mat.sum() or 1.0)
+        out[arm] = {
+            "n_events_bootstrapped": int(n),
+            "species": species,
+            "point_fraction": {lab: round(float(v), 6)
+                               for lab, v in zip(species, pt)},
+            f"ci{level}": {lab: [round(float(a), 6), round(float(b), 6)]
+                           for lab, a, b in zip(species, lo, hi)},
+        }
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--mc", required=True, help="MC ROOT file (tree 'hibeam')")
@@ -222,10 +258,19 @@ def main():
         "I": {"n_events": 0,
               "B_layers": [new_layer_acc() for _ in range(NB_LAYERS)],
               "enterB_pid": {}, "enterA_pid": {},
+              # #1046 paper closure: H3 event-presence and H4 EDep-weighted
+              # estimators alongside H2; per-event H2 records feed the
+              # event-level bootstrap.
+              "enterB_pid_event": {}, "enterA_pid_event": {},
+              "enterB_pid_edep": {}, "enterA_pid_edep": {},
+              "enter_track_records": [],
               "tracks": new_track_acc()},
         "II": {"n_events": 0,
                "B_layers": [new_layer_acc() for _ in range(NB_LAYERS)],
                "enterB_pid": {}, "enterA_pid": {},
+               "enterB_pid_event": {}, "enterA_pid_event": {},
+               "enterB_pid_edep": {}, "enterA_pid_edep": {},
+               "enter_track_records": [],
                "tracks": new_track_acc()},
     }
 
@@ -305,6 +350,7 @@ def main():
                     all_event_weights.append(w_evt)
                 # #1046: unique-track (H2) for particle-flux fractions; raw
                 # records preserved separately as transport diagnostic.
+                evt_track_rec = {}
                 for arm, mask, key in (
                     ("B", firstB, "enterB_pid"),
                     ("A", firstA, "enterA_pid"),
@@ -328,6 +374,16 @@ def main():
                         S[raw_key] = {}
                     for lab, v in acc["record_counts"].items():
                         bump(S[raw_key], lab, v)
+                    # H3 event-presence and H4 EDep-contribution estimators.
+                    for lab, v in acc["event_presence"].items():
+                        S[f"{key}_event"][lab] = S[f"{key}_event"].get(lab, 0.0) + float(v)
+                    for lab, v in acc["edep_weights"].items():
+                        S[f"{key}_edep"][lab] = S[f"{key}_edep"].get(lab, 0.0) + float(v)
+                    for lab, v in acc["track_counts"].items():
+                        evt_track_rec[arm] = evt_track_rec.get(arm, {})
+                        evt_track_rec[arm][lab] = evt_track_rec[arm].get(lab, 0.0) + float(v)
+                if evt_track_rec:
+                    S["enter_track_records"].append(evt_track_rec)
 
                 # Immutable generator-event identity within this MC file (#1164).
                 event_cluster_id = int(n_total)
@@ -594,6 +650,47 @@ def main():
             "first_layer_record_fraction_A": {
                 k: round(v / (sum(S.get("enterA_pid_records", {}).values()) or 1), 4)
                 for k, v in sorted(S.get("enterA_pid_records", {}).items(), key=lambda kv: -kv[1])
+            },
+            # #1046 H3: event-presence composition (probability an accepted
+            # event contains the species; fractions sum-normalized).
+            "enter_B_pid_fraction_event_presence": {
+                "statistical_unit": "event_presence",
+                "denominator": "sum of species event-presence counts (weighted)",
+                "fractions": {k: round(v / (sum(S["enterB_pid_event"].values()) or 1), 4)
+                              for k, v in sorted(S["enterB_pid_event"].items(), key=lambda kv: -kv[1])},
+                "counts": dict(S["enterB_pid_event"]),
+            },
+            "enter_A_pid_fraction_event_presence": {
+                "statistical_unit": "event_presence",
+                "denominator": "sum of species event-presence counts (weighted)",
+                "fractions": {k: round(v / (sum(S["enterA_pid_event"].values()) or 1), 4)
+                              for k, v in sorted(S["enterA_pid_event"].items(), key=lambda kv: -kv[1])},
+                "counts": dict(S["enterA_pid_event"]),
+            },
+            # #1046 H4: deposited-energy contribution composition.
+            "enter_B_pid_fraction_edep": {
+                "statistical_unit": "deposited_energy",
+                "denominator": "first-layer EDep summed by species (weighted)",
+                "fractions": {k: round(v / (sum(S["enterB_pid_edep"].values()) or 1), 4)
+                              for k, v in sorted(S["enterB_pid_edep"].items(), key=lambda kv: -kv[1])},
+                "counts": dict(S["enterB_pid_edep"]),
+            },
+            "enter_A_pid_fraction_edep": {
+                "statistical_unit": "deposited_energy",
+                "denominator": "first-layer EDep summed by species (weighted)",
+                "fractions": {k: round(v / (sum(S["enterA_pid_edep"].values()) or 1), 4)
+                              for k, v in sorted(S["enterA_pid_edep"].items(), key=lambda kv: -kv[1])},
+                "counts": dict(S["enterA_pid_edep"]),
+            },
+            # #1046: event-level bootstrap CI on the H2 particle-flux
+            # fractions (generator-level statistical uncertainty).
+            "enter_pid_bootstrap": {
+                "method": "event_level_bootstrap",
+                "estimator": "unique_truth_track (H2)",
+                "n_boot": 1000,
+                "seed": 1046,
+                "ci_level": 68,
+                **bootstrap_enter_fractions(S["enter_track_records"]),
             },
             "B_layers": [layer_summary(S["B_layers"][l], args.edep_large_mev)
                          for l in range(NB_LAYERS)],

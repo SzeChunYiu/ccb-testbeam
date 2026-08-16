@@ -162,3 +162,44 @@ Both excesses are positive and large → **the effect is real in data, and the M
 ---
 
 *Reproduce:* `sbatch geant4/jobs/mc01_trigger_split.sbatch` on LUNARC (uses `packages/hibeam_env` python, reads `geant4/data/output_krakow_1M.root` + the S00 selected-pulse table).
+
+
+---
+
+## Addendum 2026-08-16 -- Corrected entering-species estimators (#1046; supersedes the species-fraction numbers in this report)
+
+Defect being closed: the species fractions in the body of this report did not
+name their estimator (hit-record vs unique-track vs event-presence vs
+deposited-energy counting), and the headline narrative treated a single
+ambiguous "deuteron fraction" as a well-defined observable.
+
+Corrected result -- regenerated 2M campaign `cmc_2m_regenerated_20260814`
+(unique truth-TrackID counting, event-level bootstrap n=1000, seed 1046, 68%
+CI; `reports/issue_1046_entering_species/cmc_2m_regenerated_20260814/mc_trigger_split_summary.json`):
+
+| Estimator (B arm, first layer) | Sample I proxy (coinc, n=1106) | Sample II proxy (enterB, n=14112) |
+|---|---|---|
+| H2 unique-track flux, d | 0.593 [0.577, 0.607] | 0.173 [0.170, 0.176] |
+| H2 unique-track flux, p | 0.282 [0.272, 0.294] | 0.734 [0.730, 0.737] |
+| H3 event-presence, d | 0.620 | 0.176 |
+| H4 deposited-energy share, d | 0.855 | 0.420 |
+
+Corrected reading of the headline claim ("coincidence trigger selects events
+where a deuteron stops in the first B layer while a proton goes into A"):
+
+- SURVIVES, weakened and made precise: the coincidence-like population is
+  deuteron-ENRICHED in the first B layer by track flux (59.3%) and
+  deuteron-DOMINATED by deposited-energy share (85.5%); the
+  entering-any-layer population is proton-dominated by track flux (73.4%).
+- The A-arm composition is proton-led in both populations (p ~ 0.65,
+  d ~ 0.24-0.26) and carries negligible discriminating power between them.
+- Estimator choice moves the sample-I deuteron fraction by 26 percentage
+  points (H2 0.593 -> H4 0.855): the three compositions answer different
+  questions and are reported separately; none substitutes for another.
+- All numbers remain MC_TRIGGER_PROXY-gated (#1045 open; cross-section
+  uncertainty contract #1179 not propagated): they describe the MC transport
+  model under the software coincidence proxy, not a validated
+  hardware-trigger composition.
+
+Provenance: `reports/issue_1046_entering_species/provenance.json` (input
+sha256 0d8c8275..., seed 3500420, MODE_DIRECT_UNIT, producer sha-bound).

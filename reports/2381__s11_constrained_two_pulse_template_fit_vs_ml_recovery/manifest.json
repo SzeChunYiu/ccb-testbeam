@@ -1,0 +1,22 @@
+{
+  "ticket_id": "2381",
+  "git_commit": "68374937a0026eba71394446c496390ef51afa18",
+  "command": "/home/billy/.cache/uv/builds-v0/.tmp9099Rz/bin/python scripts/ticket_2381_s11_two_pulse_template_fit_vs_ml_recovery.py",
+  "runtime_seconds": 41.92485022544861,
+  "python": "3.13.12 (main, Feb  3 2026, 22:52:12) [Clang 21.1.4 ]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+  "outputs_sha256": {
+    "REPORT.md": "2720aa4a4cfb1de5ae81e94f321c2cb2d96bd867501afdc353e7e2c592be14c4",
+    "claimed_ticket.txt": "5ca650349a3d801c88ad779c79587069c1e5e099dd7164ae2746be3eae6baabb",
+    "event_predictions.csv": "0b1034457d2f71b36f904ad63c06cb5c40170e1bc6e986a14d7d53f86a0a0bd4",
+    "input_sha256.csv": "cc17da0dcd3e7e732b81a17f3c35833f026fdec912538d28d7d71b9af71a46f6",
+    "method_metrics.csv": "5240747a10e859f82b3c09a4465057d3466f78cd292576b7bdb2d8913a252137",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "8c61ef7db7e9d14ab7c8d65b3f726658152c5b6182cf9f360cefda096961cea7",
+    "run_heldout_metrics.csv": "711e32f2b1e53606f27fb452b537ec1ba860bb5d37e3ee656852f4e2b05933f7",
+    "strata_metrics.csv": "ebc325dc4117b765a356046462b74f8f57ec678e9919e880e7fa984c9f64d7ed",
+    "template_summary.csv": "70811c144799226d495253dcf99ec44c6cea6b9a7de91249cd5ea72526581b13",
+    "winner_ranked_metrics.csv": "b738fdf2df81fe46bd3240fb46fbaa97a8b35adaf2a68993970d03c4e3596b84"
+  },
+  "issue_number": 2381
+}

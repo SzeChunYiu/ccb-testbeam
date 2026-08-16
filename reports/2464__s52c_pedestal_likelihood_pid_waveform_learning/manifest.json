@@ -1,0 +1,77 @@
+{
+  "ticket_id": "2464",
+  "study_id": "s52c_pedestal_likelihood_pid_waveform_learning",
+  "generated_at_unix": 1786892953.6412654,
+  "artifacts": [
+    {
+      "path": "reports/2464__s52c_pedestal_likelihood_pid_waveform_learning/REPORT.md",
+      "sha256": "6d4dd5b5d7f899e9eb5a533fdb7fbd8eeb3dc9ac034bc66c62e9efd2e21f9670",
+      "bytes": 10678
+    },
+    {
+      "path": "reports/2464__s52c_pedestal_likelihood_pid_waveform_learning/benchmark_sample_meta.csv",
+      "sha256": "083057179c8e6fa2ee2cab098ee58214e4ff1033acd408641b23222a7ffed898",
+      "bytes": 4779787
+    },
+    {
+      "path": "reports/2464__s52c_pedestal_likelihood_pid_waveform_learning/claimed_ticket.txt",
+      "sha256": "662831d149c6e496c5357436820ec5575a3c9a4c0fd5172a746fba455f831a46",
+      "bytes": 519
+    },
+    {
+      "path": "reports/2464__s52c_pedestal_likelihood_pid_waveform_learning/feature_families.csv",
+      "sha256": "2d9407638c9cbf98002846025d8725ecb2ef72055abfaa6f829feda81a96c6ad",
+      "bytes": 618
+    },
+    {
+      "path": "reports/2464__s52c_pedestal_likelihood_pid_waveform_learning/heldout_per_run_metrics.csv",
+      "sha256": "16d2609ed200750dc4ff87d827c69401f634e3e114dff8b550a3b7b4c9e538f5",
+      "bytes": 3946
+    },
+    {
+      "path": "reports/2464__s52c_pedestal_likelihood_pid_waveform_learning/heldout_predictions.csv.gz",
+      "sha256": "ea4bd397e67d5793404b6093276ece7d219976bf8cd6ec784bd86fc80944f4c6",
+      "bytes": 2775242
+    },
+    {
+      "path": "reports/2464__s52c_pedestal_likelihood_pid_waveform_learning/input_sha256.csv",
+      "sha256": "a637520f923e4b88626ba6da9190d3b2f17bd43d49553bc9b2b63995626d188f",
+      "bytes": 4302
+    },
+    {
+      "path": "reports/2464__s52c_pedestal_likelihood_pid_waveform_learning/method_rmse_ci.png",
+      "sha256": "5f76449bef28d0ee1daf6263a3d0519ca0ca0974fa8c988391d30e3bc7769a65",
+      "bytes": 43566
+    },
+    {
+      "path": "reports/2464__s52c_pedestal_likelihood_pid_waveform_learning/method_summary.csv",
+      "sha256": "565689327630a0f3a5b6b018f0f79aa789a76b534e87417f850eed7ff0051031",
+      "bytes": 1410
+    },
+    {
+      "path": "reports/2464__s52c_pedestal_likelihood_pid_waveform_learning/pid_timing_pedestal_diagnostics.csv",
+      "sha256": "971f7578ca084cf3a76f97f6980192d8c1624fafd96bcf57937c673a64b885b2",
+      "bytes": 1901
+    },
+    {
+      "path": "reports/2464__s52c_pedestal_likelihood_pid_waveform_learning/reproduction_counts_by_run.csv",
+      "sha256": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+      "bytes": 1896
+    },
+    {
+      "path": "reports/2464__s52c_pedestal_likelihood_pid_waveform_learning/reproduction_match_table.csv",
+      "sha256": "30c27e630bc2f37a7e26cf4f3fac0ad2db556913c9a3725097ba16731535f2cf",
+      "bytes": 135
+    },
+    {
+      "path": "reports/2464__s52c_pedestal_likelihood_pid_waveform_learning/result.json",
+      "sha256": "b1c4c2bba215e147686158d852ba52ff7a07707c62bf0d99c0bfbba52da260c2",
+      "bytes": 3063
+    },
+    {
+      "path": "reports/2464__s52c_pedestal_likelihood_pid_waveform_learning/stratum_summary.csv",
+      "sha256": "e430c0b613ca43ecb3a80c7220c66a082d99f3861aeade51c54f6be48d29f8b3",
+      "bytes": 1980
+    }
+  ]
+}

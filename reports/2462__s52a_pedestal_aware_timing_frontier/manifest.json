@@ -1,0 +1,24 @@
+{
+  "ticket_id": "2462",
+  "study_id": "S52a",
+  "worker": "testbeam-laptop-1",
+  "config": "configs/ticket_2462_s52a_pedestal_aware_timing_frontier.json",
+  "base_script": "scripts/s35a_1784063447_849_4ac02d58_raw_pulse_onset_pedestal_timing_frontier.py",
+  "wrapper_script": "scripts/ticket_2462_s52a_pedestal_aware_timing_frontier.py",
+  "outputs_sha256": {
+    "REPORT.md": "81899ca6eba70bdd9f5999ad243fe1a1c739e834f8d0b5b5ac076d6038dc9711",
+    "ablations.csv": "1ee684dfa74bf340d35034df7ee479c04f8050ef26f5c2ab64b161a66ff9555f",
+    "benchmark_rows.csv.gz": "54c940744242499321c0608af46e0e17a7f53984636f8afccf036929285d37ee",
+    "by_run.csv": "52825e50cba3179f090e5662eea6efae616c897a6fea01bf2135415df9a8ca41",
+    "claimed_ticket.txt": "11814ba91f1da81caf204064637597559b9a04890abb3684cc464a9520fd1db3",
+    "frontier_axis_summary.csv": "199d8e49de7ce45cc38ad9ba130c9e5701a1963ff499cce8774de3201b4d8636",
+    "input_sha256.csv": "9d1630c332196186416292bc75bba0238b8007fd1975f90e78916995e3b486e1",
+    "method_deltas.csv": "c34140ada7702cd855e369956f57fd19b185b85fbcbc3688bfb31456678166e3",
+    "metrics.csv": "04393285b228ec866d0202eb5c6f4928d29ba2a56a00d49af3853462b1e5735f",
+    "predictions.csv.gz": "ce7ddae24cd74bbf53c64a0ae7832c44a74990161936b7cd1999f62891c0d171",
+    "reproduction.csv": "962a281223ae2d6280d815498dfe7f7042b684acc1de55aa6fee4e305eb9fb24",
+    "result.json": "37bad9309e5bfeb337e53ca768d85afcd466b6673a8396c81338822e9040e170",
+    "run_family_summary.csv": "252cf2ce9fe289a9c3a6dedc8fa38dd42c689afe95d98863491b86a0cfc15262",
+    "strata.csv": "3af7ea324a748c2d3d3a0881104092167cd729cd3137ce54cfc1368830cf4566"
+  }
+}

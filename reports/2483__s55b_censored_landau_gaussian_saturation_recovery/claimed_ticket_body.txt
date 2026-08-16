@@ -1,0 +1,3 @@
+# S55b: Censored Landau-Gaussian energy fit versus neural saturation recovery
+
+Academic-grade study: deepen saturation understanding by treating clipped pulse peaks as censored observations and measuring recovery of deposited energy, pulse shape, and PID boundaries under pedestal drift. Compare traditional censored Landau-Gaussian/template likelihood fits against ridge, gradient-boosted trees, MLP, 1D-CNN, and transformer encoders for saturated waveform windows. Report bootstrap 95% CIs for energy resolution, saturation-onset bias, PID macro-F1/AUC, and calibration slope, with separate strata for pile-up, pedestal state, and clipping depth.

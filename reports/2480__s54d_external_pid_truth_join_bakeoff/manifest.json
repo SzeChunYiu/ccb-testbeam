@@ -1,0 +1,20 @@
+{
+  "ticket_id": "2480",
+  "git_commit": "30ffd0c257768d8a1e64f40e3306c256af5b3768",
+  "command": "python scripts/ticket_2480_s54d_external_pid_truth_join_bakeoff.py",
+  "runtime_seconds": 97.4160885810852,
+  "python": "3.13.12",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+  "outputs_sha256": {
+    "REPORT.md": "93cc3a19b5a6ab4a7fd5efefd728d317f8b0423e3908f79ad5044c687cb983e0",
+    "claimed_ticket.txt": "d3af7bf007431032d5991a53a6c03b156a8c986574bdb4c47a884c89ef04740f",
+    "event_predictions.csv": "6d4fb4c81a48e2f2bb56644e2551e20cbc2ea71bcbf96eb6d9f725ae13e54969",
+    "manifest.json": "53ba9813f82975cee3ca15c006e6c98b2f176c020084d2e5a4c142ead8fc57d2",
+    "method_metrics.csv": "38c2f35e703d5bbaefaa63acb7f3cf92ad50f4de75e41fe00384631f7b8f432c",
+    "reproduction_match_table.csv": "b2c75394ea0fb21ca2ed7531c9178a9544d97a1becb51d046e990178321c6dc9",
+    "result.json": "d54b78b1aca1fce7e4d776282fced5982d77ee779ca75c61bb5b73093500b450",
+    "run_heldout_metrics.csv": "114d6071acf65d6339e3069116f6d3e2b032cd0a52d9d8004bb72330d1454f65",
+    "strata_metrics.csv": "968f81b5c2ca050b92b2c4be5f2b96878687260c070dad1fe245aca3f73c746c",
+    "truth_join_audit.csv": "3291aeea8fdaa77a513920e4c693c4553e618f19e7943fd91f01a4d40ebdb2b6"
+  }
+}

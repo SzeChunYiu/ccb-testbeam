@@ -1,0 +1,13 @@
+claim_helper_command: tn-ticket claim testbeam-laptop-1 --project testbeam
+claim_helper_exit_code: 0
+claim_helper_stdout:
+null
+# null
+
+null
+claim_helper_note: helper returned the known null pseudo-ticket pattern; no worker:testbeam-laptop-1 claim label was created by the helper
+manual_claim_issue: 2462
+manual_claim_command: gh issue edit 2462 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-1 --remove-label factory:open
+manual_claim_evidence: issue #2462 labels include factory:claimed, project:testbeam, worker:testbeam-laptop-1
+done_command: tn-ticket done 2462
+#2462 S52a: Cross-correlation timing versus waveform ML for pedestal-aware pulse-shape drift

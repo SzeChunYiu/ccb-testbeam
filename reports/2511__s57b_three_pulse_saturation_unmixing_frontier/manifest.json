@@ -1,0 +1,23 @@
+{
+  "ticket_id": "2511",
+  "git_commit": "49e6d8ec20bba57f7218a2be8e361486515c170f",
+  "command": "/home/billy/anaconda3/bin/python scripts/ticket_2511_s57b_three_pulse_saturation_unmixing.py",
+  "runtime_seconds": 77.29109573364258,
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "outputs_sha256": {
+    "REPORT.md": "f6fc1f137982aea9609da848f4be934af0bd2ad26ffe3479d769709b5e87be14",
+    "claimed_ticket.txt": "9b33ea9b8cc564a52bc527f2ad3f81da2f0a47f3d19eb2db9f720743df6f6efa",
+    "endpoint_metrics_ci.csv": "67078159e5b8060921e84ad364b6c90500f8587a1bd5075a6723df649071d64f",
+    "event_predictions.csv": "ad10d5af772f7d6cb67f63aa775da14604a901953f34cf0136f0bfbe0cdc38f6",
+    "input_sha256.csv": "36aa4e53600b8b94767015cda3c647b5e671062254fe3eec9febf9e515f01367",
+    "method_metrics.csv": "3882bce2c4c38f45959932795d2188b28e2588ffcca8b44a47717070b332137e",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "5d5a8aca4207a30e2d5fe07704d4e4964d505e366b9a5d1159eae9a640068401",
+    "run_heldout_metrics.csv": "a36eeefd8047665c716bb4a6dd4a38318c395b1eeb01d0c3a93d8568b96e4137",
+    "strata_metrics.csv": "cecd69955e80bcc304a2d844b0298101e7c9e43d07e99b05eca530d1d995cfd3",
+    "template_summary.csv": "eca9592b05cf73d43c290f57231745f4d3949abede50e928ded39b460577385c",
+    "winner_ranked_metrics.csv": "2deac4ec15662488eaa00263b2ec798c17fc5f538f1ab7867235f40cafd9185b"
+  },
+  "postprocess_note": "S57b ticket metadata and three-pulse/censored-likelihood wording applied after reused S35b benchmark engine."
+}

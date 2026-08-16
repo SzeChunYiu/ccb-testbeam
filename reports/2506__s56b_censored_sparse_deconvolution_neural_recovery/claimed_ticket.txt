@@ -1,0 +1,12 @@
+claim_helper_command: tn-ticket claim testbeam-laptop-3 --project testbeam
+claim_helper_stderr:
+null
+claim_helper_stdout:
+# null
+
+null
+manual_claim_issue: 2506
+manual_claim_command: gh issue edit 2506 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-3 --remove-label factory:open
+manual_claim_evidence: issue #2506 labels include factory:claimed, project:testbeam, worker:testbeam-laptop-3
+done_command: tn-ticket done 2506
+#2506 S56b: Censored sparse deconvolution vs neural recovery for saturated pile-up energy

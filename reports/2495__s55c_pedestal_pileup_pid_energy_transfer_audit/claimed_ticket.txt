@@ -1,0 +1,15 @@
+2495
+# S55c: Pedestal-pileup PID boundary stability and energy transfer audit
+
+Question: test whether pedestal memory and unresolved pile-up shift PID
+boundaries or energy transfer functions after conventional correction,
+especially near low-amplitude and high-rate regimes.
+
+Traditional comparator: pedestal-subtracted charge ratios, CFD timing,
+DeltaE-E style cuts, and Huber-calibrated run offsets.
+
+Compare ridge, gradient-boosted trees, MLP, 1D-CNN, and tabular-plus-waveform
+transformer models where apt for PID, energy, timing, saturation flagging, and
+pile-up probability. Report stratified paired bootstrap 95% CIs, calibration
+curves, ECE, energy bias, timing res68, and counterfactual ablations for
+pedestal windows, pile-up masks, shape derivatives, and saturated bins.

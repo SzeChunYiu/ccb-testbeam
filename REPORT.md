@@ -132,4 +132,4 @@ MPLCONFIGDIR=/tmp/mpl-g4-05 /home/billy/anaconda3/bin/python scripts/g4_05_17812
 
 ## Ticket-System Note
 
-For this laptop-3 continuation, the required single command `tn-ticket claim testbeam-laptop-3 --project testbeam` was run exactly once. It returned the known null pseudo-ticket (`null`, `# null`, `null`) and did not leave an open `worker:testbeam-laptop-3` claimed issue in the backend. Because no numeric issue id was assigned, `tn-ticket done <id>` cannot be run truthfully for this continuation. The ticket-system defect is tracked upstream as factory ticket `#2440`.
+For this laptop-3 continuation, the required single command `tn-ticket claim testbeam-laptop-3 --project testbeam` was run exactly once. It returned the known null pseudo-ticket (`null`, `# null`, `null`) and did not leave an open `worker:testbeam-laptop-3` claimed issue in the backend. A closure attempt using the only emitted id, `tn-ticket done null`, failed with `invalid issue format: "null"`, confirming that no numeric issue id was available to close. The ticket-system defect is tracked upstream as factory ticket `#2440`.

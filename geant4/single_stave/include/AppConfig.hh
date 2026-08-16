@@ -64,6 +64,8 @@ struct AppConfig {
   std::string neutron_tracking_time_cut_status = "UNSET";
   std::string neutron_timecut_adr = "";
   bool neutron_timecut_claims_authorized = false;
+  // #1091 ladder: sparse time-resolved neutron/late-deposit ntuple.
+  bool neutron_diagnostics = false;
 
   double reflectivity_scale = 1.0;    // scales the TiO2 reflectivity table
   double attenuation_scale  = 1.0;    // DEPRECATED: use scintillator_absorption_scale

@@ -65,6 +65,7 @@ class RunAction : public G4UserRunAction {
 
   int nt_event_ = -1;   // per-event ntuple id
   int nt_photon_ = -1;  // per-photon ntuple id (calibration mode)
+  int nt_neutron_ = -1; // per-step neutron diagnostics ntuple (#1091)
   std::string optical_out_dir_;  // resolved dir for GPU input-photon npy
 };
 

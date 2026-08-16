@@ -43,7 +43,7 @@ OUTPUT_DIR = INPUT_DIR / "results"
 # Stave-to-channel mapping. Each stave is read out by TWO duplicate channels
 # (even/odd readout pair). The even map is canonical; the odd map is carried as
 # a duplicate-channel nuisance envelope (issues #954/#1383). The measured
-# polarity map (configs/channel_polarity_v2.json) applies to BOTH hypotheses.
+# polarity map (configs/channel_polarity_v1.json (v2 RETRACTED 2026-08-16, see its retraction block)) applies to BOTH hypotheses.
 STAVE_CHANNEL = {"B2": 0, "B4": 2, "B6": 4, "B8": 6}  # canonical (even)
 STAVE_CHANNEL_DUPLICATE = {"B2": 1, "B4": 3, "B6": 5, "B8": 7}  # odd duplicates
 CHANNEL_STAVE = {v: k for k, v in STAVE_CHANNEL.items()}

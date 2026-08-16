@@ -1,0 +1,137 @@
+{
+  "claim_command": "tn-ticket claim testbeam-laptop-3 --project testbeam",
+  "claim_repair_note": "Local tn-ticket returned null|null|null because empty existing claims are string-interpolated; issue #2420 was manually label-repaired without running claim a second time.",
+  "claimed_once": true,
+  "claimed_ticket": "2420\n# P11c: learned pedestal residual as a timing-tail nuisance\n\nUse the P11 learned-pedestal residual proxy in S02/S04 timing fits, split by run with paired bootstrap CIs, to test whether pedestal recoverability explains timing tails beyond amplitude and peak-time controls. Expected information gain: connects pedestal estimation quality to the physics timing endpoint rather than only to a reconstruction diagnostic.\n\nClaim note: `tn-ticket claim testbeam-laptop-3 --project testbeam` was run exactly once. A known empty-existing-claim formatting bug in the local `tn-ticket` script returned `null|null|null` and exited before applying labels; issue #2420 was then manually label-repaired to `factory:claimed` with `worker:testbeam-laptop-3` and `factory:open` removed.\n",
+  "deltas_vs_traditional": [
+    {
+      "ci_high_ns": -0.09511166704519111,
+      "ci_low_ns": -0.5630554811305791,
+      "delta_sigma68_vs_traditional_ns": -0.34403647376455493,
+      "method": "one_dimensional_cnn"
+    },
+    {
+      "ci_high_ns": -0.055217611911390505,
+      "ci_low_ns": -0.4916475814705108,
+      "delta_sigma68_vs_traditional_ns": -0.31149317097741225,
+      "method": "gated_cnn_residual"
+    },
+    {
+      "ci_high_ns": 0.038044223300255406,
+      "ci_low_ns": -0.37245649649752466,
+      "delta_sigma68_vs_traditional_ns": -0.2121961844254403,
+      "method": "ridge"
+    },
+    {
+      "ci_high_ns": 0.4185577457916489,
+      "ci_low_ns": -0.04410136830448926,
+      "delta_sigma68_vs_traditional_ns": 0.16773857051598773,
+      "method": "hist_gradient_boosted_trees"
+    },
+    {
+      "ci_high_ns": 0.6052677554714844,
+      "ci_low_ns": 0.16227974933494266,
+      "delta_sigma68_vs_traditional_ns": 0.3542215754233724,
+      "method": "mlp"
+    }
+  ],
+  "execution_command": "MPLCONFIGDIR=/tmp/matplotlib-p11c uv run --with uproot --with awkward --with numpy --with pandas --with scikit-learn --with pyarrow --with matplotlib --with torch python reports/2420__p11c_learned_pedestal_residual_timing_tail_bakeoff/run_p11c_bakeoff.py",
+  "expected_selected_pulses": 640737,
+  "heldout_runs": [
+    57,
+    65
+  ],
+  "methods": [
+    {
+      "family": "ml",
+      "full_rms_ns": 1.721553352981385,
+      "median_ns": 1.0062859584624846,
+      "method": "one_dimensional_cnn",
+      "n_events": 130,
+      "n_pair_residuals": 390,
+      "sigma68_ci_high_ns": 1.88814266288666,
+      "sigma68_ci_low_ns": 1.5113918611012496,
+      "sigma68_ns": 1.716587861496673,
+      "tail_frac_abs_gt5ns": 0.007692307692307693
+    },
+    {
+      "family": "new_architecture",
+      "full_rms_ns": 1.824386839990561,
+      "median_ns": 1.2883532024206659,
+      "method": "gated_cnn_residual",
+      "n_events": 130,
+      "n_pair_residuals": 390,
+      "sigma68_ci_high_ns": 1.9169040990392117,
+      "sigma68_ci_low_ns": 1.6071682564811391,
+      "sigma68_ns": 1.7491311642838157,
+      "tail_frac_abs_gt5ns": 0.007692307692307693
+    },
+    {
+      "family": "ml",
+      "full_rms_ns": 1.8658706946261043,
+      "median_ns": 1.5652973897991735,
+      "method": "ridge",
+      "n_events": 130,
+      "n_pair_residuals": 390,
+      "sigma68_ci_high_ns": 2.060883908576339,
+      "sigma68_ci_low_ns": 1.7167932165065145,
+      "sigma68_ns": 1.8484281508357876,
+      "tail_frac_abs_gt5ns": 0.007692307692307693
+    },
+    {
+      "family": "traditional",
+      "full_rms_ns": 1.9633817713411528,
+      "median_ns": 1.0310846888677059,
+      "method": "traditional_binned_cfd20",
+      "n_events": 130,
+      "n_pair_residuals": 390,
+      "sigma68_ci_high_ns": 2.241971054673748,
+      "sigma68_ci_low_ns": 1.8626414379830665,
+      "sigma68_ns": 2.060624335261228,
+      "tail_frac_abs_gt5ns": 0.005128205128205128
+    },
+    {
+      "family": "ml",
+      "full_rms_ns": 2.52963757262392,
+      "median_ns": 1.4778917688345459,
+      "method": "hist_gradient_boosted_trees",
+      "n_events": 130,
+      "n_pair_residuals": 390,
+      "sigma68_ci_high_ns": 2.420317844380657,
+      "sigma68_ci_low_ns": 1.997981500847026,
+      "sigma68_ns": 2.2283629057772156,
+      "tail_frac_abs_gt5ns": 0.04871794871794872
+    },
+    {
+      "family": "ml",
+      "full_rms_ns": 2.442189007798235,
+      "median_ns": 1.958695927095178,
+      "method": "mlp",
+      "n_events": 130,
+      "n_pair_residuals": 390,
+      "sigma68_ci_high_ns": 2.6349587589748573,
+      "sigma68_ci_low_ns": 2.1943909671998245,
+      "sigma68_ns": 2.4148459106846003,
+      "tail_frac_abs_gt5ns": 0.038461538461538464
+    }
+  ],
+  "primary_metric": "held-out pair residual sigma68_ns",
+  "reproduced_selected_pulses": 640737,
+  "reproduction_pass": true,
+  "status": "DONE",
+  "study": "P11c",
+  "ticket": "2420",
+  "title": "P11c learned-pedestal residual as a timing-tail nuisance",
+  "traditional_ci95_ns": [
+    1.8626414379830665,
+    2.241971054673748
+  ],
+  "traditional_sigma68_ns": 2.060624335261228,
+  "winner": "one_dimensional_cnn",
+  "winner_ci95_ns": [
+    1.5113918611012496,
+    1.88814266288666
+  ],
+  "winner_sigma68_ns": 1.716587861496673,
+  "worker": "testbeam-laptop-3"
+}

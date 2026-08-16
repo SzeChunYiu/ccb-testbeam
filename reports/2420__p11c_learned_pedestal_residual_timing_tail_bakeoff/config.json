@@ -1,0 +1,48 @@
+{
+  "study": "P11c",
+  "ticket": "2420",
+  "worker": "testbeam-laptop-3",
+  "title": "learned-pedestal residual as a timing-tail nuisance",
+  "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+  "sorted_root_dir": "/home/billy/ccb-data/data/extracted/sorted-b",
+  "output_dir": "reports/2420__p11c_learned_pedestal_residual_timing_tail_bakeoff",
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "timing_train_runs": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 58, 59, 60, 61, 62, 63],
+  "calibration_runs": [56, 64],
+  "heldout_runs": [57, 65],
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "downstream_staves": ["B4", "B6", "B8"],
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "tof_per_cm_ns": 0.078,
+  "spacing_cm": 2.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "expected_selected_pulses": 640737,
+  "expected_sample_ii_selected_pulses": 125096,
+  "expected_sample_ii_by_stave": {"B2": 88213, "B4": 21229, "B6": 11148, "B8": 4506},
+  "random_seed": 242011,
+  "bootstrap_replicates": 500,
+  "max_train_records": 90000,
+  "torch_epochs": 12,
+  "torch_batch_size": 1024,
+  "traditional": {
+    "base_pickoff": "cfd20",
+    "cfd_fraction": 0.20,
+    "amp_bins": 6,
+    "peak_bins": [0, 3, 6, 9, 12, 18]
+  },
+  "ml": {
+    "ridge_alpha": 10.0,
+    "hgb_max_iter": 180,
+    "hgb_max_leaf_nodes": 31,
+    "hgb_learning_rate": 0.06,
+    "mlp_hidden_layer_sizes": [64, 32],
+    "mlp_max_iter": 160
+  }
+}

@@ -164,29 +164,29 @@
       "height_mm": 70.0,
       "outputs": {
         "pdf": {
-          "bytes": 14273,
+          "bytes": 14306,
           "path": "docs/figures/paper/claim_status_overview.pdf",
-          "sha256": "a9e46a91ca30c3c6462d764434cec47533a8b79bb6227586154c3a36cea5bad8"
+          "sha256": "e5f8d97de383d0eec56363fcd0f5f37e2bffe988e8136634165c818628e354c0"
         },
         "png": {
-          "bytes": 112613,
+          "bytes": 115102,
           "path": "docs/figures/paper/claim_status_overview.png",
-          "sha256": "e9ed53ff492e33ad217bca8f0019ceff0126353aef54ad689f2a5f018cf9b6b9"
+          "sha256": "8564a2767c039e94f6e6ea349d6c5bcc9448278f1f470924f193d0c465236dc0"
         },
         "svg": {
-          "bytes": 16151,
+          "bytes": 16858,
           "path": "docs/figures/paper/claim_status_overview.svg",
-          "sha256": "0adc5acfd49348bf579aac7834c823e44e6c71e0ca088f243e6b63b00ed88e80"
+          "sha256": "905d944c1f4d25ea9e52cef75c88cbe094ea815ba4765c7bdd3d9a0c41bb8fac"
         }
       },
-      "plotted_data_sha256": "65b14467dc6400739dd8ac9355f039abe72a81f489e3440950e79d3c1d10a74b",
+      "plotted_data_sha256": "7c4ddacfdf5255fdfb3ba1d19c08be9b3d869b219bb4fffe7a19838a71c85497",
       "qa_issues": [],
       "question": "What fraction of the project claim surface is currently publication-authorized?",
       "source_paths": [
         "docs/claim_ledger.csv"
       ],
       "source_table": "docs/figures/paper/source_tables/claim_status_overview_source.csv",
-      "source_table_sha256": "65b14467dc6400739dd8ac9355f039abe72a81f489e3440950e79d3c1d10a74b",
+      "source_table_sha256": "7c4ddacfdf5255fdfb3ba1d19c08be9b3d869b219bb4fffe7a19838a71c85497",
       "status": "REVIEW",
       "stem": "claim_status_overview",
       "title": "Claim ledger is mostly gated or blocked",

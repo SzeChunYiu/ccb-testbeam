@@ -1,0 +1,7 @@
+2369
+# S04: Same-particle timing resolution (rigorous)
+
+Reproduce per-stave sigma (Table 19: B6~0.68-0.75 ns) and combined sigma_comb~0.54 ns (Table 40); reconcile vs older v41 note. Report narrow-core sigma, robust width, AND full RMS together; supply MISSING chi2/ndf; tail fractions; bootstrap CIs. Variance-decomposition (traditional) vs ML per-event resolution estimate; check predicted-sigma pull is unit width. Repo: github.com/SzeChunYiu/ccb-testbeam. Read studies/STUDIES.md + relevant docs/ FIRST.
+RULES: (1) reproduce the report number from raw ROOT before extending; (2) do it BOTH traditional
+AND ML with a fair head-to-head benchmark; (3) atomic steps, each validated; (4) pin checksum+commit.
+Use studies/STUDY_TEMPLATE.md -> reports/S<NN>_<slug>/REPORT.md. Requires S00 done. Requires S03.

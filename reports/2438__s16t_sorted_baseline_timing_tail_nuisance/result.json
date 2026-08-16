@@ -1,0 +1,154 @@
+{
+  "bootstrap": {
+    "paired": true,
+    "replicates": 400,
+    "unit": "held-out run"
+  },
+  "git_commit": "e911cfc59b772e150beb5dd2c080b020066a3bd4",
+  "input_root_files": 66,
+  "methods": [
+    "gradient_boosted_trees",
+    "gradient_boosted_trees_controls_only",
+    "gradient_boosted_trees_plus_sorted_proxy",
+    "mlp",
+    "nuisance_gated_pair_cnn",
+    "one_dimensional_cnn",
+    "ridge",
+    "ridge_controls_only",
+    "ridge_plus_sorted_proxy",
+    "traditional_binned_median",
+    "uncorrected"
+  ],
+  "n_pairs": 18098,
+  "next_tickets": [
+    {
+      "body": "Repeat the sorted-baseline residual timing-tail nuisance test on Sample-I runs with identical S02/S04 controls and compare transfer of the proxy coefficient signs across Sample-I and Sample-II. Expected information gain: separates a run-local pedestal recoverability diagnostic from a detector-period-specific timing artifact.",
+      "title": "S16u: Sample-I transfer of sorted-baseline timing-tail nuisance"
+    }
+  ],
+  "outputs": [
+    "REPORT.md",
+    "result.json",
+    "reproduction_counts.csv",
+    "input_sha256.csv",
+    "sorted_recoverability_features.csv.gz",
+    "pair_rows.csv.gz",
+    "method_predictions.csv.gz",
+    "method_metrics.csv",
+    "per_run_metrics.csv",
+    "bootstrap_metrics.csv",
+    "paired_ablation_deltas.csv",
+    "proxy_summary.csv",
+    "metric_summary.png",
+    "residual_distributions.png"
+  ],
+  "paired_ablation_deltas": [
+    {
+      "augmented_method": "ridge_plus_sorted_proxy",
+      "baseline_method": "ridge_controls_only",
+      "delta_sigma68_ns": 0.009868008629581038,
+      "delta_sigma68_ns_ci_high": 0.08106874948302518,
+      "delta_sigma68_ns_ci_low": -0.060461745153461255
+    },
+    {
+      "augmented_method": "gradient_boosted_trees_plus_sorted_proxy",
+      "baseline_method": "gradient_boosted_trees_controls_only",
+      "delta_sigma68_ns": -0.014536086180620078,
+      "delta_sigma68_ns_ci_high": 0.004421179380575767,
+      "delta_sigma68_ns_ci_low": -0.042575713535630125
+    },
+    {
+      "augmented_method": "traditional_binned_median",
+      "baseline_method": "uncorrected",
+      "delta_sigma68_ns": -1.5658514397071563,
+      "delta_sigma68_ns_ci_high": -1.4632951689833207,
+      "delta_sigma68_ns_ci_low": -1.6654923175752334
+    },
+    {
+      "augmented_method": "nuisance_gated_pair_cnn",
+      "baseline_method": "one_dimensional_cnn",
+      "delta_sigma68_ns": -0.0068704041077958244,
+      "delta_sigma68_ns_ci_high": 0.00511826394731122,
+      "delta_sigma68_ns_ci_low": -0.021396000800832704
+    }
+  ],
+  "primary_metric": "sigma68_ns",
+  "raw_reproduction": {
+    "all_pass": true,
+    "rows": [
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "total selected B-stave pulses",
+        "report_value": 640737,
+        "reproduced": 640737,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_ii_analysis B2",
+        "report_value": 88213,
+        "reproduced": 88213,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_ii_analysis B4",
+        "report_value": 21229,
+        "reproduced": 21229,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_ii_analysis B6",
+        "report_value": 11148,
+        "reproduced": 11148,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_ii_analysis B8",
+        "report_value": 4506,
+        "reproduced": 4506,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_ii_analysis selected_pulses",
+        "report_value": 125096,
+        "reproduced": 125096,
+        "tolerance": 0
+      }
+    ]
+  },
+  "runtime_seconds": 63.492,
+  "split": "leave-one-run-out over Sample-II analysis runs",
+  "status": "complete",
+  "study": "S16t",
+  "ticket": "2438",
+  "title": "sorted-baseline residual timing-tail nuisance",
+  "winner": "mlp",
+  "winner_metrics": {
+    "bias_ns": 0.006634436267290955,
+    "bias_ns_ci_high": 0.2736179072454153,
+    "bias_ns_ci_low": -0.2632549201288596,
+    "delta_sigma68_vs_uncorrected_ns_ci_high": -1.6810252054267625,
+    "delta_sigma68_vs_uncorrected_ns_ci_low": -1.910168957235967,
+    "method": "mlp",
+    "n_pairs": 18098,
+    "rms_ns": 3.157272820392897,
+    "sigma68_ns": 1.138562246206687,
+    "sigma68_ns_ci_high": 1.1884164238576758,
+    "sigma68_ns_ci_low": 1.0916655985651107,
+    "tail_abs_gt_0p5_ns": 0.6355398386562051,
+    "tail_abs_gt_0p5_ns_ci_high": 0.6567400267832424,
+    "tail_abs_gt_0p5_ns_ci_low": 0.6203272931140451,
+    "tail_abs_gt_1p0_ns": 0.37352193612553874
+  },
+  "worker": "testbeam-laptop-1"
+}

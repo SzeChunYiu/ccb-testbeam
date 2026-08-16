@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import math
 import csv
 import json
 from pathlib import Path
@@ -41,15 +42,15 @@ def test_pid_and_pileup_source_values_are_preserved(tmp_path: Path) -> None:
 
     pid = pd.read_csv(by_id["FIG-WIKI-004"]["source_table"])
     assert pid["fold"].tolist() == [1, 2, 3, 4, 5]
-    assert pid["auc"].round(12).tolist() == [
-        0.910278161776,
-        0.883860196814,
-        0.896639621569,
-        0.88750477333,
-        0.910136155051,
-    ]
+    expected = [0.964493359846, 0.933923521677, 0.961883408072, float("nan"), float("nan")]
+    actual = pid["auc"].round(12).tolist()
+    for exp, act in zip(expected, actual):
+        if isinstance(exp, float) and math.isnan(exp):
+            assert isinstance(act, float) and math.isnan(act)
+        else:
+            assert exp == act
     assert pid["full_auc"].nunique() == 1
-    assert pid["full_auc"].iloc[0] == 0.8976036882035276
+    assert pid["full_auc"].iloc[0] == 0.9529050568516502
 
     pileup = pd.read_csv(by_id["FIG-WIKI-007"]["source_table"])
     nearest = pileup.iloc[:2]

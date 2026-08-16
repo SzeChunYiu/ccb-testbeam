@@ -37,7 +37,7 @@ from ccb_mc_validation.truth.geometry import GeometryRegistry
 from ccb_mc_validation.truth.track_builder import build_track_records, STOP_KE_THRESHOLD_MEV_DEFAULT
 from ccb_mc_validation.truth.pdg import species_label
 
-ROOT = "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root"
+ROOT = os.environ.get("CLUSTER_MC_ROOT", "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root")
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT  = os.path.normpath(os.path.join(HERE, "..", "..", "reports", "studies", "clusterA"))
 os.makedirs(OUT, exist_ok=True)
@@ -275,6 +275,8 @@ def vis_pid_001():
         te=folds==k
         if y[te].sum()>0 and (1-y[te]).sum()>0:
             r=roc_pr(y[te],oof[te],ww[te]); pf.append(r["auc"] if r else np.nan)
+        else:
+            pf.append(np.nan)  # Preserve 5-fold structure even if fold is class-imbalanced
     counts["pid_oof_auc_5fold"]=[float(x) for x in pf]
     counts["pid_oof_auc_5fold_mean"]=float(np.nanmean(pf)) if pf else None
     counts["pid_split_note"]="MC has no run column; contiguous 2000-event blocks as pseudo-runs, 5-fold (ML-002 run-disjoint proxy)."

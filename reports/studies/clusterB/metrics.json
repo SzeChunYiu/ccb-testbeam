@@ -72,8 +72,8 @@
         "20-80 MeV",
         "<20 MeV"
       ],
-      "frac_deposits_at_t0": 0.9788029101338338,
-      "max_deposit_time_ns": 8.247487813080554,
+      "frac_deposits_at_t0": 0.978205046686003,
+      "max_deposit_time_ns": 2.75843434626435,
       "note": "Krakow TARGET deposits are a delta at t0=0 (annihilation at rest); no intrinsic timing resolution. Truth anchor topology-stable; resolution measured by single-stave photon arm."
     }
   },
@@ -115,7 +115,7 @@
   ],
   "n_groups": 119905,
   "n_files": 75,
-  "wall_seconds": 83.82813739776611,
+  "wall_seconds": 85.48491859436035,
   "constants": {
     "DT_ns": 0.25,
     "CFD_FRAC": 0.2,
@@ -125,5 +125,10 @@
       0.0,
       100.0
     ]
+  },
+  "mc_input_provenance": {
+    "filename": "output_krakow_1M_authorising.root",
+    "sha256": "19cd97c1106632e9746dd76a683105186484aa34aa74be8617973072ebcf84ea",
+    "note": "corrected generator source (CL-021 authorising run)"
   }
 }

@@ -354,29 +354,29 @@
       "height_mm": 51.0,
       "outputs": {
         "pdf": {
-          "bytes": 13075,
+          "bytes": 13142,
           "path": "docs/figures/paper/pid_mc_validation.pdf",
-          "sha256": "4e0a8d969974c00d3ab119ade668a61d5d0532a0b794e7c2c01a00d12f56e981"
+          "sha256": "baf7e2b6ebd930d8deb4ecd2723730a377e2ac75c31c700bb4dc788dff3075d5"
         },
         "png": {
-          "bytes": 89725,
+          "bytes": 87509,
           "path": "docs/figures/paper/pid_mc_validation.png",
-          "sha256": "6c82c34f4c52654fea4ffa6c57379e6cf0c8e5f7979f38e8e2a56645bbdfd19e"
+          "sha256": "9b8bb0ef3f0f938bfb2ab967730031b3ce41d5606ccdefdf92ab65175a0a510e"
         },
         "svg": {
-          "bytes": 11122,
+          "bytes": 10874,
           "path": "docs/figures/paper/pid_mc_validation.svg",
-          "sha256": "c95f7c5366fc1d13d49851bdb9da1dbf0f0a4e0a50d04ff289c8f4cfe0266b38"
+          "sha256": "0c3bdf9e50de6dc658195ec6ef7e465c4cd1694d580a038a31f140d235b41109"
         }
       },
-      "plotted_data_sha256": "623251cd82feb1567238067ea1ae5fe528dea8f797eb2c7e561c00004b69d842",
+      "plotted_data_sha256": "c114bdcac8e58557716f820b416a957a2ba256486b2534686f70c34357f3c6f2",
       "qa_issues": [],
       "question": "Is the realistic-chain proton/deuteron AUC stable across grouped folds?",
       "source_paths": [
         "reports/studies/clusterA/counts.json"
       ],
       "source_table": "docs/figures/paper/source_tables/pid_mc_validation_source.csv",
-      "source_table_sha256": "623251cd82feb1567238067ea1ae5fe528dea8f797eb2c7e561c00004b69d842",
+      "source_table_sha256": "c114bdcac8e58557716f820b416a957a2ba256486b2534686f70c34357f3c6f2",
       "status": "SIMULATION_RESULT",
       "stem": "pid_mc_validation",
       "title": "Grouped-fold PID stability on MC",

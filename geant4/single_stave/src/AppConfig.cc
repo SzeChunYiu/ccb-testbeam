@@ -79,6 +79,9 @@ void AppConfig::PrintUsage(const char* prog) {
     "                           e.g. QGSP_BIC). No silent default (#1006)\n"
     "  --neutron-timecut-policy-id ID  Neutron tracking-time policy (REQUIRED;\n"
     "                           issue #1091 / ADR-0005)\n"
+    "  --neutron-diagnostics    record neutron_steps ntuple: per-step neutron\n"
+    "                           records + late (>1 us) scintillator deposits\n"
+    "                           (#1091 ladder; validation runs only)\n"
     "  --reflectivity-scale V   TiO2 reflectivity scale     (default 1.0)\n"
     "  --attenuation-scale V    DEPRECATED — use --scintillator-absorption-scale\n"
     "                           and --y11-bulk-attenuation-scale instead.\n"
@@ -131,6 +134,7 @@ std::string AppConfig::Describe() const {
      << " neutron_timecut_policy_id=" << (neutron_timecut_policy_id.empty() ? "UNSET" : neutron_timecut_policy_id)
      << " neutron_time_cut_us=" << neutron_time_cut_us
      << " neutron_tracking_time_cut_configured=" << (neutron_tracking_time_cut_configured ? 1 : 0)
+     << " neutron_diagnostics=" << (neutron_diagnostics ? 1 : 0)
      << " reflectivity_scale=" << reflectivity_scale
      << " attenuation_scale(deprecated)=" << attenuation_scale
      << " scintillator_absorption_scale=" << scintillator_absorption_scale
@@ -179,6 +183,7 @@ bool AppConfig::ParseArgs(int argc, char** argv) {
     else if (eq(a, "--production-cut"))    { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --production-cut requires a finite number, got '"<<v<<"'\n";return false;} production_cut_mm = t; }
     else if (eq(a, "--physics-list"))     { if(!(v=need(i)))return false; physics_list = v; }
     else if (eq(a, "--neutron-timecut-policy-id")) { if(!(v=need(i)))return false; neutron_timecut_policy_id = v; }
+    else if (eq(a, "--neutron-diagnostics"))         { neutron_diagnostics = true; }
     else if (eq(a, "--reflectivity-scale")){ if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --reflectivity-scale requires a finite number, got '"<<v<<"'\n";return false;} reflectivity_scale = t; }
     else if (eq(a, "--attenuation-scale")) { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --attenuation-scale requires a finite number, got '"<<v<<"'\n";return false;} attenuation_scale = t; scintillator_absorption_scale = t; y11_bulk_attenuation_scale = t; }
     else if (eq(a, "--scintillator-absorption-scale")) { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --scintillator-absorption-scale requires a finite number, got '"<<v<<"'\n";return false;} scintillator_absorption_scale = t; }

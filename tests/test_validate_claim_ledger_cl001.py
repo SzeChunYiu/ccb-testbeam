@@ -22,12 +22,20 @@ def copy_fixture(tmp_path: Path) -> Path:
     for relative in (
         "docs/claim_ledger.csv",
         "docs/figure_registry.csv",
+        # Old S00 artifacts: still referenced by the FIG-GL-001 registry row.
         "configs/s00_reproduction.yaml",
         "reports/S00_data_integrity_pipeline_reproduction/REPORT.md",
         "reports/S00_data_integrity_pipeline_reproduction/count_match_table.csv",
         "reports/S00_data_integrity_pipeline_reproduction/manifest.json",
         "reports/S00_data_integrity_pipeline_reproduction/fig_counts_by_group_stave.png",
         "scripts/01_build_pulse_table_from_root.py",
+        # Corrected-staging authorising chain (CL-001 ledger row sources).
+        "configs/data_side_s00_rebuild.yaml",
+        "reports/studies/data_side/REPORT.md",
+        "reports/studies/data_side/s00_rebuild/count_match_table.csv",
+        "reports/studies/data_side/s00_rebuild/manifest.json",
+        "reports/studies/data_side/s00_rebuild/s00_selected_b_pulses.csv.gz",
+        "reports/studies/data_side/s00_rebuild/fig_counts_by_group_stave.png",
     ):
         target = tmp_path / relative
         target.parent.mkdir(parents=True, exist_ok=True)

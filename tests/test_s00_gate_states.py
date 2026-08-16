@@ -241,6 +241,7 @@ class TestSelfDescription:
         gate_states = {
             "count_match": s00.GATE_PASS,
             "sorted_even_channel_crosscheck": s00.GATE_PASS,
+            "sorted_waveform_identity": s00.GATE_PASS,
         }
         s00.write_manifest(
             tmp_path, Path("/tmp/config.yaml"), comparison, tmp_path / "pulses.csv.gz",
@@ -336,6 +337,22 @@ class TestSelfDescription:
 
 class TestRollbackAtomicity:
     """atomic_publish must be atomic; staging must be isolated from canonical namespace."""
+
+    def test_atomic_publish_survives_production_staging_name(self, s00, tmp_path):
+        """main() names its staging dir `.{target.name}.staging-{pid}` — the
+        SAME formula atomic_publish historically used for its temp dir, so the
+        ``if tmp.exists(): shutil.rmtree(tmp)`` guard deleted the run's own
+        staging before the rename and every authorising publish crashed with
+        FileNotFoundError (#952 corrected-staging rerun, 2026-08-16). The
+        publish temp dir must use a distinct `.publish-{pid}` name."""
+        target = tmp_path / "s00_rebuild"
+        staging = tmp_path / f".s00_rebuild.staging-{os.getpid()}"
+        staging.mkdir()
+        (staging / "manifest.json").write_text("{}")
+        s00.atomic_publish(staging, target)
+        assert (target / "manifest.json").exists()
+        assert not staging.exists()
+        assert not (tmp_path / f".s00_rebuild.publish-{os.getpid()}").exists()
 
     def test_atomic_publish_replaces_target(self, s00, tmp_path):
         """atomic_publish should replace target_dir contents with staging_dir contents."""
@@ -549,6 +566,7 @@ class TestWriteManifest:
             gate_states = {
                 "count_match": s00.GATE_PASS,
                 "sorted_even_channel_crosscheck": s00.GATE_PASS,
+                "sorted_waveform_identity": s00.GATE_PASS,
             }
             s00.write_manifest(
                 out_dir, "config.yaml", good, selected_path,
@@ -560,7 +578,33 @@ class TestWriteManifest:
             assert manifest["authorising"] is True
             assert manifest["gate_states"]["count_match"] == "PASS"
             assert manifest["gate_states"]["sorted_even_channel_crosscheck"] == "PASS"
+            assert manifest["gate_states"]["sorted_waveform_identity"] == "PASS"
             assert manifest["schema_version"] == "v1"
+
+    def test_manifest_not_authorising_when_identity_fails(self, s00):
+        """sorted_waveform_identity FAIL must be non-authorising even with every
+        other gate PASS — the reconstruction identity is the #952 staging
+        desync detector and can never be traded off against count agreement."""
+        with tempfile.TemporaryDirectory() as tmp:
+            out_dir = Path(tmp)
+            selected_path = out_dir / "pulses.parquet"
+            selected_path.write_text("dummy", encoding="utf-8")
+
+            good = pd.DataFrame({"quantity": ["total"], "expected": [100], "actual": [100], "delta": [0], "pass": [True]})
+            gate_states = {
+                "count_match": s00.GATE_PASS,
+                "sorted_even_channel_crosscheck": s00.GATE_PASS,
+                "sorted_waveform_identity": s00.GATE_FAIL,
+            }
+            s00.write_manifest(
+                out_dir, "config.yaml", good, selected_path,
+                1000.0, "test",
+                canonical=True, model_identity={},
+                gate_states=gate_states,
+            )
+            manifest = json.loads((out_dir / "manifest.json").read_text(encoding="utf-8"))
+            assert manifest["authorising"] is False
+            assert manifest["gate_states"]["sorted_waveform_identity"] == "FAIL"
 
     def test_manifest_not_authorising_when_sorted_missing(self, s00):
         """Gate state NOT_RUN_MISSING_INPUT must be a non-authorising condition."""

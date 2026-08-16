@@ -5,4 +5,7 @@ FP-003,0\.(54|68|75)\s*ns,WIKI.md;paper/figures.yaml;paper/**/*.tex;publication/
 FP-004,(?<![\d.])(8\.9\s*%|0\.0887),WIKI.md;paper/figures.yaml;paper/**/*.tex;publication/**/*.tex,CL-029,gated|model|non-authorising|birks|e_vis|mc|simulation,8.9 percent energy resolution is MC model-dependent optical (CL-029 GATED) not an authorising data result
 FP-005,[Oo]nly one row is VALIDATED|single VALIDATED|ONLY VALIDATED,WIKI.md;paper/figures.yaml;paper/**/*.tex;publication/**/*.tex,CL-001,,No claim is VALIDATED while CL-001 is GATED; stale VALIDATED-count phrasing is forbidden with no qualifier
 FP-006,PE/deposited|PE per deposited|per deposited MeV,WIKI.md;paper/figures.yaml;paper/**/*.tex;publication/**/*.tex,CL-013,superseded|historical|mislabel|e_vis|birks|gated|quenched,Light yield per DEPOSITED MeV conflates unquenched E_raw with Birks-visible E_vis (#1302)
-FP-007,VALIDATED\s*·|✅\s*VALIDATED,WIKI.md;paper/**/*.tex;publication/**/*.tex,CL-001,cl-030|cl-031|cl-032|done_data_only,Banner-style VALIDATED status chips are forbidden while no ledger row is authorising; only DONE_DATA_ONLY rows may carry one
+# FP-007 retired 2026-08-16: its premise ("while no ledger row is authorising") expired when
+# CL-001 flipped GATED->VALIDATED on the corrected 144-word staging with all four data-integrity
+# gates PASS. Banner chips remain guarded by the ledger-driven WIKI check (VALIDATED lines naming
+# a non-authorising claim fail) and by the manuscript token qualifiers.

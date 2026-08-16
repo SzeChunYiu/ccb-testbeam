@@ -1,23 +1,36 @@
-# Production config: rebuild S00 selected B-pulse table from REAL raw HRDv
-# waveforms staged on LUNARC at /projects/hep/fs10/shared/nnbar/ccb_data/hrd/root
-# (data located 2026-07-25; previously BLOCKED_DATA).
+# Production config: rebuild S00 selected B-pulse table from the CORRECT
+# 144-word raw HRDv waveforms (8 channels x 18 samples = 144 words/event).
 #
-# KEY DATA-SIDE FIX: samples_per_channel = 16 (raw ccb_data HRDv = 128 = 8x16),
-# NOT 18 as in the laptop-era s01d config (8x18=144). The amplitude cut and
-# baseline-sample selection are sample-count-independent, so the canonical
-# S00 count (640,737, CL-001) must reproduce from this raw source.
+# STAGING CORRECTION (2026-08-16, #952): the previous run of this config
+# consumed the LUNARC staging /projects/hep/fs10/shared/nnbar/ccb_data/hrd/root,
+# which stores only the FIRST 128 WORDS of each 144-word channel-major frame.
+# Read as 8x16 it desyncs channels +2 words (file block c = tail of true
+# channel c-1 + head of true channel c): the 3,495,938 selected-pulse count
+# and the channel_polarity_v2 map measured from it are RETRACTED artifacts
+# (pedestal offsets read as pulses). See the retraction block in
+# configs/channel_polarity_v2.json.
+#
+# This rebuild uses the correct 144-word laptop extraction of the SAME event
+# stream (verified 1:1 by EVT number, run 44: 4294 events in both; laptop
+# HRD=144 vs staging HRD=128):
+#   raw_root_dir  = /home/billy/ccb-data/data/extracted/root/root   (53 hrdb files)
+#   sorted_b_dir  = /home/billy/ccb-data/data/extracted/sorted-b     (sorted ROOTs)
+# samples_per_channel = 18 (true layout), polarity = channel_polarity_v1
+# (LOCKED_FROM_DUPLICATE_READOUT_CONVENTION; operative map after the v2
+# retraction). Under the correct staging only B2 (ch0) carries >1000-ADC
+# pulses; B4/B6/B8 are quiet — the laptop-era s01d expectation.
 study_id: DATA-S00-LUNARC
-title: S00 selected B-pulse table rebuilt from real raw HRDv (LUNARC ccb_data)
-worker: lunarc-fs10
+title: S00 selected B-pulse table rebuilt from correct 144-word raw HRDv
+worker: laptop-billy
 
-raw_root_dir: /projects/hep/fs10/shared/nnbar/ccb_data/hrd/root
-sorted_b_dir: /projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/_sorted_not_present
+raw_root_dir: /home/billy/ccb-data/data/extracted/root/root
+sorted_b_dir: /home/billy/ccb-data/data/extracted/sorted-b
 output_dir: reports/studies/data_side/s00_rebuild
 pulse_table_path: reports/studies/data_side/s00_rebuild/s00_selected_b_pulses.csv.gz
 
 amplitude_cut_adc: 1000.0
 baseline_samples: [0, 1, 2, 3]
-samples_per_channel: 16
+samples_per_channel: 18
 
 staves:
   B2: 0
@@ -31,6 +44,11 @@ run_groups:
   sample_ii_calib: [64]
   sample_ii_analysis: [58, 59, 60, 61, 62, 63, 65]
 
+# Measured 2026-08-16 on the correct 144-word laptop extraction under v1
+# polarity — reproduces the original CL-001 value 640,737 bit-exact (the
+# s01d laptop-era pins for sample_i_analysis: B2 241422 / B4 6451 /
+# B6 3094 / B8 1299). The 3,495,938 interim value from the truncated
+# LUNARC staging is retracted.
 expected_counts:
   total_selected_pulses: 640737
   groups:

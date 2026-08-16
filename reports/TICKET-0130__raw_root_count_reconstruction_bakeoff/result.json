@@ -1,15 +1,15 @@
 {
   "ticket_id": "TICKET-0130",
   "project": "testbeam",
-  "worker": "testbeam-laptop-4",
+  "worker": "testbeam-laptop-3",
   "title": "TICKET-0130 raw-ROOT count reconstruction bakeoff",
   "status": "complete",
   "claimed_once": true,
-  "claim_command": "tn-ticket claim testbeam-laptop-4 --project testbeam",
+  "claim_command": "tn-ticket claim testbeam-laptop-3 --project testbeam",
   "claimed_ticket_text": "TICKET-0130 raw-ROOT count reconstruction bakeoff",
   "raw_root_reproduction": {
     "passed": true,
-    "raw_root_glob": "/home/billy/ccb-data/extracted/root/root/hrdb_run_*.root",
+    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
     "expected_selected_pulses": 640737,
     "reproduced_selected_pulses": 640737,
     "delta": 0,

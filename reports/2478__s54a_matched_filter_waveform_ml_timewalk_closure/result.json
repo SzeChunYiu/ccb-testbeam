@@ -1,0 +1,135 @@
+{
+  "append_command": "tn-ticket append \"S54b: external clock or trigger-reference validation for waveform time-walk closure\" --project testbeam --body <body>",
+  "bootstrap": {
+    "paired": true,
+    "replicates": 300,
+    "unit": "held-out run"
+  },
+  "claim_helper_output": {
+    "reran_claim": false,
+    "stderr": "null",
+    "stdout": "# null\n\nnull"
+  },
+  "claimed_ticket_text": "claim_helper_command: tn-ticket claim testbeam-laptop-4 --project testbeam\nclaim_helper_stderr:\nnull\nclaim_helper_stdout:\n# null\n\nnull\nmanual_claim_issue: 2478\nmanual_claim_command: gh issue edit 2478 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-4 --remove-label factory:open\n#2478 S54a: Matched-filter rise-shape timing versus waveform ML time-walk closure\n",
+  "done_command": "tn-ticket done 2478",
+  "git_commit": "5dc9c9ec095c487a0716b074b96ebc998bd47d2b",
+  "input_root_files": 33,
+  "issue_number": 2478,
+  "issue_url": "https://github.com/SzeChunYiu/factory-tickets/issues/2478",
+  "methods": [
+    "uncorrected_cfd20",
+    "traditional_matched_filter_template",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "one_dimensional_cnn",
+    "compact_pair_transformer",
+    "rise_tail_gated_cnn_new"
+  ],
+  "n_pairs": 18098,
+  "next_tickets": [
+    {
+      "body": "Repeat the S54a matched-filter and waveform-ML timing panel against an external clock/trigger reference rather than same-event downstream-pair residuals. Expected information gain: separates true absolute timing improvement from pair-symmetry corrections that may cancel common-mode errors.",
+      "issue_number": 2485,
+      "issue_url": "https://github.com/SzeChunYiu/factory-tickets/issues/2485",
+      "title": "S54b: external clock or trigger-reference validation for waveform time-walk closure"
+    }
+  ],
+  "outputs": [
+    "REPORT.md",
+    "result.json",
+    "reproduction_counts.csv",
+    "input_sha256.csv",
+    "pair_rows.csv.gz",
+    "method_predictions.csv.gz",
+    "method_metrics.csv",
+    "per_run_metrics.csv",
+    "bootstrap_metrics.csv",
+    "stratified_metrics.csv",
+    "method_sigma68.png",
+    "residual_distributions.png",
+    "claimed_ticket.txt",
+    "config.json",
+    "manifest.json"
+  ],
+  "primary_metric": "sigma68_ns",
+  "raw_reproduction": {
+    "all_pass": true,
+    "rows": [
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "total selected B-stave pulses",
+        "report_value": 640737,
+        "reproduced": 640737,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_ii_analysis selected_pulses",
+        "report_value": 125096,
+        "reproduced": 125096,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_ii_analysis B2",
+        "report_value": 88213,
+        "reproduced": 88213,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_ii_analysis B4",
+        "report_value": 21229,
+        "reproduced": 21229,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_ii_analysis B6",
+        "report_value": 11148,
+        "reproduced": 11148,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_ii_analysis B8",
+        "report_value": 4506,
+        "reproduced": 4506,
+        "tolerance": 0
+      }
+    ]
+  },
+  "runtime_seconds": 73.032,
+  "split": "leave-one-run-out over Sample-II analysis runs",
+  "status": "complete",
+  "study": "S54a",
+  "ticket": "2478",
+  "title": "matched-filter rise-shape timing versus waveform ML time-walk closure",
+  "traditional_method": "traditional_matched_filter_template",
+  "winner": "mlp",
+  "winner_metrics": {
+    "bias_ns": 0.007699749986437666,
+    "bias_ns_ci_high": 0.06753561460237294,
+    "bias_ns_ci_low": -0.027389053514798492,
+    "delta_sigma68_vs_traditional_ns_ci_high": -0.5560932792530997,
+    "delta_sigma68_vs_traditional_ns_ci_low": -0.7839437638118361,
+    "method": "mlp",
+    "n_pairs": 18098,
+    "rms_ns": 2.2045742029069135,
+    "sigma68_ns": 0.6071677241258274,
+    "sigma68_ns_ci_high": 0.7518707520523699,
+    "sigma68_ns_ci_low": 0.5252263670735979,
+    "tail_abs_gt_0p5_ns": 0.39490551442148303,
+    "tail_abs_gt_0p5_ns_ci_high": 0.4789932531249405,
+    "tail_abs_gt_0p5_ns_ci_low": 0.33771892420417426,
+    "tail_abs_gt_1p0_ns": 0.1575312189192176
+  },
+  "worker": "testbeam-laptop-4"
+}

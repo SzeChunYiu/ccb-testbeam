@@ -1,0 +1,11 @@
+# NEW S56c likelihood PID templates vs multitask waveform networks under pedestal and pile-up
+
+Academic-grade study: measure how pedestal state, pile-up, and saturation move PID boundaries and energy-transfer calibration.
+
+Traditional method: deltaE-E likelihood templates with pedestal-state nuisance parameters and calibrated energy-loss curves.
+
+Compare against ridge multinomial/logistic baselines, gradient-boosted trees on charge/timing/shape features, MLP multitask classifiers, 1D-CNN waveform PID heads, and a transformer encoder when event-level waveform context is available.
+
+Require run-heldout validation, PID confusion matrices by pedestal/pile-up/saturation strata, bootstrap 95% CIs for PID efficiency, purity, energy bias, and boundary displacement.
+
+Deliver short report identifying whether waveform ML learns real PID pulse structure or pedestal/pile-up shortcuts.

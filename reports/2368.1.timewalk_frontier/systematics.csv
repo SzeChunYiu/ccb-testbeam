@@ -1,0 +1,5 @@
+check,value,interpretation
+train_heldout_event_id_overlap,0.0,zero required; split is by run
+analytic_candidate,amp_only,selected alpha=100.0 by grouped CV
+method_family_trials,6.0,"analytic, ridge, GBT, MLP, CNN, hybrid; delta CIs are interpreted with this multiplicity in mind"
+data_symlink,0.0,workspace data symlink was stale; config uses absolute read-only ROOT directory

@@ -1,0 +1,52 @@
+{
+  "ticket_id": "2469",
+  "study_id": "s53a_external_pid_label_validation_pedestal_state_waveform_transfer",
+  "worker": "testbeam-laptop-4",
+  "title": "S53a: external PID-label validation for pedestal-state waveform transfer",
+  "output_dir": "reports/2469__s53a_external_pid_label_validation_pedestal_state_waveform_transfer",
+  "raw_root_dir_candidates": [
+    "data/root/root",
+    "data/extracted/root/root",
+    "/home/billy/ccb-data/data/extracted/root/root",
+    "/home/billy/ccb-data/extracted/root/root",
+    "/home/billy/Desktop/test_beam/data/root/root"
+  ],
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "duplicate_readout_channels": {
+    "B2": 1,
+    "B4": 3,
+    "B6": 5,
+    "B8": 7
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "heldout_runs": [42, 50, 57, 58, 60, 62, 64, 65],
+  "expected_total_selected_pulses": 640737,
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "max_per_run_stave": 450,
+  "bootstrap_replicates": 500,
+  "random_seed": 2469,
+  "nn": {
+    "epochs": 8,
+    "batch_size": 2048,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "max_train_rows": 40000
+  },
+  "report_title": "S53a: external PID-label validation for pedestal-state waveform transfer",
+  "ticket_scope": "S53a tests whether the S50c/S51c raw-waveform pedestal-state benchmark can be promoted from a charge/stave proxy study toward an externally anchored PID-energy transfer statement.",
+  "truth_bridge_statement": "The primary supervised target remains the event-aligned duplicate-readout energy-closure channel, while the GEANT4 PID benchmark is used as a non-keyed feasibility constraint because no one-to-one event key exists between the real HRD events and simulated tracks.",
+  "external_truth_audit": "I inspected the available GEANT4 PID truth bridge (`reports/1781181864.166893.491f3bde__s22_g4_truth_real_pid_transfer`) and the raw HRD benchmark table.  The GEANT4 table carries `event`, `track_id`, `pdg`, `particle`, `y_deuteron`, and `pseudo_run`, whereas the real raw waveform rows carry run-local `eventno/evt` identifiers; the two spaces are not event-aligned.  Therefore the honest S53a result is a negative external-truth gate plus a full pedestal-state bakeoff on the event-aligned real raw rows.  PID stability below is a high-energy/depth proxy, not proton/deuteron truth.",
+  "reproducibility_command": "MPLCONFIGDIR=/tmp/matplotlib-2469 UV_PROJECT_ENVIRONMENT=.venv-2469 uv run --index-strategy unsafe-best-match --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple --with uproot --with awkward --with numpy --with pandas --with scikit-learn --with matplotlib --with 'torch==2.5.1+cpu' python scripts/1783727976_9059_2fa2489b_pedestal_energy_pid_coupling.py --config configs/2469_s53a_external_pid_label_validation_pedestal_state_waveform_transfer.json"
+}

@@ -134,18 +134,23 @@ def test_negative_controls_bundle_all_pass():
 
 # --- v2 measured map + builder gate (close-out) ---
 
-V2_STATUS = "MEASURED_202608_RUNS31_65_UNANIMOUS_BOTH_ESTIMATORS"
+V2_STATUS = "RETRACTED_20260816_TRUNCATED_STAGING_DESYNC"
 MEASURED_MAP = {"0": 1, "1": -1, "2": -1, "3": 1, "4": -1, "5": 1, "6": -1, "7": 1}
 
 
-def test_v2_map_file_integrity():
+def test_v2_map_file_retracted_with_forensic_record():
     data = json.loads((REPO_ROOT / "configs" / "channel_polarity_v2.json").read_text())
     assert data["status"] == V2_STATUS
     assert data["channel_polarity"] == MEASURED_MAP
     assert data["stave_channel"] == {"B2": 0, "B4": 2, "B6": 4, "B8": 6}
     prov = data["provenance"]
     assert prov["audit_issue"] == 954
-    assert prov["authorising_for_even_b_staves"] and prov["authorising_for_odd_duplicates"]
+    ret = prov["retraction"]
+    assert ret["audit_issues"] == [952, 953, 954]
+    assert "128 WORDS" in ret["root_cause"] and "144-word" in ret["root_cause"]
+    # The retraction voids the v1-falsification claim; v1 stays operative.
+    v1 = json.loads((REPO_ROOT / "configs" / "channel_polarity_v1.json").read_text())
+    assert v1["status"] == "LOCKED_FROM_DUPLICATE_READOUT_CONVENTION"
     assert set(prov["v1_falsified_for_channels"]) == {"2", "3", "4", "5", "6", "7"}
     assert prov["v1_confirmed_for_channels"] == ["0", "1"]
 
@@ -164,9 +169,14 @@ def test_load_polarity_map_status_gate(tmp_path):
     import build_8x16_event_product as builder
 
     good = tmp_path / "good.json"
-    for status in ("LOCKED_FROM_DUPLICATE_READOUT_CONVENTION", V2_STATUS):
+    for status in ("LOCKED_FROM_DUPLICATE_READOUT_CONVENTION",):
         good.write_text(json.dumps({"status": status, "channel_polarity": MEASURED_MAP}))
         assert builder.load_polarity_map(good) == MEASURED_MAP
+
+    retracted = tmp_path / "retracted.json"
+    retracted.write_text(json.dumps({"status": V2_STATUS, "channel_polarity": MEASURED_MAP}))
+    with pytest.raises(ValueError, match="unresolved polarity"):
+        builder.load_polarity_map(retracted)
 
     bad = tmp_path / "bad.json"
     bad.write_text(json.dumps({"status": "DRAFT", "channel_polarity": MEASURED_MAP}))

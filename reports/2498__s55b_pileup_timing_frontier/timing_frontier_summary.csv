@@ -1,0 +1,10 @@
+group,value,method,n_events,n_positive,detection_auc,time_sigma68_ns,energy_fractional_sigma68,pileup_miss_rate
+overlap_fraction_timing_regime,"(-0.001, 10.0]",saturation_residual_fusion_new,132,132,,7.468772898382477,0.06853665348489285,0.42424242424242425
+overlap_fraction_timing_regime,"(10.0, 25.0]",saturation_residual_fusion_new,88,88,,7.851522290087933,0.04364380831181267,0.3977272727272727
+overlap_fraction_timing_regime,"(25.0, 45.0]",saturation_residual_fusion_new,78,78,,9.025034559121089,0.06552659606688697,0.23076923076923078
+overlap_fraction_timing_regime,"(45.0, 70.0]",saturation_residual_fusion_new,92,92,,9.271525946430977,0.06020545291237929,0.1956521739130435
+saturation_onset_regime,0,saturation_residual_fusion_new,381,381,,7.980393508762077,0.06901615424356437,0.3333333333333333
+saturation_onset_regime,1-2,saturation_residual_fusion_new,4,4,,10.156089787078383,0.07840928609641826,0.0
+saturation_onset_regime,3-5,saturation_residual_fusion_new,5,5,,4.332842518887084,0.012186360966111351,0.0
+pid_boundary_proxy_class,inner_high_charge,saturation_residual_fusion_new,24,24,,9.808017347747228,0.08856973838432161,0.16666666666666666
+pid_boundary_proxy_class,other,saturation_residual_fusion_new,366,366,,7.704485304157245,0.06814108305728596,0.3360655737704918

@@ -1,0 +1,22 @@
+{
+  "ticket_id": "2482",
+  "factory_issue": 2482,
+  "git_commit": "6fa77fd58f8f6c65ef4b42675de0793c404f1eca",
+  "command": "/home/billy/.cache/uv/builds-v0/.tmpD99zbv/bin/python scripts/ticket_2482_s55a_wiener_template_timing_ml_phase.py",
+  "runtime_seconds": 43.64444851875305,
+  "python": "3.13.12 (main, Feb  3 2026, 22:52:12) [Clang 21.1.4 ]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+  "outputs_sha256": {
+    "REPORT.md": "8784e14dc0dc31aa73664932cd83044c88d74ab5c8a4c88ed7add2a4291abfcf",
+    "ablation_metrics.csv": "ca68199bc0f3c5f2044dd63be3160d122de2a7dfa3c98548c71b38f01333df38",
+    "claimed_ticket.txt": "c094c36e86adb84c3f3bd8b4653c57518b879f8c8cffc2c39d3c4bd2fd428875",
+    "event_predictions.csv": "fc340df6a4fb691e8737154b5c1eb22bfde33273abb3e0fb58ff3551c5d2f0da",
+    "input_sha256.csv": "cc17da0dcd3e7e732b81a17f3c35833f026fdec912538d28d7d71b9af71a46f6",
+    "method_metrics.csv": "eea9f3934206a9009a00124514fe07a74e3ca645dc34d635bccc8103ba479c22",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "8549a71f052bf75b0ecb045f4c07e74263c782fa0e52ee01f6f2fe1bf7238024",
+    "run_heldout_metrics.csv": "5b3f2a8c23223cbcde7231887d8d725399a50ebbcd990df7b3e1511da26f5ade",
+    "strata_metrics.csv": "b89ebde18409b7738fa5dae17fee9c057b37593cabd594cf6e343ad5c7f01442",
+    "template_summary.csv": "720453c9af9eeabeb628d8d210a8d5a7079304441912a8fb750f6b60c0b33068"
+  }
+}

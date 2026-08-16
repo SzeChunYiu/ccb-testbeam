@@ -1,0 +1,57 @@
+{
+  "claim_command": "tn-ticket claim testbeam-laptop-2 --project testbeam",
+  "claim_command_ran_once": true,
+  "claim_helper_returned_null": true,
+  "data_folder_probe": {
+    "data/extracted": 0,
+    "data/root": 0,
+    "data/sorted-b": 0
+  },
+  "manual_claim_issue": 2452,
+  "methods": [
+    "frontier_transfer_fusion_hgb_new",
+    "gradient_boosted_trees",
+    "mlp_tabular_waveform",
+    "one_dimensional_cnn",
+    "ridge_logistic",
+    "strong_traditional_dropout_shape_score"
+  ],
+  "new_architecture": "frontier_transfer_fusion_hgb_new",
+  "novel_tickets_appended": [],
+  "raw_root_available_in_data_folder": false,
+  "reproduction": {
+    "matched_benchmark_rows": 49,
+    "matched_positive_rows": 16,
+    "matched_runs": [
+      37,
+      40,
+      42,
+      49,
+      57,
+      62,
+      64
+    ],
+    "p09a_raw_derived_dropout_count": 88,
+    "p09i_reviewer_confirmed_dropout_rows": 16,
+    "source": "upstream raw-derived P09a/P09i artifacts because local raw ROOT mirror was empty"
+  },
+  "runtime_sec": 72.512,
+  "selection": {
+    "primary_metric": "average_precision",
+    "split": "leave-one-run-out with paired run-block bootstrap confidence intervals",
+    "winner_rule": "maximize overall held-out average precision; bootstrap CI reported over per-run metrics"
+  },
+  "ticket_id": "2452",
+  "ticket_title": "P06g: Real-waveform dropout candidate transfer of injected recovery frontier",
+  "winner": {
+    "average_precision": 0.961165698336751,
+    "balanced_accuracy": 0.9223484848484849,
+    "ci_high": 1.0,
+    "ci_low": 1.0,
+    "family": "ml",
+    "method": "ridge_logistic",
+    "precision_at_prevalence_k": 0.875,
+    "roc_auc": 0.9772727272727272
+  },
+  "worker": "testbeam-laptop-2"
+}

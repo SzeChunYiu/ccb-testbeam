@@ -28,8 +28,8 @@ TICKET = "1783884181.2140.09a136f2"
 TITLE = "S32b analytic pile-up saturation energy-closure bakeoff"
 SLUG = "s32b_analytic_pileup_saturation_energy_closure_bakeoff"
 OUT = ROOT / "reports" / f"{TICKET}__{SLUG}"
-RAW_ROOT_DIR = Path("/home/billy/ccb-data/extracted/root/root")
-WORKER = "testbeam-laptop-4"
+RAW_ROOT_DIR = Path("/home/billy/ccb-data/data/extracted/root/root")
+WORKER = "testbeam-laptop-3"
 ADC_CLIP = 11800.0
 
 
@@ -344,7 +344,9 @@ pulse morphology, amplitude ratio, stave, and a PID proxy class.
 
 {md_table(strata, ['stratum', 'value', 'method', 'energy_fractional_bias', 'energy_fractional_sigma68', 'time_bias_ns', 'time_sigma68_ns', 'pileup_miss_rate'])}
 
-Systematic caveats are material.  First, pile-up truth is from controlled
+## Caveats
+
+The caveats are material.  First, pile-up truth is from controlled
 overlays into raw-ROOT-derived residuals; it validates reconstruction under known
 truth but not the true beam pile-up rate.  Second, the ADC clipping level is a
 benchmark stressor rather than a decoded electronics flag.  Third, only 18

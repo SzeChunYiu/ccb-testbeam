@@ -5,7 +5,7 @@
 Ticket `TICKET-0130` asks for an academic-grade comparison of a strong traditional
 multi-pulse analytic method against ridge, gradient-boosted trees, MLP, 1D-CNN,
 transformer sequence models, and a sensible new architecture for energy
-reconstruction under pile-up and ADC saturation.  The worker is `testbeam-laptop-4`.  The
+reconstruction under pile-up and ADC saturation.  The worker is `testbeam-laptop-3`.  The
 winner is **`saturation_residual_fusion_new`**, selected by held-out run-block energy closure:
 fractional energy sigma68 `0.06688` with 95%
 CI [`0.0605`,
@@ -14,7 +14,7 @@ CI [`0.0605`,
 
 ## Raw ROOT Reproduction
 
-Raw files are read from `/home/billy/ccb-data/extracted/root/root`.  For each run, `h101/HRDv` is
+Raw files are read from `/home/billy/ccb-data/data/extracted/root/root`.  For each run, `h101/HRDv` is
 reshaped to `(event, channel, sample)` with 18 samples per channel.  The B-stack
 selection uses B2/B4/B6/B8, pedestal
 
@@ -325,7 +325,9 @@ pulse morphology, amplitude ratio, stave, and a PID proxy class.
 | stave            | B6                | tiny_sequence_transformer                      |               -0.02059   |                    0.1035   |     -15.94     |            18.8   |            0.5529  |
 | stave            | B8                | tiny_sequence_transformer                      |                0.01309   |                    0.1031   |     -14.41     |            14.57  |            0.4673  |
 
-Systematic caveats are material.  First, pile-up truth is from controlled
+## Caveats
+
+The caveats are material.  First, pile-up truth is from controlled
 overlays into raw-ROOT-derived residuals; it validates reconstruction under known
 truth but not the true beam pile-up rate.  Second, the ADC clipping level is a
 benchmark stressor rather than a decoded electronics flag.  Third, only 18
@@ -342,4 +344,4 @@ uncertainty propagation.  The analytic clipped-template method remains the
 auditable fallback when deterministic extrapolation is more important than the
 observed held-out score gain.
 
-Runtime was `46.8` s on `Linux-5.15.0-139-generic-x86_64-with-glibc2.35`.
+Runtime was `42.5` s on `Linux-5.15.0-139-generic-x86_64-with-glibc2.35`.

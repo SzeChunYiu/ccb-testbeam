@@ -1,0 +1,4 @@
+2414
+# S03 follow-up: guardrail-orthogonal cross-sample CNN timewalk adoption audit
+
+Ticket #2412 found that a Sample-II-trained cnn1d_waveform_amp_shape_stave correction improves Sample-I/run-64 same-event timing closure, but the report flags stave one-hot and amplitude-support tails as the main artifact risks. Follow-up: rerun the cross-sample S03 transfer gate with detector-identity guardrails (waveform-only, stave-offset residualized, and support-matched/amplitude-tail excluded variants), then test whether the CNN lift remains with run-block bootstrap CIs. Use raw ROOT reproduction first; benchmark against analytic S03, ridge, HGB, MLP, 1D-CNN, and a guardrail-orthogonal architecture; write REPORT.md/result.json.

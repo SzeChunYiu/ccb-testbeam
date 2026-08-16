@@ -1,0 +1,23 @@
+{
+  "ticket_id": "2515",
+  "git_commit": "cec9edc28257e0699c70c17fa9b2e8d806a3d42a",
+  "command": "/home/billy/.tb-workers/testbeam-laptop-4/.venv-s58b/bin/python scripts/ticket_2515_s58b_censored_pileup_saturation_energy_frontier.py",
+  "runtime_seconds": 78.82664966583252,
+  "python": "3.8.10 (default, Mar 18 2025, 20:04:55) \n[GCC 9.4.0]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.29",
+  "outputs_sha256": {
+    "REPORT.md": "b9bf1ffd2377dac767337840fb5808556c6ce8be4f4befea95d326d25848e2c6",
+    "claimed_ticket.txt": "79356ddc748fd0e1fb0ec4f018d9d0cc6f248bddc10bf1db69c60e277117bfc0",
+    "endpoint_metrics_ci.csv": "c4e2de91d7b2538b3549ac7f692b52a5aaf53398c0cdbdf589775876d35d2190",
+    "event_predictions.csv": "1b7edfdfd8bcbb08edc07812c28db22771ac205094a17527e1c171ddaf312dea",
+    "input_sha256.csv": "cc17da0dcd3e7e732b81a17f3c35833f026fdec912538d28d7d71b9af71a46f6",
+    "method_metrics.csv": "d2da07ff3ee7a14b6ee4eba59df7765c48b66bbfa79a48806f07f767e29721ad",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "2793db34c587abd8f2c537df4a3dcc64e618849f0b563f9cd612a01101847d80",
+    "run_heldout_metrics.csv": "b8debe0f52bb318ec40a33ea2300b1abb9b7b03e54bee7cb9472f6f5f0e8a264",
+    "strata_metrics.csv": "0dfa6174d32983962a8b599f177eabecfc13fe237b9c693828c2bedc4f688a5a",
+    "template_summary.csv": "eca9592b05cf73d43c290f57231745f4d3949abede50e928ded39b460577385c",
+    "winner_ranked_metrics.csv": "99993aaa57af575b2144bdf5e235be5cfc2539b75caa3d40dbeeaf247facae7a"
+  },
+  "postprocess_note": "S58b ticket metadata and censored pile-up saturation recovery-frontier wording applied after reused S35b benchmark engine."
+}

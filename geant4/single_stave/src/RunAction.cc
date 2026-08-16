@@ -115,6 +115,20 @@ void RunAction::DefineNtuples() {
     am->CreateNtupleIColumn("detected");
     am->FinishNtuple(nt_photon_);
   }
+
+  // #1091 ladder: sparse time-resolved neutron diagnostics.
+  if (cfg_.neutron_diagnostics) {
+    nt_neutron_ = am->CreateNtuple("neutron_steps",
+                                   "per-step neutron / late-deposit records");
+    am->CreateNtupleIColumn("event");
+    am->CreateNtupleIColumn("kind");        // 0 neutron step, 1 late scint deposit
+    am->CreateNtupleDColumn("t_ns");
+    am->CreateNtupleDColumn("edep_MeV");
+    am->CreateNtupleDColumn("ke_MeV");
+    am->CreateNtupleIColumn("in_scint");
+    am->CreateNtupleIColumn("pdg");
+    am->FinishNtuple(nt_neutron_);
+  }
 }
 
 void RunAction::BeginOfRunAction(const G4Run*) {
@@ -219,6 +233,20 @@ void RunAction::FillEvent(const EventData& e, int event_id) {
     am->FillNtupleDColumn(nt_event_, c++, e.adc[i]);
   am->AddNtupleRow(nt_event_);
 
+  if (cfg_.neutron_diagnostics && nt_neutron_ >= 0) {
+    for (const auto& n : e.neutron_steps) {
+      int nc = 0;
+      am->FillNtupleIColumn(nt_neutron_, nc++, event_id);
+      am->FillNtupleIColumn(nt_neutron_, nc++, n.kind);
+      am->FillNtupleDColumn(nt_neutron_, nc++, n.t_ns);
+      am->FillNtupleDColumn(nt_neutron_, nc++, n.edep_MeV);
+      am->FillNtupleDColumn(nt_neutron_, nc++, n.ke_MeV);
+      am->FillNtupleIColumn(nt_neutron_, nc++, n.in_scint);
+      am->FillNtupleIColumn(nt_neutron_, nc++, n.pdg);
+      am->AddNtupleRow(nt_neutron_);
+    }
+  }
+
   if (cfg_.mode == SimMode::kOpticalCalibration && nt_photon_ >= 0) {
     for (const auto& p : e.photons) {
       int pc = 0;
@@ -315,6 +343,7 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
      << "  \"neutron_time_cut_us\": " << cfg_.neutron_time_cut_us << ",\n"
      << "  \"neutron_timecut_adr\": " << j(cfg_.neutron_timecut_adr) << ",\n"
      << "  \"neutron_timecut_claims_authorized\": " << (cfg_.neutron_timecut_claims_authorized ? "true" : "false") << ",\n"
+     << "  \"neutron_diagnostics\": " << (cfg_.neutron_diagnostics ? "true" : "false") << ",\n"
      << "  \"step_size_convergence_status\": \"BLOCKED_ISSUE_1095\",\n"
      << "  \"primary_vs_event_track_contract\": \"primary_* columns (#1007)\",\n"
      << "  \"reflectivity_scale\": " << cfg_.reflectivity_scale << ",\n"

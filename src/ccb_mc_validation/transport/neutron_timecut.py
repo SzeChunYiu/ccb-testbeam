@@ -13,7 +13,7 @@ from typing import Any, Mapping
 
 from ccb_mc_validation.exceptions import ConfigurationError, StudyBlockedError
 
-POLICY_VERSION = "2026.0-waveB-lane06"
+POLICY_VERSION = "2026.1-issue1091-ladder"
 QGSP_BIC_DEFAULT_NEUTRON_TIME_CUT_US = 10.0
 _REGISTRY = (
     Path(__file__).resolve().parents[3]

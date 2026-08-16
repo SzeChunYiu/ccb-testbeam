@@ -1,0 +1,49 @@
+{
+  "ticket_id": "2433",
+  "worker": "testbeam-laptop-4",
+  "title": "S46c pedestal-tail memory joint PID-energy calibration benchmark",
+  "command": "uv run --python 3.11 --with numpy --with pandas --with tabulate python scripts/s46c_2433_pedestal_tail_memory_pid_energy_benchmark.py",
+  "git_head": "e911cfc59b772e150beb5dd2c080b020066a3bd4",
+  "source_artifact_dir": "reports/1784064870.931.2c5305bf__s36c_pedestal_memory_pid_energy_calibration",
+  "inputs": [
+    {
+      "path": "reports/1784064870.931.2c5305bf__s36c_pedestal_memory_pid_energy_calibration/reproduction_match_table.csv",
+      "sha256": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020"
+    },
+    {
+      "path": "reports/1784064870.931.2c5305bf__s36c_pedestal_memory_pid_energy_calibration/winner_ranked_metrics.csv",
+      "sha256": "32ead78c0381116ad20582d369e6c1c04f0b3bb0eabf66469a8a3849aa8f430a"
+    },
+    {
+      "path": "reports/1784064870.931.2c5305bf__s36c_pedestal_memory_pid_energy_calibration/endpoint_metrics_ci.csv",
+      "sha256": "735511b849fe2751d56074bf0a68ce8b938c2c1f07e47a48e84961467c3ded65"
+    },
+    {
+      "path": "reports/1784064870.931.2c5305bf__s36c_pedestal_memory_pid_energy_calibration/run_heldout_metrics.csv",
+      "sha256": "faca1357177e225e2bc3350b2068d668100f2a437454176ca7bbf027fc9397dd"
+    },
+    {
+      "path": "reports/1784064870.931.2c5305bf__s36c_pedestal_memory_pid_energy_calibration/pedestal_counterfactual_metrics.csv",
+      "sha256": "4966e859aa72c52d1b4f8e84cc4b641f3de24499d30904297e2c73546cfbbf6a"
+    },
+    {
+      "path": "reports/1784064870.931.2c5305bf__s36c_pedestal_memory_pid_energy_calibration/event_predictions.csv",
+      "sha256": "98bb58d746f1ea5bc029bf260e1ce6dc091e7552aff2f322e3723f132a809e51"
+    }
+  ],
+  "outputs_sha256": {
+    "REPORT.md": "272b60f0ae22002a87bb560dd105d55c9c9dbce50ef38f032de9a844f8bf579e",
+    "claimed_ticket.txt": "e26c5140273a1a47fa9cf786f90c9e731bcd988e172549cc46bb63718c0ed4cb",
+    "claimed_ticket_body.txt": "3c896797f2612838087aaa840ab10861c7f8149c5941d0a825b4d9a8ba11d325",
+    "endpoint_metrics_ci.csv": "735511b849fe2751d56074bf0a68ce8b938c2c1f07e47a48e84961467c3ded65",
+    "event_predictions.csv": "98bb58d746f1ea5bc029bf260e1ce6dc091e7552aff2f322e3723f132a809e51",
+    "input_sha256.csv": "07b6d318ddd4c9dd6c883403e78c7a2848358ee5d6e4d9ef6443d72512c84b13",
+    "pedestal_counterfactual_metrics.csv": "4966e859aa72c52d1b4f8e84cc4b641f3de24499d30904297e2c73546cfbbf6a",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "f28c003c65ddd18701c7ed06cd1d4df4914cc738fe86ba731f371d2baa4c3edf",
+    "run_heldout_metrics.csv": "faca1357177e225e2bc3350b2068d668100f2a437454176ca7bbf027fc9397dd",
+    "s46c_sideband_metrics.csv": "aeddca5b22d5b8c8a6b302383f223e6ba4c3e7be07b9799a2fe20fafa45dfbe7",
+    "strata_metrics.csv": "846dadf87c8453de1353e1cc9b3a1c053a446ba0a9719fe628e597b2c4b9e525",
+    "winner_ranked_metrics.csv": "32ead78c0381116ad20582d369e6c1c04f0b3bb0eabf66469a8a3849aa8f430a"
+  }
+}

@@ -1,0 +1,2 @@
+#2380 S09: Event-level GNN over 4-stave graph
+Claim recovery: required tn-ticket command was run once and returned null; manually applied worker label to issue #2380 without rerunning tn-ticket claim.

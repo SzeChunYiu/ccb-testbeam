@@ -1,0 +1,46 @@
+{
+  "ticket_id": "2505",
+  "ticket_number": 2505,
+  "study_id": "S56a",
+  "worker": "testbeam-laptop-1",
+  "title": "derivative-template timing vs waveform ML for pedestal-shape disentanglement",
+  "claimed_ticket_text": "2505\n# NEW S56a derivative-template timing vs waveform ML for pedestal-shape disentanglement\n\nAcademic-grade study: quantify how pedestal-memory drift changes pulse shape and timing estimates across runs and amplitudes.\n\nTraditional method: derivative-enhanced template fit with constant-fraction timing and AR(1) pedestal correction.\n\nCompare against ridge regression on engineered waveform moments, gradient-boosted trees on rise/fall/tail features, MLP on normalized samples, 1D-CNN waveform encoder, and a compact transformer over sample tokens where statistics permit.\n\nRequire held-out-run evaluation, amplitude/current/pedestal strata, residual pulse-shape diagnostics, timing-bias curves, and stratified bootstrap 95% CIs for timing resolution, bias, and shape residual metrics.\n\nDeliver short report and CSV tables that identify which waveform regions carry pedestal-induced timing bias.\n",
+  "claim_command_output": "null\n# null\n\nnull\n",
+  "manual_claim_workaround": {
+    "reason": "tn-ticket claim returned malformed null output because the helper renders an empty existing-claim query as null|null|null; no issue was claimed by the helper.",
+    "issue": 2505,
+    "command": "gh issue edit 2505 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-1 --remove-label factory:open"
+  },
+  "output_dir": "reports/2505__s56a_derivative_template_timing_vs_waveform_ml",
+  "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+  "samples_per_channel": 18,
+  "baseline_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "duplicate_readout_channels": {"B2": 1, "B4": 3, "B6": 5, "B8": 7},
+  "expected_selected_pulses": 640737,
+  "expected_group_counts": {
+    "sample_i_calib": 248745,
+    "sample_i_analysis": 252266,
+    "sample_ii_calib": 14630,
+    "sample_ii_analysis": 125096
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "heldout_runs": [42, 50, 57, 58, 60, 62, 64, 65],
+  "max_per_run_stave": 180,
+  "bootstrap_replicates": 500,
+  "random_seed": 20560056,
+  "mlp_max_iter": 35,
+  "nn": {
+    "epochs": 6,
+    "transformer_epochs": 5,
+    "batch_size": 1024,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001
+  }
+}

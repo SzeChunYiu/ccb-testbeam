@@ -1,0 +1,12 @@
+claim_helper_command: tn-ticket claim testbeam-laptop-4 --project testbeam
+claim_helper_stdout:
+null
+# null
+
+null
+claim_helper_note: helper returned the known null pseudo-ticket despite open project:testbeam issues; the helper was not rerun
+manual_claim_issue: 2493
+manual_claim_command: gh issue edit 2493 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-4 --remove-label factory:open
+manual_claim_evidence: issue #2493 labels include factory:claimed, project:testbeam, worker:testbeam-laptop-4
+done_command: tn-ticket done 2493
+#2493 S55a: Late-tail afterpulse timing and pile-up attribution benchmark

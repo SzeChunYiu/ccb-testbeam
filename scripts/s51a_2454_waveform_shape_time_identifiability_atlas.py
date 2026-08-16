@@ -447,6 +447,13 @@ def json_safe(value):
     return value
 
 
+def frame_records(frame: pd.DataFrame) -> list[dict]:
+    return [
+        {str(column): json_safe(row[column]) for column in frame.columns}
+        for _, row in frame.iterrows()
+    ]
+
+
 def md_table(df: pd.DataFrame, columns: Sequence[str], max_rows: int | None = None) -> str:
     view = df.loc[:, list(columns)].copy()
     if max_rows is not None:
@@ -495,7 +502,8 @@ def write_report(
         ],
         columns=["method", "family", "description"],
     )
-    text = f"""# S51a Waveform Shape-Time Identifiability Atlas
+    report_title = f"{config['study_id']}/#{config['ticket_id']}: {config['title']}"
+    text = f"""# {report_title}
 
 ## Abstract
 
@@ -775,11 +783,11 @@ def main() -> None:
             "failure_rate_abs_gt_5ns_ci_low": float(winner_row["failure_rate_abs_gt_5ns_ci_low"]),
             "failure_rate_abs_gt_5ns_ci_high": float(winner_row["failure_rate_abs_gt_5ns_ci_high"]),
         },
-        "metric_table": json_safe(metrics.to_dict("records")),
-        "paired_delta_table": json_safe(deltas.to_dict("records")),
-        "frontier_axis_table": json_safe(axes.to_dict("records")),
-        "run_family_table": json_safe(families.to_dict("records")),
-        "ablation_table": json_safe(ablations.to_dict("records")),
+        "metric_table": frame_records(metrics),
+        "paired_delta_table": frame_records(deltas),
+        "frontier_axis_table": frame_records(axes),
+        "run_family_table": frame_records(families),
+        "ablation_table": frame_records(ablations),
         "strata_axes": AXES,
         "artifacts": {
             "report": "REPORT.md",

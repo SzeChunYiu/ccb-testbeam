@@ -1,0 +1,24 @@
+{
+  "ticket_id": "2509",
+  "worker": "testbeam-laptop-3",
+  "command": "python scripts/s57a_2509_derivative_template_timing_pedestal_slew.py",
+  "outputs_sha256": {
+    "REPORT.md": "4c6aa4ca6bf6f430a4621260413e65dc9ffd833f6f2904bb6c87fb4c0c4f23d4",
+    "claimed_ticket.txt": "7d63877c5ee7496a0529b450894fb65fcfbfc5863cdfeff12a9e8d4a8c69cb0e",
+    "claimed_ticket_body.txt": "40addea881a42179444f2c8849ec16cb94d56c0bb1b347839cd830f97133a08a",
+    "event_predictions.csv.gz": "d3108c94bf49ed6076f3170b3b5d5620c3fdaf6087a45adafc526e41f25a6c06",
+    "fig_pedestal_slew_bias.png": "4ba0394523f82b8070a11c245ef2838e0c01acdbdc93dc0491808eeecf7cf992",
+    "fig_timing_resolution_methods.png": "14fb823621fd89a06376cf364260d73078848e4e991bd4ec90652454a69f11c4",
+    "fig_winner_residual_tails.png": "b9f08adafb9eddaad4c6d9adb76d47d45cb3daaccb650b141033d999699f8540",
+    "input_sha256.csv": "2c7c2be2c9bc0828fee1ea6bf6f4ceee69387ef18c2ee870a5fee01d395b783b",
+    "leakage_checks.csv": "71c7042cf2580c82d224a645a44080fea7347c525a9d58bd02d9476815e86fde",
+    "method_deltas_vs_traditional.csv": "7cda6774f2af9ee5c9e041f13d084c2c69449f12f56f728925fdcbbd226f4f93",
+    "method_metrics.csv": "acea61a7d5b7d6c6cabeb02af35c27cb95754e65cda819c86392cb3b93133c36",
+    "reproduction_counts_by_run.csv": "6f5a2c5fbd8805fdd462204535903eae8479abf31059c5d933ab988b4343ac5b",
+    "reproduction_match_table.csv": "c8bfba74c8d39f9d9adb02559bcd6b2a433d75285e641530f69757974674a53c",
+    "result.json": "c099c2c263ae0d345b7be8ec17a28a5fc48f8e29665e20b7f9e3615ae708da51",
+    "run_heldout_metrics.csv": "6dac1ebcc4f03242c33c125ee8f13154c29e9d9e380a6a2902ed4873f18b746f",
+    "strata_metrics.csv": "a776e897872016376ab700c2bbb7092e880b67b4b19a1f8615de4635a4f65366",
+    "timing_pulse_errors.csv.gz": "390ab7aeecb5805db7a7f83ea8248a2eb87f719056f4ff4a156bdca617369b10"
+  }
+}

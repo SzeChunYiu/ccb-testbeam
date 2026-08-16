@@ -1,0 +1,3 @@
+# S16v: current-stratified sorted-baseline timing-tail transfer
+
+Use an external electronics-current ledger to stratify the S16u sorted-baseline timing-tail proxy by current state and test whether the Sample-I/Sample-II coefficient sign transfer survives within-current matching.

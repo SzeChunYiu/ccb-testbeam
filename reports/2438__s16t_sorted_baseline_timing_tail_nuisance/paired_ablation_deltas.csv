@@ -1,0 +1,5 @@
+augmented_method,baseline_method,delta_sigma68_ns,delta_sigma68_ns_ci_low,delta_sigma68_ns_ci_high
+ridge_plus_sorted_proxy,ridge_controls_only,0.009868008629581038,-0.060461745153461255,0.08106874948302518
+gradient_boosted_trees_plus_sorted_proxy,gradient_boosted_trees_controls_only,-0.014536086180620078,-0.042575713535630125,0.004421179380575767
+traditional_binned_median,uncorrected,-1.5658514397071563,-1.6654923175752334,-1.4632951689833207
+nuisance_gated_pair_cnn,one_dimensional_cnn,-0.0068704041077958244,-0.021396000800832704,0.00511826394731122

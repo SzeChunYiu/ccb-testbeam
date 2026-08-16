@@ -1,0 +1,12 @@
+claim_helper_command: tn-ticket claim testbeam-laptop-3 --project testbeam
+claim_helper_stderr:
+null
+claim_helper_stdout:
+# null
+
+null
+manual_claim_issue: 2487
+manual_claim_command: gh issue edit 2487 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-3 --remove-label factory:open
+manual_claim_evidence: issue #2487 labels include factory:claimed, project:testbeam, worker:testbeam-laptop-3
+done_command: tn-ticket done 2487
+#2487 S54a: CFD-template versus neural phase recovery for saturated pile-up pulses

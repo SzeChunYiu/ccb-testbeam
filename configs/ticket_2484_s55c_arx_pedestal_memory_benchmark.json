@@ -1,0 +1,53 @@
+{
+  "ticket_id": "2484",
+  "study_id": "S55c",
+  "worker": "testbeam-laptop-4",
+  "title": "ARX pedestal-memory deconvolution versus multitask neural pulse representations",
+  "output_dir": "reports/2484__s55c_arx_pedestal_memory_benchmark",
+  "g4_join_report_dir": "reports/1783883140.39222.3c4045b1__g4_08_keyed_digitized_geant4_native_join",
+  "raw_root_dir_candidates": [
+    "data/extracted/root/root",
+    "/home/billy/ccb-data/data/extracted/root/root",
+    "data/root/root",
+    "/home/billy/ccb-data/extracted/root/root",
+    "/home/billy/Desktop/test_beam/data/root/root"
+  ],
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "duplicate_readout_channels": {
+    "B2": 1,
+    "B4": 3,
+    "B6": 5,
+    "B8": 7
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "train_runs": [50, 51, 52, 53, 54, 55, 56, 57],
+  "heldout_runs": [58, 60, 62, 64, 65],
+  "expected_total_selected_pulses": 640737,
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "bootstrap_replicates": 500,
+  "random_seed": 248455,
+  "mlp_max_iter": 220,
+  "cnn_epochs": 0,
+  "cnn_batch_size": 128,
+  "cnn_learning_rate": 0.001,
+  "winner_score_weights": {
+    "pid_balanced_error": 0.26,
+    "energy_sigma68": 0.24,
+    "pedestal_residual_rms": 0.18,
+    "timing_jitter": 0.14,
+    "pileup_balanced_error": 0.10,
+    "pid_ece": 0.08
+  }
+}

@@ -1,0 +1,7 @@
+quantity,report_value,reproduced,delta,tolerance,pass
+total selected B-stave pulses on configured S00/S06 runs,640737,640737,0,0,True
+sample-II analysis selected pulses,125096,125096,0,0,True
+sample-II analysis B2,88213,88213,0,0,True
+sample-II analysis B4,21229,21229,0,0,True
+sample-II analysis B6,11148,11148,0,0,True
+sample-II analysis B8,4506,4506,0,0,True

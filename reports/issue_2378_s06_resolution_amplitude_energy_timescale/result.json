@@ -1,0 +1,87 @@
+{
+  "bootstrap": "run-block/event-paired bootstrap, 300 replicates in source S06b benchmark tables",
+  "finding": "phase_conformal_gated_cnn wins the S06 run-held-out benchmark with calibration loss 0.0534 [0.0414, 0.0705], improving on the strong traditional S02/S03/S04 atom robust-width baseline by 0.6056. The raw ROOT reproduction gate matches 640,737 configured selected B-stave pulses exactly.",
+  "git_commit": "3f71d0b1d84d9778aa0096cd3d24b9cd562e16a6",
+  "heldout_runs": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "methods_benchmarked": [
+    "phase_conformal_gated_cnn",
+    "cnn1d",
+    "mlp",
+    "gradient_boosted_trees",
+    "ridge",
+    "traditional"
+  ],
+  "ml_minus_traditional_calibration_loss": -0.6056110520318868,
+  "n_pair_residuals": 11460,
+  "raw_root_reproduction": [
+    {
+      "delta": 0,
+      "pass": true,
+      "quantity": "total selected B-stave pulses on configured S00/S06 runs",
+      "report_value": 640737,
+      "reproduced": 640737,
+      "tolerance": 0
+    },
+    {
+      "delta": 0,
+      "pass": true,
+      "quantity": "sample-II analysis selected pulses",
+      "report_value": 125096,
+      "reproduced": 125096,
+      "tolerance": 0
+    },
+    {
+      "delta": 0,
+      "pass": true,
+      "quantity": "sample-II analysis B2",
+      "report_value": 88213,
+      "reproduced": 88213,
+      "tolerance": 0
+    },
+    {
+      "delta": 0,
+      "pass": true,
+      "quantity": "sample-II analysis B4",
+      "report_value": 21229,
+      "reproduced": 21229,
+      "tolerance": 0
+    },
+    {
+      "delta": 0,
+      "pass": true,
+      "quantity": "sample-II analysis B6",
+      "report_value": 11148,
+      "reproduced": 11148,
+      "tolerance": 0
+    },
+    {
+      "delta": 0,
+      "pass": true,
+      "quantity": "sample-II analysis B8",
+      "report_value": 4506,
+      "reproduced": 4506,
+      "tolerance": 0
+    }
+  ],
+  "source_benchmark": "reports/1781054026.2063.38d35ceb__s06b_amplitude_energy_timing_support_closure",
+  "status": "pass",
+  "study": "S06",
+  "ticket": 2378,
+  "traditional_calibration_loss": 0.6590594203452015,
+  "winner": "phase_conformal_gated_cnn",
+  "winner_calibration_loss": 0.0534483683133147,
+  "winner_calibration_loss_ci": [
+    0.0414197526181598,
+    0.0704632721501709
+  ],
+  "winner_metric": "pooled_pairwise_calibration_loss",
+  "worker": "testbeam-laptop-4"
+}

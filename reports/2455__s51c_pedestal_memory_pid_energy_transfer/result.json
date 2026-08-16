@@ -73,8 +73,7 @@
     "calibration_ece.csv": "PID/proxy calibration",
     "strata_metrics.csv": "tail/pedestal/pulse/timing/pileup/saturation/energy strata",
     "leakage_audit.csv": "cross-task leakage audit",
-    "claimed_ticket.txt": "claim provenance",
-    "report_dir": "reports/2455__s51c_pedestal_memory_pid_energy_transfer"
+    "claimed_ticket.txt": "claim provenance"
   },
   "next_tickets": [],
   "novel_tickets_appended": [],

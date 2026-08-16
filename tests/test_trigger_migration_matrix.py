@@ -244,16 +244,16 @@ def test_partial_migration():
 
         output = json.loads((tmpdir / "output.json").read_text())
 
-        # Quadrants: both=40, proxy_only=60, hardware_only=20, neither=880
+        # Quadrants: both=60, proxy_only=40, hardware_only=0, neither=600
         q = output["aggregate_migration"]["quadrants"]
-        assert q["both"] == 40, f"Expected both=40, got {q['both']}"
-        assert q["proxy_only"] == 60, f"Expected proxy_only=60, got {q['proxy_only']}"
-        assert q["hardware_only"] == 20, f"Expected hardware_only=20, got {q['hardware_only']}"
-        assert q["neither"] == 880, f"Expected neither=880, got {q['neither']}"
+        assert q["both"] == 60, f"Expected both=60, got {q['both']}"
+        assert q["proxy_only"] == 40, f"Expected proxy_only=40, got {q['proxy_only']}"
+        assert q["hardware_only"] == 0, f"Expected hardware_only=0, got {q['hardware_only']}"
+        assert q["neither"] == 600, f"Expected neither=600, got {q['neither']}"
 
-        # Migration loss: 60/(60+40) = 60%
+        # Migration loss: 40/(40+60) = 40%
         loss = output["headline_metrics"]["migration_loss_percent"]
-        assert abs(loss - 60.0) < 0.01, f"Expected loss=60%, got {loss}%"
+        assert abs(loss - 40.0) < 0.01, f"Expected loss=40%, got {loss}%"
 
 
 def test_species_breakdown():

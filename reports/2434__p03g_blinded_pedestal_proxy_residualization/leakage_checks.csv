@@ -1,0 +1,162 @@
+heldout_run,check,value,pass,detail
+58,train_heldout_run_overlap,0.0,True,
+58,train_heldout_event_id_overlap,0.0,True,
+58,feature_audit,0.0,True,"waveform_amp_shape: same-pulse waveform plus amplitude and shape summaries; no run, event id, event order, stave id, other-stave time, or held-out target; samples 0-3 are fold-local Ridge residuals after projecting out blinded pedestal/baseline proxies; waveform_amp_shape_stave: same as waveform_amp_shape, except explicit downstream stave one-hot is intentionally included; samples 0-3 are fold-local Ridge residuals after projecting out blinded pedestal/baseline proxies; waveform_only: 18 normalized same-pulse waveform samples only; no run, event id, event order, stave id, amplitude scalar, other-stave time, or held-out target; samples 0-3 are fold-local Ridge residuals after projecting out blinded pedestal/baseline proxies; waveform_stave_onehot: same as waveform_only, except explicit downstream stave one-hot is intentionally included; samples 0-3 are fold-local Ridge residuals after projecting out blinded pedestal/baseline proxies"
+58,shuffled_target_worse:ridge_waveform_only,-0.21828011591202778,False,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:hgb_waveform_only,-0.47678572349523973,False,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:mlp_waveform_only,-0.09357194570930982,False,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:cnn1d_waveform_only,0.01197229386974441,True,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:feature_gated_waveform_only,-0.0018592236332684031,False,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:ridge_waveform_stave_onehot,0.1469364172724903,True,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:hgb_waveform_stave_onehot,0.19484555812742044,True,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:mlp_waveform_stave_onehot,0.03572902785626075,True,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:cnn1d_waveform_stave_onehot,-0.15338876513544508,False,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:feature_gated_waveform_stave_onehot,0.11773529483101641,True,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:ridge_waveform_amp_shape,-0.46017257462121197,False,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:hgb_waveform_amp_shape,-0.41847164157122396,False,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:mlp_waveform_amp_shape,-0.4010927351058706,False,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:cnn1d_waveform_amp_shape,-0.3034902039016889,False,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:feature_gated_waveform_amp_shape,-0.3721581127542031,False,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:ridge_waveform_amp_shape_stave,0.015697358241080428,True,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:hgb_waveform_amp_shape_stave,0.13790447409372564,True,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:mlp_waveform_amp_shape_stave,0.10124092133423024,True,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:cnn1d_waveform_amp_shape_stave,0.053456154316106286,True,positive means shuffled target is no better than nominal
+58,shuffled_target_worse:feature_gated_waveform_amp_shape_stave,0.2499317704276005,True,positive means shuffled target is no better than nominal
+59,train_heldout_run_overlap,0.0,True,
+59,train_heldout_event_id_overlap,0.0,True,
+59,feature_audit,0.0,True,"waveform_amp_shape: same-pulse waveform plus amplitude and shape summaries; no run, event id, event order, stave id, other-stave time, or held-out target; samples 0-3 are fold-local Ridge residuals after projecting out blinded pedestal/baseline proxies; waveform_amp_shape_stave: same as waveform_amp_shape, except explicit downstream stave one-hot is intentionally included; samples 0-3 are fold-local Ridge residuals after projecting out blinded pedestal/baseline proxies; waveform_only: 18 normalized same-pulse waveform samples only; no run, event id, event order, stave id, amplitude scalar, other-stave time, or held-out target; samples 0-3 are fold-local Ridge residuals after projecting out blinded pedestal/baseline proxies; waveform_stave_onehot: same as waveform_only, except explicit downstream stave one-hot is intentionally included; samples 0-3 are fold-local Ridge residuals after projecting out blinded pedestal/baseline proxies"
+59,shuffled_target_worse:ridge_waveform_only,-0.0902672225474963,False,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:hgb_waveform_only,0.14113929014994442,True,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:mlp_waveform_only,-0.13077506045849963,False,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:cnn1d_waveform_only,0.023377647334255514,True,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:feature_gated_waveform_only,0.0004375195835701895,True,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:ridge_waveform_stave_onehot,0.12649503460503242,True,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:hgb_waveform_stave_onehot,0.4129435479727135,True,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:mlp_waveform_stave_onehot,0.18625653559087274,True,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:cnn1d_waveform_stave_onehot,0.03977985717289312,True,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:feature_gated_waveform_stave_onehot,0.20892494810145412,True,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:ridge_waveform_amp_shape,-0.3398371220218981,False,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:hgb_waveform_amp_shape,0.13778027446255647,True,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:mlp_waveform_amp_shape,-0.05650021580917297,False,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:cnn1d_waveform_amp_shape,-0.3509374858664429,False,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:feature_gated_waveform_amp_shape,-0.24992718784276047,False,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:ridge_waveform_amp_shape_stave,0.14197570238712043,True,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:hgb_waveform_amp_shape_stave,0.41543223920625794,True,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:mlp_waveform_amp_shape_stave,0.35298211780331346,True,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:cnn1d_waveform_amp_shape_stave,0.10910691447228116,True,positive means shuffled target is no better than nominal
+59,shuffled_target_worse:feature_gated_waveform_amp_shape_stave,0.1332624251559813,True,positive means shuffled target is no better than nominal
+60,train_heldout_run_overlap,0.0,True,
+60,train_heldout_event_id_overlap,0.0,True,
+60,feature_audit,0.0,True,"waveform_amp_shape: same-pulse waveform plus amplitude and shape summaries; no run, event id, event order, stave id, other-stave time, or held-out target; samples 0-3 are fold-local Ridge residuals after projecting out blinded pedestal/baseline proxies; waveform_amp_shape_stave: same as waveform_amp_shape, except explicit downstream stave one-hot is intentionally included; samples 0-3 are fold-local Ridge residuals after projecting out blinded pedestal/baseline proxies; waveform_only: 18 normalized same-pulse waveform samples only; no run, event id, event order, stave id, amplitude scalar, other-stave time, or held-out target; samples 0-3 are fold-local Ridge residuals after projecting out blinded pedestal/baseline proxies; waveform_stave_onehot: same as waveform_only, except explicit downstream stave one-hot is intentionally included; samples 0-3 are fold-local Ridge residuals after projecting out blinded pedestal/baseline proxies"
+60,shuffled_target_worse:ridge_waveform_only,-0.14079441023671357,False,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:hgb_waveform_only,0.017357619185941475,True,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:mlp_waveform_only,-0.0475404482411661,False,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:cnn1d_waveform_only,-0.012048905940191368,False,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:feature_gated_waveform_only,0.0027533401600436935,True,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:ridge_waveform_stave_onehot,0.090402628160142,True,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:hgb_waveform_stave_onehot,0.27874106821202416,True,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:mlp_waveform_stave_onehot,-0.00327349207282146,False,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:cnn1d_waveform_stave_onehot,-0.06565904776968301,False,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:feature_gated_waveform_stave_onehot,0.17736957033139644,True,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:ridge_waveform_amp_shape,-0.3305925287617759,False,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:hgb_waveform_amp_shape,0.07784820022102945,True,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:mlp_waveform_amp_shape,-0.14250888931584882,False,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:cnn1d_waveform_amp_shape,-0.26836257884205716,False,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:feature_gated_waveform_amp_shape,-0.20073660142764815,False,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:ridge_waveform_amp_shape_stave,-0.0012938120837777678,False,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:hgb_waveform_amp_shape_stave,0.36804724249139786,True,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:mlp_waveform_amp_shape_stave,0.2049469788606566,True,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:cnn1d_waveform_amp_shape_stave,0.1504182767307498,True,positive means shuffled target is no better than nominal
+60,shuffled_target_worse:feature_gated_waveform_amp_shape_stave,0.0799988196528203,True,positive means shuffled target is no better than nominal
+61,train_heldout_run_overlap,0.0,True,
+61,train_heldout_event_id_overlap,0.0,True,
+61,feature_audit,0.0,True,"waveform_amp_shape: same-pulse waveform plus amplitude and shape summaries; no run, event id, event order, stave id, other-stave time, or held-out target; samples 0-3 are fold-local Ridge residuals after projecting out blinded pedestal/baseline proxies; waveform_amp_shape_stave: same as waveform_amp_shape, except explicit downstream stave one-hot is intentionally included; samples 0-3 are fold-local Ridge residuals after projecting out blinded pedestal/baseline proxies; waveform_only: 18 normalized same-pulse waveform samples only; no run, event id, event order, stave id, amplitude scalar, other-stave time, or held-out target; samples 0-3 are fold-local Ridge residuals after projecting out blinded pedestal/baseline proxies; waveform_stave_onehot: same as waveform_only, except explicit downstream stave one-hot is intentionally included; samples 0-3 are fold-local Ridge residuals after projecting out blinded pedestal/baseline proxies"
+61,shuffled_target_worse:ridge_waveform_only,0.0032903324742572515,True,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:hgb_waveform_only,0.451514385777805,True,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:mlp_waveform_only,0.0018488183923035528,True,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:cnn1d_waveform_only,0.0020736958758780233,True,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:feature_gated_waveform_only,-0.020424165004404582,False,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:ridge_waveform_stave_onehot,0.8623120988038204,True,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:hgb_waveform_stave_onehot,1.0732367374263072,True,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:mlp_waveform_stave_onehot,0.9866889836250432,True,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:cnn1d_waveform_stave_onehot,0.764255410100346,True,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:feature_gated_waveform_stave_onehot,0.882005572782524,True,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:ridge_waveform_amp_shape,-0.18529693081868714,False,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:hgb_waveform_amp_shape,0.5478935114003056,True,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:mlp_waveform_amp_shape,0.22056413899799998,True,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:cnn1d_waveform_amp_shape,-0.03942635932302929,False,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:feature_gated_waveform_amp_shape,-0.11160770580254775,False,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:ridge_waveform_amp_shape_stave,0.8154240409645039,True,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:hgb_waveform_amp_shape_stave,1.056714231931736,True,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:mlp_waveform_amp_shape_stave,1.0186423264971853,True,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:cnn1d_waveform_amp_shape_stave,0.8423373613953848,True,positive means shuffled target is no better than nominal
+61,shuffled_target_worse:feature_gated_waveform_amp_shape_stave,0.8681627584883667,True,positive means shuffled target is no better than nominal
+62,train_heldout_run_overlap,0.0,True,
+62,train_heldout_event_id_overlap,0.0,True,
+62,feature_audit,0.0,True,"waveform_amp_shape: same-pulse waveform plus amplitude and shape summaries; no run, event id, event order, stave id, other-stave time, or held-out target; samples 0-3 are fold-local Ridge residuals after projecting out blinded pedestal/baseline proxies; waveform_amp_shape_stave: same as waveform_amp_shape, except explicit downstream stave one-hot is intentionally included; samples 0-3 are fold-local Ridge residuals after projecting out blinded pedestal/baseline proxies; waveform_only: 18 normalized same-pulse waveform samples only; no run, event id, event order, stave id, amplitude scalar, other-stave time, or held-out target; samples 0-3 are fold-local Ridge residuals after projecting out blinded pedestal/baseline proxies; waveform_stave_onehot: same as waveform_only, except explicit downstream stave one-hot is intentionally included; samples 0-3 are fold-local Ridge residuals after projecting out blinded pedestal/baseline proxies"
+62,shuffled_target_worse:ridge_waveform_only,-0.10329033120652498,False,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:hgb_waveform_only,0.058122038106216634,True,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:mlp_waveform_only,-0.009791255521046205,False,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:cnn1d_waveform_only,0.010566224665769397,True,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:feature_gated_waveform_only,0.022899820443587293,True,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:ridge_waveform_stave_onehot,0.18220127779091944,True,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:hgb_waveform_stave_onehot,0.421536728986728,True,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:mlp_waveform_stave_onehot,0.17506557132098433,True,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:cnn1d_waveform_stave_onehot,0.17689682977569499,True,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:feature_gated_waveform_stave_onehot,0.26297012305221923,True,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:ridge_waveform_amp_shape,-0.24612889978855246,False,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:hgb_waveform_amp_shape,0.14248587005324476,True,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:mlp_waveform_amp_shape,-0.13279387948833032,False,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:cnn1d_waveform_amp_shape,-0.2845773810086172,False,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:feature_gated_waveform_amp_shape,-0.2896365469711988,False,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:ridge_waveform_amp_shape_stave,0.10826224194113587,True,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:hgb_waveform_amp_shape_stave,0.3937163834420008,True,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:mlp_waveform_amp_shape_stave,0.2719272531290393,True,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:cnn1d_waveform_amp_shape_stave,0.1571394752888935,True,positive means shuffled target is no better than nominal
+62,shuffled_target_worse:feature_gated_waveform_amp_shape_stave,0.25526848819931236,True,positive means shuffled target is no better than nominal
+63,train_heldout_run_overlap,0.0,True,
+63,train_heldout_event_id_overlap,0.0,True,
+63,feature_audit,0.0,True,"waveform_amp_shape: same-pulse waveform plus amplitude and shape summaries; no run, event id, event order, stave id, other-stave time, or held-out target; samples 0-3 are fold-local Ridge residuals after projecting out blinded pedestal/baseline proxies; waveform_amp_shape_stave: same as waveform_amp_shape, except explicit downstream stave one-hot is intentionally included; samples 0-3 are fold-local Ridge residuals after projecting out blinded pedestal/baseline proxies; waveform_only: 18 normalized same-pulse waveform samples only; no run, event id, event order, stave id, amplitude scalar, other-stave time, or held-out target; samples 0-3 are fold-local Ridge residuals after projecting out blinded pedestal/baseline proxies; waveform_stave_onehot: same as waveform_only, except explicit downstream stave one-hot is intentionally included; samples 0-3 are fold-local Ridge residuals after projecting out blinded pedestal/baseline proxies"
+63,shuffled_target_worse:ridge_waveform_only,-0.09981021998343587,False,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:hgb_waveform_only,-0.0728786877933536,False,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:mlp_waveform_only,-0.12776668774666877,False,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:cnn1d_waveform_only,-0.016360273240655587,False,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:feature_gated_waveform_only,-0.007907453297449907,False,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:ridge_waveform_stave_onehot,0.045012015390144766,True,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:hgb_waveform_stave_onehot,0.20732443322337346,True,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:mlp_waveform_stave_onehot,0.2854141371335681,True,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:cnn1d_waveform_stave_onehot,-0.03686006971634015,False,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:feature_gated_waveform_stave_onehot,0.014181618119888606,True,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:ridge_waveform_amp_shape,-0.3902302843046166,False,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:hgb_waveform_amp_shape,-0.051589760200366985,False,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:mlp_waveform_amp_shape,-0.22858100019695327,False,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:cnn1d_waveform_amp_shape,-0.18276453581373442,False,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:feature_gated_waveform_amp_shape,-0.20566793989906795,False,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:ridge_waveform_amp_shape_stave,0.010127815102594306,True,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:hgb_waveform_amp_shape_stave,0.19130373082949936,True,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:mlp_waveform_amp_shape_stave,0.1080691573463528,True,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:cnn1d_waveform_amp_shape_stave,0.024556643131530942,True,positive means shuffled target is no better than nominal
+63,shuffled_target_worse:feature_gated_waveform_amp_shape_stave,0.10186812365687303,True,positive means shuffled target is no better than nominal
+65,train_heldout_run_overlap,0.0,True,
+65,train_heldout_event_id_overlap,0.0,True,
+65,feature_audit,0.0,True,"waveform_amp_shape: same-pulse waveform plus amplitude and shape summaries; no run, event id, event order, stave id, other-stave time, or held-out target; samples 0-3 are fold-local Ridge residuals after projecting out blinded pedestal/baseline proxies; waveform_amp_shape_stave: same as waveform_amp_shape, except explicit downstream stave one-hot is intentionally included; samples 0-3 are fold-local Ridge residuals after projecting out blinded pedestal/baseline proxies; waveform_only: 18 normalized same-pulse waveform samples only; no run, event id, event order, stave id, amplitude scalar, other-stave time, or held-out target; samples 0-3 are fold-local Ridge residuals after projecting out blinded pedestal/baseline proxies; waveform_stave_onehot: same as waveform_only, except explicit downstream stave one-hot is intentionally included; samples 0-3 are fold-local Ridge residuals after projecting out blinded pedestal/baseline proxies"
+65,shuffled_target_worse:ridge_waveform_only,-0.07898751026557016,False,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:hgb_waveform_only,0.098434823449703,True,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:mlp_waveform_only,0.05338462888837214,True,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:cnn1d_waveform_only,0.031694464964318714,True,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:feature_gated_waveform_only,0.06496133446478258,True,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:ridge_waveform_stave_onehot,0.06357157486515042,True,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:hgb_waveform_stave_onehot,0.13513704210432498,True,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:mlp_waveform_stave_onehot,0.426489720966611,True,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:cnn1d_waveform_stave_onehot,0.043138567838645114,True,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:feature_gated_waveform_stave_onehot,0.1184481980522265,True,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:ridge_waveform_amp_shape,-0.1326925481095429,False,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:hgb_waveform_amp_shape,-0.004053454913639953,False,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:mlp_waveform_amp_shape,-0.17630413623988694,False,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:cnn1d_waveform_amp_shape,-0.15633215797811761,False,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:feature_gated_waveform_amp_shape,-0.17091758708115812,False,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:ridge_waveform_amp_shape_stave,0.04408630395944657,True,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:hgb_waveform_amp_shape_stave,0.4011671537071726,True,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:mlp_waveform_amp_shape_stave,0.21500332595851512,True,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:cnn1d_waveform_amp_shape_stave,0.1534628934450064,True,positive means shuffled target is no better than nominal
+65,shuffled_target_worse:feature_gated_waveform_amp_shape_stave,-0.01665754648094242,False,positive means shuffled target is no better than nominal

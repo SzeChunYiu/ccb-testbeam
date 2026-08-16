@@ -255,10 +255,10 @@ def run_migration_analysis(
 
     # Extract curve data
     eff_vs_threshold = extract_curve_data(
-        hardware_data["results"], "threshold_mev", "efficiency"
+        hardware_data["results"], "threshold_mev"
     )
     eff_vs_coinc = extract_curve_data(
-        hardware_data["results"], "coinc_ns", "efficiency"
+        hardware_data["results"], "coinc_ns"
     )
 
     # Headline metrics

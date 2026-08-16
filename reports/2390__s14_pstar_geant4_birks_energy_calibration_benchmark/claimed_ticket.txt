@@ -1,0 +1,4 @@
+2390
+# S14: Energy calibration (PSTAR/GEANT4 + Birks)
+
+Replace power-law range model with PSTAR/GEANT4; model Birks quenching; propagate systematics. See studies/STUDIES.md for full spec. RULES: reproduce-first; BOTH traditional AND ML benchmarked; atomic; pre-register metric; provenance manifest; data READ-ONLY at ./data; write only your own reports/<id> dir; STUDY_TEMPLATE.md. Needs S00 (done).

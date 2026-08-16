@@ -141,23 +141,6 @@
       "res68_frac": 0.1832730842
     }
   ],
-  "artifacts": {
-    "REPORT.md": "reports/2390__s14_pstar_geant4_birks_energy_calibration_benchmark/REPORT.md",
-    "birks_fit.csv": "reports/2390__s14_pstar_geant4_birks_energy_calibration_benchmark/birks_fit.csv",
-    "claimed_ticket.txt": "reports/2390__s14_pstar_geant4_birks_energy_calibration_benchmark/claimed_ticket.txt",
-    "composite_method_ranking.csv": "reports/2390__s14_pstar_geant4_birks_energy_calibration_benchmark/composite_method_ranking.csv",
-    "counts_by_run.csv": "reports/2390__s14_pstar_geant4_birks_energy_calibration_benchmark/counts_by_run.csv",
-    "geant4_range_table.csv": "reports/2390__s14_pstar_geant4_birks_energy_calibration_benchmark/geant4_range_table.csv",
-    "geant4_stave_priors.csv": "reports/2390__s14_pstar_geant4_birks_energy_calibration_benchmark/geant4_stave_priors.csv",
-    "input_sha256.csv": "reports/2390__s14_pstar_geant4_birks_energy_calibration_benchmark/input_sha256.csv",
-    "leakage_checks.csv": "reports/2390__s14_pstar_geant4_birks_energy_calibration_benchmark/leakage_checks.csv",
-    "manifest.json": "reports/2390__s14_pstar_geant4_birks_energy_calibration_benchmark/manifest.json",
-    "method_metrics.csv": "reports/2390__s14_pstar_geant4_birks_energy_calibration_benchmark/method_metrics.csv",
-    "pid_method_metrics.csv": "reports/2390__s14_pstar_geant4_birks_energy_calibration_benchmark/pid_method_metrics.csv",
-    "pid_run_metrics.csv": "reports/2390__s14_pstar_geant4_birks_energy_calibration_benchmark/pid_run_metrics.csv",
-    "reproduction_match_table.csv": "reports/2390__s14_pstar_geant4_birks_energy_calibration_benchmark/reproduction_match_table.csv",
-    "run_heldout_summary.csv": "reports/2390__s14_pstar_geant4_birks_energy_calibration_benchmark/run_heldout_summary.csv"
-  },
   "claim_command": "tn-ticket claim testbeam-laptop-1 --project testbeam",
   "claim_recovery_note": "The mandated claim command was run once and returned null without assigning a worker label; issue 2390, the oldest open testbeam ticket, was then label-transitioned manually to factory:claimed + worker:testbeam-laptop-1.",
   "claimed_once": true,

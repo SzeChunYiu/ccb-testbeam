@@ -8,9 +8,9 @@ Generated from `docs/figures/paper/manifest.json`. Captions are external to the 
 
 ![Selected-pulse inventory](https://raw.githubusercontent.com/SzeChunYiu/ccb-testbeam/main/docs/figures/paper/selected_pulse_inventory.png)
 
-**Status:** `VALIDATED` · **Evidence:** `DATA_MEASUREMENT`
+**Status:** `GATED` · **Evidence:** `DATA_MEASUREMENT`
 
-Exact S00 reproduction. Sample I is dominated by B2; Sample II reaches deeper staves more often. Counts are deterministic for the fixed raw inputs and selection.
+Exact S00 reproduction. Sample I is dominated by B2; Sample II reaches deeper staves more often. Counts are deterministic for the fixed raw inputs and selection; CL-001 remains GATED pending data-contract closure (#952/#953/#954), so this figure is not an authorising ledger row.
 
 [PDF](https://raw.githubusercontent.com/SzeChunYiu/ccb-testbeam/main/docs/figures/paper/selected_pulse_inventory.pdf) · [SVG](https://raw.githubusercontent.com/SzeChunYiu/ccb-testbeam/main/docs/figures/paper/selected_pulse_inventory.svg) · [source CSV](https://raw.githubusercontent.com/SzeChunYiu/ccb-testbeam/main/docs/figures/paper/source_tables/selected_pulse_inventory_source.csv)
 
@@ -22,7 +22,7 @@ Exact S00 reproduction. Sample I is dominated by B2; Sample II reaches deeper st
 
 **Status:** `REVIEW` · **Evidence:** `GOVERNANCE_LEDGER`
 
-Status counts from the canonical 26-row claim ledger. Only one row is VALIDATED; visual polish must not promote gated, blocked, flawed or superseded evidence.
+Status counts from the canonical claim ledger (docs/claim_ledger.csv). Visual polish must not promote gated, blocked, flawed or superseded evidence.
 
 [PDF](https://raw.githubusercontent.com/SzeChunYiu/ccb-testbeam/main/docs/figures/paper/claim_status_overview.pdf) · [SVG](https://raw.githubusercontent.com/SzeChunYiu/ccb-testbeam/main/docs/figures/paper/claim_status_overview.svg) · [source CSV](https://raw.githubusercontent.com/SzeChunYiu/ccb-testbeam/main/docs/figures/paper/source_tables/claim_status_overview_source.csv)
 

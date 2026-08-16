@@ -1,0 +1,3 @@
+quantity,report_value,reproduced,delta,tolerance,pass
+S00/S01 selected B-stave pulses,640737,640737,0,0,True
+analysis selected rows,377362,377362,0,0,True

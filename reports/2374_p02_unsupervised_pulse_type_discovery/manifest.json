@@ -1,0 +1,76 @@
+{
+  "ticket_id": "2374",
+  "generated_at_unix": 1786864795.6619759,
+  "artifacts": [
+    {
+      "path": "reports/2374_p02_unsupervised_pulse_type_discovery/REPORT.md",
+      "sha256": "d8d5432e26e68959cca1d98220d033f2abb1c786f63c8a43529adfe476b8059c",
+      "bytes": 13086
+    },
+    {
+      "path": "reports/2374_p02_unsupervised_pulse_type_discovery/benchmark_sample_labels.csv",
+      "sha256": "3341ec6f1251782799236435a29e84276f978a3b6f9a5067b125cd8367d7c055",
+      "bytes": 4388161
+    },
+    {
+      "path": "reports/2374_p02_unsupervised_pulse_type_discovery/claimed_ticket.txt",
+      "sha256": "ed0cfbf32b57a13f422618a2f64109a4cd060b5bb18a82a24a0e921c90d07ba6",
+      "bytes": 553
+    },
+    {
+      "path": "reports/2374_p02_unsupervised_pulse_type_discovery/heldout_per_run_metrics.csv",
+      "sha256": "a4df7b169cd58b3aad4ad1b7ea84f693c55af3dca9526db43915311cc7bc78ed",
+      "bytes": 35034
+    },
+    {
+      "path": "reports/2374_p02_unsupervised_pulse_type_discovery/heldout_predictions.csv.gz",
+      "sha256": "90d4d87c2f03dee50155e26170214867a7ee07bf7622439a6a74e36b64d32240",
+      "bytes": 6347612
+    },
+    {
+      "path": "reports/2374_p02_unsupervised_pulse_type_discovery/label_counts.csv",
+      "sha256": "7b7ba2b693cd9ebef92b7721cd7194c89492ed66f9f1c5d7fb445a62f88f2e97",
+      "bytes": 147
+    },
+    {
+      "path": "reports/2374_p02_unsupervised_pulse_type_discovery/method_summary_all.csv",
+      "sha256": "ce6e26b4576e16e2db05899671c5a59546cffce182265467bf918ea265f94509",
+      "bytes": 8300
+    },
+    {
+      "path": "reports/2374_p02_unsupervised_pulse_type_discovery/primary_auc_ci.png",
+      "sha256": "3f3ec642d04dd50081cf5a2a84e302c1e2f0f5bba8932eaf7f443b9ca6d8fcb0",
+      "bytes": 40746
+    },
+    {
+      "path": "reports/2374_p02_unsupervised_pulse_type_discovery/primary_method_summary.csv",
+      "sha256": "4ca652adccdea64f3550bd5ee5c5a2b9e3f88cb525712aebfc453b52c5f321b3",
+      "bytes": 818
+    },
+    {
+      "path": "reports/2374_p02_unsupervised_pulse_type_discovery/reproduction_counts_by_run.csv",
+      "sha256": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+      "bytes": 1896
+    },
+    {
+      "path": "reports/2374_p02_unsupervised_pulse_type_discovery/reproduction_match_table.csv",
+      "sha256": "30c27e630bc2f37a7e26cf4f3fac0ad2db556913c9a3725097ba16731535f2cf",
+      "bytes": 135
+    },
+    {
+      "path": "reports/2374_p02_unsupervised_pulse_type_discovery/result.json",
+      "sha256": "67f55d7f902cf3ea5d360f653253bfee9ddbf08fc26cb0394328f4ea67c7d95f",
+      "bytes": 2728
+    },
+    {
+      "path": "reports/2374_p02_unsupervised_pulse_type_discovery/traditional_feature_families.csv",
+      "sha256": "c635a2d72a26444f81cf00e9d9beab6ec2de60cbf2dc8e79874ff9ef08fcefa7",
+      "bytes": 1425
+    },
+    {
+      "path": "reports/2374_p02_unsupervised_pulse_type_discovery/traditional_method_summary.csv",
+      "sha256": "ce4e4087bfeb88da35cfc21ee9092268ff8a297f04dbb1d53ad341d363fe52bf",
+      "bytes": 7744
+    }
+  ]
+}

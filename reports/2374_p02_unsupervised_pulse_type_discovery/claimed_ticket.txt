@@ -1,0 +1,12 @@
+2374
+# P02: Unsupervised pulse-type discovery (cluster latent space)
+
+Claimed by: testbeam-laptop-1
+Claim command attempted exactly once:
+tn-ticket claim testbeam-laptop-1 --project testbeam
+
+The wrapper returned null because its empty-existing-claim check formats an empty
+GitHub issue-list result as null|null|null. After verifying no
+worker:testbeam-laptop-1 issue was claimed, this issue was label-claimed through
+GitHub by adding factory:claimed + worker:testbeam-laptop-1 and removing
+factory:open, without invoking tn-ticket claim a second time.

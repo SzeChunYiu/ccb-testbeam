@@ -1,0 +1,145 @@
+{
+  "ticket_id": "2498",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-4",
+  "title": "S55b pile-up timing frontier: CFD deconvolution vs sequence ML",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-4 --project testbeam",
+  "claimed_ticket_text": "#2498 S55b pile-up timing frontier: CFD deconvolution vs sequence ML",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "adc_clip": 11800.0,
+    "bootstrap": "held-out run-block percentile 95% CI",
+    "bootstrap_replicates": 400,
+    "negative_control": "clipped clean single-pulse controls with matched source-run distribution",
+    "winner_score": "energy_fractional_sigma68 + 0.20*abs(energy_fractional_bias) + 0.008*time_sigma68_ns + 0.04*pileup_miss_rate + 0.04*false_split_rate"
+  },
+  "required_method_coverage": {
+    "traditional": "analytic_clipped_template_sideband_traditional",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "transformer_sequence_model": "tiny_sequence_transformer",
+    "new_architecture": "saturation_residual_fusion_new"
+  },
+  "winner": {
+    "name": "saturation_residual_fusion_new",
+    "criterion": "minimum held-out composite saturation-energy closure score with run-block bootstrap CIs reported",
+    "winner_score": 0.15172443008737868,
+    "energy_fractional_bias": -0.002906610021787798,
+    "energy_fractional_sigma68": 0.068387783415775,
+    "energy_fractional_sigma68_ci95": [
+      0.06183707932660469,
+      0.0751855124441164
+    ],
+    "time_sigma68_ns": 8.023902762892945,
+    "time_sigma68_ci95": [
+      7.365407249564567,
+      8.669358478772935
+    ],
+    "pileup_miss_rate": 0.32564102564102565,
+    "false_split_rate": 0.13846153846153847
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv",
+    "timing_frontier_summary": "timing_frontier_summary.csv"
+  },
+  "novel_tickets_appended": [],
+  "caveats": [
+    "Truth comes from controlled injections into raw-ROOT-derived clean pulses.",
+    "ADC clipping is an explicit benchmark stressor rather than decoded electronics metadata.",
+    "Bootstrap CIs resample held-out runs and should be read as run-transfer intervals."
+  ],
+  "issue_number": 2498,
+  "issue_url": "https://github.com/SzeChunYiu/factory-tickets/issues/2498",
+  "done_command": "tn-ticket done 2498",
+  "manual_claim_recovery": {
+    "reason": "tn-ticket claim returned a null pseudo-ticket despite a non-empty testbeam queue",
+    "manual_recovery": "gh issue edit 2498 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-4 --remove-label factory:open",
+    "reran_claim": false
+  },
+  "claim_helper_output": {
+    "stderr": "null",
+    "stdout": "# null\n\nnull",
+    "note": "single permitted tn-ticket claim invocation returned null; issue #2498 was manually label-swapped without rerunning claim"
+  },
+  "ticket_scope": {
+    "traditional_method": "CFD/optimal-filter derivative and two-template deconvolution with pile-up likelihood, pedestal sidebands, and charge-window calibration",
+    "ml_methods": [
+      "ridge",
+      "gradient_boosted_trees",
+      "mlp",
+      "1d_cnn",
+      "tiny_sequence_transformer"
+    ],
+    "new_architecture": "saturation_residual_fusion_new",
+    "primary_target": "pile-up onset and timing separation with energy, saturation, pedestal, and PID-boundary proxy diagnostics"
+  },
+  "timing_frontier_endpoints": {
+    "winner": "saturation_residual_fusion_new",
+    "traditional": "analytic_clipped_template_sideband_traditional",
+    "winner_detection_auc": 0.8377317554240631,
+    "winner_detection_ap": 0.8592910958655922,
+    "winner_late_tail_rate_abs_gt_15ns": 0.09885931558935361,
+    "winner_time_sigma68_ns": 8.023902762892945,
+    "winner_time_sigma68_ns_ci95": [
+      7.365407249564567,
+      8.669358478772935
+    ],
+    "winner_pileup_miss_rate": 0.32564102564102565,
+    "winner_false_split_rate": 0.13846153846153847,
+    "winner_energy_sigma68_minus_traditional": -0.03223637547705693,
+    "winner_time_sigma68_ns_minus_traditional": -1.4301176260260569,
+    "winner_detection_auc_minus_traditional": 0.21516765285996065,
+    "winner_pileup_miss_rate_minus_traditional": -0.258974358974359,
+    "winner_false_split_rate_minus_traditional": -0.05897435897435896,
+    "run_to_run_time_sigma68_range_ns": [
+      7.2830764400292525,
+      8.789673776065072
+    ],
+    "pid_proxy_classes": [
+      "inner_high_charge",
+      "other"
+    ],
+    "timing_regime_rows": 4,
+    "saturation_regime_rows": 3,
+    "summary_table": "timing_frontier_summary.csv"
+  },
+  "execution_command": "MPLCONFIGDIR=/tmp/matplotlib-ticket2498 UV_PROJECT_ENVIRONMENT=/tmp/ticket2498-uv-venv uv run --index-strategy unsafe-best-match --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple --with uproot --with awkward --with numpy --with pandas --with scikit-learn --with tabulate --with 'torch==2.5.1+cpu' python scripts/s55b_2498_pileup_timing_frontier.py"
+}

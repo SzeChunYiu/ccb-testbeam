@@ -1,0 +1,9 @@
+method,abs_score_source_run_corr,abs_score_pedestal_corr,winner_score_reference,run_shuffle_control
+1d_cnn,0.07114648677936669,0.17278928140826127,,source_run labels shuffled for diagnostic only
+deltaE_over_E_likelihood_template,0.06575081274260693,0.05486657025258496,,source_run labels shuffled for diagnostic only
+derivative_slew_residual_fusion_new,0.07514443198248401,0.13178607534584358,,source_run labels shuffled for diagnostic only
+gradient_boosted_trees,0.09722124498037234,0.12017959756114661,10.257026728365016,source_run labels shuffled for diagnostic only
+joint_sequence_transformer,0.08376584721005764,0.17807889621768733,,source_run labels shuffled for diagnostic only
+mlp,0.04805708831146165,0.14481200946993653,,source_run labels shuffled for diagnostic only
+ridge,0.05446634666668269,0.04622920259782521,,source_run labels shuffled for diagnostic only
+template_residual_boosted_stack_new,0.07654155668937775,0.15074803234238252,,source_run labels shuffled for diagnostic only

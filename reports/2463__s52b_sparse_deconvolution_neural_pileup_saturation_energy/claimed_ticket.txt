@@ -1,0 +1,6 @@
+2463
+# S52b: Sparse deconvolution versus neural pile-up saturation energy recovery
+
+Academic study: separate overlapping pulses and clipped saturation tails to recover unbiased energy under pile-up. Compare a traditional sparse deconvolution plus censored-template fit with ridge regression, gradient-boosted trees, MLP, 1D-CNN, and transformer encoder models. Use bootstrap CIs for pile-up separation efficiency, saturation-onset bias, energy resolution, tail-shape residuals, and PID-stratified closure.
+
+Claim note: `tn-ticket claim testbeam-laptop-1 --project testbeam` was run exactly once and returned the known null edge case tracked by issue #2440. The queue was non-empty, so issue #2463 was manually label-swapped to `factory:claimed` and `worker:testbeam-laptop-1` without rerunning claim.

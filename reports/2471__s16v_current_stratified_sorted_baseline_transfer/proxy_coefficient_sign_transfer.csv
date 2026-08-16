@@ -1,0 +1,5 @@
+sample_period,current_family,n_pairs,n_runs,standardized_proxy_coef_ns,coef_ci_low,coef_ci_high,sign,positive_bootstrap_fraction
+sample_i,high_20nA,3383,12,-1.038435781865005,-1.9758210407837915,0.016908634085134388,negative,0.02666666666666667
+sample_ii,high_all_three_rate,11778,3,-1.0499249609443515,-2.7102282026500197,0.40275993084975364,negative,0.056666666666666664
+sample_ii,low_all_three_rate_edge,751,2,0.42542375277870176,-0.28936846566446417,0.42542375277870154,positive,0.76
+sample_ii,mid_all_three_rate,5569,2,-0.558240419358712,-2.751485468152133,1.2267266740134484,negative,0.22

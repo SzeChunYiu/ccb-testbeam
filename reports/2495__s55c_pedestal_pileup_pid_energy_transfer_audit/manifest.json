@@ -1,0 +1,26 @@
+{
+  "ticket_id": "2495",
+  "factory_issue": 2495,
+  "git_commit": "bcb7c94c53d027096c53fb0ef3d2c7a1f331b372",
+  "command": "/home/billy/.cache/uv/builds-v0/.tmpGJh5EY/bin/python scripts/ticket_2495_s55c_pedestal_pileup_pid_energy_audit.py",
+  "runtime_seconds": 107.9017608165741,
+  "python": "3.11.14 (main, Feb  3 2026, 22:51:56) [Clang 21.1.4 ]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+  "outputs_sha256": {
+    "REPORT.md": "cabce7ebbbbd5904de74ed93fe96b06c16f288178fb85c302ae35972dc9659e0",
+    "calibration_curve.csv": "d490ef2cc5e6370ca04432d5f0426882d440d29dbba36bf6782a94b39c75883a",
+    "calibration_ece.csv": "3527cbb2d82580fcff4dcbc876a6eaf7efee4b0a6f31f303b3b77dfef9acab94",
+    "claimed_ticket.txt": "ae64d83341cc2cac1cb70fb050aca1342f32d19547bc2d4c7c2ecfbad805227c",
+    "counterfactual_ablation_summary.csv": "0b355d15e55a1e1266d8030190c52bb1ba6920e69ba0610216c8d7db3509b00e",
+    "endpoint_metrics_ci.csv": "63ad3373bf670bfd9c6407c77c0e33c3a2cfbe102a2d3336bd0faea1e1a6b2ec",
+    "event_predictions.csv": "428b57cebfb4c39fef73654620c17ecb7e4bef375e1488893f2f3f2691a640ca",
+    "input_sha256.csv": "cc17da0dcd3e7e732b81a17f3c35833f026fdec912538d28d7d71b9af71a46f6",
+    "method_metrics.csv": "e43d7c184a684d1ece4d90a1063c28fe5ebc56ba0bf8feffdd4b63d7616cb468",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "a3bf76feaf7b37a75ce46fde5ded505d58b29878b3e0d60ed3f8a7bf6b633866",
+    "run_heldout_metrics.csv": "2eb617d974c8a8a6b2997545d0e35bdafb52bf48e356113a4eda20a0b5d6c297",
+    "strata_metrics.csv": "02944b791e5b842c354ca39274d1c5150d089dc40f0709bf2ca24318dafba6c4",
+    "template_summary.csv": "0c644a8a71f7044c3e0164413f49fde6c7fe647ee33559fc7d548633a2cc2c30",
+    "winner_ranked_metrics.csv": "ce086c9c63c0af417b9b3e153f7d245f591805c7e1c6f16437f94bf18c8d6694"
+  }
+}

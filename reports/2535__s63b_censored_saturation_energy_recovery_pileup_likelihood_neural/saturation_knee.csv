@@ -1,0 +1,3 @@
+method,saturation_knee_clipped_samples,ci_low,ci_high,definition,n
+analytic_clipped_template_sideband_traditional,0.0,0.0,0.0,|mean fractional energy bias| > 0.05 among held-out injected doublets at or above clipped-sample count,162
+saturation_residual_fusion_new,,,,|mean fractional energy bias| > 0.05 among held-out injected doublets at or above clipped-sample count,263

@@ -1,8 +1,8 @@
-# TICKET-0130: Raw-ROOT Count Reconstruction Bakeoff
+# Issue #2456 S51b: Saturated Pile-Up Energy Recovery from Censored Pulse Windows
 
 ## Abstract
 
-Ticket `TICKET-0130` asks for an academic-grade comparison of a strong traditional
+Ticket `2456` asks for an academic-grade comparison of a strong traditional
 multi-pulse analytic method against ridge, gradient-boosted trees, MLP, 1D-CNN,
 transformer sequence models, and a sensible new architecture for energy
 reconstruction under pile-up and ADC saturation.  The worker is `testbeam-laptop-4`.  The
@@ -14,7 +14,7 @@ CI [`0.0605`,
 
 ## Raw ROOT Reproduction
 
-Raw files are read from `/home/billy/ccb-data/extracted/root/root`.  For each run, `h101/HRDv` is
+Raw files are read from `/home/billy/ccb-data/data/extracted/root/root`.  For each run, `h101/HRDv` is
 reshaped to `(event, channel, sample)` with 18 samples per channel.  The B-stack
 selection uses B2/B4/B6/B8, pedestal
 
@@ -336,10 +336,10 @@ the PID class is a waveform/support proxy, not an external particle label.
 
 ## Recommendation
 
-Use `saturation_residual_fusion_new` as the preferred TICKET-0130 controlled-overlay energy-closure method
+Use `saturation_residual_fusion_new` as the preferred S51b controlled-overlay energy-closure method
 when the analysis goal is saturated doublet recovery with run-held-out
 uncertainty propagation.  The analytic clipped-template method remains the
 auditable fallback when deterministic extrapolation is more important than the
 observed held-out score gain.
 
-Runtime was `46.8` s on `Linux-5.15.0-139-generic-x86_64-with-glibc2.35`.
+Runtime was `44.2` s on `Linux-5.15.0-139-generic-x86_64-with-glibc2.35`.

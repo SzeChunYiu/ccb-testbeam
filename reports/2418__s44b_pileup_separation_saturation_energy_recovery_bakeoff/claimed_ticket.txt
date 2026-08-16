@@ -1,0 +1,2 @@
+#2418 S44b: Pile-up separation under saturation with energy recovery bakeoff
+Claim recovery: required tn-ticket command was run once and returned null; manually applied worker label to issue #2418 without rerunning tn-ticket claim.

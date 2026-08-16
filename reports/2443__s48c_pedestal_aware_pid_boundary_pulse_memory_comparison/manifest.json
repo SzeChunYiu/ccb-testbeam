@@ -1,0 +1,26 @@
+{
+  "study": "S48c",
+  "ticket_id": "2443",
+  "worker": "testbeam-laptop-1",
+  "git_commit": "aff63eae22303a09a488511c6fed4a54ae3c2fed",
+  "command": "/home/billy/.cache/uv/builds-v0/.tmpLbb9uv/bin/python scripts/s48c_2443_pedestal_aware_pid_boundary_pulse_memory_comparison.py",
+  "environment": {
+    "python": "3.13.12",
+    "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+    "torch": "2.5.1+cpu"
+  },
+  "outputs": {
+    "REPORT.md": "db1ba7c122f5343d260887ebd1d1da0adf453dfa96a2c5556ddb29b4f21a80a4",
+    "birks_fit.csv": "70ab7a8472f9b9fe05708c96d2d7c628624260e7fdaff91f2c6e9b838aa7dabc",
+    "claimed_ticket.txt": "57f652bd6e31c4d7ce6987de45ff5179d9b02c502b64ffadfcc2d730a990371c",
+    "counts_by_run.csv": "ab243e4ca56e3cfb28f677983ef6c45d4e7d6c19fd79d1f02d9a9d5398d94074",
+    "geant4_stave_priors.csv": "811b0b630bd44e5c48bf2fd638f71e5d00a7c6b6b22a0e16b0c0ae50d40fc602",
+    "input_sha256.csv": "b328fb7046ec087b6e7907589d2f1b248e988b1ed86e23b829080e54d97d8272",
+    "method_metrics.csv": "4715b0015aba4a37acb8f1efaf64e3ad48b6171614e8d77e84dbbd6c060c68d6",
+    "null_permutation_controls.csv": "a02ccc540c3716707d63a6af068f24974248c2c02dda0ad246618dd1423af7d6",
+    "reproduction_match_table.csv": "6db74f910a5176e5876f75af0b231b05ef9a86ba708d5da634ac88e279f4fa2d",
+    "result.json": "75a36c9d4f7c0c6d9864bf0b9459704a71b0c6489ea2eef2e6f4797daf30daa1",
+    "run_heldout_metrics.csv": "6cafb543b3e966c36f3840e4c41efdef4373e473a729e70f5805a2565a6f5c2f",
+    "strata_metrics.csv": "02b5abd8bf741a87a82c88eb9167b25173cd1a2a1875e038b6f1e3fae04ce675"
+  }
+}

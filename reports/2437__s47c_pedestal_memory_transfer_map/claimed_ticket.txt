@@ -1,0 +1,11 @@
+claim_helper_command: tn-ticket claim testbeam-laptop-3 --project testbeam
+claim_helper_return_code: 0
+claim_helper_stderr: null
+claim_helper_stdout: # null\n\nnull
+manual_claim_issue: 2437
+manual_claim_command: gh issue edit 2437 --add-label factory:claimed --add-label worker:testbeam-laptop-3 --remove-label factory:open
+manual_claim_evidence: issue #2437 labels include factory:claimed, project:testbeam, worker:testbeam-laptop-3
+
+# S47c: Pedestal-memory transfer map for energy timing and PID
+
+Academic-grade study: map pedestal drift and baseline memory into pulse-shape descriptors, timing residuals, pile-up tagging, saturation recovery, energy scale, and PID stability across run conditions. Compare traditional rolling-pedestal subtraction/AR(1) baseline models/GLS calibration with ridge, gradient-boosted trees, MLP, 1D-CNN, and masked-waveform transformer variants where apt. Provide bootstrap confidence intervals for transfer error, bias closure, resolution, and PID operating-point shifts.

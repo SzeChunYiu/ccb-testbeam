@@ -1,0 +1,9 @@
+#2455 S51c: Pedestal-memory PID and energy transfer under pulse-state nuisance
+
+Claim command run exactly once:
+tn-ticket claim testbeam-laptop-2 --project testbeam
+
+The helper returned a null issue even though project:testbeam still had open
+tickets and no claimed ticket for this worker. Issue #2455 was then claimed by
+a single manual GitHub label swap to factory:claimed plus
+worker:testbeam-laptop-2.

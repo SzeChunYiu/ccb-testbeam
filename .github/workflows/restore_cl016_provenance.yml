@@ -1,0 +1,80 @@
+name: Restore exact CL-016 provenance wording
+
+on:
+  push:
+    paths:
+      - .github/workflows/restore_cl016_provenance.yml
+
+permissions:
+  contents: write
+
+jobs:
+  restore:
+    if: github.repository == 'SzeChunYiu/ccb-testbeam'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Restore, validate, commit, and push
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "scheduled-scientific-review"
+          git config user.email "actions@users.noreply.github.com"
+          git fetch origin main
+          git rebase origin/main
+          python - <<'PY'
+          import csv
+          import io
+          from pathlib import Path
+
+          path = Path('docs/claim_ledger.csv')
+          rows = list(csv.reader(io.StringIO(path.read_text(encoding='utf-8'))))
+          index = {name: pos for pos, name in enumerate(rows[0])}
+          note = (
+              'Source-backed B2 external duplicate-readout closure, not truth energy. '
+              'Pseudo-saturation ML res68 0.036691 is a synthetic closure check, while '
+              'held-out odd-duplicate validation gives ML charge res68 0.176358 '
+              '[0.173043,0.180602] versus raw 0.120794 [0.117004,0.125364], a degradation '
+              'of +0.055564. The manifest execution commit '
+              'f20e1b0bceac4eeae4532c9e871a363d6dce08d7 does not contain the producer path '
+              'and the manifest records neither producer SHA-256 nor worktree cleanliness. '
+              'Withhold the correction until producer bytes are recovered and cross-stave/'
+              'new-run validation is completed.'
+          )
+          found = 0
+          for row in rows[1:]:
+              if row and row[0] == 'CL-016':
+                  row[index['notes']] = note
+                  found += 1
+          assert found == 1
+          assert len(rows) == 27 and all(len(row) == 43 for row in rows)
+          out = io.StringIO(newline='')
+          csv.writer(out, lineterminator='\n').writerows(rows)
+          path.write_text(out.getvalue(), encoding='utf-8')
+          PY
+          python tools/audit/validate_mv3_legacy_claim_rows.py \
+            docs/claim_ledger.csv \
+            reports/mv3_stopping_v3_1782679272/REPORT.md \
+            reports/mv3_stopping_v3_1782679272/mv3_summary.json \
+            src/ccb_mc_validation/studies/mv3_stopping_depth.py \
+            --output /tmp/mv3.json >/tmp/mv3.stdout
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          result = json.loads(Path('/tmp/mv3.json').read_text())
+          assert result['status'] == 'VALIDATED' and result['n_issues'] == 0
+          text = Path('docs/claim_ledger.csv').read_text(encoding='utf-8')
+          assert 'f20e1b0bceac4eeae4532c9e871a363d6dce08d7' in text
+          assert 'producer SHA-256 nor worktree cleanliness' in text
+          PY
+          git diff --check
+          git rm .github/workflows/restore_cl016_provenance.yml
+          git add docs/claim_ledger.csv
+          git commit -m "fix(ledger): restore CL-016 producer provenance"
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main

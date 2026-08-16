@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="560" viewBox="0 0 1100 560" role="img" aria-labelledby="title desc">
+  <title id="title">Stopping-power simulation input snapshot provenance gate</title>
+  <desc id="desc">Synthetic regression schematic contrasting split path reads with a single exact-byte snapshot.</desc>
+  <rect x="0" y="0" width="1100" height="560" fill="white"/>
+  <text x="550" y="38" text-anchor="middle" font-family="sans-serif" font-size="24" font-weight="bold">Simulation rows and provenance must describe the same bytes</text>
+  <text x="550" y="66" text-anchor="middle" font-family="sans-serif" font-size="15">Synthetic software regression — not detector data</text>
+
+  <rect x="45" y="105" width="470" height="330" rx="12" fill="#f7f7f7" stroke="#222" stroke-width="2"/>
+  <text x="280" y="140" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="bold">Former split-read path</text>
+  <text x="80" y="185" font-family="monospace" font-size="16">read_text(path) → rows from bytes A</text>
+  <path d="M80 205 L440 205" stroke="#222" stroke-width="2"/>
+  <text x="80" y="245" font-family="sans-serif" font-size="16">path replaced: A → B</text>
+  <text x="80" y="290" font-family="monospace" font-size="16">stat(path) → size of B</text>
+  <text x="80" y="325" font-family="monospace" font-size="16">sha256_file(path) → hash of B</text>
+  <text x="80" y="375" font-family="sans-serif" font-size="18" font-weight="bold">Rows A + provenance B = mismatch</text>
+  <line x1="72" y1="165" x2="480" y2="405" stroke="#8b0000" stroke-width="5"/>
+  <line x1="480" y1="165" x2="72" y2="405" stroke="#8b0000" stroke-width="5"/>
+
+  <rect x="585" y="105" width="470" height="330" rx="12" fill="#f7f7f7" stroke="#222" stroke-width="2"/>
+  <text x="820" y="140" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="bold">Validated single-snapshot path</text>
+  <text x="620" y="190" font-family="monospace" font-size="16">input_bytes = read_bytes(path) once</text>
+  <text x="620" y="240" font-family="monospace" font-size="16">decode/parse(input_bytes) → rows A</text>
+  <text x="620" y="290" font-family="monospace" font-size="16">len(input_bytes) → size A</text>
+  <text x="620" y="340" font-family="monospace" font-size="16">sha256(input_bytes) → hash A</text>
+  <text x="620" y="390" font-family="sans-serif" font-size="18" font-weight="bold">Rows A + provenance A = bound</text>
+  <path d="M990 185 L1015 210 L1045 165" fill="none" stroke="#111" stroke-width="5"/>
+
+  <text x="550" y="482" text-anchor="middle" font-family="sans-serif" font-size="16">Regression: path mutation after parsing cannot transfer later bytes into the reported digest.</text>
+  <text x="550" y="512" text-anchor="middle" font-family="sans-serif" font-size="16">Invalid UTF-8 now returns controlled status 2; no validation JSON or success line is emitted.</text>
+  <text x="550" y="542" text-anchor="middle" font-family="sans-serif" font-size="14">Acceptance boundary: parser/provenance integrity only; stopping-power physics closure remains blocked.</text>
+</svg>

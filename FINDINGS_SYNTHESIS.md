@@ -7,6 +7,25 @@ conclusions into one self-contained narrative so a reviewer does not have to rea
 Per-study detail is in `reports/<id>/REPORT.md`; the row-by-row scoreboard is `reports/SUMMARY.md`;
 the reporting rules every study obeys are in `docs/REPORT_STANDARD.md`.
 
+> **⚠️ STALE (2026-06-28) — superseded by `docs/PUBLICATION_NARRATIVE.md` and the
+> project dashboard (2026-07-25).** This synthesis predates the cluster A–D +
+> Opticks programme and is built on several claims the canonical ledger has since
+> downgraded. It is retained for programme history only. **Read
+> [`docs/PUBLICATION_NARRATIVE.md`](docs/PUBLICATION_NARRATIVE.md) and
+> [`reports/PROJECT_DASHBOARD.md`](reports/PROJECT_DASHBOARD.md) instead.**
+>
+> **Downgrades vs the narrative below:** legacy R_max = 3.044 MHz is **SUPERSEDED**
+> (CL-012) and the canonical Rmax is **BLOCKED** (CL-010) — the "MV5 PASS"
+> verdict below is withdrawn; the realistic-chain p/d PID is **AUC = 0.898**
+> (clusterA #921, PASS) — the 0.986 "MV1 PASS" below is a TRUTH_LEVEL_MC_ONLY
+> ceiling, now **GATED** (CL-017); the data-side timing values (1.49–1.55 ns) and
+> "MV4 PASS" are **BLOCKED** (CL-002..006, toy-digitizer); "MV6 C12 identified"
+> is **TRUTH_LEVEL_MC_ONLY** — the data anomaly is **not** identified as C12
+> (CL-022); "MV3 FAIL" is restated **TENSION** (χ²/ndf ≈ 6.8e4, CL-021); the
+> digitizer gain is **GATED** (CL-013, ±30% heuristic, not a CI), realistic MC
+> value 119.17 ADC/MeV. Where this file conflicts with the dashboard, **the
+> dashboard wins.**
+
 - **Status:** research synthesis, preliminary, not peer-reviewed.
 - **Authors:** CCB analysis fleet.
 - **Method discipline (every claim):** reproduce-first from raw ROOT, strong-traditional-vs-ML
@@ -36,10 +55,19 @@ detailed findings follow in the per-section narrative.
 | **MV0 v2** | Digitizer gain calibration (corrected) | ✅ PASS | Gain = 92 ± 28 ADC/MeV (PRELIMINARY — KS shape mismatch 0.158, inter-stave variation unresolved, 30% systematic dominates deuteron-fraction budget) |
 | **MV1** | Particle ID (proton vs deuteron) | ✅ PASS (MV3 sensitivity: unquantified) | MC AUC = 0.986; data within 0.5% of ceiling; p/d separation at B2 (where deuterons stop) may be less affected by MV3 stopping-depth error |
 | **MV2** | Range-energy calibration | ✅ PASS (limitation confirmed) | Absolute energy unreachable; p/d range ordering validated |
-| **MV3 v3** | Stopping-depth profile | ⛔ FAIL | χ²/ndf = 68,269 (4 stave bins, ndf = 3); MC overestimates B8 penetration 10×; missing upstream material budget |
+| **MV3 v3** | Stopping-depth profile | 🟠 PARTIALLY RESOLVED (selection-matched) | Legacy χ²/ndf=68,269 was **unselected MC vs hardware-trigger-selected data** (invalid comparison). Applying the data's A&B-coincidence / single-B trigger to the MC ([selection-matched study](reports/studies/mv3_selection_matched/REPORT.md)) recovers the sharp B2 peak: B2 0.46→0.87, **16.6× χ² improvement**, shape now matches data (0.94). Residual ~8 pp B2 + ΔE-E corr sign = scattering model (uniform CM angle, no σ_pd weight) + GAP-01 material deficit. |
 | **MV4** | Single-stave timing | ✅ PASS (raw) / 🔶 TENSION (timewalk) | Raw: pull = −1.05σ; timewalk-corrected: pull = +2.68σ |
 | **MV5** | Pile-up / R_max | ✅ PASS (self-consistency, not independent) | MC reproduces data tau_eff (124.8 ns); R_max agreement is model self-consistency, not independent validation |
 | **MV6** | Representation & anomaly ID | ✅ DONE | 0.32% early-peak; C12 recoils dominant (55%); GMM captures >99% |
+
+> **Correction (2026-07-25).** The statuses in the table above are no longer
+> current. Per [`docs/claim_ledger.csv`](docs/claim_ledger.csv): MV5 R_max is
+> **BLOCKED** (CL-010) and 3.044 MHz is **SUPERSEDED** (CL-012); MV1 0.986 is
+> **GATED** (CL-017, truth-only); MV4 timing is **BLOCKED** (toy digitizer,
+> CL-002..006); MV6 anomaly is **TRUTH_LEVEL_MC_ONLY** (data not identified as
+> C12, CL-022); MV3 is **TENSION** (CL-021). The MC-closure results that **are**
+> PASS live in clusters A–D: timing σ₆₈ 0.089 ns, PID AUC 0.898, ADC 119.17,
+> Birks 0.0156, Rmax 0.605 MHz — see [`docs/PUBLICATION_NARRATIVE.md`](docs/PUBLICATION_NARRATIVE.md).
 
 **Open questions now closed by MC:** anomaly species identity (MV6), pile-up R_max validation
 (MV5), digitizer gain model (MV0), PID ceiling and mechanism (MV1/MV2), timing raw resolution
@@ -340,7 +368,10 @@ data carries essentially the same separating information once a true label exist
 | Depth occupancy ordering | B2 >> B4 > B6 > B8 | Sci_bar hits fall layer 0->7 | qualitative match |
 | Sample I/II trigger split | deuteron-enriched (Matthias) | trigger-split reproduces enrichment | confirmed |
 
-### 6.2 Stopping-depth profile — structural FAIL (MV3)
+### 6.2 Stopping-depth profile — PARTIALLY RESOLVED, selection-matched (MV3)
+
+> **UPDATE (CL-021, selection-matched follow-up):** the legacy "structural FAIL" below compared **unselected MC** against **hardware-trigger-selected data** — an invalid comparison. When the data's A&B-coincidence / single-B trigger is applied identically to the MC (`scripts/studies/mv3_selection_matched.py`), the MC develops the same sharp B2 peak (**B2: 0.46 → 0.87**, data 0.94; **16.6× χ²/ndf improvement**; shape matches). The qualitative "MC broad, data sharp" discrepancy is GONE. A residual ~8 pp B2 deficit and the ΔE-E correlation sign mismatch remain, attributed to (a) the p+d scattering model (`ScatteringGenerator.cc` samples the CM angle **uniformly**, without the physical `sigma_pd_cm` cross-section) and (b) the unresolved GAP-01 upstream-material deficit. The historical analysis is retained below for provenance. See [MV3 selection-matched REPORT](reports/studies/mv3_selection_matched/REPORT.md).
+
 
 MV3 v3 (threshold-corrected) compared the MC and data stave-occupancy profiles quantitatively.
 Result: **χ²/ndf = 68,269 (4 stave bins, ndf = 3)** — a catastrophic failure, not a tension.

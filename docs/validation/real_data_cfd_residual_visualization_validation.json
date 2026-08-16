@@ -1,0 +1,161 @@
+{
+  "finding_count": 6,
+  "findings": [
+    {
+      "code": "RAW_RESIDUAL_HISTOGRAM_USES_FIXED_MINUS10_TO10_RANGE",
+      "detail": "The histogram consumes uncentered residuals but fixes the visible window to [-10, 10] ns.",
+      "line": 26
+    },
+    {
+      "code": "CENTRAL_RESIDUAL_MASS_GUARANTEED_OUTSIDE_PLOT",
+      "detail": "At least 84% of the distribution is guaranteed outside the plotted window from the reported median and sigma68 alone.",
+      "method": "t_cfd10",
+      "tag": "sample_II"
+    },
+    {
+      "code": "CENTRAL_RESIDUAL_MASS_GUARANTEED_OUTSIDE_PLOT",
+      "detail": "At least 84% of the distribution is guaranteed outside the plotted window from the reported median and sigma68 alone.",
+      "method": "t_cfd20",
+      "tag": "sample_II"
+    },
+    {
+      "code": "CENTRAL_RESIDUAL_MASS_GUARANTEED_OUTSIDE_PLOT",
+      "detail": "At least 84% of the distribution is guaranteed outside the plotted window from the reported median and sigma68 alone.",
+      "method": "t_cfd10",
+      "tag": "task_runs"
+    },
+    {
+      "code": "CENTRAL_RESIDUAL_MASS_GUARANTEED_OUTSIDE_PLOT",
+      "detail": "At least 84% of the distribution is guaranteed outside the plotted window from the reported median and sigma68 alone.",
+      "method": "t_cfd20",
+      "tag": "task_runs"
+    },
+    {
+      "code": "PLOT_LABEL_AND_VISIBLE_HISTOGRAM_USE_DIFFERENT_SUPPORT",
+      "detail": "The label reports sigma68 from the full residual vector while the histogram silently discards values outside [-10, 10] ns."
+    }
+  ],
+  "plot_contract": {
+    "dynamic_or_centered_contract": false,
+    "fixed_raw_residual_histograms": [
+      {
+        "centered_residual_argument": false,
+        "line": 26,
+        "range": [
+          -10,
+          10
+        ],
+        "raw_residual_argument": true
+      }
+    ],
+    "histograms": [
+      {
+        "centered_residual_argument": false,
+        "line": 26,
+        "range": [
+          -10,
+          10
+        ],
+        "raw_residual_argument": true
+      }
+    ],
+    "residuals_centered_before_plotting": false
+  },
+  "policy": "REAL_DATA_CFD_RESIDUAL_PLOTS_MUST_COVER_THE_REPORTED_DISTRIBUTION",
+  "reported_distribution_coverage_bounds": {
+    "sample_II": {
+      "t_cfd10": {
+        "central_interval_guaranteed_outside": true,
+        "exclusion_direction": "ABOVE_PLOT_RANGE",
+        "guaranteed_excluded_fraction": 0.84,
+        "median_ns": 59.60530122976422,
+        "n": 1888,
+        "plot_range_ns": [
+          -10.0,
+          10.0
+        ],
+        "q16_lower_bound_ns": 57.80827534984704,
+        "q84_upper_bound_ns": 61.40232710968141,
+        "sigma68_ns": 0.8985129399585929
+      },
+      "t_cfd20": {
+        "central_interval_guaranteed_outside": true,
+        "exclusion_direction": "ABOVE_PLOT_RANGE",
+        "guaranteed_excluded_fraction": 0.84,
+        "median_ns": 63.55902020874973,
+        "n": 1888,
+        "plot_range_ns": [
+          -10.0,
+          10.0
+        ],
+        "q16_lower_bound_ns": 32.691344084432785,
+        "q84_upper_bound_ns": 94.42669633306667,
+        "sigma68_ns": 15.433838062158472
+      }
+    },
+    "task_runs": {
+      "t_cfd10": {
+        "central_interval_guaranteed_outside": true,
+        "exclusion_direction": "BELOW_PLOT_RANGE",
+        "guaranteed_excluded_fraction": 0.84,
+        "median_ns": -31.827483483483483,
+        "n": 675,
+        "plot_range_ns": [
+          -10.0,
+          10.0
+        ],
+        "q16_lower_bound_ns": -38.923652144810816,
+        "q84_upper_bound_ns": -24.731314822156154,
+        "sigma68_ns": 3.5480843306636647
+      },
+      "t_cfd20": {
+        "central_interval_guaranteed_outside": true,
+        "exclusion_direction": "BELOW_PLOT_RANGE",
+        "guaranteed_excluded_fraction": 0.84,
+        "median_ns": -28.576323232323233,
+        "n": 675,
+        "plot_range_ns": [
+          -10.0,
+          10.0
+        ],
+        "q16_lower_bound_ns": -42.03624185338471,
+        "q84_upper_bound_ns": -15.116404611261753,
+        "sigma68_ns": 6.72995931053074
+      }
+    }
+  },
+  "repository_context": {
+    "initial_main": "0f7a8e50960d01156ea87cac435f6e25925cd1d9",
+    "pull_request": 939,
+    "pull_request_head": "ce81f22ef57c5db0b658737c0d9ced4c7fc69949",
+    "pull_request_state": "open",
+    "repository": "SzeChunYiu/ccb-testbeam"
+  },
+  "required_remediation": [
+    "Center each residual vector on its documented location estimator before plotting, or use a data-driven range that covers the full displayed distribution.",
+    "Record underflow, overflow, displayed count, total count, and the exact centering or range policy in plot metadata.",
+    "Regenerate both residual PNGs from collision-safe composite event keys and immutable ROOT inputs before using them as timing evidence."
+  ],
+  "result": {
+    "bytes": 681,
+    "git_blob": "debc5c45d84a210f8425bab5c9f87d8b61fd279b",
+    "path": "docs/validation/fixtures/pr939_real_data_cfd_timing_result_subset.json",
+    "repository_ref": "ce81f22ef57c5db0b658737c0d9ced4c7fc69949",
+    "scope": "VERSION_CONTROLLED_CONNECTOR_INSPECTED_RELEVANT_RESULT_SUBSET",
+    "sha256": "94c037941d65e2957b24ab209ac517048eb478245b89d1cfab2d7eb103889205",
+    "snapshot_method": "SINGLE_READ_STRICT_UTF8_EXACT_BYTES"
+  },
+  "schema": "ccb-real-data-cfd-residual-visualization-audit/1",
+  "scientific_boundary": "This audit tests whether the residual plots visually cover the distributions used for their labels. It does not validate event identity, channel mapping, waveform calibration, the CFD estimator, timing resolution, or CL-002.",
+  "source": {
+    "bytes": 1197,
+    "git_blob": "ef13a859bb756dbf4b7ea6fa40f681d8858a7ac7",
+    "path": "docs/validation/fixtures/pr939_real_data_cfd_timing_relevant.py",
+    "repository_ref": "ce81f22ef57c5db0b658737c0d9ced4c7fc69949",
+    "scope": "VERSION_CONTROLLED_CONNECTOR_INSPECTED_RELEVANT_SOURCE_COPY",
+    "sha256": "7e001aa9f8fa72f9ebff33b7f882f0b6349514ff94f7492bfbc3e6be306c403c",
+    "snapshot_method": "SINGLE_READ_STRICT_UTF8_EXACT_BYTES"
+  },
+  "status": "FLAWED",
+  "version": "1.0.0"
+}

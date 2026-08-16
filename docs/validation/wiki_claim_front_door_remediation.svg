@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">WIKI front-door claim remediation</title>
+  <desc id="desc">Synthetic documentation and provenance evidence showing the former mismatches, corrected canonical claim states, validator result, and remaining claim-ledger schema limitation.</desc>
+  <rect x="0" y="0" width="1200" height="760" fill="white"/>
+  <text x="60" y="55" font-family="sans-serif" font-size="30" font-weight="bold">WIKI front-door claim remediation</text>
+  <text x="60" y="88" font-family="sans-serif" font-size="17">Synthetic documentation/provenance evidence — not detector data</text>
+
+  <rect x="55" y="125" width="510" height="370" fill="none" stroke="black" stroke-width="2"/>
+  <text x="80" y="165" font-family="sans-serif" font-size="23" font-weight="bold">Former public state — rejected</text>
+  <text x="80" y="210" font-family="monospace" font-size="18">MV4 raw: PASS (three tables)</text>
+  <line x1="78" y1="214" x2="435" y2="195" stroke="black" stroke-width="3"/>
+  <text x="80" y="260" font-family="monospace" font-size="18">tau truth: data_only</text>
+  <line x1="78" y1="264" x2="330" y2="245" stroke="black" stroke-width="3"/>
+  <text x="80" y="310" font-family="monospace" font-size="18">&quot;Every number has uncertainty.&quot;</text>
+  <line x1="78" y1="314" x2="455" y2="292" stroke="black" stroke-width="3"/>
+  <text x="80" y="370" font-family="sans-serif" font-size="17">Ledger header: 43 columns</text>
+  <text x="80" y="400" font-family="sans-serif" font-size="17">Original matching rows: 0 / 26</text>
+  <text x="80" y="445" font-family="sans-serif" font-size="17" font-weight="bold">Exact-file validator state: FLAWED</text>
+
+  <path d="M585 300 L670 300" stroke="black" stroke-width="4" fill="none"/>
+  <path d="M660 288 L680 300 L660 312" stroke="black" stroke-width="4" fill="none"/>
+  <text x="590" y="275" font-family="sans-serif" font-size="16">bounded repair</text>
+
+  <rect x="690" y="125" width="455" height="370" fill="none" stroke="black" stroke-width="2"/>
+  <text x="715" y="165" font-family="sans-serif" font-size="23" font-weight="bold">Canonical front door — accepted</text>
+  <text x="715" y="210" font-family="monospace" font-size="18">MV4 raw: VALIDATED</text>
+  <text x="715" y="260" font-family="monospace" font-size="18">tau: data + MC self-consistent</text>
+  <text x="715" y="310" font-family="sans-serif" font-size="17">Incomplete uncertainty is explicit:</text>
+  <text x="715" y="340" font-family="monospace" font-size="17">CI_MISSING_BLOCKING</text>
+  <text x="715" y="390" font-family="sans-serif" font-size="17">CL-007 and CL-011: 43 / 43 columns</text>
+  <text x="715" y="445" font-family="sans-serif" font-size="17" font-weight="bold">Validator v1.1.0: VALIDATED, 0 issues</text>
+
+  <rect x="55" y="535" width="1090" height="155" fill="none" stroke="black" stroke-width="2" stroke-dasharray="10 7"/>
+  <text x="80" y="575" font-family="sans-serif" font-size="22" font-weight="bold">Remaining limitation — separate task</text>
+  <text x="80" y="615" font-family="sans-serif" font-size="18">24 of 26 claim-ledger rows still do not match the 43-column header.</text>
+  <text x="80" y="648" font-family="sans-serif" font-size="18">No shifted field in those rows is authorized until source-backed row reconstruction and schema validation.</text>
+
+  <text x="60" y="730" font-family="sans-serif" font-size="15">Validation: py_compile; 5 focused tests; full corrected WIKI/CL-007/CL-011 validator; 16 focused internal-link targets.</text>
+</svg>

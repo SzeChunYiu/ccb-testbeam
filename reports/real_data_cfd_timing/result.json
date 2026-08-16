@@ -1,0 +1,113 @@
+{
+  "schema": "ccb-real-data-cfd-timing/1-quarantined",
+  "study": "real_data_cfd_timing",
+  "description": "Legacy PR #939 output retained for provenance but not authorized for scientific acceptance",
+  "acceptance": {
+    "status": "FLAWED_LEGACY_OUTPUT_QUARANTINED",
+    "reason": "The merged producer joined multiple runs by event_id alone, inferred an individual-stave value from pair sigma68 / sqrt(2), and plotted uncentered residuals in a fixed range that excluded most events.",
+    "rerun_required": true,
+    "replacement_producer_version": "2.0.0",
+    "replacement_policy": "REAL_DATA_CFD_REQUIRES_COMPOSITE_EVENT_KEYS_AND_PAIR_ONLY_INFERENCE"
+  },
+  "event_identity": {
+    "legacy_generator_key": ["event_id"],
+    "required_key": ["run", "event_id"],
+    "legacy_counts_authorized": false,
+    "reason": "EVENTNO values are not guaranteed globally unique across ROOT runs."
+  },
+  "single_stave_inference": {
+    "authorized": false,
+    "legacy_value_ns": 0.6353445928285822,
+    "legacy_operation": "0.8985129399585929 / sqrt(2)",
+    "reason": "A pair sigma68 does not identify either individual stave resolution without validated equal variances, zero covariance, and a demonstrated quadrature law for the estimator."
+  },
+  "visualization_status": {
+    "residual_pngs_authorized": false,
+    "affected": [
+      "reports/real_data_cfd_timing/residuals_sample_II.png",
+      "reports/real_data_cfd_timing/residuals_task_runs.png"
+    ],
+    "reason": "The legacy plots used uncentered residuals and a fixed [-10, 10] ns range while labels reported full-vector sigma68.",
+    "required_rerun": "Median-centered full-range and core panels with q16/q84 markers and explicit displayed/underflow/overflow counts."
+  },
+  "data_dir": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root",
+  "params": {
+    "samples_per_channel": 16,
+    "n_channels": 8,
+    "baseline_samples": [0, 1, 2, 3],
+    "sample_period_ns": 10.0,
+    "amplitude_cut_adc": 1000.0,
+    "cfd_fractions": [0.1, 0.2, 0.3, 0.4, 0.5],
+    "spacing_cm": 2.0,
+    "tof_per_cm_ns": 0.078,
+    "intime_tol_samples": 1.5,
+    "bootstrap_n": 400,
+    "stave_channel_lunarc": {"B2": 0, "B6": 4, "B8": 6},
+    "clean_pair": ["B6", "B8"],
+    "rng_seed": 20260723
+  },
+  "priors": {
+    "ledger_CL002_B6_single_ns": [0.63, 0.8],
+    "ledger_CL004_combined_B4B6B8_ns": [0.46, 0.62],
+    "s02_laptop_cfd20_heldout_pair_sigma68_ns": 2.993,
+    "academic_ch4_raw_cfd_data_sigma68_ns": 1.85,
+    "clusterB_mc_ideal_sigma68_ns": 0.151
+  },
+  "sample_II": {
+    "tag": "sample_II",
+    "runs": [58, 59, 60, 61, 62, 63, 65],
+    "n_pulses": 115475,
+    "pulses_by_stave": {"B2": 87659, "B6": 17197, "B8": 10619},
+    "pulse_shape": {
+      "B2": {"n": 87659, "amp_median_adc": 3347.5, "samples_above_10pct_median": 11.0, "frac_ge3_above_10pct": 0.9873030721317834},
+      "B6": {"n": 17197, "amp_median_adc": 1742.5, "samples_above_10pct_median": 8.0, "frac_ge3_above_10pct": 0.9874396697098331},
+      "B8": {"n": 10619, "amp_median_adc": 2333.5, "samples_above_10pct_median": 10.0, "frac_ge3_above_10pct": 0.9983049251341934}
+    },
+    "per_stave_median_peak_sample": {"B6": 7.0, "B8": 11.0},
+    "n_intime_pair_events": 1888,
+    "intime_tol_samples": 1.5,
+    "evaluation": [
+      {"n": 1888, "median_ns": 59.60530122976422, "sigma68_ns": 0.8985129399585929, "ci68_ns": [0.8123935669551073, 1.0723601562332614], "core_sigma_ns": 0.5511423021269959, "core_chi2_ndf": 1.9732016178698852, "tail_frac_gt5ns": 0.15889830508474576, "full_rms_ns": 9.69875913667869, "method": "t_cfd10", "fraction": 0.1},
+      {"n": 1888, "median_ns": 63.55902020874973, "sigma68_ns": 15.433838062158472, "ci68_ns": [9.367100894895795, 17.930070316271905], "core_sigma_ns": 0.921631239523237, "core_chi2_ndf": 1.3348672045416097, "tail_frac_gt5ns": 0.2505296610169492, "full_rms_ns": 16.323545171481243, "method": "t_cfd20", "fraction": 0.2},
+      {"n": 1888, "median_ns": 67.31736128364389, "sigma68_ns": 25.751244085992873, "ci68_ns": [25.622023674726577, 25.89864363727156], "core_sigma_ns": 1.311771420006524, "core_chi2_ndf": 1.0820365402972116, "tail_frac_gt5ns": 0.4046610169491525, "full_rms_ns": 24.452834029106533, "method": "t_cfd30", "fraction": 0.3},
+      {"n": 1888, "median_ns": 21.50123092872607, "sigma68_ns": 30.583509420904427, "ci68_ns": [30.467359744965503, 30.731162605596058], "core_sigma_ns": null, "core_chi2_ndf": null, "tail_frac_gt5ns": 0.9385593220338984, "full_rms_ns": 30.897114235670337, "method": "t_cfd40", "fraction": 0.4},
+      {"n": 1888, "median_ns": 11.289629195492306, "sigma68_ns": 34.393799850058215, "ci68_ns": [34.23540923833063, 34.5268120016415], "core_sigma_ns": 2.4041511377695963, "core_chi2_ndf": 0.6552104909028069, "tail_frac_gt5ns": 0.3707627118644068, "full_rms_ns": 30.578724119965013, "method": "t_cfd50", "fraction": 0.5},
+      {"n": 1888, "median_ns": 63.777793935788885, "sigma68_ns": 1.7499999999999964, "ci68_ns": [1.5000000000000036, 1.750000000000007], "core_sigma_ns": 0.052366846638864886, "core_chi2_ndf": 40.25889290433559, "tail_frac_gt5ns": 0.09110169491525423, "full_rms_ns": 4.705952195296581, "method": "template", "fraction": null}
+    ],
+    "legacy_best_sigma68": {"method": "t_cfd10", "sigma68_ns": 0.8985129399585929, "authorized": false},
+    "figures": [
+      "reports/real_data_cfd_timing/pulse_shape_sample_II.png",
+      "reports/real_data_cfd_timing/residuals_sample_II.png",
+      "reports/real_data_cfd_timing/sigma_vs_fraction_sample_II.png"
+    ]
+  },
+  "task_runs": {
+    "tag": "task_runs",
+    "runs": [19, 20, 23, 24, 25, 26, 27, 28, 29, 30],
+    "n_pulses": 295029,
+    "pulses_by_stave": {"B2": 198655, "B6": 3444, "B8": 92930},
+    "pulse_shape": {
+      "B2": {"n": 198655, "amp_median_adc": 6687.5, "samples_above_10pct_median": 12.0, "frac_ge3_above_10pct": 0.988502680526541},
+      "B6": {"n": 3444, "amp_median_adc": 1646.75, "samples_above_10pct_median": 6.0, "frac_ge3_above_10pct": 0.9666085946573751},
+      "B8": {"n": 92930, "amp_median_adc": 6896.0, "samples_above_10pct_median": 4.0, "frac_ge3_above_10pct": 0.999967717636931}
+    },
+    "per_stave_median_peak_sample": {"B6": 7.0, "B8": 13.0},
+    "n_intime_pair_events": 675,
+    "intime_tol_samples": 1.5,
+    "evaluation": [
+      {"n": 675, "median_ns": -31.827483483483483, "sigma68_ns": 3.5480843306636647, "ci68_ns": [3.0458687329895326, 4.0811696985382895], "core_sigma_ns": 0.6284546319166743, "core_chi2_ndf": 5.5552860292206425, "tail_frac_gt5ns": 0.21777777777777776, "full_rms_ns": 5.996032130997965, "method": "t_cfd10", "fraction": 0.1},
+      {"n": 675, "median_ns": -28.576323232323233, "sigma68_ns": 6.72995931053074, "ci68_ns": [6.210735290254355, 7.185304849834726], "core_sigma_ns": 2.1095582522500727, "core_chi2_ndf": 2.285458092092116, "tail_frac_gt5ns": 0.28444444444444444, "full_rms_ns": 8.117601461052441, "method": "t_cfd20", "fraction": 0.2},
+      {"n": 675, "median_ns": -25.633333333333326, "sigma68_ns": 7.577485520821062, "ci68_ns": [6.882404467335585, 8.340698222666713], "core_sigma_ns": 1.4545053080878998, "core_chi2_ndf": 1.0179320814786381, "tail_frac_gt5ns": 0.38814814814814813, "full_rms_ns": 8.812781120799455, "method": "t_cfd30", "fraction": 0.3},
+      {"n": 675, "median_ns": -22.401362307718827, "sigma68_ns": 7.991547677581253, "ci68_ns": [7.331619974931942, 8.842282329808013], "core_sigma_ns": 3.4858461417890187, "core_chi2_ndf": 1.0120004426956473, "tail_frac_gt5ns": 0.43851851851851853, "full_rms_ns": 8.928586601285948, "method": "t_cfd40", "fraction": 0.4},
+      {"n": 675, "median_ns": -18.476305556490757, "sigma68_ns": 8.492934319569986, "ci68_ns": [7.892303073122952, 9.223799893065696], "core_sigma_ns": 5.075052654894922, "core_chi2_ndf": 1.7625202117897498, "tail_frac_gt5ns": 0.5555555555555556, "full_rms_ns": 8.727500004400738, "method": "t_cfd50", "fraction": 0.5},
+      {"n": 675, "median_ns": -28.491237973354032, "sigma68_ns": 1.0, "ci68_ns": [1.0, 1.0], "core_sigma_ns": 0.011505788132064577, "core_chi2_ndf": 8.80751212820404, "tail_frac_gt5ns": 0.0, "full_rms_ns": 0.9627333059478862, "method": "template", "fraction": null}
+    ],
+    "legacy_best_sigma68": {"method": "template", "sigma68_ns": 1.0, "authorized": false},
+    "figures": [
+      "reports/real_data_cfd_timing/pulse_shape_task_runs.png",
+      "reports/real_data_cfd_timing/residuals_task_runs.png",
+      "reports/real_data_cfd_timing/sigma_vs_fraction_task_runs.png"
+    ]
+  },
+  "legacy_runtime_sec": 6.5
+}

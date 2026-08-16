@@ -1,0 +1,36 @@
+{
+  "study": "real_data_cfd_timing",
+  "params": {
+    "clean_pair": ["B6", "B8"],
+    "rng_seed": 20260723
+  },
+  "sample_II": {
+    "pulses_by_stave": {
+      "B6": 17197,
+      "B8": 10619
+    },
+    "pulse_shape": {
+      "B6": {
+        "samples_above_10pct_median": 8.0,
+        "frac_ge3_above_10pct": 0.9874396697098331
+      },
+      "B8": {
+        "samples_above_10pct_median": 10.0,
+        "frac_ge3_above_10pct": 0.9983049251341934
+      }
+    },
+    "n_intime_pair_events": 1888,
+    "best_sigma68": {
+      "n": 1888,
+      "median_ns": 59.60530122976422,
+      "sigma68_ns": 0.8985129399585929,
+      "ci68_ns": [0.8123935669551073, 1.0723601562332614],
+      "core_sigma_ns": 0.5511423021269959,
+      "core_chi2_ndf": 1.9732016178698852,
+      "tail_frac_gt5ns": 0.15889830508474576,
+      "full_rms_ns": 9.69875913667869,
+      "method": "t_cfd10",
+      "fraction": 0.1
+    }
+  }
+}

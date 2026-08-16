@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200"
+  height="520" viewBox="0 0 1200 520">
+<rect width="1200" height="520" fill="white"/>
+<text x="50" y="55" font-size="30" font-weight="bold">
+  Single-stave adapter/analyzer metadata audit
+</text>
+<text x="50" y="92" font-size="18">Software/provenance evidence — not detector data</text>
+<rect x="50" y="125" width="310" height="80" rx="10" fill="#eeeeee" stroke="#333333"/>
+<text x="75" y="158" font-size="20">Adapter metadata</text>
+<text x="75" y="188" font-size="17">SCHEMA_AND_OPTICAL_BOOKKEEPING_COMPATIBLE</text>
+<line x1="360" y1="165" x2="505" y2="165" stroke="#333333" stroke-width="3"/>
+<polygon points="505,165 486,155 486,175" fill="#333333"/>
+<rect x="505" y="125" width="310" height="80" rx="10" fill="#eeeeee" stroke="#333333"/>
+<text x="530" y="158" font-size="20">Analyzer v2.0.0</text>
+<text x="530" y="188" font-size="17">CURRENT_COMPONENT_SUM / total denominator</text>
+<rect x="850" y="125" width="280" height="80" rx="10" fill="#eeeeee" stroke="#333333"/>
+<text x="875" y="160" font-size="22" font-weight="bold">Audit status: VALIDATED</text>
+<text x="50" y="235" font-size="21" font-weight="bold">Fail-closed findings (0)</text>
+
+<text x="50" y="468" font-size="16">
+  Policy: ADAPTER_METADATA_MUST_MATCH_CURRENT_ANALYZER_OPTICAL_CONTRACT
+</text>
+<text x="50" y="496" font-size="16">
+  Real ROOT execution and physics closure remain pending.
+</text>
+</svg>

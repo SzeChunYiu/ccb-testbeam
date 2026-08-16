@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="690" viewBox="0 0 1200 690">
+<rect width="100%" height="100%" fill="white"/>
+<style>text{font-family:DejaVu Sans,Arial,sans-serif;fill:#111}.title{font-size:27px;font-weight:700}.sub{font-size:16px}.label{font-size:17px;font-weight:600}.small{font-size:14px}.axis{stroke:#333;stroke-width:1.4}.tick{stroke:#777;stroke-width:1}.bound{stroke:#7b2cbf;stroke-width:7;stroke-linecap:round}.median{stroke:#c1121f;stroke-width:4}.window{fill:#d8f3dc;stroke:#2d6a4f;stroke-width:1.5}.warning{fill:#9b2226;font-size:15px;font-weight:700}</style>
+<text class="title" x="45" y="45">PR #939 residual plots omit the reported central distributions</text>
+<text class="sub" x="45" y="75">Fixed visible window: −10 to +10 ns. Purple bars are conservative q16–q84 bounds derived only from median and σ68.</text>
+<rect class="window" x="623.75" y="105" width="112.50" height="455"/>
+<text class="small" x="520" y="125">visible histogram window</text>
+<line class="axis" x1="230" y1="585" x2="1130" y2="585"/>
+<line class="tick" x1="230.00" y1="585" x2="230.00" y2="593"/>
+<text class="small" x="217.00" y="613">-80</text>
+<line class="tick" x1="342.50" y1="585" x2="342.50" y2="593"/>
+<text class="small" x="329.50" y="613">-60</text>
+<line class="tick" x1="455.00" y1="585" x2="455.00" y2="593"/>
+<text class="small" x="442.00" y="613">-40</text>
+<line class="tick" x1="567.50" y1="585" x2="567.50" y2="593"/>
+<text class="small" x="554.50" y="613">-20</text>
+<line class="tick" x1="680.00" y1="585" x2="680.00" y2="593"/>
+<text class="small" x="667.00" y="613">0</text>
+<line class="tick" x1="792.50" y1="585" x2="792.50" y2="593"/>
+<text class="small" x="779.50" y="613">20</text>
+<line class="tick" x1="905.00" y1="585" x2="905.00" y2="593"/>
+<text class="small" x="892.00" y="613">40</text>
+<line class="tick" x1="1017.50" y1="585" x2="1017.50" y2="593"/>
+<text class="small" x="1004.50" y="613">60</text>
+<line class="tick" x1="1130.00" y1="585" x2="1130.00" y2="593"/>
+<text class="small" x="1117.00" y="613">80</text>
+<text class="label" x="530.00" y="650">raw pair residual (ns)</text>
+<text class="label" x="45" y="175">sample_II / t_cfd10 (n=1888)</text>
+<line class="bound" x1="1005.17" y1="170" x2="1025.39" y2="170"/>
+<line class="median" x1="1015.28" y1="152" x2="1015.28" y2="188"/>
+<text class="small" x="1023.28" y="158">median 59.605 ns</text>
+<text class="warning" x="230" y="205">≥84% guaranteed outside the displayed window</text>
+<text class="label" x="45" y="275">sample_II / t_cfd20 (n=1888)</text>
+<line class="bound" x1="863.89" y1="270" x2="1211.15" y2="270"/>
+<line class="median" x1="1037.52" y1="252" x2="1037.52" y2="288"/>
+<text class="small" x="1045.52" y="258">median 63.559 ns</text>
+<text class="warning" x="230" y="305">≥84% guaranteed outside the displayed window</text>
+<text class="label" x="45" y="375">task_runs / t_cfd10 (n=675)</text>
+<line class="bound" x1="461.05" y1="370" x2="540.89" y2="370"/>
+<line class="median" x1="500.97" y1="352" x2="500.97" y2="388"/>
+<text class="small" x="508.97" y="358">median -31.827 ns</text>
+<text class="warning" x="230" y="405">≥84% guaranteed outside the displayed window</text>
+<text class="label" x="45" y="475">task_runs / t_cfd20 (n=675)</text>
+<line class="bound" x1="443.55" y1="470" x2="594.97" y2="470"/>
+<line class="median" x1="519.26" y1="452" x2="519.26" y2="488"/>
+<text class="small" x="527.26" y="458">median -28.576 ns</text>
+<text class="warning" x="230" y="505">≥84% guaranteed outside the displayed window</text>
+<text class="small" x="45" y="675">Software/visualization evidence only; no raw ROOT timing result is reprocessed or validated.</text>
+</svg>

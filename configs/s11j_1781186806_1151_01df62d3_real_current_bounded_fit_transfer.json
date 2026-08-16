@@ -1,0 +1,16 @@
+{
+  "study_id": "S11j",
+  "ticket_id": "1781186806.1151.01df62d3",
+  "worker": "testbeam-laptop-3",
+  "title": "real-current bounded-fit calibration transfer check",
+  "s07f_script": "scripts/s07f_independent_all_three_appi_validation.py",
+  "s07f_config": "configs/s07f_1781012109_1290_18206042.json",
+  "s11i_report_dir": "reports/1781065299.555.20535839",
+  "output_dir": "reports/1781186806.1151.01df62d3__s11j_real_current_bounded_fit_transfer",
+  "high_current_dt_min_ns": 51.0,
+  "clean_dt_max_ns": 3.0,
+  "fixed_clean_quantile": 0.95,
+  "bootstrap_replicates": 600,
+  "random_seed": 2026071011,
+  "next_tickets": []
+}

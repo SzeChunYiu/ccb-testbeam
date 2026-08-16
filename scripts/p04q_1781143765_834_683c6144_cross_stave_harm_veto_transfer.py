@@ -196,6 +196,8 @@ def fit_fold_models(
 
     charge_pred: Dict[str, np.ndarray] = {}
     time_resid: Dict[str, np.ndarray] = {}
+    # CFD20 threshold uses peak ADC for every correction method (#1124).
+    peak_amp_for_cfd = np.maximum(meta["b2_amp"].to_numpy(dtype=float), 1.0)
     for name, est in {
         "raw_peak": q_peak_all,
         "raw_integral": q_integral_all,
@@ -206,9 +208,14 @@ def fit_fold_models(
         pred_charge = p04p.predict_charge(cal, est)
         charge_pred[name] = (pred_charge - odd) / np.maximum(odd, 1.0)
         even_time = float(config["sample_period_ns"]) * p04p.cfd_time_samples(
-            wave, np.maximum(est, 1.0), float(config["cfd_fraction"])
+            wave, peak_amp_for_cfd, float(config["cfd_fraction"])
         )
-        offset = float(np.nanmedian(even_time[train_mask] - meta.loc[train_mask, "odd_time_ns"].to_numpy()))
+        finite = np.isfinite(even_time)
+        offset = (
+            float(np.nanmedian(even_time[train_mask & finite] - meta.loc[train_mask & finite, "odd_time_ns"].to_numpy()))
+            if np.any(train_mask & finite)
+            else 0.0
+        )
         time_resid[name] = even_time - meta["odd_time_ns"].to_numpy() - offset
 
     prod_charge = charge_pred["template_saturation"]
@@ -312,23 +319,51 @@ def fit_fold_models(
     fold["prob_shuffled_target_gbt"] = sentinel.predict_proba(X[held_idx])[:, 1]
     fold["flag_shuffled_target_gbt"] = fold["prob_shuffled_target_gbt"].to_numpy() >= 0.5
 
+    # Fail-closed model identity (#1126): never silently publish MLP/GBT as CNN/ResNet.
+    torch_exec = {
+        "cnn_1d": {"requested_model": "cnn_1d", "effective_model": None, "status": "PENDING", "error": None},
+        "wavegate_resnet": {
+            "requested_model": "wavegate_resnet",
+            "effective_model": None,
+            "status": "PENDING",
+            "error": None,
+        },
+    }
     if include_nn:
         x_wave = (wave / np.maximum(meta["b2_amp"].to_numpy()[:, None], 1.0)).astype(np.float32)
         x_tab = X[:, 18:].astype(np.float32)
         try:
             fold["prob_cnn_1d"] = p04p.fit_torch_classifier("cnn_1d", x_wave, x_tab, y, train_eligible, held_idx, config, seed + 31)
+            torch_exec["cnn_1d"].update(effective_model="cnn_1d", status="SUCCESS")
+        except Exception as exc:
+            print(f"cnn_1d failed for fold seed {seed}: {exc}", flush=True)
+            fold["prob_cnn_1d"] = np.full(len(fold), np.nan, dtype=float)
+            torch_exec["cnn_1d"].update(status="FAILED_MODEL_EXECUTION", error=type(exc).__name__)
+        try:
             fold["prob_wavegate_resnet"] = p04p.fit_torch_classifier(
                 "wavegate_resnet", x_wave, x_tab, y, train_eligible, held_idx, config, seed + 37
             )
+            torch_exec["wavegate_resnet"].update(effective_model="wavegate_resnet", status="SUCCESS")
         except Exception as exc:
-            print(f"torch classifiers failed for fold seed {seed}: {exc}", flush=True)
-            fold["prob_cnn_1d"] = fold["prob_mlp"]
-            fold["prob_wavegate_resnet"] = fold["prob_gradient_boosted_trees"]
+            print(f"wavegate_resnet failed for fold seed {seed}: {exc}", flush=True)
+            fold["prob_wavegate_resnet"] = np.full(len(fold), np.nan, dtype=float)
+            torch_exec["wavegate_resnet"].update(status="FAILED_MODEL_EXECUTION", error=type(exc).__name__)
     else:
-        fold["prob_cnn_1d"] = fold["prob_mlp"]
-        fold["prob_wavegate_resnet"] = fold["prob_gradient_boosted_trees"]
-    fold["flag_cnn_1d"] = fold["prob_cnn_1d"].to_numpy() >= 0.5
-    fold["flag_wavegate_resnet"] = fold["prob_wavegate_resnet"].to_numpy() >= 0.5
+        fold["prob_cnn_1d"] = np.full(len(fold), np.nan, dtype=float)
+        fold["prob_wavegate_resnet"] = np.full(len(fold), np.nan, dtype=float)
+        torch_exec["cnn_1d"].update(status="UNAVAILABLE", error="include_nn=False")
+        torch_exec["wavegate_resnet"].update(status="UNAVAILABLE", error="include_nn=False")
+    fold["torch_execution_json"] = json.dumps(torch_exec)
+    fold["flag_cnn_1d"] = np.where(
+        np.isfinite(fold["prob_cnn_1d"].to_numpy(dtype=float)),
+        fold["prob_cnn_1d"].to_numpy(dtype=float) >= 0.5,
+        False,
+    )
+    fold["flag_wavegate_resnet"] = np.where(
+        np.isfinite(fold["prob_wavegate_resnet"].to_numpy(dtype=float)),
+        fold["prob_wavegate_resnet"].to_numpy(dtype=float) >= 0.5,
+        False,
+    )
 
     train_hashes = {
         hashlib.sha256(np.asarray(row, dtype=np.float32).tobytes()).hexdigest()
@@ -362,6 +397,27 @@ def summarize_method(frame: pd.DataFrame, method: str, reps: int, rng: np.random
     y = frame["harm_label"].to_numpy(dtype=int)
     flag = frame[f"flag_{method}"].to_numpy(dtype=bool)
     prob = frame[f"prob_{method}"].to_numpy(dtype=float)
+    if method in {"cnn_1d", "wavegate_resnet"} and not np.isfinite(prob).any():
+        return {
+            "method": method,
+            "n": int(len(frame)),
+            "execution_state": "FAILED_MODEL_EXECUTION",
+            "requested_model": method,
+            "effective_model": None,
+            "eligible_for_ranking": False,
+            "resampling_unit": "run",
+            "harm_rate": float(y.mean()) if len(y) else float("nan"),
+            "flag_rate": float("nan"),
+            "precision": float("nan"),
+            "recall": float("nan"),
+            "f1": float("nan"),
+            "accepted_coverage": float("nan"),
+            "accepted_charge_bias_frac": float("nan"),
+            "accepted_charge_res68_frac": float("nan"),
+            "accepted_timing_abs68_ns": float("nan"),
+            "accepted_timing_tail_frac_gt5ns": float("nan"),
+            "calibration_ece": float("nan"),
+        }
     precision, recall, f1, _ = precision_recall_fscore_support(y, flag.astype(int), average="binary", zero_division=0)
     accepted = ~flag
     charge = frame.loc[accepted, "prod_charge_frac_error"].to_numpy()
@@ -381,11 +437,15 @@ def summarize_method(frame: pd.DataFrame, method: str, reps: int, rng: np.random
         "accepted_timing_tail_frac_gt5ns": metric_value(timing, "tail_frac"),
         "calibration_ece": p04p.ece_score(y, prob),
     }
-    blocks = {
-        key: block
-        for key, block in frame.groupby(["stave", "run"], sort=True)
+    # Primary resampling unit is RUN, keeping all target staves together (#1125).
+    # Legacy stave-run independent blocks break shared-run/event dependence.
+    run_blocks = {
+        int(run): block
+        for run, block in frame.groupby("run", sort=True)
     }
-    keys = np.asarray(list(blocks.keys()), dtype=object)
+    run_keys = np.asarray(sorted(run_blocks.keys()), dtype=int)
+    row["resampling_unit"] = "run"
+    row["n_resampling_units"] = int(len(run_keys))
     stats = {key: np.empty(reps, dtype=float) for key in [
         "precision",
         "recall",
@@ -396,8 +456,8 @@ def summarize_method(frame: pd.DataFrame, method: str, reps: int, rng: np.random
         "flag_rate",
     ]}
     for i in range(reps):
-        picked = rng.choice(len(keys), size=len(keys), replace=True)
-        sample = pd.concat([blocks[tuple(keys[j])] for j in picked], ignore_index=True)
+        picked = rng.choice(len(run_keys), size=len(run_keys), replace=True)
+        sample = pd.concat([run_blocks[int(run_keys[j])] for j in picked], ignore_index=True)
         sy = sample["harm_label"].to_numpy(dtype=int)
         sf = sample[f"flag_{method}"].to_numpy(dtype=bool)
         sp, sr, _, _ = precision_recall_fscore_support(sy, sf.astype(int), average="binary", zero_division=0)
@@ -613,6 +673,12 @@ def main() -> int:
     print("3/5 summarizing bootstrap CIs", flush=True)
     transfer_summary = pd.DataFrame([summarize_method(transfer_pred, m, int(config["bootstrap_reps"]), rng) for m in method_names])
     eligible = transfer_summary["accepted_coverage"] >= 0.50
+    # Failed/unavailable Torch methods are never ranked as scientific winners (#1126).
+    if "execution_state" in transfer_summary.columns:
+        failed = transfer_summary["execution_state"].fillna("SUCCESS").astype(str).str.startswith(("FAILED", "UNAVAILABLE"))
+        eligible = eligible & ~failed
+    if "eligible_for_ranking" in transfer_summary.columns:
+        eligible = eligible & transfer_summary["eligible_for_ranking"].fillna(True).astype(bool)
     rank_source = transfer_summary.copy()
     rank_source["_bad"] = ~eligible
     rank_source = rank_source.sort_values(
@@ -649,21 +715,37 @@ def main() -> int:
             by_run_rows.append(row)
     by_run = pd.DataFrame(by_run_rows)
 
-    blocks = {(stave, int(run)): block for (stave, run), block in transfer_pred.groupby(["stave", "run"])}
-    keys = list(blocks.keys())
+    run_blocks = {int(run): block for run, block in transfer_pred.groupby("run")}
+    run_keys = list(run_blocks.keys())
     delta_rows = []
     for method in [m for m in method_names if m != "traditional_rule"]:
+        if method in {"cnn_1d", "wavegate_resnet"} and not np.isfinite(transfer_pred[f"prob_{method}"].to_numpy(dtype=float)).any():
+            delta_rows.append(
+                {
+                    "method": method,
+                    "flag_rate_delta_vs_traditional": float("nan"),
+                    "ci95": [float("nan"), float("nan")],
+                    "n_blocks": int(len(run_keys)),
+                    "resampling_unit": "run",
+                    "execution_state": "FAILED_OR_UNAVAILABLE",
+                }
+            )
+            continue
         obs = float(transfer_pred[f"flag_{method}"].mean() - transfer_pred["flag_traditional_rule"].mean())
         boot = np.empty(int(config["bootstrap_reps"]), dtype=float)
         for i in range(int(config["bootstrap_reps"])):
-            sample = pd.concat([blocks[keys[j]] for j in rng.choice(len(keys), size=len(keys), replace=True)], ignore_index=True)
+            sample = pd.concat(
+                [run_blocks[run_keys[j]] for j in rng.choice(len(run_keys), size=len(run_keys), replace=True)],
+                ignore_index=True,
+            )
             boot[i] = float(sample[f"flag_{method}"].mean() - sample["flag_traditional_rule"].mean())
         delta_rows.append(
             {
                 "method": method,
                 "flag_rate_delta_vs_traditional": obs,
                 "ci95": [float(np.nanpercentile(boot, 2.5)), float(np.nanpercentile(boot, 97.5))],
-                "n_blocks": int(len(keys)),
+                "n_blocks": int(len(run_keys)),
+                "resampling_unit": "run",
             }
         )
     deltas = pd.DataFrame(delta_rows)

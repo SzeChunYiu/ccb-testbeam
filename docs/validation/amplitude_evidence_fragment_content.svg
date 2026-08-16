@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="430" viewBox="0 0 960 430" role="img" aria-labelledby="title desc">
+  <title id="title">Amplitude evidence fragment content gate</title>
+  <desc id="desc">Synthetic software provenance evidence comparing the former blank-fragment acceptance with the corrected nonblank-byte verification.</desc>
+  <rect width="960" height="430" fill="white"/>
+  <text x="30" y="40" font-family="sans-serif" font-size="24" font-weight="bold">Amplitude evidence fragments must contain evidence</text>
+  <text x="30" y="66" font-family="sans-serif" font-size="14">Synthetic software/provenance validation — not detector data</text>
+  <rect x="45" y="105" width="365" height="210" fill="white" stroke="black" stroke-dasharray="8 5"/>
+  <text x="227" y="138" text-anchor="middle" font-family="sans-serif" font-size="19" font-weight="bold">Former v1.3.0 path</text>
+  <text x="75" y="180" font-family="monospace" font-size="15">producer_contract.md#L2</text>
+  <text x="75" y="215" font-family="monospace" font-size="15">selected bytes: "  \t  \n"</text>
+  <text x="75" y="250" font-family="sans-serif" font-size="16">Range exists → fragment verified</text>
+  <text x="75" y="282" font-family="sans-serif" font-size="16" font-weight="bold">Blank line could authorize physics</text>
+  <line x1="430" y1="210" x2="525" y2="210" stroke="black" stroke-width="2"/>
+  <polygon points="525,210 509,201 509,219" fill="black"/>
+  <rect x="550" y="105" width="365" height="210" fill="#eeeeee" stroke="black"/>
+  <text x="732" y="138" text-anchor="middle" font-family="sans-serif" font-size="19" font-weight="bold">Corrected v1.4.0 path</text>
+  <text x="580" y="180" font-family="sans-serif" font-size="16">1. Verify whole-file SHA-256</text>
+  <text x="580" y="210" font-family="sans-serif" font-size="16">2. Select exact line bytes</text>
+  <text x="580" y="240" font-family="sans-serif" font-size="16">3. Require ≥1 nonblank line</text>
+  <text x="580" y="270" font-family="sans-serif" font-size="16">4. Record fragment bytes + SHA-256</text>
+  <text x="580" y="300" font-family="sans-serif" font-size="16" font-weight="bold">Whitespace-only fragment → reject</text>
+  <text x="45" y="355" font-family="sans-serif" font-size="15">Negative control: 2 failed, 6 passed</text>
+  <text x="550" y="355" font-family="sans-serif" font-size="15">Corrected focused suite: 23 passed</text>
+  <text x="45" y="395" font-family="sans-serif" font-size="13">Policy: EVIDENCE_LINE_FRAGMENT_MUST_CONTAIN_NONWHITESPACE_CONTENT</text>
+</svg>

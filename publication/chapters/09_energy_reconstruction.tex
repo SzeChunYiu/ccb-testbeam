@@ -1,0 +1,34 @@
+\section{Energy reconstruction and resolution}
+
+\subsection{Measurand definition}
+
+Energy resolution is not a single detector-independent number. For the single-stave response chain, two physically distinct targets are available:
+\begin{align}
+E_{\rm raw} &\equiv \text{unquenched Geant4 energy deposited in the scintillator},\\
+E_{\rm vis} &\equiv \text{Birks-visible/quenched energy used to generate scintillation light}.
+\end{align}
+A full range-stack reconstruction may later target incident charged-particle kinetic energy from amplitudes and stopping depth. These estimands must not share one bare \(E_{\rm dep}\) label.
+
+For a chosen target \(E_T\), define
+\[
+r=\frac{E_{\rm reco}-E_T}{E_T}.
+\]
+A publication result should report median bias, \(\sigmaeight\), RMS, tail fraction and uncertainty intervals on held-out populations, as functions of target energy and relevant phase-space variables. The uncertainty unit must reflect the independent simulation/run conditions used to establish transfer, not merely the number of events generated under a few shared grid settings.
+
+\subsection{Status of the current held-out result}
+
+\begin{publicationhold}
+The 8.9\% held-out $\sigmaeight$ result remains quarantined. Energy semantics are now enforced API-wide (\#1338): $E_{\rm raw}$ (unquenched Geant4 scintillator deposit) and $E_{\rm vis}$ (Birks-visible quenched energy) are distinct estimands. The held-out producer was rewritten (\#1339) with proper estimand definition and propagated uncertainty, and the underlying optical grid was regenerated (\#1303, complete 2026-08). On the regenerated five-point grid with the $E_{\rm vis}$ target: held-out median bias $+0.48\%$ $[+0.29,+0.62]$, $\sigmaeight = 6.26\%$ $[6.16,6.35]$, tail fraction $0.2\%$; the $E_{\rm raw}$ estimand (deliberately mis-specified pooled-linear response) gives bias $+10.4\%$, $\sigmaeight = 9.0\%$, tail $16.9\%$ and serves as the negative control, alongside the shuffled-target control reported in the result manifest. Bootstrap $16$--$84\%$ intervals use 500 resamples of the held-out population. The result remains \textsc{mc\_model\_dependent} and quarantined from VALIDATED promotion: the optical/SiPM nuisance envelope is not yet propagated, held-out coverage spans two operating points only, and impact-position transfer is scoped to the central line ($y=0$, \#1092). No promotion to VALIDATED is authorized.
+\end{publicationhold}
+
+\GatedFigure{figures/gated/edep_reconstruction_heldout.png}{0.90}{Quarantined Figure 11 from the historical held-out reconstruction study.}{GATED: wrong/ambiguous energy semantics, incomplete uncertainty and superseded optical campaign.}
+
+\GatedFigure{figures/gated/edep_reconstruction_heldout_E_vis.pdf}{0.90}{Held-out energy reconstruction on the regenerated \#1303 optical grid ($E_{\rm vis}$ estimand): residual distribution for held-out deuteron\_110 and proton\_60 with bootstrap $16$--$84\%$ intervals; median bias $+0.48\%$, $\sigmaeight = 6.26\%$, tail fraction $0.2\%$.}{GATED: MC\_MODEL\_DEPENDENT (optical/SiPM nuisance envelope not propagated; two held-out operating points; simulation, not beam data).}
+
+\GatedFigure{figures/gated/edep_reconstruction_heldout_E_raw.pdf}{0.90}{Negative control: the same reconstruction evaluated against the $E_{\rm raw}$ (unquenched) target with the pooled $E_{\rm vis}$-calibrated linear response (median bias $+10.4\%$, $\sigmaeight = 9.0\%$, tail fraction $16.9\%$).}{GATED: deliberately mis-specified response control; shown to demonstrate estimand separation, not as a performance claim.}
+
+\subsection{Required publication analysis}
+
+The replacement study should preregister and freeze training/calibration, model-selection and final-evaluation populations before fitting; include multiple well-separated target-energy regimes; validate particle-species transfer without truth-label tuning; test longitudinal/transverse position and angle support; compare transparent linear/monotonic baselines before any ML model; and propagate optical/SiPM model nuisance families separately from finite-simulation statistics. Bootstrap or hierarchical intervals should resample the independent grid/run unit appropriate to the claim. A shuffled-target or deliberately mis-specified response control should fail the reconstruction test, and occupancy/saturation diagnostics should be checked on known-answer inputs with a signed definition. If a resolution parametrisation is fitted, the available independent energy grid must identify its terms.
+
+A full-stack incident-energy estimator may use the amplitude vector \(\mathbf A=(A_{B2},A_{B4},A_{B6},A_{B8})\) and a source-bound penetration/range observable, but it remains downstream of material-budget, trigger/selection and per-channel response closure.

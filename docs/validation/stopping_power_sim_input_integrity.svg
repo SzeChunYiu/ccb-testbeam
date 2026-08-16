@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="420" viewBox="0 0 960 420" role="img" aria-labelledby="title desc">
+  <title id="title">Stopping-power simulation input integrity gate</title>
+  <desc id="desc">Synthetic regression schematic. The legacy path skips a malformed middle row, while the validated preflight rejects the table. This is not detector data.</desc>
+  <rect width="960" height="420" fill="white"/>
+  <style>
+    text{font-family:Arial,sans-serif;fill:#111}.box{fill:white;stroke:#111;stroke-width:1.5}
+    .bad{stroke:#111;stroke-width:2;stroke-dasharray:7 4}.good{stroke:#111;stroke-width:2}
+    .arrow{stroke:#111;stroke-width:1.5;fill:none;marker-end:url(#arrow)}
+  </style>
+  <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#111"/></marker></defs>
+  <text x="480" y="28" text-anchor="middle" font-size="18" font-weight="bold">Simulation event CSV integrity before PSTAR comparison</text>
+  <text x="480" y="50" text-anchor="middle" font-size="12">Synthetic regression evidence — not detector data</text>
+
+  <rect class="box" x="35" y="90" width="250" height="190"/>
+  <text x="160" y="115" text-anchor="middle" font-size="14" font-weight="bold">Three input rows</text>
+  <text x="55" y="150" font-size="12">1. proton, 10 MeV, valid</text>
+  <text x="55" y="185" font-size="12">2. proton, energy missing</text>
+  <line x1="50" y1="193" x2="270" y2="193" stroke="#111" stroke-width="2"/>
+  <text x="55" y="225" font-size="12">3. proton, 10 MeV, valid</text>
+  <text x="55" y="258" font-size="11">Every noncomment row must be accounted for.</text>
+
+  <path class="arrow" d="M285 150 C340 120, 360 120, 415 135"/>
+  <path class="arrow" d="M285 230 C340 265, 360 270, 415 255"/>
+
+  <rect class="box" x="415" y="82" width="230" height="135"/>
+  <text x="530" y="108" text-anchor="middle" font-size="14" font-weight="bold">Legacy ingestion</text>
+  <text x="435" y="140" font-size="12">Missing energy → continue</text>
+  <text x="435" y="165" font-size="12">Returned rows: 2 / 3</text>
+  <text x="435" y="190" font-size="12">Failure state: none</text>
+  <line class="bad" x1="430" y1="205" x2="630" y2="205"/>
+
+  <rect class="box" x="415" y="238" width="230" height="135"/>
+  <text x="530" y="264" text-anchor="middle" font-size="14" font-weight="bold">Validated preflight</text>
+  <text x="435" y="296" font-size="12">Line 3: no energy value</text>
+  <text x="435" y="321" font-size="12">Exit status: 2</text>
+  <text x="435" y="346" font-size="12">No validation JSON written</text>
+  <line class="good" x1="430" y1="361" x2="630" y2="361"/>
+
+  <path class="arrow" d="M645 150 L735 150"/>
+  <path class="arrow" d="M645 305 L735 305"/>
+  <rect class="box" x="735" y="105" width="190" height="90"/>
+  <text x="830" y="135" text-anchor="middle" font-size="13" font-weight="bold">Unsafe outcome</text>
+  <text x="755" y="163" font-size="12">Aggregation may proceed</text>
+  <text x="755" y="182" font-size="12">with silent selection bias.</text>
+  <rect class="box" x="735" y="260" width="190" height="90"/>
+  <text x="830" y="290" text-anchor="middle" font-size="13" font-weight="bold">Fail-closed outcome</text>
+  <text x="755" y="318" font-size="12">Correct the source table</text>
+  <text x="755" y="337" font-size="12">before any comparison.</text>
+
+  <text x="480" y="405" text-anchor="middle" font-size="11">Tool: validate_stopping_power_sim_table.py v1.0.0 · focused regression: 17 passed</text>
+</svg>

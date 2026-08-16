@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "task_id": "AUD-G4-009",
+  "status": "PARTIAL",
+  "evidence_type": "synthetic_regression",
+  "not_detector_data": true,
+  "reviewed_target": {
+    "path": "scripts/single_stave/compare_stopping_power.py",
+    "blob_sha": "ef535a47ee36b2706f6b720f0231648c23bc11a7",
+    "observed_behavior": {
+      "input_data_rows": 3,
+      "returned_rows": 2,
+      "skipped_rows": 1,
+      "energy_deposit_basis": "UNQUENCHED_RAW"
+    }
+  },
+  "validated_mitigation": {
+    "path": "tools/audit/validate_stopping_power_sim_table.py",
+    "version": "1.0.0",
+    "tests": "tests/test_validate_stopping_power_sim_table.py",
+    "pytest_result": "17 passed in 1.31s",
+    "py_compile": "PASS",
+    "line_length_max": 100,
+    "integration_state": "STANDALONE_PREFLIGHT"
+  },
+  "acceptance_boundary": [
+    "No real Geant4 event CSV was validated in this session.",
+    "The legacy comparison CLI does not yet invoke the preflight automatically.",
+    "No stopping-power agreement or detector-performance result is claimed."
+  ]
+}

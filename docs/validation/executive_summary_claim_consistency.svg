@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">Executive-summary claim consistency correction</title>
+  <desc id="desc">Synthetic documentation-governance evidence comparing five stale headline claims with their corrected canonical states. This is not detector data.</desc>
+  <rect width="1200" height="720" fill="white"/>
+  <text x="60" y="58" font-family="sans-serif" font-size="30" font-weight="bold">Executive-summary claim consistency gate</text>
+  <text x="60" y="92" font-family="sans-serif" font-size="18">Synthetic documentation/provenance evidence — not detector data</text>
+  <text x="70" y="145" font-family="sans-serif" font-size="22" font-weight="bold">Pre-change public wording</text>
+  <text x="650" y="145" font-family="sans-serif" font-size="22" font-weight="bold">Canonical corrected state</text>
+  <line x1="600" y1="120" x2="600" y2="660" stroke="black" stroke-width="2"/>
+
+  <g font-family="sans-serif" font-size="19">
+    <text x="80" y="205">Rmax 3.05 MHz — VALIDATED</text>
+    <text x="660" y="205">Rmax withheld — BLOCKED (S-STAT-003)</text>
+    <text x="80" y="285">tau truth type: data only</text>
+    <text x="660" y="285">data + MC self-consistent</text>
+    <text x="80" y="365">MV4 raw timing — PASS</text>
+    <text x="660" y="365">MV4 raw timing — VALIDATED</text>
+    <text x="80" y="445">ML wins (confirmed)</text>
+    <text x="660" y="445">P04p: no canonical winner — GATED</text>
+    <text x="660" y="480">P07e: worse than raw; withheld — GATED</text>
+    <text x="80" y="555">C12 fraction presented as established</text>
+    <text x="660" y="555">Truth-labelled MC only</text>
+  </g>
+
+  <g stroke="black" stroke-width="3" fill="none">
+    <path d="M530 200 L630 200"/>
+    <path d="M530 280 L630 280"/>
+    <path d="M530 360 L630 360"/>
+    <path d="M530 440 L630 440"/>
+    <path d="M530 550 L630 550"/>
+  </g>
+  <g fill="black">
+    <path d="M630 200 l-14 -8 v16 z"/>
+    <path d="M630 280 l-14 -8 v16 z"/>
+    <path d="M630 360 l-14 -8 v16 z"/>
+    <path d="M630 440 l-14 -8 v16 z"/>
+    <path d="M630 550 l-14 -8 v16 z"/>
+  </g>
+  <rect x="60" y="620" width="1080" height="55" fill="none" stroke="black" stroke-width="2"/>
+  <text x="80" y="655" font-family="sans-serif" font-size="18">Gate: exact-width CL-007, CL-010, CL-011, CL-015, and CL-016 must authorize the public summary.</text>
+</svg>

@@ -1,0 +1,38 @@
+schema: ccb-geometry-profile/1
+profile_id: hyp_deuteron_like_15p8MeV_bstack_note
+status: HYPOTHESIS
+claims_authorized: false
+issues:
+- 989
+adr: docs/adr/ADR-0002-geometry-kinematics-hypotheses.md
+source_type: DOC_CLAIM
+source_refs:
+- docs/01_setup_and_detector.md
+contradicts:
+- hyp_deuteron_ke_105MeV_elastic_kinematics
+parameters:
+  kind: energy_scale_hypothesis
+  estimand: sample_level_deuteron_like_energy_proxy_MeV
+  value_MeV: 15.8
+  central_16_84_MeV:
+  - 7.2
+  - 34.7
+  method: analytic_range_model_two_parameter_power_law_fit_to_4_NIST_PSTAR_CSDA_points
+  per_event_measurement: false
+  systematics_unquantified:
+  - geometry
+  - Birks_quenching
+  - relative_gains
+  energy_dictionary_required_types:
+  - incident_kinetic
+  - entry_kinetic
+  - deposited
+  - visible_birks
+  - reconstructed_calibrated
+  - residual
+notes: 'Sample-level ''deuteron-like'' median ~15.8 MeV from the B-stack timing /
+  setup note. Explicitly NOT a per-event KE measurement. Incompatible with treating
+  ~105 MeV elastic kinematics as the same quantity (#989). Origin reconciliation remains
+  BLOCKED pending expert kinematics/range study.
+
+  '

@@ -1,0 +1,12 @@
+profile_id: hyp_qgsp_bic_legacy_hardcoded
+status: HYPOTHESIS
+claims_authorized: false
+geant4_reference_list: QGSP_BIC
+applicability_note: >
+  Legacy single-stave hard-coded reference. Binary Cascade is commonly used for
+  light ions at tens–hundreds of MeV, but this profile is NOT an approved
+  nominal until the #1006 applicability matrix and external validation exist.
+  Production claims using this list remain unauthorized.
+issue: 1006
+contradicts:
+  - hyp_qgsp_inclxx_candidate

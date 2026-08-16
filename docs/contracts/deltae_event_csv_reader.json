@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "contract_id": "ccb-deltae-event-csv-reader/1",
+  "csv_artifact": "deltaE_E_events_data.csv",
+  "authoritative_bundle_metadata": "result.json",
+  "policy": "DELTAE_CSV_IDENTIFIERS_MUST_USE_AN_EXPLICIT_TEXT_READER_CONTRACT",
+  "pandas_read_csv_dtype": {
+    "provenance_policy": "string",
+    "provenance_runner_version": "string",
+    "provenance_input_sha256": "string",
+    "provenance_repository_commit": "string",
+    "provenance_bridge_sha256": "string",
+    "provenance_runner_sha256": "string",
+    "provenance_generation_command": "string",
+    "provenance_python": "string",
+    "provenance_pandas": "string"
+  },
+  "requirements": [
+    "Readers must apply the declared text dtypes before comparing provenance identifiers.",
+    "The result.json member remains authoritative for typed bundle metadata.",
+    "A CSV reader's automatic numeric inference must not be used to validate Git or SHA-256 identifiers."
+  ]
+}

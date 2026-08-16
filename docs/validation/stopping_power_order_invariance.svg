@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="520" viewBox="0 0 1000 520" role="img" aria-labelledby="title desc">
+  <title id="title">Stopping-power aggregation row-order validation</title>
+  <desc id="desc">Synthetic regression schematic comparing order-dependent sequential sums with order-stable compensated sums.</desc>
+  <rect width="1000" height="520" fill="white"/>
+  <text x="500" y="42" text-anchor="middle" font-family="sans-serif" font-size="25" font-weight="bold">Stopping-power aggregation: row order must not change the result</text>
+  <text x="500" y="70" text-anchor="middle" font-family="sans-serif" font-size="15">Synthetic floating-point regression — not detector data</text>
+
+  <rect x="55" y="105" width="420" height="315" rx="12" fill="#f4f4f4" stroke="#222" stroke-width="2"/>
+  <text x="265" y="140" text-anchor="middle" font-family="sans-serif" font-size="21" font-weight="bold">Former sequential += aggregation</text>
+  <text x="85" y="180" font-family="monospace" font-size="16">Rows: 1.0, 1e-16 × 10</text>
+  <text x="85" y="215" font-family="monospace" font-size="16">large first  → sum = 1.0</text>
+  <text x="85" y="250" font-family="monospace" font-size="16">small first  → sum = 1.000000000000001</text>
+  <line x1="85" y1="275" x2="445" y2="275" stroke="#555" stroke-width="1"/>
+  <text x="85" y="315" font-family="sans-serif" font-size="17">Same validated event multiset</text>
+  <text x="85" y="345" font-family="sans-serif" font-size="17">Different sufficient statistics</text>
+  <text x="85" y="382" font-family="sans-serif" font-size="18" font-weight="bold">REJECTED: file-order dependence</text>
+  <line x1="75" y1="125" x2="455" y2="400" stroke="#111" stroke-width="5"/>
+  <line x1="455" y1="125" x2="75" y2="400" stroke="#111" stroke-width="5"/>
+
+  <rect x="525" y="105" width="420" height="315" rx="12" fill="#f4f4f4" stroke="#222" stroke-width="2"/>
+  <text x="735" y="140" text-anchor="middle" font-family="sans-serif" font-size="21" font-weight="bold">Current math.fsum per group</text>
+  <text x="555" y="180" font-family="monospace" font-size="16">Rows: 1.0, 1e-16 × 10</text>
+  <text x="555" y="215" font-family="monospace" font-size="16">large first  → sum = 1.000000000000001</text>
+  <text x="555" y="250" font-family="monospace" font-size="16">small first  → sum = 1.000000000000001</text>
+  <line x1="555" y1="275" x2="915" y2="275" stroke="#555" stroke-width="1"/>
+  <text x="555" y="315" font-family="sans-serif" font-size="17">Same validated event multiset</text>
+  <text x="555" y="345" font-family="sans-serif" font-size="17">Identical sufficient statistics</text>
+  <text x="555" y="382" font-family="sans-serif" font-size="18" font-weight="bold">VALIDATED: MATH_FSUM_PER_GROUP</text>
+  <path d="M585 365 L620 395 L885 170" fill="none" stroke="#111" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <text x="500" y="465" text-anchor="middle" font-family="sans-serif" font-size="16">Evidence: exact old Git blob negative control; focused current suite 8 passed</text>
+  <text x="500" y="493" text-anchor="middle" font-family="sans-serif" font-size="14">Scope: numerical reproducibility only; no physics closure or uncertainty claim</text>
+</svg>

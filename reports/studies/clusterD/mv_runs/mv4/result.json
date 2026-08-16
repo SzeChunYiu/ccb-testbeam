@@ -1,0 +1,302 @@
+{
+  "study_id": "MV4",
+  "status": "TOY_DIAGNOSTIC",
+  "status_note": "Toy-digitizer diagnostic. Remains TOY_DIAGNOSTIC until re-run on LUNARC with the current v2 mv0 calibration (--calibration) AND measured data anchors (--data-anchors).",
+  "generated_utc": "2026-07-25T16:34:46.282262+00:00",
+  "mode": "synthetic",
+  "seed": 20260720,
+  "mc_file": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root",
+  "n_tracks": 4011,
+  "n_events_scanned": 5000,
+  "calibration_source": "loaded",
+  "calibration": {
+    "source": "loaded",
+    "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-clD/reports/studies/clusterD/mv_runs/mv0/calibration.json",
+    "gain_adc_per_mev": 110.0,
+    "gain_adc_per_mev_unc": 5.0,
+    "gain_rel_unc": 0.045454545454545456,
+    "pedestal_note": "digitizer default kept (data DAQ baseline is not a toy DC level)"
+  },
+  "data_anchors_source": "fallback",
+  "data_anchors": {
+    "source": "fallback",
+    "S02_raw_sigma68_ns": 1.85,
+    "S03_corrected_sigma68_ns": 1.5,
+    "raw_unc_ns": 0.1,
+    "corrected_unc_ns": 0.1,
+    "raw_ci68_ns": null,
+    "corrected_ci68_ns": null,
+    "note": "HARD-CODED FALLBACK anchors (S02/S03 assumption); not measured. Load real anchors with --data-anchors."
+  },
+  "digitizer_params": {
+    "gain_adc_per_mev": 110.0,
+    "noise_adc_rms": 50.0,
+    "pedestal_adc": 350.0,
+    "tau_rise_ns": 2.5,
+    "tau_decay_ns": 42.0,
+    "n_samples": 18,
+    "sample_spacing_ns": 10.0,
+    "adc_ceiling": 7000.0
+  },
+  "timewalk_fit": {
+    "A_ns": 1.3161616332369193,
+    "B_ns_ADC": -2489.513114082139,
+    "timewalk_functional_form": "1/A (MV4b-fixed 2026-07-01, was 1/sqrt(A))"
+  },
+  "bootstrap_kind": "iid",
+  "metrics_global": {
+    "raw": {
+      "n": 4011,
+      "sigma68_ns": 4.749933734825163,
+      "rms_ns": 11.707796791974907,
+      "core_sigma_ns": 1.8733318700631776,
+      "tail_frac": 0.1381201695337821,
+      "chi2": 1727518062936.2998,
+      "ndf": 23,
+      "chi2_ndf": 75109480997.23042
+    },
+    "corrected_test_half": {
+      "n": 2005,
+      "sigma68_ns": 4.592496904649138,
+      "rms_ns": 11.092827544665047,
+      "core_sigma_ns": 2.4362522283041894,
+      "tail_frac": 0.1286783042394015,
+      "chi2": 34127166484.3408,
+      "ndf": 28,
+      "chi2_ndf": 1218827374.440743
+    },
+    "corrected_all": {
+      "n": 4011,
+      "sigma68_ns": 3.8021673680256045,
+      "rms_ns": 10.843721936127027,
+      "core_sigma_ns": 2.409934263548819,
+      "tail_frac": 0.13537771129394166,
+      "chi2": 155616587.33252934,
+      "ndf": 31,
+      "chi2_ndf": 5019889.913952559
+    },
+    "raw_sigma68_unc_ns": 0.5981021647349449,
+    "corrected_sigma68_unc_ns": 0.9233229219433338
+  },
+  "sigma68_ns": {
+    "raw": 4.749933734825163,
+    "raw_unc": 0.5981021647349449,
+    "corrected_test_half": 4.592496904649138,
+    "corrected_unc": 0.9233229219433338,
+    "corrected_all": 3.8021673680256045
+  },
+  "residual_median_ns": -2.9243082014103976,
+  "pull": {
+    "raw": 4.782178554152805,
+    "raw_combined_unc": 0.6064043201203527,
+    "corrected": 3.329840051898768,
+    "corrected_combined_unc": 0.9287223579660261
+  },
+  "improvement_factor": 1.0342813143796887,
+  "gain_propagation": {
+    "rel_unc": 0.045454545454545456,
+    "central_raw_sigma68_ns": 4.749933734825163,
+    "gain_lo": {
+      "gain_adc_per_mev": 105.0,
+      "raw_sigma68_ns": 5.218123103875931,
+      "n": 3921
+    },
+    "gain_hi": {
+      "gain_adc_per_mev": 115.0,
+      "raw_sigma68_ns": 4.243745137027146,
+      "n": 4098
+    }
+  },
+  "slices": {
+    "species": [
+      {
+        "slice_dim": "species",
+        "slice_value": "deuteron",
+        "n": 1424,
+        "raw_sigma68_ns": 2.46855442173691,
+        "corr_sigma68_ns": 2.5221011368845985,
+        "raw_rms_ns": 9.962582272108985,
+        "corr_rms_ns": 9.19308431413216,
+        "raw_core_sigma_ns": 1.6589639972774541,
+        "corr_core_sigma_ns": 1.993123709114016,
+        "raw_tail_frac": 0.11095505617977527,
+        "corr_tail_frac": 0.10674157303370786,
+        "raw_chi2_ndf": 6443.998820482415,
+        "corr_chi2_ndf": 472.4933349832887
+      },
+      {
+        "slice_dim": "species",
+        "slice_value": "proton",
+        "n": 2587,
+        "raw_sigma68_ns": 8.656281756402052,
+        "corr_sigma68_ns": 7.27084626647657,
+        "raw_rms_ns": 12.505057696524837,
+        "corr_rms_ns": 11.643321231180225,
+        "raw_core_sigma_ns": 2.0199093789941878,
+        "corr_core_sigma_ns": 2.510730064429193,
+        "raw_tail_frac": 0.10552763819095477,
+        "corr_tail_frac": 0.11055276381909548,
+        "raw_chi2_ndf": 236212864545.41098,
+        "corr_chi2_ndf": 85467995156.81296
+      }
+    ],
+    "amplitude": [
+      {
+        "slice_dim": "amplitude",
+        "slice_value": "amp_q1",
+        "n": 1003,
+        "raw_sigma68_ns": 18.350831973605544,
+        "corr_sigma68_ns": 18.08402588686629,
+        "raw_rms_ns": 16.15258829907971,
+        "corr_rms_ns": 16.027827626590806,
+        "raw_core_sigma_ns": 16.15258829907971,
+        "corr_core_sigma_ns": 16.027827626590806,
+        "raw_tail_frac": 0.0,
+        "corr_tail_frac": 0.0,
+        "raw_chi2_ndf": 1058757925675.9395,
+        "corr_chi2_ndf": 947558459262.9545
+      },
+      {
+        "slice_dim": "amplitude",
+        "slice_value": "amp_q2",
+        "n": 1002,
+        "raw_sigma68_ns": 8.227300820138804,
+        "corr_sigma68_ns": 8.238349621301023,
+        "raw_rms_ns": 12.182406809662048,
+        "corr_rms_ns": 12.096912340758093,
+        "raw_core_sigma_ns": 2.162714749080554,
+        "corr_core_sigma_ns": 2.227327089079593,
+        "raw_tail_frac": 0.10379241516966067,
+        "corr_tail_frac": 0.10079840319361277,
+        "raw_chi2_ndf": 33404053646.996784,
+        "corr_chi2_ndf": 31320872307.620888
+      },
+      {
+        "slice_dim": "amplitude",
+        "slice_value": "amp_q3",
+        "n": 1003,
+        "raw_sigma68_ns": 1.9933343015682452,
+        "corr_sigma68_ns": 2.051682703904537,
+        "raw_rms_ns": 5.292200827081124,
+        "corr_rms_ns": 5.23700284698195,
+        "raw_core_sigma_ns": 1.860066160903797,
+        "corr_core_sigma_ns": 1.913484445115814,
+        "raw_tail_frac": 0.03489531405782652,
+        "corr_tail_frac": 0.03389830508474576,
+        "raw_chi2_ndf": 1.2506950352285957,
+        "corr_chi2_ndf": 2.3783456037990374
+      },
+      {
+        "slice_dim": "amplitude",
+        "slice_value": "amp_q4",
+        "n": 1003,
+        "raw_sigma68_ns": 1.442130535783619,
+        "corr_sigma68_ns": 1.5453690548733376,
+        "raw_rms_ns": 1.4810222240166282,
+        "corr_rms_ns": 1.548295484505462,
+        "raw_core_sigma_ns": 1.4468396022899188,
+        "corr_core_sigma_ns": 1.519291698724223,
+        "raw_tail_frac": 0.006979062811565304,
+        "corr_tail_frac": 0.0029910269192422734,
+        "raw_chi2_ndf": 2.2383802271608904,
+        "corr_chi2_ndf": 0.9819628325185871
+      }
+    ]
+  },
+  "slice_dims": [
+    "species",
+    "amplitude"
+  ],
+  "loro_raw": {
+    "n_runs": 5,
+    "metric_full_ns": 4.749933734825163,
+    "leave_one_run_out": {
+      "values_ns": [
+        4.716212323240192,
+        4.6520332569565594,
+        4.371081923298794,
+        4.765528709163357,
+        5.0949868664295686
+      ],
+      "mean_ns": 4.7199686158176934,
+      "std_ns": 0.231976575253603,
+      "min_ns": 4.371081923298794,
+      "max_ns": 5.0949868664295686
+    },
+    "per_run": [
+      {
+        "run": "run0",
+        "n": 807,
+        "sigma68_ns": 5.091976071523268
+      },
+      {
+        "run": "run1",
+        "n": 793,
+        "sigma68_ns": 5.134044174583924
+      },
+      {
+        "run": "run2",
+        "n": 814,
+        "sigma68_ns": 6.364415949505457
+      },
+      {
+        "run": "run3",
+        "n": 795,
+        "sigma68_ns": 4.6198524816086985
+      },
+      {
+        "run": "run4",
+        "n": 802,
+        "sigma68_ns": 3.3041102172185997
+      }
+    ],
+    "per_run_spread_std_ns": 0.9860477601084844
+  },
+  "loro_corrected": {
+    "n_runs": 5,
+    "metric_full_ns": 3.8021673680256045,
+    "leave_one_run_out": {
+      "values_ns": [
+        3.731912614799951,
+        3.737196965039854,
+        3.707290201785889,
+        3.81790008375964,
+        4.180147713110623
+      ],
+      "mean_ns": 3.8348895156991913,
+      "std_ns": 0.1765907841093098,
+      "min_ns": 3.707290201785889,
+      "max_ns": 4.180147713110623
+    },
+    "per_run": [
+      {
+        "run": "run0",
+        "n": 807,
+        "sigma68_ns": 4.0346662459847895
+      },
+      {
+        "run": "run1",
+        "n": 793,
+        "sigma68_ns": 4.132936709437338
+      },
+      {
+        "run": "run2",
+        "n": 814,
+        "sigma68_ns": 5.550294050879828
+      },
+      {
+        "run": "run3",
+        "n": 795,
+        "sigma68_ns": 3.682304940105653
+      },
+      {
+        "run": "run4",
+        "n": 802,
+        "sigma68_ns": 3.2040704590195572
+      }
+    ],
+    "per_run_spread_std_ns": 0.7853267496799733
+  },
+  "n_proton": 2587,
+  "n_deuteron": 1424
+}

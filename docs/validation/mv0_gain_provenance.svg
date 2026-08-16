@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="360" viewBox="0 0 920 360" role="img" aria-labelledby="title desc">
+<title id="title">MV0 gain provenance contract audit</title>
+<desc id="desc">Repository evidence showing whether the calibration artifact, producer code, claim ledger, and reproduction command form one reproducible chain.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<text x="30" y="38" font-family="sans-serif" font-size="22" font-weight="bold">MV0 gain provenance chain</text>
+<defs><pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#555" stroke-width="2"/></pattern></defs>
+<text x="30" y="63" font-family="sans-serif" font-size="13">Software/provenance evidence; not detector data and not a gain remeasurement.</text>
+<rect x="30" y="95" width="240" height="36" fill="#d9d9d9" stroke="black"/>
+<text x="42" y="118" font-family="sans-serif" font-size="14">Calibration artifact</text>
+<line x1="270" y1="113" x2="350" y2="113" stroke="black" stroke-width="2"/>
+<rect x="350" y="95" width="500" height="36" fill="#d9d9d9" stroke="black"/>
+<text x="365" y="118" font-family="sans-serif" font-size="14">net amplitude declared: YES</text>
+<rect x="30" y="150" width="240" height="36" fill="url(#hatch)" stroke="black"/>
+<text x="42" y="173" font-family="sans-serif" font-size="14">Tracked producer</text>
+<line x1="270" y1="168" x2="350" y2="168" stroke="black" stroke-width="2"/>
+<rect x="350" y="150" width="500" height="36" fill="url(#hatch)" stroke="black"/>
+<text x="365" y="173" font-family="sans-serif" font-size="14">net amplitude implemented: NO</text>
+<rect x="30" y="205" width="240" height="36" fill="url(#hatch)" stroke="black"/>
+<text x="42" y="228" font-family="sans-serif" font-size="14">Claim ledger</text>
+<line x1="270" y1="223" x2="350" y2="223" stroke="black" stroke-width="2"/>
+<rect x="350" y="205" width="500" height="36" fill="url(#hatch)" stroke="black"/>
+<text x="365" y="228" font-family="sans-serif" font-size="14">CL-013/CL-014 exact width: NO</text>
+<rect x="30" y="260" width="240" height="36" fill="url(#hatch)" stroke="black"/>
+<text x="42" y="283" font-family="sans-serif" font-size="14">Reproduce command</text>
+<line x1="270" y1="278" x2="350" y2="278" stroke="black" stroke-width="2"/>
+<rect x="350" y="260" width="500" height="36" fill="url(#hatch)" stroke="black"/>
+<text x="365" y="283" font-family="sans-serif" font-size="14">required CLI inputs present: NO</text>
+<text x="30" y="330" font-family="sans-serif" font-size="13">Status: FLAWED; findings: 10; policy: MV0_GAIN_NOT_CANONICAL_UNTIL_PRODUCER_AND_ARTIFACT_REPRODUCE</text>
+</svg>

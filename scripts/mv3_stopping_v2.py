@@ -94,21 +94,45 @@ def mc_stopping_fractions(mc_path: str, tree: str = "hibeam", max_events: int = 
     return {"counts": counts, "fractions": fracs, "n_tracks": total}
 
 
+def _net_amplitude(df: pd.DataFrame) -> pd.Series:
+    """Return the baseline-subtracted (net) pulse amplitude per row.
+
+    Per docs/contracts/PULSE_TABLE_CONTRACT.md the canonical net field is
+    ``peak_height_adc``; the legacy ``amplitude_adc`` is ALREADY produced as
+    ``max(waveform - baseline)`` by scripts/01_build_pulse_table_from_root.py
+    (baseline already removed). Subtracting ``baseline_adc`` again is the
+    A-001 double-subtraction bug. This helper NEVER subtracts baseline_adc.
+    """
+    if "peak_height_adc" in df.columns:
+        return df["peak_height_adc"].abs()
+    # amplitude_adc is net per producer code (PulseTable contract v1).
+    return df["amplitude_adc"].abs()
+
+
 def data_stopping_fractions(data_csv: str, threshold_net: float = 1000.0) -> dict:
     """
     For each event (by eventno/evt), find the deepest stave with net_adc > threshold.
     Return stopping fraction per stave.
+
+    ``net_adc`` is the contract net amplitude (peak_height_adc if present,
+    else the already-baseline-subtracted amplitude_adc). It is NOT re-derived
+    by subtracting baseline_adc (A-001 double-subtraction bug).
     """
     df = pd.read_csv(data_csv)
-    df["net_adc"] = (df["amplitude_adc"] - df["baseline_adc"]).abs()
+    df["net_adc"] = _net_amplitude(df)
     df = df[df["net_adc"] > threshold_net]
 
     stave_rank = {"B2": 0, "B4": 1, "B6": 2, "B8": 3}
     df["stave_rank"] = df["stave"].map(stave_rank)
 
     results = {}
-    for group_name, sub_group in [("all", df), ("sample_i", df[df["group"].str.contains("sample_i")]),
-                                   ("sample_ii", df[df["group"].str.contains("sample_ii")])]:
+    # Exact categorical match: "sample_i_" prefix must NOT match "sample_ii_".
+    sample = np.where(df["group"].str.startswith("sample_i_"), "I",
+                      np.where(df["group"].str.startswith("sample_ii_"), "II", "other"))
+    df = df.assign(sample=sample)
+    for group_name, sub_group in [("all", df),
+                                  ("sample_i", df[df["sample"] == "I"]),
+                                  ("sample_ii", df[df["sample"] == "II"])]:
         if len(sub_group) == 0:
             results[group_name] = {"fractions": {s: 0 for s in STAVES}, "n_events": 0}
             continue
@@ -129,6 +153,15 @@ def data_stopping_fractions(data_csv: str, threshold_net: float = 1000.0) -> dic
 
 
 def main():
+    import warnings
+    warnings.warn(
+        "mv3_stopping_v2.py is DEPRECATED: it counts all MC tracks regardless "
+        "of predicted amplitude, so through-going protons are misclassified as "
+        "stopping. Use scripts/mv3_stopping_v3.py, which applies the per-stave "
+        "amplitude threshold. v2 is retained only for historical comparison.",
+        DeprecationWarning,
+        stacklevel=2,
+    )
     ap = argparse.ArgumentParser()
     ap.add_argument("--mc", required=True)
     ap.add_argument("--data", required=True)

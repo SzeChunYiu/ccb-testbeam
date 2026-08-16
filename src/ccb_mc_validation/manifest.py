@@ -45,7 +45,14 @@ def build_manifest_record(
         input_pairs.append((f"{label}:{resolved.name}", digest))
 
     if outputs is None:
-        outputs = sorted(p.name for p in out_dir.iterdir() if p.is_file())
+        outputs = sorted(p.name for p in out_dir.iterdir() if p.is_file() and p.name != "manifest.json")
+    output_records: list[dict[str, Any]] = []
+    for _out_name in outputs:
+        _out_fp = out_dir / _out_name
+        if _out_fp.is_file():
+            output_records.append({"name": _out_name, "size_bytes": _out_fp.stat().st_size, "sha256": sha256_file(_out_fp)})
+        else:
+            output_records.append({"name": _out_name, "size_bytes": None, "sha256": "missing"})
 
     return ManifestRecord(
         study_id=study_id,
@@ -56,7 +63,7 @@ def build_manifest_record(
         git_branch=_git_value(["rev-parse", "--abbrev-ref", "HEAD"], repo_root),
         python_version=platform.python_version(),
         inputs=tuple(input_pairs),
-        outputs=tuple(outputs),
+        outputs=tuple(output_records),
     )
 
 
@@ -80,8 +87,13 @@ def load_manifest(path: str | Path) -> dict[str, Any]:
     return payload
 
 
-def verify_manifest(path: str | Path, *, expected_study_id: str | None = None) -> bool:
-    """Verify manifest structure and optional study id."""
+def verify_manifest(path: str | Path, *, expected_study_id: str | None = None, strict_outputs: bool = True) -> bool:
+    """Verify manifest structure, study id, and output integrity (fail-closed).
+
+    Output records (new format) carry {name, size_bytes, sha256}; each is re-hashed
+    and compared, and missing outputs raise. Legacy name-only outputs cannot be
+    proven and raise under ``strict_outputs`` (default).
+    """
     payload = load_manifest(path)
     required = {"study_id", "config_path", "config_sha256", "outputs"}
     missing = required - set(payload)
@@ -94,4 +106,22 @@ def verify_manifest(path: str | Path, *, expected_study_id: str | None = None) -
     outputs = payload["outputs"]
     if not isinstance(outputs, list):
         raise ManifestError("manifest.outputs must be a list")
+    manifest_dir = Path(path).resolve().parent
+    for rec in outputs:
+        if isinstance(rec, dict):
+            name = rec.get("name")
+            exp_sha = rec.get("sha256")
+            fp = manifest_dir / name
+            if not fp.is_file():
+                raise ManifestError(f"output missing: {name}")
+            if exp_sha and exp_sha != "missing":
+                actual = sha256_file(fp)
+                if actual != exp_sha:
+                    raise ManifestError(f"output altered (sha256 mismatch): {name}")
+        elif isinstance(rec, str):
+            if strict_outputs:
+                raise ManifestError(f"legacy unhashed output cannot be verified (strict): {rec}")
+            fp = manifest_dir / rec
+            if not fp.is_file():
+                raise ManifestError(f"output missing: {rec}")
     return True

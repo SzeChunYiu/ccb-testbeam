@@ -187,8 +187,12 @@ def extract_truth_pairs(config: dict) -> pd.DataFrame:
     n_entries = int(tree.num_entries)
     block_size = max(1, math.ceil(n_entries / n_blocks))
     max_pairs = int(truth["max_pairs"])
-    per_block_cap = max(1, math.ceil(max_pairs / n_blocks))
-    block_counts = np.zeros(n_blocks, dtype=int)
+    n_pair_types = max(1, len(adjacent_pairs))
+    # Per-(block, pair) caps: order-invariant inclusion (#1129).
+    per_block_pair_cap = max(1, math.ceil(max_pairs / (n_blocks * n_pair_types)))
+    block_pair_counts = {
+        (b, f"{la}-{lb}"): 0 for b in range(n_blocks) for la, lb in adjacent_pairs
+    }
     rows: List[dict] = []
 
     entry_base = 0
@@ -217,24 +221,29 @@ def extract_truth_pairs(config: dict) -> pd.DataFrame:
             entries = event_entries[np.asarray(valid)]
             blocks = np.minimum(n_blocks - 1, entries // block_size).astype(int)
 
+            pair_key = f"{la}-{lb}"
             keep_parts = []
             for block in np.unique(blocks):
-                remaining = per_block_cap - int(block_counts[block])
+                remaining = per_block_pair_cap - int(block_pair_counts[(int(block), pair_key)])
                 if remaining <= 0:
                     continue
                 idx = np.flatnonzero(blocks == block)[:remaining]
                 if len(idx):
                     keep_parts.append(idx)
-                    block_counts[block] += len(idx)
+                    block_pair_counts[(int(block), pair_key)] += len(idx)
             if not keep_parts:
                 continue
             keep = np.concatenate(keep_parts)
             entries = entries[keep]
             blocks = blocks[keep]
 
+            # Timing target: first accepted step times (layer-entry proxy).
             truth_dt = ak.to_numpy((tb - ta)[valid])[keep].astype(float)
-            edep_a = first_values("Sci_bar_EDep", ma, valid)[keep].astype(float)
-            edep_b = first_values("Sci_bar_EDep", mb, valid)[keep].astype(float)
+            # Features: layer totals / EDep-weighted summaries (#1128), not first-step
+            # bookkeeping for edep; entry kinematics still from firsts for TOF chord.
+            # Total layer EDep (step-bookkeeping invariant) (#1128).
+            edep_a = ak.to_numpy(ak.sum(batch["Sci_bar_EDep"][ma], axis=-1))[np.asarray(valid)].astype(float)[keep]
+            edep_b = ak.to_numpy(ak.sum(batch["Sci_bar_EDep"][mb], axis=-1))[np.asarray(valid)].astype(float)[keep]
             xa = first_values("Sci_bar_GlobalPosition_X", ma, valid)[keep].astype(float)
             ya = first_values("Sci_bar_GlobalPosition_Y", ma, valid)[keep].astype(float)
             za = first_values("Sci_bar_GlobalPosition_Z", ma, valid)[keep].astype(float)
@@ -252,9 +261,16 @@ def extract_truth_pairs(config: dict) -> pd.DataFrame:
             dz = zb - za
             pa = np.sqrt(pxa * pxa + pya * pya + pza * pza)
             pb = np.sqrt(pxb * pxb + pyb * pyb + pzb * pzb)
-            beta_mid = 0.5 * (beta_from_p(pa, float(truth["proton_mass_gev"])) + beta_from_p(pb, float(truth["proton_mass_gev"])))
-            good = np.isfinite(beta_mid) & (beta_mid > 0.0) & np.isfinite(truth_dt)
+            mass = float(truth["proton_mass_gev"])
+            beta_a = beta_from_p(pa, mass)
+            beta_b = beta_from_p(pb, mass)
+            # Reciprocal-velocity trapezoid on the chord (#1127 H2). Full Geant4
+            # path-integral TOF remains BLOCKED without stored step polylines.
+            beta_mid = 0.5 * (beta_a + beta_b)
+            inv_beta_trap = 0.5 * (1.0 / np.maximum(beta_a, 1e-6) + 1.0 / np.maximum(beta_b, 1e-6))
+            good = np.isfinite(beta_a) & np.isfinite(beta_b) & (beta_a > 0) & (beta_b > 0) & np.isfinite(truth_dt)
             for i in np.flatnonzero(good):
+                dist = float(math.sqrt(dx[i] * dx[i] + dy[i] * dy[i] + dz[i] * dz[i]))
                 rows.append(
                     {
                         "event_entry": int(entries[i]),
@@ -262,9 +278,9 @@ def extract_truth_pairs(config: dict) -> pd.DataFrame:
                         "track_id": 1,
                         "layer_a": int(la),
                         "layer_b": int(lb),
-                        "pair": f"{la}-{lb}",
+                        "pair": pair_key,
                         "truth_dt_ns": float(truth_dt[i]),
-                        "distance_cm": float(math.sqrt(dx[i] * dx[i] + dy[i] * dy[i] + dz[i] * dz[i])),
+                        "distance_cm": dist,
                         "dx_cm": float(dx[i]),
                         "dy_cm": float(dy[i]),
                         "dz_cm": float(dz[i]),
@@ -278,10 +294,13 @@ def extract_truth_pairs(config: dict) -> pd.DataFrame:
                         "z_b": float(zb[i]),
                         "p_a_gev": float(pa[i]),
                         "p_b_gev": float(pb[i]),
+                        "beta_a": float(beta_a[i]),
+                        "beta_b": float(beta_b[i]),
                         "beta_mid": float(beta_mid[i]),
+                        "inv_beta_trap": float(inv_beta_trap[i]),
                     }
                 )
-            if np.all(block_counts >= per_block_cap):
+            if all(v >= per_block_pair_cap for v in block_pair_counts.values()):
                 return pd.DataFrame(rows)
         entry_base += len(counts)
     return pd.DataFrame(rows)
@@ -299,7 +318,10 @@ def feature_columns() -> List[str]:
         "edep_b",
         "p_a_gev",
         "p_b_gev",
+        "beta_a",
+        "beta_b",
         "beta_mid",
+        "inv_beta_trap",
         "x_a",
         "y_a",
         "z_a",
@@ -341,7 +363,17 @@ def add_baseline_predictions(df: pd.DataFrame, config: dict) -> pd.DataFrame:
     beta_40 = beta_from_ekin(40.0, mass)
     beta_190 = beta_from_ekin(190.0, mass)
     nominal = float(config["tof_per_cm_ns_used_in_notes"])
-    out["pred_truth_kinematic_tof"] = out["distance_cm"] / (np.maximum(out["beta_mid"], 1e-6) * c)
+    # H2 reciprocal-velocity trapezoid on the Euclidean chord (#1127).
+    # Prefer precomputed inv_beta_trap when present.
+    if "inv_beta_trap" in out.columns:
+        out["pred_truth_kinematic_tof"] = out["distance_cm"] * out["inv_beta_trap"] / c
+    else:
+        beta_a = out["beta_a"] if "beta_a" in out.columns else out["beta_mid"]
+        beta_b = out["beta_b"] if "beta_b" in out.columns else out["beta_mid"]
+        inv = 0.5 * (1.0 / np.maximum(beta_a.to_numpy(float), 1e-6) + 1.0 / np.maximum(beta_b.to_numpy(float), 1e-6))
+        out["pred_truth_kinematic_tof"] = out["distance_cm"].to_numpy(float) * inv / c
+    out["pred_truth_kinematic_tof_legacy_arith_beta"] = out["distance_cm"] / (np.maximum(out["beta_mid"], 1e-6) * c)
+    out["tof_baseline_model"] = "chord_reciprocal_velocity_trapezoid"
     out["pred_nominal_2cm_notes"] = 2.0 * nominal
     out["pred_nominal_4cm_notes"] = 4.0 * nominal
     out["pred_4cm_40mev_tof"] = 4.0 / (beta_40 * c)
@@ -360,32 +392,46 @@ def torch_available() -> bool:
     return torch is not None and nn is not None and DataLoader is not None and TensorDataset is not None
 
 
-class MLP(nn.Module):
-    def __init__(self, n_in: int):
-        super().__init__()
-        self.net = nn.Sequential(
-            nn.Linear(n_in, 64),
-            nn.ReLU(),
-            nn.Dropout(0.05),
-            nn.Linear(64, 64),
-            nn.ReLU(),
-            nn.Linear(64, 1),
-        )
+# Guard torch model classes so the module imports without torch (GitHub CI).
+if nn is not None:  # pragma: no branch
 
-    def forward(self, x):
-        return self.net(x).squeeze(-1)
+    class MLP(nn.Module):
+        def __init__(self, n_in: int):
+            super().__init__()
+            self.net = nn.Sequential(
+                nn.Linear(n_in, 64),
+                nn.ReLU(),
+                nn.Dropout(0.05),
+                nn.Linear(64, 64),
+                nn.ReLU(),
+                nn.Linear(64, 1),
+            )
+
+        def forward(self, x):
+            return self.net(x).squeeze(-1)
 
 
-class PairCNN(nn.Module):
-    def __init__(self, n_feat: int):
-        super().__init__()
-        self.conv = nn.Sequential(nn.Conv1d(n_feat, 32, kernel_size=1), nn.ReLU(), nn.Conv1d(32, 32, kernel_size=2), nn.ReLU())
-        self.head = nn.Sequential(nn.Linear(32, 32), nn.ReLU(), nn.Linear(32, 1))
+    class PairCNN(nn.Module):
+        def __init__(self, n_feat: int):
+            super().__init__()
+            self.conv = nn.Sequential(nn.Conv1d(n_feat, 32, kernel_size=1), nn.ReLU(), nn.Conv1d(32, 32, kernel_size=2), nn.ReLU())
+            self.head = nn.Sequential(nn.Linear(32, 32), nn.ReLU(), nn.Linear(32, 1))
 
-    def forward(self, x):
-        x = x.transpose(1, 2)
-        x = self.conv(x).squeeze(-1)
-        return self.head(x).squeeze(-1)
+        def forward(self, x):
+            x = x.transpose(1, 2)
+            x = self.conv(x).squeeze(-1)
+            return self.head(x).squeeze(-1)
+
+else:  # pragma: no cover
+
+    class MLP:  # type: ignore[no-redef]
+        def __init__(self, *args, **kwargs):
+            raise RuntimeError("torch is not available")
+
+
+    class PairCNN:  # type: ignore[no-redef]
+        def __init__(self, *args, **kwargs):
+            raise RuntimeError("torch is not available")
 
 
 def train_torch_model(model, X_train, y_train, X_val, y_val, config: dict) -> Tuple[object, float]:

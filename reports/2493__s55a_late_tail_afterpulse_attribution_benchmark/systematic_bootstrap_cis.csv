@@ -1,0 +1,9 @@
+metric,interpretation,heldout_rows,heldout_positive_rows,afterpulse_minus_memory_median_shift,ci_low,ci_high,bootstrap_replicates
+tail_shape_parameter_exp_slope,tail-shape exponential slope,11845,5032,0.036799535155296326,0.012544922064989805,0.10197137002833186,500
+tail_shape_parameter_ar_rms,tail-shape AR residual RMS,11845,5032,0.02196965552866459,0.013607615046203137,0.05642427615821359,500
+timing_shift_mean_time_sample,timing shift,11845,5032,0.56343674659729,0.3083945095539093,1.355099081993103,500
+pileup_confusion_event_multiplicity,pile-up confusion,11845,5032,0.0,0.0,1.0,500
+saturation_recovery_late_tail_fraction,saturation recovery,11845,5032,0.06113924831151962,0.030221318639814854,0.17959202788770193,500
+pedestal_drift_sensitivity_adc,pedestal drift sensitivity,11845,5032,-1.0,-2.25,-0.25,500
+energy_bias_log10_amplitude,energy bias proxy,11845,5032,-0.023614585399627686,-0.026648521423339844,-0.019834509491920473,500
+pid_confusion_duplicate_readout_adc,PID confusion proxy,11845,5032,-83.0,-113.025,-47.618750000000006,500

@@ -1,0 +1,66 @@
+{
+  "ticket_id": "1781212364.2054355.4a1327ef",
+  "study_id": "G4-02",
+  "status": "conditional",
+  "winner": {
+    "method": "geant4_birks_lookup",
+    "family": "traditional_geant4_birks",
+    "res68_frac": 0.0402476780185758,
+    "res68_ci95": [
+      0.038856418352992535,
+      0.0416112695450198
+    ],
+    "bias_frac": -0.023105417371831,
+    "mae_mev": 0.2282076557167133
+  },
+  "traditional_calibration": {
+    "method": "geant4_birks_lookup",
+    "alpha_adc_per_MeV": 15123.540571357118,
+    "kB_cm_per_MeV": 0.0485,
+    "dedx_table": "/home/billy/ccb-geant4/dedx_p_in_CD2.txt",
+    "nominal_geometry": "center_4cm",
+    "stave_thickness_cm": 1.0,
+    "beam_energy_mev": 190.0,
+    "adoption_gate": "calibration-only; absolute adoption remains blocked until G4-01 and G4-04 pass"
+  },
+  "stave_priors": [
+    {
+      "stave": "B2",
+      "stave_idx": 0,
+      "center_cm": 2.0,
+      "residual_energy_mev": 182.2808615897,
+      "dedx_mev_cm": 3.9064620173,
+      "expected_edep_mev": 3.903153515
+    },
+    {
+      "stave": "B4",
+      "stave_idx": 1,
+      "center_cm": 6.0,
+      "residual_energy_mev": 166.1952117181,
+      "dedx_mev_cm": 4.1476784063,
+      "expected_edep_mev": 4.1436920381
+    },
+    {
+      "stave": "B6",
+      "stave_idx": 2,
+      "center_cm": 10.0,
+      "residual_energy_mev": 148.965453291,
+      "dedx_mev_cm": 4.5198696784,
+      "expected_edep_mev": 4.5151595153
+    },
+    {
+      "stave": "B8",
+      "stave_idx": 3,
+      "center_cm": 14.0,
+      "residual_energy_mev": 130.0266335084,
+      "dedx_mev_cm": 4.9816575004,
+      "expected_edep_mev": 4.9831236802
+    }
+  ],
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  }
+}

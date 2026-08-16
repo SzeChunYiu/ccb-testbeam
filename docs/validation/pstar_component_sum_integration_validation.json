@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "task_id": "AUD-G4-012",
+  "session_utc": "2026-07-23T18:15:39Z",
+  "status": "VALIDATED",
+  "scope": "canonical PSTAR component-sum parser integration",
+  "changed_code": [
+    "scripts/single_stave/compare_stopping_power.py",
+    "tools/audit/validate_pstar_component_sum.py"
+  ],
+  "tests": {
+    "command": "python -m pytest tests/test_validate_pstar_component_sum.py tests/test_compare_stopping_power_pstar_component_integration.py tests/test_compare_stopping_power_reference_integrity.py tests/test_compare_stopping_power_energy_range.py tests/test_compare_stopping_power_quenched_proxy.py tests/test_compare_stopping_power_sim_input_integration.py tests/test_validate_stopping_power_sim_table.py -q",
+    "passed": 42,
+    "failed": 0,
+    "duration_seconds": 4.22
+  },
+  "direct_cli_invalid_reference": {
+    "fixture_total_identity": "1 + 9 != 8",
+    "expected_exit_code": 2,
+    "output_csv_written": false,
+    "numerical_pass_printed": false
+  },
+  "canonical_parser": {
+    "tool": "tools/audit/validate_pstar_component_sum.py",
+    "tool_version": "1.1.0",
+    "component_identity": "total = electronic + nuclear",
+    "rounding_model": "half unit in the last written decimal place",
+    "comparison_imports_shared_parser": true,
+    "independent_comparison_reference_parser_present": false
+  },
+  "output_fields_added": [
+    "reference_input_sha256",
+    "reference_input_bytes",
+    "reference_rows_validated",
+    "reference_validator_version",
+    "reference_component_identity",
+    "reference_component_consistent"
+  ],
+  "file_sha256": {
+    "scripts/single_stave/compare_stopping_power.py": "7e830eebb0475a18dcc834f6f750613f8523440d5683a2ff30f35deb83051b31",
+    "tools/audit/validate_pstar_component_sum.py": "bf5bf88036e7913bcf5cc4bad330903df5653d4471367b7c513fcc431aaf924e",
+    "tests/test_validate_pstar_component_sum.py": "da6091650a1dbd7c598401cea98fbeda1a451479d390ab0ddc632ba0bad5fb61",
+    "tests/test_compare_stopping_power_pstar_component_integration.py": "7617f14d62d43b59cd5ac51951a88c92ba2ec6afba9615f0bca5cc381566f30f"
+  },
+  "maximum_python_line_length": 97,
+  "not_run": [
+    "full repository pytest",
+    "ruff",
+    "Geant4 build and CTest",
+    "ROOT processing",
+    "real simulation execution",
+    "GitHub Actions"
+  ],
+  "scientific_status": "DIAGNOSTIC_ONLY"
+}

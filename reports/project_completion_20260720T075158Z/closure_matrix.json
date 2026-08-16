@@ -1,0 +1,294 @@
+[
+  {
+    "acceptance": [
+      {
+        "criterion": "primary crosses 2.0 cm normal thickness (not 50 cm)",
+        "evidence": "PrimaryGeneratorAction.cc: z0=-half_z-1mm, dir +z",
+        "passed": true
+      },
+      {
+        "criterion": "fibres rotated along x, contained in bar, overlap-checked",
+        "evidence": "DetectorConstruction.cc: rotateY(90deg); pSurfChk=true",
+        "passed": true
+      },
+      {
+        "criterion": "photons counted at named sensor boundary, not fibre Edep",
+        "evidence": "SteppingAction.cc + TrackingAction.cc",
+        "passed": true
+      },
+      {
+        "criterion": "one immutable config per run -> one output (no overwrite)",
+        "evidence": "RunAction.cc single OpenFile; main.cc single BeamOn",
+        "passed": true
+      },
+      {
+        "criterion": "headless CMake independent of Qt",
+        "evidence": "CMakeLists.txt CCB_ENABLE_VIS=OFF default; parses to Geant4 dep only",
+        "passed": true
+      },
+      {
+        "criterion": "seed/geometry hash/optical-table sha256 in output meta",
+        "evidence": "RunAction::WriteMetadataSidecar -> <output>.meta.json",
+        "passed": true
+      }
+    ],
+    "dependencies": [],
+    "evidence": [
+      "geant4/single_stave/ (11 headers + 12 sources)",
+      "geant4/single_stave/tests/test_geometry_report_offline.py (5 passed)",
+      "non-Geant4 core compiled + functionally verified (SHA-256 == system shasum)"
+    ],
+    "issue": "#796",
+    "notes": "Code complete + offline-verified. Compile/run is CCB-796-RUN.",
+    "status": "DONE",
+    "task_id": "CCB-796-CODE"
+  },
+  {
+    "acceptance": [
+      {
+        "criterion": "Geant4 build passes (module load Geant4; bash slurm/build.sh)",
+        "evidence": "no Geant4 locally; runs on LUNARC",
+        "passed": false
+      },
+      {
+        "criterion": "3 ctests green (geometry, proton smoke, geometry-report)",
+        "evidence": null,
+        "passed": false
+      },
+      {
+        "criterion": "calibration ntuples produced per grid point",
+        "evidence": null,
+        "passed": false
+      }
+    ],
+    "dependencies": [
+      "CCB-796-CODE"
+    ],
+    "evidence": [
+      "slurm/build.sh",
+      "slurm/submit_calibration.sh",
+      "slurm/points_example.csv"
+    ],
+    "issue": "#796",
+    "notes": "Needs LUNARC Geant4 + optical physics. All inputs staged.",
+    "status": "BLOCKED_COMPUTE",
+    "task_id": "CCB-796-RUN"
+  },
+  {
+    "acceptance": [
+      {
+        "criterion": "analyzer accepts paths as args (no hard-coded LUNARC dirs)",
+        "evidence": "argparse CLIs; verified end-to-end on fixture",
+        "passed": true
+      },
+      {
+        "criterion": "photon-count inequality enforced (gen>=arrival>=detected)",
+        "evidence": "test_analyze_rejects_inequality_violation",
+        "passed": true
+      },
+      {
+        "criterion": "writes event + summary tables, result.json, manifest, figures",
+        "evidence": "/tmp/f_report artifacts verified",
+        "passed": true
+      }
+    ],
+    "dependencies": [],
+    "evidence": [
+      "scripts/single_stave/{make_single_stave_fixture,analyze_single_stave,extract_g4_entry_energies}.py",
+      "tests/test_single_stave_analysis.py (9 passed)",
+      "scripts/analyze_mc_stave_response.py (stub replaced -> forwarding CLI)"
+    ],
+    "issue": "#796",
+    "notes": "Offline-tested. Real full-MC entry-energy extraction = CCB-796-ENTRY.",
+    "status": "DONE",
+    "task_id": "CCB-796-ANALYSIS"
+  },
+  {
+    "acceptance": [
+      {
+        "criterion": "empirical stave-entry spectra per species/stave/angle from full MC",
+        "evidence": "needs full-MC truth ROOT on fs10 (LUNARC)",
+        "passed": false
+      },
+      {
+        "criterion": "quantile grid (5/16/50/84/95%) + Bragg structure",
+        "evidence": null,
+        "passed": false
+      }
+    ],
+    "dependencies": [
+      "CCB-796-ANALYSIS"
+    ],
+    "evidence": [
+      "scripts/single_stave/extract_g4_entry_energies.py",
+      "synthetic-ROOT fixture test (test_extract_root_fixture_quantile_grid)"
+    ],
+    "issue": "#796",
+    "notes": "Branch contract fixed offline (uproot bug patched); real tree on LUNARC.",
+    "status": "BLOCKED_EXTERNAL",
+    "task_id": "CCB-796-ENTRY"
+  },
+  {
+    "acceptance": [
+      {
+        "criterion": "run manifest builder validates against schema",
+        "evidence": "test_manifest_to_dict_is_schema_valid",
+        "passed": true
+      },
+      {
+        "criterion": "closure matrix writer (CSV+JSON), enum-validated",
+        "evidence": "test_write_closure_matrix_*",
+        "passed": true
+      },
+      {
+        "criterion": "report dir init (REPORT/closure/manifest/commands/figures), no overwrite",
+        "evidence": "test_init_report_dir_creates_artifacts_and_no_overwrite",
+        "passed": true
+      }
+    ],
+    "dependencies": [],
+    "evidence": [
+      "tools/ccbprov/",
+      "schemas/*.schema.json",
+      "tests/test_ccbprov.py (10 passed)"
+    ],
+    "issue": null,
+    "notes": "Reproducibility substrate for every downstream run.",
+    "status": "DONE",
+    "task_id": "CCB-PROV"
+  },
+  {
+    "acceptance": [
+      {
+        "criterion": "supervisor_deltaE_E.py present at audited commit",
+        "evidence": "absent at d3b2beb; handoff defects doc references a superseded file",
+        "passed": false
+      }
+    ],
+    "dependencies": [],
+    "evidence": [
+      "conflict_supervisor_deltaE_E.md",
+      "git history: existed at ca30589f, absent at d3b2beb"
+    ],
+    "issue": "#618",
+    "notes": "Stale handoff reference. eventno-join + Sample I/II fixes QUEUED (CCB-DELTAE-FIX).",
+    "status": "SUPERSEDED",
+    "task_id": "CCB-DELTAE"
+  },
+  {
+    "acceptance": [
+      {
+        "criterion": "event key is (file_id, run, event) across all deltaE-E scripts",
+        "evidence": null,
+        "passed": false
+      },
+      {
+        "criterion": "Sample I/II inclusive/exclusive made explicit; thresholds applied",
+        "evidence": null,
+        "passed": false
+      },
+      {
+        "criterion": "deterministic seed; hexbin+quantiles; event tables emitted",
+        "evidence": null,
+        "passed": false
+      }
+    ],
+    "dependencies": [
+      "CCB-DELTAE"
+    ],
+    "evidence": [
+      "scripts/*deltaE*/*.py joins on eventno alone (collision risk)"
+    ],
+    "issue": "#618",
+    "notes": "Needs data on LUNARC to validate; scoped and queued, not silently dropped.",
+    "status": "READY",
+    "task_id": "CCB-DELTAE-FIX"
+  },
+  {
+    "acceptance": [
+      {
+        "criterion": "hash + inspect krakow_109_8-38deg_4-71deg.root deployed geometry",
+        "evidence": "ROOT file + ROOT/VGM on LUNARC required",
+        "passed": false
+      },
+      {
+        "criterion": "verify 8 B bars + 4 A bars, thickness, passive layers",
+        "evidence": null,
+        "passed": false
+      }
+    ],
+    "dependencies": [],
+    "evidence": [
+      "geant4/configs/krakow.geoconf (referenced)"
+    ],
+    "issue": "#844",
+    "notes": "Geometry inventory + cross-section render pending LUNARC/ROOT.",
+    "status": "BLOCKED_COMPUTE",
+    "task_id": "CCB-844-GEOM"
+  },
+  {
+    "acceptance": [
+      {
+        "criterion": "staged stopping-depth scan (overlap/geantino -> pilot -> final)",
+        "evidence": null,
+        "passed": false
+      },
+      {
+        "criterion": "chi2/ndf + likelihood GoF; do NOT reuse 11.12 g/cm2 as calibrated",
+        "evidence": null,
+        "passed": false
+      }
+    ],
+    "dependencies": [
+      "CCB-844-GEOM"
+    ],
+    "evidence": [],
+    "issue": "#844",
+    "notes": "Depends on pinned deployed geometry and LUNARC compute.",
+    "status": "BLOCKED_COMPUTE",
+    "task_id": "CCB-844-SCAN"
+  },
+  {
+    "acceptance": [
+      {
+        "criterion": "rerun with v2 gain (not 246 ADC/MeV); load anchors from result files",
+        "evidence": null,
+        "passed": false
+      },
+      {
+        "criterion": "report sigma68/RMS/core-sigma/tail-frac/chi2 + LORO spread",
+        "evidence": null,
+        "passed": false
+      }
+    ],
+    "dependencies": [],
+    "evidence": [
+      "scripts/mv4_timing_study.py (1/A fix present in tree)"
+    ],
+    "issue": null,
+    "notes": "Code present; closure requires rerun on LUNARC data + calibration cards.",
+    "status": "BLOCKED_COMPUTE",
+    "task_id": "CCB-TIMING"
+  },
+  {
+    "acceptance": [
+      {
+        "criterion": "every claim maps to result-file path + commit + uncertainty + status",
+        "evidence": "claims populate as results land",
+        "passed": false
+      }
+    ],
+    "dependencies": [
+      "CCB-796-RUN",
+      "CCB-844-SCAN",
+      "CCB-TIMING"
+    ],
+    "evidence": [
+      "paper/ (skeleton: outline, crosswalks, claims_ledger, limitations)"
+    ],
+    "issue": "#797",
+    "notes": "Skeleton + claim ledger in place; content gated on the compute-blocked results.",
+    "status": "IN_PROGRESS",
+    "task_id": "CCB-797-PAPER"
+  }
+]

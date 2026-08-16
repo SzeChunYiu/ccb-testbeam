@@ -1,0 +1,7 @@
+S45a: Pedestal-memory pulse-shape and timing bias closure
+
+Compare a traditional pretrigger pedestal model plus CFD/template-fit timing baseline against ridge, gradient-boosted trees, MLP, 1D-CNN and compact transformer waveform regressors.
+
+Report run-block bootstrap 95% CIs for timing bias/resolution, pulse-shape residual modes and pedestal-memory transfer across amplitude, stave, rate and pretrigger-history strata.
+
+Acceptance: separate true pulse-shape/timing shifts from pedestal artifacts, publish leakage checks and residual slices, and identify where ML improves or only memorizes baseline state.

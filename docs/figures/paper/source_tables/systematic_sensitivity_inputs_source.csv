@@ -1,0 +1,12 @@
+figure_id,figure_status,figure_evidence_class,nuisance,abs_elasticity_adc,source
+FIG-WIKI-011,REVIEW,SENSITIVITY_INPUTS,recovery_time,0.007,clusterD sipm-p2-001
+FIG-WIKI-011,REVIEW,SENSITIVITY_INPUTS,dark_count,0.01,clusterD sipm-p2-001
+FIG-WIKI-011,REVIEW,SENSITIVITY_INPUTS,window_end,0.01,clusterD sipm-p2-001
+FIG-WIKI-011,REVIEW,SENSITIVITY_INPUTS,afterpulse,0.016,clusterD sipm-p2-001
+FIG-WIKI-011,REVIEW,SENSITIVITY_INPUTS,sipm_n_cells,0.033,clusterD sipm-p2-001
+FIG-WIKI-011,REVIEW,SENSITIVITY_INPUTS,crosstalk,0.074,clusterD sipm-p2-001
+FIG-WIKI-011,REVIEW,SENSITIVITY_INPUTS,attenuation,0.226,clusterD sipm-p2-001
+FIG-WIKI-011,REVIEW,SENSITIVITY_INPUTS,birks_kB,0.398,clusterD sipm-p2-001
+FIG-WIKI-011,REVIEW,SENSITIVITY_INPUTS,pde_scale,0.891,clusterD sipm-p2-001
+FIG-WIKI-011,REVIEW,SENSITIVITY_INPUTS,coupling,0.939,clusterD sipm-p2-001
+FIG-WIKI-011,REVIEW,SENSITIVITY_INPUTS,reflectivity,3.484,clusterD sipm-p2-001

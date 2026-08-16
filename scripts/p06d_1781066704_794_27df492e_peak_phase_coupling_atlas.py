@@ -98,21 +98,10 @@ def stack_obj(values: np.ndarray) -> np.ndarray:
 
 
 def cfd_time_samples(waveforms: np.ndarray, amplitudes: np.ndarray, fraction: float) -> np.ndarray:
-    threshold = amplitudes * float(fraction)
-    ge = waveforms >= threshold[:, None]
-    first = np.argmax(ge, axis=1)
-    valid = ge.any(axis=1)
-    out = np.full(len(waveforms), np.nan, dtype=np.float64)
-    for i in np.where(valid)[0]:
-        j = int(first[i])
-        if j <= 0:
-            out[i] = float(j)
-            continue
-        y0 = float(waveforms[i, j - 1])
-        y1 = float(waveforms[i, j])
-        denom = y1 - y0
-        out[i] = float(j) if denom <= 0.0 else (j - 1) + (float(threshold[i]) - y0) / denom
-    return out
+    """Thin wrapper over canonical digital_cfd (#1063 / #1060)."""
+    import digital_cfd
+
+    return digital_cfd.cfd_time_samples(waveforms, amplitudes, fraction)
 
 
 def sigma68(values: np.ndarray) -> float:

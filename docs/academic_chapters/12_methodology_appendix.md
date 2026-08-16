@@ -1,5 +1,5 @@
 # Chapter 12: Methodology Appendix — Reproducibility, Leakage Controls, and Reporting Standards
-> **ACCEPTED by nature-reviewer (3/3).** All standard fixes applied.
+> **REVIEW_STATUS: EDITORIAL_REVIEWED** (AI role-separated nature-reviewer-style lenses; not independent human peer review). Scope: readability/structure only. Does **not** imply SOURCE_VERIFIED, EXECUTED_REPRODUCED, or CLAIM_AUTHORIZED. Open factual blockers remain tracked in GitHub issues / claim ledger. Contract: `docs/contracts/REVIEW_STATUS_TAXONOMY.json` / `chatgpt_todo/ATOMIC_RESEARCH_PROTOCOL.md`.
 
 
 ## Abstract

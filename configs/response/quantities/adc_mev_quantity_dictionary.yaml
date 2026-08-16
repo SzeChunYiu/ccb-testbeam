@@ -1,0 +1,48 @@
+schema: ccb-adc-mev-quantity-dictionary/1
+dictionary_version: "2026.0-waveB-lane05"
+issues: [994]
+adr: docs/adr/ADR-0006-adc-mev-quantity-dictionary.md
+fail_closed_on_ambiguous_short_label: true
+quantities:
+  - quantity_id: mc_digitizer_peak_adc_per_visible_MeV_nominal
+    short_label: mc_digitizer_gain
+    domain: mc_digitizer
+    input_energy_type: birks_visible_or_raw_edep_depending_on_apply_birks
+    output_adc_definition: peak_height_or_sample_scale
+    estimator: simulation_parameter
+    nominal_value: 120.0
+    unit: ADC/MeV
+    validity_population: MV0_digitizer_skeleton
+    uncertainty_status: PARAMETER_NOT_DATA_CALIBRATION
+    claims_authorized: false
+    notes: "ElectronicsConfig.gain_adc_per_mev default; not interchangeable with CL-013."
+  - quantity_id: mc_digitizer_peak_adc_per_MeV_legacy_119p17
+    short_label: g4_digitizer_scale_119p17
+    domain: mc_digitizer
+    input_energy_type: deposited_or_visible_unspecified_legacy
+    output_adc_definition: conversion_scale_legacy
+    estimator: simulation_parameter_legacy
+    nominal_value: 119.17
+    unit: ADC/MeV
+    validity_population: legacy_public_surfaces
+    uncertainty_status: LEGACY_UNTYPED
+    claims_authorized: false
+    notes: "Legacy ~119.17 ADC/MeV surface cited in #994; keep distinct id until estimator verified."
+  - quantity_id: data_mc_median_match_peak_adc_per_truth_edep_MeV_proxy_cl013
+    short_label: cl013_median_match_proxy
+    domain: data_mc_proxy
+    input_energy_type: truth_edep
+    output_adc_definition: peak_height
+    estimator: median_match
+    nominal_value: 92.0
+    unit: ADC/MeV
+    validity_population: CL-013_gated_sample
+    uncertainty_envelope_relative: 0.30
+    uncertainty_status: HEURISTIC_ENVELOPE_PROXY_ONLY
+    claims_authorized: false
+    notes: "CL-013 92 ADC/MeV ±30% proxy. Envelope MUST NOT auto-apply to digitizer parameters."
+compatibility_rules:
+  - rule_id: distinct_truth_types_forbid_shared_public_short_label
+    description: >
+      Two quantities with different (domain, input_energy_type, estimator)
+      must not share the same short_label in public output.

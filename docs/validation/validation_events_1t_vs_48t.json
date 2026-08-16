@@ -1,0 +1,537 @@
+{
+  "branches": [
+    {
+      "allclose": true,
+      "branch": "arrival_f1far",
+      "candidate_dtype": "int32",
+      "entries": 500,
+      "exact_equal": true,
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "n_mismatched": 0,
+      "reference_dtype": "int32",
+      "rms_diff": 0.0
+    },
+    {
+      "allclose": true,
+      "branch": "arrival_f2far",
+      "candidate_dtype": "int32",
+      "entries": 500,
+      "exact_equal": true,
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "n_mismatched": 0,
+      "reference_dtype": "int32",
+      "rms_diff": 0.0
+    },
+    {
+      "allclose": true,
+      "branch": "arrival_f2near",
+      "candidate_dtype": "int32",
+      "entries": 500,
+      "exact_equal": true,
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "n_mismatched": 0,
+      "reference_dtype": "int32",
+      "rms_diff": 0.0
+    },
+    {
+      "allclose": true,
+      "branch": "arrival_readout",
+      "candidate_dtype": "int32",
+      "entries": 500,
+      "exact_equal": true,
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "n_mismatched": 0,
+      "reference_dtype": "int32",
+      "rms_diff": 0.0
+    },
+    {
+      "allclose": true,
+      "branch": "detected_f1far",
+      "candidate_dtype": "int32",
+      "entries": 500,
+      "exact_equal": true,
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "n_mismatched": 0,
+      "reference_dtype": "int32",
+      "rms_diff": 0.0
+    },
+    {
+      "allclose": true,
+      "branch": "detected_f2far",
+      "candidate_dtype": "int32",
+      "entries": 500,
+      "exact_equal": true,
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "n_mismatched": 0,
+      "reference_dtype": "int32",
+      "rms_diff": 0.0
+    },
+    {
+      "allclose": true,
+      "branch": "detected_f2near",
+      "candidate_dtype": "int32",
+      "entries": 500,
+      "exact_equal": true,
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "n_mismatched": 0,
+      "reference_dtype": "int32",
+      "rms_diff": 0.0
+    },
+    {
+      "allclose": true,
+      "branch": "detected_readout",
+      "candidate_dtype": "int32",
+      "entries": 500,
+      "exact_equal": true,
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "n_mismatched": 0,
+      "reference_dtype": "int32",
+      "rms_diff": 0.0
+    },
+    {
+      "allclose": true,
+      "branch": "edep_scint_MeV",
+      "candidate_dtype": "float64",
+      "entries": 500,
+      "exact_equal": true,
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "n_mismatched": 0,
+      "reference_dtype": "float64",
+      "rms_diff": 0.0
+    },
+    {
+      "allclose": true,
+      "branch": "edep_scint_raw_MeV",
+      "candidate_dtype": "float64",
+      "entries": 500,
+      "exact_equal": true,
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "n_mismatched": 0,
+      "reference_dtype": "float64",
+      "rms_diff": 0.0
+    },
+    {
+      "allclose": true,
+      "branch": "entry_x_cm",
+      "candidate_dtype": "float64",
+      "entries": 500,
+      "exact_equal": true,
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "n_mismatched": 0,
+      "reference_dtype": "float64",
+      "rms_diff": 0.0
+    },
+    {
+      "allclose": true,
+      "branch": "entry_y_cm",
+      "candidate_dtype": "float64",
+      "entries": 500,
+      "exact_equal": true,
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "n_mismatched": 0,
+      "reference_dtype": "float64",
+      "rms_diff": 0.0
+    },
+    {
+      "allclose": true,
+      "branch": "entry_z_cm",
+      "candidate_dtype": "float64",
+      "entries": 500,
+      "exact_equal": true,
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "n_mismatched": 0,
+      "reference_dtype": "float64",
+      "rms_diff": 0.0
+    },
+    {
+      "allclose": true,
+      "branch": "event",
+      "candidate_dtype": "int32",
+      "entries": 500,
+      "exact_equal": true,
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "n_mismatched": 0,
+      "reference_dtype": "int32",
+      "rms_diff": 0.0
+    },
+    {
+      "allclose": true,
+      "branch": "exit_x_cm",
+      "candidate_dtype": "float64",
+      "entries": 500,
+      "exact_equal": true,
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "n_mismatched": 0,
+      "reference_dtype": "float64",
+      "rms_diff": 0.0
+    },
+    {
+      "allclose": true,
+      "branch": "exit_y_cm",
+      "candidate_dtype": "float64",
+      "entries": 500,
+      "exact_equal": true,
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "n_mismatched": 0,
+      "reference_dtype": "float64",
+      "rms_diff": 0.0
+    },
+    {
+      "allclose": true,
+      "branch": "exit_z_cm",
+      "candidate_dtype": "float64",
+      "entries": 500,
+      "exact_equal": true,
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "n_mismatched": 0,
+      "reference_dtype": "float64",
+      "rms_diff": 0.0
+    },
+    {
+      "allclose": true,
+      "branch": "ke_MeV",
+      "candidate_dtype": "float64",
+      "entries": 500,
+      "exact_equal": true,
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "n_mismatched": 0,
+      "reference_dtype": "float64",
+      "rms_diff": 0.0
+    },
+    {
+      "allclose": true,
+      "branch": "n_cerenkov_generated",
+      "candidate_dtype": "int32",
+      "entries": 500,
+      "exact_equal": true,
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "n_mismatched": 0,
+      "reference_dtype": "int32",
+      "rms_diff": 0.0
+    },
+    {
+      "allclose": true,
+      "branch": "n_scint_generated",
+      "candidate_dtype": "int32",
+      "entries": 500,
+      "exact_equal": true,
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "n_mismatched": 0,
+      "reference_dtype": "int32",
+      "rms_diff": 0.0
+    },
+    {
+      "allclose": true,
+      "branch": "n_wls_generated",
+      "candidate_dtype": "int32",
+      "entries": 500,
+      "exact_equal": true,
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "n_mismatched": 0,
+      "reference_dtype": "int32",
+      "rms_diff": 0.0
+    },
+    {
+      "allclose": true,
+      "branch": "particle",
+      "candidate_dtype": "object",
+      "entries": 500,
+      "exact_equal": true,
+      "max_abs_diff": null,
+      "mean_abs_diff": null,
+      "n_mismatched": 0,
+      "reference_dtype": "object",
+      "rms_diff": null
+    },
+    {
+      "allclose": true,
+      "branch": "pe_sat_f1far",
+      "candidate_dtype": "float64",
+      "entries": 500,
+      "exact_equal": true,
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "n_mismatched": 0,
+      "reference_dtype": "float64",
+      "rms_diff": 0.0
+    },
+    {
+      "allclose": true,
+      "branch": "pe_sat_f2far",
+      "candidate_dtype": "float64",
+      "entries": 500,
+      "exact_equal": true,
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "n_mismatched": 0,
+      "reference_dtype": "float64",
+      "rms_diff": 0.0
+    },
+    {
+      "allclose": true,
+      "branch": "pe_sat_f2near",
+      "candidate_dtype": "float64",
+      "entries": 500,
+      "exact_equal": true,
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "n_mismatched": 0,
+      "reference_dtype": "float64",
+      "rms_diff": 0.0
+    },
+    {
+      "allclose": true,
+      "branch": "pe_sat_readout",
+      "candidate_dtype": "float64",
+      "entries": 500,
+      "exact_equal": true,
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "n_mismatched": 0,
+      "reference_dtype": "float64",
+      "rms_diff": 0.0
+    },
+    {
+      "allclose": true,
+      "branch": "track_len_scint_mm",
+      "candidate_dtype": "float64",
+      "entries": 500,
+      "exact_equal": true,
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "n_mismatched": 0,
+      "reference_dtype": "float64",
+      "rms_diff": 0.0
+    }
+  ],
+  "event_ids": {
+    "candidate": {
+      "duplicate_ids": [],
+      "entries": 500,
+      "expected_entries": 500,
+      "missing_ids": [],
+      "unexpected_ids": [],
+      "unique_entries": 500,
+      "valid": true
+    },
+    "reference": {
+      "duplicate_ids": [],
+      "entries": 500,
+      "expected_entries": 500,
+      "missing_ids": [],
+      "unexpected_ids": [],
+      "unique_entries": 500,
+      "valid": true
+    }
+  },
+  "inputs": {
+    "atol": 0.0,
+    "candidate": "/projects/hep/fs10/scratch/scyiu/gpu_stave_48t.root",
+    "candidate_meta": "/projects/hep/fs10/scratch/scyiu/gpu_stave_48t.root.meta.json",
+    "reference": "/projects/hep/fs10/scratch/scyiu/gpu_stave_1t.root",
+    "reference_meta": "/projects/hep/fs10/scratch/scyiu/gpu_stave_1t.root.meta.json",
+    "rtol": 0.0,
+    "tree": "events"
+  },
+  "metadata": {
+    "physics_provenance": {
+      "attenuation_scale": {
+        "candidate": 1,
+        "equal": true,
+        "reference": 1,
+        "required_equal": true
+      },
+      "birks_kB_mm_per_MeV": {
+        "candidate": 0.126,
+        "equal": true,
+        "reference": 0.126,
+        "required_equal": true
+      },
+      "collection_efficiency": {
+        "candidate": 1,
+        "equal": true,
+        "reference": 1,
+        "required_equal": true
+      },
+      "optical_interface_model": {
+        "candidate": "UNKNOWN_EXTERNAL",
+        "equal": true,
+        "reference": "UNKNOWN_EXTERNAL",
+        "required_equal": true
+      },
+      "geometry_hash": {
+        "candidate": "d05ae2327548c322",
+        "equal": true,
+        "reference": "d05ae2327548c322",
+        "required_equal": true
+      },
+      "git_commit": {
+        "candidate": "unknown",
+        "equal": true,
+        "reference": "unknown",
+        "required_equal": false
+      },
+      "kinetic_energy_MeV": {
+        "candidate": 100,
+        "equal": true,
+        "reference": 100,
+        "required_equal": true
+      },
+      "mode": {
+        "candidate": "optical",
+        "equal": true,
+        "reference": "optical",
+        "required_equal": true
+      },
+      "n_events": {
+        "candidate": 500,
+        "equal": true,
+        "reference": 500,
+        "required_equal": true
+      },
+      "optical_tables": {
+        "candidate": {
+          "scintillator_absorption": {
+            "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/single_stave/optical/scintillator_absorption.csv",
+            "sha256": "bc260086a6c82dadaf69de4e6d4ad453a180c3657cc08b892229af7b0f6e6e8b"
+          },
+          "scintillator_emission": {
+            "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/single_stave/optical/scintillator_emission.csv",
+            "sha256": "9007ec5272208fa21c72811474572f9a41fbb463a2502c1c9c43d4b3d97d32ee"
+          },
+          "sipm_pde": {
+            "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/single_stave/optical/sipm_pde.csv",
+            "sha256": "f15b77d4b82c7f2f1b4ea92bd113afda219461968be07967e920c5bc46c9840b"
+          },
+          "tio2_reflectivity": {
+            "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/single_stave/optical/tio2_reflectivity.csv",
+            "sha256": "ad6ad0ba7e3ed6a2c49457c9e4eba71b076dfda2fa636530b3fbe7c4e496fc35"
+          },
+          "y11_absorption": {
+            "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/single_stave/optical/y11_absorption.csv",
+            "sha256": "f11e2e73698d4569180bc9538df1a1fb3a26b9b890d9f9b67117106b13210634"
+          },
+          "y11_bulk_attenuation": {
+            "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/single_stave/optical/y11_bulk_attenuation.csv",
+            "sha256": "7ef689180d32fc69eab67307d98493414fa5575d23ca1682b70194d70d5308ca"
+          },
+          "y11_emission": {
+            "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/single_stave/optical/y11_emission.csv",
+            "sha256": "fdfca95d3af46a7e6113f871dc865c1980a8f8f8ac024c6d447ce3503b65b12f"
+          }
+        },
+        "equal": true,
+        "reference": {
+          "scintillator_absorption": {
+            "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/single_stave/optical/scintillator_absorption.csv",
+            "sha256": "bc260086a6c82dadaf69de4e6d4ad453a180c3657cc08b892229af7b0f6e6e8b"
+          },
+          "scintillator_emission": {
+            "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/single_stave/optical/scintillator_emission.csv",
+            "sha256": "9007ec5272208fa21c72811474572f9a41fbb463a2502c1c9c43d4b3d97d32ee"
+          },
+          "sipm_pde": {
+            "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/single_stave/optical/sipm_pde.csv",
+            "sha256": "f15b77d4b82c7f2f1b4ea92bd113afda219461968be07967e920c5bc46c9840b"
+          },
+          "tio2_reflectivity": {
+            "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/single_stave/optical/tio2_reflectivity.csv",
+            "sha256": "ad6ad0ba7e3ed6a2c49457c9e4eba71b076dfda2fa636530b3fbe7c4e496fc35"
+          },
+          "y11_absorption": {
+            "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/single_stave/optical/y11_absorption.csv",
+            "sha256": "f11e2e73698d4569180bc9538df1a1fb3a26b9b890d9f9b67117106b13210634"
+          },
+          "y11_bulk_attenuation": {
+            "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/single_stave/optical/y11_bulk_attenuation.csv",
+            "sha256": "7ef689180d32fc69eab67307d98493414fa5575d23ca1682b70194d70d5308ca"
+          },
+          "y11_emission": {
+            "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/single_stave/optical/y11_emission.csv",
+            "sha256": "fdfca95d3af46a7e6113f871dc865c1980a8f8f8ac024c6d447ce3503b65b12f"
+          }
+        },
+        "required_equal": true
+      },
+      "particle": {
+        "candidate": "proton",
+        "equal": true,
+        "reference": "proton",
+        "required_equal": true
+      },
+      "pde_scale": {
+        "candidate": 1,
+        "equal": true,
+        "reference": 1,
+        "required_equal": true
+      },
+      "reflectivity_scale": {
+        "candidate": 1,
+        "equal": true,
+        "reference": 1,
+        "required_equal": true
+      },
+      "schema": {
+        "candidate": "ccb-stave-run-meta/1",
+        "equal": true,
+        "reference": "ccb-stave-run-meta/1",
+        "required_equal": true
+      },
+      "seed": {
+        "candidate": 1,
+        "equal": true,
+        "reference": 1,
+        "required_equal": true
+      },
+      "sipm_n_cells": {
+        "candidate": 3600,
+        "equal": true,
+        "reference": 3600,
+        "required_equal": true
+      }
+    },
+    "thread_provenance": {
+      "G4FORCENUMBEROFTHREADS": {
+        "candidate": null,
+        "reference": null
+      },
+      "threads_effective": {
+        "candidate": null,
+        "reference": null
+      },
+      "threads_requested": {
+        "candidate": null,
+        "reference": null
+      }
+    },
+    "valid": true
+  },
+  "pass": true,
+  "schema": {
+    "candidate_only": [],
+    "match": true,
+    "reference_only": []
+  },
+  "schema_version": "ccb-g4-mt-reproducibility/1"
+}

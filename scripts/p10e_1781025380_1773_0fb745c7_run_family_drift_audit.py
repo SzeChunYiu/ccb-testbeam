@@ -17,6 +17,8 @@ from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
 import numpy as np
+
+from ccb_mc_validation.waveform_ratios import late_and_peak_ratios
 import pandas as pd
 import yaml
 from sklearn.ensemble import ExtraTreesRegressor
@@ -104,6 +106,7 @@ def make_handles(table: pd.DataFrame, norm: np.ndarray) -> pd.DataFrame:
     cfd = cfd_positions(norm, [0.10, 0.20, 0.30, 0.50])
     amp = table["amplitude_adc"].to_numpy(dtype=float)
     area_over_amp = table["area_adc_samples"].to_numpy(dtype=float) / np.maximum(amp, 1.0)
+    _p10e_ratios = late_and_peak_ratios(norm, late_start=10)
     peak = table["peak_sample"].to_numpy(dtype=float)
     h = pd.DataFrame(
         {
@@ -122,8 +125,11 @@ def make_handles(table: pd.DataFrame, norm: np.ndarray) -> pd.DataFrame:
             "width_half": half_width(norm, cfd["cfd50"]),
             "tail_mean_8_17": np.nanmean(norm[:, 8:18], axis=1),
             "tail_area_10_17": np.nansum(norm[:, 10:18], axis=1),
-            "late_over_total": np.nansum(norm[:, 10:18], axis=1) / np.maximum(np.nansum(norm, axis=1), 1.0e-6),
-            "peak_to_area": 1.0 / np.maximum(area_over_amp, 1.0e-6),
+            # #1100 shared waveform-ratio contract (late_start=10 for P10e window)
+            "late_over_total": _p10e_ratios["late_signed_fraction_v1"],
+            "peak_to_area": _p10e_ratios["peak_to_area_signed_v1"],
+            "late_over_total_positive_v1": _p10e_ratios["late_positive_fraction_v1"],
+            "denominator_valid_signed": _p10e_ratios["denominator_valid_signed"],
         }
     )
     return h

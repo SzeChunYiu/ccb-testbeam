@@ -1,0 +1,55 @@
+{
+  "ticket_id": "1784345699.596.042f3c5c",
+  "study_id": "S44a",
+  "title": "derivative-integral pulse-shape timing pedestal benchmark",
+  "worker": "testbeam-laptop-2",
+  "raw_root_dir": "data/root/root",
+  "reproduction": {
+    "expected_selected_pulses": 640737,
+    "selected_pulses": 640737,
+    "passed": true
+  },
+  "split": {
+    "train_runs": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 58, 59, 60, 61, 62, 63],
+    "heldout_runs": [42, 57, 64, 65],
+    "train_pulses": 581124,
+    "heldout_pulses": 59613,
+    "bootstrap_replicates": 500
+  },
+  "methods_benchmarked": [
+    "derivative_integral_cfd",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn_1d",
+    "compact_waveform_attention"
+  ],
+  "traditional_method": "derivative_integral_cfd",
+  "new_architecture": "compact_waveform_attention",
+  "winner": {
+    "method": "compact_waveform_attention",
+    "selection_metric": "minimum held-out downstream pair timing sigma68_ns",
+    "timing_sigma68_ns": 1.853149280028282,
+    "ci_low": 1.7743970947419374,
+    "ci_high": 1.9519411370783595
+  },
+  "method_summary": [
+    {"method": "derivative_integral_cfd", "n_pair_residuals": 1224, "timing_sigma68_ns": 3.3050779276883855, "timing_sigma68_ci_low": 3.1420069746605, "timing_sigma68_ci_high": 3.467701343142056},
+    {"method": "ridge", "n_pair_residuals": 1224, "timing_sigma68_ns": 1.9320703407779496, "timing_sigma68_ci_low": 1.8344035512656287, "timing_sigma68_ci_high": 2.00632241965707},
+    {"method": "gradient_boosted_trees", "n_pair_residuals": 1224, "timing_sigma68_ns": 1.9962024680142032, "timing_sigma68_ci_low": 1.884012891186124, "timing_sigma68_ci_high": 2.1942200163314403},
+    {"method": "mlp", "n_pair_residuals": 1224, "timing_sigma68_ns": 2.1863133060465607, "timing_sigma68_ci_low": 2.093122847356135, "timing_sigma68_ci_high": 2.262255153686363},
+    {"method": "cnn_1d", "n_pair_residuals": 1224, "timing_sigma68_ns": 1.8914104326155852, "timing_sigma68_ci_low": 1.757459180669624, "timing_sigma68_ci_high": 1.9818201493081213},
+    {"method": "compact_waveform_attention", "n_pair_residuals": 1224, "timing_sigma68_ns": 1.853149280028282, "timing_sigma68_ci_low": 1.7743970947419374, "timing_sigma68_ci_high": 1.9519411370783595}
+  ],
+  "leakage_checks": [
+    {"check": "raw_root_reproduction", "pass": true, "value": 640737, "detail": "canonical selected-pulse count"},
+    {"check": "train_heldout_run_overlap", "pass": true, "value": 0, "detail": "split by run"},
+    {"check": "finite_traditional_phase", "pass": true, "value": 59613, "detail": "traditional anchor for all held-out pulses"},
+    {"check": "training_target_rows", "pass": true, "value": 14646, "detail": "downstream closure residual targets"},
+    {"check": "model_panel_complete", "pass": true, "value": "derivative_integral_cfd,ridge,gradient_boosted_trees,mlp,cnn_1d,compact_waveform_attention", "detail": "traditional plus requested ML/NN panel"}
+  ],
+  "novel_ticket_appended": false,
+  "next_tickets": [],
+  "runtime_sec": 36.4,
+  "git_commit": "f99b8e31e21f39313e8e5711fa5dcd9a4886ef1f"
+}

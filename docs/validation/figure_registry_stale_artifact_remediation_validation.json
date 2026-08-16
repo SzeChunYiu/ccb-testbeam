@@ -1,0 +1,48 @@
+{
+  "schema": "ccb-figure-registry-stale-artifact-remediation/1",
+  "task_id": "AUD-FIG-006-R1",
+  "policy": "FIGURE_REGISTRY_BUILD_MUST_NOT_LEAVE_STALE_ARTIFACTS",
+  "status": "VALIDATED",
+  "session_stamp": "2026-07-26T192823Z",
+  "repository": "SzeChunYiu/ccb-testbeam",
+  "initial_remote_main": "cbc5ef1cc194ae976ffb05a0f7a2305ec8428088",
+  "concurrent_commits_reviewed": [
+    "fa5b0631564b1eebea90ec7726b250682b5eeb7c",
+    "81470c351347eed08f77184d5dcc4e747e867a88"
+  ],
+  "implementation": {
+    "builder_git_blob": "6f2b8066799f045fe8c3a05549139c871a2ef27e",
+    "registry_git_blob": "c64bf734b244a114ea7d5f259b32421cd59aaa25",
+    "lifecycle_test_git_blob": "38591487747c3881052a5c30932afda1d0997fc5",
+    "publication_test_git_blob": "1ac7fa4b8fafa6f3bffc742f8c95163775c25f82",
+    "managed_artifact_policy": "PREVIOUS_REPORT_RECONCILIATION_NONPASS_REMOVAL_REPORT_ROLLBACK"
+  },
+  "controls": {
+    "blocked": {"before": 2, "after": 0},
+    "failed": {"before": 2, "after": 0},
+    "removed": {"before": 2, "after": 0},
+    "kind_change": {"before": 1, "after": 0},
+    "report_publication_failure": {
+      "prior_figure_restored": true,
+      "prior_source_data_restored": true,
+      "prior_report_preserved": true
+    },
+    "unsafe_prior_path": "REJECTED_WITHOUT_DELETION",
+    "unsafe_entry_id": "REJECTED_BEFORE_OUTPUT"
+  },
+  "validation": {
+    "python_compile": "PASS",
+    "focused_lifecycle_pytest": "9 passed in 0.81s",
+    "reconstructed_figure_registry_suite": "37 passed in 1.16s",
+    "exact_source_stale_audit": "VALIDATED_WITH_ZERO_FINDINGS",
+    "json_parse": "PASS",
+    "svg_xml_parse": "PASS",
+    "maximum_changed_python_line_length": 96
+  },
+  "scientific_boundary": "Software and artifact-provenance remediation only. No paper figure, central value, uncertainty, calibration, timing, PID, stopping profile, pile-up rate, or detector-performance quantity was regenerated or accepted.",
+  "limitations": [
+    "The full shipped-registry build was not executed against all repository artifacts.",
+    "Repository-wide pytest, ruff, paper build, link inventory, and GitHub Actions were not run.",
+    "The execution container could not resolve github.com; validation used exact connector-inspected source reconstructions and remote Git blob identities."
+  ]
+}

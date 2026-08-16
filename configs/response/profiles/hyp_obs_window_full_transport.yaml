@@ -1,0 +1,26 @@
+schema: ccb-response-profile/1
+profile_id: hyp_obs_window_full_transport
+kind: observation_window
+status: HYPOTHESIS
+claims_authorized: false
+issues: [1090]
+adr: docs/adr/ADR-0004-quenching-material-obs-window-hypotheses.md
+source_type: CODE
+source_refs:
+  - geant4/single_stave/src/SteppingAction.cc
+  - geant4/single_stave/src/EventAction.cc
+parameters:
+  semantic_class: FULL_TRANSPORT
+  window_start_ns: null
+  window_end_ns: null
+  time_origin_model: geant4_global_track_time
+  applies_to:
+    - edep_scint_raw_MeV
+    - edep_scint_MeV
+    - n_scint_generated
+    - n_end_arrival
+    - pe_saturated_legacy
+  production_validity: TRUTH_BOOKKEEPING_ONLY
+notes: >
+  All-time Geant4 accumulators. Must not be silently paired with finite-window
+  ADC as the same observation domain (#1090).

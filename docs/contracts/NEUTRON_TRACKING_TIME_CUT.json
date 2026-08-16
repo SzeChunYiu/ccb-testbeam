@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0.0",
+  "contract_id": "NEUTRON_TRACKING_TIME_CUT",
+  "issue": "#1091",
+  "audit_id": "ARU-G4-NEUTRON-TIMECUT-001",
+  "physics_list_default": "QGSP_BIC",
+  "implicit_reference_default_us": 10.0,
+  "status_when_unconfigured": "IMPLICIT_QGSP_BIC_REFERENCE_DEFAULT",
+  "required_sidecar_fields": [
+    "physics_list",
+    "neutron_tracking_time_cut_us",
+    "neutron_tracking_time_cut_status",
+    "neutron_tracking_time_cut_configured"
+  ],
+  "claim_gate": "Authorising delayed-neutron / long-lived neutron activity claims remain BLOCKED until neutron_tracking_time_cut_configured=true and the cut is source-bound in run metadata.",
+  "non_claims": [
+    "Recording the implicit 10 us default does not validate delayed-neutron sensitivity.",
+    "This contract does not change Geant4 transport by itself."
+  ]
+}

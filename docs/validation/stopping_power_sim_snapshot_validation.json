@@ -1,0 +1,30 @@
+{
+  "correction": {
+    "input_snapshot_method": "SINGLE_READ_EXACT_BYTES",
+    "parse_and_provenance_source": "same in-memory byte string",
+    "tool_version": "1.2.0",
+    "utf8_error": "SimulationTableError"
+  },
+  "defect": {
+    "additional_failure": "Invalid UTF-8 escaped as UnicodeDecodeError instead of controlled status-2 input failure.",
+    "former_behavior": "CSV rows were parsed from one path read while byte size and SHA-256 were measured from later path reads.",
+    "risk": "A concurrently replaced file could yield normalized rows from one byte set and provenance from another."
+  },
+  "schema_version": 1,
+  "scientific_boundary": "Synthetic parser/provenance validation only; no real Geant4 export or stopping-power closure was executed.",
+  "scope": "simulation input parse/provenance byte-snapshot identity",
+  "session_utc": "2026-07-23T230825Z",
+  "task_id": "AUD-G4-019",
+  "validation": {
+    "max_python_line_length": 94,
+    "old_control": {
+      "meaning": "exact former algorithm does not satisfy same-snapshot and controlled UTF-8 failure assertions",
+      "result": "2 failed"
+    },
+    "py_compile": "PASS",
+    "pytest": {
+      "command": "python -m pytest tests/test_validate_stopping_power_sim_table.py tests/test_validate_stopping_power_sim_snapshot.py -q",
+      "result": "19 passed in 2.01s"
+    }
+  }
+}

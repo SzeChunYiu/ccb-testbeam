@@ -1,0 +1,181 @@
+{
+  "study": "MV6_representation",
+  "mc_file": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root",
+  "seed": 42,
+  "n_events_scanned": 20000,
+  "n_tracks": 7848,
+  "species_counts": {
+    "proton": 2956,
+    "deuteron": 2886,
+    "alpha": 925,
+    "C12": 677,
+    "heavy_ion": 291,
+    "electron": 113
+  },
+  "morphology_counts": {
+    "saturated": 4657,
+    "normal": 3153,
+    "early_peak": 38
+  },
+  "morphology_frac": {
+    "saturated": 0.5933995922528033,
+    "normal": 0.40175840978593275,
+    "early_peak": 0.004841997961264016
+  },
+  "anomaly_frac_total": 0.004841997961264016,
+  "per_species_morphology": {
+    "C12": {
+      "n": 677,
+      "early_peak": 0.03692762186115214,
+      "early_peak_ci": 0.014205838417300035,
+      "low_area": 0.0,
+      "low_area_ci": 0.0,
+      "saturated": 0.0,
+      "saturated_ci": 0.0,
+      "normal": 0.9630723781388478,
+      "normal_ci": 0.01420583841730004
+    },
+    "alpha": {
+      "n": 925,
+      "early_peak": 0.003243243243243243,
+      "early_peak_ci": 0.00366411891798917,
+      "low_area": 0.0,
+      "low_area_ci": 0.0,
+      "saturated": 0.015135135135135135,
+      "saturated_ci": 0.007868042163676335,
+      "normal": 0.9816216216216216,
+      "normal_ci": 0.008655872629460003
+    },
+    "deuteron": {
+      "n": 2886,
+      "early_peak": 0.0,
+      "early_peak_ci": 0.0,
+      "low_area": 0.0,
+      "low_area_ci": 0.0,
+      "saturated": 0.8825363825363826,
+      "saturated_ci": 0.011746971167752706,
+      "normal": 0.11746361746361747,
+      "normal_ci": 0.011746971167752708
+    },
+    "electron": {
+      "n": 113,
+      "early_peak": 0.04424778761061947,
+      "early_peak_ci": 0.0379171150252658,
+      "low_area": 0.0,
+      "low_area_ci": 0.0,
+      "saturated": 0.0,
+      "saturated_ci": 0.0,
+      "normal": 0.9557522123893806,
+      "normal_ci": 0.037917115025265784
+    },
+    "heavy_ion": {
+      "n": 291,
+      "early_peak": 0.006872852233676976,
+      "early_peak_ci": 0.009492497842162228,
+      "low_area": 0.0,
+      "low_area_ci": 0.0,
+      "saturated": 0.044673539518900345,
+      "saturated_ci": 0.02373617099606281,
+      "normal": 0.9484536082474226,
+      "normal_ci": 0.025404857220015637
+    },
+    "proton": {
+      "n": 2956,
+      "early_peak": 0.0010148849797023004,
+      "early_peak_ci": 0.001147867547304443,
+      "low_area": 0.0,
+      "low_area_ci": 0.0,
+      "saturated": 0.7046684709066305,
+      "saturated_ci": 0.01644565531393756,
+      "normal": 0.2943166441136671,
+      "normal_ci": 0.016429192003606766
+    }
+  },
+  "early_peak_species_composition": {
+    "C12": 25,
+    "electron": 5,
+    "alpha": 3,
+    "proton": 3,
+    "heavy_ion": 2,
+    "deuteron": 0
+  },
+  "pca_explained_variance_ratio": [
+    0.6385528079134289,
+    0.057649314892365196,
+    0.028815904089414934,
+    0.0236915925568161,
+    0.02198003964095834,
+    0.02158913923485026,
+    0.02052490264908182,
+    0.020004869168033172,
+    0.019526034036186392,
+    0.019209944958635775
+  ],
+  "pca_cumulative_at_4": 0.7487096194520252,
+  "pca_cumulative_at_8": 0.8328085701449488,
+  "gmm_clusters": {
+    "0": {
+      "n": 2014,
+      "frac": 0.25662589194699287,
+      "dominant_species": "deuteron",
+      "purity": 0.8738828202581926,
+      "species_composition": {
+        "deuteron": 1760,
+        "proton": 252,
+        "heavy_ion": 2
+      },
+      "morphology_composition": {
+        "saturated": 2014
+      }
+    },
+    "1": {
+      "n": 2498,
+      "frac": 0.31829765545361877,
+      "dominant_species": "proton",
+      "purity": 0.39951961569255406,
+      "species_composition": {
+        "proton": 998,
+        "alpha": 678,
+        "deuteron": 567,
+        "heavy_ion": 177,
+        "C12": 65,
+        "electron": 13
+      },
+      "morphology_composition": {
+        "normal": 1873,
+        "saturated": 625
+      }
+    },
+    "2": {
+      "n": 2018,
+      "frac": 0.2571355759429154,
+      "dominant_species": "proton",
+      "purity": 0.7423191278493558,
+      "species_composition": {
+        "proton": 1498,
+        "deuteron": 520
+      },
+      "morphology_composition": {
+        "saturated": 2018
+      }
+    },
+    "3": {
+      "n": 1318,
+      "frac": 0.16794087665647298,
+      "dominant_species": "C12",
+      "purity": 0.464339908952959,
+      "species_composition": {
+        "C12": 612,
+        "alpha": 247,
+        "proton": 208,
+        "heavy_ion": 112,
+        "electron": 100,
+        "deuteron": 39
+      },
+      "morphology_composition": {
+        "normal": 1280,
+        "early_peak": 38
+      }
+    }
+  }
+}

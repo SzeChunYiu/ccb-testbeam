@@ -1,0 +1,156 @@
+[
+  {
+    "task_id": "STATUS-MV0-gain",
+    "status": "CORRECTED",
+    "issue": "A-001",
+    "mandated_label": "CORRECTED/BLOCKED",
+    "rationale": "92 ADC/MeV derived from a pulse amplitude that was baseline-subtracted twice (pulse-table double subtraction). Value invalid until the table is regenerated under docs/contracts/PULSE_TABLE_CONTRACT.md.",
+    "downstream_action": "Re-derive gain from the v1 pulse contract.",
+    "blocker": "BLOCKED_COMPUTE",
+    "dependencies": [],
+    "evidence": [
+      "audit/CRITICAL_FINDINGS_SUMMARY.json",
+      "BUG_LEDGER_V2:A-001"
+    ],
+    "acceptance": [
+      {
+        "criterion": "MV0-gain carries mandated label 'CORRECTED/BLOCKED' in status docs",
+        "passed": true,
+        "evidence": "this record"
+      }
+    ],
+    "notes": "Mandated by v2 re-audit. Downstream closure: BLOCKED_COMPUTE."
+  },
+  {
+    "task_id": "STATUS-MV1",
+    "status": "FAILED_INFORMATIVE",
+    "issue": "A-003",
+    "mandated_label": "MC_TRUTH_ONLY_REAUDIT",
+    "rationale": "MC weight (PrimaryWeight) ignored, so distributions are unweighted truth, not physical production. Reclassify as truth-only until reweighted.",
+    "downstream_action": "Reweight per docs/contracts/MC_WEIGHT_POLICY.md; publish ESS.",
+    "blocker": "BLOCKED_EXTERNAL",
+    "dependencies": [],
+    "evidence": [
+      "audit/CRITICAL_FINDINGS_SUMMARY.json",
+      "BUG_LEDGER_V2:A-003"
+    ],
+    "acceptance": [
+      {
+        "criterion": "MV1 carries mandated label 'MC_TRUTH_ONLY_REAUDIT' in status docs",
+        "passed": true,
+        "evidence": "this record"
+      }
+    ],
+    "notes": "Mandated by v2 re-audit. Downstream closure: BLOCKED_EXTERNAL."
+  },
+  {
+    "task_id": "STATUS-MV3-stopping",
+    "status": "FAILED_INFORMATIVE",
+    "issue": "A-004",
+    "mandated_label": "FAIL_DIAGNOSTIC",
+    "rationale": "Stopping-depth data/MC comparison used a thresholded amplitude and an unresolved layer->stave mapping. Not a closure; a diagnostic only.",
+    "downstream_action": "Fix mapping (geometry contract), re-run weighted with material budget.",
+    "blocker": "BLOCKED_COMPUTE",
+    "dependencies": [],
+    "evidence": [
+      "audit/CRITICAL_FINDINGS_SUMMARY.json",
+      "BUG_LEDGER_V2:A-004"
+    ],
+    "acceptance": [
+      {
+        "criterion": "MV3-stopping carries mandated label 'FAIL_DIAGNOSTIC' in status docs",
+        "passed": true,
+        "evidence": "this record"
+      }
+    ],
+    "notes": "Mandated by v2 re-audit. Downstream closure: BLOCKED_COMPUTE."
+  },
+  {
+    "task_id": "STATUS-MV4-timing",
+    "status": "FAILED_INFORMATIVE",
+    "issue": "A-007",
+    "mandated_label": "TOY_DIAGNOSTIC",
+    "rationale": "Timing 1/A correction uses a hard-coded 246 ADC/MeV gain and hard-coded data anchors/uncertainties instead of loading v2 calibration + result files. Toy until re-run with real calibration.",
+    "downstream_action": "Load v2 gain + anchors from result files; add slicing/metrics; re-run.",
+    "blocker": "BLOCKED_COMPUTE",
+    "dependencies": [],
+    "evidence": [
+      "audit/CRITICAL_FINDINGS_SUMMARY.json",
+      "BUG_LEDGER_V2:A-007"
+    ],
+    "acceptance": [
+      {
+        "criterion": "MV4-timing carries mandated label 'TOY_DIAGNOSTIC' in status docs",
+        "passed": true,
+        "evidence": "this record"
+      }
+    ],
+    "notes": "Mandated by v2 re-audit. Downstream closure: BLOCKED_COMPUTE."
+  },
+  {
+    "task_id": "STATUS-MV5-pileup",
+    "status": "FAILED_INFORMATIVE",
+    "issue": "A-006",
+    "mandated_label": "SELF_CONSISTENCY_ONLY",
+    "rationale": "Inserts the measured tau_eff=124.8 ns and the same 0.38 factor into the capacity equation and uses fixed-threshold leading-edge theory while the code applies CFD20. Not an independent MC validation.",
+    "downstream_action": "Rebuild an independent pile-up validation consistent with CFD20.",
+    "blocker": "BLOCKED_COMPUTE",
+    "dependencies": [],
+    "evidence": [
+      "audit/CRITICAL_FINDINGS_SUMMARY.json",
+      "BUG_LEDGER_V2:A-006"
+    ],
+    "acceptance": [
+      {
+        "criterion": "MV5-pileup carries mandated label 'SELF_CONSISTENCY_ONLY' in status docs",
+        "passed": true,
+        "evidence": "this record"
+      }
+    ],
+    "notes": "Mandated by v2 re-audit. Downstream closure: BLOCKED_COMPUTE."
+  },
+  {
+    "task_id": "STATUS-MV6-C12anomaly",
+    "status": "FAILED_INFORMATIVE",
+    "issue": "A-009",
+    "mandated_label": "MC_HYPOTHESIS_TENSION",
+    "rationale": "C12 early-peak identity overclaimed: MC predicts ~0.32% early-peak fraction vs ~4% in data, with radically different saturation fractions. C12 dominance in one MC-selected class is a hypothesis, not data closure.",
+    "downstream_action": "State as MC hypothesis with tension; do not claim data-anomaly identity.",
+    "blocker": "BLOCKED_EXTERNAL",
+    "dependencies": [],
+    "evidence": [
+      "audit/CRITICAL_FINDINGS_SUMMARY.json",
+      "BUG_LEDGER_V2:A-009"
+    ],
+    "acceptance": [
+      {
+        "criterion": "MV6-C12anomaly carries mandated label 'MC_HYPOTHESIS_TENSION' in status docs",
+        "passed": true,
+        "evidence": "this record"
+      }
+    ],
+    "notes": "Mandated by v2 re-audit. Downstream closure: BLOCKED_EXTERNAL."
+  },
+  {
+    "task_id": "STATUS-DeltaE-E-eventno-outputs",
+    "status": "FAILED_INFORMATIVE",
+    "issue": "A-002",
+    "mandated_label": "INVALID_PENDING_RERUN",
+    "rationale": "Prior \u0394E\u2013E outputs joined data on eventno alone (cross-run collisions), ignored declared thresholds, used unseeded sampling, and defined stopping as any-deposit. Invalid until re-run with the composite-key module.",
+    "downstream_action": "Re-run with scripts/single_stave/deltaE_E.py (composite key + thresholds).",
+    "blocker": "BLOCKED_EXTERNAL",
+    "dependencies": [],
+    "evidence": [
+      "audit/CRITICAL_FINDINGS_SUMMARY.json",
+      "BUG_LEDGER_V2:A-002"
+    ],
+    "acceptance": [
+      {
+        "criterion": "DeltaE-E-eventno-outputs carries mandated label 'INVALID_PENDING_RERUN' in status docs",
+        "passed": true,
+        "evidence": "this record"
+      }
+    ],
+    "notes": "Mandated by v2 re-audit. Downstream closure: BLOCKED_EXTERNAL."
+  }
+]

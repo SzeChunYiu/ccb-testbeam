@@ -7,7 +7,9 @@ Usage:
 import csv, sys
 allowed = {
     "VALIDATED", "DONE_DATA_ONLY", "TRUTH_LEVEL_MC_ONLY", "TENSION", "FAIL",
-    "CORRECTED", "BLOCKED", "GATED", "SUPERSEDED"
+    "CORRECTED", "BLOCKED", "GATED", "SUPERSEDED",
+    # Honest audit-downgrade labels (claim honestly downgraded by the audit):
+    "REVIEW", "FLAWED",
 }
 
 if len(sys.argv) != 2:

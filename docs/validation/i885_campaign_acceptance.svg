@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">Issue 885 campaign coverage and fit independence audit</title>
+  <desc id="desc">Synthetic audit schematic, not detector data. It shows 14 of 72 total files, 14 of 40 main-grid files, five proton and two deuteron independent energies, and the seed-file versus independent-energy mismatch in the calibration fits.</desc>
+  <rect width="1200" height="720" fill="#ffffff"/>
+  <text x="50" y="55" font-family="sans-serif" font-size="30" font-weight="bold">Issue #885 partial campaign acceptance audit</text>
+  <text x="50" y="88" font-family="sans-serif" font-size="18">Synthetic repository audit schematic — not detector data</text>
+
+  <rect x="45" y="120" width="540" height="520" fill="#f7f7f7" stroke="#333" stroke-width="2"/>
+  <text x="70" y="160" font-family="sans-serif" font-size="24" font-weight="bold">Coverage accounting</text>
+  <text x="70" y="205" font-family="sans-serif" font-size="19">Total campaign files</text>
+  <rect x="70" y="225" width="430" height="32" fill="#dddddd" stroke="#333"/>
+  <rect x="70" y="225" width="84" height="32" fill="#4c78a8"/>
+  <text x="515" y="249" font-family="monospace" font-size="18">14 / 72</text>
+
+  <text x="70" y="300" font-family="sans-serif" font-size="19">Main-grid files</text>
+  <rect x="70" y="320" width="430" height="32" fill="#dddddd" stroke="#333"/>
+  <rect x="70" y="320" width="151" height="32" fill="#59a14f"/>
+  <text x="515" y="344" font-family="monospace" font-size="18">14 / 40</text>
+
+  <text x="70" y="397" font-family="sans-serif" font-size="19">Independent main-grid energies</text>
+  <rect x="70" y="417" width="430" height="32" fill="#dddddd" stroke="#333"/>
+  <rect x="70" y="417" width="151" height="32" fill="#f28e2b"/>
+  <text x="515" y="441" font-family="monospace" font-size="18">7 / 20</text>
+
+  <text x="70" y="492" font-family="sans-serif" font-size="18">Proton: 5 / 10 energies</text>
+  <text x="70" y="525" font-family="sans-serif" font-size="18">Deuteron: 2 / 10 energies</text>
+  <text x="70" y="565" font-family="sans-serif" font-size="17" fill="#a00000">Old label “14/72 main-grid” mixes total and main-grid denominators.</text>
+  <text x="70" y="600" font-family="sans-serif" font-size="17" fill="#a00000">A shared “2–20 MeV” range hides unequal species coverage.</text>
+
+  <rect x="615" y="120" width="540" height="520" fill="#f7f7f7" stroke="#333" stroke-width="2"/>
+  <text x="640" y="160" font-family="sans-serif" font-size="24" font-weight="bold">Calibration-fit independence</text>
+
+  <text x="640" y="210" font-family="sans-serif" font-size="20" font-weight="bold">Proton fit</text>
+  <circle cx="680" cy="250" r="13" fill="#4c78a8"/><circle cx="720" cy="250" r="13" fill="#4c78a8"/>
+  <circle cx="760" cy="250" r="13" fill="#4c78a8"/><circle cx="800" cy="250" r="13" fill="#4c78a8"/>
+  <circle cx="840" cy="250" r="13" fill="#4c78a8"/><circle cx="880" cy="250" r="13" fill="#4c78a8"/>
+  <circle cx="920" cy="250" r="13" fill="#4c78a8"/><circle cx="960" cy="250" r="13" fill="#4c78a8"/>
+  <circle cx="1000" cy="250" r="13" fill="#4c78a8"/><circle cx="1040" cy="250" r="13" fill="#4c78a8"/>
+  <text x="640" y="290" font-family="sans-serif" font-size="18">10 seed files → 5 independent kinetic energies</text>
+  <text x="640" y="320" font-family="sans-serif" font-size="17">Fit metadata reports n=10; accepted n must be 5.</text>
+
+  <text x="640" y="385" font-family="sans-serif" font-size="20" font-weight="bold">Deuteron fit</text>
+  <rect x="670" y="420" width="25" height="25" fill="#e15759"/>
+  <rect x="715" y="420" width="25" height="25" fill="#e15759"/>
+  <rect x="760" y="420" width="25" height="25" fill="#e15759"/>
+  <rect x="805" y="420" width="25" height="25" fill="#e15759"/>
+  <text x="640" y="480" font-family="sans-serif" font-size="18">4 seed files → 2 independent kinetic energies</text>
+  <text x="640" y="515" font-family="sans-serif" font-size="17" fill="#a00000">Two-parameter line + two energies = zero residual degrees of freedom.</text>
+  <text x="640" y="550" font-family="sans-serif" font-size="17" fill="#a00000">Near-unity R² is descriptive only, not calibration validation.</text>
+
+  <line x1="640" y1="590" x2="1110" y2="590" stroke="#333" stroke-width="2" stroke-dasharray="8 6"/>
+  <text x="640" y="620" font-family="sans-serif" font-size="17">Acceptance gate: seed-average first, record n_files and n_energy_points,</text>
+  <text x="640" y="647" font-family="sans-serif" font-size="17">and require at least 3 independent energies for a linear calibration fit.</text>
+
+  <text x="50" y="690" font-family="sans-serif" font-size="15">Source: committed manifest, per-config CSV, fits JSON, and summary at main commit 2986da32c6b01d6f3f1b6ec90231ab5eeee436b1.</text>
+</svg>

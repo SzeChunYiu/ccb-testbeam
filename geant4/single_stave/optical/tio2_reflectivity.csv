@@ -1,0 +1,13 @@
+# TiO2 diffuse reflective external coating: reflectivity vs wavelength
+# units_x: nm
+# units_y: frac  (reflectivity in [0,1])
+# source: TiO2-loaded diffuse reflector, typical ~90-95% in the visible (literature)
+# status: MANUFACTURER_REPRESENTATIVE  (obtain/scan surface reflectivity; --reflectivity-scale systematic)
+# wavelength_nm, reflectivity
+400, 0.85
+420, 0.90
+450, 0.92
+476, 0.93
+500, 0.93
+550, 0.93
+600, 0.92

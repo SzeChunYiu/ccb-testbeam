@@ -1,0 +1,32 @@
+{
+  "task_id": "AUD-G4-021",
+  "status": "VALIDATED",
+  "policy": "NO_INPUT_OUTPUT_ALIAS_AND_ATOMIC_REPORT_WRITE",
+  "evidence_class": "synthetic software/provenance regression; not detector data",
+  "prechange_source_blob": "360f3e46db664f4eead48021536f210e2f7a85c9",
+  "source_path": "scripts/single_stave/compare_stopping_power.py",
+  "source_bytes": 23541,
+  "source_sha256": "aa9b2f854f2eb2cb9120399e045969b5b8b4dadf939fc186afbcd2650cb397f7",
+  "test_path": "tests/test_compare_stopping_power_output_safety.py",
+  "test_bytes": 6941,
+  "test_sha256": "29087d41927af1e0f932c329cdbffbc5e975c76fff6a2427caf00ce91e087139",
+  "validation": {
+    "py_compile": "passed",
+    "pytest": "12 passed in 0.07s",
+    "ast_audit_status": "VALIDATED",
+    "direct_final_write": false,
+    "output_alias_guard": true,
+    "atomic_report_write": true,
+    "max_source_line_length": 91,
+    "max_test_line_length": 93
+  },
+  "scenarios": [
+    "simulation input alias rejected without byte change",
+    "reference input alias rejected without byte change",
+    "resolved symlink alias rejected",
+    "injected replace failure preserves prior output and cleans temporary file",
+    "injected serialization failure preserves prior output and cleans temporary file",
+    "successful report returns exact final bytes and SHA-256"
+  ],
+  "scientific_boundary": "No real simulation, accepted stopping-power closure, uncertainty budget, calibration, or detector-performance claim."
+}

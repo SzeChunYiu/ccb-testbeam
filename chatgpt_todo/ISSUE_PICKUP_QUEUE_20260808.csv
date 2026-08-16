@@ -1,0 +1,58 @@
+issue,audit_id,priority,domain,ready_now,depends_on,direct_work_on_audit_branch,next_action
+952,AF-001,P0,data_contract,partial,,yes,run real per-event width census and wire validator into S00
+961,AF-011,P0,event_identity,no,immutable pipeline products,no,derive canonical DAQ key and wrap/reset rules
+953,AF-002,P0,raw_sorted_closure,partial,952;961,yes,add ADC-word/channel/sample comparator and run on real products
+954,AF-003,P0,polarity,no,952;961,no,infer and validate per-channel per-run polarity from raw/calibration evidence
+993,AF-013,P0,provenance,no,952;953;961,no,trace 8x16 to 8x18 lineage byte-by-byte
+971,AF-023,P0,schema,partial,952;954,no,migrate S00 to explicit pulse-table schema
+972,AF-024,P0,release_gate,yes,953,no,replace fabricated skipped crosscheck with explicit gate states
+973,AF-025,P1,provenance,yes,972,no,hash consumed inputs and record missing expected inputs
+983,AF-035,P0,run_roles,partial,,yes,wire exclusive-role validator into config loading
+962,AF-012,P0,run_ledger,no,external run metadata,no,build canonical study-specific run-role ledger
+955,AF-004,P0,claims,yes,952;953;954,no,demote/qualify CL-001 until data-contract gates pass
+956,AF-005,P0,pid,partial,869;879;880;952;953;954,no,recompute correct data proxy and weighted data-matched MC
+970,AF-TIM-POP-001,P1,report_repro,partial,962;993,no,rebuild timing report from selection-flow DAG
+969,AF-021,P1,claims_docs,yes,955,no,generate public status from one machine-readable authority
+994,AF-022,P1,calibration_semantics,yes,971,no,create truth-type quantity dictionary and migrate labels
+990,AF-042,P1,review_governance,yes,969,no,separate editorial/method/source/reproduction/claim statuses
+987,AF-039,P0,hardware,no,external hardware evidence,no,resolve one-vs-two fibre CCB stave hardware
+991,AF-043,P0,geometry,no,external hardware evidence,no,resolve 50 cm MC vs ~1 m beam-test stave length
+992,AF-044,P0,geometry,no,869;991,no,resolve 2 cm vs 4 cm analyzed-stave spacing
+986,AF-038,P1,mc_provenance,yes,987;991;992,no,implement canonical separated config digests
+974,AF-026,P0,sipm,partial,987,no,make cell-count/profile knob reach core microcell grid
+975,AF-027,P0,sipm,partial,,yes,run Geant4 integration regression and persist failure status
+976,AF-028,P1,sipm,partial,,yes,run zero-control/malformed-env integration regression
+977,AF-029,P0,sipm_provenance,yes,975;976;997,no,persist full effective core/electronics metadata and digest
+978,AF-030,P0,optical,partial,,yes,run calibration-driver strict-mode CI and keep #980 separate
+979,AF-031,P1,optical,no,external property evidence,no,move scalar optical constants into sourced property ledger
+980,AF-032,P0,optical_schema,yes,,no,implement property-specific unit/range/row validation
+981,AF-033,P1,pde,yes,977;980;996,no,unify PDE source and extrapolation policy
+982,AF-034,P0,mc_analysis,yes,977,no,join effective metadata and reject filename-only knob truth
+984,AF-036,P1,mc_statistics,yes,977,no,generate paired multi-seed nuisance design
+985,AF-037,P1,mc_statistics,yes,982;984,no,replace global linear slope with local/asymmetric response analysis
+996,AF-045,P0,optical_gate,partial,980,yes,run Geant4 strict-PDE startup regression and preserve semantic schema follow-up
+997,AF-048,P0,mc_provenance,yes,986;977,no,persist beam position angle run-path flags and effective config digests
+998,AF-047,P1,mc_execution,partial,,yes,add BeamOn/event-count postcondition and macro hash provenance
+999,AF-046,P1,mc_primary,yes,986;991;992,no,implement geometry-aware primary ray-intersection preflight
+1000,AF-049,P0,mc_material,no,external CCB material evidence,no,replace polystyrene assumption with source-verified actual scintillator material and rerun ranges
+1005,AF-054,P0,mc_material,no,external coating evidence,no,replace massless-air coating with source-verified physical coating material and nuisance envelope
+1006,AF-055,P0,mc_hadronic,yes,1000;1005;986,no,make hadronic physics list configurable and validate applicable p/d model ensemble
+1007,AF-056,P0,mc_stopping,yes,1000;1006,no,separate primary stopping-power quantities from all-particle event Edep/path and revalidate
+1008,AF-057,P0,mc_quenching,partial,1000;1007,no,add quenching model-form uncertainty and held-out p/d light-response validation
+1009,AF-058,P0,mc_digitizer,partial,952;993;977;1010,no,persist full production SiPM waveform and sample it on exact real HRD DAQ schema
+1010,AF-059,P0,electronics,no,external CCB electronics evidence,no,measure or identify CCB front-end impulse noise saturation and sampling response
+1001,AF-050,P0,mc_statistics,yes,880,no,make data-MC comparison fail closed on weights and use weight-aware distribution test
+1002,AF-051,P1,report_generation,yes,956;1001,no,render numerical and causal narrative from validated machine-readable results
+963,AF-014,P1,waveform,partial,952;954,no,compare identifiable baseline models with injected pathologies
+964,AF-015,P1,timing_model,partial,993,no,audit design-matrix rank conditioning and held-out prediction
+965,AF-016,P1,timing_quality,partial,962;964,no,calibrate qtemplate operating points on held-out runs
+967,AF-019,P1,tof,partial,989;992,no,build species-energy-path TOF uncertainty model
+966,AF-017-018,P1,timing_stats,partial,965;967,no,fit mixture/covariance-aware timing model
+968,AF-020,P1,timing_topology,partial,952;953;954;963;967,no,discriminate B2 broad-residual mechanisms
+1003,AF-052,P0,timing_selection,yes,962;993,no,quantify peak-time preselection bias and report unconditional timing residuals
+1004,AF-053,P0,timing_provenance,yes,962,no,fail authorising timing run on missing empty or failed requested inputs
+988,AF-040,P0,pileup_claim,yes,,no,remove blocked 3.05 MHz headline and rebuild event-rate/recovery inference
+989,AF-041,P0,nuclear_kinematics,partial,869;992,yes,run source-bound p+d kinematics tool over angle/energy acceptance and reconcile 15.8 MeV estimator
+958,AF-007,P1,ml_statistics,yes,961,no,fix second-stage inclusion probabilities or simplify sampling
+959,AF-008-010,P1,ml_statistics,yes,958;961,no,use group-aware weighted selection/calibration and fail unsupported weights
+960,AF-009,P1,ml_statistics,yes,958;959,no,bootstrap the same weighted estimand and fail degenerate uncertainty

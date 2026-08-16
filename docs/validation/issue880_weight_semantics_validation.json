@@ -1,0 +1,109 @@
+{
+  "acceptance_status": "PARTIAL",
+  "audit_id": "AUD-MC-002",
+  "confirmed_repository_findings": [
+    {
+      "code": "NONFINITE_WEIGHT_COERCED_TO_UNIT",
+      "evidence": "load_mc applies np.where(np.isfinite(w_evt), w_evt, 1.0)"
+    },
+    {
+      "code": "INVALID_WEIGHT_FALLS_BACK_TO_UNWEIGHTED",
+      "evidence": "wmean, wmedian, wfrac, and wcorr return unweighted estimators when sum(w)<=0"
+    },
+    {
+      "code": "RELATIVE_BIAS_DIRECTION_AMBIGUOUS",
+      "evidence": "first_B_layer_mean_rel_bias_pct is (weighted-unweighted)/unweighted = -68.0224%, while prose says it shows how far the legacy unweighted summary was off"
+    },
+    {
+      "code": "ABSOLUTE_BIAS_DIRECTION_AMBIGUOUS",
+      "evidence": "deuteron_fraction_abs_bias_pp is weighted-unweighted = -40.5851 pp, while the legacy-minus-weighted direction is +40.5851 pp"
+    },
+    {
+      "code": "PROVENANCE_FIELDS_MISSING",
+      "evidence": "tracked result omits exact ROOT SHA-256, producer commit, generation command, and weight-validation policy/version"
+    }
+  ],
+  "executable_fixture_audit": {
+    "finding_code_counts": {
+      "ABSOLUTE_BIAS_DIRECTION_AMBIGUOUS": 1,
+      "DIRECTIONAL_FIELD_MISSING": 3,
+      "INVALID_WEIGHT_FALLS_BACK_TO_UNWEIGHTED": 4,
+      "NONFINITE_WEIGHT_COERCED_TO_UNIT": 1,
+      "PROSE_DIRECTION_CONFLICT": 1,
+      "PROVENANCE_FIELD_MISSING": 4,
+      "RELATIVE_BIAS_DIRECTION_AMBIGUOUS": 1
+    },
+    "finding_codes": [
+      "ABSOLUTE_BIAS_DIRECTION_AMBIGUOUS",
+      "DIRECTIONAL_FIELD_MISSING",
+      "INVALID_WEIGHT_FALLS_BACK_TO_UNWEIGHTED",
+      "NONFINITE_WEIGHT_COERCED_TO_UNIT",
+      "PROSE_DIRECTION_CONFLICT",
+      "PROVENANCE_FIELD_MISSING",
+      "RELATIVE_BIAS_DIRECTION_AMBIGUOUS"
+    ],
+    "finding_count": 15,
+    "reconstructed_result_sha256": "590cd22e1641a314b51cd25305779c5dcf17c7c67a67fed8c554bb5be8742981",
+    "reconstructed_result_size_bytes": 6895,
+    "source_excerpt_sha256": "279b8f5babb4dce31fed3d77f8da9f5feb98dc639748e7e949825358a6ffd04f",
+    "source_excerpt_size_bytes": 1029,
+    "status": "FLAWED"
+  },
+  "independent_recalculation": {
+    "legacy_deuteron_overstatement_relative_to_weighted_pct": 244.39966043037631,
+    "legacy_unweighted_minus_weighted_pp": 40.585086858616876,
+    "legacy_unweighted_overstatement_relative_to_weighted_pct": 212.7192164972955,
+    "weighted_change_relative_to_unweighted_pct": -68.02243203341332,
+    "weighted_minus_unweighted_pp": -40.585086858616876
+  },
+  "initial_remote_main": "a4b996ccbdfeea120e6deaead863f19d468d1091",
+  "observed": {
+    "fraction_unweighted": 0.5719111928400914,
+    "fraction_weighted": 0.16606032425392264,
+    "mean_unweighted": 6.674567424757,
+    "mean_weighted": 2.134364334727324
+  },
+  "policy": "ISSUE880_WEIGHTS_MUST_FAIL_CLOSED_AND_BIAS_DIRECTION_MUST_BE_EXPLICIT",
+  "recommended_semantics": {
+    "legacy_unweighted_minus_weighted_pp": "100 * (unweighted_fraction - weighted_fraction)",
+    "legacy_unweighted_overstatement_relative_to_weighted_pct": "100 * (unweighted - weighted) / weighted",
+    "weight_policy": "Reject missing, empty, nonfinite, negative, or zero-total event weights; never substitute unit weights or fall back to an unweighted estimator.",
+    "weighted_change_relative_to_unweighted_pct": "100 * (weighted - unweighted) / unweighted"
+  },
+  "repository_evidence": {
+    "inspection_method": "Authenticated GitHub blob and ranged file reads. The executable audit was run on a faithful current-source excerpt plus the tracked numerical values because the connector does not materialize repository files into the local runtime.",
+    "issue_880": "https://github.com/SzeChunYiu/ccb-testbeam/issues/880",
+    "merged_pr_897": "https://github.com/SzeChunYiu/ccb-testbeam/pull/897",
+    "result_git_blob": "37d69e2c697a7ce7c9e1eff9aeff48539551d922",
+    "result_path": "reports/issues879_880_887_mc_analysis/issues879_880_887_result.json",
+    "study_git_blob": "bc1220fdfe1010989fd8ab273f8c1b1fcf708b2c",
+    "study_path": "scripts/single_stave/issues879_880_887_mc_study.py"
+  },
+  "required_remediation": [
+    "Replace unit-weight coercion and invalid-weight fallbacks with fail-closed validation.",
+    "Emit both directional percentage comparisons with explicit denominators and signs.",
+    "Regenerate the report and plots from the exact ROOT bytes.",
+    "Record ROOT SHA-256, producer commit, command, environment, and weight-policy version.",
+    "Propagate weighted uncertainty or resampling diagnostics before using the shifts as claims."
+  ],
+  "scientific_boundary": "This audit does not rerun the one-million-event ROOT study, prove that the first primary is the intended event-weight carrier, quantify weighted uncertainty, or establish data/MC closure. The retained numerical comparison remains scientifically useful only as a flagged diagnostic until a strict content-addressed rerun is produced.",
+  "session_stamp_utc": "2026-07-25T030239Z",
+  "status": "FLAWED",
+  "title": "Issue #880 weight-failure and bias-direction semantics audit",
+  "validation": {
+    "commands": [
+      "python -m py_compile tools/audit/audit_issue880_weight_semantics.py tests/test_audit_issue880_weight_semantics.py tools/audit/render_issue880_weight_semantics_evidence.py",
+      "PYTHONPATH=. pytest -q tests/test_audit_issue880_weight_semantics.py"
+    ],
+    "file_sha256": {
+      "tests/test_audit_issue880_weight_semantics.py": "4e4aa2b32ca7f49899e697d3f42a0396ab9ecd5892a65fa5245466acc59f297d",
+      "tools/audit/audit_issue880_weight_semantics.py": "55f0e59be7277bbc77339f3218dc590466c98636e6ff27fb73dbccbfa71cab09",
+      "tools/audit/render_issue880_weight_semantics_evidence.py": "40b6ca549e618b760ca62f25e4c30a952ba0c372ca208b2c7449f7d27a0b9c9e"
+    },
+    "max_python_line_length": 99,
+    "pytest": "6 passed in 0.04s",
+    "python": "3.13.5"
+  },
+  "validator": "audit_issue880_weight_semantics",
+  "validator_version": "1.0.0"
+}

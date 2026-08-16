@@ -1,0 +1,12 @@
+{
+ "finding": "A-001", "check": "AMBIGUOUS_AMPLITUDE_ADC + baseline schema",
+ "tables": [
+  {"report": "1781012359.1143.5d9c3b2a/timing_pulse_table.csv.gz",
+   "has_amplitude_adc": true, "has_peak_height_or_net": false, "has_baseline_col": false,
+   "AMBIGUOUS_AMPLITUDE_ADC": true,
+   "note": "canonical timing pulse table uses ambiguous amplitude_adc with no peak_height_adc/peak_code_adc -> double-subtraction risk (A-001)"},
+  {"report": "1781033578...s00f_dynamic_baseline_pileup_support/matched_pulse_table.csv.gz",
+   "has_amplitude_adc": false, "uses": ["median_amp_adc","dynamic_amp_adc"],
+   "has_baseline_col": true, "AMBIGUOUS_AMPLITUDE_ADC": false}
+ ]
+}

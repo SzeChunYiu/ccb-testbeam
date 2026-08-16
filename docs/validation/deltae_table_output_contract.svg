@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="698" viewBox="0 0 1100 698" role="img" aria-labelledby="title desc">
+<title id="title">DeltaE event-table output integrity evidence</title>
+<desc id="desc">Synthetic software control contrasting broad fallback with the fail-closed atomic output contract. This is not detector data.</desc>
+<rect x="1" y="1" width="1098" height="696" fill="white" stroke="black"/>
+<text x="40" y="55" font-family="sans-serif" font-size="28" font-weight="bold">DeltaE event-table output integrity</text>
+<text x="40" y="90" font-family="sans-serif" font-size="18">Policy status: VALIDATED; findings: 0</text>
+<text x="40" y="120" font-family="monospace" font-size="14">Source SHA-256: a0ad0b288cd4b5494fa8461089d9a0d192049690a9b8bc15f0cd3036e61b876d</text>
+<line x1="40" y1="145" x2="1060" y2="145" stroke="black" stroke-width="2"/>
+<text x="60" y="185" font-family="sans-serif" font-size="18" font-weight="bold">Former broad fallback</text>
+<text x="60" y="211" font-family="sans-serif" font-size="18">Injected failure: PermissionError</text>
+<text x="60" y="237" font-family="sans-serif" font-size="18">Writer calls: parquet -&gt; csv</text>
+<text x="60" y="263" font-family="sans-serif" font-size="18">Published: events.csv.gz</text>
+<text x="60" y="289" font-family="sans-serif" font-size="18">Partial Parquet retained: True</text>
+<text x="60" y="315" font-family="sans-serif" font-size="18"></text>
+<text x="60" y="341" font-family="sans-serif" font-size="18" font-weight="bold">Corrected contract</text>
+<text x="60" y="367" font-family="sans-serif" font-size="18">Input/output alias: rejected</text>
+<text x="60" y="393" font-family="sans-serif" font-size="18">Arbitrary Parquet error: rejected</text>
+<text x="60" y="419" font-family="sans-serif" font-size="18">Missing engine only: CSV gzip fallback</text>
+<text x="60" y="445" font-family="sans-serif" font-size="18">Temporary file: same directory</text>
+<text x="60" y="471" font-family="sans-serif" font-size="18">Flush/fsync + os.replace: required</text>
+<text x="60" y="497" font-family="sans-serif" font-size="18">Stale alternate format: rejected</text>
+<line x1="40" y1="533" x2="1060" y2="533" stroke="black"/>
+<text x="40" y="563" font-family="sans-serif" font-size="15">Interpretation: software/provenance validation only; no A-002 physics result is authorized.</text>
+</svg>

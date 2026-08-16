@@ -1,3 +1,12 @@
 results/*.root
 outputs/
 *.root
+
+# generated Geant4 build trees (never track)
+**/build/
+# runtime cwd copies made by jobs/*.sbatch (tracked sources live in configs/ + src_patch/)
+/krakow.config
+/sigma_pd_cm_190.txt
+/dedx_p_in_CD2.txt
+/slurm-*.out
+/slurm-*.err

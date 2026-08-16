@@ -1,0 +1,143 @@
+{
+  "after": {
+    "issues": [],
+    "n_issues": 0,
+    "status": "VALIDATED"
+  },
+  "before": {
+    "bytes": 21368,
+    "issue_codes": [
+      "MISSING_CURRENT_PCA_CORRECTION",
+      "MISSING_REVIEW_LEGEND_STATUS",
+      "MISSING_WIKI_CLAIM_ROW",
+      "STALE_PUBLIC_CLAIM_PRESENT",
+      "STATUS_LEDGER_MISMATCH",
+      "TRUTH_TYPE_LEDGER_MISMATCH",
+      "UNSUPPORTED_WIKI_UNCERTAINTY",
+      "VALUE_LEDGER_MISMATCH",
+      "VALUE_NOT_WITHHELD"
+    ],
+    "n_issues": 31,
+    "sha256": "baaa9dbd3585870c7d9c0807493e9afce81f9767f3be68d581502d62496c59d4",
+    "status": "FLAWED",
+    "wiki_git_blob": "9d8110893adeae482b2439c4187b53f94174a55e"
+  },
+  "claim_ledger": {
+    "bytes": 21486,
+    "columns": 43,
+    "exact_width_rows": 26,
+    "git_blob": "bb552aa5ed70e7d81dcda888c5aa61402c01e03c",
+    "path": "docs/claim_ledger.csv",
+    "sha256": "e7e560a66df43a9cacdf5041361aaffa0995927144adae3701b5c60e0433c26b",
+    "width_mismatch_rows": 0
+  },
+  "limitations": [
+    "The exact full ledger was not downloaded as one file in the local runtime; validation used exact 43-field rows fetched from current main and the existing cumulative 26/26 schema evidence.",
+    "The legacy GAP-01 prose still uses a coarse MV3 geometry-failure shorthand and should be synchronized separately to the non-reconstructable CL-021 diagnostic.",
+    "No detector data, ROOT processing, simulation rerun, calibration, or performance estimate was produced."
+  ],
+  "policy": "WIKI_CANONICAL_RESULTS_MUST_MATCH_EXACT_WIDTH_LEDGER_ROWS",
+  "status": "VALIDATED",
+  "tests": {
+    "command": "PYTHONPATH=. python -m pytest tests/test_validate_wiki_canonical_results.py tests/test_wiki_claim_front_door_current.py -q",
+    "max_python_line_lengths": {
+      "tests/test_validate_wiki_canonical_results.py": 98,
+      "tests/test_wiki_claim_front_door_current.py": 93,
+      "tools/audit/validate_wiki_canonical_results.py": 96
+    },
+    "py_compile": "PASS",
+    "result": "8 passed in 1.14s"
+  },
+  "validation_scope": {
+    "bindings": [
+      {
+        "check_uncertainties": true,
+        "check_value": true,
+        "claim_id": "CL-002",
+        "require_withheld_when_blank": true,
+        "wiki_label": "B6 single-stave \u03c3\u2086\u2088"
+      },
+      {
+        "check_uncertainties": true,
+        "check_value": true,
+        "claim_id": "CL-004",
+        "require_withheld_when_blank": true,
+        "wiki_label": "Combined 3-stave \u03c3 (B4+B6+B8)"
+      },
+      {
+        "check_uncertainties": true,
+        "check_value": true,
+        "claim_id": "CL-006",
+        "require_withheld_when_blank": true,
+        "wiki_label": "Pair covariance"
+      },
+      {
+        "check_uncertainties": true,
+        "check_value": true,
+        "claim_id": "CL-011",
+        "require_withheld_when_blank": true,
+        "wiki_label": "\u03c4eff (effective live-time)"
+      },
+      {
+        "check_uncertainties": true,
+        "check_value": true,
+        "claim_id": "CL-013",
+        "require_withheld_when_blank": true,
+        "wiki_label": "Digitizer gain (MV0 v2)"
+      },
+      {
+        "check_uncertainties": true,
+        "check_value": true,
+        "claim_id": "CL-017",
+        "require_withheld_when_blank": true,
+        "wiki_label": "p/d PID AUC"
+      },
+      {
+        "check_uncertainties": true,
+        "check_value": false,
+        "claim_id": "CL-022",
+        "require_withheld_when_blank": true,
+        "wiki_label": "C12-like anomaly fraction in truth-labelled MC"
+      },
+      {
+        "check_uncertainties": true,
+        "check_value": false,
+        "claim_id": "CL-021",
+        "require_withheld_when_blank": true,
+        "wiki_label": "MV3 legacy B8 fractions / profile statistic"
+      },
+      {
+        "check_uncertainties": true,
+        "check_value": true,
+        "claim_id": "CL-007",
+        "require_withheld_when_blank": true,
+        "wiki_label": "MV4 raw timing pull"
+      },
+      {
+        "check_uncertainties": true,
+        "check_value": true,
+        "claim_id": "CL-008",
+        "require_withheld_when_blank": true,
+        "wiki_label": "MV4 corrected timing pull"
+      },
+      {
+        "check_uncertainties": true,
+        "check_value": true,
+        "claim_id": "CL-009",
+        "require_withheld_when_blank": true,
+        "wiki_label": "ML timing"
+      }
+    ],
+    "claim_ledger": "11 exact 43-field binding rows extracted from current docs/claim_ledger.csv; cumulative schema evidence reports 26/26 exact-width rows",
+    "wiki": "exact remote main bytes after commit e215a4cd44ca6ed2eff3ec45921fcc72faa1e115"
+  },
+  "validator": "validate_wiki_canonical_results.py",
+  "version": "1.0.0",
+  "wiki": {
+    "bytes": 23355,
+    "commit": "e215a4cd44ca6ed2eff3ec45921fcc72faa1e115",
+    "git_blob": "fee0e1a15243904dbeb46254878ade4650a8e1f6",
+    "path": "WIKI.md",
+    "sha256": "c0e8c8f7aa0c6b8f024ea9821dcb046b77376aecc95c81301afaf40248417680"
+  }
+}

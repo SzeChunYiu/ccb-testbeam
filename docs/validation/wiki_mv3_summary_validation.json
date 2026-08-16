@@ -1,0 +1,162 @@
+{
+  "acceptance": "Validator, regression tests, exact replacement contract, and candidate visual evidence are validated; public WIKI remediation is not delivered.",
+  "candidate": {
+    "issues": 0,
+    "scope": "locally patched exact WIKI snapshot, not present on remote main in this run",
+    "status": "VALIDATED",
+    "wiki_bytes": 24023,
+    "wiki_sha256": "89537456afc070e2aa39cd15ac9c91d55526d35f719d85e5fe55b178a2d45fec"
+  },
+  "checks": {
+    "direct_validator": "CANDIDATE VALIDATED; REMOTE PRE-CHANGE SNAPSHOT FLAWED with 12 findings",
+    "markdown_link_target_sequence": {
+      "after_count": 44,
+      "before_count": 44,
+      "unchanged": true
+    },
+    "max_python_line_lengths": {
+      "tests/test_validate_wiki_mv3_summary.py": 93,
+      "tools/audit/render_wiki_mv3_summary_evidence.py": 98,
+      "tools/audit/validate_wiki_mv3_summary.py": 93
+    },
+    "py_compile": "PASS",
+    "pytest": "5 passed in 0.04s",
+    "svg_xml_parse": "PASS"
+  },
+  "claim_ledger": {
+    "bytes": 2118,
+    "path": "docs/claim_ledger.csv",
+    "sha256": "f8caa81e82083ae97ce7166dc65f19523467601be9bcc72b90d4ad4e89a3b575"
+  },
+  "environment": {
+    "platform": "Linux-6.12.13-x86_64-with-glibc2.41",
+    "pytest": "9.0.2",
+    "python": "3.13.5"
+  },
+  "exact_wiki_tokens": {
+    "acceptance_boundary": "the diagnostic remains FLAWED",
+    "blocker": "BLK-MV3-LEGACY-001",
+    "chi2": "Pearson χ² = 204808.2179684494",
+    "chi2_ndf": "χ²/ndf = 68269.40598948313",
+    "data_count_fraction": "7051/306745 = 0.02298651974767315",
+    "mc_count_fraction": "55619/249484 = 0.22293614019335908",
+    "ndf": "ndf = 3"
+  },
+  "forbidden_stale_phrases": [
+    "the reported χ²/ndf label is not reconstructable",
+    "without the underlying χ², ndf, bin variances, covariance, or exact counts",
+    "Recover exact counts/statistic",
+    "exact statistic/count provenance remain unresolved",
+    "MV3 geometry FAIL (χ²/ndf = 68,269)"
+  ],
+  "issues": [
+    {
+      "code": "REMOTE_WIKI_NOT_SYNCHRONIZED",
+      "detail": "The exact candidate passed validation, but remote main still contains the stale rounded/absence narrative. A one-time Actions transport was staged and retriggered, but no follow-up workflow commit was observed."
+    }
+  ],
+  "local_execution_scope": {
+    "ledger_fixture": "exact header plus exact CL-019/020/021 rows reconstructed from authenticated GitHub line reads; remote whole-file blob recorded separately",
+    "summary_fixture": "exact tracked JSON fields reconstructed from authenticated complete-file read; remote blob recorded separately",
+    "wiki_after": {
+      "bytes": 24023,
+      "sha256": "89537456afc070e2aa39cd15ac9c91d55526d35f719d85e5fe55b178a2d45fec"
+    },
+    "wiki_before": {
+      "bytes": 23355,
+      "sha256": "c0e8c8f7aa0c6b8f024ea9821dcb046b77376aecc95c81301afaf40248417680",
+      "source": "exact raw main snapshot downloaded before editing"
+    }
+  },
+  "mv3_summary": {
+    "bytes": 1019,
+    "path": "reports/mv3_stopping_v3_1782679272/mv3_summary.json",
+    "sha256": "9d3c34a6c23a2ec21255eed2a3b90cf9f0691137476ceac376320ce2dbce01d9"
+  },
+  "n_issues": 1,
+  "negative_control": {
+    "exit_status": 1,
+    "input": "pre-change WIKI snapshot",
+    "issue_code_counts": {
+      "MISSING_EXACT_WIKI_TOKEN": 7,
+      "STALE_MV3_ABSENCE_NARRATIVE": 5
+    },
+    "n_issues": 12,
+    "status": "FLAWED"
+  },
+  "policy": "WIKI_MV3_MUST_REPORT_EXACT_TRACKED_SUMMARY_WITH_FLAWED_BOUNDARY",
+  "reconstructed": {
+    "chi2": 204808.2179684494,
+    "chi2_ndf": 68269.40598948313,
+    "data_b8_fraction": 0.02298651974767315,
+    "data_counts": {
+      "B2": 268576,
+      "B4": 19284,
+      "B6": 11834,
+      "B8": 7051
+    },
+    "data_total": 306745,
+    "exact_checks": {
+      "chi2_matches_summary": true,
+      "chi2_ndf_matches_summary": true,
+      "data_fraction_matches_summary": true,
+      "mc_fraction_matches_summary": true,
+      "ndf_matches_summary": true
+    },
+    "mc_b8_fraction": 0.22293614019335908,
+    "mc_counts": {
+      "B2": 117213,
+      "B4": 45507,
+      "B6": 31145,
+      "B8": 55619
+    },
+    "mc_total": 249484,
+    "ndf": 3
+  },
+  "remote_main": {
+    "head_at_transport_recheck": "c9548f1abb8d8de465e618255f0c835987e8141f",
+    "wiki_blob": "fee0e1a15243904dbeb46254878ade4650a8e1f6",
+    "wiki_findings": 12,
+    "wiki_status": "FLAWED",
+    "workflow_transport": "NO_FOLLOW_UP_COMMIT_OBSERVED"
+  },
+  "remote_sources": {
+    "claim_ledger_blob": "8135794d6f0b22da6b760bf6234bb8e1cae795fb",
+    "claim_rows": [
+      "CL-019",
+      "CL-020",
+      "CL-021"
+    ],
+    "mv3_summary_blob": "2bb4b34e499642dfdf8ceb13e2f6351ff6e5cc6d",
+    "wiki_blob_before": "fee0e1a15243904dbeb46254878ade4650a8e1f6"
+  },
+  "required_claims": [
+    "CL-019",
+    "CL-020",
+    "CL-021"
+  ],
+  "scientific_boundary": [
+    "This is documentation and fixed-source arithmetic validation, not detector-data reanalysis.",
+    "Geometry, trigger/selection transfer, gain response, covariance, p-value interpretation, and detector/model systematics remain unresolved.",
+    "The MV3 profile diagnostic remains FLAWED under BLK-MV3-LEGACY-001."
+  ],
+  "session": {
+    "initial_remote_main": "e844e779c9c431c6fcfe144b5cc5d856323c7bcf",
+    "stamp_utc": "2026-07-24T221537Z",
+    "task_id": "AUD-WIKI-001",
+    "unit": "MV3 exact tracked-summary public WIKI synchronization"
+  },
+  "status": "PARTIAL",
+  "unrun_checks": [
+    "No GitHub Actions run or workflow-generated commit was observable through the available connector.",
+    "The exact patched WIKI was not committed to remote main in this run.",
+    "No ROOT, Geant4, detector-data, or simulation rerun was performed."
+  ],
+  "validator": "validate_wiki_mv3_summary.py",
+  "version": "1.0.0",
+  "wiki": {
+    "bytes": 24023,
+    "path": "WIKI.md",
+    "sha256": "89537456afc070e2aa39cd15ac9c91d55526d35f719d85e5fe55b178a2d45fec"
+  }
+}

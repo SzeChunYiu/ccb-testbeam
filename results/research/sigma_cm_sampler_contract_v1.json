@@ -1,0 +1,27 @@
+{
+  "current_algorithm": {
+    "cdf_construction": "trapezoid_integral_of_node_pdf_sigma_times_sin_theta",
+    "inverse": "linear_theta_interpolation_within_each_cdf_interval",
+    "resulting_within_interval_density": "piecewise_constant_interval_average"
+  },
+  "input": {
+    "bytes": 640,
+    "path": "geant4/src_patch/sigma_pd_cm_190.txt",
+    "rows": 28,
+    "sha256": "0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc",
+    "support_theta_cm_deg": [
+      26.49,
+      169.78
+    ]
+  },
+  "interpretation": "The current inverse-CDF implementation does not sample the linearly varying node PDF whose trapezoid integrals define its CDF; it samples a piecewise-constant density with the same interval masses. The outside-support probability is model extrapolation, not measured 190 MeV cross-section support.",
+  "max_cdf_deviation_interval_index": 0,
+  "max_cdf_deviation_theta_cm_deg": 13.245,
+  "max_cdf_deviation_vs_linear_node_pdf": 0.084865752117123,
+  "probability_above_measured_support": 0.003869284858232268,
+  "probability_below_measured_support": 0.339463008468492,
+  "probability_outside_measured_support": 0.34333229332672427,
+  "schema_version": "ccb_sigma_cm_sampler_contract_v1",
+  "scientific_boundary": "Deterministic numerical self-consistency result only. It does not choose the physically correct extrapolation below 26.49 deg or above 169.78 deg, propagate cross-section systematics, or validate detector-level predictions.",
+  "trapezoid_normalization_mb_per_sr_rad": 1.8240017962546706
+}

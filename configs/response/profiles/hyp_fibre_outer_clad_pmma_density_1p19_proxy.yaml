@@ -1,0 +1,22 @@
+schema: ccb-response-profile/1
+profile_id: hyp_fibre_outer_clad_pmma_density_1p19_proxy
+kind: fibre_outer_clad_transport
+status: HYPOTHESIS
+claims_authorized: false
+issues: [1094]
+adr: docs/adr/ADR-0004-quenching-material-obs-window-hypotheses.md
+source_type: CODE
+source_refs:
+  - geant4/single_stave/src/DetectorConstruction.cc
+contradicts:
+  - hyp_fibre_outer_clad_fluorinated_polymer_1p43
+parameters:
+  transport_base_material: G4_PLEXIGLASS
+  density_g_per_cm3: 1.19
+  optical_rindex: 1.42
+  optical_label: fluorinated_PMMA_index_only
+  composition_matches_optical_label: false
+  production_validity: CURRENT_MC_PROXY
+notes: >
+  Current MC uses PMMA density/composition for charged-particle transport while
+  setting n=1.42. Optical index agreement is NOT material agreement (#1094).

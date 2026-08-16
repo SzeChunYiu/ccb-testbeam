@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="560" viewBox="0 0 960 560" role="img" aria-labelledby="title desc">
+  <title id="title">Chapter 9 MV6 source-consistency correction</title>
+  <desc id="desc">Synthetic documentation validation graphic comparing unsupported former chapter claims with tracked producer and summary facts. Not detector data.</desc>
+  <rect width="960" height="560" fill="white"/>
+  <text x="40" y="42" font-family="sans-serif" font-size="24" font-weight="bold">Chapter 9 MV6 source-consistency correction</text>
+  <text x="40" y="70" font-family="sans-serif" font-size="14">Synthetic documentation/provenance evidence — not detector data</text>
+
+  <text x="40" y="115" font-family="sans-serif" font-size="18" font-weight="bold">Representation contract</text>
+  <rect x="40" y="135" width="400" height="145" fill="#f5f5f5" stroke="#333"/>
+  <text x="60" y="165" font-family="sans-serif" font-size="16" font-weight="bold">Former chapter</text>
+  <text x="60" y="195" font-family="sans-serif" font-size="15">8 PCs, 99.7% cumulative variance</text>
+  <text x="60" y="225" font-family="sans-serif" font-size="15">K = 7 selected by BIC</text>
+  <text x="60" y="255" font-family="sans-serif" font-size="15">Named PC meanings and convergence claims</text>
+
+  <rect x="520" y="135" width="400" height="145" fill="#f5f5f5" stroke="#333"/>
+  <text x="540" y="165" font-family="sans-serif" font-size="16" font-weight="bold">Tracked producer and summary</text>
+  <text x="540" y="195" font-family="sans-serif" font-size="15">4 PCs: 74.5518%; 8 PCs: 82.1884%</text>
+  <text x="540" y="225" font-family="sans-serif" font-size="15">K = 4 on first four PCs</text>
+  <text x="540" y="255" font-family="sans-serif" font-size="15">No BIC scan; no validated PC semantics</text>
+
+  <line x1="440" y1="207" x2="520" y2="207" stroke="#333" stroke-width="2"/>
+  <polygon points="520,207 506,199 506,215" fill="#333"/>
+
+  <text x="40" y="330" font-family="sans-serif" font-size="18" font-weight="bold">Three non-interchangeable binomial quantities</text>
+  <rect x="40" y="350" width="880" height="150" fill="#fafafa" stroke="#333"/>
+  <text x="60" y="385" font-family="sans-serif" font-size="15">Early-peak rate: 283 / 87,555 = 0.3232%</text>
+  <text x="60" y="420" font-family="sans-serif" font-size="15">C12 share of early-peak class: 156 / 283 = 55.12%</text>
+  <text x="60" y="455" font-family="sans-serif" font-size="15">Early-peak rate within C12: 156 / 7,302 = 2.1364%</text>
+  <text x="60" y="485" font-family="sans-serif" font-size="14">Wilson 95% intervals and evidence boundaries are retained in the validation JSON and chapter.</text>
+
+  <text x="40" y="535" font-family="sans-serif" font-size="14" font-weight="bold">Policy: CHAPTER9_MUST_MATCH_TRACKED_MV6_PRODUCER_AND_SUMMARY</text>
+</svg>

@@ -78,6 +78,25 @@ def _check_wiki_page(name: str, run_root: Path, page_name: str) -> dict[str, Any
     return rec
 
 
+def study_release_check(name: str, rec: dict) -> dict:
+    """VAL-002 defense-in-depth: a study passes the release gate only if it is
+    PRODUCTION with no blocker/error marker -- not merely status == PRODUCTION."""
+    ok = isinstance(rec, dict) and rec.get("status") == "PRODUCTION"
+    reason = None if ok else "missing/non-production study artifact"
+    if ok and rec.get("blocked_by"):
+        ok = False
+        reason = f"study blocked_by {rec.get('blocked_by')!r}"
+    if ok and rec.get("_ml_error"):
+        ok = False
+        reason = "study recorded an ML error (_ml_error)"
+    return {
+        "name": f"{name}_production_artifact",
+        "status": PASS if ok else BLOCKED,
+        "observed_status": rec.get("status") if isinstance(rec, dict) else None,
+        "reason": reason,
+    }
+
+
 def generate_release_audit(run_root: Path, *, include_claim_ledger: bool = False) -> dict[str, Any]:
     """Write a machine-readable release audit and Markdown summary.
 
@@ -109,14 +128,7 @@ def generate_release_audit(run_root: Path, *, include_claim_ledger: bool = False
     studies = validation.get("study_metrics", {}) if isinstance(validation.get("study_metrics"), dict) else {}
     for study in ("MV1", "MV2", "MV3"):
         rec = studies.get(study, {}) if isinstance(studies, dict) else {}
-        checks.append(
-            {
-                "name": f"{study}_production_artifact",
-                "status": PASS if rec.get("status") == "PRODUCTION" else BLOCKED,
-                "observed_status": rec.get("status"),
-                "reason": None if rec.get("status") == "PRODUCTION" else "missing production study artifact",
-            }
-        )
+        checks.append(study_release_check(study, rec))
     for study in ("MV4", "MV5", "MV6", "MV7", "MV8"):
         checks.append(
             {

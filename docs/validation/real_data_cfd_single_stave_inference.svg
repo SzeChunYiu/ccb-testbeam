@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="520" viewBox="0 0 920 520">
+<rect width="100%" height="100%" fill="white"/>
+<text x="20" y="34" font-size="24" font-weight="bold">Pair sigma68 / sqrt(2) is not a general single-stave estimator</text>
+<text x="20" y="62" font-size="15">Relative error versus stave A sigma68 in deterministic fixed-seed controls</text>
+<line x1="540.0" y1="90" x2="540.0" y2="390" stroke="black" stroke-width="2"/>
+<text x="540.0" y="418" text-anchor="middle" font-size="14">0% error</text>
+<text x="20" y="131" font-size="15">iid_normal</text><rect x="537.77" y="111" width="2.23" height="24" fill="#5b8ff9" stroke="#1f1f1f" /><text x="529.77" y="130" text-anchor="end" font-size="14">-0.5%</text><text x="20" y="183" font-size="15">iid_laplace</text><rect x="540.00" y="163" width="45.18" height="24" fill="#5b8ff9" stroke="#1f1f1f" /><text x="593.18" y="182" text-anchor="start" font-size="14">+10.7%</text><text x="20" y="235" font-size="15">iid_heavy_tail_mixture</text><rect x="540.00" y="215" width="92.17" height="24" fill="#5b8ff9" stroke="#1f1f1f" /><text x="640.17" y="234" text-anchor="start" font-size="14">+21.7%</text><text x="20" y="287" font-size="15">unequal_normal</text><rect x="540.00" y="267" width="243.48" height="24" fill="#5b8ff9" stroke="#1f1f1f" /><text x="791.48" y="286" text-anchor="start" font-size="14">+57.4%</text><text x="20" y="339" font-size="15">equal_normal_rho_0p5</text><rect x="415.70" y="319" width="124.30" height="24" fill="#5b8ff9" stroke="#1f1f1f" /><text x="407.70" y="338" text-anchor="end" font-size="14">-29.3%</text>
+<text x="20" y="438" font-size="16" font-weight="bold">Observed PR pair metric</text>
+<text x="20" y="466" font-size="15">sigma68 = 0.898513 ns; naive /sqrt(2) = 0.635345 ns</text>
+<text x="20" y="492" font-size="15">tail &gt;5 ns = 0.159; RMS/sigma68 = 10.79</text>
+<text x="20" y="514" font-size="13">Interpretation: pair-only timing evidence; individual-stave inference remains unauthorized without deconvolution and covariance assumptions.</text>
+</svg>

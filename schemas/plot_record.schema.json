@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ccb-plot-record.schema.json",
+  "title": "CCB Plot Record",
+  "type": "object",
+  "required": [
+    "plot_id",
+    "script",
+    "command",
+    "source_data",
+    "result_files",
+    "git_commit",
+    "outputs"
+  ],
+  "properties": {
+    "plot_id": {
+      "type": "string"
+    },
+    "script": {
+      "type": "string"
+    },
+    "command": {
+      "type": "string"
+    },
+    "source_data": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "result_files": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "input_hashes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$"
+      }
+    },
+    "git_commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "seed": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "status": {
+      "enum": [
+        "VALIDATED",
+        "PRELIMINARY",
+        "TENSION",
+        "FAILED",
+        "EXTERNAL_BLOCKER",
+        "ILLUSTRATIVE"
+      ]
+    },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    }
+  },
+  "additionalProperties": true
+}

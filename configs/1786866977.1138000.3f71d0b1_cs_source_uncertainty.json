@@ -1,0 +1,22 @@
+{
+  "ticket_id": "1786866977.1138000.3f71d0b1",
+  "study_id": "S46a",
+  "worker": "testbeam-laptop",
+  "issue": 1179,
+  "title": "190-MeV p-d source-model uncertainty: sampled envelope closure + lab-frame bands",
+  "output_dir": "reports/1786866977.1138000.3f71d0b1__s46a_cs_source_uncertainty_sampled_closure",
+  "script": "scripts/s46a_1786866977_1179_3f71d0b1_cs_source_uncertainty_sampled_closure.py",
+  "input_table": "geant4/src_patch/sigma_pd_cm_190.txt",
+  "input_table_sha256": "0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc",
+  "extends_result": "results/research/sigma_cm_source_uncertainty_v1.json",
+  "sampler_seed": 1179,
+  "n_sample": 5000000,
+  "n_replicas": 200,
+  "m_replica": 200000,
+  "box_fraction": 0.03,
+  "common_scale": 1.045,
+  "corner_split_theta_cm_deg": 46.951812,
+  "random_seed": 1179,
+  "deterministic": true,
+  "claims_authorized": false
+}

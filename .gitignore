@@ -1,65 +1,7 @@
-# ---- Large data: never in git. Canonical store is /home/billy/ccb-data (immutable,
-# outside the repo). `data` is a read-only symlink into it. See DATA.md. ----
-data/
-/data
-*.zip
-*.tar
-*.gz
-*.root
-*.h5
-*.hdf5
-*.npy
-*.npz
-*.parquet
-*.feather
-
-# ---- Source PDFs (provenance only; tracked separately if needed) ----
-*.pdf
-
-# ---- ML artifacts ----
-*.pt
-*.pth
-*.ckpt
-*.pkl
-*.joblib
-checkpoints/
-runs/
-wandb/
-mlruns/
-
-# ---- Python ----
+geant4/results/*.root
+geant4/results/*.out
+geant4/results/*.err
 __pycache__/
-*.py[cod]
-.venv/
-venv/
-.env
-.ipynb_checkpoints/
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
-
-# ---- Editors / OS ----
-.vscode/
-.idea/
-.DS_Store
-*.swp
-
-# ---- Scratch ----
-scratch/
-tmp/
-*.log
-
-# SLURM job logs
-geant4/jobs/*.out
-geant4/jobs/*.err
-
-# MC validation ephemeral artifacts
-reports/mc_validation_fixture/
-reports/mc_validation/mv0_digitizer/
-reports/mc_validation/mv9_synthesis/
+.mplconfig/
+.claude/worktrees/
 reports/mc_validation/runs/
-reports/mc_validation/resolved_configs/
-reports/mv0_digitizer_skeleton/
-RUN_BLOCKED.md
-src/ccb_mc_validation.egg-info/
-*.parquet.tmp

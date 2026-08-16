@@ -1,0 +1,110 @@
+{
+  "acceptance": "PARTIAL",
+  "audit_id": "AUD-WIKI-001",
+  "commands": [
+    "python -m py_compile tools/audit/validate_wiki_claim_front_door.py tests/test_validate_wiki_claim_front_door.py",
+    "python -m pytest tests/test_validate_wiki_claim_front_door.py -q",
+    "python tools/audit/validate_wiki_claim_front_door.py current/WIKI_claim_excerpt.md current/docs/claim_ledger.csv"
+  ],
+  "current_claim_excerpt_result": {
+    "issue_counts": {
+      "MISSING_REQUIRED_PUBLIC_CAVEAT": 2,
+      "MISSING_WIKI_CLAIM_ROW": 2,
+      "MISSING_WIKI_STATUS": 2,
+      "STATUS_LEDGER_MISMATCH": 3,
+      "TRUTH_TYPE_LEDGER_MISMATCH": 1,
+      "UNRESOLVED_RMAX_DERIVATION_PUBLISHED": 1,
+      "UNRESOLVED_RMAX_THRESHOLD_PUBLISHED": 1,
+      "UNSUPPORTED_COMBINED_ML_WIN_CLAIM": 1,
+      "UNSUPPORTED_ML_WIN_CLAIM": 3,
+      "VALUE_PRESENT_WHEN_LEDGER_WITHHOLDS": 3,
+      "WITHHELD_RMAX_VALUE_PUBLISHED": 2
+    },
+    "measured_conflicts": [
+      "CL-010 BLOCKED with blank canonical value, but WIKI publishes 3.044–3.05 MHz as VALIDATED in two tables and repeats the mu_max=0.38 derivation",
+      "CL-012 SUPERSEDED with blank accepted value, but WIKI calls approximately 3.05 MHz the new canonical value",
+      "CL-015 GATED, but WIKI calls duplicate readout an ML-win or confirmed-win domain",
+      "CL-016 GATED with external ML closure worse than raw, but WIKI calls saturation recovery an ML-win or promising domain"
+    ],
+    "n_findings": 21,
+    "process_status": 1,
+    "status": "FLAWED"
+  },
+  "initial_remote_main": "74966884f40e6dbc8ac6243d4983eaa7dfb395ae",
+  "limitations": [
+    "Root WIKI was not rewritten in this unit",
+    "Executable current-state validation used an exact claim-bearing excerpt, not a complete local WIKI snapshot",
+    "No detector data, simulation, fit, uncertainty interval, Rmax calculation, model training, or correction result was regenerated",
+    "Full repository pytest, ruff, broken-link checking, and GitHub Actions were not run"
+  ],
+  "negative_control": {
+    "former_scope": "CL-007 and CL-011 only, without Rmax/ML phrase and caveat gates",
+    "interpretation": "validator v1.1.0 could not detect the reviewed Rmax/P04p/P07e conflicts",
+    "stale_fixture_status": "VALIDATED"
+  },
+  "policy": "WIKI_FRONT_DOOR_MUST_MATCH_EXACT_WIDTH_CANONICAL_CLAIMS",
+  "remote_sources": {
+    "claim_ledger": {
+      "bytes": 12077,
+      "exact_local_blob_match": true,
+      "git_blob_sha1": "853d955f449268ec614ac61f33f243d30cf473e0",
+      "path": "docs/claim_ledger.csv",
+      "sha256": "c0e283e6d43a1013a9565f2697c4f99f7b47d639245b9926a8ddc83786602e19"
+    },
+    "wiki": {
+      "git_blob_sha1": "04781e1107075e1e57c08e6dd4e1f48d9a131763",
+      "path": "WIKI.md",
+      "scope": "exact claim-bearing ranges reconstructed from authenticated reads; no full local byte snapshot"
+    }
+  },
+  "repository": "SzeChunYiu/ccb-testbeam",
+  "required_remediation": [
+    "Withhold every numerical Rmax and mark it BLOCKED pending S-STAT-003",
+    "Retain 3.0448717948717947 MHz only as superseded correction history",
+    "Replace combined/domain ML-win wording with separate GATED P04p and P07e statements and exact limitations",
+    "State that no production duplicate-readout model or saturation correction is authorized",
+    "Run v1.2.0 on the complete exact WIKI and ledger and require VALIDATED before closing AUD-WIKI-001"
+  ],
+  "scientific_scope": "documentation_and_claim_governance_only",
+  "session_utc": "2026-07-24T102230Z",
+  "test_result": "10 passed in 0.04s",
+  "validated_files": {
+    "WIKI_claim_excerpt.md": {
+      "bytes": 3170,
+      "git_blob_sha1": "65ddf2f8aad18ae709b7972159843adf8af2b132",
+      "path": "current/WIKI_claim_excerpt.md",
+      "sha256": "366e0862e5cced8102616c2f80aa446466535e63eb875e1b6ad544eb517299c5"
+    },
+    "claim_ledger.csv": {
+      "bytes": 12077,
+      "git_blob_sha1": "853d955f449268ec614ac61f33f243d30cf473e0",
+      "path": "current/docs/claim_ledger.csv",
+      "sha256": "c0e283e6d43a1013a9565f2697c4f99f7b47d639245b9926a8ddc83786602e19"
+    },
+    "test_validate_wiki_claim_front_door.py": {
+      "bytes": 12794,
+      "git_blob_sha1": "ecaa4acd6d46e56861c83a32b071678cf4f3960f",
+      "path": "tests/test_validate_wiki_claim_front_door.py",
+      "sha256": "3f1a4298f3adedc51eaf908f922f6700586afc766cb9b88c0da505d21b65241f"
+    },
+    "validate_wiki_claim_front_door.py": {
+      "bytes": 12893,
+      "git_blob_sha1": "6ae2df1018abde8d93a7bb04d787786ade95622a",
+      "path": "tools/audit/validate_wiki_claim_front_door.py",
+      "sha256": "f26ec655446e97623b005003706a70bd6f9f309bab51d738fda6d50586848f8e"
+    }
+  },
+  "validator": {
+    "expected_ledger_columns": 43,
+    "name": "validate_wiki_claim_front_door.py",
+    "required_claim_widths": {
+      "CL-007": 43,
+      "CL-010": 43,
+      "CL-011": 43,
+      "CL-012": 43,
+      "CL-015": 43,
+      "CL-016": 43
+    },
+    "version": "1.2.0"
+  }
+}

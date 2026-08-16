@@ -1,0 +1,100 @@
+{
+  "artifacts": {
+    "builder": {
+      "bytes": 16683,
+      "git_blob": "cc56e548b54fd8f2692182de6114ee3bcfe196c4",
+      "path": "tools/figure_registry/builder.py",
+      "sha256": "1a280ff20d54ae74ef4eda9e1b33065f3dc46a6d3bfffd777149b9eb4a63ce21"
+    },
+    "renderer": {
+      "bytes": 4372,
+      "git_blob": "15f29bfac9cc16265464bcb8ea0cd1e205cdaafa",
+      "path": "tools/audit/render_figure_registry_snapshot_provenance_evidence.py",
+      "sha256": "5780a78ab354e2c57fa19fb460787858f94bdff786b6f65b0315e377ad79300d"
+    },
+    "test": {
+      "bytes": 5993,
+      "git_blob": "8550b37469278b708237d2a9ef181e24f608fda3",
+      "path": "tests/test_figure_registry_snapshot_remediation.py",
+      "sha256": "eea7b91afd0f28cde7f128e0fdb5b2df092d73c34af368667c47b9017424d31a"
+    }
+  },
+  "controls": {
+    "alias_rejection": {
+      "source_bytes_preserved": true,
+      "source_output_alias_rejected": true
+    },
+    "publication_failure": {
+      "controlled_error_type": "FigureRegistryError",
+      "injected_failure": "os.replace raises OSError",
+      "previous_target_preserved": true,
+      "temporary_files_remaining": 0
+    },
+    "result_path_replacement": {
+      "central_value_used": 0.68,
+      "path_after_snapshot_contains_replacement": true,
+      "recorded_matches_snapshot": true,
+      "recorded_sha256": "880e5b3a422a0504eb35bf2918bd674cea0b38ae82805a60d6b48f5a248f4805",
+      "replacement_bytes": 46,
+      "replacement_sha256": "3b6204ea9a2aad1f6c90d59f42f6484bb9ec9e766094bdae23981c70306988d7",
+      "snapshot_bytes": 45,
+      "snapshot_sha256": "880e5b3a422a0504eb35bf2918bd674cea0b38ae82805a60d6b48f5a248f4805"
+    },
+    "source_artifact_replacement": {
+      "path_after_snapshot_contains_replacement": true,
+      "published_matches_snapshot": true,
+      "published_target_bytes": 18,
+      "published_target_sha256": "baabbed7db11b99073870ca9517ea3caf20541d33848bfbde0830d77be6d2eb3",
+      "replacement_bytes": 38,
+      "replacement_sha256": "5846f2f03f5bfc0b295fccb71360798c49e95c1b1528964a82db0f17c92f7cb7",
+      "snapshot_bytes": 18,
+      "snapshot_sha256": "baabbed7db11b99073870ca9517ea3caf20541d33848bfbde0830d77be6d2eb3"
+    }
+  },
+  "current_audit": {
+    "auditor_version": "1.0.0",
+    "finding_count": 0,
+    "status": "VALIDATED"
+  },
+  "implementation_commits": [
+    "bde3641d03a5a8f1d36b6e226d8914b7fdb0c62f",
+    "8f8f87ee669f7156231b6290b9366dd5969cda43"
+  ],
+  "initial_main": "8b460728fce2f550d63bed078f17c2285e0c2b2a",
+  "policy": "FIGURE_ARTIFACT_PROVENANCE_MUST_BIND_TO_SINGLE_READ_EXACT_BYTES",
+  "publication_contract": {
+    "result_json": "SINGLE_READ_STRICT_UTF8_EXACT_BYTES",
+    "source_artifact": "SINGLE_READ_EXACT_BYTES",
+    "source_metadata_publication": "ATOMIC_EXACT_BYTES",
+    "target_publication": "SAME_DIRECTORY_TEMP_FLUSH_FSYNC_OS_REPLACE",
+    "target_verification": "INDEPENDENT_FINAL_TARGET_SHA256_AND_SIZE"
+  },
+  "schema": "ccb-figure-registry-snapshot-provenance-remediation/1",
+  "scientific_boundary": "Software/provenance validation only; no scientific value, uncertainty, calibration, PID, timing, stopping profile, pile-up rate, or detector-performance claim was validated or changed.",
+  "session_stamp": "2026-07-26T100542Z",
+  "status": "VALIDATED",
+  "task_id": "AUD-FIG-002-R1",
+  "test_commits": [
+    "5acba6b08620b587d0bd5b18229a032141d173ad",
+    "79a1064ccc6e0e1786a09d0283405ea91d01f496"
+  ],
+  "unrun_checks": [
+    "repository-wide pytest",
+    "ruff",
+    "complete paper build",
+    "repository-wide link inventory",
+    "GitHub Actions"
+  ],
+  "validation": {
+    "command": "PYTHONPATH=. pytest -q tests/test_figure_registry_snapshot_remediation.py",
+    "compile_command": "python -m py_compile tools/figure_registry/builder.py tests/test_figure_registry_snapshot_remediation.py tools/audit/render_figure_registry_snapshot_provenance_evidence.py",
+    "compile_result": "passed",
+    "matplotlib": "3.10.8",
+    "max_changed_python_line_length": 95,
+    "platform": "Linux-6.12.13-x86_64-with-glibc2.41",
+    "pytest": "9.0.2",
+    "python": "3.13.5",
+    "pyyaml": "6.0.3",
+    "result": "5 passed in 0.39s"
+  }
+}

@@ -1,0 +1,12 @@
+task_id,status,issue,dependencies,evidence,notes,n_acceptance,n_passed
+CCB-796-CODE,DONE,#796,,geant4/single_stave/ (11 headers + 12 sources);geant4/single_stave/tests/test_geometry_report_offline.py (5 passed);non-Geant4 core compiled + functionally verified (SHA-256 == system shasum),Code complete + offline-verified. Compile/run is CCB-796-RUN.,6,6
+CCB-796-RUN,BLOCKED_COMPUTE,#796,CCB-796-CODE,slurm/build.sh;slurm/submit_calibration.sh;slurm/points_example.csv,Needs LUNARC Geant4 + optical physics. All inputs staged.,3,0
+CCB-796-ANALYSIS,DONE,#796,,"scripts/single_stave/{make_single_stave_fixture,analyze_single_stave,extract_g4_entry_energies}.py;tests/test_single_stave_analysis.py (9 passed);scripts/analyze_mc_stave_response.py (stub replaced -> forwarding CLI)",Offline-tested. Real full-MC entry-energy extraction = CCB-796-ENTRY.,3,3
+CCB-796-ENTRY,BLOCKED_EXTERNAL,#796,CCB-796-ANALYSIS,scripts/single_stave/extract_g4_entry_energies.py;synthetic-ROOT fixture test (test_extract_root_fixture_quantile_grid),Branch contract fixed offline (uproot bug patched); real tree on LUNARC.,2,0
+CCB-PROV,DONE,,,tools/ccbprov/;schemas/*.schema.json;tests/test_ccbprov.py (10 passed),Reproducibility substrate for every downstream run.,3,3
+CCB-DELTAE,SUPERSEDED,#618,,"conflict_supervisor_deltaE_E.md;git history: existed at ca30589f, absent at d3b2beb",Stale handoff reference. eventno-join + Sample I/II fixes QUEUED (CCB-DELTAE-FIX).,1,0
+CCB-DELTAE-FIX,READY,#618,CCB-DELTAE,scripts/*deltaE*/*.py joins on eventno alone (collision risk),"Needs data on LUNARC to validate; scoped and queued, not silently dropped.",3,0
+CCB-844-GEOM,BLOCKED_COMPUTE,#844,,geant4/configs/krakow.geoconf (referenced),Geometry inventory + cross-section render pending LUNARC/ROOT.,2,0
+CCB-844-SCAN,BLOCKED_COMPUTE,#844,CCB-844-GEOM,,Depends on pinned deployed geometry and LUNARC compute.,2,0
+CCB-TIMING,BLOCKED_COMPUTE,,,scripts/mv4_timing_study.py (1/A fix present in tree),Code present; closure requires rerun on LUNARC data + calibration cards.,2,0
+CCB-797-PAPER,IN_PROGRESS,#797,CCB-796-RUN;CCB-844-SCAN;CCB-TIMING,"paper/ (skeleton: outline, crosswalks, claims_ledger, limitations)",Skeleton + claim ledger in place; content gated on the compute-blocked results.,1,0

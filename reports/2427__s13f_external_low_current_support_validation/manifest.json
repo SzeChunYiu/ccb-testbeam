@@ -1,0 +1,202 @@
+{
+  "study": "S13f",
+  "ticket": "2427",
+  "worker": "testbeam-laptop-2",
+  "git_commit": "784cb9e2817df87e7b94e60d71a395c582794228",
+  "python": "3.7.6",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "random_seed": 131306,
+  "config": "configs/s13f_2427_external_low_current_support_validation.json",
+  "commands": [
+    "/home/billy/anaconda3/bin/python scripts/s13f_1781173865_934_2a1e2781_external_low_current_support_validation.py --config configs/s13f_2427_external_low_current_support_validation.json"
+  ],
+  "inputs": [
+    {
+      "file": "data/root/root/hrdb_run_0044.root",
+      "sha256": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50",
+      "bytes": 1227977
+    },
+    {
+      "file": "data/root/root/hrdb_run_0045.root",
+      "sha256": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b",
+      "bytes": 13786671
+    },
+    {
+      "file": "data/root/root/hrdb_run_0046.root",
+      "sha256": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3",
+      "bytes": 412227
+    },
+    {
+      "file": "data/root/root/hrdb_run_0047.root",
+      "sha256": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3",
+      "bytes": 3098718
+    },
+    {
+      "file": "data/root/root/hrdb_run_0048.root",
+      "sha256": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8",
+      "bytes": 8995827
+    },
+    {
+      "file": "data/root/root/hrdb_run_0049.root",
+      "sha256": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744",
+      "bytes": 9203548
+    },
+    {
+      "file": "data/root/root/hrdb_run_0050.root",
+      "sha256": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799",
+      "bytes": 13217424
+    },
+    {
+      "file": "data/root/root/hrdb_run_0051.root",
+      "sha256": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e",
+      "bytes": 6036876
+    },
+    {
+      "file": "data/root/root/hrdb_run_0052.root",
+      "sha256": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af",
+      "bytes": 2941826
+    },
+    {
+      "file": "data/root/root/hrdb_run_0053.root",
+      "sha256": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c",
+      "bytes": 11713879
+    },
+    {
+      "file": "data/root/root/hrdb_run_0054.root",
+      "sha256": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c",
+      "bytes": 11056922
+    },
+    {
+      "file": "data/root/root/hrdb_run_0055.root",
+      "sha256": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c",
+      "bytes": 7153324
+    },
+    {
+      "file": "data/root/root/hrdb_run_0056.root",
+      "sha256": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb",
+      "bytes": 15273160
+    },
+    {
+      "file": "data/root/root/hrdb_run_0057.root",
+      "sha256": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16",
+      "bytes": 8881910
+    },
+    {
+      "file": "data/root/root/hrdb_run_0058.root",
+      "sha256": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1",
+      "bytes": 9623179
+    },
+    {
+      "file": "data/root/root/hrdb_run_0059.root",
+      "sha256": "64fced477c9c45f9726cde0d466c15a6d776b8bb1b22a0043510dc73c884ae0e",
+      "bytes": 12032616
+    },
+    {
+      "file": "data/root/root/hrdb_run_0060.root",
+      "sha256": "f466b5af260d9fadba426280f6313bac1381c1441c569c7094a8a9d61373030d",
+      "bytes": 10174098
+    },
+    {
+      "file": "data/root/root/hrdb_run_0061.root",
+      "sha256": "c57d1f18f79f11fb0d3a0bbbf42f978cff1ec704dc08337c600c17354099d61d",
+      "bytes": 10362658
+    },
+    {
+      "file": "data/root/root/hrdb_run_0062.root",
+      "sha256": "2530c56acb462473c6b5c316c0689491ec044f01a8c623624eebafbd271fdfbe",
+      "bytes": 10634393
+    },
+    {
+      "file": "data/root/root/hrdb_run_0063.root",
+      "sha256": "3fd42501e2c53a914b535616bc7bb7b8fb5554cd4f46d890023db6877a720a53",
+      "bytes": 10494181
+    },
+    {
+      "file": "data/root/root/hrdb_run_0065.root",
+      "sha256": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb",
+      "bytes": 10600278
+    }
+  ],
+  "outputs": [
+    {
+      "file": "REPORT.md",
+      "sha256": "5d6f0581c93e944eb1b872464a8ac052caed20acc275ed84b5fac5da2495cf87",
+      "bytes": 19392
+    },
+    {
+      "file": "bootstrap_metric_samples.csv",
+      "sha256": "c1da8df8b5dbdcea586bbca426f182121c03eda9cf36d2961577e4908788b571",
+      "bytes": 869414
+    },
+    {
+      "file": "external_support_audit.csv",
+      "sha256": "125ba3bb58bb4ff22af85d6d62a5f4b53a51ddde8e2cd857a131aa3aebffbd6a",
+      "bytes": 350
+    },
+    {
+      "file": "fig_method_auc_ci.png",
+      "sha256": "c74fa73ab0bea14f55cd3151dd8a3024c037b05d75c34226ee3e92a5d7b0b1e7",
+      "bytes": 90090
+    },
+    {
+      "file": "fig_support_loss_by_stave.png",
+      "sha256": "8319e474ddebcc1c13315b5119eaa538052b75cc9b30e9b6a6495ce3514fad07",
+      "bytes": 48741
+    },
+    {
+      "file": "input_sha256.csv",
+      "sha256": "409e676b4d37556cfc3729b42b488ca27f1ce43a896218797c13ccbd0e20023f",
+      "bytes": 2275
+    },
+    {
+      "file": "leakage_checks.csv",
+      "sha256": "4f7de9099ee7a7bed4672bb76e4356d41dd290ff5fabb835ce433519c3c8af7c",
+      "bytes": 1805
+    },
+    {
+      "file": "matched_atom_table.csv",
+      "sha256": "d06b3a71f72da61db45ff29d63a94d571f9d57cec68e54b47c2a9c8c758697d3",
+      "bytes": 54492
+    },
+    {
+      "file": "method_delta_bootstrap.csv",
+      "sha256": "c4c5d75be09e6043cbf79893ae05d6d8505a2382220e287defaa6226840f5a1b",
+      "bytes": 3602
+    },
+    {
+      "file": "method_metrics.csv",
+      "sha256": "3a2dc53e14a634d7affa7297d96f04a9c5fef8fbfb25ebd39fdebf087a795526",
+      "bytes": 6104
+    },
+    {
+      "file": "pulse_scores.csv",
+      "sha256": "c0a34c9c949553e75a317233b9f47c0978e2ccf3720f37bb962b6805821ab0bb",
+      "bytes": 24201778
+    },
+    {
+      "file": "reproduction_match_table.csv",
+      "sha256": "c28bd9b6c1f9bae70b2d7a7fdcb8f68818bae3b6e8d2a11367b530c41c876f38",
+      "bytes": 278
+    },
+    {
+      "file": "result.json",
+      "sha256": "a5ee23ceff5faa75400f55241eed59ab0a0fdb5ba75c3bd7cf63e25a48b832d1",
+      "bytes": 20744
+    },
+    {
+      "file": "run_metrics.csv",
+      "sha256": "310683d8d69c4674ffc28c6e69b7c06724c82a67974cdf349671f71ee819b886",
+      "bytes": 9879
+    },
+    {
+      "file": "support_atlas.csv",
+      "sha256": "6d51cb36e7f9f1f8c9b0ffc596c4ad70d88f2e880c40758ebee7a2f017c2667c",
+      "bytes": 1825822
+    },
+    {
+      "file": "topology_by_run.csv",
+      "sha256": "ee6f96f53987edb514dce56936d06f707ced02246a3715c74b5f2ea304278be5",
+      "bytes": 1477
+    }
+  ]
+}

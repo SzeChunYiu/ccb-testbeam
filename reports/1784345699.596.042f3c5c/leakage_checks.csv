@@ -1,0 +1,6 @@
+check,pass,value,detail
+raw_root_reproduction,True,640737,canonical selected-pulse count
+train_heldout_run_overlap,True,0,split by run
+finite_traditional_phase,True,59613,traditional anchor for all held-out pulses
+training_target_rows,True,14646,downstream closure residual targets
+model_panel_complete,True,"derivative_integral_cfd,ridge,gradient_boosted_trees,mlp,cnn_1d,compact_waveform_attention",traditional plus requested ML/NN panel

@@ -1,8 +1,10 @@
-# §4 — Timing Analysis: Sub-Nanosecond Resolution with One-Ended WLS Readout
+# §4 — Timing Analysis with One-Ended WLS Readout
 
-> **ACCEPTED by nature-reviewer with 6 fixes.** 7,100 words, 10 figures. Fixes: (1) MC timewalk tension quantified in systematic budget, (2) two-ended projection caveated, (3) sqrt(2) separated into random-noise vs position-cancellation, (4) B2 exclusion population restriction stated, (5) one-sentence enabling statement added to intro, (6) systematic table with plain-English interpretation.
+> **REVIEW_STATUS: EDITORIAL_REVIEWED** (AI role-separated nature-reviewer-style lenses; not independent human peer review). Scope: readability/structure only. Does **not** imply SOURCE_VERIFIED, EXECUTED_REPRODUCED, or CLAIM_AUTHORIZED. Open factual blockers remain tracked in GitHub issues / claim ledger. Contract: `docs/contracts/REVIEW_STATUS_TAXONOMY.json` / `chatgpt_todo/ATOMIC_RESEARCH_PROTOCOL.md`.
 
-The timing resolution of the HRD scintillator stacks is the primary physics deliverable of the CCB test-beam programme. The HIBEAM/NNBAR experiment requires same-particle timing at the sub-nanosecond level to distinguish signal events from background — specifically, to separate neutron-antineutron oscillation candidates from spallation-induced background events that differ by a few nanoseconds in time-of-flight. This chapter presents the complete timing analysis chain: from raw waveform to calibrated particle arrival time, through amplitude-dependent timewalk correction, to the final multi-stave combined time. The 540 ps combined resolution enables discrimination of antineutron annihilation vertices from random beam-induced coincidences at the part-per-million level, a capability not demonstrated with one-ended WLS readout at this scintillator length in prior work. Every equation needed for reproducibility is stated explicitly. Where the analysis reveals paradoxes — the position-dependence puzzle, the B2 covariance anomaly, the tau_eff provenance — the resolution is presented alongside the result.
+> **CLAIM-GOVERNANCE QUARANTINE (2026-08-16, #1299).** The per-stave and combined σ68 timing values in this chapter (B6 0.68–0.75 ns; B4+B6+B8 0.54–0.56 ns, quoted below as "540 ps") are **legacy, source-absent ledger values, now WITHHELD** (`docs/claim_ledger.csv` CL-002..CL-006, `legacy_claim_source_unresolved`, GATED/BLOCKED). Timing σ68 is **not measurable** on the located raw 8×16-channel 16-sample 100 MS/s beam product (≥38 ns sampling-limited; the component-safe B4–B6 pair residual is 8.7 ns, CL-1320-001), and cross-schema transfer from earlier waveform formats is quarantined by #993. The values below are retained as historical analysis narrative only; they are not beam-data detector-resolution claims and must not be cited as such. Where this chapter conflicts with the ledger, the ledger wins.
+
+The timing resolution of the HRD scintillator stacks is the primary physics deliverable of the CCB test-beam programme. The HIBEAM/NNBAR experiment requires same-particle timing at the sub-nanosecond level to distinguish signal events from background — specifically, to separate neutron-antineutron oscillation candidates from spallation-induced background events that differ by a few nanoseconds in time-of-flight. This chapter presents the complete timing analysis chain: from raw waveform to calibrated particle arrival time, through amplitude-dependent timewalk correction, to the final multi-stave combined time. The historical narrative below quotes a 540 ps combined resolution; that number is a legacy, source-absent ledger value (withheld — CL-004/CL-005; see the quarantine note above), not a beam-data resolution claim. Every equation needed for reproducibility is stated explicitly. Where the analysis reveals paradoxes — the position-dependence puzzle, the B2 covariance anomaly, the tau_eff provenance — the resolution is presented alongside the result.
 
 ## 1. Principles of Scintillator Timing
 
@@ -53,7 +55,7 @@ To contextualise the HRD timing performance, Table 1 presents a comparison with 
 | **HRD B6 (one-ended, timewalk-corrected)** | **~680-750 ps** | BC-408 + WLS fibre + CFD + timewalk correction | **This work** |
 | **HRD B4+B6+B8 combined** | **~540-560 ps** | Multi-stave inverse-variance combination | **This work** |
 
-The HRD achieves 540 ps combined timing with one-ended readout — a configuration chosen for cost, mechanical simplicity, and radiation hardness in the ESS environment. This is competitive with two-ended readout systems and within a factor of 2-3 of the LGAD state of the art, despite using a fundamentally simpler and more radiation-tolerant technology. The projected improvement from two-ended readout (Section 7) would bring the HRD into the 300-400 ps range, competitive with dedicated two-ended scintillator-SiPM systems.
+The historical analysis claimed 540 ps combined timing with one-ended readout (legacy value, withheld — source-absent; see the quarantine note above). The one-ended configuration itself is chosen for cost, mechanical simplicity, and radiation hardness in the ESS environment; its competitive positioning versus two-ended or LGAD systems rests on that simplicity, not on a validated resolution number. The projected improvement from two-ended readout (Section 7) would bring the HRD into the 300-400 ps range, competitive with dedicated two-ended scintillator-SiPM systems.
 
 ### 1.4 Inter-stave residual method
 
@@ -226,7 +228,7 @@ where t_i = t_corrected(B_i) is the timewalk-corrected time for stave i, and sig
 
 sigma^2_combined = 1 / sum_i (1 / sigma_i^2)   (22)
 
-For equal resolutions sigma_i = sigma_single, this reduces to sigma_combined = sigma_single / sqrt(N). Using B4, B6, and B8 (excluding B2), the combined event time achieves sigma_68 approximately 0.54-0.56 ns.
+For equal resolutions sigma_i = sigma_single, this reduces to sigma_combined = sigma_single / sqrt(N). Using B4, B6, and B8 (excluding B2), the historical analysis reached a combined sigma_68 of approximately 0.54-0.56 ns (legacy value, withheld — CL-004/CL-005).
 
 The combination formula assumes independent measurement errors. The validity of this assumption is tested by examining the correlation matrix of inter-stave residuals (Section 3). The B4-B6, B4-B8, and B6-B8 residual covariances are all small (approximately 16 ns^2), consistent with predominantly uncorrelated stochastic errors.
 
@@ -262,9 +264,11 @@ The alignment is performed iteratively: an initial estimate of the inter-stave o
 |---|---|---|---|
 | B2 | ~2.8 | ~5-6 | Topology-driven covariance (stopping deuterons, saturation); excluded from precision timing |
 | B4 | ~1.45 | ~2.2 | WLS propagation delay; moderate pile-up; mixed proton/deuteron population |
-| B6 | **0.68-0.75** | ~1.5 | Best single-stave: cleaner pulse shapes at depth, through-going protons only |
+| B6 | **0.68-0.75** (legacy, withheld) | ~1.5 | Best single-stave: cleaner pulse shapes at depth, through-going protons only |
 | B8 | ~0.93 | ~1.8 | Lower statistics; some penetration dependence; edge of stack |
-| B4+B6+B8 | **0.54-0.56** | — | Combined event time (inverse-variance weighted) |
+| B4+B6+B8 | **0.54-0.56** (legacy, withheld) | — | Combined event time (inverse-variance weighted; CL-004/CL-005) |
+
+> All σ68 values in this table are legacy/source-absent (CL-002..CL-005). On the located 8×16 100 MS/s raw product, timing σ68 is not measurable (≥38 ns sampling-limited; component-safe B4–B6 pair residual 8.7 ns, CL-1320-001).
 
 **Figure 4.1** (03_timing_resolution.png) displays the per-stave timing resolution as a bar chart, visually confirming B6 as the best-performing single stave and the combined B4+B6+B8 resolution as the overall best measurement.
 
@@ -375,7 +379,7 @@ The tau_eff provenance requires clarification. The value tau_eff = 90 ns that ap
 
 ## 9. Summary of Timing Performance
 
-The HRD B-stack achieves the following timing resolution:
+The historical analysis reported the following timing values (legacy/source-absent — withheld in the current ledger, CL-002..CL-005):
 
 - **Single-stave (B6, best):** sigma_68 = 0.68-0.75 ns (timewalk-corrected)
 - **Multi-stave combined (B4+B6+B8):** sigma_68 = 0.54-0.56 ns
@@ -384,7 +388,7 @@ The HRD B-stack achieves the following timing resolution:
 - **MC validation (raw):** PASS (1.05 sigma agreement)
 - **MC validation (timewalk-corrected):** TENSION (2.68 sigma, traced to B/sqrt(ADC) digitizer bug, GAP-02)
 
-The combined resolution of 540 ps represents the timing precision with which the HRD can determine that two staves were hit by the same particle. This is the quantity relevant to the HIBEAM/NNBAR background rejection: signal events produce correlated timing across multiple staves, while background events produce uncorrelated timing. The 540 ps resolution provides a timing window of approximately 1.5 ns (3 sigma) for associating hits across staves, which is sufficient to reject the majority of accidental coincidences at the ESS beam rate.
+The legacy 540 ps value was interpreted as the timing precision with which the HRD can determine that two staves were hit by the same particle. This is the quantity relevant to the HIBEAM/NNBAR background rejection: signal events produce correlated timing across multiple staves, while background events produce uncorrelated timing. Such a resolution would provide a timing window of approximately 1.5 ns (3 sigma) for associating hits across staves — a projection only; the value itself is withheld as source-absent.
 
 The projected two-ended readout improvement (sigma_68 approximately 0.48-0.53 ns single-stave, approximately 0.34-0.38 ns combined) would bring the HRD into the 300-400 ps range, competitive with dedicated two-ended scintillator-SiPM timing systems and within a factor of 10 of the LGAD state of the art. This projection remains to be validated by a dedicated beam measurement (GAP-05).
 
@@ -411,7 +415,7 @@ The projected two-ended readout improvement (sigma_68 approximately 0.48-0.53 ns
 ## Covariance-Aware Combined Event-Time Estimator (Thesis Upgrade Addition)
 
 > **Priority: BLOCKING for headline timing claim.**
-> The current combined 3-stave result (σ ≈ 0.54–0.56 ns) assumes independent stave errors. The measured pair covariance is −0.127 ns².
+> The legacy combined 3-stave result (σ ≈ 0.54–0.56 ns; withheld — source-absent) assumes independent stave errors. The measured pair covariance is −0.127 ns².
 
 ### Method
 
@@ -445,7 +449,7 @@ t_combined = (1ᵀ V⁻¹ t) / (1ᵀ V⁻¹ 1)
 
 | Estimator | σ_combined (ns) | Status |
 |---|---|---|
-| Naive (independence-assumed) | 0.54–0.56 | Current headline |
+| Naive (independence-assumed) | 0.54–0.56 | Legacy value (withheld — source-absent) |
 | Covariance-aware | **To be computed** | Required before final thesis |
 
 ### B2 Exclusion

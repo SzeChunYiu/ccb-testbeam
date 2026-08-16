@@ -1,0 +1,5 @@
+claim,headline,evidence_class,status,source,figure,claim_id
+"ADC gain (data/MC proxy, MV0)",92 ADC/MeV; 28 ADC/MeV heuristic envelope,DATA_MC_CALIBRATION_PROXY,GATED,CL-013,VIS-CLAIM-001_claim_dashboard.svg,CL-013
+Stopping-depth data/MC closure,Pearson chi2/ndf = 68269.40598948313,LEGACY_DIAGNOSTIC,FLAWED,CL-021,VIS-CLAIM-001_claim_dashboard.svg,CL-021
+Anomaly / C12 identity,283/87555 = 0.003232254011764034 truth-MC morphology,TRUTH_LEVEL_MC_ONLY,TRUTH_LEVEL_MC_ONLY,CL-022,VIS-CLAIM-001_claim_dashboard.svg,CL-022
+Cluster D MV3 rerun diagnostic,Pearson chi2/ndf = 86135.4707883642; distinct,DIAGNOSTIC_ONLY,FLAWED,reports/studies/clusterD/mv_runs/mv3/mv3_summary.json,VIS-CLAIM-001_claim_dashboard.svg,

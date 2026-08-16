@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="430"
+     viewBox="0 0 1100 430" role="img" aria-labelledby="title desc">
+  <title id="title">CL-011 effective-live-time claim remediation</title>
+  <desc id="desc">Documentation and provenance evidence, not detector data.</desc>
+  <rect width="1100" height="430" fill="white"/>
+  <text x="36" y="48" font-family="sans-serif" font-size="25" font-weight="bold">
+    CL-011 effective-live-time claim remediation
+  </text>
+  <text x="36" y="76" font-family="sans-serif" font-size="14">
+    Documentation/provenance validation — this graphic is not a detector-data plot.
+  </text>
+  <line x1="36" y1="94" x2="1064" y2="94" stroke="black"/>
+  <text x="54" y="130" font-family="sans-serif" font-size="17">Primary study</text>
+  <text x="380" y="130" font-family="monospace" font-size="17">S10b data measurement</text>
+  <text x="54" y="168" font-family="sans-serif" font-size="17">Run-average live10</text>
+  <text x="380" y="168" font-family="monospace" font-size="17">124.79018394263471 ns</text>
+  <text x="54" y="206" font-family="sans-serif" font-size="17">Run-bootstrap 95% CI</text>
+  <text x="380" y="206" font-family="monospace" font-size="17">
+    [123.33094981246663, 126.35875117626817] ns
+  </text>
+  <text x="54" y="244" font-family="sans-serif" font-size="17">Sampling units</text>
+  <text x="380" y="244" font-family="monospace" font-size="17">14 runs; 252266 pulses</text>
+  <text x="54" y="282" font-family="sans-serif" font-size="17">Canonical status</text>
+  <text x="380" y="282" font-family="monospace" font-size="17">DONE_DATA_ONLY</text>
+  <text x="54" y="320" font-family="sans-serif" font-size="17">Open blocker</text>
+  <text x="380" y="320" font-family="monospace" font-size="17">BLK-S10B-001</text>
+  <line x1="36" y1="345" x2="1064" y2="345" stroke="black"/>
+  <text x="36" y="378" font-family="sans-serif" font-size="14">
+    MV5 reuses rounded 124.8 ns as an input; it is not an independent validation.
+  </text>
+  <text x="36" y="406" font-family="sans-serif" font-size="14">
+    No stat/syst decomposition, universal dead time, or accepted Rmax is authorized.
+  </text>
+</svg>

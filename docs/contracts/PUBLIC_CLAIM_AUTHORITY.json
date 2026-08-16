@@ -1,0 +1,129 @@
+{
+  "schema_version": "1.0.0",
+  "contract_id": "PUBLIC_CLAIM_AUTHORITY",
+  "issue": "#969",
+  "audit_id": "AF-021-AF-022",
+  "generated_at": "2026-08-11T21:29:31Z",
+  "description": "Machine-readable authority for README/WIKI/dashboard headline tables. Front doors must not advertise a stronger status than this file + claim ledger.",
+  "data_location": {
+    "status": "LOCATED_ON_LUNARC_NONCANONICAL",
+    "canonical_archive_status": "NOT_YET_POPULATED",
+    "canonical_archive_path": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam-data/",
+    "located_raw_root": "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/",
+    "located_on": "2026-07-25",
+    "source_report": "reports/studies/data_side/REPORT.md",
+    "format_note": "Located ccb_data waveforms are 8ch x 16 samples; canonical S00 uses 18-sample product lineage gated by #952/#962",
+    "forbidden_readme_phrases": [
+      "raw beam ROOT (`hrdb_run_*.root`) is not staged on LUNARC",
+      "raw ROOT not staged"
+    ],
+    "required_readme_phrases": [
+      "located on LUNARC at `/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/`",
+      "canonical archive not yet populated"
+    ]
+  },
+  "headlines": [
+    {
+      "short_name": "selected_b_pulses_s00",
+      "claim_id": "CL-001",
+      "truth_type": "DATA_MEASUREMENT",
+      "measurand": "Selected B-stack pulses (S00 gate)",
+      "value": "640737",
+      "unit": "pulses",
+      "uncertainty_semantics": "Exact deterministic reproduction count for fixed inputs; not a physics uncertainty",
+      "authorization_status": "GATED",
+      "blocking_issues": [
+        "#952",
+        "#953",
+        "#954"
+      ],
+      "source_report": "reports/S00_data_integrity_pipeline_reproduction/REPORT.md",
+      "source_script": "scripts/01_build_pulse_table_from_root.py",
+      "source_config": "configs/s00_reproduction.yaml",
+      "source_manifest": "reports/S00_data_integrity_pipeline_reproduction/manifest.json"
+    },
+    {
+      "short_name": "adc_digitizer_gain_mc_clusterC",
+      "claim_id": "CLUSTER-C-917-GAIN",
+      "truth_type": "SIMULATION_RESULT",
+      "measurand": "Digitizer gain used inside clusterC MC digitizer chain",
+      "value": "119.17",
+      "unit": "ADC/MeV",
+      "uncertainty_semantics": "Simulation-result scalar from clusterC study; NOT data/MC median-matching proxy; NOT bench calibration",
+      "authorization_status": "PASS",
+      "blocking_issues": [],
+      "source_report": "studies/clusterC (issue #917)",
+      "source_script": null,
+      "disambiguation": "Distinct from CL-013 data/MC proxy and from executable MV0 default gain_adc_per_mev=120"
+    },
+    {
+      "short_name": "adc_gain_data_mc_proxy_mv0",
+      "claim_id": "CL-013",
+      "truth_type": "DATA_MC_PROXY",
+      "measurand": "MV0 B2 median-matching data/MC gain proxy",
+      "value": "92",
+      "unit": "ADC/MeV",
+      "uncertainty_semantics": "Heuristic +/-30% systematic envelope (rounded 28 ADC/MeV); NOT a confidence interval",
+      "authorization_status": "GATED",
+      "blocking_issues": [
+        "BLK-MV0-001",
+        "#1078"
+      ],
+      "source_report": "reports/mv0_calibration_1782677847/REPORT.md",
+      "source_script": "scripts/mv0_calibrate_from_data.py",
+      "source_manifest": "reports/mv0_calibration_1782677847/calibration.json",
+      "notes": "Ledger supersedes stale README '110 ADC/MeV' shorthand; public tables must use 92 with envelope semantics"
+    },
+    {
+      "short_name": "mv0_executable_default_gain",
+      "claim_id": "MV0-MODEL-IDENTITY",
+      "truth_type": "EXECUTABLE_DEFAULT",
+      "measurand": "Frozen executable DigitizerPipeline ElectronicsConfig.gain_adc_per_mev default",
+      "value": "120",
+      "unit": "ADC/MeV",
+      "uncertainty_semantics": "Code default, not a calibrated measurement",
+      "authorization_status": "FROZEN_EXECUTABLE",
+      "blocking_issues": [
+        "#1078"
+      ],
+      "source_script": "src/ccb_mc_validation/digitizer/electronics.py",
+      "disambiguation": "Must not be labelled 'calibration' in README"
+    },
+    {
+      "short_name": "detector_timing_resolution_data",
+      "claim_id": "CL-002",
+      "truth_type": "DATA_MEASUREMENT",
+      "measurand": "B6 single-stave timing sigma68 on beam data",
+      "value": null,
+      "unit": "ns",
+      "uncertainty_semantics": "Value withheld; raw 16-sample format is sampling-limited",
+      "authorization_status": "GATED",
+      "blocking_issues": [
+        "DATA-FORMAT-LIMITED-001",
+        "#952",
+        "#962"
+      ],
+      "source_report": "reports/studies/data_side/REPORT.md"
+    },
+    {
+      "short_name": "canonical_pileup_rmax",
+      "claim_id": "CL-010",
+      "truth_type": "DATA_MEASUREMENT",
+      "measurand": "Canonical pile-up Rmax",
+      "value": null,
+      "unit": "MHz",
+      "uncertainty_semantics": "Withheld pending S-STAT-003",
+      "authorization_status": "BLOCKED",
+      "blocking_issues": [
+        "S-STAT-003"
+      ],
+      "source_report": "docs/claim_ledger.csv"
+    }
+  ],
+  "rules": [
+    "VALIDATED/PASS public status requires every blocking_issue closed or PASS",
+    "Identical short_name with distinct truth_type requires explicit disambiguation in the front door",
+    "README/WIKI/dashboard must not exceed authorization_status of this authority or claim_ledger.csv",
+    "Correction history is preserved in claim_ledger supersedes/notes columns; do not silently rewrite"
+  ]
+}

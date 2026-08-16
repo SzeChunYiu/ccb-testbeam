@@ -1,0 +1,212 @@
+{
+  "study_id": "MV3-selection-matched",
+  "generated_utc": "2026-07-25T21:46:17.683318+00:00",
+  "parameters": {
+    "coinc_ns": 15.0,
+    "gain": 92.0,
+    "peak_frac": 0.733,
+    "threshold_adc": 1000.0,
+    "stop_ke_mev": 1.0
+  },
+  "mc": {
+    "mc_file": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root",
+    "n_total_events": 1000000,
+    "n_enterB": 237065,
+    "n_enterA": 69744,
+    "n_coincidence": 64725,
+    "coinc_ns": 15.0,
+    "gain": 92.0,
+    "peak_frac": 0.733,
+    "threshold_adc": 1000.0,
+    "stop_ke_mev": 1.0,
+    "threshold_edep_mev": 14.828874784981318,
+    "unselected": {
+      "n_events": 237390,
+      "n_no_fire": 5865,
+      "stop_depth_counts": {
+        "B2": 106603.0,
+        "B4": 40957.0,
+        "B6": 28843.0,
+        "B8": 55122.0
+      },
+      "stop_depth_frac": {
+        "B2": 0.4604383975812547,
+        "B4": 0.17690098261526832,
+        "B6": 0.12457833927221683,
+        "B8": 0.23808228053126013
+      },
+      "truth_stop_counts": {
+        "B2": 994.0,
+        "B4": 1333.0,
+        "B6": 903.0,
+        "B8": 676.0
+      },
+      "truth_stop_frac": {
+        "B2": 0.25448028673835127,
+        "B4": 0.3412698412698413,
+        "B6": 0.23118279569892472,
+        "B8": 0.17306707629288273
+      },
+      "truth_n_stop": 3906,
+      "truth_n_escape_censored": 233484,
+      "dE_E_n_both_fire": 130820,
+      "dE_E_corr_both_fire": -0.36567311446036854,
+      "dE_E_corr_all": -0.6602211362842615,
+      "entry_ekin_median_mev": 118.84066860281075,
+      "entry_ekin_p10_mev": 60.71667766877927,
+      "entry_ekin_p90_mev": 151.8748438474142
+    },
+    "sample_ii": {
+      "n_events": 237065,
+      "n_no_fire": 5599,
+      "stop_depth_counts": {
+        "B2": 106594.0,
+        "B4": 40934.0,
+        "B6": 28826.0,
+        "B8": 55112.0
+      },
+      "stop_depth_frac": {
+        "B2": 0.4605168793688922,
+        "B4": 0.17684670750779813,
+        "B6": 0.12453664901108587,
+        "B8": 0.23809976411222383
+      },
+      "truth_stop_counts": {
+        "B2": 945.0,
+        "B4": 1276.0,
+        "B6": 867.0,
+        "B8": 646.0
+      },
+      "truth_stop_frac": {
+        "B2": 0.2530798071772898,
+        "B4": 0.3417246920192823,
+        "B6": 0.23219068023567221,
+        "B8": 0.17300482056775576
+      },
+      "truth_n_stop": 3734,
+      "truth_n_escape_censored": 233331,
+      "dE_E_n_both_fire": 130789,
+      "dE_E_corr_both_fire": -0.3674576847996675,
+      "dE_E_corr_all": -0.6643590770607046,
+      "entry_ekin_median_mev": 118.84066860281075,
+      "entry_ekin_p10_mev": 60.71667766877927,
+      "entry_ekin_p90_mev": 151.8748438474142
+    },
+    "sample_i": {
+      "n_events": 64725,
+      "n_no_fire": 912,
+      "stop_depth_counts": {
+        "B2": 55321.0,
+        "B4": 3838.0,
+        "B6": 1303.0,
+        "B8": 3351.0
+      },
+      "stop_depth_frac": {
+        "B2": 0.8669236675912432,
+        "B4": 0.06014448466613386,
+        "B6": 0.02041903687336436,
+        "B8": 0.052512810869258617
+      },
+      "truth_stop_counts": {
+        "B2": 319.0,
+        "B4": 115.0,
+        "B6": 36.0,
+        "B8": 19.0
+      },
+      "truth_stop_frac": {
+        "B2": 0.6523517382413088,
+        "B4": 0.23517382413087934,
+        "B6": 0.0736196319018405,
+        "B8": 0.03885480572597137
+      },
+      "truth_n_stop": 489,
+      "truth_n_escape_censored": 64236,
+      "dE_E_n_both_fire": 9427,
+      "dE_E_corr_both_fire": -0.41726984482907514,
+      "dE_E_corr_all": -0.5342899368404225,
+      "entry_ekin_median_mev": 74.60077997413373,
+      "entry_ekin_p10_mev": 52.09001103295473,
+      "entry_ekin_p90_mev": 114.3469880779699
+    }
+  },
+  "data": {
+    "pulse_table": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/reports/1781028640.1299.266407ae/s00_selected_b_pulses.csv.gz",
+    "threshold_adc": 1000.0,
+    "n_pulses_above_thr": 640737,
+    "all": {
+      "n_events": 364938,
+      "stop_depth_counts": {
+        "B2": 326324,
+        "B4": 19661,
+        "B6": 11787,
+        "B8": 7166
+      },
+      "stop_depth_frac": {
+        "B2": 0.8941902460143915,
+        "B4": 0.05387490477834591,
+        "B6": 0.03229863702875557,
+        "B8": 0.019636212178507036
+      }
+    },
+    "sample_i": {
+      "n_events": 286165,
+      "stop_depth_counts": {
+        "B2": 270219,
+        "B4": 8884,
+        "B6": 4596,
+        "B8": 2466
+      },
+      "stop_depth_frac": {
+        "B2": 0.9442769031852253,
+        "B4": 0.031045026470742403,
+        "B6": 0.016060664302063495,
+        "B8": 0.008617406041968794
+      }
+    },
+    "sample_ii": {
+      "n_events": 78773,
+      "stop_depth_counts": {
+        "B2": 56105,
+        "B4": 10777,
+        "B6": 7191,
+        "B8": 4700
+      },
+      "stop_depth_frac": {
+        "B2": 0.7122364261866375,
+        "B4": 0.1368108362002209,
+        "B6": 0.09128762393205794,
+        "B8": 0.05966511368108362
+      }
+    },
+    "deltaE_E": {
+      "n_both_fire": 47390,
+      "corr_both_fire": 0.18325985756612032,
+      "threshold_adc_note": "event-csv deltaE/E are per-event max amplitudes (ADC); selection dE>0 & E>0 mirrors VIS-DE-001-DATA (n_both_B2_B4)."
+    }
+  },
+  "chi2_results": {
+    "MC-unselected  vs DATA-all": {
+      "chi2": 278431.28062579513,
+      "ndf": 3,
+      "chi2_per_ndf": 92810.42687526504
+    },
+    "MC-Sample-II   vs DATA-Sample-II": {
+      "chi2": 22785.240484940685,
+      "ndf": 3,
+      "chi2_per_ndf": 7595.080161646895
+    },
+    "MC-Sample-I    vs DATA-Sample-I": {
+      "chi2": 16770.26850156602,
+      "ndf": 3,
+      "chi2_per_ndf": 5590.089500522007
+    }
+  },
+  "dE_E_corr": {
+    "data_both_fire": 0.18325985756612032,
+    "mc_unselected": -0.36567311446036854,
+    "mc_sample_ii": -0.3674576847996675,
+    "mc_sample_i": -0.41726984482907514
+  },
+  "verdict": "PARTIALLY RESOLVED (selection-matched, residual remains)",
+  "chi2_improvement_factor": 16.602672795596263
+}

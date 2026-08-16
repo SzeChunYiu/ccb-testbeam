@@ -1,0 +1,73 @@
+{
+  "accepted_rmax_mhz": null,
+  "claim_ids": [
+    "CL-010",
+    "CL-012"
+  ],
+  "execution_scope": "Focused code/tests executed locally. Repository facts were read from authenticated GitHub blobs. A complete checkout was unavailable because DNS resolution for github.com failed; no real data or simulation rerun occurred.",
+  "issues": [],
+  "n_issues": 0,
+  "policy": "QUARANTINE_CONFLICTED_RMAX_DEFINITION",
+  "repository_evidence": {
+    "academic_chapter": {
+      "git_blob_sha": "93c35482104dd45b5879e68e576f95a638e7c42b",
+      "path": "docs/academic_chapters/05_pileup_analysis.md"
+    },
+    "base_main_sha": "72fccaa8f4d6c00665c60fd0a94884c87cdd544b",
+    "source_commit": "3c5ff5cf587c8ca9cefda20cb220ba29effd2170",
+    "source_report": {
+      "git_blob_sha": "96ede7778cdb30cfab420abeb69c23f0a98b6974",
+      "path": "reports/mv5_pileup_1782678353/REPORT.md"
+    },
+    "source_script": {
+      "git_blob_sha": "7a3ba24761080ff45a130bb2a50a749f66d9572b",
+      "path": "scripts/mv5_pileup_study.py"
+    },
+    "source_summary": {
+      "git_blob_sha": "646d55e027f3ddc6def4ca43514c46ef9935e6d4",
+      "path": "reports/mv5_pileup_1782678353/mv5_pileup_summary.json"
+    },
+    "tracked_figure": {
+      "git_blob_sha": "a810ae53d009af533ca1a192cca5ab4f269dc48c",
+      "path": "reports/mv5_pileup_1782678353/mv5_pileup.png"
+    }
+  },
+  "scientific_acceptance": "BLOCKED",
+  "source_conflicts": [
+    {
+      "code": "DUTY_SCALED_RECIPROCAL_NOT_OCCUPANCY_CRITERION",
+      "derived_mhz": 3.0448717948717947,
+      "duty_factor": 0.38,
+      "tau_eff_ns": 124.8
+    },
+    {
+      "chapter_occupancy_mhz": 3.2,
+      "code": "ACADEMIC_CHAPTER_3P20_TO_3P05_NON_ROUNDING_STEP",
+      "published_headline_mhz": 3.05
+    },
+    {
+      "code": "RECOVERY_CEILING_NOT_REACHED",
+      "failure_ceiling": 0.17,
+      "maximum_failure_rate": 0.03475,
+      "reported_crossing_mhz": null
+    }
+  ],
+  "status": "VALIDATED",
+  "updated_ledger": {
+    "bytes": 10097,
+    "exact_width_rows": 5,
+    "sha256": "809e03162f04f94235fe36612c0ec8a3ccf4ae054a5d87341bdd5e26ad3c57d6",
+    "width_mismatch_rows": 21
+  },
+  "validation": {
+    "fixture_validator_issues": 0,
+    "fixture_validator_status": "VALIDATED",
+    "focused_pytest": "6 passed in 0.04s",
+    "json_parse": "PASS",
+    "maximum_python_line_length": 92,
+    "py_compile": "PASS",
+    "svg_xml_parse": "PASS"
+  },
+  "validator": "validate_claim_ledger_cl010.py",
+  "version": "1.0.0"
+}

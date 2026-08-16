@@ -1,0 +1,478 @@
+{
+  "ticket_id": "2501",
+  "study_id": "S55a",
+  "title": "phase-conditioned pulse-shape timing benchmark",
+  "worker": "testbeam-laptop-3",
+  "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+  "reproduction": {
+    "expected_selected_pulses": 640737,
+    "selected_pulses": 640737,
+    "passed": true
+  },
+  "split": {
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63
+    ],
+    "heldout_runs": [
+      42,
+      57,
+      64,
+      65
+    ],
+    "train_pulses": 581124,
+    "heldout_pulses": 59613,
+    "bootstrap_replicates": 500
+  },
+  "methods_benchmarked": [
+    "trapezoid_template",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn_1d",
+    "compact_waveform_transformer",
+    "phase_conditioned_residual_fusion"
+  ],
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "selection_metric": "minimum held-out downstream pair timing sigma68_ns",
+    "timing_sigma68_ns": 1.3610666523897708,
+    "ci_low": 1.25859734900299,
+    "ci_high": 1.4320471248908866
+  },
+  "traditional_method": "trapezoid_template",
+  "trapezoid": {
+    "rise": 2,
+    "flat": 2
+  },
+  "template_grid": {
+    "min": -1.4,
+    "max": 1.4,
+    "step": 0.02
+  },
+  "new_architecture": "phase_conditioned_residual_fusion",
+  "method_summary": [
+    {
+      "method": "trapezoid_template",
+      "n_pair_residuals": 1224,
+      "timing_sigma68_ns": 2.153699101187471,
+      "timing_sigma68_ci_low": 2.0232181251049006,
+      "timing_sigma68_ci_high": 2.371521239014669,
+      "median_residual_ns": -3.7976503350354953,
+      "median_residual_ci_low": -3.9906968836784387,
+      "median_residual_ci_high": -3.568668753330524,
+      "shape_phase_bias_ns": 0.0,
+      "shape_phase_bias_ci_low": 0.0,
+      "shape_phase_bias_ci_high": 0.0,
+      "rise_time_bias_ns": 0.0,
+      "rise_time_bias_ci_low": 0.0,
+      "rise_time_bias_ci_high": 0.0,
+      "energy_drift_area_norm": 0.0,
+      "energy_drift_ci_low": 0.0,
+      "energy_drift_ci_high": 0.0
+    },
+    {
+      "method": "ridge",
+      "n_pair_residuals": 1224,
+      "timing_sigma68_ns": 1.5453600485139316,
+      "timing_sigma68_ci_low": 1.329369464715934,
+      "timing_sigma68_ci_high": 1.6470679764028502,
+      "median_residual_ns": 1.3254813950662587,
+      "median_residual_ci_low": 1.102882384361493,
+      "median_residual_ci_high": 1.4767521302288316,
+      "shape_phase_bias_ns": 0.9044518706659801,
+      "shape_phase_bias_ci_low": 0.050042926780754726,
+      "shape_phase_bias_ci_high": 1.8945799816020141,
+      "rise_time_bias_ns": 0.0,
+      "rise_time_bias_ci_low": 0.0,
+      "rise_time_bias_ci_high": 0.0,
+      "energy_drift_area_norm": 0.0,
+      "energy_drift_ci_low": 0.0,
+      "energy_drift_ci_high": 0.0
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "n_pair_residuals": 1224,
+      "timing_sigma68_ns": 1.3610666523897708,
+      "timing_sigma68_ci_low": 1.25859734900299,
+      "timing_sigma68_ci_high": 1.4320471248908866,
+      "median_residual_ns": 1.5882238691340191,
+      "median_residual_ci_low": 1.3191736835779402,
+      "median_residual_ci_high": 1.8268457102155011,
+      "shape_phase_bias_ns": -1.5723448824526685,
+      "shape_phase_bias_ci_low": -1.9231102963620899,
+      "shape_phase_bias_ci_high": -0.7273136568028207,
+      "rise_time_bias_ns": 0.0,
+      "rise_time_bias_ci_low": 0.0,
+      "rise_time_bias_ci_high": 0.0,
+      "energy_drift_area_norm": 0.0,
+      "energy_drift_ci_low": 0.0,
+      "energy_drift_ci_high": 0.0
+    },
+    {
+      "method": "mlp",
+      "n_pair_residuals": 1224,
+      "timing_sigma68_ns": 1.4488322335138386,
+      "timing_sigma68_ci_low": 1.2531321934804645,
+      "timing_sigma68_ci_high": 1.5267940140275624,
+      "median_residual_ns": 1.524258129316749,
+      "median_residual_ci_low": 1.4397512788677531,
+      "median_residual_ci_high": 1.697316681803894,
+      "shape_phase_bias_ns": 0.4516754118305073,
+      "shape_phase_bias_ci_low": -0.2519326433982503,
+      "shape_phase_bias_ci_high": 1.4257928135378428,
+      "rise_time_bias_ns": 0.0,
+      "rise_time_bias_ci_low": 0.0,
+      "rise_time_bias_ci_high": 0.0,
+      "energy_drift_area_norm": 0.0,
+      "energy_drift_ci_low": 0.0,
+      "energy_drift_ci_high": 0.0
+    },
+    {
+      "method": "cnn_1d",
+      "n_pair_residuals": 1224,
+      "timing_sigma68_ns": 1.510827425256705,
+      "timing_sigma68_ci_low": 1.3028247992333526,
+      "timing_sigma68_ci_high": 1.6372984428649389,
+      "median_residual_ns": 1.3948579279615245,
+      "median_residual_ci_low": 1.230718190353489,
+      "median_residual_ci_high": 1.5263214822692717,
+      "shape_phase_bias_ns": -7.874344128298514,
+      "shape_phase_bias_ci_low": -7.874344128298514,
+      "shape_phase_bias_ci_high": -7.87434412829851,
+      "rise_time_bias_ns": 0.0,
+      "rise_time_bias_ci_low": 0.0,
+      "rise_time_bias_ci_high": 0.0,
+      "energy_drift_area_norm": 0.0,
+      "energy_drift_ci_low": 0.0,
+      "energy_drift_ci_high": 0.0
+    },
+    {
+      "method": "compact_waveform_transformer",
+      "n_pair_residuals": 1224,
+      "timing_sigma68_ns": 1.6067335770835183,
+      "timing_sigma68_ci_low": 1.3841424286365545,
+      "timing_sigma68_ci_high": 1.7152286650529902,
+      "median_residual_ns": 1.2988045420983916,
+      "median_residual_ci_low": 1.1162533993720984,
+      "median_residual_ci_high": 1.4319105772451302,
+      "shape_phase_bias_ns": 7.912674773520081,
+      "shape_phase_bias_ci_low": 7.912674773520081,
+      "shape_phase_bias_ci_high": 7.912674773520081,
+      "rise_time_bias_ns": 0.0,
+      "rise_time_bias_ci_low": 0.0,
+      "rise_time_bias_ci_high": 0.0,
+      "energy_drift_area_norm": 0.0,
+      "energy_drift_ci_low": 0.0,
+      "energy_drift_ci_high": 0.0
+    },
+    {
+      "method": "phase_conditioned_residual_fusion",
+      "n_pair_residuals": 1224,
+      "timing_sigma68_ns": 1.3703628575235138,
+      "timing_sigma68_ci_low": 1.240483636906312,
+      "timing_sigma68_ci_high": 1.4329544276486104,
+      "median_residual_ns": 1.5123409723871113,
+      "median_residual_ci_low": 1.3194211646009286,
+      "median_residual_ci_high": 1.7260769810136196,
+      "shape_phase_bias_ns": -0.717512828387882,
+      "shape_phase_bias_ci_low": -1.0611299712207085,
+      "shape_phase_bias_ci_high": -0.3365369443512236,
+      "rise_time_bias_ns": 0.0,
+      "rise_time_bias_ci_low": 0.0,
+      "rise_time_bias_ci_high": 0.0,
+      "energy_drift_area_norm": 0.0,
+      "energy_drift_ci_low": 0.0,
+      "energy_drift_ci_high": 0.0
+    }
+  ],
+  "pretrigger_pedestal_window_ablation": [
+    {
+      "window": "samples_0_2",
+      "baseline_samples": "0,1,2",
+      "selected_pulses": 642190,
+      "delta_vs_nominal": 1453,
+      "fractional_delta_vs_nominal": 0.0022677011004515113
+    },
+    {
+      "window": "samples_0_3",
+      "baseline_samples": "0,1,2,3",
+      "selected_pulses": 640737,
+      "delta_vs_nominal": 0,
+      "fractional_delta_vs_nominal": 0.0
+    },
+    {
+      "window": "samples_1_4",
+      "baseline_samples": "1,2,3,4",
+      "selected_pulses": 630839,
+      "delta_vs_nominal": -9898,
+      "fractional_delta_vs_nominal": -0.015447835851527226
+    }
+  ],
+  "saturation_mask_ablation": [
+    {
+      "method": "trapezoid_template",
+      "mask": "amplitude_adc_lt_3600",
+      "n_pulses": 29549,
+      "n_pair_residuals": 855,
+      "timing_sigma68_ns": 2.3135223962731635,
+      "ci_low": 2.0232181251049006,
+      "ci_high": 2.544499309442255
+    },
+    {
+      "method": "ridge",
+      "mask": "amplitude_adc_lt_3600",
+      "n_pulses": 29549,
+      "n_pair_residuals": 855,
+      "timing_sigma68_ns": 1.5565856983047193,
+      "ci_low": 1.2916401451439845,
+      "ci_high": 1.7042917701456066
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "mask": "amplitude_adc_lt_3600",
+      "n_pulses": 29549,
+      "n_pair_residuals": 855,
+      "timing_sigma68_ns": 1.3837027614196877,
+      "ci_low": 1.2196009171338709,
+      "ci_high": 1.4775911551195975
+    },
+    {
+      "method": "mlp",
+      "mask": "amplitude_adc_lt_3600",
+      "n_pulses": 29549,
+      "n_pair_residuals": 855,
+      "timing_sigma68_ns": 1.4662574253293832,
+      "ci_low": 1.2448508763284742,
+      "ci_high": 1.5350302235767046
+    },
+    {
+      "method": "cnn_1d",
+      "mask": "amplitude_adc_lt_3600",
+      "n_pulses": 29549,
+      "n_pair_residuals": 855,
+      "timing_sigma68_ns": 1.4593165919484468,
+      "ci_low": 1.0665176808834076,
+      "ci_high": 1.6690479448862554
+    },
+    {
+      "method": "compact_waveform_transformer",
+      "mask": "amplitude_adc_lt_3600",
+      "n_pulses": 29549,
+      "n_pair_residuals": 855,
+      "timing_sigma68_ns": 1.6050525235957316,
+      "ci_low": 1.2228448667339649,
+      "ci_high": 1.740637448291885
+    },
+    {
+      "method": "phase_conditioned_residual_fusion",
+      "mask": "amplitude_adc_lt_3600",
+      "n_pulses": 29549,
+      "n_pair_residuals": 855,
+      "timing_sigma68_ns": 1.3596396887534599,
+      "ci_low": 1.1154202300202485,
+      "ci_high": 1.4605700956320362
+    },
+    {
+      "method": "trapezoid_template",
+      "mask": "amplitude_adc_lt_3800",
+      "n_pulses": 31759,
+      "n_pair_residuals": 954,
+      "timing_sigma68_ns": 2.294210028564494,
+      "ci_low": 2.0232181251049006,
+      "ci_high": 2.480752196750565
+    },
+    {
+      "method": "ridge",
+      "mask": "amplitude_adc_lt_3800",
+      "n_pulses": 31759,
+      "n_pair_residuals": 954,
+      "timing_sigma68_ns": 1.5459004817078894,
+      "ci_low": 1.2977712267388293,
+      "ci_high": 1.6534419612065925
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "mask": "amplitude_adc_lt_3800",
+      "n_pulses": 31759,
+      "n_pair_residuals": 954,
+      "timing_sigma68_ns": 1.3696136730006347,
+      "ci_low": 1.2285568938584177,
+      "ci_high": 1.4500383903808323
+    },
+    {
+      "method": "mlp",
+      "mask": "amplitude_adc_lt_3800",
+      "n_pulses": 31759,
+      "n_pair_residuals": 954,
+      "timing_sigma68_ns": 1.4573368430421438,
+      "ci_low": 1.261271483190459,
+      "ci_high": 1.5067813576641385
+    },
+    {
+      "method": "cnn_1d",
+      "mask": "amplitude_adc_lt_3800",
+      "n_pulses": 31759,
+      "n_pair_residuals": 954,
+      "timing_sigma68_ns": 1.4712888889394224,
+      "ci_low": 1.1005683152675623,
+      "ci_high": 1.6613859238009034
+    },
+    {
+      "method": "compact_waveform_transformer",
+      "mask": "amplitude_adc_lt_3800",
+      "n_pulses": 31759,
+      "n_pair_residuals": 954,
+      "timing_sigma68_ns": 1.5944453970625236,
+      "ci_low": 1.2768682539463079,
+      "ci_high": 1.7302581842705145
+    },
+    {
+      "method": "phase_conditioned_residual_fusion",
+      "mask": "amplitude_adc_lt_3800",
+      "n_pulses": 31759,
+      "n_pair_residuals": 954,
+      "timing_sigma68_ns": 1.3628932387109673,
+      "ci_low": 1.1706453903824503,
+      "ci_high": 1.4503848914198088
+    },
+    {
+      "method": "trapezoid_template",
+      "mask": "amplitude_adc_lt_4000",
+      "n_pulses": 33702,
+      "n_pair_residuals": 1008,
+      "timing_sigma68_ns": 2.2547764168887374,
+      "ci_low": 2.0232181251049006,
+      "ci_high": 2.471453508632511
+    },
+    {
+      "method": "ridge",
+      "mask": "amplitude_adc_lt_4000",
+      "n_pulses": 33702,
+      "n_pair_residuals": 1008,
+      "timing_sigma68_ns": 1.5452561853148525,
+      "ci_low": 1.3045991811375828,
+      "ci_high": 1.6720173662922542
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "mask": "amplitude_adc_lt_4000",
+      "n_pulses": 33702,
+      "n_pair_residuals": 1008,
+      "timing_sigma68_ns": 1.3707036481062063,
+      "ci_low": 1.249612211124898,
+      "ci_high": 1.4473473238699208
+    },
+    {
+      "method": "mlp",
+      "mask": "amplitude_adc_lt_4000",
+      "n_pulses": 33702,
+      "n_pair_residuals": 1008,
+      "timing_sigma68_ns": 1.452102183246106,
+      "ci_low": 1.2731858889119927,
+      "ci_high": 1.522776803900976
+    },
+    {
+      "method": "cnn_1d",
+      "mask": "amplitude_adc_lt_4000",
+      "n_pulses": 33702,
+      "n_pair_residuals": 1008,
+      "timing_sigma68_ns": 1.4763106778070338,
+      "ci_low": 1.0784532229900383,
+      "ci_high": 1.6674447266112054
+    },
+    {
+      "method": "compact_waveform_transformer",
+      "mask": "amplitude_adc_lt_4000",
+      "n_pulses": 33702,
+      "n_pair_residuals": 1008,
+      "timing_sigma68_ns": 1.5962442069388105,
+      "ci_low": 1.2896716224570925,
+      "ci_high": 1.7293811203639111
+    },
+    {
+      "method": "phase_conditioned_residual_fusion",
+      "mask": "amplitude_adc_lt_4000",
+      "n_pulses": 33702,
+      "n_pair_residuals": 1008,
+      "timing_sigma68_ns": 1.3642113076037696,
+      "ci_low": 1.1869588518808385,
+      "ci_high": 1.4463872292546072
+    }
+  ],
+  "leakage_checks": [
+    {
+      "check": "raw_root_reproduction",
+      "pass": true,
+      "value": 640737,
+      "detail": "canonical selected-pulse count must match exactly"
+    },
+    {
+      "check": "train_heldout_run_overlap",
+      "pass": true,
+      "value": 0,
+      "detail": "split by run"
+    },
+    {
+      "check": "finite_traditional_phase",
+      "pass": true,
+      "value": 59613,
+      "detail": "all held-out pulses must have a traditional phase anchor"
+    },
+    {
+      "check": "training_target_rows",
+      "pass": true,
+      "value": 14646,
+      "detail": "same-event downstream consistency targets from train runs"
+    },
+    {
+      "check": "winner_named_in_result_json",
+      "pass": true,
+      "value": "gradient_boosted_trees",
+      "detail": "winner is selected by minimum held-out timing sigma68"
+    },
+    {
+      "check": "pretrigger_window_ablations_written",
+      "pass": true,
+      "value": 3,
+      "detail": "raw ROOT count gate rerun for alternate baseline windows"
+    },
+    {
+      "check": "saturation_mask_ablations_written",
+      "pass": true,
+      "value": 21,
+      "detail": "held-out timing metric recomputed with amplitude saturation masks"
+    }
+  ],
+  "novel_ticket_appended": false,
+  "next_tickets": [],
+  "runtime_sec": 61.7,
+  "git_commit": "b3627abca9fdc535eb8ae51a0791c6c23fe9a688"
+}

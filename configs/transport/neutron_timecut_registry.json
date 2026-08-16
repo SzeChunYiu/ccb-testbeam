@@ -1,0 +1,47 @@
+{
+  "policy_version": "2026.1-issue1091-ladder",
+  "default_policy_id": null,
+  "fail_closed_when_unset": true,
+  "qgsp_bic_documented_default_us": 10.0,
+  "policies": {
+    "pin_qgsp_bic_default_10us": {
+      "status": "PINNED_REFERENCE_DEFAULT",
+      "claims_authorized": false,
+      "physics_list": "QGSP_BIC",
+      "neutron_time_cut_us": 10.0,
+      "neutron_energy_cut_MeV": 0.0,
+      "source": "Geant4 Physics List Guide for QGSP_BIC — 10 microsecond default neutron tracking-time cut; default neutron energy cut is zero.",
+      "sensitivity_study": {
+        "digest": null,
+        "domain": null
+      },
+      "notes": "Explicit pin of the reference-list default. Does not authorize negligibility claims."
+    },
+    "wiring_test_1ns": {
+      "status": "WIRING_TEST",
+      "claims_authorized": false,
+      "physics_list": "QGSP_BIC",
+      "neutron_time_cut_us": 0.001,
+      "neutron_energy_cut_MeV": 0.0,
+      "source": "issue #1091 wiring test — an artificially short cut that must visibly remove late neutron history in a neutron-rich fixture; diagnostic only, never production.",
+      "sensitivity_study": {
+        "digest": null,
+        "domain": null
+      },
+      "notes": "Known-answer control for the ladder harness."
+    },
+    "diagnostic_extended_or_disabled": {
+      "status": "HYPOTHESIS",
+      "claims_authorized": false,
+      "physics_list": "QGSP_BIC",
+      "neutron_time_cut_us": 1000000000.0,
+      "neutron_energy_cut_MeV": 0.0,
+      "source": "diagnostic_UI_override_not_production",
+      "sensitivity_study": {
+        "digest": null,
+        "domain": null
+      },
+      "notes": "Diagnostic policy for future default-vs-extended ladder. Not production."
+    }
+  }
+}

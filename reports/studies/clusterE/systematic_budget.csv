@@ -1,0 +1,15 @@
+nuisance,abs_elasticity_adc,source
+reflectivity,3.484,clusterD sipm-p2-001
+coupling,0.939,clusterD sipm-p2-001
+pde_scale,0.891,clusterD sipm-p2-001
+birks_kB,0.398,clusterD sipm-p2-001
+attenuation,0.226,clusterD sipm-p2-001
+crosstalk,0.074,clusterD sipm-p2-001
+sipm_n_cells,0.033,clusterD sipm-p2-001
+afterpulse,0.016,clusterD sipm-p2-001
+dark_count,0.01,clusterD sipm-p2-001
+window_end,0.01,clusterD sipm-p2-001
+recovery_time,0.007,clusterD sipm-p2-001
+digitizer_gain_envelope,0.3,"CL-013 MV0 v2 (±30%, NOT a CI)"
+birks_kB_span_cm_per_MeV,0.007615126050420166,clusterC
+geometry_material_missing_g_per_cm2,8-10,MV3 (clusterD)

@@ -1,6 +1,37 @@
 # Chapter 6: Pulse Shape Representation and Machine Learning
 
-> **ACCEPTED by nature-reviewer (3/3).** 12,500 words, 8 figures, 15 references. All standard fixes applied: figure references, equation numbering, Data/Code Availability, Limitations, Summary. No outstanding reviewer requests.
+> **REVIEW_STATUS: EDITORIAL_REVIEWED** (AI role-separated nature-reviewer-style lenses; not independent human peer review). Scope: readability/structure only. Does **not** imply SOURCE_VERIFIED, EXECUTED_REPRODUCED, or CLAIM_AUTHORIZED. Open factual blockers remain tracked in GitHub issues / claim ledger. Contract: `docs/contracts/REVIEW_STATUS_TAXONOMY.json` / `chatgpt_todo/ATOMIC_RESEARCH_PROTOCOL.md`.
+
+## Source-Binding and Claim Matrix
+
+> **Issue #1098 (P0).** This chapter's equations, architecture, data split, and physical PC interpretations must be bound to the executable producers that actually generated them. Every numeric claim below is mapped to its producer (study script + config + result artifact) and its source commit. Where a body figure is a *historical synthesis* that no tracked executable reproduces, it is marked `UNRESOLVED_SYNTHESIS` and must not be treated as a measured result.
+
+### Producers (executables + configs that generated the measured numbers)
+
+| Producer | Executable | Config | Result artifact | Source commit |
+|---|---|---|---|---|
+| P01 (PCA + AE representation study) | `scripts/p01_self_supervised_waveform_representation.py` | `configs/p01_*.json` | P01 result | `39762f8f205b46ce0b6fc63d74873e05240b22d6` |
+| P01a (controlled waveform probes) | `scripts/p01a_controlled_waveform_probes.py` | tracked separately | `reports/1781005204.1227.36547733__p01a_controlled_waveform_probes/result.json` | P01a config not tracked at a stable commit |
+| P01b (full-data embedding artifact) | — (P01b consumer) | `configs/p01b_full_data_embedding_artifact.json` | embedding artifact SHA-256 `9dcffdb123a8c091781771ba9f1c6667a65af91cfabbfb64328427dfd7f865be` | `13357484d6bde7c31f4586e1be9f1ca8e33a19da` |
+| P02c (embedding consumer) | `scripts/p02c_p01b_embedding_consumer.py` | `configs/p02c_p01b_embedding_consumer.json` | `reports/1781010024.975.3e06183e__p02c_p01b_embedding_consumer/result.json` | `8dd38baebdff5b068a8c177c9e0d52bf97f778d0` |
+
+### Executable-vs-chapter reconciliation (the fixes this chapter now records)
+
+| Claim | Chapter states | Executable producer states | Resolution |
+|---|---|---|---|
+| AE encoder architecture | `18 -> 64 -> 32 -> d` | `18 -> 32 -> 16 -> d` (P01 script, `nn.Sequential(nn.Linear(18,32), ReLU, nn.Linear(32,16), ReLU, nn.Linear(16,latent_dim), ...)`) | **CORRECTED** in §1.2.1 |
+| AE training protocol | batch 256, 150–250 epochs, step-decay LR | batch 4096, 35 epochs (P01) / 14 epochs (P02c), Adam lr 0.001, mask 0.3, noise 0.02 | **CORRECTED** in §1.2.2 |
+| PCA parameter count | `19*d` | `18*d + 18` (18-component mean vector + 18×d loading matrix) | **CORRECTED** in §1.2.1 |
+| PCA reconstruction MSE convention | `MSE(d) = sum_{j>d} lambda_j` (per-sample) | `((rec - x)**2).mean()` over 18 samples (per-element) | **CONVENTION NOTED** in §1.1.1 |
+| AE vs PCA reconstruction | AE superior (reconstruction MSE) | AE heldout `full_recon_mse` = 0.01428 vs PCA heldout MSE = 0.01337 (P01b) — AE **not** superior | **CORRECTED** in §1.2.3 |
+| AE downstream superiority | AE better downstream (5–8%) | P01a probe bacc: AE 0.2765 < traditional 0.2916; P02c manual AMI: AE 0.4787 < traditional 0.4973 | **CORRECTED** in §1.2.4 / §3.7 |
+| PCA data split | 78%/11%/11% random | train_runs exclude heldout runs [42,57,64,65]; train_pulses=581124, heldout_pulses=59613 (sum 640,737) | **SPLIT** in §1.1.1 |
+
+### Source requirements
+
+1. Any number that a tracked executable produces must cite that producer (script + config commit) in the text or a table cell.
+2. A number that *no* tracked executable reproduces is labelled `UNRESOLVED_SYNTHESIS` and is diagnostic prose, not a measured result.
+3. The S00 canonical pulse table (640,737 selected B-stave pulses) is the common input gate for all producers; its selector is `ccb_mc_validation.selector v1_first_four_median` (`b4 = median(w[0:4])`, `A4 = max(w) − b4`, cut 1000 ADC).
 
 ## Abstract
 
@@ -42,17 +73,21 @@ where V_d = [v_1 | ... | v_d] is the 18 x d matrix of the first d eigenvectors. 
 w_i_hat^(d) = V_d z_i^(d) + w_bar = V_d V_d^T (w_i - w_bar) + w_bar
 ```
 
-The mean squared reconstruction error for dimension d is:
+The reconstruction error is expressed in two conventions that must be kept distinct. The *per-sample* (per-waveform) mean squared error — the sum of the discarded eigenvalues — is:
 
 ```
-MSE(d) = (1/N) * sum_{i=1}^N ||w_i - w_i_hat^(d)||^2 = sum_{j=d+1}^{18} lambda_j
+MSE_sample(d) = (1/N) * sum_{i=1}^N ||w_i - w_i_hat^(d)||^2 = sum_{j=d+1}^{18} lambda_j
 ```
 
 The last equality follows from the orthonormality of V: the reconstruction error is exactly the sum of the discarded eigenvalues. This is a key property: PCA guarantees that for any d, no other linear projection to d dimensions achieves lower reconstruction MSE.
 
+The *per-element* convention used by the P01/P01b executable producers (`((rec - x_test) ** 2).mean(axis=1)`; `scripts/p01_self_supervised_waveform_representation.py`, commit `39762f8f205b46ce0b6fc63d74873e05240b22d6`) averages over the 18 ADC samples, so it is a factor of 18 smaller than the per-sample value: `MSE_element(d) = MSE_sample(d) / 18`. All AE-vs-PCA reconstruction tables in §1.2.3 use the per-element convention as reported by the producer; the eigenvalue-derived per-sample values in the table below are divided by 18 when compared against them.
+
 #### 1.1.2 Eigenvalue spectrum and effective dimensionality
 
-The PCA results (Study P01) reveal that pulse shapes are fundamentally low-dimensional. The full eigenvalue spectrum of the 18 x 18 covariance matrix, computed from the full dataset of 640,737 pulses, is:
+The PCA results (Study P01) reveal that pulse shapes are fundamentally low-dimensional. The full eigenvalue spectrum of the 18 x 18 covariance matrix, computed from the **training set of 581,124 pulses** (excluding the held-out runs `[42, 57, 64, 65]`; `train_pulses = 581,124`, `heldout_pulses = 59,613`, sum = 640,737), is:
+
+> **CORRECTED (source binding).** The executable producer fits the PCA on the training partition only — `scripts/p01_self_supervised_waveform_representation.py` line 447-448 (`pca = PCA(n_components=dim, ...)`; `pca.fit(x_train)`, commit `39762f8f205b46ce0b6fc63d74873e05240b22d6`). An earlier draft stated the eigenvalues were computed from the full 640,737-pulse population; that is **CORRECTED** to the training-set covariance. The eigenvalue convention is the *per-element* variance of the 18-sample normalised waveforms (the same `((rec - x_test) ** 2).mean(axis=1)` convention used for reconstruction MSE in §1.2.3), so the eigenvalues are the per-element diagonal entries of the covariance of the amplitude-normalised training waveforms, not the per-sample values of §1.1.1. The qualitative low-dimensionality conclusion is unchanged, but the split provenance is now recorded.
 
 | Component j | Eigenvalue lambda_j | Fraction of total | Cumulative fraction |
 |---|---|---|---|
@@ -97,11 +132,11 @@ Note that the conventional "99.7% at d=8" from the preliminary analysis was base
 
 #### 1.1.3 Physical interpretation of principal components
 
-The eigenvectors v_1 through v_4 have clear physical interpretations, verified by projecting them back to the 18-sample time domain and examining their shape (Study P01b, Figure 6.1 in the Figure Gallery):
+The eigenvectors v_1 through v_4 have clear physical interpretations, verified by projecting them back to the 18-sample time domain and examining their shape (Study P01b; the Figure Gallery plot referenced as Figure 6.1 is `UNRESOLVED_SYNTHESIS` — it is a historical composite no tracked executable regenerates, so the *shapes* below are diagnostic prose, not a measured producer output):
 
 **PC1 (41.3% variance): Overall pulse amplitude.** The first eigenvector is positive at all 18 samples, with a shape that closely matches the mean waveform. It encodes the total integrated charge of the pulse: pulses with large (positive) projection onto PC1 have large amplitudes, and pulses with small (near-zero) projection have small amplitudes. The dominance of PC1 reflects the fact that pulse amplitude spans a factor of approximately 50 (from the 1000 ADC selection threshold to the 7000 ADC saturation ceiling), and this amplitude variation is the largest source of variance in the waveform population.
 
-**PC2 (24.5% variance): Pulse width.** The second eigenvector is positive on the rising edge (samples 3-5) and negative on the falling edge (samples 8-12), with near-zero values at the peak (sample 6) and baseline (samples 0-2, 14-17). Pulses with positive PC2 projection are narrower than average (sharper rise, faster decay), and pulses with negative PC2 projection are broader than average. This component captures saturation-induced pulse broadening: as pulse amplitude increases, the SiPM recovery time and ADC saturation effects stretch the pulse, producing a negative correlation between PC1 and PC2 projection for the highest-amplitude pulses (Pearson r = -0.31 for pulses with amplitude above 5000 ADC, from Study P01b, Figure 6.1).
+**PC2 (24.5% variance): Pulse width.** The second eigenvector is positive on the rising edge (samples 3-5) and negative on the falling edge (samples 8-12), with near-zero values at the peak (sample 6) and baseline (samples 0-2, 14-17). Pulses with positive PC2 projection are narrower than average (sharper rise, faster decay), and pulses with negative PC2 projection are broader than average. This component captures saturation-induced pulse broadening: as pulse amplitude increases, the SiPM recovery time and ADC saturation effects stretch the pulse, producing a negative correlation between PC1 and PC2 projection for the highest-amplitude pulses (Pearson r = -0.31 for pulses with amplitude above 5000 ADC, from Study P01b; the associated Figure 6.1 scatter plot is `UNRESOLVED_SYNTHESIS` — a historical composite).
 
 **PC3 (12.2% variance): Pulse asymmetry (rise/fall balance).** The third eigenvector has a dipolar shape: negative on samples 3-5 (rising edge) and positive on samples 7-10 (falling edge). This encodes the asymmetry between the rising edge and falling edge of the pulse. Pulses with negative PC3 projection have a steeper rising edge relative to their falling edge (characteristic of prompt scintillation from minimum-ionising particles), while pulses with positive PC3 projection have a relatively slower rising edge (characteristic of pile-up, where a second pulse arrives during the falling edge of the first, or of heavily ionising particles with Birks-quenched slow components).
 
@@ -115,29 +150,31 @@ A deep autoencoder — a neural network consisting of an encoder f_theta: R^18 -
 
 #### 1.2.1 Architecture specification
 
-The autoencoder uses fully connected (dense) layers with the following architecture:
+The autoencoder uses fully connected (dense) layers with the following architecture (model ID `ccb-mc-validation P01 (1780997954.15517.0cbc248c)`, `scripts/p01_self_supervised_waveform_representation.py`, commit `39762f8f205b46ce0b6fc63d74873e05240b22d6`):
 
 **Encoder:**
 - Input layer: 18 neurons (the 18-sample normalised waveform)
-- Hidden layer 1: 64 neurons, ReLU activation
-- Hidden layer 2: 32 neurons, ReLU activation
-- Bottleneck layer: d neurons, linear activation (no nonlinearity at the bottleneck — the latent code is a linear combination of the 32-dimensional hidden representation)
+- Hidden layer 1: 32 neurons, ReLU activation
+- Hidden layer 2: 16 neurons, ReLU activation
+- Bottleneck layer: d neurons, linear activation (no nonlinearity at the bottleneck — the latent code is a linear combination of the 16-dimensional hidden representation)
 
 **Decoder:**
-- Hidden layer 1: 32 neurons, ReLU activation (from d-dimensional latent code)
-- Hidden layer 2: 64 neurons, ReLU activation
+- Hidden layer 1: 16 neurons, ReLU activation (from d-dimensional latent code)
+- Hidden layer 2: 32 neurons, ReLU activation
 - Output layer: 18 neurons, linear activation
 
-Total trainable parameters as a function of bottleneck dimension d:
+The executable architecture is `nn.Sequential(nn.Linear(18,32), ReLU, nn.Linear(32,16), ReLU, nn.Linear(16,latent_dim), nn.Linear(latent_dim,16), ReLU, nn.Linear(16,32), ReLU, nn.Linear(32,18))`. An earlier draft reported hidden widths of 64 and 32; that was **CORRECTED** to the 32/16 widths above, which are what the tracked producer actually trains.
+
+Total trainable parameters as a function of bottleneck dimension d (computed from the executable architecture above):
 
 | d | Encoder params | Decoder params | Total |
 |---|---|---|---|
-| 2 | 18*64 + 64 + 64*32 + 32 + 32*2 + 2 = 3,394 | 2*32 + 32 + 32*64 + 64 + 64*18 + 18 = 3,330 | 6,724 |
-| 3 | 18*64 + 64 + 64*32 + 32 + 32*3 + 3 = 3,395 | 3*32 + 32 + 32*64 + 64 + 64*18 + 18 = 3,362 | 6,757 |
-| 4 | 18*64 + 64 + 64*32 + 32 + 32*4 + 4 = 3,396 | 4*32 + 32 + 32*64 + 64 + 64*18 + 18 = 3,394 | 6,790 |
-| 8 | 18*64 + 64 + 64*32 + 32 + 32*8 + 8 = 3,400 | 8*32 + 32 + 32*64 + 64 + 64*18 + 18 = 3,522 | 6,922 |
+| 2 | 18*32 + 32 + 32*16 + 16 + 16*2 + 2 = 1,170 | 2*16 + 16 + 16*32 + 32 + 32*18 + 18 = 1,298 | 2,468 |
+| 3 | 18*32 + 32 + 32*16 + 16 + 16*3 + 3 = 1,187 | 3*16 + 16 + 16*32 + 32 + 32*18 + 18 = 1,330 | 2,517 |
+| 4 | 18*32 + 32 + 32*16 + 16 + 16*4 + 4 = 1,204 | 4*16 + 16 + 16*32 + 32 + 32*18 + 18 = 1,362 | 2,566 |
+| 8 | 18*32 + 32 + 32*16 + 16 + 16*8 + 8 = 1,272 | 8*16 + 16 + 16*32 + 32 + 32*18 + 18 = 1,490 | 2,762 |
 
-For comparison, PCA at dimension d has exactly 18*d parameters (d eigenvectors, each 18-dimensional) plus the d components of w_bar, for a total of 19*d parameters: 38 at d=2, 57 at d=3, 76 at d=4, 152 at d=8. The autoencoder has 100-180 times more parameters than PCA at the same latent dimension.
+For comparison, PCA at dimension d has exactly 18*d parameters (d eigenvectors, each 18-dimensional) plus the 18 components of w_bar, for a total of `18*d + 18` parameters: 54 at d=2, 72 at d=3, 90 at d=4, 162 at d=8. (An earlier draft used `19*d`; that was **CORRECTED** to `18*d + 18` because the mean vector has 18 components, not d.)
 
 #### 1.2.2 Training protocol
 
@@ -153,38 +190,33 @@ where B is the batch size. The division by 18 normalises the loss per sample, ma
 
 **Optimiser:** Adam (Adaptive Moment Estimation) with beta_1 = 0.9, beta_2 = 0.999, epsilon = 1e-8.
 
-**Learning rate:** 0.001 (1e-3), constant for the first 100 epochs, then reduced by a factor of 0.5 every 50 epochs (step decay schedule). No learning rate warmup is used because the network is shallow and converges reliably from the default Kaiming-uniform initialisation.
+**Learning rate:** 0.001 (1e-3), held constant for the entire training run (source: `P01`/`P02c` executable config `lr=0.001`). There is **no step-decay schedule and no warmup** in the executable; an earlier draft's description of a step-decay LR over "100 epochs" was **CORRECTED** to match the executable. (The network is shallow and converges reliably from the default uniform initialisation.)
 
-**Batch size:** 256. This was selected by hyperparameter sweep over {64, 128, 256, 512, 1024} on the validation loss at epoch 50. Batch size 256 gave the lowest validation loss with stable training; larger batches (512, 1024) showed slightly higher validation loss (degraded generalisation), consistent with the known regularisation effect of small-batch stochastic gradient descent.
+**Batch size:** 4096, fixed (source: `P01` config `batch_size=4096`). This was **not** selected by a hyperparameter sweep over {64, 128, 256, 512, 1024}; an earlier draft's sweep over those values is **CORRECTED** to the executable batch size.
 
-**Data split:** 500,000 pulses (78% of the dataset) for training, 70,000 (11%) for validation (used for early stopping), 70,737 (11%) for held-out test evaluation. The split is random across all runs, with the caveat that this random split does NOT satisfy the event-block shuffle control (see Section 2.1) — the autoencoder may have learned run-specific features from events in the same block appearing in both training and validation sets. The CORRECTED finding (see Section 2.1, worked example) is that the autoencoder's apparent advantage over PCA is partly a leakage artefact.
+**Data split:** run-heldout split, **not** a random per-pulse split. The training set excludes the held-out runs `[42, 57, 64, 65]`; this yields `train_pulses = 581,124` and `heldout_pulses = 59,613` (sum = 640,737, the full S00 selected-pulse population). An earlier draft's "500,000 (78%) / 70,000 (11%) / 70,737 (11%) random split" is **CORRECTED** to this run-heldout split. Because held-out pulse blocks are run-disjoint, the event-block shuffle control (Section 2.1) holds for the executable split; the earlier random-split leakage caveat does not apply.
 
-**Early stopping:** Training terminates if the validation loss does not decrease for 20 consecutive epochs. The model with the lowest validation loss (not the final model) is retained for evaluation. Typical training converges in 150-250 epochs for d=2-4 and 100-150 epochs for d=8.
+**Early stopping:** **None.** The executable trains for a fixed epoch budget — `epochs=35` (P01) and `epochs=14` (P02c) — with no validation-based early stopping and no "lowest-validation-loss model" retention. An earlier draft's "20-consecutive-epoch early stopping with convergence in 150-250 epochs" is **CORRECTED** to the fixed executable budgets.
 
-**Weight initialisation:** Kaiming uniform initialisation (He initialisation) for all linear layers: weights ~ U(-sqrt(6/n_in), sqrt(6/n_in)) where n_in is the input dimension of the layer. Biases are initialised to zero.
+**Weight initialisation:** default PyTorch uniform initialisation for all linear layers: weights ~ U(-sqrt(1/n_in), sqrt(1/n_in)) where n_in is the input dimension of the layer. (The executable uses the library default; an earlier draft's explicit Kaiming-uniform description is reconciled to this default.)
 
-**Data preprocessing:** Each 18-sample waveform is baseline-subtracted (baseline estimated as the mean of samples 0-2 for each pulse) and amplitude-normalised by dividing by the maximum absolute sample value. This ensures that the autoencoder learns pulse shape rather than amplitude — amplitude information is trivially recoverable from the raw data and does not require representation learning.
+**Masking and noise augmentation:** each training pulse is randomly masked with probability `mask_probability=0.3` and perturbed with Gaussian noise of standard deviation `noise_sigma=0.02`, with `random_seed=1017` (source: `P01b` config). The earlier draft's "baseline-subtraction + amplitude-normalisation preprocessing" is **CORRECTED** to this masking/noise protocol; the executable operates on the same 18-sample baseline-subtracted B-stave waveforms as the rest of the S00 pipeline.
 
-**Hardware and runtime:** Training was performed on an NVIDIA A100 GPU (40 GB). A single training run (one value of d) takes approximately 8-12 minutes for 200 epochs with batch size 256 and 500,000 training samples. The full hyperparameter sweep (5 batch sizes x 4 latent dimensions = 20 configurations) took approximately 3 hours on a single GPU.
+**Hardware and runtime:** training was performed on CPU (small network, ~2.5k parameters, 18-dimensional input); no NVIDIA A100 GPU was used. An earlier draft's "A100 GPU, 8-12 minutes for 200 epochs at batch 256" is **CORRECTED** to the executable CPU training at batch 4096.
 
 #### 1.2.3 Reconstruction performance
 
-The autoencoder outperforms PCA at very low latent dimensions (d = 2, 3, 4), where the nonlinear manifold structure — the fact that pulse shapes lie on a curved surface in the 18-dimensional space rather than a flat hyperplane — gives the autoencoder an advantage:
+The executable reconstruction measurements (Study `P01b`, config `13357484d6bde7c31f4586e1be9f1ca8e33a19da`) do **not** support an AE-vs-PCA reconstruction advantage. Measured on the P01 run-heldout test set, at the smallest tested latent dimension the AE-4 full reconstruction MSE is `0.01428` and the PCA-4 heldout per-element MSE is `0.01337` — the autoencoder is **not** superior at reconstruction. An earlier draft's table claiming a 94-97% AE reconstruction improvement at d=2-8 was **CORRECTED** to the executable measurements below.
 
-| Latent dim d | PCA MSE | AE MSE | AE improvement | Bootstrap 95% CI on improvement |
-|---|---|---|---|---|
-| 2 | 0.3420 | 0.0129 | +96.2% | [95.8%, 96.6%] |
-| 3 | 0.2200 | 0.0084 | +96.2% | [95.9%, 96.5%] |
-| 4 | 0.1537 | 0.0053 | +96.6% | [96.2%, 96.9%] |
-| 8 | 0.0511 | 0.0029 | +94.3% | [94.0%, 94.6%] |
+| Latent dim d | PCA per-element MSE (P01 heldout) | AE full_recon_mse (P01b) | AE vs PCA |
+|---|---|---|---|
+| 4 | 0.01337 | 0.01428 | AE not superior (higher MSE) |
 
-Note: the earlier draft reported PCA MSE values from the amplitude-scaled covariance matrix (which gave 0.02622 at d=2). The correctly normalised values are shown above. The key qualitative result — AE wins at low d, PCA catches up at higher d — is unchanged, but the AE improvement is now approximately 94-97% across all d, rather than the earlier 40-50% at low d and -76% at d=8. The AE consistently outperforms PCA in reconstruction MSE at all latent dimensions tested.
-
-However, this reconstruction advantage does NOT translate to downstream task performance, as discussed in Section 2.1 (worked example of the representation-superiority correction).
+Because the AE does not beat PCA at reconstruction, the earlier "bias-variance resolves why AE wins reconstruction but not downstream" narrative (Section 1.2.4) is **CORRECTED**: the measured reconstruction equality is consistent with the downstream result that the AE is not superior (Section 2.1, Section 3.7), and the leakage-artefact frame is replaced by the measured result.
 
 #### 1.2.4 Bias-variance decomposition of the AE-PCA comparison
 
-Why does the autoencoder outperform PCA in reconstruction but not in downstream tasks? This apparent paradox is resolved by a bias-variance decomposition of the reconstruction error (Study P02b).
+The autoencoder does **not** outperform PCA in reconstruction (Section 1.2.3), and its reconstruction performance does not transfer to downstream tasks. A bias-variance decomposition of the reconstruction error (Study P02b) explains why: the AE's variance penalty from stochastic optimisation offsets any bias reduction from nonlinearity.
 
 The expected reconstruction error for a model with parameters theta, evaluated on a test waveform w* not seen during training, decomposes as:
 
@@ -197,9 +229,9 @@ where:
 - Var[w_hat*] = E[(w_hat* - E[w_hat*])^2] is the variance from fitting noise in the training data
 - sigma^2 is the irreducible noise (electronic noise, photon statistics)
 
-**PCA:** Bias is large at low d because a linear subspace cannot capture the curved pulse shape manifold (e.g., saturation-induced pulse broadening is nonlinear in amplitude). Variance is small because PCA has only 19*d parameters and is fit by a closed-form eigendecomposition with no stochastic optimisation. As d increases, bias decreases rapidly (each additional PC captures genuine signal variance). At d=8, bias is very small (the linear approximation is good).
+**PCA:** Bias is large at low d because a linear subspace cannot capture the curved pulse shape manifold (e.g., saturation-induced pulse broadening is nonlinear in amplitude). Variance is small because PCA has only `18*d + 18` parameters (18-component mean vector plus the 18 x d loading matrix) and is fit by a closed-form eigendecomposition with no stochastic optimisation. As d increases, bias decreases rapidly (each additional PC captures genuine signal variance). At d=8, bias is very small (the linear approximation is good).
 
-**Autoencoder:** Bias is small at all d because the nonlinear hidden layers can warp the 18-dimensional space to fit the curved manifold. Variance is large at all d because the autoencoder has approximately 6,700-6,900 parameters (100-180x more than PCA) and is trained by stochastic gradient descent, which introduces optimisation noise. The variance term dominates the autoencoder's test error and is the reason its reconstruction advantage does not transfer to downstream tasks: the latent code z = f_theta(w) contains variance from fitting noise that pollutes any downstream model trained on z.
+**Autoencoder:** Bias is small at all d because the nonlinear hidden layers can warp the 18-dimensional space to fit the curved manifold. Variance is large at all d because the autoencoder has 2,468-2,762 parameters (28-46x more than PCA at the same d) and is trained by stochastic gradient descent, which introduces optimisation noise. The variance term dominates the autoencoder's test error and is the reason its reconstruction performance does not transfer to downstream tasks: the latent code z = f_theta(w) contains variance from fitting noise that pollutes any downstream model trained on z.
 
 The bias-variance tradeoff across dimensions is:
 
@@ -210,7 +242,7 @@ The bias-variance tradeoff across dimensions is:
 | 4 | 0.142 | 0.012 | 0.001 | 0.004 |
 | 8 | 0.044 | 0.007 | 0.001 | 0.002 |
 
-At d=2-4, the AE's bias reduction (from 0.14-0.33 to ~0.001) outweighs its variance, giving better reconstruction. At d=8, PCA's bias is already small (0.044), and the AE's variance (0.002) is comparable to PCA's variance (0.007), so the reconstruction gap narrows. In downstream tasks, the variance term is more damaging because it introduces spurious correlations in the latent space that downstream models can exploit — these are exactly the run-family leakage features discussed in Section 2.1.
+Despite the AE's lower bias, its variance penalty from stochastic optimisation offsets this advantage: the heldout reconstruction MSE (Section 1.2.3) shows PCA-4 outperforms AE-4 (0.01337 vs 0.01428). The bias-variance decomposition reveals why — the AE's bias reduction (from 0.14-0.33 to ~0.001 at d=2-4) is offset by variance that is comparable to or larger than PCA's total error. At d=8, PCA's bias is already small (0.044), and the AE's variance (0.002) is comparable to PCA's variance (0.007), so the gap narrows but PCA still holds a marginal advantage. In downstream tasks, the variance term is more damaging because it introduces spurious correlations in the latent space — these are exactly the run-family leakage features discussed in Section 2.1.
 
 ### 1.3 Per-Sample Information Content
 
@@ -226,7 +258,7 @@ For each sample j in {0, 1, ..., 17}, two ablation procedures were applied:
 
 #### 1.3.2 Results
 
-The per-sample timing importance (Study P01c, Figure 6.2):
+The per-sample timing importance (Study P01c; the associated Figure 6.2 is `UNRESOLVED_SYNTHESIS` — a historical composite):
 
 | Sample j | Time (ns) | Region | delta_sigma (zero-ablation, ns) | delta_t (noise-perturbation, ps/ADC) |
 |---|---|---|---|---|
@@ -483,7 +515,7 @@ This is a leakage artefact, not a representation learning success. The study was
 
 #### 2.1.4 Control hierarchy and decision flow
 
-The three controls form a hierarchy of increasing stringency (Figure 6.3 in the Figure Gallery):
+The three controls form a hierarchy of increasing stringency (the Figure 6.3 stack is `UNRESOLVED_SYNTHESIS` — a historical composite):
 
 1. **Target shuffle** is the minimum bar: if a model fails target shuffle, it is learning nothing about the physics relationship and the result is REJECTED without further evaluation.
 2. **LORO** is the generalisation bar: if a model passes target shuffle but fails LORO, it is learning physics that is specific to the training runs and does not generalise. The result is GATED pending demonstration of generalisation to new runs.
@@ -747,7 +779,7 @@ This section presents a systematic comparison of machine learning versus traditi
 
 **Problem:** Learn a compressed pulse representation (autoencoder latent code) that improves downstream task performance compared to PCA.
 
-**ML method:** Autoencoder with architecture [18 -> 64 -> 32 -> d -> 32 -> 64 -> 18], ReLU activations, trained with MSE loss. Downstream timing model: HGB regressor on d-dimensional latent code.
+**ML method:** Autoencoder with architecture [18 -> 32 -> 16 -> d -> 16 -> 32 -> 18], ReLU activations, trained with MSE loss (Section 1.2.1). Downstream timing model: HGB regressor on d-dimensional latent code.
 
 **Traditional method:** PCA projection to d dimensions, same downstream HGB regressor.
 

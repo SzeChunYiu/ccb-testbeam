@@ -1,0 +1,12 @@
+profile_id: hyp_qgsp_inclxx_candidate
+status: HYPOTHESIS
+claims_authorized: false
+geant4_reference_list: QGSP_INCLXX
+applicability_note: >
+  INCL++ candidate for p/d projectiles from ~1 MeV (Geant4 Physics Reference
+  Manual INCL++ chapter). Must only enter the uncertainty ensemble after
+  isotope/data coverage and cut/step policy (#1089/#1095) are explicit.
+  Not approved; no invented preference over BIC.
+issue: 1006
+contradicts:
+  - hyp_qgsp_bic_legacy_hardcoded

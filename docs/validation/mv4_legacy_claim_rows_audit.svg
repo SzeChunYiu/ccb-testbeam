@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="520" viewBox="0 0 760 520" role="img" aria-labelledby="title desc">
+<title id="title">Legacy MV4 timing claim remediation</title>
+<desc id="desc">Five unsupported values are withheld, two pulls are gated toy diagnostics, and the qualitative method verdict is REVIEW.</desc>
+<defs><pattern id="blocked" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#555" stroke-width="2"/></pattern></defs>
+<rect width="100%" height="100%" fill="white"/>
+<text x="25" y="32" font-family="sans-serif" font-size="21" font-weight="bold">MV4 legacy timing claims: source-bound state</text>
+<text x="25" y="56" font-family="sans-serif" font-size="13">Software/provenance evidence only — no detector timing measurement.</text>
+<text x="25" y="105" font-family="monospace" font-size="14">CL-002</text>
+<rect x="115" y="86" width="600" height="28" fill="url(#blocked)" stroke="black"/>
+<text x="130" y="105" font-family="sans-serif" font-size="13">BLOCKED: value withheld</text>
+<text x="25" y="151" font-family="monospace" font-size="14">CL-003</text>
+<rect x="115" y="132" width="600" height="28" fill="url(#blocked)" stroke="black"/>
+<text x="130" y="151" font-family="sans-serif" font-size="13">BLOCKED: value withheld</text>
+<text x="25" y="197" font-family="monospace" font-size="14">CL-004</text>
+<rect x="115" y="178" width="600" height="28" fill="url(#blocked)" stroke="black"/>
+<text x="130" y="197" font-family="sans-serif" font-size="13">BLOCKED: value withheld</text>
+<text x="25" y="243" font-family="monospace" font-size="14">CL-005</text>
+<rect x="115" y="224" width="600" height="28" fill="url(#blocked)" stroke="black"/>
+<text x="130" y="243" font-family="sans-serif" font-size="13">BLOCKED: value withheld</text>
+<text x="25" y="289" font-family="monospace" font-size="14">CL-006</text>
+<rect x="115" y="270" width="600" height="28" fill="url(#blocked)" stroke="black"/>
+<text x="130" y="289" font-family="sans-serif" font-size="13">BLOCKED: value withheld</text>
+<text x="25" y="335" font-family="monospace" font-size="14">CL-007</text>
+<rect x="115" y="316" width="600" height="28" fill="#ddd" stroke="black"/>
+<text x="130" y="335" font-family="sans-serif" font-size="13">GATED: -1.054403396247793</text>
+<text x="25" y="381" font-family="monospace" font-size="14">CL-008</text>
+<rect x="115" y="362" width="600" height="28" fill="#ddd" stroke="black"/>
+<text x="130" y="381" font-family="sans-serif" font-size="13">GATED: 2.680528799917713</text>
+<text x="25" y="427" font-family="monospace" font-size="14">CL-009</text>
+<rect x="115" y="408" width="600" height="28" fill="#ddd" stroke="black"/>
+<text x="130" y="427" font-family="sans-serif" font-size="13">REVIEW: REVIEW</text>
+<text x="25" y="485" font-family="sans-serif" font-size="12">Status: VALIDATED; policy: LEGACY_MV4_TIMING_REQUIRES_STRICT_INPUTS_AND_SOURCE_BOUND_CLAIMS</text>
+</svg>

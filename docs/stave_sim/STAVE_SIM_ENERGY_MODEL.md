@@ -76,5 +76,11 @@ The first-order model matches the data amplitude range within uncertainties.
 
 ## Related
 - [Issue #796](https://github.com/SzeChunYiu/ccb-testbeam/issues/796)
-- [MV0 calibration](reports/mv0_calibration_1782677847/REPORT.md)
-- [G4-08 truth bridge](reports/1783883140.39222.3c4045b1__g4_08_keyed_digitized_geant4_native_join/)
+- [MV0 calibration](../../reports/mv0_calibration_1782677847/REPORT.md)
+- [G4-08 truth bridge](../../reports/1783883140.39222.3c4045b1__g4_08_keyed_digitized_geant4_native_join/)
+
+<!-- waveB-lane02-quenching -->
+
+## Quenching model status (Wave B Lane 02 / #1008)
+
+Executable quenching is `birks_geant4` with status `HYPOTHESIS` (`quenching_claims_authorized=false`). Within-form `kB` scans are nuisance variation only. Multi-model closure (Chou/Wright/Voltz or CCB-calibrated response tables) is **BLOCKED** until scintillator identity (#1000) and the #1008 programme are closed. See `docs/adr/ADR-0004-quenching-model-hypothesis.md`.

@@ -356,7 +356,31 @@ class PipelineOrchestrator:
         self._event("preflight", status, {"cluster": cluster})
         return preflight
 
+    def _running_on_lunarc(self) -> bool:
+        """True when this process is already on a LUNARC node (no nested ssh)."""
+        markers = (
+            Path("/projects/hep/fs10"),
+            Path("/home/s/scyiu"),
+        )
+        if any(p.exists() for p in markers):
+            return True
+        host = (self.exec_raw.get("cluster", {}) or {}).get("ssh_host", "lunarc") if isinstance(self.exec_raw, dict) else "lunarc"
+        try:
+            import socket
+            return host in socket.gethostname() or "lunarc" in socket.gethostname().lower()
+        except OSError:
+            return False
+
+    def _slurm_cmd(self, remote_command: str) -> list[str]:
+        """Run sacct/sbatch directly on-cluster; ssh only from off-cluster hosts."""
+        if self._running_on_lunarc():
+            return ["bash", "-lc", remote_command]
+        host = (self.exec_raw.get("cluster", {}) or {}).get("ssh_host", "lunarc") if isinstance(self.exec_raw, dict) else "lunarc"
+        return ["ssh", "-o", "BatchMode=yes", host, remote_command]
+
     def _cluster_probe(self) -> str:
+        if self._running_on_lunarc():
+            return "REACHABLE"
         host = self.exec_raw.get("cluster", {}).get("ssh_host", "lunarc") if isinstance(self.exec_raw, dict) else "lunarc"
         try:
             check = subprocess.run(["ssh", "-O", "check", host], capture_output=True, text=True, timeout=8)
@@ -420,6 +444,14 @@ class PipelineOrchestrator:
     def test(self, scope: str = "unit", strict: bool = False) -> dict[str, Any]:
         run_path = self._ensure_run()
         cmd = [sys.executable, "-m", "pytest", "-q"]
+        if scope == "integration":
+            cmd.append("tests/integration")
+        elif scope == "all":
+            cmd.append("tests/")
+        else:  # "unit" (default) -- exclude integration
+            cmd += ["tests/", "--ignore=tests/integration"]
+        if strict:
+            cmd += ["-x", "--strict-markers"]
         started = datetime.now(tz=timezone.utc).isoformat()
         proc = subprocess.run(cmd, cwd=self.repo_root, capture_output=True, text=True)
         log_path = run_path / "execution" / "pytest.log"
@@ -431,6 +463,13 @@ class PipelineOrchestrator:
 
     def fixture(self, workers: int = 1, shards: int = 1) -> str:
         return self.smoke(studies="MV0,MV1,MV2,MV3,MV9", fixture=True, workers=workers, shards=shards)
+
+    @staticmethod
+    def _aggregate_smoke_status(results: dict[str, Any]) -> str:
+        """FAIL-closed gate: PASS only if every study result is PASS (and at least one ran)."""
+        if not results:
+            return "FAIL"
+        return "PASS" if all(r.get("status") == "PASS" for r in results.values()) else "FAIL"
 
     def smoke(self, studies: str = "all", fixture: bool = True, workers: int = 1, shards: int = 1) -> str:
         run_path = self._ensure_run()
@@ -461,9 +500,10 @@ class PipelineOrchestrator:
             except Exception as exc:  # keep smoke gate honest but non-fatal for missing registry
                 synth_out.write_text(f"# MV9 synthesis\n\nBLOCKED: {exc}\n", encoding="utf-8")
             results["MV9"] = {"status": STATUS_SMOKE, "artifact": str(synth_out)}
-        gate = {"run_id": self.run_id, "status": "PASS", "mode": STATUS_FIXTURE if fixture else STATUS_SMOKE, "studies": results, "workers": workers, "shards": shards, "not_for_physics": True}
+        gate_status = self._aggregate_smoke_status(results)
+        gate = {"run_id": self.run_id, "status": gate_status, "mode": STATUS_FIXTURE if fixture else STATUS_SMOKE, "studies": results, "workers": workers, "shards": shards, "not_for_physics": True}
         atomic_write_json(run_path / "SMOKE_GATE.json", gate)
-        (run_path / "SMOKE_GATE.md").write_text(f"# Smoke gate\n\nStatus: **PASS** ({gate['mode']}; not for physics)\n\nRun ID: `{self.run_id}`\n", encoding="utf-8")
+        (run_path / "SMOKE_GATE.md").write_text(f"# Smoke gate\n\nStatus: **{gate_status}** ({gate['mode']}; not for physics)\n\nRun ID: `{self.run_id}`\n", encoding="utf-8")
         self._event("smoke", "PASS", {"studies": list(results)})
         return str(self.run_id)
 
@@ -520,8 +560,9 @@ class PipelineOrchestrator:
 
     def _sacct(self, job_id: str) -> dict[str, Any]:
         try:
-            proc = subprocess.run(["ssh", "lunarc", f"sacct -X -j {job_id} --format=JobID,State,ExitCode -P"], capture_output=True, text=True, timeout=30)
-            return {"returncode": proc.returncode, "stdout": proc.stdout, "stderr": proc.stderr}
+            cmd = self._slurm_cmd(f"sacct -X -j {job_id} --format=JobID,State,ExitCode -P")
+            proc = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
+            return {"returncode": proc.returncode, "stdout": proc.stdout, "stderr": proc.stderr, "command": cmd}
         except Exception as exc:
             return {"returncode": -1, "error": str(exc)}
 
@@ -536,9 +577,48 @@ class PipelineOrchestrator:
 
     def collect(self, run_id: str | None = None) -> dict[str, Any]:
         path = self._ensure_run(run_id)
-        result = {"status": STATUS_BLOCKED, "reason": "No completed LUNARC production jobs to collect", "run_id": self.run_id}
+        artifacts: list[str] = []
+        for pattern in ("**/SMOKE_GATE.json", "**/JOB_REGISTRY.json", "**/WATCH.json", "**/*SUMMARY*.json", "**/MV*/**/*.json"):
+            for p in path.glob(pattern):
+                if p.is_file():
+                    artifacts.append(str(p.relative_to(path)))
+        registry_path = path / "execution" / "JOB_REGISTRY.json"
+        jobs = json.loads(registry_path.read_text(encoding="utf-8")) if registry_path.is_file() else {}
+        completed = False
+        for rec in jobs.values() if isinstance(jobs, dict) else []:
+            probe = rec.get("sacct_probe") or {}
+            stdout = str(probe.get("stdout") or "")
+            if "COMPLETED" in stdout:
+                completed = True
+        smoke = path / "SMOKE_GATE.json"
+        if smoke.is_file() and not jobs:
+            payload = json.loads(smoke.read_text(encoding="utf-8"))
+            result = {
+                "status": payload.get("status", STATUS_SMOKE),
+                "mode": "smoke_collect",
+                "run_id": self.run_id,
+                "artifacts": sorted(set(artifacts)),
+                "not_for_physics": True,
+                "dag_ready": True,
+            }
+            atomic_write_json(path / "execution" / "COLLECT.json", result)
+            self._event("collect", result["status"], {"artifacts": len(result["artifacts"])})
+            return result
+        if not completed and not artifacts:
+            result = {"status": STATUS_BLOCKED, "reason": "No completed LUNARC production jobs to collect", "run_id": self.run_id}
+            atomic_write_json(path / "execution" / "COLLECT.json", result)
+            self._write_production_status_report(path, status=STATUS_BLOCKED, reason=result["reason"])
+            return result
+        result = {
+            "status": STATUS_DONE if completed else STATUS_SMOKE,
+            "run_id": self.run_id,
+            "jobs": jobs,
+            "artifacts": sorted(set(artifacts)),
+            "not_for_physics": not completed,
+            "dag_ready": True,
+        }
         atomic_write_json(path / "execution" / "COLLECT.json", result)
-        self._write_production_status_report(path, status=STATUS_BLOCKED, reason=result["reason"])
+        self._event("collect", result["status"], {"artifacts": len(result["artifacts"])})
         return result
 
     
@@ -666,7 +746,18 @@ class PipelineOrchestrator:
 
     def plot(self, run_id: str | None = None) -> dict[str, Any]:
         path = self._ensure_run(run_id)
-        if (path / "VALIDATION.json").is_file():
+        val_path = path / "VALIDATION.json"
+        if val_path.is_file():
+            # Fail-closed (VAL-003): plots require a PASSING validation, not just a file.
+            try:
+                _val = json.loads(val_path.read_text(encoding="utf-8"))
+            except (OSError, ValueError):
+                _val = {}
+            if _val.get("status") != "PASS":
+                result = {"status": STATUS_BLOCKED, "reason": f"plotting gated on VALIDATION.status==PASS (got {_val.get('status')!r})"}
+                atomic_write_json(path / "figures" / "PLOT_BLOCKED.json", result)
+                self._write_production_status_report(path, status=STATUS_BLOCKED, reason=result["reason"])
+                return result
             artifacts = generate_run_summary(path)
             figure_manifest = generate_summary_figure_manifest(path)
             visual_review = generate_summary_visual_review(path)

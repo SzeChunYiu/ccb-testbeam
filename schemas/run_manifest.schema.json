@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ccb-run-manifest.schema.json",
+  "title": "CCB Test-Beam Run Manifest",
+  "type": "object",
+  "required": [
+    "task_id",
+    "git_commit",
+    "command",
+    "started_utc",
+    "inputs",
+    "configs",
+    "outputs",
+    "environment"
+  ],
+  "properties": {
+    "task_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "git_commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "dirty": {
+      "type": "boolean"
+    },
+    "command": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "cwd": {
+      "type": "string"
+    },
+    "started_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "finished_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "host": {
+      "type": "string"
+    },
+    "slurm_job_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "seed_policy": {
+      "type": "string"
+    },
+    "inputs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/file"
+      }
+    },
+    "configs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/file"
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/file"
+      }
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": {
+        "type": [
+          "string",
+          "number",
+          "boolean",
+          "null"
+        ]
+      }
+    }
+  },
+  "$defs": {
+    "file": {
+      "type": "object",
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "size_bytes": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

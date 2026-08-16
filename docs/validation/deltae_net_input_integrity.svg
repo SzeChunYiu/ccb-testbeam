@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520" viewBox="0 0 900 520" role="img" aria-labelledby="title desc">
+  <title id="title">DeltaE-E net-amplitude input-integrity remediation</title>
+  <desc id="desc">Synthetic software evidence. A finite net amplitude is accepted, while NaN and positive infinity are rejected before event-stave aggregation and missing-layer zero filling.</desc>
+  <rect width="900" height="520" fill="white"/>
+  <text x="450" y="42" text-anchor="middle" font-family="sans-serif" font-size="24" font-weight="bold">ΔE–E net-amplitude input-integrity remediation</text>
+  <text x="450" y="70" text-anchor="middle" font-family="sans-serif" font-size="14">Synthetic software/provenance evidence — not detector data</text>
+  <line x1="100" y1="400" x2="840" y2="400" stroke="black" stroke-width="2"/>
+  <line x1="100" y1="120" x2="100" y2="400" stroke="black" stroke-width="2"/>
+  <text x="58" y="405" text-anchor="middle" font-family="sans-serif" font-size="13">0</text>
+  <text x="58" y="130" text-anchor="middle" font-family="sans-serif" font-size="13">1</text>
+  <text x="26" y="260" transform="rotate(-90 26 260)" text-anchor="middle" font-family="sans-serif" font-size="15">Bridge accepted event (1=yes)</text>
+  <rect x="150" y="120" width="150" height="280" fill="#4c78a8"/>
+  <rect x="375" y="400" width="150" height="0" fill="#f58518"/>
+  <rect x="600" y="400" width="150" height="0" fill="#e45756"/>
+  <text x="225" y="110" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="bold">1</text>
+  <text x="450" y="382" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="bold">0</text>
+  <text x="675" y="382" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="bold">0</text>
+  <text x="225" y="425" text-anchor="middle" font-family="sans-serif" font-size="16">Finite 250 ADC</text>
+  <text x="450" y="425" text-anchor="middle" font-family="sans-serif" font-size="16">NaN</text>
+  <text x="675" y="425" text-anchor="middle" font-family="sans-serif" font-size="16">+infinity</text>
+  <text x="450" y="462" text-anchor="middle" font-family="sans-serif" font-size="14">Finite input retained; invalid measured rows rejected before aggregation and zero filling.</text>
+  <text x="450" y="486" text-anchor="middle" font-family="sans-serif" font-size="13">Policy: DELTAE_NET_AMPLITUDE_ROWS_MUST_BE_FINITE_NUMERIC_BEFORE_AGGREGATION</text>
+</svg>

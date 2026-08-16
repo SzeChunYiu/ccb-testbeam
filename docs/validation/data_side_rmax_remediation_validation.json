@@ -1,0 +1,108 @@
+{
+  "accepted_rmax_mhz": null,
+  "independent_calculations": {
+    "cl011_tau_ns": 124.79018394263471,
+    "composite_events": 584602,
+    "former_130ns_model_mhz": 2.923076923076923,
+    "former_minus_exact_mhz": -0.1220343829107633,
+    "interpretation": "Both rates are convention/model sensitivities. Selected-pulse occupancy does not identify absolute Rmax.",
+    "legacy_mu_convention": 0.38,
+    "mean_selected_pulses_per_event": 1.0960225931488432,
+    "model_sensitivity_only_mhz": 3.045111305987686,
+    "selected_pulses": 640737
+  },
+  "inputs": {
+    "ledger": {
+      "bytes": 22276,
+      "path": "docs/claim_ledger.csv",
+      "sha256": "67673cb00fb2a4704a04438cbfc87133eadda39413e65a62aa324272f2008563"
+    },
+    "report": {
+      "bytes": 7113,
+      "path": "reports/studies/data_side/REPORT.md",
+      "sha256": "c7867e0ebfe3299486d95abf6acef4b6588a5fcae11bc1ee0cca0f38d8fe90c4"
+    },
+    "script": {
+      "bytes": 13724,
+      "path": "scripts/studies/data_side_real_beam.py",
+      "sha256": "eb6fa133377c91f6804bfcb237fd5eb8aa708cdb3ae57b4b35dbee8f483ab7dc"
+    },
+    "test": {
+      "bytes": 1739,
+      "path": "tests/test_data_side_rmax_quarantine.py",
+      "sha256": "b8c4654948554492d2e5465f28428ae4ab0131e79517bd554d26a287918cd3fc"
+    }
+  },
+  "issues": [],
+  "ledger": {
+    "all_rows_exact_width": true,
+    "cl010": {
+      "allowed_status_validated": "NO",
+      "blocked_by": "S-STAT-003",
+      "ci_status": "NOT_APPLICABLE_WITH_REASON",
+      "current_value": "",
+      "source_data": "reports/mv5_pileup_1782678353/mv5_pileup_summary.json",
+      "source_report": "reports/mv5_pileup_1782678353/REPORT.md",
+      "source_script": "scripts/mv5_pileup_study.py",
+      "stat_unc": "",
+      "status": "BLOCKED",
+      "supersedes": "4.22 MHz",
+      "syst_unc": "",
+      "total_unc": "",
+      "truth_type": "derived_model_conflicted",
+      "unit": "MHz"
+    },
+    "cl011_value_ns": 124.79018394263471,
+    "columns": 43,
+    "rows": 26
+  },
+  "n_issues": 0,
+  "policy": "OCCUPANCY_DOES_NOT_IDENTIFY_ABSOLUTE_RMAX_WITHOUT_RATE_EXPOSURE",
+  "repository": {
+    "blobs": {
+      "ledger": "d666d9db6e7026c8d4ba0d69cc1fb301adf5c306",
+      "report": "b3a9c3d96a8df3b6f85be381aa6b004914eb6bf6",
+      "script": "ae5b7474a38c0b1df5cf683ab1c6de82a789b913",
+      "test": "a5ec0a18ae3e246f60ad8875249e2a10df3ba0f8"
+    },
+    "commits": [
+      {
+        "message": "docs(audit): claim Rmax occupancy remediation",
+        "sha": "676549430e33994ca66b709ba102bfdc8998cf57"
+      },
+      {
+        "message": "fix(rmax): quarantine occupancy-derived absolute rate",
+        "sha": "512671d35aa25c9830e80cd9ff525fd43254e608"
+      },
+      {
+        "message": "docs(rmax): withdraw occupancy-derived absolute rate",
+        "sha": "6255a1a263adc3f33c12f9af62ca8dafafdaf3b3"
+      },
+      {
+        "message": "docs(ledger): restore CL-010 Rmax quarantine",
+        "sha": "25a058b4438ab17a5fcad5de49f8e1716cd917de"
+      },
+      {
+        "message": "test(rmax): lock occupancy quarantine contract",
+        "sha": "d82585d006c984d03126bbe6b583dca4ddbb7f80"
+      }
+    ],
+    "full_name": "SzeChunYiu/ccb-testbeam",
+    "initial_main": "a5d66f563029183e170c24f5412fffc4e336d602"
+  },
+  "scientific_acceptance": "BLOCKED",
+  "scientific_boundary": "No raw ROOT files were reprocessed; no arrival-rate exposure, accepted mu_max, recovery ceiling, calibration, PID, or detector-performance result was produced.",
+  "stamp": "2026-07-26T091312Z",
+  "status": "VALIDATED",
+  "task_id": "AUD-LEDGER-004-R1",
+  "validation": {
+    "commands": [
+      "python -m py_compile scripts/studies/data_side_real_beam.py tests/test_data_side_rmax_quarantine.py",
+      "pytest -q tests/test_data_side_rmax_quarantine.py"
+    ],
+    "platform": "Linux-6.12.13-x86_64-with-glibc2.41",
+    "pytest": "2 passed in 0.32s",
+    "python": "3.13.5",
+    "remote_blob_identity_verified": true
+  }
+}

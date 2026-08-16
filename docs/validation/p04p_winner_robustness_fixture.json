@@ -1,0 +1,51 @@
+{
+  "harm_methods": [
+    {
+      "accepted_charge_res68_frac": 0.03902452880489024,
+      "accepted_coverage": 0.5016432417313474,
+      "accepted_coverage_ci95": [
+        0.4781032287979763,
+        0.5382552094265317
+      ],
+      "accepted_timing_abs68_ns": 0.039143681860957444,
+      "calibration_ece": 0.0750709805072009,
+      "method": "gradient_boosted_trees"
+    },
+    {
+      "accepted_charge_res68_frac": 0.04055070702536622,
+      "accepted_coverage": 0.5470846194571808,
+      "accepted_coverage_ci95": [
+        0.5225633159229767,
+        0.580955936618611
+      ],
+      "accepted_timing_abs68_ns": 0.04517760365138898,
+      "calibration_ece": 0.007440736549030646,
+      "method": "mlp"
+    },
+    {
+      "accepted_charge_res68_frac": 0.07854122474166687,
+      "accepted_coverage": 0.7965177260331445,
+      "accepted_coverage_ci95": [
+        0.7726672918889558,
+        0.823106967936089
+      ],
+      "accepted_timing_abs68_ns": 0.03807678647200362,
+      "calibration_ece": 0.13158170757289703,
+      "method": "traditional_rule"
+    },
+    {
+      "accepted_charge_res68_frac": 0.11166921405901398,
+      "accepted_coverage": 1.0,
+      "accepted_coverage_ci95": [
+        1.0,
+        1.0
+      ],
+      "accepted_timing_abs68_ns": 0.07317504179325625,
+      "calibration_ece": 0.09800307334250893,
+      "method": "shuffled_target_gbt"
+    }
+  ],
+  "study": "P04p",
+  "winner": "gradient_boosted_trees",
+  "winner_selection": "coverage>=0.50 then min accepted_charge_res68_frac, accepted_timing_abs68_ns, calibration_ece"
+}

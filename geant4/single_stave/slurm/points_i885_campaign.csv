@@ -1,0 +1,106 @@
+# issue #885/#1092/#1093 single-stave campaign. Columns: particle,energy_MeV,hit_x_cm,hit_y_cm,seed,nevents[,theta_deg,phi_deg]
+# particles=['proton', 'deuteron'] energies_MeV=[2, 5, 8, 12, 20, 30, 50, 80, 120, 150]
+# phase_space_support=central_track_plus_transverse_y_map
+# angular_coverage=NORMAL_INCIDENCE_ONLY theta_deg=0.0 phi_deg=0.0 (#1093; AppConfig defaults; submit_calibration does not pass --theta/--phi)
+# claim_gate: angular/azimuth response from this campaign alone is BLOCKED / UNVALIDATED
+# default hit_x=0.0 hit_y=0.0 cm
+# attenuation: distances_from_+x_readout_cm=[5, 10, 30, 45] -> hit_x=[20.0,15.0,-5.0,-20.0] at energies [30, 80] MeV per particle
+# transverse_y (#1092): y=[-1.0, 0.0, 1.0] cm at E=[30, 80] MeV; phase_space_status=MC_PHASE_SPACE_PROBE_DATA_Y_DISTRIBUTION_UNKNOWN
+# angular_probe (#1093): particle=proton E=30 MeV theta_deg=[0.0, 10.0] phi_deg=[0.0, 90.0]; phase_space_status=MC_SENSITIVITY_GRID_DATA_ANGLE_UNKNOWN; DATA_ANGLE_DISTRIBUTION_UNKNOWN
+# seeds=[101, 102] nevents=500 (readout at +x, READOUT_END_X_CM=25.0)
+proton,2,0.0,0.0,101,500
+proton,2,0.0,0.0,102,500
+proton,5,0.0,0.0,101,500
+proton,5,0.0,0.0,102,500
+proton,8,0.0,0.0,101,500
+proton,8,0.0,0.0,102,500
+proton,12,0.0,0.0,101,500
+proton,12,0.0,0.0,102,500
+proton,20,0.0,0.0,101,500
+proton,20,0.0,0.0,102,500
+proton,30,0.0,0.0,101,500
+proton,30,0.0,0.0,102,500
+proton,50,0.0,0.0,101,500
+proton,50,0.0,0.0,102,500
+proton,80,0.0,0.0,101,500
+proton,80,0.0,0.0,102,500
+proton,120,0.0,0.0,101,500
+proton,120,0.0,0.0,102,500
+proton,150,0.0,0.0,101,500
+proton,150,0.0,0.0,102,500
+deuteron,2,0.0,0.0,101,500
+deuteron,2,0.0,0.0,102,500
+deuteron,5,0.0,0.0,101,500
+deuteron,5,0.0,0.0,102,500
+deuteron,8,0.0,0.0,101,500
+deuteron,8,0.0,0.0,102,500
+deuteron,12,0.0,0.0,101,500
+deuteron,12,0.0,0.0,102,500
+deuteron,20,0.0,0.0,101,500
+deuteron,20,0.0,0.0,102,500
+deuteron,30,0.0,0.0,101,500
+deuteron,30,0.0,0.0,102,500
+deuteron,50,0.0,0.0,101,500
+deuteron,50,0.0,0.0,102,500
+deuteron,80,0.0,0.0,101,500
+deuteron,80,0.0,0.0,102,500
+deuteron,120,0.0,0.0,101,500
+deuteron,120,0.0,0.0,102,500
+deuteron,150,0.0,0.0,101,500
+deuteron,150,0.0,0.0,102,500
+proton,30,20.0,0.0,101,500
+proton,30,20.0,0.0,102,500
+proton,30,15.0,0.0,101,500
+proton,30,15.0,0.0,102,500
+proton,30,-5.0,0.0,101,500
+proton,30,-5.0,0.0,102,500
+proton,30,-20.0,0.0,101,500
+proton,30,-20.0,0.0,102,500
+proton,80,20.0,0.0,101,500
+proton,80,20.0,0.0,102,500
+proton,80,15.0,0.0,101,500
+proton,80,15.0,0.0,102,500
+proton,80,-5.0,0.0,101,500
+proton,80,-5.0,0.0,102,500
+proton,80,-20.0,0.0,101,500
+proton,80,-20.0,0.0,102,500
+deuteron,30,20.0,0.0,101,500
+deuteron,30,20.0,0.0,102,500
+deuteron,30,15.0,0.0,101,500
+deuteron,30,15.0,0.0,102,500
+deuteron,30,-5.0,0.0,101,500
+deuteron,30,-5.0,0.0,102,500
+deuteron,30,-20.0,0.0,101,500
+deuteron,30,-20.0,0.0,102,500
+deuteron,80,20.0,0.0,101,500
+deuteron,80,20.0,0.0,102,500
+deuteron,80,15.0,0.0,101,500
+deuteron,80,15.0,0.0,102,500
+deuteron,80,-5.0,0.0,101,500
+deuteron,80,-5.0,0.0,102,500
+deuteron,80,-20.0,0.0,101,500
+deuteron,80,-20.0,0.0,102,500
+proton,30,0.0,-1.0,101,500
+proton,30,0.0,-1.0,102,500
+proton,30,0.0,1.0,101,500
+proton,30,0.0,1.0,102,500
+proton,80,0.0,-1.0,101,500
+proton,80,0.0,-1.0,102,500
+proton,80,0.0,1.0,101,500
+proton,80,0.0,1.0,102,500
+deuteron,30,0.0,-1.0,101,500
+deuteron,30,0.0,-1.0,102,500
+deuteron,30,0.0,1.0,101,500
+deuteron,30,0.0,1.0,102,500
+deuteron,80,0.0,-1.0,101,500
+deuteron,80,0.0,-1.0,102,500
+deuteron,80,0.0,1.0,101,500
+deuteron,80,0.0,1.0,102,500
+proton,30,0.0,0.0,101,500,0.0,0.0
+proton,30,0.0,0.0,102,500,0.0,0.0
+proton,30,0.0,0.0,101,500,0.0,90.0
+proton,30,0.0,0.0,102,500,0.0,90.0
+proton,30,0.0,0.0,101,500,10.0,0.0
+proton,30,0.0,0.0,102,500,10.0,0.0
+proton,30,0.0,0.0,101,500,10.0,90.0
+proton,30,0.0,0.0,102,500,10.0,90.0

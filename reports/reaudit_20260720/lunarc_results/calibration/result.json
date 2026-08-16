@@ -1,0 +1,71 @@
+{
+  "n_events": 1000,
+  "n_files": 5,
+  "light_yield_PE_per_MeV": 7.200230469338915,
+  "offset_PE": 65.51106713214288,
+  "fit_r2": 0.8660510469629726,
+  "pooled_pe_per_edep": 10.144291249287107,
+  "points": [
+    {
+      "species": "deuteron",
+      "ke_MeV": 70.0,
+      "n": 200,
+      "edep_mean_MeV": 49.67841395246214,
+      "edep_std_MeV": 5.231846442802356,
+      "arrival_mean": 1429.105,
+      "pe_mean": 431.565,
+      "pe_std": 62.42239802346591,
+      "pe_over_edep": 8.687173475646176,
+      "resolution": 0.14464193811700649
+    },
+    {
+      "species": "deuteron",
+      "ke_MeV": 110.0,
+      "n": 200,
+      "edep_mean_MeV": 28.582263937963933,
+      "edep_std_MeV": 8.428320191407536,
+      "arrival_mean": 910.04,
+      "pe_mean": 275.535,
+      "pe_std": 47.50156602681642,
+      "pe_over_edep": 9.640069121117627,
+      "resolution": 0.172397575722926
+    },
+    {
+      "species": "proton",
+      "ke_MeV": 60.0,
+      "n": 200,
+      "edep_mean_MeV": 28.665770264738658,
+      "edep_std_MeV": 4.666434935276722,
+      "arrival_mean": 935.18,
+      "pe_mean": 282.41,
+      "pe_std": 25.243254544531297,
+      "pe_over_edep": 9.851819692680243,
+      "resolution": 0.08938512993354093
+    },
+    {
+      "species": "proton",
+      "ke_MeV": 100.0,
+      "n": 200,
+      "edep_mean_MeV": 16.21927437647282,
+      "edep_std_MeV": 2.492438248284455,
+      "arrival_mean": 583.255,
+      "pe_mean": 176.64,
+      "pe_std": 16.510917600182008,
+      "pe_over_edep": 10.890746151765489,
+      "resolution": 0.09347213315320431
+    },
+    {
+      "species": "proton",
+      "ke_MeV": 140.0,
+      "n": 200,
+      "edep_mean_MeV": 12.693632681264068,
+      "edep_std_MeV": 5.299440138822514,
+      "arrival_mean": 458.45,
+      "pe_mean": 139.48,
+      "pe_std": 29.042031609376092,
+      "pe_over_edep": 10.98818624284551,
+      "resolution": 0.2082164583408094
+    }
+  ],
+  "definition": "detected_readout PE vs edep_scint (Birks-quenched) MeV, single-stave optical mode"
+}

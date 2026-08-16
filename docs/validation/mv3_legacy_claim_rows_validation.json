@@ -1,0 +1,71 @@
+{
+  "claims": [
+    "CL-019",
+    "CL-020",
+    "CL-021"
+  ],
+  "inputs": {
+    "claim_ledger": {
+      "bytes": 18183,
+      "path": "docs/claim_ledger.csv",
+      "sha256": "cfdfc8b38e53158fee5cb32a61165d2fc8c2e2370d81580e5f75fe369963fbcb",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    },
+    "current_remediation": {
+      "bytes": 7903,
+      "git_blob": "9b0dfeaa6e74401345bc78c7ab82b33d7868b665",
+      "path": "src/ccb_mc_validation/studies/mv3_stopping_depth.py",
+      "sha256": "6f5d206caed1b54d0b6e2d0a9ef558e8f0e298bcb2683ccedd6fe33ff8e7bc43",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    },
+    "legacy_report": {
+      "bytes": 2232,
+      "git_blob": "b72eed4f7eb3237040a1346d7253080c098c8986",
+      "path": "reports/mv3_stopping_v3_1782679272/REPORT.md",
+      "sha256": "a1027e168d1f0321a334c44f1a1d59176a17869b5239991709b861db7962fa0f",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    }
+  },
+  "issues": [],
+  "n_issues": 0,
+  "policy": "LEGACY_MV3_PROFILE_REQUIRES_EXACT_COUNTS_AND_FAIL_CLOSED_RERUN",
+  "remediation_contract": {
+    "blocks_without_inputs": true,
+    "removes_event_parity_proxy": true,
+    "removes_stop_layer_occupancy_proxy": true,
+    "requires_per_layer_mask": true,
+    "requires_sample_label": true
+  },
+  "rounding_identifiability": {
+    "data_b8": {
+      "denominator": 306745,
+      "possible_numerator_count": 307,
+      "possible_numerator_max": 7208,
+      "possible_numerator_min": 6902,
+      "reported_fraction": 0.023,
+      "rounding_decimals": 3
+    },
+    "mc_b8": {
+      "denominator": 249484,
+      "possible_numerator_count": 249,
+      "possible_numerator_max": 55759,
+      "possible_numerator_min": 55511,
+      "reported_fraction": 0.223,
+      "rounding_decimals": 3
+    }
+  },
+  "source_contract": {
+    "b8_data_fraction": 0.023,
+    "b8_mc_fraction": 0.223,
+    "chi2_ndf_label": 68269.4,
+    "data_events": 306745,
+    "data_fraction_sum": 1.001,
+    "exact_per_stave_counts_present": false,
+    "mc_fraction_sum": 1.0,
+    "mc_tracks_above_threshold": 249484,
+    "separate_chi2_ndf_p_value_present": false
+  },
+  "status": "VALIDATED",
+  "validator": "validate_mv3_legacy_claim_rows.py",
+  "version": "1.0.0"
+}

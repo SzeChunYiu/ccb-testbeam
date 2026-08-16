@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0.0",
+  "contract_id": "MV0_DIGITIZER_MODEL_IDENTITY",
+  "issue": "#1078",
+  "audit_id": "ARU-MV0-MODEL-IDENTITY-001",
+  "model_id": "MV0_EXECUTABLE_DEFAULT_V1",
+  "authority": "EXECUTABLE",
+  "source_modules": [
+    "src/ccb_mc_validation/digitizer/pipeline.py",
+    "src/ccb_mc_validation/digitizer/electronics.py",
+    "src/ccb_mc_validation/digitizer/transport.py",
+    "src/ccb_mc_validation/digitizer/sampling.py"
+  ],
+  "frozen_defaults": {
+    "n_samples": 18,
+    "sample_spacing_ns": 10.0,
+    "tau_rise_ns": 2.0,
+    "tau_decay_ns": 35.0,
+    "transport": {
+      "model": "zero_mean_gaussian_time_smear",
+      "sigma_ns": 0.5,
+      "position_attenuation": false,
+      "lambda_att_cm": null
+    },
+    "electronics": {
+      "gain_adc_per_mev": 120.0,
+      "gain_sigma_adc_per_mev": null,
+      "noise_adc_rms": 8.0,
+      "pedestal_adc": 300.0,
+      "adc_bits": 14,
+      "adc_ceiling": 7000
+    },
+    "apply_birks_default": false,
+    "stages_default": [
+      "birks",
+      "scintillation",
+      "transport",
+      "sampling"
+    ]
+  },
+  "divergent_prose": {
+    "path": "docs/academic_chapters/10_mc_validation.md",
+    "status": "DIVERGENT_FROM_EXECUTABLE",
+    "examples": [
+      "Chapter claims WLS position attenuation exp(-z/lambda_att) with lambda_att=250 cm \u2014 absent from transport.py",
+      "Chapter claims gain 245.6 +/- 73.7 ADC/MeV with per-event sigma_G \u2014 absent from ElectronicsConfig",
+      "Chapter claims noise sigma=50 ADC \u2014 executable default is 8.0"
+    ],
+    "rule": "Reports may only authorise MV0/production-digitizer claims when generated from or validated against this frozen identity"
+  }
+}

@@ -1,0 +1,269 @@
+{
+  "artifacts": [
+    "REPORT.md",
+    "result.json",
+    "manifest.json",
+    "input_sha256.csv",
+    "raw_reproduction_by_run.csv",
+    "class_counts.csv",
+    "method_metrics.csv",
+    "per_species_metrics.csv",
+    "fold_metrics.csv",
+    "confusion_matrix_winner.csv",
+    "leakage_checks.csv",
+    "systematics_controls.csv",
+    "method_vs_traditional_delta.csv",
+    "raw_run_family_controls.csv"
+  ],
+  "classes": {
+    "alpha": 1000020040,
+    "carbon12": 1000060120,
+    "deuteron": 1000010020,
+    "proton": 2212
+  },
+  "geant4_input": "/home/billy/ccb-geant4/output_krakow_1M.root",
+  "leakage_checks_passed": true,
+  "method_vs_traditional_delta": [
+    {
+      "delta_balanced_accuracy_vs_traditional": 0.11804761904761907,
+      "delta_macro_f1_vs_traditional": 0.21941726072842616,
+      "method": "gradient_boosted_trees"
+    },
+    {
+      "delta_balanced_accuracy_vs_traditional": 0.0895773809523811,
+      "delta_macro_f1_vs_traditional": 0.09511499645265176,
+      "method": "ridge"
+    },
+    {
+      "delta_balanced_accuracy_vs_traditional": 0.057851190476190695,
+      "delta_macro_f1_vs_traditional": 0.06105049405381968,
+      "method": "hybrid_cnn_tabular"
+    },
+    {
+      "delta_balanced_accuracy_vs_traditional": 0.0,
+      "delta_macro_f1_vs_traditional": 0.0,
+      "method": "traditional_bands"
+    },
+    {
+      "delta_balanced_accuracy_vs_traditional": -0.009309523809523657,
+      "delta_macro_f1_vs_traditional": 0.1394327636329059,
+      "method": "mlp"
+    },
+    {
+      "delta_balanced_accuracy_vs_traditional": -0.22083928571428557,
+      "delta_macro_f1_vs_traditional": -0.11227368404407567,
+      "method": "cnn1d"
+    }
+  ],
+  "methods": [
+    {
+      "balanced_accuracy": 0.9239761904761905,
+      "balanced_accuracy_ci_high": 0.9387713603907111,
+      "balanced_accuracy_ci_low": 0.8982740361953022,
+      "macro_f1": 0.9033985536577036,
+      "macro_f1_ci_high": 0.9242911390548276,
+      "macro_f1_ci_low": 0.8753441544816043,
+      "macro_precision": 0.8872774034294733,
+      "macro_precision_ci_high": 0.9185277153594328,
+      "macro_precision_ci_low": 0.8584262195044186,
+      "macro_recall": 0.9239761904761905,
+      "macro_recall_ci_high": 0.9387713603907111,
+      "macro_recall_ci_low": 0.8982740361953022,
+      "method": "gradient_boosted_trees",
+      "n": 3108
+    },
+    {
+      "balanced_accuracy": 0.8955059523809524,
+      "balanced_accuracy_ci_high": 0.934299337394746,
+      "balanced_accuracy_ci_low": 0.8581047553366248,
+      "macro_f1": 0.7790962893819292,
+      "macro_f1_ci_high": 0.8056918859507698,
+      "macro_f1_ci_low": 0.7574999314093355,
+      "macro_precision": 0.7198534424454958,
+      "macro_precision_ci_high": 0.7544242765775467,
+      "macro_precision_ci_low": 0.696875833209612,
+      "macro_recall": 0.8955059523809524,
+      "macro_recall_ci_high": 0.934299337394746,
+      "macro_recall_ci_low": 0.8581047553366248,
+      "method": "ridge",
+      "n": 3108
+    },
+    {
+      "balanced_accuracy": 0.863779761904762,
+      "balanced_accuracy_ci_high": 0.8885324843492344,
+      "balanced_accuracy_ci_low": 0.836564653079532,
+      "macro_f1": 0.7450317869830971,
+      "macro_f1_ci_high": 0.7713258536950457,
+      "macro_f1_ci_low": 0.7266981828775788,
+      "macro_precision": 0.7326505740807395,
+      "macro_precision_ci_high": 0.7579896540568598,
+      "macro_precision_ci_low": 0.7081972252007706,
+      "macro_recall": 0.863779761904762,
+      "macro_recall_ci_high": 0.8885324843492344,
+      "macro_recall_ci_low": 0.836564653079532,
+      "method": "hybrid_cnn_tabular",
+      "n": 3108
+    },
+    {
+      "balanced_accuracy": 0.8059285714285713,
+      "balanced_accuracy_ci_high": 0.8430423452906486,
+      "balanced_accuracy_ci_low": 0.7701612025969979,
+      "macro_f1": 0.6839812929292775,
+      "macro_f1_ci_high": 0.7075083021026269,
+      "macro_f1_ci_low": 0.659147012579708,
+      "macro_precision": 0.703975953293503,
+      "macro_precision_ci_high": 0.7324900296338591,
+      "macro_precision_ci_low": 0.6777257552117031,
+      "macro_recall": 0.8059285714285713,
+      "macro_recall_ci_high": 0.8430423452906486,
+      "macro_recall_ci_low": 0.7701612025969979,
+      "method": "traditional_bands",
+      "n": 3108
+    },
+    {
+      "balanced_accuracy": 0.7966190476190477,
+      "balanced_accuracy_ci_high": 0.8349045354934503,
+      "balanced_accuracy_ci_low": 0.7406908471829579,
+      "macro_f1": 0.8234140565621834,
+      "macro_f1_ci_high": 0.8649306656845687,
+      "macro_f1_ci_low": 0.7637143024986075,
+      "macro_precision": 0.8819636217191721,
+      "macro_precision_ci_high": 0.9473486343692026,
+      "macro_precision_ci_low": 0.8144299324910125,
+      "macro_recall": 0.7966190476190477,
+      "macro_recall_ci_high": 0.8349045354934503,
+      "macro_recall_ci_low": 0.7406908471829579,
+      "method": "mlp",
+      "n": 3108
+    },
+    {
+      "balanced_accuracy": 0.5850892857142858,
+      "balanced_accuracy_ci_high": 0.6477061382400671,
+      "balanced_accuracy_ci_low": 0.5429897353619889,
+      "macro_f1": 0.5717076088852018,
+      "macro_f1_ci_high": 0.6070555284185394,
+      "macro_f1_ci_low": 0.5262488292678429,
+      "macro_precision": 0.604650134284305,
+      "macro_precision_ci_high": 0.6436508167188764,
+      "macro_precision_ci_low": 0.572318535994748,
+      "macro_recall": 0.5850892857142858,
+      "macro_recall_ci_high": 0.6477061382400671,
+      "macro_recall_ci_low": 0.5429897353619889,
+      "method": "cnn1d",
+      "n": 3108
+    }
+  ],
+  "n_available_labeled_events": 69339,
+  "n_used_events": 3108,
+  "next_tickets": [],
+  "raw_reproduction": {
+    "delta": 0,
+    "events": 1096728,
+    "expected_selected_pulses": 640737,
+    "passed": true,
+    "raw_root_dir": "data/root/root",
+    "runs": 33,
+    "selected_pulses": 640737,
+    "stave_counts": {
+      "B2": 579424,
+      "B4": 36116,
+      "B6": 17945,
+      "B8": 7252
+    }
+  },
+  "runtime_sec": 133.72928071022034,
+  "ticket": "1783744185.18861.10947fe9",
+  "ticket_specific_controls": [
+    {
+      "ci_high": "",
+      "ci_low": "",
+      "control": "raw_root_reproduction",
+      "note": "Exact S00 selected-pulse gate from HRDv, median samples 0-3, A>1000 ADC.",
+      "quantity": "selected B-stave pulses",
+      "unit": "pulses",
+      "value": 640737.0,
+      "verdict": "pass"
+    },
+    {
+      "ci_high": "",
+      "ci_low": "",
+      "control": "pedestal_threshold_gate",
+      "note": "Pedestal enters through per-channel median of samples 0-3 before pulse selection.",
+      "quantity": "amplitude threshold after median baseline",
+      "unit": "ADC",
+      "value": 1000.0,
+      "verdict": "controlled in reproduction gate"
+    },
+    {
+      "ci_high": 0.8579906953350936,
+      "ci_low": 0.33931917551530294,
+      "control": "pileup_occupancy_proxy",
+      "note": "Selected-pulse multiplicity is used as a raw occupancy proxy; true unresolved pile-up labels are not available.",
+      "quantity": "selected pulses per raw event, run mean range",
+      "unit": "pulses/event",
+      "value": 0.5682485013302835,
+      "verdict": "bounded as raw run heterogeneity"
+    },
+    {
+      "ci_high": 0.9392786281179138,
+      "ci_low": 0.860939390147249,
+      "control": "run_split_stability",
+      "note": "Bootstrap CIs resample held-out blocks; fold range exposes non-bootstrap block variation.",
+      "quantity": "winner balanced accuracy fold range",
+      "unit": "balanced accuracy",
+      "value": 0.9156861807310744,
+      "verdict": "weakest held-out block reported"
+    },
+    {
+      "ci_high": "",
+      "ci_low": "",
+      "control": "traditional_baseline_margin",
+      "note": "Margin is descriptive; paired bootstrap of the margin is not available because per-event predictions are not retained.",
+      "quantity": "winner minus traditional balanced accuracy",
+      "unit": "balanced accuracy",
+      "value": 0.11804761904761907,
+      "verdict": "winner exceeds traditional baseline"
+    },
+    {
+      "ci_high": "",
+      "ci_low": "",
+      "control": "energy_dependence_proxy",
+      "note": "Inputs include log total B-stack deposited energy, first/tail charge, centroid, spread, active layers, and dE/dx proxy.",
+      "quantity": "energy features included",
+      "unit": "boolean",
+      "value": 1.0,
+      "verdict": "modeled, not separately stress-scanned"
+    },
+    {
+      "ci_high": "",
+      "ci_low": "",
+      "control": "pulse_shape_timing_proxy",
+      "note": "Sequence includes energy-weighted layer times T_ik/100 and tabular timing moments from GEANT4.",
+      "quantity": "layer time features included",
+      "unit": "boolean",
+      "value": 1.0,
+      "verdict": "modeled, no real timing claim"
+    },
+    {
+      "ci_high": "",
+      "ci_low": "",
+      "control": "saturation_breakdown",
+      "note": "GEANT4 deposits are not digitized ADC waveforms; saturation robustness is not proven by this benchmark.",
+      "quantity": "electronics saturation model present",
+      "unit": "boolean",
+      "value": 0.0,
+      "verdict": "caveated"
+    }
+  ],
+  "title": "waveform PID under pedestal, pile-up, and energy controls",
+  "truth_definition": "dominant Sci_bar LayerID1==2 deposited energy by target PDG, dominance >= 0.6",
+  "winner": "gradient_boosted_trees",
+  "winner_balanced_accuracy": 0.9239761904761905,
+  "winner_balanced_accuracy_ci95": [
+    0.8982740361953022,
+    0.9387713603907111
+  ],
+  "winner_macro_f1": 0.9033985536577036,
+  "winner_metric": "run_block_heldout_balanced_accuracy",
+  "worker": "testbeam-laptop-2"
+}

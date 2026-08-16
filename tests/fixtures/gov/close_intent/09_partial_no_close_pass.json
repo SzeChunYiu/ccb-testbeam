@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0.0",
+  "issue_number": 1057,
+  "atom_id": "SOURCE-PHI-001",
+  "disposition": "PARTIAL_NO_CLOSE",
+  "basis": "PARTIAL_NO_CLOSE",
+  "unresolved_leaves": [
+    "compiled_seeded_source"
+  ],
+  "successors": [],
+  "pr_text": "Refs #1057. Does not close #1057."
+}

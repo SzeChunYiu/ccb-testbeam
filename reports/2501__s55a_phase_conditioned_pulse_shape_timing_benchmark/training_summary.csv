@@ -1,0 +1,9 @@
+method,hyperparameter,train_residual_sigma68_ns
+ridge,alpha=0.1,1.1479501072368954
+ridge,alpha=1,1.1477035251938266
+ridge,alpha=10,1.1379095065742728
+gradient_boosted_trees,max_iter=160,0.8788180317391203
+mlp,"hidden=[64, 32]",0.9213983555323049
+cnn_1d,epochs=4,
+compact_waveform_transformer,"epochs=4, d_model=24",
+phase_conditioned_residual_fusion,0.35 HGB + 0.25 ExtraTrees + 0.20 CNN + 0.20 transformer,0.5108747413682044

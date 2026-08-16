@@ -1,0 +1,32 @@
+[
+  {
+    "n": 500,
+    "raw_mean_MeV": 16.7919060405191,
+    "vis_mean_MeV": 15.231685416430404,
+    "suppression_mean": 0.9207518112126937,
+    "suppression_median": 0.9294316318181992,
+    "max_raw_minus_vis_MeV": 31.999362542248655,
+    "kB_mm_per_MeV": 0.1,
+    "file": "/projects/hep/fs10/shared/nnbar/billy/ccb-runs/an3/sys_birks_smoke2/sys_birks_kB0100_s11.root"
+  },
+  {
+    "n": 500,
+    "raw_mean_MeV": 16.722052568834883,
+    "vis_mean_MeV": 14.92867067929616,
+    "suppression_mean": 0.904434225295323,
+    "suppression_median": 0.9125210176764718,
+    "max_raw_minus_vis_MeV": 32.07352927839126,
+    "kB_mm_per_MeV": 0.126,
+    "file": "/projects/hep/fs10/shared/nnbar/billy/ccb-runs/an3/sys_birks_smoke2/sys_birks_kB0126_s11.root"
+  },
+  {
+    "n": 500,
+    "raw_mean_MeV": 16.909943563780637,
+    "vis_mean_MeV": 14.567769779561962,
+    "suppression_mean": 0.8799552948524095,
+    "suppression_median": 0.8916094701023294,
+    "max_raw_minus_vis_MeV": 55.19506236815003,
+    "kB_mm_per_MeV": 0.16,
+    "file": "/projects/hep/fs10/shared/nnbar/billy/ccb-runs/an3/sys_birks_smoke2/sys_birks_kB0160_s11.root"
+  }
+]

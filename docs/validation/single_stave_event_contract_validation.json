@@ -1,0 +1,100 @@
+{
+  "downstream_blocker": "analyze_single_stave.py still uses scintillation-only arrival bound and denominator",
+  "initial_main_sha": "2f653429c2b7ead1d35752a23f3bb908506dd23d",
+  "inputs": {
+    "analyzer_git_blob_sha": "5a3fdd88757bec8b8f39b2ca9f7be889b70e848c",
+    "run_action_git_blob_sha": "2e10565aa41182618083634cd18b6ddae89660da"
+  },
+  "mapping": {
+    "arrival_readout": "n_end_selected",
+    "detected_readout": "n_detected_pe",
+    "event": "event_id",
+    "ke_MeV": "kinetic_energy_MeV",
+    "particle": "particle_pdg via explicit proton/deuteron map",
+    "track_len_scint_mm": "track_length_scint_cm = mm / 10"
+  },
+  "outputs": {
+    "adapter_sha256": "883a5108c054db4e103838869c199d7e2e6588ec3b72170f41bf89b60f772b3c",
+    "audit_markdown_sha256": "fa7b69f8618368422cabb5337e15f91e32b15e081120435cb2ccb4c6950c51a6",
+    "event_contract_doc_sha256": "6beab423f2f8a976662ddf08836380db6b28bff381d076ea5844b25f35568b8b",
+    "renderer_sha256": "e1cac840006b64deca45241f888dccd971a39b1aeaee537c931bedf1fab636ad",
+    "tests_sha256": "a66ddce0d2cd2198b146e9ee72c5153bb97de894f92cdaa00b7ca6714e303f71"
+  },
+  "policy": "CURRENT_GEANT4_EVENT_TREE_MUST_MAP_EXPLICITLY_TO_ANALYSIS_CONTRACT",
+  "primary_source": {
+    "statement": "G4OpticalPhysics includes scintillation, Cerenkov, absorption, WLS, and boundary processes; optical categories must not be conflated.",
+    "title": "Geant4 Book for Application Developers — Optical Photon Processes",
+    "url": "https://geant4.web.cern.ch/documentation/pipelines/master/bfad_html/ForApplicationDevelopers/TrackingAndPhysics/physicsProcess.html"
+  },
+  "repository_facts": {
+    "analyzer_blob_sha": "5a3fdd88757bec8b8f39b2ca9f7be889b70e848c",
+    "analyzer_path": "scripts/single_stave/analyze_single_stave.py",
+    "confirmed_mismatch": [
+      "RunAction writes arrival_readout but analyzer did not map it to n_end_selected",
+      "RunAction writes detected_readout but analyzer did not map it to n_detected_pe",
+      "RunAction writes track_len_scint_mm while analyzer expects track_length_scint_cm",
+      "analyzer bounded arrivals only by scintillation photons, excluding WLS and Cerenkov categories"
+    ],
+    "producer_blob_sha": "2e10565aa41182618083634cd18b6ddae89660da",
+    "producer_path": "geant4/single_stave/src/RunAction.cc",
+    "readme_correction_commit": "39d9dc0aacccc93d2e4d0ae86ef5da8d58c1f4c1",
+    "readme_git_blob_sha": "a0d2cc0ab61562ba9c6d58dcc9bb53fcdba9f3d0",
+    "readme_path": "geant4/single_stave/README.md"
+  },
+  "schema": "ccb-validation-record/1",
+  "scientific_boundary": [
+    "No Geant4 event was generated or reprocessed.",
+    "No optical yield, calibration, detector response, or performance claim was measured.",
+    "The adapter validates schema and bookkeeping semantics only."
+  ],
+  "session_stamp": "2026-07-25T133443Z",
+  "status": "VALIDATED",
+  "task_id": "AUD-G4-022",
+  "task_status": "PARTIAL",
+  "validation": {
+    "commands": [
+      "python -m py_compile scripts/single_stave/adapt_geant4_events.py tests/test_adapt_geant4_events.py tools/audit/render_single_stave_event_contract_evidence.py",
+      "pytest -q tests/test_adapt_geant4_events.py"
+    ],
+    "controls": [
+      {
+        "name": "current branch mapping and unit conversion",
+        "status": "PASS"
+      },
+      {
+        "name": "WLS-inclusive generated-track bound",
+        "status": "PASS"
+      },
+      {
+        "name": "arrival count above total generated fails closed",
+        "status": "PASS"
+      },
+      {
+        "name": "detected count above arrivals fails closed",
+        "status": "PASS"
+      },
+      {
+        "name": "nonfinite, fractional, and negative counts fail closed",
+        "status": "PASS"
+      },
+      {
+        "name": "ambiguous source/normalized columns fail closed",
+        "status": "PASS"
+      },
+      {
+        "name": "existing output and input alias protection",
+        "status": "PASS"
+      },
+      {
+        "name": "atomic output and machine-readable mapping",
+        "status": "PASS"
+      }
+    ],
+    "focused_tests": {
+      "duration_seconds": 1.62,
+      "passed": 12,
+      "total": 12
+    },
+    "max_python_line_length": 95
+  }
+}

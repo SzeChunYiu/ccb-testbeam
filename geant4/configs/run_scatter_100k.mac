@@ -1,0 +1,6 @@
+/run/initialize
+/ElGen/E 190. MeV
+/ElGen/TargetThickness 2.3 mm
+/ElGen/Beamspot 10 mm
+/ElGen/CSFile sigma_pd_cm_190.txt
+/run/beamOn 100000

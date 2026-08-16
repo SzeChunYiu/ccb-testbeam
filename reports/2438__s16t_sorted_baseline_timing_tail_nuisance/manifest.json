@@ -1,0 +1,24 @@
+{
+  "command": "python scripts/s16t_2438_sorted_baseline_timing_tail_nuisance.py --config configs/s16t_2438_sorted_baseline_timing_tail_nuisance.json",
+  "created_utc": "2026-08-16T10:55:02Z",
+  "files": {
+    "REPORT.md": "93b97a8937bf2954ddb036e257caaa3903fa59aeb3d5f5c5f85625673abef6ec",
+    "bootstrap_metrics.csv": "5f6ea4dfc3a0dfb41222e5c6bcfb8998306de54cf6f255935be6ea371502f8e4",
+    "config.json": "f9114464ef898ecd69f61197956aad909d1d733a9864683b708a8e19d633e5b4",
+    "input_sha256.csv": "02d93529768bbc10ab14f4609df885f1436ca6dcf3de81ace1297dbf4d85a9e1",
+    "method_metrics.csv": "b934e0e1b8337f73305e79ccdeeb4fa4a82e578bb63ef5bae9666eb0fdd3f290",
+    "method_predictions.csv.gz": "8cf43d3e8bd0d438748c08771b37ad78aa0c455ee9109c0d8ceb85f7de966a21",
+    "metric_summary.png": "dd334ea8203d1bbf769dc8d48378c31105ace0ab220e9d80395c0fde8c7285d7",
+    "pair_rows.csv.gz": "58d1174afbc2c263bbc498049b53087e9b511893fe1858b7c4fca58be2440756",
+    "paired_ablation_deltas.csv": "93e5d7d6741a519b4625ce8e2abbe73b989f01256e30d74e2d304bc1b1aca7dc",
+    "per_run_metrics.csv": "47cf67c9032e498a14ad4e7212d599225efcae60cda9ca6af572b29c68c0557c",
+    "proxy_summary.csv": "8ce24993dafc5b4cc9ad0dc778ef3d7131567f4eaf5aec1f3cb6a156320d37f6",
+    "reproduction_counts.csv": "6ad645ea8f6f2b69cbdada182cc21826cb1c4eeca8bd115524224534462266a4",
+    "residual_distributions.png": "871e9a1c4309e37adaa7b925a631635eb8fc854ff14f0baa010ee4a62ee129c1",
+    "result.json": "048f39348037db004f347b13116be1ba2ed970934b48d4dd7914cc7142b40276",
+    "sorted_recoverability_features.csv.gz": "7d88ff7345ebbec771ac6eb3e4e075f322e4b146a179c8c1ee0332e92c92486e"
+  },
+  "git_commit": "e911cfc59b772e150beb5dd2c080b020066a3bd4",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+  "python": "3.11.14"
+}

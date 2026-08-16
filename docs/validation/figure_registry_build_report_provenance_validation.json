@@ -1,0 +1,95 @@
+{
+  "schema": "ccb-figure-registry-build-report-provenance/1",
+  "task_id": "AUD-FIG-005",
+  "session_stamp": "2026-07-26T170400Z",
+  "status": "VALIDATED",
+  "policy": "FIGURE_BUILD_REPORT_MUST_BIND_TO_EXACT_REGISTRY_SNAPSHOT",
+  "base_main": "03851ff128a5a351f39c7754e47ac35fe80e0fa0",
+  "validated_main": "bd81bce0fa0714f7473ae946db221e3bbdb918a5",
+  "implementation": {
+    "path": "tools/figure_registry/builder.py",
+    "git_blob": "39dcd3b13d3886c43f3e9111291d420f86cc7c85",
+    "sha256": "78feca87c3693f4ccabc319043531b7b6b5d767f4270471d3d939a258d75ae76",
+    "size_bytes": 18264,
+    "commit": "db1a05a5ce9003cd45e10df4f247c55733a06dc2"
+  },
+  "regression": {
+    "path": "tests/test_figure_registry_build_report_provenance.py",
+    "git_blob": "f242097b78f812327f846e942b8eb0f589675d4b",
+    "sha256": "486abf6a3f7eabb4f4883515c3a9ac61db0a9f79ef0419a754486468cdfab046",
+    "size_bytes": 4779,
+    "commit": "bd81bce0fa0714f7473ae946db221e3bbdb918a5"
+  },
+  "former_contract": {
+    "registry_loader": "load_registry(path) returned only entries and discarded RegistrySnapshot identity",
+    "build_report_registry_identity": ["path"],
+    "format_error_boundary": "RegistryFormatError bypassed the FigureRegistryError CLI catch"
+  },
+  "corrected_contract": {
+    "registry_loader": "load_registry_snapshot(path)",
+    "build_report_registry_identity": [
+      "path",
+      "sha256",
+      "size_bytes",
+      "snapshot_method",
+      "entry_count"
+    ],
+    "snapshot_method": "SINGLE_READ_STRICT_UTF8_DUPLICATE_KEY_REJECTING_YAML",
+    "format_error_boundary": "RegistryFormatError is wrapped as FigureRegistryError with one controlled stderr diagnostic"
+  },
+  "controls": {
+    "valid_quarantined_registry": {
+      "size_bytes": 76,
+      "sha256": "bc4a5a1552f098c89b11f12a1bf29b8442b32f44cb7e1caa4afe3c143a321345",
+      "entry_count": 1
+    },
+    "replacement_after_snapshot": {
+      "parsed_entry": "ORIGINAL",
+      "original_size_bytes": 83,
+      "original_sha256": "7cf6295508bdca2d085fc4799c2bcd8da0a6c9ac2b7d1bf8fe1607b31ca4baef",
+      "replacement_size_bytes": 86,
+      "replacement_sha256": "ba5ccd85b1e665c470da7fb1488edc5bfc6ece7887a8f4a74b13a8f124046841",
+      "report_bound_to_original": true
+    },
+    "format_failures": {
+      "duplicate_yaml_key": "controlled status 1; no traceback; no misleading report",
+      "invalid_utf8": "controlled status 1; no traceback"
+    },
+    "structural_invalid_registry": {
+      "size_bytes": 66,
+      "sha256": "03cee6353b6d18dd2fcde3f1900a2e5db78a8c62206deaed5ad8227c3694efcd",
+      "report_status": "INVALID_REGISTRY",
+      "provenance_retained": true
+    }
+  },
+  "validation": {
+    "environment": {
+      "python": "3.13.5",
+      "pytest": "9.0.2",
+      "matplotlib": "3.10.8",
+      "pyyaml": "6.0.3"
+    },
+    "commands": [
+      "python -m py_compile tools/figure_registry/registry.py tools/figure_registry/builder.py tests/test_figure_registry_duplicate_keys.py tests/test_figure_registry_build_report_provenance.py",
+      "PYTHONPATH=. pytest -q tests/test_figure_registry_duplicate_keys.py tests/test_figure_registry_build_report_provenance.py"
+    ],
+    "checks": {
+      "tests_passed": 12,
+      "tests_failed": 0,
+      "maximum_changed_python_line_length": 93,
+      "builder_git_blob_matches_remote": true,
+      "test_git_blob_matches_remote": true,
+      "json_parse": "PASS",
+      "svg_xml_parse": "PASS"
+    }
+  },
+  "scientific_boundary": "This validates registry/build-report provenance and controlled format diagnostics only. It does not validate any registry entry, paper figure, central value, uncertainty, calibration, timing, PID, stopping profile, pile-up rate, or detector-performance claim.",
+  "unrun_checks": [
+    "repository-wide pytest",
+    "repository-wide ruff",
+    "complete shipped-registry build",
+    "paper build",
+    "repository-wide link inventory",
+    "GitHub Actions"
+  ]
+}

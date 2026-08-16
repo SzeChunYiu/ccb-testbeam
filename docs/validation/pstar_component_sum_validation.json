@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "task_id": "AUD-G4-012",
+  "session_utc": "2026-07-23T17:41:35Z",
+  "status": "PARTIAL",
+  "scientific_status": "REFERENCE_TABLE_INTERNAL_IDENTITY_VALIDATED_ONLY",
+  "authoritative_identity": "total stopping power = electronic stopping power + nuclear stopping power",
+  "tool": {
+    "path": "tools/audit/validate_pstar_component_sum.py",
+    "version": "1.0.0"
+  },
+  "committed_reference": {
+    "path": "data/reference/stopping_power/pstar_polystyrene.csv",
+    "github_blob_sha": "7e953dd346caedcee6da54180fb636b890a64040",
+    "validated_local_git_blob_sha": "7e953dd346caedcee6da54180fb636b890a64040",
+    "exact_blob_match": true,
+    "bytes": 7413,
+    "sha256": "bc4d8b018115fd0892fe4ea22b6ec3da7be8ab65afa7595337c491ae6ed869dd",
+    "rows_validated": 141,
+    "all_rows_component_consistent": true,
+    "rounding_model": "half unit in the last written decimal place",
+    "minimum_interval_overlap_width_MeV_cm2_g": "0.0002615",
+    "maximum_interval_overlap_width_MeV_cm2_g": "0.110"
+  },
+  "regression": {
+    "compile": "PASS",
+    "pytest": "8 passed in 1.21s",
+    "invalid_total_exit_status": 2,
+    "invalid_total_output_written": false,
+    "coverage": [
+      "rounded decimal interval overlap",
+      "scientific notation precision",
+      "exact file byte and SHA-256 provenance",
+      "inconsistent total rejection",
+      "nonnumeric and nonfinite rejection",
+      "nonphysical-value rejection",
+      "CLI fail-closed behavior",
+      "machine-readable validation output"
+    ]
+  },
+  "artifacts": {
+    "audit_markdown": "docs/validation/pstar_component_sum_audit.md",
+    "validation_json": "docs/validation/pstar_component_sum_validation.json",
+    "visual": "docs/validation/pstar_component_sum.svg"
+  },
+  "limitations": [
+    "standalone validator is not yet integrated into compare_stopping_power.py",
+    "the NIST source was not independently re-queried during this execution",
+    "passing the component identity does not prove correct material transcription",
+    "no Geant4 simulation or accepted stopping-power closure was run",
+    "the deuteron velocity-scaling approximation remains unvalidated"
+  ]
+}

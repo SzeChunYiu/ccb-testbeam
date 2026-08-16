@@ -72,6 +72,5 @@ most informative next step), not just "do more".
 Exact commands to regenerate every number/figure. List output artifacts written.
 
 ---
-*A study is accepted only after a passing **Scientific Critic** review (see
-[fleet/CRITIC_PROTOCOL.md](../fleet/CRITIC_PROTOCOL.md)). Check [fleet/LESSONS.md](../fleet/LESSONS.md)
-before you start — it lists recurring mistakes to avoid.*
+*A study is accepted only after a passing **Scientific Critic** review. Before you
+start, review prior study post-mortems to identify recurring mistakes to avoid.*

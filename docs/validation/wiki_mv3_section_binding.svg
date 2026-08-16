@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760">
+<rect width="1280" height="760" fill="white"/>
+<text x="55" y="58" font-family="DejaVu Sans, sans-serif" font-size="34" font-weight="bold">MV3 WIKI section-binding validation</text>
+<text x="55" y="96" font-family="DejaVu Sans, sans-serif" font-size="19" font-weight="normal">Software/documentation evidence only — not detector data or physics closure</text>
+<rect x="55" y="140" width="560" height="450" fill="#f2f2f2" stroke="#222" stroke-width="2"/>
+<rect x="665" y="140" width="560" height="450" fill="#f8f8f8" stroke="#222" stroke-width="2"/>
+<text x="85" y="185" font-family="DejaVu Sans, sans-serif" font-size="27" font-weight="bold">Current root WIKI</text>
+<text x="695" y="185" font-family="DejaVu Sans, sans-serif" font-size="27" font-weight="bold">Synthetic token-dump regression</text>
+<text x="85" y="235" font-family="DejaVu Sans, sans-serif" font-size="23" font-weight="bold">Status: FLAWED</text>
+<text x="85" y="275" font-family="DejaVu Sans, sans-serif" font-size="23" font-weight="normal">Section findings: 7</text>
+<text x="85" y="320" font-family="DejaVu Sans, sans-serif" font-size="20" font-weight="normal">Rounded canonical row remains public</text>
+<text x="85" y="360" font-family="DejaVu Sans, sans-serif" font-size="20" font-weight="normal">Exact values are not bound to six use sites</text>
+<text x="85" y="415" font-family="DejaVu Sans, sans-serif" font-size="20" font-weight="bold">Required action: patch canonical sections</text>
+<text x="695" y="235" font-family="DejaVu Sans, sans-serif" font-size="21" font-weight="normal">All exact tokens present globally</text>
+<text x="695" y="275" font-family="DejaVu Sans, sans-serif" font-size="21" font-weight="normal">Stale canonical row intentionally retained</text>
+<text x="695" y="315" font-family="DejaVu Sans, sans-serif" font-size="21" font-weight="normal">Global-token predicate: satisfied</text>
+<text x="695" y="355" font-family="DejaVu Sans, sans-serif" font-size="21" font-weight="bold">Section-binding validator: FLAWED</text>
+<text x="695" y="395" font-family="DejaVu Sans, sans-serif" font-size="21" font-weight="normal">Findings: 2</text>
+<text x="695" y="450" font-family="DejaVu Sans, sans-serif" font-size="21" font-weight="bold">Conclusion: token location is evidence</text>
+<text x="55" y="635" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal">Policy: WIKI_MV3_EXACT_VALUES_MUST_BE_BOUND_TO_CANONICAL_SECTIONS</text>
+<text x="55" y="668" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal">WIKI SHA-256: c0e8c8f7aa0c6b8f024ea9821dcb046b77376aecc95c81301afaf40248417680</text>
+<text x="55" y="701" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="normal">Generation command: python tools/audit/render_wiki_mv3_section_binding_evidence.py --json docs/validation/wiki_mv3_section_binding_validation.json --out docs/validation/wiki_mv3_section_binding.svg</text>
+</svg>

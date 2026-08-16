@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0.0",
+  "contract_id": "SCIENTIFIC_ISSUE_COMPLETION_GATES",
+  "issue": "#1218",
+  "audit_id": "ARU-GOV-MERGE-CLOSE-KEYWORD-001",
+  "invariant": "MERGED(implementation) != COMPLETE(research_universe)",
+  "allow_close_only_if": [
+    "All declared material completion gates are ACCEPTED",
+    "OR every unresolved leaf is explicitly transferred to named successor issues with no loss of blocker/claim state"
+  ],
+  "forbidden_auto_close_patterns": [
+    "(?i)\\bCloses\\s+#\\d+",
+    "(?i)\\bClose\\s+#\\d+",
+    "(?i)\\bFixes\\s+#\\d+",
+    "(?i)\\bFix(?:e[sd])?\\s+#\\d+",
+    "(?i)\\bResolves?\\s+#\\d+"
+  ],
+  "safe_reference_patterns": [
+    "(?i)\\bRefs\\s+#\\d+",
+    "(?i)\\bRelated\\s+#\\d+",
+    "(?i)\\bdoes not close\\s+#\\d+"
+  ],
+  "scientific_universe_issues_require_manual_review": true,
+  "close_intent_schema": "docs/contracts/CLOSE_INTENT.schema.json",
+  "witness": {
+    "parent": "#1057",
+    "incident_pr": "#1216",
+    "counterexample_bounded_close_ok": "#1182"
+  }
+}

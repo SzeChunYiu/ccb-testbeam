@@ -1,0 +1,34 @@
+path,status,source_path,publication_role
+final/stave_geometry.pdf,DESIGN_SPEC,reports/paper_1317_setup_figures_20260815T2301Z/stave_geometry.pdf,#1317 stave geometry from BOM-audited producer (#796 spec)
+final/ccb_layout.pdf,SIM_CONFIG,reports/paper_1317_setup_figures_20260815T2301Z/ccb_layout.pdf,#1317 two-arm layout schematic (BOM-annotated)
+final/channel_map.pdf,SIM_CONFIG,reports/paper_1317_setup_figures_20260815T2301Z/channel_map.pdf,#1317 channel-to-layer map with #869 parity caveat
+final/data_depth_profile.pdf,GATED,authorising 8x16 event-level data producer (measured polarity v2 #1383),final beam-data longitudinal topology
+final/mc_depth_profile.pdf,SIMULATION_RESULT,reports/paper_1319_mc_depth_profile_20260816T0030Z/mc_depth_profile.pdf,#1319 MC depth profile + sparse-readout parity envelope (proxy trigger)
+final/timing_b4_b6_residual.pdf,GATED,reports/issue_1320_timing/timing_b4_b6_residual_sample_II.pdf,pair residual under measured polarity v2 (0.146 ns width, -9.7 ns channel-skew offset; not detector resolution)
+gated/fig07_data_deltaE_E_per_sample.png,GATED,reports/paper_956_deltaE_E_20260812T103800Z/figures/fig07_data_deltaE_E_per_sample.png,quarantined #956 output
+gated/fig08_mc_deltaE_E_I.png,GATED,reports/paper_956_deltaE_E_20260812T103800Z/figures/fig08_mc_deltaE_E_I.png,quarantined #956 output
+gated/fig08_mc_deltaE_E_II.png,GATED,reports/paper_956_deltaE_E_20260812T103800Z/figures/fig08_mc_deltaE_E_II.png,quarantined #956 output
+gated/fig_b2_b4_two_channel_diagnostic.png,GATED,reports/paper_956_deltaE_E_20260812T103800Z/figures/fig_b2_b4_two_channel_diagnostic.png,two-channel diagnostic only
+gated/edep_reconstruction_heldout.png,GATED,docs/figures/paper/edep_reconstruction_heldout.png,quarantined #1297/#1302/#1303 output
+gated/selected_pulse_inventory.png,GATED,docs/figures/paper/selected_pulse_inventory.png,CL-001 status controlled by canonical ledger
+model_diagnostics/timing_mc_method_closure.png,MC_METHOD_CLOSURE,docs/figures/paper/timing_mc_method_closure.png,simulation method diagnostic
+model_diagnostics/pid_mc_validation.png,SIMULATION_RESULT,docs/figures/paper/pid_mc_validation.png,simulation result only
+model_diagnostics/adc_mc_calibration.png,SIMULATION_RESULT,docs/figures/paper/adc_mc_calibration.png,simulation result only
+model_diagnostics/birks_mc_comparison.png,SIMULATION_RESULT,docs/figures/paper/birks_mc_comparison.png,simulation result only
+model_diagnostics/pileup_digitizer_mc.png,SIMULATION_RESULT,docs/figures/paper/pileup_digitizer_mc.png,simulation result only
+illustrative/geometry_tof.png,ILLUSTRATIVE,docs/figures/reports/0000000012.1.truthtiming/figures/geometry_tof.png,superseded by final/ccb_layout.pdf; removed from manuscript
+illustrative/06_timewalk_explained.png,ILLUSTRATIVE,docs/figures/06_timewalk_explained.png,no measured claim
+illustrative/03_waveform_annotated.png,ILLUSTRATIVE,docs/figures/03_waveform_annotated.png,no measured claim
+final/618_mc_truth_full_I.pdf,SIMULATION_RESULT,reports/paper_618_species_penetration_2m_20260814T1449Z/figures/618_mc_truth_full_I.pdf,#618 species-resolved MC truth (full downstream sum, Sample I)
+final/618_mc_truth_full_II.pdf,SIMULATION_RESULT,reports/paper_618_species_penetration_2m_20260814T1449Z/figures/618_mc_truth_full_II.pdf,#618 species-resolved MC truth (full downstream sum, Sample II)
+final/618_mc_truth_4layer_I.pdf,SIMULATION_RESULT,reports/paper_618_species_penetration_2m_20260814T1449Z/figures/618_mc_truth_4layer_I.pdf,#618 species-resolved MC truth (data-matched 4-layer, Sample I)
+final/618_mc_truth_4layer_II.pdf,SIMULATION_RESULT,reports/paper_618_species_penetration_2m_20260814T1449Z/figures/618_mc_truth_4layer_II.pdf,#618 species-resolved MC truth (data-matched 4-layer, Sample II)
+final/618_penetration_I.pdf,SIMULATION_RESULT,reports/paper_618_species_penetration_2m_20260814T1449Z/figures/618_penetration_I.pdf,#618 species-resolved MC truth (L_stop per species, Sample I)
+final/618_penetration_II.pdf,SIMULATION_RESULT,reports/paper_618_species_penetration_2m_20260814T1449Z/figures/618_penetration_II.pdf,#618 species-resolved MC truth (L_stop per species, Sample II)
+gated/618_data_amplitude_I_II.png,GATED,reports/paper_618_species_penetration_2m_20260814T1449Z/figures/618_data_amplitude_I_II.png,#618 beam-data amplitude proxy dE-E, Samples I+II
+gated/618_data_penetration_I_II.png,GATED,reports/paper_618_species_penetration_2m_20260814T1449Z/figures/618_data_penetration_I_II.png,#618 beam-data stopping-layer overlay, amplitude domain
+final/1303_stage_accounting.pdf,SIMULATION_RESULT,reports/paper_1303_optical_campaign_20260815T2209Z/figures/1303_stage_accounting.pdf,#1303 optical stage accounting (regenerated grid)
+final/1303_pe_per_mev.pdf,SIMULATION_RESULT,reports/paper_1303_optical_campaign_20260815T2209Z/figures/1303_pe_per_mev.pdf,#1303 per-point PE/MeV_vis and PE/MeV_raw yields (regenerated grid)
+final/1303_edep_vs_pe.pdf,SIMULATION_RESULT,reports/paper_1303_optical_campaign_20260815T2209Z/figures/1303_edep_vs_pe.pdf,#1303 detected PE vs E_vis/E_raw (regenerated grid)
+gated/edep_reconstruction_heldout_E_vis.pdf,GATED,reports/paper_1303_optical_campaign_20260815T2209Z/edep_reconstruction_heldout_E_vis.pdf,#1297/#1303 held-out E_vis reconstruction (CL-029 GATED)
+gated/edep_reconstruction_heldout_E_raw.pdf,GATED,reports/paper_1303_optical_campaign_20260815T2209Z/edep_reconstruction_heldout_E_raw.pdf,#1297/#1303 held-out E_raw negative control (CL-029 GATED)

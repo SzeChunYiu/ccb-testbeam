@@ -1,0 +1,38 @@
+{
+  "task_id": "AUD-WIKI-003",
+  "policy": "WIKI_MV3_EXACT_VALUES_MUST_BE_BOUND_TO_CANONICAL_SECTIONS",
+  "initial_remote_main": "94eb6705c5db6d10793532b6b2607b855806298b",
+  "before": {
+    "status": "FLAWED",
+    "n_issues": 7,
+    "wiki_blob_sha": "fee0e1a15243904dbeb46254878ade4650a8e1f6"
+  },
+  "after": {
+    "status": "VALIDATED",
+    "n_issues": 0,
+    "wiki_commit": "a38f8cf5b2abb6f363a7bd2c0c6bed6828229720",
+    "wiki_blob_sha": "91e82c59a2b59b285c6a529c0637ed665be2c4fd",
+    "integration_test_commit": "eb030003d96ed1e6a589ec03e4e2fdaa6c57d718"
+  },
+  "exact_evidence": {
+    "selected_data_b8": "7051/306745 = 0.02298651974767315",
+    "thresholded_mc_b8": "55619/249484 = 0.22293614019335908",
+    "pearson_chi2": 204808.2179684494,
+    "ndf": 3,
+    "chi2_per_ndf": 68269.40598948313,
+    "scientific_status": "FLAWED",
+    "blocker": "BLK-MV3-LEGACY-001"
+  },
+  "local_validation": {
+    "command": "python -m py_compile tools/audit/validate_wiki_mv3_section_binding.py tools/audit/validate_wiki_mv3_summary.py tests/test_wiki_mv3_public_remediation.py && PYTHONPATH=. python -m pytest tests/test_wiki_mv3_public_remediation.py -q",
+    "result": "2 passed in 0.02s",
+    "scope": "exact validator logic with a fixture matching the six committed public-use sites and exact ledger/summary arithmetic"
+  },
+  "generation_command": "python tools/audit/render_wiki_mv3_public_remediation.py --json docs/validation/wiki_mv3_public_remediation_validation.json --out docs/validation/wiki_mv3_public_remediation.svg",
+  "limitations": [
+    "No ROOT or Geant4 rerun was performed.",
+    "The fixed-source Pearson diagnostic remains non-authorizing.",
+    "No geometry, trigger/selection-transfer, gain, covariance, or detector-model closure was established.",
+    "No repository-wide CI or broken-link run is claimed in this session."
+  ]
+}

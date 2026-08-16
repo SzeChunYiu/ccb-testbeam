@@ -1,0 +1,398 @@
+# CCB test-beam -- paper figure result registry
+# ============================================================================
+# Single source of truth binding every paper figure to its source artifact.
+# Regenerated 2026-07-26 from the cluster A-D + Opticks + E synthesis programme
+# (canonical claim state: reports/studies/clusterE/claims_table.csv +
+# docs/claim_ledger.csv). No headline number is hand-entered: every quantitative
+# entry points `result:` at the on-disk cluster metrics/counts JSON and reads its
+# `value_key:`, and every `source_figure:` is a real PNG on origin/main.
+#
+# Build with:
+#     python -m tools.figure_registry.builder --registry paper/figures.yaml --out paper/figures
+#
+# Statuses (allowed):
+#   VALIDATED            data result + MC/truth or independent closure supports it
+#   PRELIMINARY          source-backed but not paper-authorizing without opt-in
+#   SIMULATION_RESULT    proven on Monte Carlo only (cluster MC closure)
+#   MC_METHOD_CLOSURE    analysis-chain closure on MC (strongest SIMULATION_RESULT)
+#   PARTIAL              proven up to a defined last-mile gap (e.g. Opticks gather)
+#   GATED                candidate withheld until a named control passes
+#   TENSION              data/MC comparison disagrees beyond tolerance
+#   BLOCKED              canonical value withheld pending a named criterion
+#   BLOCKED_DATA         underlying beam data not staged (no figure can be built)
+#   SUPERSEDED           retained only as correction history; do not use
+#   EXTERNAL_BLOCKER     result artifact compute-blocked / not on disk -> BLOCKED
+#   ILLUSTRATIVE         schematic only; carries no measured numbers
+#
+# Rules:
+#   - Quantitative figures read `value_key` from `result` (a cluster metrics JSON)
+#     ONLY (never a hand-entered literal).
+#   - figure_sourced entries: the rendered PNG / REPORT is the primary artifact (no
+#     single metrics JSON to read); the caption quotes claims_table.csv directly.
+#   - BLOCKED_DATA / EXTERNAL_BLOCKER entries carry NO headline number and are
+#     reported BLOCKED by the builder until the underlying data/artifact is staged.
+#   - claim_id / evidence_class mirror reports/studies/clusterE/claims_table.csv.
+# ----------------------------------------------------------------------------
+
+# === MC method closure (clusters A-D) -- proven on simulation =================
+
+TIMING-MC:                   # clusterB #918, VIS-TIM-005 -- combined timing closure
+  result: reports/studies/clusterB/metrics.json
+  value_key: VIS-TIM-005/combined_sigma68_ns
+  source_figure: docs/figures/paper/timing_mc_method_closure.png
+  claim_id: clusterB/#918
+  evidence_class: MC_METHOD_CLOSURE
+  status: MC_METHOD_CLOSURE
+  kind: quantitative
+  caption: >-
+    4-sensor inverse-variance combined timing resolution on the Krakow MC,
+    sigma68 = 0.089 ns (RMS 0.112 ns, condition kappa~1.2, leave-one-sensor-out
+    ~0.10 ns, pull |z|<1 = 0.683 exact). MC closure; NOT a beam-data timing result.
+
+PID-MC:                      # clusterA #921, VIS-PID-001 -- realistic-chain PID
+  result: reports/studies/clusterA/counts.json
+  value_key: pid_full_auc
+  source_figure: docs/figures/paper/pid_mc_validation.png
+  claim_id: clusterA/#921
+  evidence_class: SIMULATION_RESULT
+  status: SIMULATION_RESULT
+  kind: quantitative
+  caption: >-
+    Proton/deuteron PID on the realistic dE-E chain (MC), full AUC = 0.898
+    (5-fold 0.898 +/- 0.01; AP 0.47; Brier 0.017). The legacy 0.986 HGB truth
+    ceiling is GATED (CL-017) and is NOT this number.
+
+ADC-MC:                      # clusterC #917, VIS-ENE-001 -- digitizer gain
+  result: reports/studies/clusterC/metrics.json
+  value_key: VIS-ENE-001/proton/slope_adc_per_MeV
+  source_figure: docs/figures/paper/adc_mc_calibration.png
+  claim_id: clusterC/#917
+  evidence_class: SIMULATION_RESULT
+  status: SIMULATION_RESULT
+  kind: quantitative
+  caption: >-
+    ADC calibration (digitizer gain) = 119.17 ADC/MeV (proton = deuteron;
+    pulls mu ~ 0). MC closure; the 92 ADC/MeV MV0 data/MC proxy with a 28
+    ADC/MeV heuristic envelope is GATED (CL-013).
+
+BIRKS-MC:                    # clusterC #917, VIS-ENE-002 -- Birks quenching
+  result: reports/studies/clusterC/metrics.json
+  value_key: VIS-ENE-002/kB_best_per_track_dEdx
+  source_figure: docs/figures/paper/birks_mc_comparison.png
+  claim_id: clusterC/#917
+  evidence_class: SIMULATION_RESULT
+  status: SIMULATION_RESULT
+  kind: quantitative
+  caption: >-
+    Birks kB from per-track dE/dx = 0.0156 cm/MeV (vs 0.0127 total-edep proxy,
+    0.008 digitizer default). MC closure.
+
+RMAX-MC:                     # clusterC #917, VIS-PU-002 -- digitizer-domain Rmax
+  result: reports/studies/clusterC/metrics.json
+  value_key: VIS-PU-002/Rmax_quality_Hz
+  source_figure: docs/figures/paper/pileup_digitizer_mc.png
+  claim_id: clusterC/#917
+  evidence_class: SIMULATION_RESULT
+  status: SIMULATION_RESULT
+  kind: quantitative
+  caption: >-
+    Digitizer-domain nearest scan points are 0.289 MHz at 5.06% overlap and
+    0.605 MHz at 10.31% overlap for the stored 180 ns window. SIMULATION_RESULT
+    only; the canonical detector Rmax is BLOCKED
+    (CL-010/S-STAT-003) and the legacy 3.044 MHz is SUPERSEDED (CL-012).
+
+# === S00 data-count row (CL-001 GATED) ========================================
+
+S00-COUNT:                   # CL-001 -- S00 selected-pulse reproduction
+  result: reports/S00_data_integrity_pipeline_reproduction/count_match_table.csv
+  source_figure: docs/figures/paper/selected_pulse_inventory.png
+  claim_id: CL-001
+  evidence_class: DATA_MEASUREMENT
+  status: GATED
+  kind: figure_sourced
+  caption: >-
+    Selected B-stack pulses (S00 median gate) = 640,737, exact deterministic
+    reproduction for fixed raw inputs. CL-001 is GATED pending data-contract
+    closure (#952/#953/#954); this is not an authorising ledger row.
+
+# === Opticks GPU/CPU parity -- PARTIAL =======================================
+
+OPTICKS-PARITY:              # opticks #920 -- GPU/CPU optical-photon parity
+  result: figures/opticks/opticks_gpu_vs_cpu_parity.png
+  source_figure: figures/opticks/opticks_gpu_vs_cpu_parity.png
+  source_summary: figures/opticks/SUMMARY.md
+  claim_id: opticks/#920
+  evidence_class: SIMULATION_RESULT
+  status: PARTIAL
+  kind: figure_sourced
+  caption: >-
+    Opticks GPU/CPU optical-photon parity (2 events, identical seed). CPU Geant4
+    reference 4592 arrivals (2296/evt); GPU path proven through GDML ingestion,
+    4-SiPM annotation, 148,697 photons/event upload; device->host GATHER returns
+    null (EventMode config point) -> 0 GPU hits. CPU ctest 9/9 PASS. NO GPU
+    speedup is claimed (undefined with 0 gathered hits).
+
+# === Data-side results withheld by format/transfer blockers ==================
+
+TIMING-DATA:                 # CL-002..006 -- detector timing on beam data
+  result: reports/studies/data_side/REPORT.md
+  claim_id: CL-002..006
+  evidence_class: DATA_FORMAT_LIMITED_MIXED_STATUS
+  blocked_by: DATA-FORMAT-LIMITED-001; BLK-MV4-LEGACY-001
+  status: BLOCKED
+  kind: quantitative
+  caption: >-
+    Detector timing resolution on beam data is withheld. The staged raw 16-sample
+    format gives sampling-limited diagnostics, not a detector-resolution estimate;
+    no headline value is authorized.
+
+PID-DATA:                    # PID on beam data
+  result: reports/studies/data_side/REPORT.md
+  claim_id: PID-on-data
+  evidence_class: BLOCKED
+  blocked_by: DATA_MC_TRANSFER_NOT_VALIDATED
+  status: BLOCKED
+  kind: quantitative
+  caption: >-
+    Proton/deuteron PID transferred onto beam data is withheld. Group-disjoint
+    transfer, calibration and selection closure are absent; no headline value.
+
+# === GATED / TENSION / BLOCKED / SUPERSEDED ==================================
+
+MV0-GAIN:                    # CL-013 -- digitizer gain data/MC proxy
+  result: reports/mv0_calibration_1782677847/calibration.json
+  source_figure: docs/figures/paper/adc_mc_calibration.png
+  claim_id: CL-013
+  evidence_class: DATA_MC_PROXY
+  blocked_by: BLK-MV0-001
+  status: GATED
+  kind: quantitative
+  caption: >-
+    MV0 data/MC gain proxy = 92 ADC/MeV with a rounded 28 ADC/MeV HEURISTIC
+    systematic envelope (NOT a confidence interval). GATED pending
+    operator-bench per-stave calibration.
+
+MV3-STOP:                    # CL-021 -- stopping-depth data/MC
+  result: reports/studies/clusterA/counts.json
+  value_key: termination_unweighted
+  source_figure: docs/figures/paper/stopping_b8_tension.png
+  claim_id: CL-021
+  evidence_class: MC_DIAGNOSTIC
+  blocked_by: BLK-MV3-LEGACY-001
+  status: TENSION
+  kind: figure_sourced
+  caption: >-
+    Stopping-depth data/MC profile disagrees at chi2/ndf ~ 6.8e4 (CL-021:
+    68,269). TENSION: ~8-10 g/cm2 of upstream material budget missing from the
+    MC geometry. All quantitative MC stopping-depth claims unreliable until fix.
+
+RMAX-CANONICAL:              # CL-010 -- canonical pile-up Rmax
+  result: reports/mv5_pileup_1782678353/mv5_pileup_summary.json
+  claim_id: CL-010
+  evidence_class: BLOCKED
+  blocked_by: S-STAT-003
+  status: BLOCKED
+  kind: quantitative
+  caption: >-
+    Canonical pile-up Rmax. BLOCKED: 0.38 is the beam duty factor, not a justified
+    occupancy-quality threshold (S-STAT-003). No canonical value or uncertainty.
+
+RMAX-LEGACY:                 # CL-012 -- superseded legacy Rmax
+  result: reports/mv5_pileup_1782678353/mv5_pileup_summary.json
+  claim_id: CL-012
+  evidence_class: SUPERSEDED
+  status: SUPERSEDED
+  kind: quantitative
+  caption: >-
+    Legacy Rmax = 3.044 MHz = (1/tau_eff)*0.38 duty-factor arithmetic. SUPERSEDED;
+    do NOT use (supersedes CL-010 history). Retained only as correction history.
+
+SYST-BUDGET:                 # CL-026 -- systematic uncertainty budget
+  result: reports/studies/clusterE/systematic_budget.csv
+  source_figure: docs/figures/paper/systematic_sensitivity_inputs.png
+  claim_id: CL-026
+  evidence_class: BLOCKED
+  blocked_by: BLK-SYST-001
+  status: BLOCKED
+  kind: quantitative
+  caption: >-
+    Systematic uncertainty budget. BLOCKED: no per-claim nuisance model,
+    covariance, hash-bound inputs, or coverage study. Component estimates are not
+    blanket authorisation (CL-026).
+
+EDEP-RECO-MC:                # PAPER-A09 / #1297 + #1303 regenerated grid -- held-out E_vis reconstruction
+  result: reports/paper_1303_optical_campaign_20260815T2209Z/result.json
+  value_key: summaries/0/heldout_sigma68_fraction
+  source_figure: publication/figures/gated/edep_reconstruction_heldout_E_vis.pdf
+  claim_id: CL-029
+  evidence_class: MC_MODEL_DEPENDENT
+  status: MC_MODEL_DEPENDENT
+  kind: quantitative
+  caption: >-
+    Held-out single-stave energy reconstruction on the REGENERATED #1303
+    five-point optical grid (SHA-256-bound, distinct cladding materials,
+    current source). Separate estimands: E_vis (Birks-visible) and E_raw
+    (unquenched). Pooled linear PE-to-E_vis fit frozen on train runs
+    (deuteron_70, proton_100, proton_140; n=6000); held-out deuteron_110 +
+    proton_60 (n=4000): E_vis median bias +0.5% [0.29,0.62], sigma68 6.26%
+    [6.16,6.35], tail 0.2%; E_raw median bias +10.4%, sigma68 9.0%, tail 16.9%
+    (mis-specified response control). Bootstrap 16-84% CIs, 500 resamples.
+    Shuffled-target control reported in result.json. MODEL-DEPENDENT OPTICAL
+    MC; NOT a beam-data energy calibration. Optical/SiPM nuisance envelope
+    NOT_EVALUATED pending PAPER-A07/A08. Supersedes the July-grid 8.9%
+    edep_scint result (SUPERSEDED_MODEL_DIAGNOSTIC).
+
+OPTICAL-STAGE-1303:          # #1303 -- optical stage accounting, regenerated grid
+  result: reports/paper_1303_optical_campaign_20260815T2209Z/1303_summary.json
+  value_key: pooled_calibration_E_vis/slope_PE_per_MeV_E_vis
+  source_figure: publication/figures/final/1303_stage_accounting.pdf
+  claim_id: "#1303"
+  evidence_class: MC_MODEL_DEPENDENT
+  status: MC_MODEL_DEPENDENT
+  kind: quantitative
+  caption: >-
+    Optical stage accounting on the regenerated #1303 five-point grid:
+    per-point mean scintillation photons, WLS capture (eps~0.19), transport
+    (eps~0.021), sensor arrivals, detected PE, saturated-PE occupancy and ADC,
+    with explicit denominators. Pooled E_vis light yield 11.78 PE/MeV_vis
+    (offset 0.65 PE, r^2=0.976, n=10000); per-point 11.78-11.84 PE/MeV_vis;
+    E_raw yields 8.6-10.6 PE/MeV carry Birks quenching (quench ratio
+    E_vis/E_raw ~ 0.81 at d110). July-grid ~9-11 PE/"MeV" values are
+    SUPERSEDED_MODEL_DIAGNOSTIC (Birks-visible denominator, aliased
+    claddings). MODEL-DEPENDENT OPTICAL MC; nuisance envelope NOT_EVALUATED.
+
+PE-PER-MEV-1303:             # #1303 -- per-point light yield, regenerated grid
+  result: reports/paper_1303_optical_campaign_20260815T2209Z/1303_summary.json
+  value_key: points/0/pe_per_mev_E_vis/mean
+  source_figure: publication/figures/final/1303_pe_per_mev.pdf
+  claim_id: "#1303"
+  evidence_class: MC_MODEL_DEPENDENT
+  status: MC_MODEL_DEPENDENT
+  kind: quantitative
+  caption: >-
+    Per-point detected-PE yield versus visible and raw deposited energy for
+    the five regenerated calibration points (p60/p100/p140/d70/d110, 2000
+    events each, seed-bound, SHA-256-bound inputs). E_vis yields are flat
+    within CI across species/energy; E_raw yields split by species through
+    the Birks quenching ratio. MODEL-DEPENDENT OPTICAL MC.
+
+# === Synthesis figures (cluster E) -- status mirrors the claim dashboard ======
+
+CLAIM-DASHBOARD:
+  source_figure: docs/figures/paper/claim_status_overview.png
+  claim_id: canonical-ledger
+  evidence_class: GOVERNANCE_LEDGER
+  status: PRELIMINARY
+  kind: figure_sourced
+  caption: >-
+    Exact status counts from the 26-row canonical claim ledger. This governance
+    view is source-backed but does not convert gated, blocked, flawed or
+    superseded physics claims into accepted results.
+
+DASHBOARD-OVERVIEW:
+  source_figure: reports/studies/clusterE/PROJECT_DASHBOARD_OVERVIEW.png
+  claim_id: clusterE
+  status: ILLUSTRATIVE
+  kind: illustrative
+  caption: >-
+    Single-image executive summary (also embedded in reports/PROJECT_DASHBOARD.md).
+
+# === Illustrative schematics (kept SEPARATE from quantitative figures) =======
+
+SCH-01:
+  source_figure: docs/figures/geometry_tof.png
+  status: ILLUSTRATIVE
+  kind: illustrative
+  caption: Beamline / detector geometry schematic. Carries no measured numbers.
+SCH-02:
+  source_figure: docs/figures/06_timewalk_explained.png
+  status: ILLUSTRATIVE
+  kind: illustrative
+  caption: Amplitude timewalk correction mechanism (simulated). Not quantitative.
+SCH-03:
+  source_figure: docs/figures/03_waveform_annotated.png
+  status: ILLUSTRATIVE
+  kind: illustrative
+  caption: Annotated scintillator waveform (simulated). Not quantitative.
+# === ΔE–E figures (corrected producer #956 #1336) ===============================
+
+DELTA-E-DATA-I:              # CL-030 -- DATA Sample-I ΔE-E Pearson r
+  result: reports/paper_956_deltaE_E_20260814T090700Z/result.json
+  value_key: data_I_pearson_r
+  source_figure: publication/figures/gated/fig07_data_deltaE_E_per_sample.png
+  claim_id: CL-030
+  evidence_class: data_amplitude_proxy
+  status: DONE_DATA_ONLY
+  kind: quantitative
+  caption: >-
+    DATA Sample-I ΔE=A(B2), E=A(B4)+A(B6)+A(B8) Pearson r = −0.0419 (68% CI
+    [−0.0507, −0.0298], n=147,274, run-block bootstrap). DONE_DATA_ONLY: MC
+    gate (CL-033) pending. Not calibrated energy; 51.8% B2 saturation.
+
+DELTA-E-DATA-II:             # CL-031 -- DATA Sample-II ΔE-E Pearson r
+  result: reports/paper_956_deltaE_E_20260814T090700Z/result.json
+  value_key: data_II_pearson_r
+  source_figure: publication/figures/gated/fig07_data_deltaE_E_per_sample.png
+  claim_id: CL-031
+  evidence_class: data_amplitude_proxy
+  status: DONE_DATA_ONLY
+  kind: quantitative
+  caption: >-
+    DATA Sample-II ΔE=A(B2), E=A(B4)+A(B6)+A(B8) Pearson r = −0.0697 (68% CI
+    [−0.0984, −0.0303], n=69,174, run-block bootstrap). DONE_DATA_ONLY: MC gate
+    (CL-033) pending. Not calibrated energy; 7.6% B2 saturation.
+
+DELTA-E-MC-I:               # CL-033 -- MC Sample-I ΔE-E weighted Pearson r (GATED)
+  result: reports/paper_956_deltaE_E_20260814T090700Z/result.json
+  value_key: mc_I_pearson_r
+  source_figure: publication/figures/gated/fig08_mc_deltaE_E_I.png
+  claim_id: CL-033
+  evidence_class: mc_truth_proxy
+  status: GATED
+  kind: quantitative
+  caption: >-
+    MC Sample-I ΔE-E four-readout weighted Pearson r. GATED pending
+    MC_TRIGGER_PROXY closure (CL-033). Σw=357,482; ESS=102,463. Not hardware
+    trigger validated.
+
+DELTA-E-MC-II:               # CL-033 -- MC Sample-II ΔE-E weighted Pearson r (GATED)
+  result: reports/paper_956_deltaE_E_20260814T090700Z/result.json
+  value_key: mc_II_pearson_r
+  source_figure: publication/figures/gated/fig08_mc_deltaE_E_II.png
+  claim_id: CL-033
+  evidence_class: mc_truth_proxy
+  status: GATED
+  kind: quantitative
+  caption: >-
+    MC Sample-II ΔE-E four-readout weighted Pearson r. GATED pending
+    MC_TRIGGER_PROXY closure (CL-033). Σw=357,482; ESS=102,463. Not hardware
+    trigger validated.
+
+DELTA-E-B2B4-DIAG:           # CL-032 -- B2-B4 two-channel diagnostic (NOT ΔE-E)
+  result: reports/paper_956_deltaE_E_20260814T090700Z/result.json
+  value_key: b2_b4_pearson_r
+  source_figure: publication/figures/gated/fig_b2_b4_two_channel_diagnostic.png
+  claim_id: CL-032
+  evidence_class: data_amplitude_proxy
+  status: DONE_DATA_ONLY
+  kind: quantitative
+  caption: >-
+    B2-B4 two-channel amplitude diagnostic Pearson r = 0.1506 (68% CI
+    [0.1254, 0.1801], n=25,423). NOT ΔE-E: this is a response diagnostic only.
+    Supersedes eventno-only join for production use.
+
+DELTA-E-SEGMENTATION:        # Segmentation mechanism illustration
+  result: publication/figures/gated/fig_segmentation_readout_phase.png
+  source_figure: publication/figures/gated/fig_segmentation_readout_phase.png
+  claim_id: CL-030
+  evidence_class: data_amplitude_proxy
+  status: DONE_DATA_ONLY
+  kind: figure_sourced
+  caption: >-
+    Segmentation and readout-phase mechanism: alternating B2/B4/B6/B8
+    longitudinal positions sample the Bragg rise at different phases. A change in
+    entry energy, angle or passive material can move the peak between sampled
+    and unsampled layers, altering the apparent sparse ΔE-E topology. Full
+    physical-layer sums are required for validation. DONE_DATA_ONLY with
+    corrected producer; remaining gates: layer-map offset (#1296), saturation
+    source-binding, MC provenance (#1311).

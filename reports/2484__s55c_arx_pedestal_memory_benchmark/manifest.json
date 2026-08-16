@@ -1,0 +1,87 @@
+{
+  "ticket_id": "2484",
+  "generated_at_unix": 1786892519.1123679,
+  "command": "scripts/ticket_2484_s55c_arx_pedestal_memory_benchmark.py --config configs/ticket_2484_s55c_arx_pedestal_memory_benchmark.json",
+  "artifacts": [
+    {
+      "path": "reports/2484__s55c_arx_pedestal_memory_benchmark/REPORT.md",
+      "sha256": "3f4f8917bc4a682dfbbbf266fb8631e175263338b22086e77c84868d07e7534d",
+      "bytes": 24659
+    },
+    {
+      "path": "reports/2484__s55c_arx_pedestal_memory_benchmark/bootstrap_intervals_long.csv",
+      "sha256": "cd44373af78dc7fa121ecee451828b7c081c5ba403b4993ffa1538a8a3a2328e",
+      "bytes": 5367
+    },
+    {
+      "path": "reports/2484__s55c_arx_pedestal_memory_benchmark/claimed_ticket.txt",
+      "sha256": "a631608426cbc4969a1998db638c8a5942d840e0660aca57ae20c2c66a53bed8",
+      "bytes": 92
+    },
+    {
+      "path": "reports/2484__s55c_arx_pedestal_memory_benchmark/claimed_ticket_body.txt",
+      "sha256": "ad5fed5ffc34b2582363095811fe8a4479c5dfc7acc51bdf087191c5e3ac3f9e",
+      "bytes": 554
+    },
+    {
+      "path": "reports/2484__s55c_arx_pedestal_memory_benchmark/external_join_features.csv.gz",
+      "sha256": "b180dc86aa3c3ff8a401932ab63fcd7639736bf2680b5f809a8059a2d3918b52",
+      "bytes": 279330
+    },
+    {
+      "path": "reports/2484__s55c_arx_pedestal_memory_benchmark/external_native_join_audit.csv",
+      "sha256": "ad010779219e0be128c5d03a00e905a8b4fbd74c4f4d9936835a91b46b46ab0c",
+      "bytes": 164
+    },
+    {
+      "path": "reports/2484__s55c_arx_pedestal_memory_benchmark/feature_family_audit.csv",
+      "sha256": "c635a2d72a26444f81cf00e9d9beab6ec2de60cbf2dc8e79874ff9ef08fcefa7",
+      "bytes": 1425
+    },
+    {
+      "path": "reports/2484__s55c_arx_pedestal_memory_benchmark/heldout_predictions.csv.gz",
+      "sha256": "fc87c72d60839ee95ff9e969c49e074c29baf8905a1d4345025bf896944ace9c",
+      "bytes": 530395
+    },
+    {
+      "path": "reports/2484__s55c_arx_pedestal_memory_benchmark/method_summary.csv",
+      "sha256": "43deb9e901e6fe0b3012bde0b9e821a1765e49ffb8610c7be79374165c4fb76a",
+      "bytes": 5532
+    },
+    {
+      "path": "reports/2484__s55c_arx_pedestal_memory_benchmark/pedestal_counterfactuals.csv",
+      "sha256": "29d22cf24f9587d20aac23f1e848e11e1e7b07ae3154188f48291052e8d67446",
+      "bytes": 1235
+    },
+    {
+      "path": "reports/2484__s55c_arx_pedestal_memory_benchmark/reproduction_counts_by_run.csv",
+      "sha256": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+      "bytes": 1896
+    },
+    {
+      "path": "reports/2484__s55c_arx_pedestal_memory_benchmark/reproduction_match_table.csv",
+      "sha256": "d3325c107d2e5a2df7c5c80e0375592216a738d2ba378c7ba7d7d1beb6c25da4",
+      "bytes": 95
+    },
+    {
+      "path": "reports/2484__s55c_arx_pedestal_memory_benchmark/result.json",
+      "sha256": "bd0fff2714e3d429aa328bc7bb759b1d797840ee387c1da7331db088808df951",
+      "bytes": 5386
+    },
+    {
+      "path": "reports/2484__s55c_arx_pedestal_memory_benchmark/run_heldout_metrics.csv",
+      "sha256": "44980ecb2677da575c729f5abff7bf8460524712855a8f6f3cdd55ed4118ee61",
+      "bytes": 8288
+    },
+    {
+      "path": "reports/2484__s55c_arx_pedestal_memory_benchmark/saturation_mask_stress.csv",
+      "sha256": "8eb7be2dc9fa953575aa22b6e3e5e989bae48208c9be1ed0cb1dea095174c75e",
+      "bytes": 1678
+    },
+    {
+      "path": "reports/2484__s55c_arx_pedestal_memory_benchmark/strata_assignments.csv",
+      "sha256": "aaeabd8ca30bf2c30cde09f1cfd565162d4d666cc4e2c9995c98e803e32023ec",
+      "bytes": 62388
+    }
+  ]
+}

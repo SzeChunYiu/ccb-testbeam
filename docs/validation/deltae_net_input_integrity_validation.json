@@ -1,0 +1,73 @@
+{
+  "issue_count": 0,
+  "issues": [],
+  "policy": "DELTAE_NET_AMPLITUDE_ROWS_MUST_BE_FINITE_NUMERIC_BEFORE_AGGREGATION",
+  "repository_source": {
+    "candidate_bytes": 13225,
+    "candidate_sha256": "8295d117b068795ea48015c14cbd7531094dae5931283e5e9205121d5eaa8011",
+    "current_git_blob": "2820c461508990d743cc53754c33ec2934a3c9ad",
+    "implementation_commit": "910efe6b37b3d16a31275e9c0502ee2bd5512ab9",
+    "path": "scripts/single_stave/deltaE_E_data_bridge.py",
+    "prior_git_blob": "7f50ce667a6cde07e94717d0187831da4d8459ac",
+    "remediation": [
+      "pd.to_numeric(errors=\"coerce\") for the selected net-amplitude column",
+      "np.isfinite rejection before groupby, pivot_table, or missing-layer zero filling",
+      "machine-readable amplitude_validation and missing_layer_policy fields"
+    ]
+  },
+  "scientific_boundary": "Synthetic software-integrity validation only; no A-002 production bytes, calibration, stopping profile, particle-identification result, or detector-performance claim is established.",
+  "session": {
+    "initial_main": "421aafd6894b6ba3b92b98f616141084742b6812",
+    "task_id": "AUD-DELTAE-003",
+    "utc_stamp": "2026-07-25T060608Z"
+  },
+  "source": {
+    "bytes": 13225,
+    "path": "/mnt/data/deltae_remediation/scripts/single_stave/deltaE_E_data_bridge.py",
+    "sha256": "8295d117b068795ea48015c14cbd7531094dae5931283e5e9205121d5eaa8011"
+  },
+  "source_indicators": {
+    "direct_net_assignment_present": false,
+    "net_finite_validation_language_present": true
+  },
+  "status": "VALIDATED",
+  "synthetic_controls": {
+    "finite": {
+      "amp_B2": [
+        "250.0"
+      ],
+      "label": "finite_control",
+      "rejected": false,
+      "rows": 1,
+      "stopping_distribution": {
+        "B4": 1
+      }
+    },
+    "nan": {
+      "exception": "net amplitude input requires finite numeric values; 1 rows fail",
+      "exception_type": "ValueError",
+      "label": "nan_net_amplitude",
+      "rejected": true
+    },
+    "positive_infinity": {
+      "exception": "net amplitude input requires finite numeric values; 1 rows fail",
+      "exception_type": "ValueError",
+      "label": "positive_infinity_net_amplitude",
+      "rejected": true
+    }
+  },
+  "validation": {
+    "audit_result": "VALIDATED; issue_count=0",
+    "commands": [
+      "python -m py_compile scripts/single_stave/deltaE_E_data_bridge.py tools/audit/audit_deltae_net_input_integrity.py tests/test_deltae_net_input_remediation.py",
+      "pytest -q tests/test_deltae_data_bridge_composite_key.py tests/test_deltae_net_input_remediation.py",
+      "python tools/audit/audit_deltae_net_input_integrity.py --source scripts/single_stave/deltaE_E_data_bridge.py --out docs/validation/deltae_net_input_integrity_validation.json"
+    ],
+    "focused_result": "17 passed in 0.31s",
+    "python": "3.13.5",
+    "renderer_commit": "20bc4b7b36c6942578264fee5d9126aefaf6ff06",
+    "strict_runner_note": "The new repository regression targets the current strict runner API. Local execution used a faithful reconstruction of the unchanged pre-publication call path; exact current runner lines 355-408 were independently inspected.",
+    "test_commit": "64f486988252145d3d6744ddc4a1a0c828e59cf1"
+  },
+  "validator_version": "1.0.0"
+}

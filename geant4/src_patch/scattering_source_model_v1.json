@@ -1,0 +1,38 @@
+{
+  "schema_version": "ccb_scattering_source_model_v1",
+  "reaction": "2H(p,dp) elastic proton-deuteron scattering",
+  "incident_proton_kinetic_energy_MeV": 190.0,
+  "cross_section_table": {
+    "path": "sigma_pd_cm_190.txt",
+    "sha256": "0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc",
+    "source_sidecar": "sigma_pd_cm_190.source.json"
+  },
+  "target_polar_angle_density": "p(theta_cm) proportional to (dσ/dΩ)(theta_cm) * sin(theta_cm)",
+  "cross_section_interpolation_mode": "linear_node_pdf_exact_inverse_v1",
+  "cross_section_support_mode": "measured_table_support_truncate_v1",
+  "support_theta_cm_deg": [
+    26.49,
+    169.78
+  ],
+  "target_azimuthal_density": "p(phi) = 1/(2*pi) on [0,2*pi)",
+  "source_phi_measure": "uniform_full_2pi_v1",
+  "support_phi_rad": [
+    0.0,
+    6.283185307179586
+  ],
+  "detector_surrogate_phi_preselection": false,
+  "event_weight_mode": "unit_direct_sampling_v1",
+  "event_weight": 1.0,
+  "source_model_status": "NOMINAL_TRUTH_REFERENCE_NONAUTHORISING_FOR_DETECTOR_CLAIMS",
+  "support_policy_note": "The nominal polar-angle distribution is conditional on measured Table-VI support. Zero probability outside that theta support is a declared reference-model choice, not evidence that the physical cross section vanishes there. Alternate source-bound support/extrapolation models remain a required sensitivity under issue #1178.",
+  "azimuth_policy_note": "The reference source samples full physical azimuth with no detector-surrogate pre-acceptance. Detector geometry and trigger logic determine downstream acceptance. The historical 5 cm / 1 m narrow-phi proposal remains non-authorising for total rates or general angular distributions without an explicit proposal/target measure treatment.",
+  "uncertainty_note": "Central values only. Statistical and systematic cross-section nuisance propagation remains issue #1179.",
+  "validation_note": "Deterministic interval inverse, source-byte checks, and static/deterministic full-azimuth source-contract checks are repository-tested. A compiled Geant4 build, seeded generator-level closure, full-phi versus any importance-sampled accepted-observable closure, production run manifest serialization, and detector-response propagation remain required before authorising physical claims.",
+  "hard_coded_detector_surrogate_phi_preacceptance": {
+    "present": false,
+    "historical_mechanism": "5 cm detector height / 1 m distance => phi_max = atan2(0.025, 1)",
+    "retirement": "removed; source_phi_measure=uniform_full_2pi_v1",
+    "authorising_for_detector_claims": false,
+    "issue": 1057
+  }
+}

@@ -1,0 +1,3 @@
+[console_scripts]
+ccb-mc-validation = ccb_mc_validation.cli:main
+ccb-paper-plots = ccb_plotting.wiki_figures:main

@@ -1,0 +1,16 @@
+\section{Introduction}
+
+The HIBEAM/NNBAR programme at the European Spallation Source is developing the experimental techniques required for searches for baryon-number-violating neutron-conversion processes, including free neutron--antineutron oscillation~\cite{Yiu2022,Barrow2021}. In a neutron--antineutron search, an antineutron would annihilate in a thin target and produce a low-energy hadronic final state whose charged particles, pions and secondary nuclear interactions must be reconstructed with high efficiency while backgrounds are rejected.
+
+These requirements differ from those of a conventional collider spectrometer. The neutron flight region must remain magnetically quiet, restricting the use of magnetic momentum analysis close to the interaction region, while many charged annihilation products are sufficiently slow that range and specific-ionisation information are directly useful. The HIBEAM/NNBAR calorimeter concept therefore includes multiple layers of plastic scintillator ahead of the electromagnetic calorimeter, so that the longitudinal pattern of deposited energy and the depth reached by a charged particle can supplement calorimetric and timing information~\cite{Dunne2022}. A segmented scintillator range stack also provides a controlled system in which the consequences of sparse readout, thresholding and finite waveform sampling can be studied explicitly.
+
+The CCB test-beam data provide an experimental test of this range-stack concept with charged-particle events that can also be represented in Geant4. The present study focuses on five connected questions:
+\begin{enumerate}[label=(\roman*)]
+  \item what longitudinal-response differences are observed between the declared beam-data run families;
+  \item how much range and energy-loss information is lost when the analysed readout samples only alternating positions in the B stack;
+  \item what timing observable is supported by the source-bound waveform format and estimator;
+  \item which causal response stages must be represented in a one-fibre, one-end scintillator/WLS/SiPM model; and
+  \item how raw deposited energy and Birks-visible energy should be kept distinct when defining and validating an energy-reconstruction estimator.
+\end{enumerate}
+
+The analysis intentionally separates direct beam-data observables from truth-level simulation and from model-dependent optical/electronics predictions. This distinction is essential for the present detector state: a result that is reproducible within a specified Monte-Carlo model is evidence about that model, but it becomes a detector-performance measurement only after the relevant hardware, calibration, data-lineage and held-out validation conditions are established. The evidence and provenance rules used to enforce this separation are described in the reproducibility section rather than being treated as additional detector observables.

@@ -1,0 +1,84 @@
+{
+  "acceptance": "Section-binding validator, focused regressions, machine-readable evidence, and deterministic visual evidence are validated. The root WIKI remains scientifically FLAWED until its six sections are patched.",
+  "checks": {
+    "direct_current_wiki": "FLAWED with 7 section findings",
+    "invalid_utf8": "controlled ValidationError",
+    "json_parse": "PASS",
+    "max_python_line_lengths": {
+      "tests/test_validate_wiki_mv3_section_binding.py": 99,
+      "tools/audit/render_wiki_mv3_section_binding_evidence.py": 90,
+      "tools/audit/validate_wiki_mv3_section_binding.py": 96
+    },
+    "py_compile": "PASS",
+    "pytest": "5 passed in 0.03s",
+    "svg_xml_parse": "PASS"
+  },
+  "confirmed_validator_weakness": {
+    "description": "Global exact-token presence can be satisfied by an unrelated appendix while the canonical MV3 row remains rounded. Scientific authorization requires location-bound evidence.",
+    "existing_global_tokens_checked": [
+      "data count/fraction",
+      "MC count/fraction",
+      "Pearson chi2",
+      "ndf",
+      "chi2/ndf",
+      "FLAWED boundary",
+      "blocker"
+    ],
+    "new_bound_sections": [
+      "canonical_results_table",
+      "material_budget_impact",
+      "pid_mv3_section",
+      "mc_validation_matrix",
+      "mc_blocking_issue",
+      "gap01"
+    ]
+  },
+  "current_wiki": {
+    "bytes": 23355,
+    "git_blob": "fee0e1a15243904dbeb46254878ade4650a8e1f6",
+    "issue_codes": [
+      "CANONICAL_ROW_MISMATCH",
+      "CANONICAL_ROW_ROUNDED_ONLY",
+      "MATERIAL_IMPACT_MISMATCH",
+      "PID_SECTION_MISMATCH",
+      "VALIDATION_MATRIX_MISMATCH",
+      "BLOCKING_ISSUE_MISMATCH",
+      "GAP01_MISMATCH"
+    ],
+    "n_issues": 7,
+    "path": "WIKI.md",
+    "sha256": "c0e8c8f7aa0c6b8f024ea9821dcb046b77376aecc95c81301afaf40248417680",
+    "status": "FLAWED"
+  },
+  "environment": {
+    "platform": "Linux 6.12.13",
+    "pytest": "9.0.2",
+    "python": "3.13.5"
+  },
+  "generation_command": "python tools/audit/render_wiki_mv3_section_binding_evidence.py --json docs/validation/wiki_mv3_section_binding_validation.json --out docs/validation/wiki_mv3_section_binding.svg",
+  "policy": "WIKI_MV3_EXACT_VALUES_MUST_BE_BOUND_TO_CANONICAL_SECTIONS",
+  "scientific_boundary": [
+    "This is software/documentation governance, not detector-data reanalysis.",
+    "Exact MV3 fixed-source arithmetic remains a FLAWED diagnostic under BLK-MV3-LEGACY-001.",
+    "Geometry, trigger/selection transfer, gain response, covariance, p-value interpretation, and detector/model systematics remain unresolved."
+  ],
+  "session": {
+    "initial_remote_main": "4480ca889250e1915d963e7c646cd5ebf923a201",
+    "stamp_utc": "2026-07-24T230723Z",
+    "task_id": "AUD-WIKI-003",
+    "unit": "MV3 public-WIKI section-binding gate"
+  },
+  "status": "VALIDATED",
+  "synthetic_regression": {
+    "canonical_row": "rounded 2.3%, 22.3%, and 68269.4",
+    "global_exact_tokens_present": true,
+    "issue_codes": [
+      "CANONICAL_ROW_MISMATCH",
+      "CANONICAL_ROW_ROUNDED_ONLY"
+    ],
+    "n_issues": 2,
+    "status": "FLAWED"
+  },
+  "validator": "validate_wiki_mv3_section_binding.py",
+  "version": "1.0.0"
+}

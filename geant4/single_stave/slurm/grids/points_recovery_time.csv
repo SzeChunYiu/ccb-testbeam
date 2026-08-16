@@ -1,0 +1,26 @@
+# knob: recovery_time
+# channel: env  target: CCB_SIPM_RECOVERY_TIME_NS  unit: ns
+# rationale: Microcell RC recovery; S13360-3050CS tens of ns, swept 5-100 ns.
+# base_cli: --particle proton --energy 100 --hit-x 0 --hit-y 0 --theta 0 --phi 0
+# default_nevents: 60
+# paired_seed_design: AF-036 / #984 common-random-number
+# seed_replicates: 1000,1001,1002
+# note: same replicate_seed is reused at every knob value (CRN pairing)
+# columns: label,seed,nevents,cli_args,env_vars
+# explicit triple encoded in label as knob=value__rep=<replicate_seed>
+label,seed,nevents,cli_args,env_vars
+recovery_time=5__rep=1000,1000,60,,CCB_SIPM_RECOVERY_TIME_NS=5
+recovery_time=15__rep=1000,1000,60,,CCB_SIPM_RECOVERY_TIME_NS=15
+recovery_time=30__rep=1000,1000,60,,CCB_SIPM_RECOVERY_TIME_NS=30
+recovery_time=60__rep=1000,1000,60,,CCB_SIPM_RECOVERY_TIME_NS=60
+recovery_time=100__rep=1000,1000,60,,CCB_SIPM_RECOVERY_TIME_NS=100
+recovery_time=5__rep=1001,1001,60,,CCB_SIPM_RECOVERY_TIME_NS=5
+recovery_time=15__rep=1001,1001,60,,CCB_SIPM_RECOVERY_TIME_NS=15
+recovery_time=30__rep=1001,1001,60,,CCB_SIPM_RECOVERY_TIME_NS=30
+recovery_time=60__rep=1001,1001,60,,CCB_SIPM_RECOVERY_TIME_NS=60
+recovery_time=100__rep=1001,1001,60,,CCB_SIPM_RECOVERY_TIME_NS=100
+recovery_time=5__rep=1002,1002,60,,CCB_SIPM_RECOVERY_TIME_NS=5
+recovery_time=15__rep=1002,1002,60,,CCB_SIPM_RECOVERY_TIME_NS=15
+recovery_time=30__rep=1002,1002,60,,CCB_SIPM_RECOVERY_TIME_NS=30
+recovery_time=60__rep=1002,1002,60,,CCB_SIPM_RECOVERY_TIME_NS=60
+recovery_time=100__rep=1002,1002,60,,CCB_SIPM_RECOVERY_TIME_NS=100

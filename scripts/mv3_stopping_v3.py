@@ -108,21 +108,44 @@ def mc_stopping_fractions_threshold(mc_path, tree="hibeam", max_events=0,
     }
 
 
+def _net_amplitude(df: pd.DataFrame) -> pd.Series:
+    """Return the baseline-subtracted (net) pulse amplitude per row.
+
+    Per docs/contracts/PULSE_TABLE_CONTRACT.md the canonical net field is
+    ``peak_height_adc``; the legacy ``amplitude_adc`` is ALREADY produced as
+    ``max(waveform - baseline)`` by scripts/01_build_pulse_table_from_root.py
+    (baseline already removed). Subtracting ``baseline_adc`` again is the
+    A-001 double-subtraction bug. This helper NEVER subtracts baseline_adc.
+    """
+    if "peak_height_adc" in df.columns:
+        return df["peak_height_adc"].abs()
+    # amplitude_adc is net per producer code (PulseTable contract v1).
+    return df["amplitude_adc"].abs()
+
+
 def data_stopping_fractions(data_csv, threshold_net=THRESHOLD_NET):
-    """Per-event deepest stave with net_adc > threshold."""
+    """Per-event deepest stave with net_adc > threshold.
+
+    ``net_adc`` is the contract net amplitude (peak_height_adc if present,
+    else the already-baseline-subtracted amplitude_adc). It is NOT re-derived
+    by subtracting baseline_adc (that is the A-001 double-subtraction bug).
+    """
     df = pd.read_csv(data_csv)
-    df["net_adc"] = (df["amplitude_adc"] - df["baseline_adc"]).abs()
+    df["net_adc"] = _net_amplitude(df)
     df = df[df["net_adc"] > threshold_net]
 
     stave_rank = {"B2": 0, "B4": 1, "B6": 2, "B8": 3}
     df["stave_rank"] = df["stave"].map(stave_rank)
 
     results = {}
-    # Fix: use exact match to avoid sample_i containing sample_ii
+    # Exact categorical match: "sample_i_" prefix must NOT match "sample_ii_".
+    sample = np.where(df["group"].str.startswith("sample_i_"), "I",
+                      np.where(df["group"].str.startswith("sample_ii_"), "II", "other"))
+    df = df.assign(sample=sample)
     groups = [
         ("all", df),
-        ("sample_i",  df[df["group"].str.contains("sample_i") & ~df["group"].str.contains("sample_ii")]),
-        ("sample_ii", df[df["group"].str.contains("sample_ii")]),
+        ("sample_i",  df[df["sample"] == "I"]),
+        ("sample_ii", df[df["sample"] == "II"]),
     ]
     for group_name, sub_group in groups:
         if len(sub_group) == 0:

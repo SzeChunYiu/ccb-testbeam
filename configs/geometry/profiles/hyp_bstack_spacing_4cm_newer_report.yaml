@@ -1,0 +1,23 @@
+schema: ccb-geometry-profile/1
+profile_id: hyp_bstack_spacing_4cm_newer_report
+status: HYPOTHESIS
+claims_authorized: false
+issues: [992]
+adr: docs/adr/ADR-0002-geometry-kinematics-hypotheses.md
+source_type: DOC_CLAIM
+source_refs:
+  - docs/01_setup_and_detector.md
+  - docs/academic_chapters/02_experimental_setup.md
+contradicts:
+  - hyp_bstack_spacing_2cm_timing_note
+parameters:
+  kind: bstack_layer_spacing
+  analysed_stave_labels: ["B2", "B4", "B6", "B8"]
+  analysed_stave_centres_cm: [0.0, 4.0, 8.0, 12.0]
+  analysed_stave_spacing_cm: 4.0
+  spacing_convention: centre_to_centre_analysed_staves
+notes: >
+  Newer report / Chapter 2 centre-to-centre spacing of 4 cm for analysed
+  B staves at (0,4,8,12) cm. Contradicts the 2 cm step in the B-stack timing
+  note TOF table (#992). Do not hard-code spacing elsewhere; derive from a
+  selected profile. Physical stack table from ROOT/CAD remains BLOCKED_COMPUTE.

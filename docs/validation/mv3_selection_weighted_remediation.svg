@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="590" viewBox="0 0 760 590">
+<defs><pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="8" height="8" fill="#f2f2f2"/><line x1="0" y1="0" x2="0" y2="8" stroke="#555" stroke-width="2"/></pattern></defs>
+<rect width="760" height="590" fill="white"/>
+<text x="380" y="42" text-anchor="middle" font-size="25" font-weight="bold">MV3 weighting-contract synthetic control</text>
+<text x="380" y="72" text-anchor="middle" font-size="16">VALIDATED_PREPARED_SCRIPT_REMOTE_DELIVERY_PARTIAL</text>
+<line x1="80" y1="430" x2="680" y2="430" stroke="#111"/>
+<line x1="80" y1="130" x2="80" y2="430" stroke="#111"/>
+<text x="32" y="285" transform="rotate(-90 32 285)" text-anchor="middle" font-size="17">Profile fraction</text>
+<text x="75" y="435" text-anchor="end" font-size="14">0.0</text>
+<text x="75" y="285" text-anchor="end" font-size="14">0.5</text>
+<text x="75" y="135" text-anchor="end" font-size="14">1.0</text>
+<rect x="120" y="400.00" width="80" height="30.00" fill="#4c78a8" stroke="#111"/>
+<text x="160" y="392.00" text-anchor="middle" font-size="18">0.1</text>
+<text x="160" y="458" text-anchor="middle" font-size="15">Weighted B2</text>
+<rect x="240" y="160.00" width="80" height="270.00" fill="#4c78a8" stroke="#111"/>
+<text x="280" y="152.00" text-anchor="middle" font-size="18">0.9</text>
+<text x="280" y="458" text-anchor="middle" font-size="15">Weighted B8</text>
+<rect x="420" y="280.00" width="80" height="150.00" fill="url(#hatch)" stroke="#111"/>
+<text x="460" y="272.00" text-anchor="middle" font-size="18">0.5</text>
+<text x="460" y="458" text-anchor="middle" font-size="15">Unweighted B2</text>
+<rect x="540" y="280.00" width="80" height="150.00" fill="url(#hatch)" stroke="#111"/>
+<text x="580" y="272.00" text-anchor="middle" font-size="18">0.5</text>
+<text x="580" y="458" text-anchor="middle" font-size="15">Unweighted B8</text>
+<text x="380" y="510" text-anchor="middle" font-size="15">Synthetic weights 1 and 9: ESS = 1.219512</text>
+<text x="380" y="538" text-anchor="middle" font-size="13">Policy: MV3_SELECTION_WEIGHTED_SIGNED_CHARGE_SAME_TARGET_V2</text>
+<text x="380" y="566" text-anchor="middle" font-size="13" font-weight="bold">Software/provenance validation only — not detector data</text>
+</svg>

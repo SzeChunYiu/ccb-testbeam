@@ -24,8 +24,11 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
+try:
+    import uproot
+except ModuleNotFoundError:  # pragma: no cover - optional for pure helper tests
+    uproot = None  # type: ignore
 import pandas as pd
-import uproot
 from sklearn.decomposition import PCA
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import balanced_accuracy_score, f1_score
@@ -170,15 +173,40 @@ def json_sanitize(value):
     return value
 
 
-def run_block_bootstrap(values: np.ndarray, runs: np.ndarray, rng: np.random.Generator, n_boot: int) -> Tuple[float, float]:
+def run_block_bootstrap(
+    values: np.ndarray,
+    runs: np.ndarray,
+    rng: np.random.Generator,
+    n_boot: int,
+    *,
+    cluster_estimand: str = "pulse_weighted",
+) -> Tuple[float, float]:
+    """Run-cluster bootstrap with multiplicity preserved (issue #1097).
+
+    ``cluster_estimand``:
+      - ``pulse_weighted``: concatenate sampled-run pulse rows (with replacement
+        multiplicity) and take the mean;
+      - ``equal_cluster``: average the per-run means of the sampled runs.
+    """
+    values = np.asarray(values, dtype=float)
+    runs = np.asarray(runs)
     unique_runs = np.unique(runs)
+    if unique_runs.size < 2:
+        raise ValueError(
+            f"run_block_bootstrap NOT_ESTIMABLE with <2 runs (got {unique_runs.size})"
+        )
     boot = []
     for _ in range(n_boot):
         sampled = rng.choice(unique_runs, size=len(unique_runs), replace=True)
-        mask = np.zeros(len(values), dtype=bool)
-        for run in sampled:
-            mask |= runs == run
-        boot.append(float(np.mean(values[mask])))
+        if cluster_estimand == "pulse_weighted":
+            idx_parts = [np.where(runs == run)[0] for run in sampled]
+            idx = np.concatenate(idx_parts)
+            boot.append(float(np.mean(values[idx])))
+        elif cluster_estimand == "equal_cluster":
+            run_means = [float(np.mean(values[runs == run])) for run in sampled]
+            boot.append(float(np.mean(run_means)))
+        else:
+            raise ValueError(f"unknown cluster_estimand: {cluster_estimand!r}")
     return ci(boot)
 
 

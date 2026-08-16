@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "contract_id": "I885_ANGULAR_PHASE_SPACE",
+  "issue": "#1093",
+  "audit_id": "ARU-STAVE-ANGULAR-RESPONSE-001",
+  "evidence_state": "BLOCKED",
+  "campaign_coverage": "NORMAL_INCIDENCE_ONLY",
+  "theta_deg_default": 0.0,
+  "phi_deg_default": 0.0,
+  "surfaces": [
+    "geant4/single_stave/slurm/make_i885_campaign.py",
+    "geant4/single_stave/slurm/submit_calibration.sh",
+    "geant4/single_stave/slurm/points_i885_campaign.csv"
+  ],
+  "missing": [
+    "source-bound data track angular/azimuth distribution at the stave",
+    "theta/phi columns in the I885 campaign grid",
+    "held-out validation that normal-incidence slice is sufficient for accepted observables"
+  ],
+  "fail_closed_policy": "Do not claim angular/azimuth response closure or full phase-space calibration from the I885 normal-incidence campaign alone.",
+  "related_issues": [
+    "#885",
+    "#1092",
+    "#844",
+    "#991",
+    "#1032"
+  ]
+}

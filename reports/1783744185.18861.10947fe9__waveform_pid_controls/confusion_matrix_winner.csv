@@ -1,0 +1,5 @@
+,pred_proton,pred_deuteron,pred_alpha,pred_carbon12
+true_proton,1473,4,23,0
+true_deuteron,9,1478,12,1
+true_alpha,5,10,64,1
+true_carbon12,0,1,1,26

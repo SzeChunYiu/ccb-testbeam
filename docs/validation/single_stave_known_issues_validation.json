@@ -1,0 +1,60 @@
+{
+  "forbidden_stale_phrases": [
+    "## Open issue A",
+    "## Open issue B",
+    "photon-collection readout IN_PROGRESS",
+    "Thread-count reproducibility | NOT VALIDATED",
+    "Multiseed stability | NOT VALIDATED",
+    "optical calibration plots require issue A resolved first"
+  ],
+  "issues": [],
+  "known_issues": {
+    "bytes": 4351,
+    "path": "geant4/single_stave/KNOWN_ISSUES.md",
+    "sha256": "0dd9b2e4c489c0aa1b2ca9b3938acf9a9f4ba6a2c1c55dae0d5056f77a57678c"
+  },
+  "n_issues": 0,
+  "policy": "KNOWN_ISSUES_MUST_MATCH_REPOSITORY_RECORDED_G4_VALIDATION",
+  "reconstructed": {
+    "cross_seed_mean_pe": 178.3,
+    "cross_seed_rse_percent": 0.48,
+    "event_branches_equal": 27,
+    "event_branches_total": 27,
+    "event_equality_count": 500,
+    "events_per_run": 500,
+    "gcc_version": "12.3.0",
+    "geant4_version": "11.2.2",
+    "node": "hpua40",
+    "photon_fields_equal": 6,
+    "photon_records": 1170091,
+    "seed_means_pe": [
+      177.1,
+      178.0,
+      179.5,
+      178.5
+    ]
+  },
+  "required_tokens": {
+    "calibration_boundary": "not a detector calibration",
+    "canonical_evidence": "docs/validation/G4_VALIDATION_RESULTS.md",
+    "event_branches": "27/27 branches exact equal",
+    "events_per_run": "500 events per run",
+    "gcc_version": "GCC 12.3.0",
+    "geant4_version": "Geant4 11.2.2",
+    "mean_yield": "178.3 PE/event",
+    "photon_fields": "all 6 stored fields exact equal",
+    "photon_records": "1,170,091 records",
+    "pr_state": "PR #868 remains closed and unmerged",
+    "rse": "RSE 0.48%",
+    "stopping_power_boundary": "BLK-G4-SP-001",
+    "validated_status": "Implementation/runtime status:** VALIDATED"
+  },
+  "status": "VALIDATED",
+  "validation_results": {
+    "bytes": 1878,
+    "path": "docs/validation/G4_VALIDATION_RESULTS.md",
+    "sha256": "b609a33be671418c11f46f94b2eddeb952308229fb9e62fb6f3501537c08e7a3"
+  },
+  "validator": "validate_single_stave_known_issues.py",
+  "version": "1.0.0"
+}

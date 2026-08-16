@@ -1,0 +1,42 @@
+{
+  "task_id": "AUD-G4-007",
+  "session_utc": "2026-07-23T11:06:11Z",
+  "initial_main_sha": "9dc4005dd030e78d2523d8094fa16adffcfc0bd1",
+  "prechange_script_blob_sha1": "0436fb390476697cfc83f88208322a99d7792a1c",
+  "validated_postchange_script_blob_sha1": "7c3c05f12a1311d5ead8d1d45e0f5fea91dc92ce",
+  "validated_test_blob_sha1": "31afa0144e18f7f9e598b60c8850fa6b9269b03e",
+  "defect": {
+    "malformed_rows": "silently skipped",
+    "energy_order": "silently sorted",
+    "duplicate_energies": "accepted",
+    "nonfinite_values": "accepted",
+    "nonphysical_values": "accepted",
+    "demonstrated_cli_effect": "success with NUMERICAL TOLERANCE: PASS"
+  },
+  "corrected_gate": {
+    "required_columns": true,
+    "all_rows_parseable": true,
+    "finite_values": true,
+    "positive_energy": true,
+    "nonnegative_components": true,
+    "positive_total": true,
+    "strictly_increasing_energy": true,
+    "minimum_validated_rows": 2,
+    "cli_input_error_status": 2
+  },
+  "validation": {
+    "commands": [
+      "python -m py_compile scripts/single_stave/compare_stopping_power.py tests/test_compare_stopping_power_reference_path.py tests/test_compare_stopping_power_energy_range.py tests/test_compare_stopping_power_reference_integrity.py",
+      "python -m pytest tests/test_compare_stopping_power_reference_path.py tests/test_compare_stopping_power_energy_range.py tests/test_compare_stopping_power_reference_integrity.py -q"
+    ],
+    "result": "14 passed in 2.94s",
+    "prechange_regression": "6 failed, 1 passed in 1.08s",
+    "changed_python_lines_over_100": 0
+  },
+  "limitations": [
+    "The committed PSTAR CSV was inspected through GitHub but not materialized in the execution container.",
+    "No complete repository pytest, ruff, Geant4, ROOT, CTest, or GitHub Actions run was performed.",
+    "No real simulation, stopping-power value, calibration, or detector-performance result was generated."
+  ],
+  "scientific_status": "DIAGNOSTIC_ONLY"
+}

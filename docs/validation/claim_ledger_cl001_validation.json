@@ -1,0 +1,58 @@
+{
+  "claim_id": "CL-001",
+  "configured_runs": 33,
+  "count_table_gate": {
+    "delta": "0",
+    "pass": "True",
+    "report_value": "640737",
+    "reproduced": "640737",
+    "tolerance": "0"
+  },
+  "expected_count": 640737,
+  "inputs": {
+    "config": {
+      "bytes": 1344,
+      "path": "configs/s00_reproduction.yaml",
+      "sha256": "6978622749afd46044adf63979526e23498f9a09602cc9710f182cad925748e4",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    },
+    "count_table": {
+      "bytes": 1055,
+      "path": "reports/S00_data_integrity_pipeline_reproduction/count_match_table.csv",
+      "sha256": "b6227057386a9dc110b8b7c9ee2047ff4725be3c9c62da3fb65129c12a183dcf",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    },
+    "figure_registry": {
+      "bytes": 5787,
+      "path": "docs/figure_registry.csv",
+      "sha256": "0c0ec55d07d6446ad1cb41f7e4f01d953e9ece9160f1b89eb34959fd169891f3",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    },
+    "ledger": {
+      "bytes": 9337,
+      "path": "docs/claim_ledger.csv",
+      "sha256": "a760fdd78fd120b098a2342fbf3e8e681141ea08b4f0d42ace01ea5b91f96767",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    },
+    "manifest": {
+      "bytes": 538,
+      "path": "reports/S00_data_integrity_pipeline_reproduction/manifest.json",
+      "sha256": "c8a190d957fcf120ede39f1c9d391eb587ce254f5b3c8ef5508f4d14fc7da6dc",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    },
+    "report": {
+      "bytes": 8759,
+      "path": "reports/S00_data_integrity_pipeline_reproduction/REPORT.md",
+      "sha256": "4e80ee7d3d8e002dc1556baef3ffbba476e4d4bc0f538791a7fb530523d6eb4e",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    }
+  },
+  "issues": [],
+  "n_issues": 0,
+  "policy": "SOURCE_BACKED_EXACT_COUNT_LEDGER_ROW",
+  "source_commit": "dcde28d37b9adee4f56ee0348d090006c53d2fa1",
+  "source_data_tracking": "INTENTIONALLY_UNTRACKED_GENERATED_ARTIFACT",
+  "status": "VALIDATED",
+  "validator": "validate_claim_ledger_cl001.py",
+  "version": "1.0.0"
+}

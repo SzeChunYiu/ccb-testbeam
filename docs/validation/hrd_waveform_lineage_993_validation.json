@@ -1,0 +1,21 @@
+{
+  "issue": 993,
+  "paper_atom": "PAPER-A02",
+  "verdict": "DISTINCT_SCHEMAS",
+  "authorising_schema": "hrd_raw_8x16_v1",
+  "raw_manifest_complete": true,
+  "raw_input_sha256_count": 33,
+  "raw_input_missing_runs": [],
+  "all_runs_contract_8x16_pass": true,
+  "any_run_contract_8x18_pass": false,
+  "lunarc_run31_sha256": "0986c8263d7445eda3633578fc606902d487a6c8ffb4b4ccd68336e6d140c268",
+  "laptop_run31_sha256": "9921aa75c062d0b8994573299a201cbe2725673319fdf1b8cffb711fb9adcea7",
+  "event_spot_check_records": 500,
+  "event_spot_check_mismatches": 45,
+  "disputed_samples_16_17_in_lunarc_raw": false,
+  "timing_18_sample_non_authorising": true,
+  "cross_schema_timing_transfer_allowed": false,
+  "producer": "tools/audit/audit_hrd_waveform_lineage_993.py",
+  "manifest": "reports/studies/paper_a02_waveform_lineage/manifest.json",
+  "report": "reports/studies/paper_a02_waveform_lineage/REPORT.md"
+}

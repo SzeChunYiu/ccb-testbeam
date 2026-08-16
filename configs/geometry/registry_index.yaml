@@ -1,0 +1,51 @@
+# CCB geometry / mapping / kinematics hypothesis registry (Wave A Lane 03).
+# schema: ccb-geometry-registry/1
+#
+# CRITICAL: There is NO approved silent default. Callers MUST set
+# geometry_profile_id to a registered profile. Unset -> ConfigurationError.
+#
+# Physical contradictions (#987 fibre count, #991 stave length, #992 spacing,
+# #989 deuteron energy scale) are recorded as named HYPOTHESIS profiles.
+# Selecting a profile documents which hypothesis a run assumes; it does NOT
+# resolve the contradiction. Only status=APPROVED (after hardware/CAD closure)
+# may authorize beam-test claims.
+
+schema: ccb-geometry-registry/1
+registry_version: "2026.0-waveA-lane03"
+default_profile_id: null
+fail_closed_when_unset: true
+issues:
+  - 987
+  - 989
+  - 991
+  - 992
+  - 999
+adrs:
+  - docs/adr/ADR-0002-geometry-kinematics-hypotheses.md
+  - docs/adr/ADR-0003-beam-intersection-preflight.md
+
+profiles:
+  - profile_id: hyp_mc_single_stave_50cm_2fibre
+    path: profiles/hyp_mc_single_stave_50cm_2fibre.yaml
+    status: HYPOTHESIS
+    issues: [987, 991, 999]
+  - profile_id: hyp_docs_stave_100cm_1fibre
+    path: profiles/hyp_docs_stave_100cm_1fibre.yaml
+    status: HYPOTHESIS
+    issues: [987, 991]
+  - profile_id: hyp_bstack_spacing_4cm_newer_report
+    path: profiles/hyp_bstack_spacing_4cm_newer_report.yaml
+    status: HYPOTHESIS
+    issues: [992]
+  - profile_id: hyp_bstack_spacing_2cm_timing_note
+    path: profiles/hyp_bstack_spacing_2cm_timing_note.yaml
+    status: HYPOTHESIS
+    issues: [992]
+  - profile_id: hyp_deuteron_ke_105MeV_elastic_kinematics
+    path: profiles/hyp_deuteron_ke_105MeV_elastic_kinematics.yaml
+    status: HYPOTHESIS
+    issues: [989]
+  - profile_id: hyp_deuteron_like_15p8MeV_bstack_note
+    path: profiles/hyp_deuteron_like_15p8MeV_bstack_note.yaml
+    status: HYPOTHESIS
+    issues: [989]

@@ -1,0 +1,17 @@
+profile_id: hyp_physicslist_default_step_policy_unvalidated
+kind: step_convergence
+status: HYPOTHESIS
+claims_authorized: false
+issue: 1095
+summary: >
+  Inherit the reference physics-list / EM constructor step policy with no
+  application G4UserLimits, G4StepLimiterPhysics, or documented StepFunction
+  campaign. Not authorizing for Bragg/quenching closure.
+parameters:
+  application_user_limits: false
+  step_limiter_physics: false
+  convergence_study: absent
+  em_option: physicslist_default
+blocked_until:
+  - documented step-size / visible-energy convergence study near Bragg stopping
+  - named StepFunction / user-max-step / MS limitation ledger

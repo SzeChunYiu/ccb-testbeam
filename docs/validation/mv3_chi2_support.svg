@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="430" viewBox="0 0 1200 430">
+<rect x="1" y="1" width="1198" height="428" fill="white" stroke="black"/>
+<text x="38" y="55" font-family="sans-serif" font-size="26" font-weight="bold" fill="black">MV3 Pearson chi-square support audit</text>
+<text x="38" y="89" font-family="sans-serif" font-size="19" font-weight="bold" fill="black">Status: FLAWED | findings: 2</text>
+<text x="38" y="123" font-family="sans-serif" font-size="19" font-weight="normal" fill="black">Synthetic control A: model fractions [0.50, 0.50, 0, 0]</text>
+<text x="38" y="157" font-family="sans-serif" font-size="19" font-weight="normal" fill="black">Observed counts [45, 45, 10, 0] include B6=10 where expected B6=0.</text>
+<text x="38" y="191" font-family="sans-serif" font-size="19" font-weight="normal" fill="black">Current behavior: RETURNED chi2=1.0 ndf=1</text>
+<text x="38" y="225" font-family="sans-serif" font-size="19" font-weight="bold" fill="black">Required behavior: reject as CHI2_OBSERVED_OUTSIDE_MODEL_SUPPORT.</text>
+<text x="38" y="259" font-family="sans-serif" font-size="19" font-weight="normal" fill="black">Synthetic control B: model fractions sum to 0.95.</text>
+<text x="38" y="293" font-family="sans-serif" font-size="19" font-weight="normal" fill="black">Current behavior: RETURNED chi2=5.0</text>
+<text x="38" y="327" font-family="sans-serif" font-size="19" font-weight="bold" fill="black">Required behavior: reject as CHI2_PROFILE_NOT_NORMALIZED.</text>
+<text x="38" y="361" font-family="sans-serif" font-size="19" font-weight="normal" fill="black">Evidence class: synthetic software/statistical validation, not detector data.</text>
+</svg>

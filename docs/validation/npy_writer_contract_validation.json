@@ -1,0 +1,69 @@
+{
+  "schema": "ccb-validation/npy-writer-contract/1",
+  "task_id": "AUD-G4-024",
+  "session_stamp": "2026-07-25T180216Z",
+  "policy": "NPY_OUTPUT_MUST_BE_LITTLE_ENDIAN_AND_FAIL_CLOSED",
+  "result": "VALIDATED",
+  "initial_remote_main": "a5b108fc8ead2f644c8b362f3a8732ef1d0528fc",
+  "implementation_commit": "e54f1f5d8c3a3175e3bce56e459d461c523e01cc",
+  "test_commit": "09d4409e2b9091718b563b98da186376ce22cad6",
+  "renderer_commit": "5e064ca5bca2b1472679cf22071ef375dc3a8d8c",
+  "inputs": {
+    "former_header": {
+      "path": "geant4/single_stave/include/NpyWriter.hh",
+      "git_blob": "21ab586666daa978e4befa3b7b3387e808d76495",
+      "finding": "native-endian header length and unchecked stream writes"
+    },
+    "corrected_header": {
+      "path": "geant4/single_stave/include/NpyWriter.hh",
+      "git_blob": "0db837e3614eb725571e3863fce3a15855c52f03",
+      "bytes": 3473,
+      "sha256": "84df93606b6b2e3e5011806c2f2e652b9a2fb8e0c92008e9347c20163cb31b9d"
+    },
+    "tests": {
+      "path": "tests/test_npy_writer_contract.py",
+      "git_blob": "e15669312655d7d15479c520da12a42850c30461",
+      "bytes": 4163,
+      "sha256": "2de66bdbb56b53b15170040524fc2c1c9f31c683dacf110512a28260949ce7a7"
+    },
+    "renderer": {
+      "path": "tools/audit/render_npy_writer_contract_evidence.py",
+      "git_blob": "3d33c282b382ac03a79bba7355263c152b6613e7",
+      "bytes": 1550,
+      "sha256": "b148662e6c19207f8a04e2bf6f9d6fc2b8cdeabac30731c06b46fe17ca3abd0d"
+    }
+  },
+  "authoritative_reference": {
+    "title": "numpy.lib.format - Format Version 1.0",
+    "url": "https://numpy.org/doc/2.0/reference/generated/numpy.lib.format.html",
+    "supported_statement": "The two-byte header length is a little-endian unsigned short; the array dtype descriptor must match the emitted payload byte order."
+  },
+  "negative_control": {
+    "description": "The exact former algorithm was compiled and asked to write beneath a missing parent directory.",
+    "return_code": 0,
+    "output_exists": false,
+    "interpretation": "The former writer reported success while producing no artifact."
+  },
+  "commands": [
+    "python -m py_compile tests/test_npy_writer_contract.py tools/audit/render_npy_writer_contract_evidence.py",
+    "pytest -q tests/test_npy_writer_contract.py"
+  ],
+  "test_result": "6 passed in 0.36s",
+  "checks": [
+    {"label": "NumPy loads exact float32 values", "status": "PASS"},
+    {"label": "Header length is explicit little-endian", "status": "PASS"},
+    {"label": "Payload is emitted as little-endian float32", "status": "PASS"},
+    {"label": "Empty (0,4,4) arrays remain valid", "status": "PASS"},
+    {"label": "Non-empty null payload fails closed", "status": "PASS"},
+    {"label": "Shape-product overflow fails closed", "status": "PASS"},
+    {"label": "Unwritable target fails closed", "status": "PASS"}
+  ],
+  "scientific_boundary": "This validates NPY serialization and failure handling only. It does not validate Opticks propagation, GPU hit gathering, optical yield, sensor response, or detector performance.",
+  "unrun_checks": [
+    "full Geant4 build and CTest",
+    "Opticks A40 execution",
+    "repository-wide pytest and ruff",
+    "GitHub Actions",
+    "real GPU input-photon artifact regeneration"
+  ]
+}

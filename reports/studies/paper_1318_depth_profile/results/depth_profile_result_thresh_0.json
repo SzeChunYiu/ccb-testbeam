@@ -1,0 +1,90 @@
+{
+  "schema_version": "depth_profile_8x16_v2",
+  "producer_script": "analyze_depth_profile_8x16.py",
+  "git_commit": "c5b19f752d31a50f9639d5fb148d5de9e6cd0259",
+  "input_manifest_hash": "e60eefb059b1dab7",
+  "threshold_adc": 0,
+  "baseline_samples": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "channel_polarity_source": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/configs/channel_polarity_v2.json",
+  "stave_channel_map": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "duplicate_channel_parity_path": "reports/studies/paper_1318_depth_profile/results/duplicate_channel_parity.json",
+  "stave_amplitudes": {
+    "B2": 2415.515836293036,
+    "B4": 1925.1830477867336,
+    "B6": 2367.4768374874766,
+    "B8": 2501.377914219658
+  },
+  "stave_occupancies": {
+    "B2": 1096728,
+    "B4": 1096728,
+    "B6": 1096728,
+    "B8": 1096728
+  },
+  "stave_amplitude_uncertainties": {},
+  "sample_i_amplitudes": {
+    "B2": 3556.5673530789013,
+    "B4": 1570.365501681495,
+    "B6": 2415.6449585197834,
+    "B8": 2536.2450394018233
+  },
+  "sample_ii_amplitudes": {
+    "B2": 1274.4643195071703,
+    "B4": 2280.000593891972,
+    "B6": 2319.3087164551694,
+    "B8": 2466.5107890374925
+  },
+  "sample_i_occupancies": {
+    "B2": 798694,
+    "B4": 798694,
+    "B6": 798694,
+    "B8": 798694
+  },
+  "sample_ii_occupancies": {
+    "B2": 298034,
+    "B4": 298034,
+    "B6": 298034,
+    "B8": 298034
+  },
+  "normalized_profile_sample_i": {
+    "B2": 0.3528752717518484,
+    "B4": 0.15580842372515918,
+    "B6": 0.23967530671272524,
+    "B8": 0.2516409978102673
+  },
+  "normalized_profile_sample_ii": {
+    "B2": 0.15280825634918957,
+    "B4": 0.27337204337150434,
+    "B6": 0.27808508678692545,
+    "B8": 0.29573461349238067
+  },
+  "bootstrap_method": "run_block_bootstrap",
+  "bootstrap_reps": 1000,
+  "amplitude_ci_95": {
+    "B2": [
+      1274.4643195071703,
+      3683.265236429653
+    ],
+    "B4": [
+      1531.7767619946565,
+      2280.000593891972
+    ],
+    "B6": [
+      2319.3087164551694,
+      2416.485272726599
+    ],
+    "B8": [
+      2466.5107890374925,
+      2538.613369810525
+    ]
+  }
+}

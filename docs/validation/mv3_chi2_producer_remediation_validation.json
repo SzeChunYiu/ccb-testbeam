@@ -1,0 +1,81 @@
+{
+  "schema": "ccb-mv3-chi2-producer-remediation/1",
+  "task_id": "AUD-MV3-SEL-003",
+  "policy": "PEARSON_CHI2_MUST_REJECT_OUT_OF_SUPPORT_DATA_AND_NONUNIT_PROFILES",
+  "status": "PARTIAL",
+  "delivery_status": "CORE_CODE_BLOCKED_EVIDENCE_ON_MAIN",
+  "initial_remote_main": "54a899d82c1991747218a5b3a5a0835c51991420",
+  "main_documentation": {
+    "evidence_commit": "13ddd66f1b5280a960336d6f855631398d7db090",
+    "handoff_commit": "fae320327fc157ffa362ad139df568b311201372",
+    "core_code_present": false
+  },
+  "transport": {
+    "pull_request": 933,
+    "branch": "chatgpt/AUD-MV3-SEL-003-chi2-remediation-20260726T002131Z",
+    "candidate_head": "c9b20d0707b675c134ce8e6b0e804a115b569ae4",
+    "merge_permitted": false
+  },
+  "implementation": {
+    "front_door_blob": "91dc6d21e6c5ffa83fada4210456157d3bbee322",
+    "preserved_implementation_blob": "cd787ab64408228d67536b88bcc617fe32d0ec5a",
+    "producer_test_blob": "92c28df965d544d3c0b3ce5de36681e3a029f0e7",
+    "focused_workflow_blob": "fcdbc661a91ef3d6c61011aafa8eb79211b05843",
+    "profile_abs_tolerance": 1e-12,
+    "requirements": [
+      "exact B2/B4/B6/B8 category keys",
+      "finite nonnegative model and observed values",
+      "unit-normalized model profile",
+      "positive observed total",
+      "reject positive observed mass at zero expectation",
+      "omit only expected=observed=0 categories",
+      "derive ndf from supported categories",
+      "sum Pearson terms with math.fsum"
+    ]
+  },
+  "synthetic_controls": {
+    "old_positive_observed_zero_expected": {
+      "model": [0.5, 0.5, 0.0, 0.0],
+      "observed": [45, 45, 10, 0],
+      "old_chi2_per_ndf": 1.0,
+      "corrected_outcome": "CHI2_OBSERVED_OUTSIDE_MODEL_SUPPORT:staves=B6"
+    },
+    "old_nonunit_profile": {
+      "model": [0.45, 0.45, 0.05, 0.0],
+      "observed": [45, 45, 10, 0],
+      "old_chi2_per_ndf": 2.5,
+      "corrected_outcome": "CHI2_PROFILE_NOT_NORMALIZED"
+    }
+  },
+  "validation": {
+    "focused_workflow": {
+      "run_id": 30181818650,
+      "job_id": 89739575951,
+      "conclusion": "success",
+      "checks": [
+        "focused Python compilation",
+        "producer and audit regressions",
+        "exact canonical-source zero-finding audit",
+        "100-character line-length gate"
+      ]
+    },
+    "repository_workflow": {
+      "run_id": 30181818642,
+      "job_id": 89739575939,
+      "conclusion": "failure",
+      "ruff": "All checks passed",
+      "pytest": {
+        "passed": 775,
+        "failed": 42,
+        "skipped": 1,
+        "warnings": 6,
+        "duration_seconds": 60.43
+      },
+      "artifact_id": 8625795443,
+      "artifact_digest": "sha256:d16b0db6177e79fb30bcc682160d5460c30ea17f685b4a709c454f6c565adafa",
+      "candidate_test_failures": 0,
+      "blocker": "The repository-wide validation gate remains red on 42 pre-existing cross-area failures. Candidate producer code was not merged. Main advanced only with validated blocker documentation and evidence."
+    }
+  },
+  "scientific_boundary": "Software and statistical-contract validation only. No production ROOT or beam-data file was rerun; no weighted profile, covariance, sensitivity scan, calibration, PID, closure, or detector-performance result is established. Canonical CL-021 remains FLAWED under BLK-MV3-LEGACY-001."
+}

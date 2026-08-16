@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720"
+viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">DeltaE present-signal input integrity</title>
+  <desc id="desc">Synthetic software validation showing former malformed-to-zero and
+  infinity-retention behavior, and the corrected fail-closed contract.</desc>
+  <rect width="1200" height="720" fill="#ffffff"/>
+  <text x="60" y="70" font-family="sans-serif" font-size="34" font-weight="700">
+    DeltaE present-signal integrity
+  </text>
+  <text x="60" y="108" font-family="monospace" font-size="18">DELTAE_PRESENT_SIGNAL_CELLS_MUST_BE_FINITE_NUMERIC</text>
+  <rect x="60" y="140" width="1080" height="58" rx="8" fill="#eef6ee" stroke="#2f6f3e"/>
+  <text x="84" y="177" font-family="sans-serif" font-size="24" font-weight="700">
+    VALIDATED — 0 findings
+  </text>
+
+  <text x="90" y="255" font-family="sans-serif" font-size="24" font-weight="700">
+    Former algorithm
+  </text>
+  <text x="620" y="255" font-family="sans-serif" font-size="24" font-weight="700">
+    Corrected contract
+  </text>
+
+  <text x="90" y="310" font-family="sans-serif" font-size="20">
+    Malformed present cell accepted
+  </text>
+  <rect x="90" y="330" width="380" height="42" fill="#b94a48"/>
+  <text x="485" y="358" font-family="monospace" font-size="19">1</text>
+
+  <text x="90" y="430" font-family="sans-serif" font-size="20">Infinite present cell retained</text>
+  <rect x="90" y="450" width="380" height="42" fill="#b94a48"/>
+  <text x="485" y="478" font-family="monospace" font-size="19">1</text>
+
+  <text x="620" y="310" font-family="sans-serif" font-size="20">
+    Malformed present cell accepted
+  </text>
+  <rect x="620" y="330" width="0" height="42" fill="#2f6f3e"/>
+  <text x="1015" y="358" font-family="monospace" font-size="19">0</text>
+
+  <text x="620" y="430" font-family="sans-serif" font-size="20">
+    Infinite present cell retained
+  </text>
+  <rect x="620" y="450" width="0" height="42" fill="#2f6f3e"/>
+  <text x="1015" y="478" font-family="monospace" font-size="19">0</text>
+
+  <line x1="560" y1="275" x2="560" y2="525" stroke="#777" stroke-width="2"/>
+  <text x="60" y="570" font-family="sans-serif" font-size="20">
+    Zero fill remains authorized only when an entire supported downstream column is absent.
+  </text>
+  <text x="60" y="610" font-family="sans-serif" font-size="17">
+    Synthetic software/provenance evidence; not detector data and not a physics acceptance plot.
+  </text>
+  <text x="60" y="650" font-family="monospace" font-size="15">
+    source sha256: ef51bec47aa15eada369a4e46f4036dfe4ba54409030aa18adf1a3d951165548
+  </text>
+</svg>

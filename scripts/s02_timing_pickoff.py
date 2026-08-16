@@ -26,6 +26,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import uproot
+import sys as _sys
+from pathlib import Path as _Path
+_HERE = _Path(__file__).resolve().parent
+if str(_HERE) not in _sys.path:
+    _sys.path.insert(0, str(_HERE))
+import digital_cfd
 import yaml
 from scipy.optimize import curve_fit
 from sklearn.linear_model import Ridge
@@ -128,40 +134,36 @@ def reproduce_counts(config: dict) -> pd.DataFrame:
     return out[["quantity", "report_value", "reproduced", "delta", "tolerance", "pass"]]
 
 
-def cfd_time_samples(waveforms: np.ndarray, amplitudes: np.ndarray, fraction: float) -> np.ndarray:
-    threshold = amplitudes * float(fraction)
-    ge = waveforms >= threshold[:, None]
-    first = np.argmax(ge, axis=1)
-    valid = ge.any(axis=1)
-    out = np.full(len(waveforms), np.nan, dtype=float)
-    for i in np.where(valid)[0]:
-        j = int(first[i])
-        if j <= 0:
-            out[i] = float(j)
-            continue
-        y0, y1 = waveforms[i, j - 1], waveforms[i, j]
-        denom = y1 - y0
-        if denom <= 0:
-            out[i] = float(j)
-        else:
-            out[i] = (j - 1) + (threshold[i] - y0) / denom
-    return out
+def cfd_time_samples(
+    waveforms: np.ndarray,
+    amplitudes: np.ndarray,
+    fraction: float,
+    *,
+    amplitude_mode: str = "global_max",
+    return_status: bool = False,
+):
+    """Delegate to canonical ``digital_cfd`` (#1063). Left-censor -> nan (#1060)."""
+    return digital_cfd.cfd_time_samples(
+        waveforms,
+        amplitudes,
+        fraction,
+        amplitude_mode=amplitude_mode,  # type: ignore[arg-type]
+        return_status=return_status,
+    )
 
 
-def leading_edge_time_samples(waveforms: np.ndarray, threshold_adc: float) -> np.ndarray:
-    ge = waveforms >= float(threshold_adc)
-    first = np.argmax(ge, axis=1)
-    valid = ge.any(axis=1)
-    out = np.full(len(waveforms), np.nan, dtype=float)
-    for i in np.where(valid)[0]:
-        j = int(first[i])
-        if j <= 0:
-            out[i] = float(j)
-            continue
-        y0, y1 = waveforms[i, j - 1], waveforms[i, j]
-        denom = y1 - y0
-        out[i] = float(j) if denom <= 0 else (j - 1) + (threshold_adc - y0) / denom
-    return out
+def leading_edge_time_samples(
+    waveforms: np.ndarray,
+    threshold_adc: float,
+    *,
+    return_status: bool = False,
+):
+    """Delegate to canonical ``digital_cfd`` leading-edge helper."""
+    return digital_cfd.leading_edge_time_samples(
+        waveforms,
+        threshold_adc,
+        return_status=return_status,
+    )
 
 
 def build_templates(pulses: pd.DataFrame, stave_names: List[str]) -> Dict[str, np.ndarray]:
@@ -185,7 +187,35 @@ def shifted_template(template: np.ndarray, shift: float) -> np.ndarray:
     return np.interp(x - shift, x, template, left=template[0], right=template[-1])
 
 
-def template_phase_time(pulses: pd.DataFrame, templates: Dict[str, np.ndarray], grid: np.ndarray) -> np.ndarray:
+def parabolic_subgrid_offset(grid: np.ndarray, sse: np.ndarray, j: int) -> float:
+    """Continuous phase from a 3-point parabola about grid[j] (#1064)."""
+    g = np.asarray(grid, dtype=float)
+    y = np.asarray(sse, dtype=float)
+    if j <= 0 or j >= len(g) - 1:
+        return float(g[j])
+    y0, y1, y2 = float(y[j - 1]), float(y[j]), float(y[j + 1])
+    denom = y0 - 2.0 * y1 + y2
+    if not np.isfinite(denom) or abs(denom) < 1e-30:
+        return float(g[j])
+    dx = float(g[j] - g[j - 1])
+    if not np.isfinite(dx) or dx == 0.0:
+        return float(g[j])
+    delta = 0.5 * dx * (y0 - y2) / denom
+    if abs(delta) > abs(dx):
+        return float(g[j])
+    return float(g[j] + delta)
+
+
+def template_phase_time(
+    pulses: pd.DataFrame,
+    templates: Dict[str, np.ndarray],
+    grid: np.ndarray,
+    *,
+    refine: str = "parabolic",
+) -> np.ndarray:
+    """Template-phase pickoff with optional parabolic sub-grid refine (#1064)."""
+    if refine not in ("parabolic", "none"):
+        raise ValueError(f"unknown template refine mode {refine!r}; use parabolic|none")
     out = np.full(len(pulses), np.nan, dtype=float)
     for stave, template in templates.items():
         idx = np.flatnonzero(pulses["stave"].to_numpy() == stave)
@@ -196,7 +226,9 @@ def template_phase_time(pulses: pd.DataFrame, templates: Dict[str, np.ndarray], 
         for row_idx in idx:
             wf = pulses.iloc[row_idx]["waveform"] / max(float(pulses.iloc[row_idx]["amplitude_adc"]), 1.0)
             sse = ((shifted - wf[None, :]) ** 2).sum(axis=1)
-            out[row_idx] = refs + grid[int(np.argmin(sse))]
+            j = int(np.argmin(sse))
+            phase = float(grid[j]) if refine == "none" else parabolic_subgrid_offset(grid, sse, j)
+            out[row_idx] = refs + phase
     return out
 
 

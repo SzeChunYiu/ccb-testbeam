@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="514"
+viewBox="0 0 1100 514">
+<rect width="100%" height="100%" fill="white"/>
+<g fill="black" font-family="sans-serif">
+<text x="35" y="42" font-size="28" font-weight="bold">Strict MC weight-vector validation</text>
+<text x="35" y="76" font-size="17">Synthetic software/provenance evidence —
+not detector data</text>
+<text x="35" y="108" font-size="15">Policy: MC_WEIGHT_VECTOR_MUST_BE_UNAMBIGUOUS_FINITE_NONNEGATIVE_AND_EVENT_ALIGNED</text>
+<text x="45" y="132" font-size="16" font-weight="bold">Case</text>
+<text x="590" y="132" font-size="16" font-weight="bold">Result</text>
+<text x="895" y="132" font-size="16" font-weight="bold" text-anchor="end">Meaning</text>
+<text x="45" y="150" font-size="18">finite nonnegative 1D weights, one per entry</text><text x="590" y="150" font-size="18" font-family="monospace">OK</text><text x="895" y="150" font-size="18" text-anchor="end">ESS allowed</text><line x1="35" y1="167" x2="1065" y2="167" stroke="currentColor" stroke-opacity="0.2"/><text x="45" y="204" font-size="18">one NaN weight</text><text x="590" y="204" font-size="18" font-family="monospace">P0_NONFINITE_WEIGHT</text><text x="895" y="204" font-size="18" text-anchor="end">no silent filtering</text><line x1="35" y1="221" x2="1065" y2="221" stroke="currentColor" stroke-opacity="0.2"/><text x="45" y="258" font-size="18">PrimaryWeight and EventWeight both present</text><text x="590" y="258" font-size="18" font-family="monospace">P0_AMBIGUOUS_WEIGHT_BRANCHES</text><text x="895" y="258" font-size="18" text-anchor="end">branch identity required</text><line x1="35" y1="275" x2="1065" y2="275" stroke="currentColor" stroke-opacity="0.2"/><text x="45" y="312" font-size="18">2D weight array</text><text x="590" y="312" font-size="18" font-family="monospace">P0_WEIGHT_SHAPE_INVALID</text><text x="895" y="312" font-size="18" text-anchor="end">no flattening</text><line x1="35" y1="329" x2="1065" y2="329" stroke="currentColor" stroke-opacity="0.2"/><text x="45" y="366" font-size="18">weight count differs from tree entries</text><text x="590" y="366" font-size="18" font-family="monospace">P0_WEIGHT_LENGTH_MISMATCH</text><text x="895" y="366" font-size="18" text-anchor="end">event alignment required</text><line x1="35" y1="383" x2="1065" y2="383" stroke="currentColor" stroke-opacity="0.2"/><text x="45" y="420" font-size="18">output path aliases input ROOT</text><text x="590" y="420" font-size="18" font-family="monospace">INPUT_OUTPUT_ALIAS</text><text x="895" y="420" font-size="18" text-anchor="end">input bytes preserved</text><line x1="35" y1="437" x2="1065" y2="437" stroke="currentColor" stroke-opacity="0.2"/>
+</g>
+</svg>

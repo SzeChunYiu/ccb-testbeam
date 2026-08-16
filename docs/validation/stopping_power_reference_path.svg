@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="280" viewBox="0 0 960 280" role="img" aria-labelledby="title desc">
+  <title id="title">Stopping-power reference path resolution before and after correction</title>
+  <desc id="desc">The legacy parents index resolves outside the repository and triggers an inline fallback. The corrected index resolves to the committed PSTAR table and prints its SHA-256.</desc>
+  <rect x="1" y="1" width="958" height="278" fill="white" stroke="black"/>
+  <text x="480" y="28" text-anchor="middle" font-family="monospace" font-size="18">compare_stopping_power.py reference resolution</text>
+
+  <rect x="35" y="55" width="400" height="170" fill="white" stroke="black" stroke-width="2"/>
+  <text x="235" y="82" text-anchor="middle" font-family="monospace" font-size="16">Legacy</text>
+  <text x="55" y="112" font-family="monospace" font-size="14">HERE = /repo/scripts/single_stave</text>
+  <text x="55" y="138" font-family="monospace" font-size="14">HERE.parents[2] = /parent-of-repo</text>
+  <text x="55" y="164" font-family="monospace" font-size="14">/parent-of-repo/data/...  [missing]</text>
+  <line x1="235" y1="174" x2="235" y2="194" stroke="black" marker-end="url(#arrow)"/>
+  <text x="235" y="216" text-anchor="middle" font-family="monospace" font-size="14">inline fallback -&gt; false PASS</text>
+
+  <rect x="525" y="55" width="400" height="170" fill="white" stroke="black" stroke-width="2"/>
+  <text x="725" y="82" text-anchor="middle" font-family="monospace" font-size="16">Corrected</text>
+  <text x="545" y="112" font-family="monospace" font-size="14">HERE = /repo/scripts/single_stave</text>
+  <text x="545" y="138" font-family="monospace" font-size="14">HERE.parents[1] = /repo</text>
+  <text x="545" y="164" font-family="monospace" font-size="14">/repo/data/reference/...  [committed]</text>
+  <line x1="725" y1="174" x2="725" y2="194" stroke="black" marker-end="url(#arrow)"/>
+  <text x="725" y="216" text-anchor="middle" font-family="monospace" font-size="14">path + SHA-256 -&gt; explicit result</text>
+
+  <text x="480" y="255" text-anchor="middle" font-family="sans-serif" font-size="13">The self-test now validates repository data-path wiring; physics interpretation remains diagnostic-only.</text>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="black"/>
+    </marker>
+  </defs>
+</svg>

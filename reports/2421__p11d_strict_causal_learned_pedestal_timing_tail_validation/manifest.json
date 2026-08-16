@@ -1,0 +1,19 @@
+{
+  "ticket_number": 2421,
+  "git_commit": "44b380ed64f15a23fbbdc7f0f71f1426f5de90a2",
+  "command": "/home/billy/anaconda3/envs/nnbar_env/bin/python scripts/p11d_2421_strict_causal_learned_pedestal_timing_tail_validation.py",
+  "runtime_seconds": 5.8243567943573,
+  "python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+  "outputs_sha256": {
+    "REPORT.md": "323bc07bd3e2608fc7b2bb74564883454a6783754e00fe7800c9ab177fa47d6d",
+    "causal_control_sidebands.csv": "f50ba36f9f8c83cdfd2bcbcbb2b9623ef17d9bc131683cc731ba38df9542d463",
+    "forced_random_control_audit.csv": "ef94a8bada44c1dc40435e6583c0e62d331db9cca4bbb5c530d788a35e41f5b8",
+    "input_sha256.csv": "6ca47e25432b4fc9239b3831540ff30097404f17c1189da16c239b3d4a9b2453",
+    "method_benchmark_with_ci.csv": "f1265da1de1687fe554412a64d773a90e5fb72006cf472f9166096815a542bbf",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "f4e5b497c91b2867a41fc5f49f36f42b25316b6015898a76f8e7907d71196135",
+    "run_heldout_metrics.csv": "22d90f573a312cf0a5cadb11e26609cfb1e4da88f00c3a1c2624ec4dbe6484df",
+    "s02_s04_timing_tail_propagation.csv": "7f4e0e48e6d551d9b4cb058be8539953c4046b427aa01e74f1f1653c4e698c63"
+  }
+}

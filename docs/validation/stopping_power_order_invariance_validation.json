@@ -1,0 +1,43 @@
+{
+  "task_id": "AUD-G4-018",
+  "status": "VALIDATED",
+  "evidence_type": "synthetic floating-point regression",
+  "not_detector_data": true,
+  "pre_change": {
+    "git_blob": "79ea276741807d896cc238f0",
+    "git_blob_full": "79ea276741807d896cc6d2a99e8071605cc238f0",
+    "summation_method": "SEQUENTIAL_BINARY64_PLUS_EQUAL",
+    "large_first_deposit_sum_MeV": 1.0,
+    "small_first_deposit_sum_MeV": 1.000000000000001,
+    "large_first_mass_stopping_MeV_cm2_g": 0.9090909090909092,
+    "small_first_mass_stopping_MeV_cm2_g": 0.9090909090909101,
+    "negative_control": "2 failed, 1 passed"
+  },
+  "post_change": {
+    "git_blob": "4e45e55b48c1d51320b9e6d0959b0b8423d0b2fc",
+    "sha256": "ee61e0f2a76fa2e94513d176ce7b34698acaada02d84defe480df38a2f32dd72",
+    "summation_method": "MATH_FSUM_PER_GROUP",
+    "forward_deposit_sum_MeV": 1.000000000000001,
+    "reverse_deposit_sum_MeV": 1.000000000000001,
+    "forward_mass_stopping_MeV_cm2_g": 0.9090909090909101,
+    "reverse_mass_stopping_MeV_cm2_g": 0.9090909090909101,
+    "focused_tests": "8 passed in 0.06s"
+  },
+  "fixture": {
+    "particle": "proton",
+    "energy_MeV": 1.0,
+    "event_count": 11,
+    "deposits_MeV": {
+      "large": 1.0,
+      "small": 1e-16,
+      "small_count": 10
+    },
+    "track_length_each_mm": 1.0,
+    "material_density_g_cm3": 1.0
+  },
+  "limitations": [
+    "No real Geant4 event table was processed.",
+    "No statistical or systematic uncertainty was evaluated.",
+    "Local deposited energy remains a diagnostic proxy rather than an accepted projectile-loss observable."
+  ]
+}

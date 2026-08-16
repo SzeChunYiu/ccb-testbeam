@@ -1,0 +1,7 @@
+quantity,value
+alignment_policy,run_keyed_geant4_pseudo_bridge
+exact_native_event_matches,0
+source_runs,13
+matched_benchmark_events,1396
+unique_geant4_entries_sampled,1285
+source_run_equals_g4_pseudo_run_fraction,1.0

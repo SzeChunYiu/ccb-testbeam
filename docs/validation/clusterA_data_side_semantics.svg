@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="520" viewBox="0 0 960 520">
+<rect width="100%" height="100%" fill="white"/>
+<text x="40" y="50" font-family="sans-serif" font-size="26" font-weight="bold">Cluster A data-side semantics validation</text>
+<text x="40" y="82" font-family="sans-serif" font-size="15">Software/provenance evidence — not detector-performance data</text>
+<text x="40" y="135" font-family="sans-serif" font-size="18" font-weight="bold">MC density for two events in one hexbin</text>
+<text x="40" y="180" font-family="sans-serif" font-size="15">Former plot: event count (PrimaryWeight ignored)</text>
+<rect x="330" y="160" width="11.0" height="28" fill="#999"/>
+<text x="356.0" y="181" font-family="monospace" font-size="16">2.0</text>
+<text x="40" y="235" font-family="sans-serif" font-size="15">Corrected plot: sum PrimaryWeight</text>
+<rect x="330" y="215" width="555.5" height="28" fill="#4477aa"/>
+<text x="900.5" y="236" font-family="monospace" font-size="16">101.0</text>
+<text x="40" y="310" font-family="sans-serif" font-size="18" font-weight="bold">Data-table interpretation</text>
+<rect x="40" y="335" width="880" height="115" rx="10" fill="#f5f5f5" stroke="#555"/>
+<text x="60" y="370" font-family="sans-serif" font-size="16">632,939 table rows and 385,984 composite keys are distinct denominators.</text>
+<text x="60" y="400" font-family="sans-serif" font-size="16">Outputs now label row counts and preserve the composite-merge blocker.</text>
+<text x="60" y="430" font-family="sans-serif" font-size="16">Invalid numeric cells fail closed instead of becoming zero or infinity.</text>
+<text x="40" y="490" font-family="monospace" font-size="13">policy: DATA_ROWS_MUST_BE_FINITE_AND_ROW_LEVEL_RESULTS_MUST_NOT_POSE_AS_EVENTS</text>
+</svg>

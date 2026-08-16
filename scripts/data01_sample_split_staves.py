@@ -23,11 +23,48 @@ Columns: run, group, eventno, evt, stave, channel, baseline_adc,
 Usage:
   python3 data01_sample_split_staves.py --table s00_selected_b_pulses.csv.gz --out <dir>
 """
-import argparse, json, os
+import argparse
+import json
+import os
+import sys
+import traceback
+
 import numpy as np
 import pandas as pd
 
 STAVES = ["B2", "B4", "B6", "B8"]
+_CLUSTER_KEY_COLUMNS = ("run", "eventno")
+
+
+def _require_cluster_key_columns(df: pd.DataFrame) -> None:
+    """Fail closed before cluster-ID export when composite key columns are absent (#1164)."""
+    missing = [col for col in _CLUSTER_KEY_COLUMNS if col not in df.columns]
+    if missing:
+        raise RuntimeError(
+            f"cluster export requires columns {list(_CLUSTER_KEY_COLUMNS)}; missing {missing}"
+        )
+
+
+def _per_event_stave_amplitude(df, sample, stave):
+    """One row per (run, eventno) carrying a single amplitude for this stave.
+
+    Aggregates multiple pulses per (run, eventno, stave) to the max amplitude
+    (deterministic), then asserts one row per (run, eventno). Downstream
+    B2<->B4 merges MUST key on the composite (run, eventno) — joining on
+    eventno alone collides across runs (eventno is NOT globally unique; see
+    docs/contracts/PULSE_TABLE_CONTRACT.md).
+    """
+    sub = df[(df["sample"] == sample) & (df["stave"] == stave)]
+    if sub.empty:
+        return pd.DataFrame(columns=["run", "eventno", "amp"])
+    agg = (sub.groupby(["run", "eventno"], sort=False)["amplitude_adc"]
+              .max()
+              .reset_index()
+              .rename(columns={"amplitude_adc": "amp"}))
+    if agg.duplicated(["run", "eventno"]).any():
+        raise RuntimeError(
+            f"cardinality violation: duplicate (run,eventno) for {sample}/{stave}")
+    return agg
 
 
 def main():
@@ -40,10 +77,14 @@ def main():
                     help="amplitude threshold defining a 'large pulse'")
     ap.add_argument("--sat-adc", type=float, default=7000.0,
                     help="approximate B2 saturation ceiling")
+    ap.add_argument("--seed", type=int,
+                    default=int(os.environ.get("CCB_PLOT_SEED", "12345")),
+                    help="RNG seed for plot subsampling (env: CCB_PLOT_SEED)")
     args = ap.parse_args()
     os.makedirs(args.out, exist_ok=True)
 
     df = pd.read_csv(args.table)
+    _require_cluster_key_columns(df)
     df["sample"] = np.where(df["group"].str.startswith("sample_i_"), "I",
                      np.where(df["group"].str.startswith("sample_ii_"), "II", "other"))
     if not args.include_calib:
@@ -52,6 +93,7 @@ def main():
     out = {"table": os.path.abspath(args.table),
            "include_calib": args.include_calib,
            "large_adc": args.large_adc, "sat_adc": args.sat_adc,
+           "plot_seed": int(args.seed),
            "n_pulses": int(len(df)),
            "per_sample": {}}
 
@@ -94,26 +136,49 @@ def main():
         json.dump(out, fh, indent=2)
 
     # Save arrays
+    # Pulse-row export retains amplitudes; cluster IDs are required for any
+    # weighted-null calibration (#1164). statistical_unit remains pulse_row
+    # until an event-aggregated DATA product is selected by the consumer.
+    _require_cluster_key_columns(df)
+    sI = df.loc[(df["sample"] == "I") & (df["stave"] == "B2")]
+    sII = df.loc[(df["sample"] == "II") & (df["stave"] == "B2")]
+    sample_i_cluster = (
+        sI["run"].astype(str) + ":" + sI["eventno"].astype(str)
+    ).to_numpy()
+    sample_ii_cluster = (
+        sII["run"].astype(str) + ":" + sII["eventno"].astype(str)
+    ).to_numpy()
+    if sample_i_cluster.size != sI.shape[0] or sample_ii_cluster.size != sII.shape[0]:
+        raise RuntimeError(
+            "cluster export incomplete: cluster_id length mismatch with pulse rows"
+        )
     np.savez_compressed(
         os.path.join(args.out, "first_B_layer_B2_amplitude.npz"),
-        sampleI=df[(df["sample"] == "I") & (df["stave"] == "B2")]["amplitude_adc"].to_numpy(np.float32),
-        sampleII=df[(df["sample"] == "II") & (df["stave"] == "B2")]["amplitude_adc"].to_numpy(np.float32),
+        sampleI=sI["amplitude_adc"].to_numpy(np.float32),
+        sampleII=sII["amplitude_adc"].to_numpy(np.float32),
+        sampleI_run=sI["run"].to_numpy(np.int64),
+        sampleII_run=sII["run"].to_numpy(np.int64),
+        sampleI_eventno=sI["eventno"].to_numpy(np.int64),
+        sampleII_eventno=sII["eventno"].to_numpy(np.int64),
+        sampleI_cluster_id=sample_i_cluster,
+        sampleII_cluster_id=sample_ii_cluster,
+        statistical_unit=np.asarray(["pulse_row"]),
+        cluster_key=np.asarray(["run:eventno"]),
+        weight_semantics=np.asarray(["unit_data_pulse"]),
     )
     per_stave_amp = {}
     for s in ("I", "II"):
         for st in STAVES:
-            arr = df[(df["sample"] == s) & (df["stave"] == st)]["amplitude_adc"].to_numpy(np.float32)
+            mask = (df["sample"] == s) & (df["stave"] == st)
+            arr = df.loc[mask, "amplitude_adc"].to_numpy(np.float32)
             per_stave_amp[f"{s}_{st}"] = arr
     np.savez_compressed(os.path.join(args.out, "per_stave_amplitude.npz"), **per_stave_amp)
 
-    # B2 vs B4 per-event
+    # B2 vs B4 per-event — composite key (run, eventno) with 1:1 cardinality
     for s, label in (("I", "Sample I"), ("II", "Sample II")):
-        sub = df[df["sample"] == s]
-        b2 = sub[sub["stave"] == "B2"][["eventno", "amplitude_adc"]].copy()
-        b2.columns = ["eventno", "amp_B2"]
-        b4 = sub[sub["stave"] == "B4"][["eventno", "amplitude_adc"]].copy()
-        b4.columns = ["eventno", "amp_B4"]
-        merged = b2.merge(b4, on="eventno", how="inner")
+        b2 = _per_event_stave_amplitude(df, s, "B2").rename(columns={"amp": "amp_B2"})
+        b4 = _per_event_stave_amplitude(df, s, "B4").rename(columns={"amp": "amp_B4"})
+        merged = b2.merge(b4, on=["run", "eventno"], how="inner", validate="1:1")
         if len(merged) > 0:
             np.savez_compressed(
                 os.path.join(args.out, f"B2_vs_B4_{s}.npz"),
@@ -189,15 +254,18 @@ def main():
         fig, axes = plt.subplots(1, 2, figsize=(14, 6))
         for si, (s, lbl) in enumerate((("I", "Sample I"), ("II", "Sample II"))):
             ax = axes[si]
-            sub = df[df["sample"] == s]
-            b2 = sub[sub["stave"] == "B2"][["eventno", "amplitude_adc"]].copy()
-            b2.columns = ["eventno", "amp_B2"]
-            b4 = sub[sub["stave"] == "B4"][["eventno", "amplitude_adc"]].copy()
-            b4.columns = ["eventno", "amp_B4"]
-            merged = b2.merge(b4, on="eventno", how="inner")
+            b2 = _per_event_stave_amplitude(df, s, "B2").rename(columns={"amp": "amp_B2"})
+            b4 = _per_event_stave_amplitude(df, s, "B4").rename(columns={"amp": "amp_B4"})
+            merged = b2.merge(b4, on=["run", "eventno"], how="inner", validate="1:1")
             if len(merged) > 0:
+                # Deterministic subsample: stable row order + recorded seed.
+                merged = merged.sort_values(["run", "eventno"]).reset_index(drop=True)
                 n_pts = min(8000, len(merged))
-                idx = np.random.choice(len(merged), n_pts, replace=False) if len(merged) > n_pts else np.arange(len(merged))
+                if len(merged) > n_pts:
+                    rng = np.random.default_rng(args.seed)
+                    idx = np.sort(rng.choice(len(merged), n_pts, replace=False))
+                else:
+                    idx = np.arange(len(merged))
                 ax.scatter(merged["amp_B2"].iloc[idx], merged["amp_B4"].iloc[idx],
                            s=2, alpha=0.3, color="C0" if s == "I" else "C3", rasterized=True)
                 corr = merged["amp_B2"].corr(merged["amp_B4"])
@@ -236,8 +304,11 @@ def main():
         plt.close(fig)
 
         print("[plots] All 5 DATA figures generated.")
-    except Exception as e:
-        print(f"[plot_error] {e}", file=sys.stderr)
+    except Exception:
+        print("[plot_error] plotting failed; re-raising (fail-closed).",
+              file=sys.stderr)
+        traceback.print_exc()
+        raise
 
     print(json.dumps(out["headline_first_B_layer_B2"], indent=2))
     print(f"[ok] wrote {args.out}/data_sample_split_summary.json")

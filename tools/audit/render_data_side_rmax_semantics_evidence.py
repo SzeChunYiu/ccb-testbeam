@@ -1,0 +1,93 @@
+#!/usr/bin/env python3
+"""Render an SVG summary of the data-side Rmax semantics audit."""
+from __future__ import annotations
+
+import argparse
+import html
+import json
+from pathlib import Path
+
+
+def render(payload: dict) -> str:
+    current = payload["current_like_executable_fixture"]
+    calc = current["independent_calculations"]
+    status = html.escape(current["status"])
+    exact = calc["model_sensitivity_only_mhz"]
+    former = calc["former_130ns_model_mhz"]
+    n_issues = current["n_issues"]
+    lines = [
+        '<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="520"',
+        ' viewBox="0 0 1100 520" role="img" aria-labelledby="title desc">',
+        '<title id="title">Data-side Rmax semantics audit</title>',
+        '<desc id="desc">Selected-pulse occupancy is measured; model inputs are separate.',
+        ' The absolute Rmax claim remains blocked.</desc>',
+        '<rect width="1100" height="520" fill="#ffffff"/>',
+        '<text x="50" y="52" font-family="sans-serif" font-size="30"',
+        ' font-weight="700">Data-side occupancy does not identify absolute Rmax</text>',
+        '<text x="50" y="84" font-family="sans-serif" font-size="17">',
+        'Policy: OCCUPANCY_DOES_NOT_IDENTIFY_ABSOLUTE_RMAX_WITHOUT_RATE_EXPOSURE</text>',
+        '<rect x="50" y="120" width="300" height="170" rx="12" fill="#e8f1fb"',
+        ' stroke="#1f5a92" stroke-width="2"/>',
+        '<text x="75" y="155" font-family="sans-serif" font-size="22"',
+        ' font-weight="700">Measured from selected table</text>',
+        '<text x="75" y="193" font-family="sans-serif" font-size="18">',
+        '640,737 selected pulses</text>',
+        '<text x="75" y="223" font-family="sans-serif" font-size="18">',
+        '584,602 composite events</text>',
+        '<text x="75" y="253" font-family="sans-serif" font-size="18">',
+        'mean multiplicity = 1.0960</text>',
+        '<rect x="400" y="120" width="300" height="170" rx="12" fill="#fff4d6"',
+        ' stroke="#a87000" stroke-width="2"/>',
+        '<text x="425" y="155" font-family="sans-serif" font-size="22"',
+        ' font-weight="700">Not measured by occupancy</text>',
+        '<text x="425" y="193" font-family="sans-serif" font-size="18">',
+        'mu_max = 0.38 convention</text>',
+        '<text x="425" y="223" font-family="sans-serif" font-size="18">',
+        'tau = 124.790... ns estimand</text>',
+        '<text x="425" y="253" font-family="sans-serif" font-size="18">',
+        'arrival-rate exposure absent</text>',
+        '<rect x="750" y="120" width="300" height="170" rx="12" fill="#fde9e7"',
+        ' stroke="#a3312a" stroke-width="2"/>',
+        '<text x="775" y="155" font-family="sans-serif" font-size="22"',
+        ' font-weight="700">Scientific decision</text>',
+        '<text x="775" y="193" font-family="sans-serif" font-size="18">',
+        'CL-010: BLOCKED</text>',
+        '<text x="775" y="223" font-family="sans-serif" font-size="18">',
+        'accepted Rmax: none</text>',
+        '<text x="775" y="253" font-family="sans-serif" font-size="18">',
+        f'current audit: {status} ({n_issues} findings)</text>',
+        '<line x1="350" y1="205" x2="400" y2="205" stroke="#555"',
+        ' stroke-width="3" marker-end="url(#arrow)"/>',
+        '<line x1="700" y1="205" x2="750" y2="205" stroke="#555"',
+        ' stroke-width="3" marker-end="url(#arrow)"/>',
+        '<defs><marker id="arrow" markerWidth="10" markerHeight="10"',
+        ' refX="8" refY="3" orient="auto">',
+        '<path d="M0,0 L0,6 L9,3 z" fill="#555"/></marker></defs>',
+        '<rect x="50" y="330" width="1000" height="120" rx="12" fill="#f5f5f5"',
+        ' stroke="#777"/>',
+        '<text x="75" y="367" font-family="monospace" font-size="18">',
+        f'0.38 / 124.79018394263471 ns = {exact:.15f} MHz',
+        ' (model sensitivity only)</text>',
+        '<text x="75" y="400" font-family="monospace" font-size="18">',
+        f'0.38 / 130 ns = {former:.15f} MHz (former assumption)</text>',
+        '<text x="75" y="433" font-family="sans-serif" font-size="17">',
+        'Neither calculation becomes data-derived because occupancy is plotted.</text>',
+        '<text x="50" y="490" font-family="sans-serif" font-size="15">',
+        'Software/documentation provenance evidence; not detector-rate data.</text>',
+        '</svg>',
+    ]
+    return "\n".join(lines)
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("validation_json", type=Path)
+    parser.add_argument("output_svg", type=Path)
+    args = parser.parse_args()
+    payload = json.loads(args.validation_json.read_text(encoding="utf-8"))
+    args.output_svg.write_text(render(payload), encoding="utf-8")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

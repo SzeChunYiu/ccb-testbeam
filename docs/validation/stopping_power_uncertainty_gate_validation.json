@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "task_id": "AUD-G4-015",
+  "session_utc": "2026-07-23T20:28:12Z",
+  "status": "VALIDATED",
+  "scope": "fail-closed acceptance when no stopping-power uncertainty is evaluated",
+  "prechange": {
+    "script_git_blob": "8b9c0c530b6414c774601286a0d67f13500aa532",
+    "script_sha256": "768d4136bf59ee10c5074298bd7fa8195adb3d680e291802b520c88f97911260",
+    "synthetic_ratio": 1.0,
+    "events": 1,
+    "within_tolerance": true,
+    "cli_exit_status": 0,
+    "cli_label": "NUMERICAL TOLERANCE: PASS",
+    "new_regression_on_old_bytes": "4 failed"
+  },
+  "postchange": {
+    "script_git_blob": "c3884d953a38b0dad69f50e3a9dc787bc1f29fd0",
+    "script_sha256": "ef7fbc16a8d31a361055942df9e9d3d16639bcb5b2ec3ce50e09fde56f7f8de6",
+    "numeric_within_tolerance": true,
+    "uncertainty_method": "NOT_EVALUATED",
+    "uncertainty_evaluated": false,
+    "acceptance_status": "NOT_ACCEPTED_NO_UNCERTAINTY",
+    "within_tolerance": false,
+    "cli_exit_status": 1,
+    "cli_label": "NUMERICAL TOLERANCE: POINT_ESTIMATE_ONLY_NOT_ACCEPTED"
+  },
+  "focused_validation": {
+    "pytest": "19 passed in 3.77s",
+    "py_compile": "PASS",
+    "maximum_changed_python_line_length": 97,
+    "json_parse": "PASS",
+    "svg_xml_parse": "PASS"
+  },
+  "primary_method_source": {
+    "title": "Guidelines for Evaluating and Expressing the Uncertainty of NIST Measurement Results",
+    "authors": ["B. N. Taylor", "C. E. Kuyatt"],
+    "report": "NIST Technical Note 1297",
+    "year": 1994,
+    "doi": "10.6028/NIST.tn.1297",
+    "supported_statement": "Results require quantitative uncertainty reporting; uncertainty components include statistical and other evaluations."
+  },
+  "scientific_boundary": {
+    "real_simulation_run": false,
+    "real_event_table": false,
+    "uncertainty_budget_implemented": false,
+    "accepted_projectile_energy_loss_closure": false,
+    "detector_performance_claim": false
+  }
+}

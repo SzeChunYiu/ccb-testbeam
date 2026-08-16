@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="538"
+ viewBox="0 0 1200 538">
+<rect width="1200" height="538" fill="white"/>
+<text x="52" y="54" font-size="30" font-weight="bold">NPY writer integrity validation</text>
+<text x="52" y="90" font-size="19">Policy: NPY_OUTPUT_MUST_BE_LITTLE_ENDIAN_AND_FAIL_CLOSED</text>
+<text x="52" y="120" font-size="17">Synthetic software/provenance evidence;
+not detector data.</text>
+<text x="58" y="166" font-size="20">NumPy loads exact float32 values</text><text x="930" y="166" font-size="20" font-weight="bold">PASS</text><text x="58" y="210" font-size="20">Header length is explicit little-endian</text><text x="930" y="210" font-size="20" font-weight="bold">PASS</text><text x="58" y="254" font-size="20">Payload is emitted as little-endian float32</text><text x="930" y="254" font-size="20" font-weight="bold">PASS</text><text x="58" y="298" font-size="20">Empty (0,4,4) arrays remain valid</text><text x="930" y="298" font-size="20" font-weight="bold">PASS</text><text x="58" y="342" font-size="20">Non-empty null payload fails closed</text><text x="930" y="342" font-size="20" font-weight="bold">PASS</text><text x="58" y="386" font-size="20">Shape-product overflow fails closed</text><text x="930" y="386" font-size="20" font-weight="bold">PASS</text><text x="58" y="430" font-size="20">Unwritable target fails closed</text><text x="930" y="430" font-size="20" font-weight="bold">PASS</text>
+<text x="52" y="503" font-size="17">Focused result:
+VALIDATED</text>
+</svg>

@@ -1,0 +1,21 @@
+\section{Scintillator stave and readout}
+
+\subsection{Stave geometry}
+
+The current design specification follows the later collaboration clarification associated with issue \#796. Each B stave is described as an extruded-polystyrene scintillator approximately 50 cm long, 5.18 cm wide and 2.0 cm thick along the nominal particle path. Two longitudinal holes of 2.0 mm diameter are separated by 2.0 cm centre-to-centre and accept 1.8 mm Kuraray Y-11 wavelength-shifting fibres. The exterior includes a reflective coating. Older repository prose describing approximately one-metre BC-408 bars is treated as superseded/unknown external history rather than an alternative current specification.
+
+The stave design supports two longitudinal fibres and, in the full concept, readout from both fibre ends, corresponding to four possible optical measurements. The later collaboration clarification states that the CCB beam-test configuration used one fibre at one end; in the present evidence hierarchy this remains a \status{DESIGN\_SPEC} statement until the installed hardware/BOM record closes under issue \#1296. If confirmed for the analysed hardware, one-ended readout makes the response dependent on longitudinal hit position and removes the charge/time asymmetry that a two-ended system could use to constrain position.
+
+\PaperFigure{figures/final/stave_geometry.pdf}{0.88}{B-stack stave geometry (design specification, issue \#796). Dimensions, hole and fibre parameters and the one-fibre one-end readout configuration are annotated on-figure with evidence status; of the four possible fibre-end measurements only one was instrumented, and the reflective outer coating enters the optical model as a distinct surface.}{DESIGN\_SPEC; see publication/tables/hardware\_bom.csv and issue \#1296.}
+
+\subsection{SiPM and electronics boundary}
+
+The detector model uses a Hamamatsu S13360-3050CS MPPC. Manufacturer data specify a 3\,mm\(\times\)3\,mm photosensitive area, 50~\(\mu\)m pixel pitch and 3600 pixels, with spectral sensitivity covering the Y-11 green-emission region~\cite{HamamatsuS13360}. These public specifications do not by themselves determine the CCB operating response. PDE, overvoltage, temperature, optical coupling, illumination footprint, microcell recovery, crosstalk, afterpulsing, gain and the analogue impulse response are separate response objects.
+
+The publication model therefore keeps sensor photons, primary avalanches, correlated avalanches, charge and ADC waveform observables distinct. A scalar efficiency is not allowed to absorb unresolved physics from multiple stages.
+
+\subsection{Waveform products}
+
+Two waveform schemas appear in the project history. Historical reconstruction configurations use 18 samples per channel, whereas the located LUNARC beam product contains eight channels with 16 samples per channel (128 waveform words per event). The provenance analysis under issue \#993 classifies these as distinct schemas rather than a proven reversible 16-to-18 sample transformation. Consequently, historical sub-nanosecond timing studies based on the 18-sample product cannot be promoted to the source-bound 8-by-16 beam sample.
+
+Every publication amplitude/timing figure must record waveform schema, raw-file hashes, producer revision, channel map and pulse-polarity contract. The publication source package intentionally does not hide these provenance requirements behind a generic label such as ``raw data''.

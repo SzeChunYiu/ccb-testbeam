@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0.0",
+  "issue_number": 1182,
+  "atom_id": "BOUNDED-IMPL-001",
+  "disposition": "EXPLICIT_SUCCESSOR_TRANSFER",
+  "basis": "EXPLICIT_SUCCESSOR_TRANSFER",
+  "unresolved_leaves": [
+    "runtime_path_provenance"
+  ],
+  "successors": [],
+  "pr_text": "Refs #1182"
+}

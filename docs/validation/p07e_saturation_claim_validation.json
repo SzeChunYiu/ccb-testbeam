@@ -1,0 +1,58 @@
+{
+  "confirmed_provenance_findings": [
+    "manifest execution commit does not contain the recorded producer path",
+    "manifest does not bind producer script bytes by SHA-256",
+    "manifest does not record a clean or dirty worktree state"
+  ],
+  "files": {
+    "audit": "docs/validation/p07e_saturation_claim_audit.md",
+    "test": "tests/test_audit_p07e_saturation_claim.py",
+    "tool": "tools/audit/audit_p07e_saturation_claim.py",
+    "visual": "docs/validation/p07e_saturation_claim.svg"
+  },
+  "policy": "P07E_EXTERNAL_DUPLICATE_CLOSURE_OVERRIDES_PSEUDO_SATURATION",
+  "repository_exact_facts": {
+    "base_main_sha": "71907c86124f2ac0e5c4ee9fd4acc05967a02268",
+    "claim_ledger_git_blob": "4dc46181f48211e017ba0d2ff29bdac2c6f21897",
+    "config_git_blob": "f4749f0e48bc7c858882a6ce5728ac2810570cf8",
+    "manifest_execution_commit": "f20e1b0bceac4eeae4532c9e871a363d6dce08d7",
+    "manifest_git_blob": "befe9202edbbe902221bb8081104557435005c22",
+    "manifest_input_root_files": 33,
+    "manifest_report_sha256": "fd26d7a3be385457ab0e468f4dc670c1b5ee17cd669c9a36464fdc601cad79d2",
+    "manifest_result_sha256": "7943cfd8377fa93ef9d5706f2896c72c7644b80ece358da83b31cc8dec8e7e9d",
+    "producer_and_outputs_introduced_commit": "d30d91bc4b2988d3b1fffa8d7d44e58e1130603b",
+    "producer_git_blob_current_main": "471825680163266bc2b83fb104c372a029a10b51",
+    "report_git_blob": "2540a6666cf60ca68ec2f1a8c3d4d74f33f4958a",
+    "result_git_blob": "e83eaa4bfc4e413befec09bcf7222c195f5160d7"
+  },
+  "scientific_basis": {
+    "external_ml_worse_than_raw_with_nonoverlapping_run_block_ci95": true,
+    "external_validation_rows": 183132,
+    "held_out_runs": 33,
+    "ml_charge_res68_abs_frac": 0.1763577793605039,
+    "ml_charge_res68_abs_frac_ci95": [
+      0.17304334869529975,
+      0.18060166173702746
+    ],
+    "ml_minus_raw_charge_res68_abs_frac": 0.05556403818350119,
+    "pseudo_saturation_ml_res68_abs_frac": 0.03669062665507541,
+    "raw_charge_res68_abs_frac": 0.12079374117700271,
+    "raw_charge_res68_abs_frac_ci95": [
+      0.11700387021774719,
+      0.12536373643016782
+    ],
+    "traditional_charge_res68_abs_frac": 0.12077766801970549
+  },
+  "scientific_decision": "WITHHOLD_ML_CORRECTION",
+  "status": "VALIDATED_AUDIT_GATED_SCIENTIFIC_CLAIM",
+  "task_id": "AUD-LEDGER-001",
+  "unit": "CL-016 P07e saturation claim reconstruction",
+  "validation": {
+    "fixture_scope": "source-faithful reduced fixtures; not detector data",
+    "max_test_line_length": 100,
+    "max_tool_line_length": 100,
+    "py_compile": "PASS",
+    "pytest": "4 passed in 0.62s",
+    "svg_xml": "PASS"
+  }
+}

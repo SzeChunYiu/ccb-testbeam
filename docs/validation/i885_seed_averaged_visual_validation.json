@@ -1,0 +1,35 @@
+{
+  "artifacts": {
+    "fits": "geant4/single_stave/results/i885_v1/i885_fits.json",
+    "points": "geant4/single_stave/results/i885_v1/i885_seed_averaged_points.csv",
+    "svg": "geant4/single_stave/results/i885_v1/P5_seed_averaged_calibration.svg",
+    "svg_sha256": "725b592d9d217f43cf8624ca7682575a35cf5f4f1ec06d9ea7266a7a4f8a3332",
+    "svg_size_bytes": 7259
+  },
+  "checks": {
+    "byte_for_byte_match": true,
+    "deterministic_repeat_render": true,
+    "output_xml_parse": true,
+    "python_compile": true,
+    "renderer_pytest": {
+      "failed": 0,
+      "passed": 3
+    }
+  },
+  "command": "python scripts/single_stave/render_i885_refit_svg.py --fits geant4/single_stave/results/i885_v1/i885_fits.json --points geant4/single_stave/results/i885_v1/i885_seed_averaged_points.csv --output geant4/single_stave/results/i885_v1/P5_seed_averaged_calibration.svg",
+  "fail_closed_conditions": [
+    "accepted fit present in input JSON",
+    "missing rejected proton diagnostic",
+    "missing deuteron insufficient-energy skip",
+    "missing/nonfinite/negative point-table values",
+    "unsupported particle"
+  ],
+  "renderer": {
+    "path": "scripts/single_stave/render_i885_refit_svg.py",
+    "version": "1.0.0"
+  },
+  "scientific_boundary": "Partial Geant4 simulation diagnostic, not detector data and not an accepted calibration function.",
+  "session_utc": "2026-07-23T14:23:31Z",
+  "status": "VALIDATED_BYTE_REPRODUCIBLE_VISUAL",
+  "task_id": "AUD-I885-002"
+}

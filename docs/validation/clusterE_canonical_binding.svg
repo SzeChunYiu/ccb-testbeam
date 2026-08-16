@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<style>text{font-family:DejaVu Sans,Arial,sans-serif}.h{font-size:28px;font-weight:700}.s{font-size:17px}.b{font-size:16px;font-weight:700}.m{font-size:15px}</style>
+<text x="50" y="52" class="h">Cluster E canonical claim-binding audit</text>
+<rect x="50" y="75" width="160" height="40" rx="8" fill="#b2182b"/>
+<text x="130" y="102" text-anchor="middle" fill="white" class="b">FLAWED</text>
+<text x="235" y="102" class="s">13 fail-closed finding(s); software/documentation evidence only</text>
+<text x="50" y="145" class="b">Claim / provenance contract</text>
+<text x="390" y="145" class="b">Canonical binding</text>
+<text x="760" y="145" class="b">Observed conflict</text>
+<rect x="45" y="144" width="1110" height="58" fill="#f5f5f5" stroke="#dddddd"/>
+<text x="60" y="177" class="m">CL-013 gain</text>
+<text x="390" y="177" class="m">92 ADC/MeV</text>
+<text x="760" y="177" class="m">Dashboard/summary/CSV use 110</text>
+<rect x="45" y="216" width="1110" height="58" fill="#ffffff" stroke="#dddddd"/>
+<text x="60" y="249" class="m">CL-021 chi2/ndf</text>
+<text x="390" y="249" class="m">68269.40598948313</text>
+<text x="760" y="249" class="m">86135.4707883642 is a distinct Cluster D rerun</text>
+<rect x="45" y="288" width="1110" height="58" fill="#f5f5f5" stroke="#dddddd"/>
+<text x="60" y="321" class="m">CL-022 morphology</text>
+<text x="390" y="321" class="m">283 / 87555</text>
+<text x="760" y="321" class="m">Dashboard/summary/CSV use 25 / 38 toy subset</text>
+<rect x="45" y="360" width="1110" height="58" fill="#ffffff" stroke="#dddddd"/>
+<text x="60" y="393" class="m">Provenance</text>
+<text x="390" y="393" class="m">full 40-hex commit + 64-hex input SHA-256</text>
+<text x="760" y="393" class="m">current output truncates/omits bindings</text>
+<text x="50" y="500" class="s">Interpretation: Cluster D reruns/toy diagnostics may be shown, but must not silently replace canonical ledger rows.</text>
+<text x="50" y="530" class="m">No detector-performance, calibration, data/MC-transfer, or accepted stopping-profile result is established by this audit.</text>
+</svg>

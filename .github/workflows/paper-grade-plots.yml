@@ -1,0 +1,79 @@
+name: Paper-grade plots
+
+on:
+  pull_request:
+    paths:
+      - "src/ccb_plotting/**"
+      - "tools/figure_registry/**"
+      - "scripts/generate*figures.py"
+      - "scripts/generate_all.py"
+      - "scripts/check_plot_quality.py"
+      - "scripts/update_wiki_plot_docs.py"
+      - "docs/claim_ledger.csv"
+      - "reports/S00_data_integrity_pipeline_reproduction/count_match_table.csv"
+      - "reports/studies/clusterA/counts.json"
+      - "reports/studies/clusterB/metrics.json"
+      - "reports/studies/clusterC/metrics.json"
+      - "reports/studies/clusterE/systematic_budget.csv"
+      - "docs/figures/paper/**"
+      - "WIKI.md"
+      - "paper/figures.yaml"
+      - "tests/test_paper_grade_plots.py"
+      - "requirements/plots.txt"
+      - ".github/workflows/paper-grade-plots.yml"
+  push:
+    branches: [main]
+    paths:
+      - "src/ccb_plotting/**"
+      - "tools/figure_registry/**"
+      - "scripts/generate*figures.py"
+      - "scripts/generate_all.py"
+      - "scripts/check_plot_quality.py"
+      - "scripts/update_wiki_plot_docs.py"
+      - "docs/claim_ledger.csv"
+      - "reports/S00_data_integrity_pipeline_reproduction/count_match_table.csv"
+      - "reports/studies/clusterA/counts.json"
+      - "reports/studies/clusterB/metrics.json"
+      - "reports/studies/clusterC/metrics.json"
+      - "reports/studies/clusterE/systematic_budget.csv"
+      - "docs/figures/paper/**"
+      - "WIKI.md"
+      - "paper/figures.yaml"
+      - "tests/test_paper_grade_plots.py"
+      - "requirements/plots.txt"
+      - ".github/workflows/paper-grade-plots.yml"
+
+jobs:
+  regenerate-and-audit:
+    continue-on-error: true
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: requirements/plots.txt
+      - name: Install the pinned plotting environment
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements/plots.txt
+          python -m pip install "pytest>=9,<10" "ruff>=0.14,<1"
+          python -m pip install -e . --no-deps
+      - name: Static checks
+        shell: bash
+        run: |
+          set +e
+          ruff check --ignore E501 src/ccb_plotting scripts tests tools/figure_registry 2>&1 | tee ruff.log
+          echo "status=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+          echo "ruff status: ${PIPESTATUS[0]} (non-blocking for paper-grade-plots)"
+      - name: Generate figures and documentation
+        run: make plots-docs
+      - name: Validate file-level publication requirements
+        run: make plots-check
+      - name: Run plotting regression tests
+        run: pytest -q tests/test_paper_grade_plots.py
+      - name: Require committed generated outputs to be current
+        run: git diff --exit-code -- WIKI.md docs/FIGURE_GALLERY.md docs/wiki_plot_manifest.csv docs/figures/paper wiki

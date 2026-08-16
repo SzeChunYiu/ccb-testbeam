@@ -1,0 +1,147 @@
+{
+  "claims": [
+    "CL-019",
+    "CL-020",
+    "CL-021"
+  ],
+  "inputs": {
+    "claim_ledger": {
+      "bytes": null,
+      "path": "exact reconstructed ledger with committed CL-019/020/021 rows",
+      "sha256": "LOCAL_RECONSTRUCTION_NOT_REMOTE_WHOLE_FILE_DIGEST",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    },
+    "legacy_report": {
+      "bytes": 415,
+      "path": "reports/mv3_stopping_v3_1782679272/REPORT.md",
+      "sha256": "7992ee2b684bd429fdff1944a7f9e2155b2d4773cc4161c93b57bb9abff5966c",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    },
+    "strict_remediation": {
+      "bytes": 212,
+      "path": "src/ccb_mc_validation/studies/mv3_stopping_depth.py",
+      "sha256": "4f8d1434b10fcf5d94223a6119f50b8954f27df6c2b65e8ee87ebc8220e14af2",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    },
+    "tracked_summary": {
+      "bytes": 881,
+      "path": "reports/mv3_stopping_v3_1782679272/mv3_summary.json",
+      "sha256": "8f32b7c231aa4b3b8a4ec54b3a3ea78ce2364eb5de7e3f2120561bfffdffe002",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    }
+  },
+  "issues": [],
+  "n_issues": 0,
+  "policy": "TRACKED_MV3_SUMMARY_EXACT_COUNTS_WITH_FAIL_CLOSED_STRICT_RERUN",
+  "remediation_contract": {
+    "blocks_without_inputs": true,
+    "removes_event_parity_proxy": true,
+    "removes_stop_layer_occupancy_proxy": true,
+    "requires_per_layer_mask": true,
+    "requires_sample_label": true
+  },
+  "source_contract": {
+    "data_counts": {
+      "B2": 268576,
+      "B4": 19284,
+      "B6": 11834,
+      "B8": 7051
+    },
+    "data_fractions": {
+      "B2": 0.8755676539144892,
+      "B4": 0.06286655039201942,
+      "B6": 0.03857927594581819,
+      "B8": 0.02298651974767315
+    },
+    "data_n": 306745,
+    "mc_counts": {
+      "B2": 117213,
+      "B4": 45507,
+      "B6": 31145,
+      "B8": 55619
+    },
+    "mc_fractions": {
+      "B2": 0.46982171201359607,
+      "B4": 0.18240448285260777,
+      "B6": 0.12483766494043706,
+      "B8": 0.22293614019335908
+    },
+    "mc_n": 249484,
+    "reconstructed_chi2": 204808.2179684494,
+    "reconstructed_chi2_per_ndf": 68269.40598948313,
+    "reconstructed_expected_data_counts": {
+      "B2": 144115.46105161053,
+      "B4": 55951.66309262317,
+      "B6": 38293.32953215437,
+      "B8": 68384.54632361192
+    },
+    "reconstructed_ndf": 3,
+    "stated_chi2": 204808.2179684494,
+    "stated_chi2_per_ndf": 68269.40598948313,
+    "stated_ndf": 3
+  },
+  "status": "VALIDATED",
+  "validation_run": {
+    "base_main_sha": "a52ea7c3f76eddff204e8ebb990a55cfe8793e7f",
+    "changed_file_provenance": {
+      "docs/claim_ledger.csv": {
+        "bytes": 21589,
+        "git_blob": "3bc4020f563220e6b3e37d567910dd3aee3cc39e",
+        "sha256": "e5ccb9ec7859597c8843068e5e72efd1a6bde405f4ae868dd1c5e00cb7f1be7e"
+      },
+      "tests/test_audit_mv3_summary_provenance.py": {
+        "bytes": 3494,
+        "git_blob": "b7e9645e22168b1ec76eab286e98c3122477eff1",
+        "sha256": "7a0cafc5afcb8fee5d3a161e571782e070236e0d55c957764735f9a503967ac3"
+      },
+      "tests/test_validate_mv3_legacy_claim_rows.py": {
+        "bytes": 4318,
+        "git_blob": "53cb81e244b58b4f482f2fbbd4ae444661b6e5ed",
+        "sha256": "bb196b76ee56ab5e15fdaf651efabb3be996895cdee822cc26b65533723e7dce"
+      },
+      "tools/audit/audit_mv3_summary_provenance.py": {
+        "bytes": 2702,
+        "git_blob": "fe42ac57178f9dfe2f0c23b01c0d908660d27adc",
+        "sha256": "074c742f5ff13015046c5537b915fdf83bd29b6f040a268a0c5be6aa5885f5c6"
+      },
+      "tools/audit/render_mv3_legacy_claim_evidence.py": {
+        "bytes": 4730,
+        "git_blob": "d3eeb37e612f49317fa7dab5e0ec205404331559",
+        "sha256": "c8b305a51611895640de1d9dce063684e01df22ea69bf19de64556fac9fa89ad"
+      },
+      "tools/audit/validate_mv3_legacy_claim_rows.py": {
+        "bytes": 14591,
+        "git_blob": "57f4f66ded41bccf3a994919d6a30e8888892342",
+        "sha256": "d78bccb77045dcf0a83c0ee1f8037e9236dd4f79600a17dd8d5ff4dfd0d46745"
+      }
+    },
+    "compile_result": "PASS",
+    "current_claim_ledger_git_blob": "8135794d6f0b22da6b760bf6234bb8e1cae795fb",
+    "focused_test_command": "PYTHONPATH=. python -m pytest tests/test_validate_mv3_legacy_claim_rows.py tests/test_audit_mv3_summary_provenance.py -q",
+    "focused_test_result": "11 passed in 1.76s",
+    "json_parse_result": "PASS",
+    "negative_control": {
+      "input_git_blob": "bb552aa5ed70e7d81dcda888c5aa61402c01e03c",
+      "issue_codes": [
+        "FIELD_CI_METHOD",
+        "FIELD_CI_STATUS",
+        "FIELD_CLAIM_TEXT",
+        "FIELD_CURRENT_VALUE",
+        "FIELD_DENOMINATOR",
+        "FIELD_NUMERATOR",
+        "FIELD_SOURCE_DATA",
+        "NOTE_CAVEAT",
+        "NOTE_DENIES_TRACKED_SUMMARY"
+      ],
+      "n_issues": 33,
+      "return_code": 1,
+      "status": "FLAWED"
+    },
+    "public_wiki_sync": "DEFERRED_SAFE_FULL_FILE_PATCH_REQUIRED",
+    "scientific_boundary": "Exact tracked fixed-source counts and Pearson arithmetic are validated. No corrected geometry, strict data/MC selection transfer, covariance model, uncertainty propagation, p-value interpretation, or accepted B8 closure is established.",
+    "session_stamp_utc": "2026-07-24T210523Z",
+    "svg_xml_parse_result": "PASS"
+  },
+  "validator": "validate_mv3_legacy_claim_rows.py",
+  "version": "2.0.0"
+}

@@ -1,0 +1,53 @@
+{
+  "acceptance": "PARTIAL_PUBLIC_SYNC_OPEN",
+  "claim": {
+    "bootstrap_unit": "run",
+    "ci95_ns": [
+      123.33094981246663,
+      126.35875117626817
+    ],
+    "ci_method": "run_mean_nonparametric_bootstrap_percentile",
+    "estimate_ns": 124.79018394263471,
+    "n_data": 252266,
+    "n_runs": 14,
+    "source_commit": "da9651c56ef6495ce9656d84b69b600daa6d8f86",
+    "status": "DONE_DATA_ONLY",
+    "truth_type": "data_measurement"
+  },
+  "initial_main_sha": "563582a0d7b1d3b0fac3e33cc241b4981a21912e",
+  "ledger": {
+    "bytes": 21431,
+    "fields_per_row": 43,
+    "new_git_blob": "254dc5b64945260193d6b1bd4146bd6400ad28cf",
+    "new_sha256": "e532f3af57c2d50d261bac6a0b40546decc45a4f780fd57f92afc279a4d71ea4",
+    "old_git_blob": "8135794d6f0b22da6b760bf6234bb8e1cae795fb",
+    "row_count_including_header": 27
+  },
+  "policy": "TAU_EFF_CLAIM_MUST_BIND_TO_PRIMARY_S10B_MEASUREMENT",
+  "publication_correction": {
+    "corrective_commit": "ab03023366396caaa97abc4cb7ea9a81aeae0731",
+    "detected_by": "candidate Git blob mismatch",
+    "final_blob_matches_validated_candidate": true,
+    "transient_issue": "two unrelated P04p/P07e script/config paths were transcribed with periods instead of underscores"
+  },
+  "remaining_public_sync": [
+    "WIKI.md",
+    "docs/academic_chapters/01_executive_summary.md",
+    "docs/academic_chapters/05_pileup_analysis.md"
+  ],
+  "scientific_boundary": [
+    "no raw ROOT reprocessing",
+    "no waveform fit rerun",
+    "no new systematic uncertainty",
+    "no universal detector dead time",
+    "no accepted Rmax"
+  ],
+  "status": "VALIDATED",
+  "task_id": "AUD-LEDGER-003",
+  "tests": {
+    "csv_exact_width": "PASS: 27/27 rows have 43 fields",
+    "py_compile": "PASS",
+    "pytest": "2 passed in 0.02s"
+  },
+  "unit": "canonical CL-011 remediation"
+}

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760">
+<rect width="1200" height="760" fill="white"/>
+<text x="50" y="55" font-family="DejaVu Sans, sans-serif" font-size="30" font-weight="bold">Issue #880: directional weight-effect semantics</text>
+<text x="50" y="88" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="normal">Independent recalculation from the tracked 1,000,000-event summary; not a ROOT rerun</text>
+<line x1="50" y1="110" x2="1150" y2="110" stroke="#333" stroke-width="2"/>
+<text x="60" y="155" font-family="DejaVu Sans, sans-serif" font-size="22" font-weight="bold">First B-layer mean energy deposit [MeV]</text>
+<rect x="80" y="205" width="340.0" height="52" fill="#d9d9d9" stroke="#111" stroke-width="2"/>
+<text x="80" y="197" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="bold">Legacy unweighted</text>
+<text x="430" y="249" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="normal">6.675</text>
+<rect x="80" y="300" width="108.7" height="52" fill="#9ecae1" stroke="#111" stroke-width="2"/>
+<text x="80" y="292" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="bold">PrimaryWeighted</text>
+<text x="198" y="344" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="normal">2.134</text>
+<text x="60" y="400" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal">Weighted change relative to unweighted: -68.0%</text>
+<text x="60" y="432" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="bold">Legacy unweighted overstatement relative to weighted: +212.7%</text>
+<text x="630" y="155" font-family="DejaVu Sans, sans-serif" font-size="22" font-weight="bold">Entering-B deuteron fraction</text>
+<rect x="650" y="205" width="340.0" height="52" fill="#d9d9d9" stroke="#111" stroke-width="2"/>
+<text x="650" y="197" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="bold">Legacy unweighted</text>
+<text x="999" y="249" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="normal">57.19%</text>
+<rect x="650" y="300" width="98.7" height="52" fill="#9ecae1" stroke="#111" stroke-width="2"/>
+<text x="650" y="292" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="bold">PrimaryWeighted</text>
+<text x="758" y="344" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="normal">16.61%</text>
+<text x="630" y="400" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal">Legacy minus weighted: +40.59 percentage points</text>
+<text x="630" y="432" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="bold">Legacy overstatement relative to weighted: +244.4%</text>
+<line x1="50" y1="485" x2="1150" y2="485" stroke="#333" stroke-width="2"/>
+<text x="60" y="530" font-family="DejaVu Sans, sans-serif" font-size="22" font-weight="bold">Confirmed software/reporting defects</text>
+<text x="80" y="570" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal">1. Nonfinite weights are converted to unit weight instead of failing closed.</text>
+<text x="80" y="605" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal">2. Invalid weighted estimators fall back to unweighted estimators.</text>
+<text x="80" y="640" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal">3. Signed fields describe weighted − unweighted, while prose calls them legacy bias.</text>
+<text x="80" y="675" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="normal">4. The retained result omits ROOT SHA-256, producer commit, command, and weight policy.</text>
+<text x="50" y="730" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="bold">Acceptance: audit gate validated; retained physics result remains FLAWED pending strict rerun.</text>
+</svg>

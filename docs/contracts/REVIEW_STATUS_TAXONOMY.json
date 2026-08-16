@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0.0",
+  "contract_id": "REVIEW_STATUS_TAXONOMY",
+  "issue": "#990",
+  "audit_id": "AF-042",
+  "levels": [
+    {
+      "id": "EDITORIAL_REVIEWED",
+      "means": "structure/readability/reasoning reviewed"
+    },
+    {
+      "id": "METHOD_REVIEWED",
+      "means": "method objections addressed on stated assumptions"
+    },
+    {
+      "id": "SOURCE_VERIFIED",
+      "means": "every external factual claim has a valid source"
+    },
+    {
+      "id": "EXECUTED_REPRODUCED",
+      "means": "code/result reproduced on immutable inputs"
+    },
+    {
+      "id": "CLAIM_AUTHORIZED",
+      "means": "claim ledger gates/uncertainty/provenance all pass"
+    }
+  ],
+  "forbidden_unqualified_badges": [
+    "ACCEPTED by nature-reviewer (3/3)",
+    "ACCEPTED by nature-reviewer with"
+  ],
+  "required_badge_fields": [
+    "scope",
+    "date_or_commit",
+    "open_blockers_policy"
+  ],
+  "ai_role_disclosure": "nature-reviewer-style 3/3 badges are AI role-separated review lenses unless genuinely independent human/blinded reviewers are documented",
+  "protocol": "chatgpt_todo/ATOMIC_RESEARCH_PROTOCOL.md"
+}

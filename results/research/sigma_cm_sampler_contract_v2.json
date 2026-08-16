@@ -1,0 +1,60 @@
+{
+  "implemented_reference": {
+    "cdf_construction": "trapezoid_integral_of_linear_node_pdf_sigma_times_sin_theta",
+    "cross_section_interpolation_mode": "linear_node_pdf_exact_inverse_v1",
+    "cross_section_support_mode": "measured_table_support_truncate_v1",
+    "inverse": "analytic_quadratic_interval_mass_inverse",
+    "inverse_probe_fractions": [
+      0.0,
+      0.001,
+      0.01,
+      0.1,
+      0.25,
+      0.5,
+      0.75,
+      0.9,
+      0.99,
+      0.999,
+      1.0
+    ],
+    "max_inverse_interval_mass_fraction_error": 3.3306690738754696e-16,
+    "normalization": 1.1977630765144902,
+    "positive_common_density_scaling_invariant": true,
+    "probability_outside_measured_support": 0.0,
+    "support_policy_interpretation": "The nominal reference distribution is conditional on the measured Table-VI angular support. This is an explicit conservative model choice, not evidence that the physical cross section vanishes outside the measured range. Extrapolation/support sensitivity remains a separate source-model uncertainty.",
+    "support_theta_cm_deg": [
+      26.49,
+      169.78
+    ],
+    "worst_inverse_probe": {
+      "interval_index": 16,
+      "recovered_fraction": 0.9900000000000003,
+      "requested_fraction": 0.99
+    }
+  },
+  "input": {
+    "bytes": 640,
+    "path": "geant4/src_patch/sigma_pd_cm_190.txt",
+    "rows": 28,
+    "sha256": "0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc",
+    "support_theta_cm_deg": [
+      26.49,
+      169.78
+    ]
+  },
+  "interpretation": "The legacy inverse-CDF used the correct trapezoid interval masses but sampled a piecewise-constant density inside each interval and silently assigned substantial mass outside measured support. The replacement exactly inverts the linearly interpolated sigma*sin(theta) node density on an explicitly truncated measured-support reference.",
+  "legacy_v1": {
+    "cdf_construction": "trapezoid_integral_of_node_pdf_sigma_times_sin_theta",
+    "inverse": "linear_theta_interpolation_within_each_cdf_interval",
+    "max_cdf_deviation_interval_index": 0,
+    "max_cdf_deviation_theta_cm_deg": 13.245,
+    "max_cdf_deviation_vs_linear_node_pdf": 0.084865752117123,
+    "normalization": 1.8240017962546706,
+    "probability_above_measured_support": 0.003869284858232268,
+    "probability_below_measured_support": 0.339463008468492,
+    "probability_outside_measured_support": 0.34333229332672427,
+    "resulting_within_interval_density": "piecewise_constant_interval_average"
+  },
+  "schema_version": "ccb_sigma_cm_sampler_contract_v2",
+  "scientific_boundary": "Deterministic numerical/source-contract result only. The measured-support truncation is a declared nominal reference, not a physical extrapolation result. Cross-section statistical/systematic uncertainty, alternate support models, compiled Geant4 execution, generator-level Monte Carlo closure, and detector-level predictions remain separate gates."
+}

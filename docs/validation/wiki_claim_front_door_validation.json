@@ -1,0 +1,49 @@
+{
+  "audit_id": "AUD-WIKI-002",
+  "measured_excerpt_control": {
+    "issue_count": 8,
+    "issues": {
+      "OVERSTATED_UNCERTAINTY_COMPLETENESS": 1,
+      "STATUS_LEDGER_MISMATCH": 3,
+      "STATUS_OUTSIDE_LEGEND": 3,
+      "TRUTH_TYPE_LEDGER_MISMATCH": 1
+    },
+    "ledger_excerpt_sha256": "e89519ff2099af61c68cea2151918fd61db506387b4247927daa0ac1d59d50e9",
+    "process_status": 1,
+    "wiki_excerpt_sha256": "7ff43954b0ae435d161ae6b6c96b9178f5aeda0d870857047e2e446fc1a28f14"
+  },
+  "policy": "WIKI_FRONT_DOOR_MUST_MATCH_CANONICAL_LEDGER",
+  "repository_sources": {
+    "claim_ledger": {
+      "claim_ids": [
+        "CL-007",
+        "CL-011"
+      ],
+      "git_blob_sha1": "6f4d4023814b42a566826912bcef7df9903c41e7",
+      "path": "docs/claim_ledger.csv"
+    },
+    "wiki": {
+      "git_blob_sha1": "c27a1e555145cb248e253f17a6f6d1cfe64542a8",
+      "path": "WIKI.md",
+      "ranges_inspected": [
+        "front matter",
+        "confidence-status legend",
+        "canonical results table",
+        "timing key-results table",
+        "MC validation matrix"
+      ]
+    }
+  },
+  "scientific_boundary": "Documentation-state audit only; no timing, pile-up, detector, data, or simulation result was regenerated.",
+  "status": "FLAWED",
+  "test": {
+    "path": "tests/test_validate_wiki_claim_front_door.py",
+    "result": "5 passed in 0.03s",
+    "sha256": "b118e7ab1287a11d3fae097eea57789dd4616538672d0af06127c4348916fc74"
+  },
+  "validator": {
+    "path": "tools/audit/validate_wiki_claim_front_door.py",
+    "sha256": "d8bc0f814d2855501b599d54d691d5a7e3939a58040690e7825364823773639f",
+    "version": "1.0.0"
+  }
+}

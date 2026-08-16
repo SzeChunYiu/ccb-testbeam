@@ -1,0 +1,122 @@
+{
+  "schema_version": "1.0",
+  "campaign_id": "cmc_2m_regenerated_20260814",
+  "campaign_type": "regenerated_paper_mc_scaleup",
+  "issue": 618,
+  "generation_date": "2026-08-14",
+  "superproject_commit": "6b57771e3c872ff3ee1b503f84f732c454acca6d",
+  "output_file": "geant4/data/output_krakow_2m_regenerated.root",
+  "input_digests": {
+    "cross_section_table": {
+      "path": "geant4/src_patch/sigma_pd_cm_190.txt",
+      "sha256": "0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc",
+      "n_points": 28,
+      "source": "Ermisch et al. PRC 71 064004 (2005) Table VI, 190 MeV p-d",
+      "units": "mb/sr"
+    },
+    "macro": {
+      "path": "geant4/macros/run_krakow_100k.mac"
+    },
+    "config": {
+      "path": "geant4/configs/krakow.config"
+    },
+    "geometry": {
+      "path": "krakow_109_8-38deg_4-71deg.root",
+      "source": "hibeam_g4_geobuilder",
+      "note": "External geometry, digest not bound in this manifest"
+    }
+  },
+  "source_measure": {
+    "generator_measure_mode": "MODE_DIRECT_UNIT",
+    "adapter_mode_id": "direct_sampling_unit_weight_v1",
+    "cross_section_interpolation_mode": "linear_node_pdf_exact_inverse_v1",
+    "cross_section_support_mode": "measured_table_support_truncate_v1",
+    "target_distribution": "p(theta) = sigma(theta) * sin(theta) / Z over measured support",
+    "weight_semantics": "unit event weight (direct sampling from target distribution)",
+    "beam_energy_mev": 190.0,
+    "target_thickness_mm": 2.3,
+    "beamspot_mm": 10.0
+  },
+  "uncertainty_contract": {
+    "propagation_status": "central_value_only_issue_1179",
+    "declaration_path": "geant4/uncertainty/cmc_100k_regenerated_20260814_source_systematics_declaration.json",
+    "statistical_uncertainty": "encoded in table col 3, not propagated to campaign",
+    "systematic_uncertainty": "3% point-to-point + <4.5% total, not propagated to campaign (primary covariance unavailable)",
+    "nuisance_mode": "NOMINAL_V1",
+    "framework_reference": "PR #1349 (df72735)",
+    "sensitivity_reference": "PR #1190 (d4d174d)"
+  },
+  "geant4_environment": {
+    "version": "from hibeam_g4_250603 conda env",
+    "physics_list": "QGSP_BIC_HP (default for hibeam_g4)",
+    "note": "Executable build receipt bound in executable_receipt (single ROOT 6.32 stack)"
+  },
+  "random_seed": "3500420",
+  "runtime_host": "LUNARC",
+  "references": [
+    "#1178: Direct-CDF sampler contract",
+    "#880: Weight adapter integration",
+    "#1311: MC provenance gap"
+  ],
+  "slurm_job_id": "3500420",
+  "generation_timestamp": "2026-08-14T16:45:19.586818",
+  "runtime_stack": "packages/hibeam_env ROOT-6.32 single-runtime v2 (same as cmc_100k_regenerated)",
+  "output_receipt": {
+    "status": "GENERATED",
+    "path": "geant4/data/output_krakow_2m_regenerated.root",
+    "size_bytes": 711988750,
+    "sha256": "0d8c827502b3ce8f5bbe419e1c11a2905db55015b94a741a11ec7e52f292afe1",
+    "tracked_in_git": false,
+    "note": "*.root is gitignored (geant4/.gitignore); this receipt binds file identity",
+    "receipt_correction": {
+      "date": "2026-08-16",
+      "issue": 1046,
+      "reason": "receipt previously carried the stale 100k output identity (efb40aa0..., 35760505 B) from the pre-regeneration template; corrected to the actual 2M artifact by full sha256sum",
+      "superseded_values": {
+        "path": "geant4/data/output_krakow_100k_regenerated.root",
+        "size_bytes": 35760505,
+        "sha256": "efb40aa09a5fdae1520e9d92b5a8c28f1c6283681f3b2b416fcbaf4a9404ca6c"
+      }
+    }
+  },
+  "production": {
+    "slurm_job_id": "3498666",
+    "runtime_host": "LUNARC cn039",
+    "superproject_commit": "b0da33f0415c27936ee093ddff0d7eb88886d399",
+    "thread_mode": "serial (G4WT0 only)",
+    "worker_count": 1,
+    "event_count": 100000,
+    "random_seed_note": "No /random/seed command in the macro; Geant4 default per-run seeding applies. The manifest random_seed field (3498666) is the SLURM job-id label, not an engine seed."
+  },
+  "executable_receipt": {
+    "hibeam_g4_sha256": "055c9e8e44bfb953ce660ec2b38cd370d2eece5b0b3bf090ee82b86556142d40",
+    "build": "hibeam_src_scatter/build_632 \u2014 single ROOT 6.32 runtime (packages/hibeam_env); VGM rebuilt against the same stack (vgm_install_632); ldd 6.34-count=0",
+    "generator_source_pair": {
+      "installed_by": "geant4/src_patch/patch_scatter.py --src-root (byte-verified)",
+      "ScatteringGenerator.hh": {
+        "bytes": 3967,
+        "sha256": "afe240e906ed381d637ddfe92b8450f8ea8b4fc125ad865bb31a5471cc14bb30",
+        "git_blob": "3492d2b61fcc7320070837cff241089f40e4882d"
+      },
+      "ScatteringGenerator.cc": {
+        "bytes": 20908,
+        "sha256": "d3ed8b8b2475e5d3783cbd10bff5a778bf873497c2b4ab3d1c0dbdd7c5e5dc00",
+        "git_blob": "a04da519551a7d505b4bce50b20d0b5424f0f40d",
+        "lineage": "current main: #1183 direct-CDF sampler + #1182 fail-closed worker init + #1057 phi fix + #1179 uncertainty contract"
+      }
+    },
+    "cross_section_table": {
+      "file": "geant4/src_patch/sigma_pd_cm_190.txt",
+      "sha256": "0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc",
+      "bytes": 640,
+      "rows": 28
+    },
+    "runtime_log_confirmation": [
+      "inverse-CDF ready over measured support [26.49,169.78] deg from 28 CS pts; interpolation=linear_node_pdf_exact_inverse_v1",
+      "source readiness=CONFIGURED_READY",
+      "uncertainty_contract=not_propagated_issue_1179"
+    ]
+  },
+  "event_count": 2000000,
+  "purpose": "#618 species/penetration deliverables: 100k unit-weight campaign yields 686 B-entrance events (56 sample-I), too thin for sample-I species panels; 2M scale-up same sampler/stack. No /random/seed: default engine seed, sequential stream -> first 100k replicates cmc_100k_regenerated by construction."
+}

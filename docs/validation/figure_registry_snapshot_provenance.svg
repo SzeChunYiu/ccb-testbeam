@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560">
+<rect width="100%" height="100%" fill="white"/>
+<text x="50" y="55" font-family="sans-serif" font-size="28" font-weight="bold">Figure provenance is bound to one exact byte snapshot</text>
+<text x="50" y="88" font-family="sans-serif" font-size="16">FIGURE_ARTIFACT_PROVENANCE_MUST_BIND_TO_SINGLE_READ_EXACT_BYTES</text>
+<text x="50" y="125" font-family="sans-serif" font-size="18" font-weight="bold">Exact-current audit: VALIDATED (0 findings)</text>
+<text x="50" y="175" font-family="monospace" font-size="15">Artifact</text>
+<text x="285" y="175" font-family="monospace" font-size="15">snapshot hash</text>
+<text x="500" y="175" font-family="monospace" font-size="15">later path hash</text>
+<text x="735" y="175" font-family="monospace" font-size="15">recorded/published</text>
+<text x="1000" y="175" font-family="monospace" font-size="15">match</text>
+<text x="50" y="235" font-family="sans-serif" font-size="20">Result JSON</text>
+<text x="285" y="235" font-family="monospace" font-size="19">880e5b3a422a</text>
+<text x="500" y="235" font-family="monospace" font-size="19">3b6204ea9a2a</text>
+<text x="735" y="235" font-family="monospace" font-size="19">880e5b3a422a</text>
+<text x="1010" y="235" font-family="sans-serif" font-size="20" font-weight="bold">YES</text>
+<text x="50" y="310" font-family="sans-serif" font-size="20">Source artifact</text>
+<text x="285" y="310" font-family="monospace" font-size="19">baabbed7db11</text>
+<text x="500" y="310" font-family="monospace" font-size="19">5846f2f03f5b</text>
+<text x="735" y="310" font-family="monospace" font-size="19">baabbed7db11</text>
+<text x="1010" y="310" font-family="sans-serif" font-size="20" font-weight="bold">YES</text>
+<line x1="50" y1="390" x2="1070" y2="390" stroke="black" stroke-width="1"/>
+<text x="50" y="430" font-family="sans-serif" font-size="18" font-weight="bold">Remediated path:</text>
+<text x="225" y="430" font-family="sans-serif" font-size="18">read once; decode/parse or publish retained bytes; hash and size the same snapshot.</text>
+<text x="50" y="470" font-family="sans-serif" font-size="18">Source artifacts use same-directory temporary publication, flush, fsync, os.replace, and final-target verification.</text>
+<text x="50" y="520" font-family="sans-serif" font-size="14">Synthetic software evidence only; no underlying scientific value or uncertainty is validated.</text>
+</svg>

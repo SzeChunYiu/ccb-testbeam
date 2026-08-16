@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="930" viewBox="0 0 1000 930" role="img" aria-labelledby="title desc">
+<title id="title">CL-011 tau-eff source-binding audit</title>
+<desc id="desc">Software and documentation provenance evidence, not detector data.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<text x="28" y="34" font-family="sans-serif" font-size="22" font-weight="bold">CL-011 tau_eff provenance and estimand audit</text>
+<text x="28" y="58" font-family="sans-serif" font-size="13">Tracked-artifact audit; this graphic is not a detector-data plot.</text>
+<text x="40" y="92" font-family="sans-serif" font-size="14">Primary estimate: <tspan font-family="monospace">124.790184 ns</tspan></text>
+<text x="40" y="117" font-family="sans-serif" font-size="14">Run-bootstrap 95% CI: <tspan font-family="monospace">[123.330950, 126.358751] ns</tspan></text>
+<text x="40" y="142" font-family="sans-serif" font-size="14">Run-level estimand: <tspan font-family="monospace">14 runs</tspan></text>
+<text x="40" y="167" font-family="sans-serif" font-size="14">Selected pulses: <tspan font-family="monospace">252266</tspan></text>
+<text x="40" y="192" font-family="sans-serif" font-size="14">Current ledger findings: <tspan font-family="monospace">30</tspan></text>
+<text x="28" y="227" font-family="sans-serif" font-size="16" font-weight="bold">Fail-closed findings</text>
+<text x="45" y="251" font-family="monospace" font-size="12">• CL011_FIELD_MISMATCH claim_text</text>
+<text x="45" y="273" font-family="monospace" font-size="12">• CL011_FIELD_MISMATCH ci_method</text>
+<text x="45" y="295" font-family="monospace" font-size="12">• CL011_FIELD_MISMATCH n_runs</text>
+<text x="45" y="317" font-family="monospace" font-size="12">• CL011_FIELD_MISMATCH n_data</text>
+<text x="45" y="339" font-family="monospace" font-size="12">• CL011_FIELD_MISMATCH truth_type</text>
+<text x="45" y="361" font-family="monospace" font-size="12">• CL011_FIELD_MISMATCH status</text>
+<text x="45" y="383" font-family="monospace" font-size="12">• CL011_FIELD_MISMATCH allowed_status_validated</text>
+<text x="45" y="405" font-family="monospace" font-size="12">• CL011_FIELD_MISMATCH source_report</text>
+<text x="45" y="427" font-family="monospace" font-size="12">• CL011_FIELD_MISMATCH source_script</text>
+<text x="45" y="449" font-family="monospace" font-size="12">• CL011_FIELD_MISMATCH source_data</text>
+<text x="45" y="471" font-family="monospace" font-size="12">• CL011_FIELD_MISMATCH source_manifest</text>
+<text x="45" y="493" font-family="monospace" font-size="12">• CL011_FIELD_MISMATCH source_commit</text>
+<text x="45" y="515" font-family="monospace" font-size="12">• CL011_FIELD_MISMATCH link_validated</text>
+<text x="45" y="537" font-family="monospace" font-size="12">• CL011_FIELD_MISMATCH ci_status</text>
+<text x="45" y="559" font-family="monospace" font-size="12">• CL011_FIELD_MISMATCH blocked_by</text>
+<text x="45" y="581" font-family="monospace" font-size="12">• CL011_NUMERIC_MISMATCH current_value</text>
+<text x="45" y="603" font-family="monospace" font-size="12">• CL011_NUMERIC_MISMATCH ci_low</text>
+<text x="45" y="625" font-family="monospace" font-size="12">• CL011_NUMERIC_MISMATCH ci_high</text>
+<text x="45" y="647" font-family="monospace" font-size="12">• UNSUPPORTED_UNCERTAINTY_DECOMPOSITION stat_unc</text>
+<text x="45" y="669" font-family="monospace" font-size="12">• UNSUPPORTED_UNCERTAINTY_DECOMPOSITION syst_unc</text>
+<text x="45" y="691" font-family="monospace" font-size="12">• UNSUPPORTED_UNCERTAINTY_DECOMPOSITION total_unc</text>
+<text x="45" y="713" font-family="monospace" font-size="12">• CL011_REQUIRED_CAVEAT_MISSING run-average estimand</text>
+<text x="45" y="735" font-family="monospace" font-size="12">• CL011_REQUIRED_CAVEAT_MISSING 14 runs</text>
+<text x="45" y="757" font-family="monospace" font-size="12">• CL011_REQUIRED_CAVEAT_MISSING 252266 selected pulses</text>
+<text x="45" y="779" font-family="monospace" font-size="12">• CL011_REQUIRED_CAVEAT_MISSING not a detector-wide universal dead time</text>
+<text x="45" y="801" font-family="monospace" font-size="12">• CL011_REQUIRED_CAVEAT_MISSING MV5 uses the value as an input rather than independently validating it</text>
+<text x="45" y="823" font-family="monospace" font-size="12">• CL011_REQUIRED_CAVEAT_MISSING no statistical/systematic uncertainty decomposition</text>
+<text x="45" y="845" font-family="monospace" font-size="12">• SECONDARY_MV5_REPORT_USED_AS_PRIMARY_SOURCE </text>
+<text x="45" y="867" font-family="monospace" font-size="12">• NONEXISTENT_LEDGER_SOURCE_DATA_PATH </text>
+<text x="45" y="889" font-family="monospace" font-size="12">• INDEPENDENT_CLOSURE_OVERSTATED </text>
+<text x="28" y="908" font-family="sans-serif" font-size="12">Status: FLAWED; policy: TAU_EFF_CLAIM_MUST_BIND_TO_PRIMARY_S10B_MEASUREMENT</text>
+</svg>

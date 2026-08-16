@@ -1,0 +1,2 @@
+source,path,tree,entries,branch_count,candidate_native_daq_key_branches,has_run,has_EVENTNO,has_EVT,has_TRIGGER,joinable_to_daq_native_keys
+geant4_root,/home/billy/ccb-geant4/output_30k.root,hibeam,30000,62,,False,False,False,False,False

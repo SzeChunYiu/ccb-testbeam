@@ -1,0 +1,65 @@
+{
+  "conditional_diagonal_statistical_reference": {
+    "interpretation": "This uses only the published row statistical uncertainties and a diagonal approximation. It is not a replacement for unavailable systematic covariance.",
+    "max_pointwise_cdf_standard_uncertainty": 0.0004453566889758832,
+    "mean_theta_cm_standard_uncertainty_deg": 0.02252797870713097,
+    "status": "DELTA_METHOD_CONDITIONAL_ON_INDEPENDENT_ROW_STATISTICS",
+    "theta_cm_deg_at_max_pointwise_cdf_standard_uncertainty": 49.488045
+  },
+  "deterministic_sensitivity": {
+    "alternating_3pct_controls": {
+      "minus_plus_max_abs_cdf_delta": 0.0014569781233605278,
+      "plus_minus_max_abs_cdf_delta": 0.0014567989868344983,
+      "theta_cm_deg_at_minus_plus_max": 28.983246,
+      "theta_cm_deg_at_plus_minus_max": 28.983246
+    },
+    "common_scale_bound_control": {
+      "interpretation": "A fully common multiplicative source normalization cancels from normalized shape.",
+      "max_abs_normalized_cdf_delta": 3.3306690738754696e-16,
+      "relative_scale": 1.045
+    },
+    "grid_points": 10001,
+    "grid_support_theta_cm_deg": [
+      26.49,
+      169.78
+    ],
+    "nodewise_relative_box_3pct_sensitivity_v1": {
+      "box_definition": "each central sigma_i independently allowed in [0.97,1.03]*sigma_i",
+      "max_cdf_downward_excursion": 0.014380572923809676,
+      "max_cdf_upward_excursion": 0.01430729974634637,
+      "max_mean_theta_cm_deg": 57.5322672970398,
+      "min_mean_theta_cm_deg": 56.050251002153615,
+      "nominal_mean_theta_cm_deg": 56.78396200051643,
+      "status": "NONPROBABILISTIC_ENVELOPE",
+      "theta_cm_deg_at_max_downward_excursion": 46.951812,
+      "theta_cm_deg_at_max_upward_excursion": 46.951812
+    }
+  },
+  "input": {
+    "bytes": 640,
+    "path": "geant4/src_patch/sigma_pd_cm_190.txt",
+    "rows": 28,
+    "sha256": "0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc",
+    "source_doi": "10.1103/PhysRevC.71.064004",
+    "source_table": "VI",
+    "support_theta_cm_deg": [
+      26.49,
+      169.78
+    ]
+  },
+  "nominal_source_model": {
+    "cross_section_interpolation_mode": "linear_node_pdf_exact_inverse_v1",
+    "cross_section_support_mode": "measured_table_support_truncate_v1",
+    "mean_theta_cm_deg": 56.78396200051643,
+    "normalization": 1.19776307651449
+  },
+  "schema_version": "ccb_sigma_cm_source_uncertainty_v1",
+  "scientific_boundary": "Source-level deterministic/conditional uncertainty research only. The nodewise 3% box is a sensitivity envelope, not a confidence region or inferred covariance. No beam data, detector response, production Geant4 sample, or detector-performance claim is validated.",
+  "source_uncertainty_contract": {
+    "point_to_point_construction": "The source reports an extra per-point error chosen so a high-order polynomial fit to the angular cross section reaches chi^2 approximately one after target-thickness and background-subtraction limitations; this does not uniquely define a stochastic row covariance model.",
+    "point_to_point_systematic_fraction_at_190_MeV": 0.03,
+    "published_row_covariance_matrix": false,
+    "row_third_column": "absolute_statistical_uncertainty_dsigma_domega_mb_per_sr",
+    "total_systematic_fraction_bound_at_190_MeV": "<0.045"
+  }
+}

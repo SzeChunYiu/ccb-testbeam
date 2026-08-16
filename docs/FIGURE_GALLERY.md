@@ -1,140 +1,135 @@
-# Figure Gallery — CCB Test-Beam Analysis
+# CCB paper-grade figure gallery
 
-All publication figures are in the `reports/` directory. Use these for paper drafts.
-Format: PNG, 150 dpi (for embedded figures).
+Generated from `docs/figures/paper/manifest.json`. Captions are external to the image so the plot area remains uncluttered. PDF and SVG versions sit beside every PNG.
 
----
+## FIG-WIKI-001 — Selected-pulse inventory
 
-## MV0 — Digitizer Gain Calibration
+**Question:** How are the exact S00 analysis pulses distributed across samples and staves?
 
-Directory: `reports/mv0_calibration_1782677847/`
+![Selected-pulse inventory](figures/paper/selected_pulse_inventory.png)
 
-| Figure | Description |
-|---|---|
-| `mv0_adc_vs_edep_scatter.png` | Scatter plot: data net_adc vs MC edep (B2 protons); gain slope = 92 ADC/MeV shown |
-| `mv0_adc_spectrum_data.png` | Data B2 net_adc distribution; median = 1781 ADC marked |
-| `mv0_edep_spectrum_mc.png` | MC B2 edep distribution; median × peak_frac = 1781 ADC |
-| `mv0_gain_calibration_summary.png` | Combined: data/MC overlay after gain application |
+**Status:** `GATED` · **Evidence:** `DATA_MEASUREMENT`
 
-**Key number**: gain = 92 ± 28 ADC/MeV (v2 corrected; v1 was 246 ADC/MeV — wrong ADC convention)
+Exact S00 reproduction. Sample I is dominated by B2; Sample II reaches deeper staves more often. Counts are deterministic for the fixed raw inputs and selection; CL-001 remains GATED pending data-contract closure (#952/#953/#954), so this figure is not an authorising ledger row.
 
----
+[PDF](figures/paper/selected_pulse_inventory.pdf) · [SVG](figures/paper/selected_pulse_inventory.svg) · [source CSV](figures/paper/source_tables/selected_pulse_inventory_source.csv)
 
-## MV3 — Stopping-Depth Profile (FAIL)
+## FIG-WIKI-002 — Claim ledger is mostly gated or blocked
 
-Directory: `reports/mv3_stopping_v3_1782679272/`
+**Question:** What fraction of the project claim surface is currently publication-authorized?
 
-| Figure | Description |
-|---|---|
-| `mv3_stop_frac.png` | Bar chart: MC vs data stave hit fractions (B2/B4/B6/B8); shows 10× B8 discrepancy |
+![Claim ledger is mostly gated or blocked](figures/paper/claim_status_overview.png)
 
-**Key number**: χ²/ndf = 68,269 (catastrophic FAIL); B8 MC=22.3% vs data=2.3%
+**Status:** `REVIEW` · **Evidence:** `GOVERNANCE_LEDGER`
 
----
+Status counts from the canonical claim ledger (docs/claim_ledger.csv). Visual polish must not promote gated, blocked, flawed or superseded evidence.
 
-## MV4 — Timing Resolution
+[PDF](figures/paper/claim_status_overview.pdf) · [SVG](figures/paper/claim_status_overview.svg) · [source CSV](figures/paper/source_tables/claim_status_overview_source.csv)
 
-Directory: `reports/mv4_timing_1782678162/`
+## FIG-WIKI-003 — Timing estimator closure on MC
 
-| Figure | Description |
-|---|---|
-| `mv4_sigma68_comparison.png` | σ₆₈ MC vs data (raw and corrected) |
-| `mv4_timing_distribution.png` | Timing residual distribution overlays |
-| `mv4_timewalk_correction.png` | Timewalk ΔT vs ADC amplitude |
-| `mv4_sigma68_vs_amplitude.png` | Amplitude-dependent σ₆₈ |
-| `mv4_pull_summary.png` | Pull values (raw PASS, corrected TENSION) |
+**Question:** How much does the four-sensor estimator improve the MC residual width?
 
-**Key number**: σ₆₈_raw = 1.744 ns (PASS pull=−1.05); corrected pull=+2.68 (TENSION — MV4b shows model artefact)
+![Timing estimator closure on MC](figures/paper/timing_mc_method_closure.png)
 
----
+**Status:** `MC_METHOD_CLOSURE` · **Evidence:** `MC_METHOD_CLOSURE`
 
-## MV4b — Physical Timewalk Model
+Krakow MC method closure. The combined four-sensor estimator reaches σ68 = 0.089 ns; this is not a detector timing measurement on beam data.
 
-Directory: `reports/mv4b_timewalk_model/`
+[PDF](figures/paper/timing_mc_method_closure.pdf) · [SVG](figures/paper/timing_mc_method_closure.svg) · [source CSV](figures/paper/source_tables/timing_mc_method_closure_source.csv)
 
-| Figure | Description |
-|---|---|
-| `mv4b_timewalk_model.png` | Physical (1/A) vs toy (1/√A) timewalk curves — shows toy B<0 is unphysical |
-| `mv4b_timing_residuals.png` | σ₆₈ distributions: raw / physical 1/A / toy 1/√A corrections |
-| `mv4b_sigma68_vs_adc.png` | Amplitude-dependent σ₆₈ for each correction model |
+## FIG-WIKI-004 — Grouped-fold PID stability on MC
 
-**Key finding**: Toy timewalk with B<0 over-corrects; physical 1/A form resolves tension
+**Question:** Is the realistic-chain proton/deuteron AUC stable across grouped folds?
 
----
+![Grouped-fold PID stability on MC](figures/paper/pid_mc_validation.png)
 
-## MV5 — Pile-Up Rate
+**Status:** `SIMULATION_RESULT` · **Evidence:** `SIMULATION_RESULT`
 
-Directory: `reports/mv5_pileup_1782678353/`
+Five contiguous event-block folds from the realistic ΔE–E MC chain. Fold ordering is categorical, so points are deliberately not connected. Transfer to beam data remains unvalidated.
 
-| Figure | Description |
-|---|---|
-| `mv5_rmax_comparison.png` | R_max MC vs data comparison (3.044 vs 3.05 MHz) |
-| `mv5_deadtime_model.png` | Dead-time fraction vs trigger rate |
+[PDF](figures/paper/pid_mc_validation.pdf) · [SVG](figures/paper/pid_mc_validation.svg) · [source CSV](figures/paper/source_tables/pid_mc_validation_source.csv)
 
-**Key number**: R_max = 3.044 MHz (0.2% agreement with data) — PASS
+## FIG-WIKI-005 — Gain closure and gated data/MC proxy
 
----
+**Question:** How does MC digitizer closure compare with the gated MV0 data/MC proxy?
 
-## MV6 — Anomaly Species Identification
+![Gain closure and gated data/MC proxy](figures/paper/adc_mc_calibration.png)
 
-Directory: `reports/mv6_representation_1782678362/`
+**Status:** `GATED` · **Evidence:** `MC_CLOSURE_PLUS_GATED_DATA_MC_PROXY`
 
-| Figure | Description |
-|---|---|
-| `mv6_pca_clusters.png` | PCA scatter with GMM clusters coloured; Cluster 2 = C12 anomaly |
+MC fits recover 119.168 ADC/MeV for both species near the configured 120 ADC/MeV. The separate MV0 proxy is 92 ADC/MeV with a 28 ADC/MeV heuristic systematic envelope, not a confidence interval, and remains gated.
 
-**Key number**: 0.32% anomaly fraction; C12 recoils = 55% of anomaly class
+[PDF](figures/paper/adc_mc_calibration.pdf) · [SVG](figures/paper/adc_mc_calibration.svg) · [source CSV](figures/paper/source_tables/adc_mc_calibration_source.csv)
 
----
+## FIG-WIKI-006 — Birks-model dependence on MC
 
-## MV3b — Upstream Material Budget
+**Question:** How strongly does the inferred Birks coefficient depend on the fitting observable?
 
-Directory: `reports/mv3b_material_budget/`
+![Birks-model dependence on MC](figures/paper/birks_mc_comparison.png)
 
-| Figure | Description |
-|---|---|
-| `mv3b_range_curve.png` | Proton CSDA range vs energy in BC-408; stave positions marked |
-| `mv3b_material_scan.png` | B8 fraction vs upstream material; required=~8 g/cm²; known components |
+**Status:** `SIMULATION_RESULT` · **Evidence:** `SIMULATION_RESULT`
 
-**Key finding**: ~8 g/cm² additional upstream material needed; inter-stave dead material is dominant
+The per-track dE/dx fit gives kB = 0.0156 cm/MeV, above both the total-deposit proxy and the digitizer default. The spread is model dependence, not a confidence interval.
 
----
+[PDF](figures/paper/birks_mc_comparison.pdf) · [SVG](figures/paper/birks_mc_comparison.svg) · [source CSV](figures/paper/source_tables/birks_mc_comparison_source.csv)
 
-## MC Synthesis
+## FIG-WIKI-007 — Digitizer-domain overlap scan
 
-Directory: `reports/mc_validation_synthesis/`
+**Question:** Which event rates correspond to the stored 5% and 10% overlap scan points?
 
-| Figure | Description |
-|---|---|
-| `mv9_master_synthesis.png` | Master overview: all 6 MV verdicts, pull values, status |
+![Digitizer-domain overlap scan](figures/paper/pileup_digitizer_mc.png)
 
----
+**Status:** `SIMULATION_RESULT` · **Evidence:** `SIMULATION_RESULT`
 
-## Data Analysis Studies (S* / P*)
+Poisson overlap for the 180 ns acquisition window. The stored nearest scan points are 0.289 MHz (5.06%, not exactly 5%) and 0.605 MHz (10.31%, not exactly 10%). These are simulation-domain criteria; canonical detector Rmax remains blocked.
 
-See `reports/SUMMARY.md` for the full list of ~230 data-driven studies.
-Key figures are in study-specific subdirectories under `reports/`.
+[PDF](figures/paper/pileup_digitizer_mc.pdf) · [SVG](figures/paper/pileup_digitizer_mc.svg) · [source CSV](figures/paper/source_tables/pileup_digitizer_mc_source.csv)
 
----
+## FIG-WIKI-008 — B8 stopping assignment disagrees
 
-## Figure Production
+**Question:** How large is the exact B8 fraction mismatch in the legacy data/MC stopping profile?
 
-All figures are reproducible by running the corresponding script:
+![B8 stopping assignment disagrees](figures/paper/stopping_b8_tension.png)
 
-| Study | Script | Output dir |
-|---|---|---|
-| MV0 | `scripts/mv0_calibrate_from_data.py` | `reports/mv0_calibration_*/` |
-| MV3 | `scripts/mv3_stopping_v3.py` | `reports/mv3_stopping_v3_*/` |
-| MV4 | `scripts/mv4_timing_study.py` | `reports/mv4_timing_*/` |
-| MV4b | `scripts/mv4b_timewalk_model.py` | `reports/mv4b_timewalk_model/` |
-| MV5 | `scripts/mv5_pileup_study.py` | `reports/mv5_pileup_*/` |
-| MV6 | `scripts/mv6_representation_study.py` | `reports/mv6_representation_*/` |
-| MV3b | `scripts/mv3b_material_budget.py` | `reports/mv3b_material_budget/` |
+**Status:** `TENSION` · **Evidence:** `LEGACY_DATA_MC_DIAGNOSTIC`
 
-Python environment: `/projects/hep/fs10/shared/nnbar/billy/packages/hibeam_env/bin/python3`
+Exact tracked counts give 2.30% in selected data and 22.29% in thresholded MC. Wilson intervals show counting uncertainty only; unresolved geometry, trigger, gain and selection transfer dominate the scientific interpretation.
 
-SLURM jobs for compute-intensive runs: see `geant4/jobs/mv*.sbatch`
+[PDF](figures/paper/stopping_b8_tension.pdf) · [SVG](figures/paper/stopping_b8_tension.svg) · [source CSV](figures/paper/source_tables/stopping_b8_tension_source.csv)
 
----
+## FIG-WIKI-009 — Early-peak morphology in truth MC
 
-*Figure gallery | Date: 2026-06-28 | CCB test-beam project*
+**Question:** How frequent is the early-peak morphology overall and within truth-labelled C12 tracks?
+
+![Early-peak morphology in truth MC](figures/paper/anomaly_truth_mc.png)
+
+**Status:** `TRUTH_LEVEL_MC_ONLY` · **Evidence:** `TRUTH_LEVEL_MC_ONLY`
+
+Truth-labelled MC rates with Wilson 95% intervals: 283/87,555 overall and 156/7,302 within C12. C12 forms 156/283 early-peak tracks, but the separate beam-data anomaly is not identified as C12.
+
+[PDF](figures/paper/anomaly_truth_mc.pdf) · [SVG](figures/paper/anomaly_truth_mc.svg) · [source CSV](figures/paper/source_tables/anomaly_truth_mc_source.csv)
+
+## FIG-WIKI-010 — Synthetic-waveform PCA compression
+
+**Question:** How much variance is captured by compact PCA representations of the MC waveforms?
+
+![Synthetic-waveform PCA compression](figures/paper/pca_truth_mc.png)
+
+**Status:** `TRUTH_LEVEL_MC_ONLY` · **Evidence:** `SYNTHETIC_WAVEFORM_MC`
+
+Fixed synthetic-waveform MC output: three components explain 72.5% and eight explain 82.2%. These values supersede stale 0.89/0.997 statements and are not beam-data PCA results.
+
+[PDF](figures/paper/pca_truth_mc.pdf) · [SVG](figures/paper/pca_truth_mc.svg) · [source CSV](figures/paper/source_tables/pca_truth_mc_source.csv)
+
+## FIG-WIKI-011 — ADC-response sensitivity inputs
+
+**Question:** Which dimensionless nuisance elasticities dominate the current MC sensitivity scan?
+
+![ADC-response sensitivity inputs](figures/paper/systematic_sensitivity_inputs.png)
+
+**Status:** `REVIEW` · **Evidence:** `SENSITIVITY_INPUTS`
+
+Dimensionless cluster-D ADC-response elasticities only. Mixed-unit rows (gain envelope, kB span and missing material) are excluded rather than combined. This is a sensitivity inventory, not a propagated uncertainty budget.
+
+[PDF](figures/paper/systematic_sensitivity_inputs.pdf) · [SVG](figures/paper/systematic_sensitivity_inputs.svg) · [source CSV](figures/paper/source_tables/systematic_sensitivity_inputs_source.csv)

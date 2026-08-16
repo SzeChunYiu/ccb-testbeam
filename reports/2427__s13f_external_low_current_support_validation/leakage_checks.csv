@@ -1,0 +1,15 @@
+fold,check,value,flag,note
+family_a_to_b,train_test_run_overlap,0.0,False,Leave-run-family-out folds must have disjoint runs.
+family_a_to_b,external_rows_labeled,0.0,False,External control runs are support-only and never enter labeled train/test current arrays.
+family_a_to_b,external_train_test_run_overlap,0.0,False,External support runs must be disjoint from all labeled high/low runs.
+family_a_to_b,external_support_rows,6300.0,False,External control rows are atomized only to expand low-current-like support counts.
+family_a_to_b,forbidden_columns_used,0.0,False,"Model features exclude run number, event number, current label, current group, and run-family label."
+family_a_to_b,support_distance_cut_train_q95,1.9060890689843701,False,Distance support gate is fit on train-fold residual features only.
+family_a_to_b,test_rows_scored,10500.0,False,Every capped held-out pulse receives a score and support label.
+family_b_to_a,train_test_run_overlap,0.0,False,Leave-run-family-out folds must have disjoint runs.
+family_b_to_a,external_rows_labeled,0.0,False,External control runs are support-only and never enter labeled train/test current arrays.
+family_b_to_a,external_train_test_run_overlap,0.0,False,External support runs must be disjoint from all labeled high/low runs.
+family_b_to_a,external_support_rows,6300.0,False,External control rows are atomized only to expand low-current-like support counts.
+family_b_to_a,forbidden_columns_used,0.0,False,"Model features exclude run number, event number, current label, current group, and run-family label."
+family_b_to_a,support_distance_cut_train_q95,1.903443763880352,False,Distance support gate is fit on train-fold residual features only.
+family_b_to_a,test_rows_scored,9687.0,False,Every capped held-out pulse receives a score and support label.

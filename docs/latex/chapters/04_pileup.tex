@@ -16,25 +16,27 @@ window used in the Poisson occupancy calculation; and third, injected
 two-pulse closure tests that rank reconstruction algorithms under a controlled
 but synthetic truth definition.
 
-The main physics conclusion is that the originally quoted maximum rate is
-reproducible only as an assumption.  The S10 reproduction gives
-$R_{\max}=4.222$ MHz when $\tau_{\mathrm{eff}}=90$ ns is inserted by hand.
-However, the directly measured waveform live-time is materially longer:
-the run-held-out template measurement gives a 10\% live-time of
-$124.79$ ns with a 95\% bootstrap confidence interval
-$[123.32,126.33]$ ns.  Rescaling the same occupancy limit with this
-measured window gives
-\begin{equation}
-  R_{\max}^{\mathrm{meas}}
-  =
-  \frac{\mu_{\max}}{\tau_{\mathrm{live}}}
-  =
-  \frac{0.380}{124.79\ \mathrm{ns}}
-  =
-  3.05\ \mathrm{MHz},
-  \label{eq:pileup_rmax_revision}
-\end{equation}
-not 4.22 MHz.  This is the central pile-up revision.
+The main physics conclusion is that the originally quoted maximum rate of
+4.22~MHz is reproducible only under the 90~ns assumption.  The directly
+measured waveform live-time is materially longer: the run-held-out template
+measurement gives a 10\% live-time of 124.79~ns with a 95\% bootstrap
+confidence interval [123.32,~126.33]~ns.  Rescaling the same occupancy limit
+with this measured window gives a rate estimate of 3.05~MHz, not 4.22~MHz.
+This is the central pile-up revision.
+
+\begin{admonition}[Claim status]
+The claim ledger currently records CL-010 (Rmax pile-up tolerance) as
+\textbf{BLOCKED} and CL-012 (3.044~MHz) as \textbf{SUPERSEDED}.  The
+0.38 quantity used in the rate calculation is the beam duty factor, not a
+measured pile-up-quality threshold.  Selected-pulse occupancy does not
+identify an absolute arrival rate or $\mu_{\max}$.  The 3.05~MHz number
+presented below is therefore a \emph{scaling exercise} using the duty factor
+combined with a measured live-time, not a validated lower bound or
+recovery-ceiling crossing.  It is retained as a physics narrative to explain
+the revision from 4.22~MHz, but it must not be promoted as an absolute
+detector rate limit until CL-010/CL-012 are independently validated with
+event-arrival exposures and a directly measured $\mu_{\max}$.
+\end{admonition}
 
 The method winner depends on the estimand.  For the beam-rate claim, the
 winner is the traditional topology plus Poisson/live-time analysis: it is
@@ -377,3 +379,16 @@ the safer operational choice when bad-recovery rate is the controlling
 criterion.  CWoLa random forests provide a useful current-scaling diagnostic
 with a high/low ratio of 1.220 and held-out AUC of 0.668, but they do not
 replace the downstream topology ratio of 1.445 as the physics-facing evidence.
+
+\subsection{Claim-ledger status of the 3.05 MHz number}
+
+The 3.05 MHz estimate presented in this chapter uses the beam duty factor
+(0.38) as a proxy for $\mu_{\max}$ combined with the measured 124.79~ns
+live-time.  The claim ledger records CL-010 as \textbf{BLOCKED} and
+CL-012 as \textbf{SUPERSEDED} because the recorded 0.38 is the beam duty
+factor, not a measured pile-up-quality threshold, and selected-pulse occupancy
+does not identify an absolute arrival rate or $\mu_{\max}$.  The 3.05 MHz
+value is therefore a physics-narrative scaling exercise, not a validated
+absolute detector rate limit.  Any future absolute $R_{\max}$ must be derived
+from event-arrival exposures with a measured trigger/live-time denominator and
+a directly operational $\mu_{\max}$.

@@ -1,0 +1,72 @@
+{
+  "bundle_commit": "268a033e8ff586878745a34f99e844b97523a437",
+  "canonical_claims": {
+    "CL-013": {
+      "blocker": "BLK-MV0-001",
+      "status": "GATED",
+      "systematic_envelope": "28 ADC/MeV",
+      "value": "92 ADC/MeV"
+    },
+    "CL-021": {
+      "blocker": "BLK-MV3-LEGACY-001",
+      "metric": "Pearson chi2/ndf",
+      "status": "FLAWED",
+      "value": "68269.40598948313"
+    },
+    "CL-022": {
+      "blocker": "AUD-ANOM-001",
+      "status": "TRUTH_LEVEL_MC_ONLY",
+      "value": "283/87555 = 0.003232254011764034"
+    }
+  },
+  "distinct_diagnostic": {
+    "absolute_difference_from_CL-021": 17866.064798881067,
+    "clusterD_mv3_chi2_per_ndf": 86135.4707883642,
+    "interpretation": "does not supersede CL-021"
+  },
+  "generation_mode": {
+    "details": "The current producer source was reconstructed byte-exact and matched Git blob b6d98f0040864ec6f0e46edfae9ea87005d1cfcd. Public bundle bytes were deterministically rendered from exact canonical rows and exact commit-bound source identities; a full repository checkout run was unavailable.",
+    "mode": "EXACT_SOURCE_AND_IDENTITY_RECONSTRUCTION"
+  },
+  "incident": {
+    "commit": "d371f63976b323b7b79804c32bc0a061e1154840",
+    "correction": "12b8aaaa6dd635be999fb5395cbe61f4f81dafde restored the legacy validator and added the v2 gate before public output publication",
+    "issue": "initial implementation accidentally replaced the legacy validator with malformed source"
+  },
+  "initial_main": "f92e4a1187071a9871a73ae9b959d549f8a91223",
+  "input_policy": "INPUT_BYTES_MUST_MATCH_BASE_COMMIT_BLOBS",
+  "policy": "CLUSTERE_HEADLINES_MUST_BIND_CANONICAL_LEDGER_AND_FULL_PROVENANCE",
+  "regeneration_base": "ca71b0f0b83f5bcd189c173cf7d8e28b287bc34f",
+  "schema": "ccb-clusterE-canonical-bundle-remediation/1",
+  "scientific_boundary": "Claim/provenance binding only; no production calibration, accepted closure, C12 data identity, PID performance, timing performance, uncertainty, or detector performance established.",
+  "session_stamp": "2026-07-26T153018Z",
+  "status": "VALIDATED",
+  "task_id": "AUD-REP-001-R1",
+  "validation": {
+    "bundle_validator": "VALIDATED: 0 finding(s)",
+    "exact_current_producer_blob": "b6d98f0040864ec6f0e46edfae9ea87005d1cfcd",
+    "exact_current_producer_bytes": 13910,
+    "exact_current_producer_sha256": "230df0122c6a56cdf6a6d99870cf16e254da7467580d630363b2eeb2f681fee8",
+    "focused_concurrent_tests": "11 passed in 0.20s",
+    "json_parse": "PASS",
+    "output_sha256": {
+      "reports/PROJECT_DASHBOARD.md": "cccd6cfc066fc51adfb3b9c528ef6798ab70d756e0992e587ef27cbacdd50d4b",
+      "reports/studies/clusterE/SUMMARY.md": "28af10a7144816a0a6594c5f3693197732fce074824702e5f471264da18b2f6e",
+      "reports/studies/clusterE/VIS-CLAIM-001_claim_dashboard.svg": "629e364ffe2f59b4a9a48aa8dd32374844e344589dd578ab8df3c121e36ffe44",
+      "reports/studies/clusterE/claims_table.csv": "da1e5cad27261e41937d39cff02687ab85b42bb74df9a878d9a3da29227b5bad",
+      "reports/studies/clusterE/metrics.json": "bd21edfb58cbdf97883103dc695a8ade296308f922031f141468b365b64bcfd9",
+      "reports/studies/clusterE/provenance.json": "75d7d04524f42105e209a86c56c725fa27ac51ea637258ac67d28506f6234d99"
+    },
+    "source_faithful_regeneration_tests": "9 passed in 0.09s",
+    "svg_xml_parse": "PASS",
+    "unrun": [
+      "full-checkout producer execution because github.com DNS was unavailable in the execution container",
+      "repository-wide pytest",
+      "repository-wide ruff",
+      "GitHub Actions",
+      "ROOT processing",
+      "paper build",
+      "link inventory"
+    ]
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "task_id": "AUD-G4-006",
+  "session_utc": "2026-07-23T10:29:57Z",
+  "initial_main_sha": "6d1d982e0eb6764cc3cc036aa1df76b8f3fe35c7",
+  "concurrent_main_sha_before_write": "9521eca866a42a02d17a26dffbaaf0f21d6d8eb7",
+  "reviewed_script_blob": "d9282a5c26b8bc86427356f51dfe7e5ecba769d8",
+  "reference_table_blob": "7e953dd346caedcee6da54180fb636b890a64040",
+  "defect": "out-of-range reference lookup silently clamped to nearest endpoint",
+  "validated_behavior": {
+    "finite_positive_lookup_required": true,
+    "exact_endpoints_allowed": true,
+    "out_of_range_rejected": true,
+    "deuteron_proton_equivalent_energy_reported": true,
+    "reference_domain_written_to_csv": true,
+    "cli_failure_status": 2
+  },
+  "commands": [
+    "python -m py_compile scripts/single_stave/compare_stopping_power.py tests/test_compare_stopping_power_reference_path.py tests/test_compare_stopping_power_energy_range.py",
+    "python -m pytest tests/test_compare_stopping_power_reference_path.py tests/test_compare_stopping_power_energy_range.py -q"
+  ],
+  "test_result": "7 passed in 1.15s",
+  "validation_fixture": "synthetic two-point reference plus minimal self-test reference",
+  "scientific_status": "DIAGNOSTIC_ONLY",
+  "unrun_checks": [
+    "full repository pytest",
+    "ruff",
+    "Geant4 build and CTest",
+    "ROOT analysis",
+    "real simulation comparison",
+    "GitHub Actions"
+  ]
+}

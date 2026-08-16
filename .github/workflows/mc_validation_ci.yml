@@ -3,28 +3,156 @@ name: MC Validation CI
 on:
   push:
     paths:
-      - "src/ccb_mc_validation/**"
+      - "src/**"
+      - "scripts/**"
+      - "tools/**"
       - "tests/**"
-      - "configs/mc_validation/**"
+      - "configs/**"
+      - "geant4/**"
+      - "docs/contracts/**"
+      - "docs/latex/**"
+      - "docs/ATOMIC_RESEARCH_PROTOCOL.md"
+      - "docs/AI_SESSION_PICKUP_GUIDE_20260808.md"
+      - "chatgpt_todo/**"
+      - "paper/figures.yaml"
+      - "constraints/**"
       - "pyproject.toml"
+      - ".gitignore"
+      - ".gitmodules"
+      - ".claude/worktrees/**"
       - ".github/workflows/mc_validation_ci.yml"
-  pull_request:
-    paths:
-      - "src/ccb_mc_validation/**"
-      - "tests/**"
-      - "configs/mc_validation/**"
-      - "pyproject.toml"
-      - ".github/workflows/mc_validation_ci.yml"
+  pull_request: {}
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # The SiPM engine is a public submodule.  Root CI must execute the
+          # exact gitlink commit rather than validating only the superproject
+          # pointer.  actions/checkout defaults submodules to false.
+          submodules: recursive
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
       - name: Install package with dev extras
         run: pip install -e ".[dev]"
+      - name: Validate exact SiPM submodule source and C++ tests
+        id: sipm_core
+        shell: bash
+        run: |
+          # Keep the job fail-closed while preserving the dependency failure
+          # as an artifact.  The final enforcement step authorises only when
+          # this exact pipeline status is zero.
+          set +e
+          {
+            set -euo pipefail
+            python3 geant4/single_stave/sipm/tools/check_conflict_markers.py --self-test
+            python3 geant4/single_stave/sipm/tools/check_conflict_markers.py
+            cmake -S geant4/single_stave/sipm -B /tmp/ccb-sipm-core-build \
+              -DCCB_SIPM_BUILD_TESTS=ON -DCCB_SIPM_BUILD_EXAMPLES=ON
+            cmake --build /tmp/ccb-sipm-core-build --parallel 2
+            ctest --test-dir /tmp/ccb-sipm-core-build --output-on-failure
+          } 2>&1 | tee sipm_core.log
+          echo "status=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+      - name: Lint scientific code (ruff-clean paths)
+        id: lint
+        shell: bash
+        run: |
+          set +e
+          # Lint the curated ruff-clean set. scripts/mv3_stopping_v2.py and
+          # mv3_stopping_v3.py carry PRE-EXISTING style debt (E501/E702 from
+          # dense plotting/report code) that predates this change and is out of
+          # scope to bulk-reformat; they remain in the trigger scope above and
+          # are covered by the unit tests, and will be added here once cleaned.
+          ruff check \
+            scripts/compare_single_stave_mt_reproducibility.py \
+            scripts/compare_single_stave_photon_trees.py \
+            scripts/analyze_single_stave_multiseed_rng.py \
+            scripts/data01_sample_split_staves.py \
+            scripts/generate_all.py \
+            src/ccb_figures/figures/fig20_key_results.py \
+            tools/audit/validate_gitlink_submodule_contract.py \
+            tools/audit/validate_mc_ci_trigger_scope.py \
+            tools/audit/validate_pr_base_freshness.py \
+            tools/audit/validate_geant4_external_overlay.py \
+            tools/audit/geant4_build_binding_receipt.py \
+            tools/audit/geant4_toolchain_attestation.py \
+            tools/audit/geant4_tool_probe_binding.py \
+            tools/audit/geant4_runtime_dependency_attestation.py \
+            tools/audit/geant4_runtime_codepage_attestation.py \
+            tools/audit/geant4_elf_link_attestation.py \
+            tools/audit/geant4_runtime_link_coobservation.py \
+            tools/audit/geant4_loader_secure_state_attestation.py \
+            tools/audit/geant4_loader_initial_environment_attestation.py \
+            tools/audit/geant4_loader_argv_attestation.py \
+            tools/audit/geant4_loader_cwd_attestation.py \
+            tools/audit/geant4_loader_exec_boundary_cwd_attestation.py \
+            tools/audit/geant4_loader_exec_boundary_fs_attestation.py \
+            tools/audit/repository_content_transfer.py \
+            tests/test_compare_single_stave_mt_reproducibility.py \
+            tests/test_compare_single_stave_photon_trees.py \
+            tests/test_analyze_single_stave_multiseed_rng.py \
+            tests/test_data01_composite_key_and_seeding.py \
+            tests/test_mv3_stopping_net_amplitude.py \
+            tests/test_fig20_no_quantitative_literals.py \
+            tests/test_gitlink_submodule_contract.py \
+            tests/test_mc_ci_trigger_scope.py \
+            tests/test_pr_base_freshness.py \
+            tests/test_scattering_source_phi_measure.py \
+            tests/test_geant4_external_overlay.py \
+            tests/test_geant4_build_binding_receipt.py \
+            tests/test_geant4_toolchain_attestation.py \
+            tests/test_geant4_tool_probe_binding.py \
+            tests/test_geant4_runtime_dependency_attestation.py \
+            tests/test_geant4_runtime_codepage_attestation.py \
+            tests/test_geant4_elf_link_attestation.py \
+            tests/test_geant4_runtime_link_coobservation.py \
+            tests/test_geant4_loader_secure_state_attestation.py \
+            tests/test_geant4_loader_initial_environment_attestation.py \
+            tests/test_geant4_loader_argv_attestation.py \
+            tests/test_geant4_loader_cwd_attestation.py \
+            tests/test_geant4_loader_exec_boundary_cwd_attestation.py \
+            tests/test_geant4_loader_exec_boundary_image_transition.py \
+            tests/test_geant4_loader_exec_boundary_fs_attestation.py \
+            tests/test_repository_content_transfer.py \
+            2>&1 | tee ruff.log
+          echo "status=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+
+      - name: Scientific close-intent / merge-close gates (#1218)
+        run: |
+          python tools/gov/run_close_intent_gates.py --skip-pr-text
+          python tools/gov/check_merge_close_keywords.py --text "Refs #1057. Does not close #1057."
       - name: Run unit tests
-        run: pytest tests/ -q --ignore=tests/integration
+        id: pytest
+        shell: bash
+        run: |
+          set +e
+          pytest tests/ -q --ignore=tests/integration 2>&1 | tee pytest.log
+          echo "status=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+      - name: Upload validation diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: validation-logs-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            sipm_core.log
+            ruff.log
+            pytest.log
+          if-no-files-found: error
+          retention-days: 14
+      - name: Enforce validation results
+        if: always()
+        shell: bash
+        env:
+          SIPM_CORE_STATUS: ${{ steps.sipm_core.outputs.status }}
+          RUFF_STATUS: ${{ steps.lint.outputs.status }}
+          PYTEST_STATUS: ${{ steps.pytest.outputs.status }}
+        run: |
+          echo "SiPM core status: ${SIPM_CORE_STATUS:-missing}"
+          echo "ruff status: ${RUFF_STATUS:-missing}"
+          echo "pytest status: ${PYTEST_STATUS:-missing}"
+          if [[ "${SIPM_CORE_STATUS:-1}" != "0" || "${RUFF_STATUS:-1}" != "0" || "${PYTEST_STATUS:-1}" != "0" ]]; then
+            exit 1
+          fi

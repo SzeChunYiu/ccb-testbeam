@@ -5,13 +5,43 @@ truth for where it lives and what it contains.
 
 ## Canonical locations
 
-| Copy | Path | Notes |
+| Copy | Path | Status |
 |---|---|---|
 | Local (laptop `billy`) | `/home/billy/Desktop/test_beam/data/` | working copy; gitignored |
-| LUNARC (canonical) | `/projects/hep/fs9/shared/nnbar/billy/ccb-testbeam/data/` | **to be populated** — primary archive for the fleet |
+| LUNARC (canonical archive) | `/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam-data/` | **NOT YET POPULATED** — intended primary archive for the fleet |
 
-> TODO: rsync `data/raw/` to the LUNARC path above and record checksums so every worker
-> (laptop, LUNARC, Mac) pulls byte-identical inputs.
+> **Status (DATA-008, 2026-07-23):** the canonical LUNARC archive is not yet
+> populated. The historical path on the fs9 tier does not exist either. Do not
+> invent data here: until the store is rsynced in, every worker must derive
+> inputs from its local working copy and record the source path + sha256 in the
+> run manifest. The intended archive layout (to be created on population):
+
+```
+/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam-data/
+├── raw/                       # original archives (immutable); sha256 below
+│   ├── CCB Data.zip
+│   ├── CCB Data/{sorted-a.zip, sorted-b.zip, root.zip}
+│   └── root.zip.tar
+└── extracted/                 # 6.1 GB (see "Extracted layout" below)
+    ├── root/root/             # hrda_run_NNNN.root / hrdb_run_NNNN.root
+    ├── sorted-a/
+    └── sorted-b/
+```
+
+### Hash-verification procedure
+
+When the archive is populated, every worker MUST verify byte-identical inputs
+using the sha256 manifest recorded by Study S00 in
+`reports/S00_data_integrity_pipeline_reproduction/input_sha256.csv` (raw-archive
+digests listed under "Integrity" below). Verify with:
+
+```bash
+sha256sum -c reports/S00_data_integrity_pipeline_reproduction/input_sha256.csv
+```
+
+A mismatch is a hard stop: do not run downstream studies until the archive and
+the manifest agree. The PulseTable itself is versioned via the
+`schema_version` field mandated by `docs/contracts/PULSE_TABLE_CONTRACT.md`.
 
 ## Archive contents
 

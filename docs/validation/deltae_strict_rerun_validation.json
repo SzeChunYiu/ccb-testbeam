@@ -1,0 +1,111 @@
+{
+  "confirmed_defects": [
+    "The former main entry point uses hard-coded input and output paths.",
+    "The input is parsed by path without recording or requiring an exact SHA-256 snapshot.",
+    "JSON, CSV, and PNG outputs are written directly without a transactional bundle publication contract.",
+    "The former output omits repository commit, producer byte identities, command, and runtime versions.",
+    "The former entry point cannot safely implement the required immutable A-002 rerun acceptance contract."
+  ],
+  "implemented_contract": [
+    "Require an expected exact input SHA-256 and verify the same path before and after processing.",
+    "Require a clean tracked checkout at an explicit expected repository commit.",
+    "Retain explicit amplitude column, convention, and conditional polarity semantics.",
+    "Validate one unique output row per source_file_id/run/evt and finite numeric ADC outputs.",
+    "Require event-row and stopping-distribution totals to equal the physical-event count.",
+    "Repeat exact provenance in the event CSV and expose it visibly and in metadata in the SVG.",
+    "Stage the complete JSON/CSV/SVG bundle in a sibling directory and restore the previous bundle after an injected in-process publication failure.",
+    "Reject output containment aliases and require explicit overwrite of an existing bundle."
+  ],
+  "initial_remote_main": "86c6e086d3716ab3ac10481fae92f1a316adf2d3",
+  "policy": "DELTAE_BRIDGE_CONTENT_ADDRESSED_TRANSACTIONAL_RERUN",
+  "repository_evidence": {
+    "evidence_renderer": {
+      "git_blob": "b88ecc889b47c1f86d538896c2599ea9b4c96c95",
+      "path": "tools/audit/render_deltae_strict_rerun_evidence.py"
+    },
+    "existing_bridge": {
+      "git_blob": "7f50ce667a6cde07e94717d0187831da4d8459ac",
+      "path": "scripts/single_stave/deltaE_E_data_bridge.py"
+    },
+    "existing_bridge_tests": {
+      "git_blob": "3b59a793f5d67e6a0d3c7117c42ec41ad7b84a90",
+      "path": "tests/test_deltae_data_bridge_composite_key.py"
+    },
+    "rerun_instructions": {
+      "git_blob": "f765f72df25eb3259edc9f6ae1cafbf292f22858",
+      "path": "scripts/single_stave/DELTAE_STRICT_RERUN.md"
+    },
+    "strict_runner": {
+      "git_blob": "76f7ffda2c2af92b400ca61f2f12c2b34fff7dba",
+      "path": "scripts/single_stave/deltaE_E_data_bridge_strict.py",
+      "sha256": "fa63a7a13ec1d0ead7774d5d1bb0aecc4ec8ecbe2a4e823731436f38c53ad4ef"
+    },
+    "strict_tests": {
+      "git_blob": "796ccc908d54246881b3774fba5a7853e8201b03",
+      "path": "tests/test_deltae_data_bridge_strict.py"
+    }
+  },
+  "runner_version": "1.0.0",
+  "scientific_boundary": {
+    "amplitude_convention_authorized": false,
+    "deltae_pid_claim_accepted": false,
+    "exact_a002_input_available": false,
+    "production_rerun_performed": false,
+    "pulse_polarity_authorized": false,
+    "reason": "Exact A-002 pulse-table and supporting convention/polarity evidence bytes were unavailable; BLK-AMP-001 remains open.",
+    "stopping_distribution_accepted": false
+  },
+  "session_stamp_utc": "2026-07-25T042815Z",
+  "status": "PARTIAL",
+  "synthetic_bundle": {
+    "classification": "SYNTHETIC_SOFTWARE_AND_PROVENANCE_VALIDATION_NOT_DETECTOR_DATA",
+    "environment": {
+      "matplotlib": "3.10.8",
+      "numpy": "2.3.5",
+      "pandas": "2.2.3",
+      "python": "3.13.5"
+    },
+    "event_csv": {
+      "bytes": 1200,
+      "sha256": "bc19dee4cd7d7d6bffbe78bf8084785e78b444e73095f702e0a353bcbc4da439"
+    },
+    "event_rows": 2,
+    "input_bytes": 109,
+    "input_sha256": "84deb3ae1b0a57a7e3026cb8eb6f34492dea4db1202789a110e9e49fe5f48ae7",
+    "plot_svg": {
+      "bytes": 70509,
+      "sha256": "d67859563dcf1bac1cabc40bd3cb6dd1f4b5763504f6a38ceb41daf0f24f4c1c"
+    },
+    "result_json": {
+      "bytes": 2557,
+      "sha256": "dc8fdeb59ddfe6979f060b37650444b45b4ae74a8d38e832f2708e880e7babad"
+    },
+    "stopping_distribution_total": 2,
+    "unique_composite_keys": 2
+  },
+  "task_id": "AUD-DELTAE-001",
+  "validation": {
+    "checks": {
+      "json_parse": "PASS",
+      "max_python_line_length": 97,
+      "py_compile": "PASS",
+      "svg_xml_parse": "PASS"
+    },
+    "commands": [
+      "python -m py_compile scripts/single_stave/deltaE_E_data_bridge_strict.py tests/test_deltae_data_bridge_strict.py",
+      "PYTHONPATH=. pytest -q tests/test_deltae_data_bridge_strict.py"
+    ],
+    "pytest_result": "9 passed in 1.79s",
+    "regression_coverage": [
+      "valid content-addressed reconstructable bundle",
+      "input SHA-256 mismatch",
+      "repository commit mismatch",
+      "input/output containment alias",
+      "implicit overwrite preservation",
+      "injected transactional publication failure and rollback",
+      "input replacement during processing",
+      "duplicate physical composite keys",
+      "nonfinite output ADC values"
+    ]
+  }
+}

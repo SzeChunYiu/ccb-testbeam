@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0.0",
+  "issue_number": 900,
+  "atom_id": "OLD-ATOM",
+  "disposition": "SUPERSEDED",
+  "basis": "SUPERSEDED",
+  "unresolved_leaves": [],
+  "successors": [
+    {
+      "issue_number": 901,
+      "inherits_blockers": true,
+      "inherits_claim_state": true
+    }
+  ],
+  "pr_text": "Refs #900. Superseded by #901.",
+  "emit_complete": false
+}

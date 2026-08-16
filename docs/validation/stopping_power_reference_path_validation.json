@@ -1,0 +1,44 @@
+{
+  "schema": "ccb-stopping-power-reference-path-audit/1",
+  "task_id": "AUD-G4-004",
+  "session_utc": "2026-07-23T10:04:54Z",
+  "initial_main_sha": "5a4bdfc3f0099f2b6e8c3891b5a2a05f57ecf770",
+  "inspected": {
+    "script_path": "scripts/single_stave/compare_stopping_power.py",
+    "script_git_blob_sha": "2212b4faf330adb40adffb6dc5334698443d8aa3",
+    "reference_path": "data/reference/stopping_power/pstar_polystyrene.csv",
+    "reference_git_blob_sha": "7e953dd346caedcee6da54180fb636b890a64040"
+  },
+  "finding": {
+    "legacy_default_expression": "HERE.parents[2] / data/reference/stopping_power/pstar_polystyrene.csv",
+    "correct_repository_root_expression": "HERE.parents[1]",
+    "inline_fallback_masked_missing_committed_reference": true,
+    "legacy_self_test_exit_code": 0
+  },
+  "validated_change": {
+    "default_reference_is_repository_relative": true,
+    "missing_reference_fails_closed": true,
+    "self_test_prints_reference_sha256": true,
+    "inline_reference_fallback_removed": true,
+    "scientific_status": "DIAGNOSTIC_ONLY"
+  },
+  "validation": {
+    "commands": [
+      "python -m py_compile scripts/single_stave/compare_stopping_power.py tests/test_compare_stopping_power_reference_path.py",
+      "python -m pytest tests/test_compare_stopping_power_reference_path.py -q"
+    ],
+    "pytest": {
+      "passed": 3,
+      "failed": 0,
+      "duration_seconds": 0.55
+    },
+    "full_committed_reference_executed_locally": false,
+    "local_reference_fixture": "minimal table containing the five PSTAR values exercised by self_test"
+  },
+  "scientific_boundary": {
+    "geant4_run": false,
+    "root_processed": false,
+    "stopping_power_closure_validated": false,
+    "deuteron_reference_validated": false
+  }
+}

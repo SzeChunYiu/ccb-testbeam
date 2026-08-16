@@ -1,0 +1,105 @@
+{
+  "auditor": "audit_mv4_legacy_claim_rows.py",
+  "claim_ledger": {
+    "bytes": 21486,
+    "path": "docs/claim_ledger.csv",
+    "sha256": "e7e560a66df43a9cacdf5041361aaffa0995927144adae3701b5c60e0433c26b",
+    "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+  },
+  "claim_states": {
+    "CL-002": {
+      "current_value": "",
+      "status": "BLOCKED"
+    },
+    "CL-003": {
+      "current_value": "",
+      "status": "BLOCKED"
+    },
+    "CL-004": {
+      "current_value": "",
+      "status": "BLOCKED"
+    },
+    "CL-005": {
+      "current_value": "",
+      "status": "BLOCKED"
+    },
+    "CL-006": {
+      "current_value": "",
+      "status": "BLOCKED"
+    },
+    "CL-007": {
+      "current_value": "-1.054403396247793",
+      "status": "GATED"
+    },
+    "CL-008": {
+      "current_value": "2.680528799917713",
+      "status": "GATED"
+    },
+    "CL-009": {
+      "current_value": "REVIEW",
+      "status": "REVIEW"
+    }
+  },
+  "current_contract": {
+    "bytes": 4441,
+    "path": "scripts/MV4_TIMING_README.md",
+    "sha256": "55608d6a3f72bf65877a2be81acb66db20ca4df9517b12e20b22dec57e01f4e1",
+    "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+  },
+  "issues": [],
+  "legacy_report": {
+    "bytes": 2342,
+    "path": "reports/mv4_timing_1782678162/REPORT.md",
+    "sha256": "004e1269ede4f60d43eaf1ef3d0087e4ebc9168a4ff09df2a7ae5199fd081bec",
+    "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+  },
+  "legacy_summary": {
+    "bytes": 1204,
+    "path": "reports/mv4_timing_1782678162/mv4_summary.json",
+    "sha256": "29ea729663a29288af686a59a63ddd2bd4f22a6001e2591cb7a4994066173ea9",
+    "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+  },
+  "n_issues": 0,
+  "policy": "LEGACY_MV4_TIMING_REQUIRES_STRICT_INPUTS_AND_SOURCE_BOUND_CLAIMS",
+  "row_widths": {
+    "CL-002": 43,
+    "CL-003": 43,
+    "CL-004": 43,
+    "CL-005": 43,
+    "CL-006": 43,
+    "CL-007": 43,
+    "CL-008": 43,
+    "CL-009": 43
+  },
+  "source_absence_confirmed": {
+    "CL-002": true,
+    "CL-003": true,
+    "CL-004": true,
+    "CL-005": true,
+    "CL-006": true
+  },
+  "source_facts": {
+    "assumed_data_unc_ns": 0.1,
+    "corrected_bootstrap_se_ns": 0.010813166729502352,
+    "corrected_pull": 2.680528799917713,
+    "corrected_sigma68_ns": 1.7696154242198858,
+    "gain_adc_per_mev": 110.0,
+    "n_events_scanned": 241487,
+    "n_tracks": 80000,
+    "raw_bootstrap_se_ns": 0.006755405549476786,
+    "raw_pull": -1.054403396247793,
+    "raw_sigma68_ns": 1.744319343085384
+  },
+  "status": "VALIDATED",
+  "target_claim_ids": [
+    "CL-002",
+    "CL-003",
+    "CL-004",
+    "CL-005",
+    "CL-006",
+    "CL-007",
+    "CL-008",
+    "CL-009"
+  ],
+  "version": "1.1.0"
+}

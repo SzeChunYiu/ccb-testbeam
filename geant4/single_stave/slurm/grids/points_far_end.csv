@@ -1,0 +1,23 @@
+# knob: far_end
+# channel: cli  target: --far-end  unit: mode
+# rationale: Far-end boundary; absorb|open|mirror|instrumented (near/far split).
+# base_cli: --particle proton --energy 100 --hit-x 0 --hit-y 0 --theta 0 --phi 0
+# default_nevents: 60
+# paired_seed_design: AF-036 / #984 common-random-number
+# seed_replicates: 1000,1001,1002
+# note: same replicate_seed is reused at every knob value (CRN pairing)
+# columns: label,seed,nevents,cli_args,env_vars
+# explicit triple encoded in label as knob=value__rep=<replicate_seed>
+label,seed,nevents,cli_args,env_vars
+far_end=absorb__rep=1000,1000,60,--far-end absorb,
+far_end=open__rep=1000,1000,60,--far-end open,
+far_end=mirror__rep=1000,1000,60,--far-end mirror,
+far_end=instrumented__rep=1000,1000,60,--far-end instrumented,
+far_end=absorb__rep=1001,1001,60,--far-end absorb,
+far_end=open__rep=1001,1001,60,--far-end open,
+far_end=mirror__rep=1001,1001,60,--far-end mirror,
+far_end=instrumented__rep=1001,1001,60,--far-end instrumented,
+far_end=absorb__rep=1002,1002,60,--far-end absorb,
+far_end=open__rep=1002,1002,60,--far-end open,
+far_end=mirror__rep=1002,1002,60,--far-end mirror,
+far_end=instrumented__rep=1002,1002,60,--far-end instrumented,

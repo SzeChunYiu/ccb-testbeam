@@ -1,0 +1,174 @@
+{
+  "canonical_values": {
+    "CL-013": {
+      "status": "GATED",
+      "systematic_envelope": 28.0,
+      "truth_type": "data_mc_calibration_proxy",
+      "unit": "ADC/MeV",
+      "value": 92.0
+    },
+    "CL-021": {
+      "chi2_per_ndf": 68269.40598948313,
+      "status": "FLAWED",
+      "truth_type": "legacy_data_mc_profile_diagnostic"
+    },
+    "CL-022": {
+      "denominator": 87555,
+      "numerator": 283,
+      "rate": 0.003232254011764034,
+      "status": "TRUTH_LEVEL_MC_ONLY",
+      "truth_type": "mc_truth_only"
+    }
+  },
+  "distinct_clusterD_outputs": {
+    "interpretation": "These are distinct Cluster D rerun/toy outputs and do not silently supersede CL-013, CL-021, or CL-022.",
+    "mv0_rerun_gain_adc_per_mev": 110.0,
+    "mv0_rerun_ks": 0.10773131550396098,
+    "mv3_rerun_chi2_per_ndf": 86135.4707883642,
+    "mv6_toy_early_peak_c12": "25/38"
+  },
+  "execution_mode": "EXACT_GITHUB_BLOB_REVIEW_PLUS_SYNTHETIC_FAIL_CLOSED_TESTS",
+  "finding_count": 13,
+  "findings": [
+    {
+      "artifact": "reports/PROJECT_DASHBOARD.md",
+      "code": "DASHBOARD_CL013_MISMATCH",
+      "evidence": "CL-013 is shown as 110 ADC/MeV instead of canonical 92 ADC/MeV with 28 ADC/MeV heuristic envelope."
+    },
+    {
+      "artifact": "reports/studies/clusterE/SUMMARY.md",
+      "code": "SUMMARY_CL013_MISMATCH",
+      "evidence": "Canonical table and figure caption use 110 ±30% for CL-013."
+    },
+    {
+      "artifact": "reports/studies/clusterE/claims_table.csv",
+      "code": "CLAIMS_TABLE_CL013_MISMATCH",
+      "evidence": "MV0 row headline is 110 ADC/MeV (±30%)."
+    },
+    {
+      "artifact": "reports/PROJECT_DASHBOARD.md",
+      "code": "DASHBOARD_CL021_CONFLATION",
+      "evidence": "CL-021 is cited with approximately 8.6e4 from the Cluster D rerun, while canonical CL-021 is 68269.40598948313."
+    },
+    {
+      "artifact": "reports/studies/clusterE/SUMMARY.md",
+      "code": "SUMMARY_CL021_CONFLATION",
+      "evidence": "Canonical claim table uses approximately 8.6e4 and TENSION rather than exact CL-021 and FLAWED."
+    },
+    {
+      "artifact": "reports/studies/clusterE/claims_table.csv",
+      "code": "CLAIMS_TABLE_CL021_MISMATCH",
+      "evidence": "Row uses approximately 6.8e4 and TENSION, erasing exact value/status."
+    },
+    {
+      "artifact": "reports/PROJECT_DASHBOARD.md",
+      "code": "DASHBOARD_CL022_TOY_SUBSTITUTION",
+      "evidence": "25/38 toy early-peak C12 is substituted for canonical 283/87555 early-peak morphology rate."
+    },
+    {
+      "artifact": "reports/studies/clusterE/SUMMARY.md",
+      "code": "SUMMARY_CL022_TOY_SUBSTITUTION",
+      "evidence": "Canonical table uses 25/38 and BLOCKED instead of CL-022 TRUTH_LEVEL_MC_ONLY."
+    },
+    {
+      "artifact": "reports/studies/clusterE/claims_table.csv",
+      "code": "CLAIMS_TABLE_CL022_MISMATCH",
+      "evidence": "Anomaly row uses 25/38 and status BLOCKED."
+    },
+    {
+      "artifact": "reports/studies/clusterE/provenance.json",
+      "code": "PROVENANCE_BASE_COMMIT_UNBOUND",
+      "evidence": "base_commit is literal (worktree HEAD), not a 40-hex SHA."
+    },
+    {
+      "artifact": "reports/studies/clusterE/provenance.json",
+      "code": "PROVENANCE_DIGESTS_TRUNCATED",
+      "evidence": "Input digests are only 12 hex characters despite being labelled SHA-256."
+    },
+    {
+      "artifact": "reports/studies/clusterE/provenance.json",
+      "code": "PROVENANCE_INPUTS_OMITTED",
+      "evidence": "Opticks summary and Cluster D MV3 source used by headlines are not content-bound."
+    },
+    {
+      "artifact": "scripts/clusterE/clusterE_synthesis.py",
+      "code": "GENERATOR_HARDCODES_STALE_CANONICAL_VALUES",
+      "evidence": "The generator hardcodes 110, 25/38, 86135 and a 12-character digest rather than deriving canonical claim fields and full hashes."
+    }
+  ],
+  "implementation_files": {
+    "tests/test_validate_clusterE_canonical_binding.py": {
+      "bytes": 7550,
+      "git_blob": "9f675b3bf48e869ecda674bb944f7d4ed349d571",
+      "sha256": "db42e3fed31cd3e9d34a87fca1a50642e5ae0bffa2f0fb7a7f45158e570a2af7"
+    },
+    "tools/audit/render_clusterE_canonical_binding_evidence.py": {
+      "git_blob": "5409f70a0a4b6f0121cf92ff3e1419ed4bc89ca5",
+      "validation": "py_compile and SVG XML parse passed for functionally equivalent local renderer; exact committed blob line length reviewed"
+    },
+    "tools/audit/validate_clusterE_canonical_binding.py": {
+      "bytes": 14891,
+      "git_blob": "9b282954a162f12f819049585d40f7b8e5830274",
+      "sha256": "786ec2c1e72e2c98034d9d5659765757e7d3e2f1de3351f302a1174ca9227d35"
+    }
+  },
+  "initial_remote_main": "8ceda40d2f71d53a93bb02568c8e90509c973e0c",
+  "policy": "CLUSTERE_HEADLINES_MUST_BIND_CANONICAL_LEDGER_AND_FULL_PROVENANCE",
+  "repository_inputs": {
+    "docs/claim_ledger.csv": {
+      "git_blob": "254dc5b64945260193d6b1bd4146bd6400ad28cf"
+    },
+    "reports/PROJECT_DASHBOARD.md": {
+      "git_blob": "49f35e9593e5896bea28ffaaf13f46b7863ed3b9"
+    },
+    "reports/studies/clusterD/SUMMARY.md": {
+      "git_blob": "37c0904364080aa7fe515bd9c693688d7d27582d"
+    },
+    "reports/studies/clusterD/mv_runs/mv0/calibration.json": {
+      "git_blob": "6400ccbf611abf335a942623368d254ffa95e3a7"
+    },
+    "reports/studies/clusterD/mv_runs/mv3/mv3_summary.json": {
+      "git_blob": "3438c0eef6e17d1235d4e28209454d6e98923457"
+    },
+    "reports/studies/clusterE/SUMMARY.md": {
+      "git_blob": "31f800d38f68de26faceffdd8ed3c2f9dcf39606"
+    },
+    "reports/studies/clusterE/claims_table.csv": {
+      "git_blob": "7170c47326f1c0b8d8696a7daf2625438fd41db6"
+    },
+    "reports/studies/clusterE/metrics.json": {
+      "git_blob": "bb25e65e4a0e5668d38548b634b3f50d10df7ff7"
+    },
+    "reports/studies/clusterE/provenance.json": {
+      "git_blob": "70c9cf5576e7600a99fcbf406884af8ae969e8a9"
+    },
+    "scripts/clusterE/clusterE_synthesis.py": {
+      "git_blob": "55d56db3a84354f6f5cae5d5d8873bf6612b359f"
+    }
+  },
+  "required_remediation": [
+    "Derive CL-013, CL-021 and CL-022 headline values/statuses from exact ledger fields, never hardcoded literals.",
+    "Show Cluster D rerun/toy outputs as distinct diagnostics that do not supersede canonical rows.",
+    "Record a full 40-hex base commit and full 64-hex SHA-256 for every actually used input, including Opticks and Cluster D MV3.",
+    "Regenerate every text, CSV, JSON and visual artifact together, then run the validator and link checks."
+  ],
+  "schema": "ccb-clusterE-canonical-binding-validation/1",
+  "scientific_boundary": "Software/documentation provenance audit only. No detector performance, calibration, data/MC transfer, anomaly identity, or accepted stopping-profile closure is established.",
+  "session_stamp": "2026-07-25T190251Z",
+  "status": "FLAWED",
+  "validation": {
+    "committed_source_identity": "Git blob identities recorded after direct-main publication.",
+    "current_repository_end_to_end_execution": "NOT_RUN_COMPLETE_CHECKOUT_UNAVAILABLE",
+    "py_compile": "PASS",
+    "pytest": "6 passed in 0.05s",
+    "tests_cover": [
+      "current-like fail-closed",
+      "corrected contract",
+      "truncated digest",
+      "ledger width",
+      "invalid UTF-8",
+      "atomic JSON publication"
+    ]
+  },
+  "validator_version": "1.0.0"
+}

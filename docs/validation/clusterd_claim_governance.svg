@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+<rect width="1200" height="720" fill="white"/>
+<rect x="30" y="25" width="1140" height="80" rx="12" fill="#eef3f8"/>
+<text x="55" y="62" font-family="sans-serif" font-size="28" font-weight="bold">Cluster D scientific-claim governance</text>
+<text x="55" y="91" font-family="sans-serif" font-size="16" font-weight="normal">status=VALIDATED  findings=0  main 5367ec7bbf5f → fd3212db157e</text>
+<text x="45" y="145" font-family="sans-serif" font-size="17" font-weight="bold">Area</text>
+<text x="180" y="145" font-family="sans-serif" font-size="17" font-weight="bold">Merged wording</text>
+<text x="465" y="145" font-family="sans-serif" font-size="17" font-weight="bold">Tracked evidence</text>
+<text x="940" y="145" font-family="sans-serif" font-size="17" font-weight="bold">Corrected state</text>
+<rect x="30" y="175" width="1140" height="92" rx="8" fill="#f8fafc"/>
+<text x="45" y="210" font-family="sans-serif" font-size="20" font-weight="bold">MV0</text>
+<text x="180" y="210" font-family="sans-serif" font-size="17" font-weight="normal">PASS / production</text>
+<text x="465" y="210" font-family="sans-serif" font-size="16" font-weight="normal">KS=0.1077; chi2/ndf=2928; stave mismatch</text>
+<text x="940" y="210" font-family="sans-serif" font-size="18" font-weight="bold">GATED proxy</text>
+<rect x="30" y="277" width="1140" height="92" rx="8" fill="#eef3f8"/>
+<text x="45" y="312" font-family="sans-serif" font-size="20" font-weight="bold">MV5</text>
+<text x="180" y="312" font-family="sans-serif" font-size="17" font-weight="normal">Rmax=3.04 MHz</text>
+<text x="465" y="312" font-family="sans-serif" font-size="16" font-weight="normal">duty-factor product; recovery ceiling null</text>
+<text x="940" y="312" font-family="sans-serif" font-size="18" font-weight="bold">BLOCKED</text>
+<rect x="30" y="379" width="1140" height="92" rx="8" fill="#f8fafc"/>
+<text x="45" y="414" font-family="sans-serif" font-size="20" font-weight="bold">MV6</text>
+<text x="180" y="414" font-family="sans-serif" font-size="17" font-weight="normal">data species identified</text>
+<text x="465" y="414" font-family="sans-serif" font-size="16" font-weight="normal">25/38 truth-MC; cluster purity 46.4%</text>
+<text x="940" y="414" font-family="sans-serif" font-size="18" font-weight="bold">TRUTH MC ONLY</text>
+<rect x="30" y="481" width="1140" height="92" rx="8" fill="#eef3f8"/>
+<text x="45" y="516" font-family="sans-serif" font-size="20" font-weight="bold">VIS-MC</text>
+<text x="180" y="516" font-family="sans-serif" font-size="17" font-weight="normal">proves simulation</text>
+<text x="465" y="516" font-family="sans-serif" font-size="16" font-weight="normal">internal/toy closure and embedded PSTAR table</text>
+<text x="940" y="516" font-family="sans-serif" font-size="18" font-weight="bold">DIAGNOSTIC</text>
+<rect x="30" y="600" width="1140" height="82" rx="10" fill="#fff5e6"/>
+<text x="50" y="632" font-family="sans-serif" font-size="18" font-weight="bold">Boundary</text>
+<text x="150" y="632" font-family="sans-serif" font-size="17" font-weight="normal">Documentation and source-binding validation; no raw data or simulation rerun.</text>
+<text x="50" y="660" font-family="sans-serif" font-size="18" font-weight="bold">Policy</text>
+<text x="150" y="660" font-family="sans-serif" font-size="15" font-weight="normal">CLUSTERD_PUBLIC_STATUS_MUST_NOT_OVERRIDE_CANONICAL_CLAIM_GATES</text>
+<metadata>renderer=render_clusterd_claim_governance_evidence.py;version=1.0.0</metadata>
+</svg>

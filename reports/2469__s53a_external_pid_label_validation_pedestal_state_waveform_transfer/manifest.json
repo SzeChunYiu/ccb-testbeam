@@ -1,0 +1,66 @@
+{
+  "ticket_id": "2469",
+  "generated_at_unix": 1786894412.6938293,
+  "artifacts": [
+    {
+      "path": "reports/2469__s53a_external_pid_label_validation_pedestal_state_waveform_transfer/REPORT.md",
+      "sha256": "0f2c1d5ba7cdea6454101521e9f8f4d29a52892b853f8d08b70e61a5c6485a84",
+      "bytes": 8976
+    },
+    {
+      "path": "reports/2469__s53a_external_pid_label_validation_pedestal_state_waveform_transfer/benchmark_sample_meta.csv",
+      "sha256": "43bd31071502a1a6a36c5e5e204a9bae7bb1e7a3b06e483128a4794cc83c9ed2",
+      "bytes": 4428578
+    },
+    {
+      "path": "reports/2469__s53a_external_pid_label_validation_pedestal_state_waveform_transfer/feature_families.csv",
+      "sha256": "2d9407638c9cbf98002846025d8725ecb2ef72055abfaa6f829feda81a96c6ad",
+      "bytes": 618
+    },
+    {
+      "path": "reports/2469__s53a_external_pid_label_validation_pedestal_state_waveform_transfer/heldout_per_run_metrics.csv",
+      "sha256": "ae444645680ab9099ab4efb77a466477cd7de33d319d6429b27b415267d9282a",
+      "bytes": 3964
+    },
+    {
+      "path": "reports/2469__s53a_external_pid_label_validation_pedestal_state_waveform_transfer/heldout_predictions.csv.gz",
+      "sha256": "ba65fe9c70313b6b26a566947ed3b77b0a9886ac5e8a6e8de214dae970969fb3",
+      "bytes": 2534057
+    },
+    {
+      "path": "reports/2469__s53a_external_pid_label_validation_pedestal_state_waveform_transfer/input_sha256.csv",
+      "sha256": "a637520f923e4b88626ba6da9190d3b2f17bd43d49553bc9b2b63995626d188f",
+      "bytes": 4302
+    },
+    {
+      "path": "reports/2469__s53a_external_pid_label_validation_pedestal_state_waveform_transfer/method_rmse_ci.png",
+      "sha256": "d249deffe199dbb05ce53c324d2eb18ddfa34fc8517ba8d0399938fe341e0c56",
+      "bytes": 43181
+    },
+    {
+      "path": "reports/2469__s53a_external_pid_label_validation_pedestal_state_waveform_transfer/method_summary.csv",
+      "sha256": "300079d54b43cfcbc03642ab229c96da600198ef2541259bf0c43b8d7661e02d",
+      "bytes": 1412
+    },
+    {
+      "path": "reports/2469__s53a_external_pid_label_validation_pedestal_state_waveform_transfer/reproduction_counts_by_run.csv",
+      "sha256": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+      "bytes": 1896
+    },
+    {
+      "path": "reports/2469__s53a_external_pid_label_validation_pedestal_state_waveform_transfer/reproduction_match_table.csv",
+      "sha256": "30c27e630bc2f37a7e26cf4f3fac0ad2db556913c9a3725097ba16731535f2cf",
+      "bytes": 135
+    },
+    {
+      "path": "reports/2469__s53a_external_pid_label_validation_pedestal_state_waveform_transfer/result.json",
+      "sha256": "7107e08a23abf086e555e8a662884a2683c60bd4e6bb28893a938c8ae2189ce1",
+      "bytes": 4808
+    },
+    {
+      "path": "reports/2469__s53a_external_pid_label_validation_pedestal_state_waveform_transfer/stratum_summary.csv",
+      "sha256": "174623276f69f5ddd5869957148e46263be83dd67e1e164f1824aedf4e041b2b",
+      "bytes": 1539
+    }
+  ]
+}

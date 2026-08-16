@@ -1,0 +1,137 @@
+{
+  "args": {
+    "estimand": "both",
+    "grid_dir": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/results/1303_grid_regen_v2",
+    "output": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/reports/paper_1303_optical_campaign_20260815T2209Z/a09",
+    "seed": 20260812
+  },
+  "command": [
+    "scripts/single_stave/paper_a09_heldout_edep_reconstruction.py",
+    "--grid-dir",
+    "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/results/1303_grid_regen_v2",
+    "--output",
+    "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/reports/paper_1303_optical_campaign_20260815T2209Z/a09",
+    "--estimand",
+    "both"
+  ],
+  "inputs": [
+    {
+      "bytes": 231501138,
+      "git_commit": "533d58e8d2f826ab2255f519adb9b61b34f11c84",
+      "kinetic_energy_MeV": 110,
+      "meta_path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/results/1303_grid_regen_v2/stave_deuteron_110MeV_x0_y0_th0_ph0_s1.root.meta.json",
+      "meta_sha256": "8b2993fb5168bf2d062e1e91374c934d459521c008c661be92173a05c2c3894b",
+      "n_events": 2000,
+      "particle": "deuteron",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/results/1303_grid_regen_v2/stave_deuteron_110MeV_x0_y0_th0_ph0_s1.root",
+      "sha256": "881d9caa792eea85ebba601f4451f11ebbf097fb8480baaa801d66823bcac28a"
+    },
+    {
+      "bytes": 364137143,
+      "git_commit": "42e67cadfe0077b80174f95dc4ae5c3b9dd9829d",
+      "kinetic_energy_MeV": 70,
+      "meta_path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/results/1303_grid_regen_v2/stave_deuteron_70MeV_x0_y0_th0_ph0_s1.root.meta.json",
+      "meta_sha256": "8a1178b448bdb83b0ed9c74cb3e58223f8d4c5c445a5509dbc977191307bdd39",
+      "n_events": 2000,
+      "particle": "deuteron",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/results/1303_grid_regen_v2/stave_deuteron_70MeV_x0_y0_th0_ph0_s1.root",
+      "sha256": "362b2b66ca0cf4e64e7ab1eb8b7974d659da194b4bae02f71cdaffe86f2cb6cb"
+    },
+    {
+      "bytes": 149277539,
+      "git_commit": "533d58e8d2f826ab2255f519adb9b61b34f11c84",
+      "kinetic_energy_MeV": 100,
+      "meta_path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/results/1303_grid_regen_v2/stave_proton_100MeV_x0_y0_th0_ph0_s1.root.meta.json",
+      "meta_sha256": "f11d1b7d23231a2cd2ecd696fa096faca9e169588eb69be1e52440c8b064a524",
+      "n_events": 2000,
+      "particle": "proton",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/results/1303_grid_regen_v2/stave_proton_100MeV_x0_y0_th0_ph0_s1.root",
+      "sha256": "75b262b4af3ecbe0512e152a326bd46059176f0abc5e1d0e5baf1e76b77c158f"
+    },
+    {
+      "bytes": 117498239,
+      "git_commit": "533d58e8d2f826ab2255f519adb9b61b34f11c84",
+      "kinetic_energy_MeV": 140,
+      "meta_path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/results/1303_grid_regen_v2/stave_proton_140MeV_x0_y0_th0_ph0_s1.root.meta.json",
+      "meta_sha256": "38a23a8998662bcd99649f1701f9a85b5c4acd85da1414337bde3da4f286a4b4",
+      "n_events": 2000,
+      "particle": "proton",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/results/1303_grid_regen_v2/stave_proton_140MeV_x0_y0_th0_ph0_s1.root",
+      "sha256": "f6f1edf8f3bcdaba25ac9b94fdceda65e036147b7f543e8d4ac178276a784e00"
+    },
+    {
+      "bytes": 234963050,
+      "git_commit": "533d58e8d2f826ab2255f519adb9b61b34f11c84",
+      "kinetic_energy_MeV": 60,
+      "meta_path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/results/1303_grid_regen_v2/stave_proton_60MeV_x0_y0_th0_ph0_s1.root.meta.json",
+      "meta_sha256": "2c27116277b8de4670253a47063b4a23af7fd73e0ca87d5a5e13e074902f1476",
+      "n_events": 2000,
+      "particle": "proton",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1303/geant4/results/1303_grid_regen_v2/stave_proton_60MeV_x0_y0_th0_ph0_s1.root",
+      "sha256": "b537e0cece568b661394fc3dbccdc792d056a70ff7b1349123a2e2ebd3fb3e5a"
+    }
+  ],
+  "outputs": [
+    {
+      "bytes": 20664,
+      "path": "edep_reconstruction_heldout_E_raw.pdf",
+      "sha256": "15e211cb83e025bdef8cbf7e24be0263a7bc86195e37702bbb13dc6b0d644a08"
+    },
+    {
+      "bytes": 66725,
+      "path": "edep_reconstruction_heldout_E_raw.png",
+      "sha256": "1134d2eac22ad363fdb43ccc9f90f579ffb88ec56c0f5d96714a4b5f12aaf3d7"
+    },
+    {
+      "bytes": 21537,
+      "path": "edep_reconstruction_heldout_E_vis.pdf",
+      "sha256": "e89dc6440169a5a4d1ff234f635acdef3d57649b73f7764b36a11c2ace1db5a9"
+    },
+    {
+      "bytes": 76806,
+      "path": "edep_reconstruction_heldout_E_vis.png",
+      "sha256": "3de73e9e712c2df0d5dd56c7b534fb961b1f28c0e35bf43e115ba622cdf4e718"
+    },
+    {
+      "bytes": 496,
+      "path": "heldout_energy_reconstruction_summary_E_raw.csv",
+      "sha256": "a39771923d5f42cace5037bde4323efbbbb5fa7c595ee48f88d19caf27290fed"
+    },
+    {
+      "bytes": 499,
+      "path": "heldout_energy_reconstruction_summary_E_vis.csv",
+      "sha256": "b9d48629e1ab9a99b297fd6b93266f3b31067c9348bac96a6a724c827483b0dc"
+    },
+    {
+      "bytes": 856,
+      "path": "heldout_energy_reconstruction_summary_combined.csv",
+      "sha256": "9b5eac5be4b636129ea107c8db81068bdfaf1c720fa414bf79f0190c94c338e2"
+    },
+    {
+      "bytes": 438885,
+      "path": "heldout_event_residuals_E_raw.csv",
+      "sha256": "36bc01e2f0ff3fdef62531c2810bfda7c0857860db060d524accfa0d4deb9352"
+    },
+    {
+      "bytes": 441149,
+      "path": "heldout_event_residuals_E_vis.csv",
+      "sha256": "15af8caf603004777778b932160b946f091ed4a20d51d057d779364d6137d660"
+    },
+    {
+      "bytes": 15101,
+      "path": "result.json",
+      "sha256": "79a393a492bafa46dd17bdee7aa31a54d42e7b5081853277722f983343a2edb3"
+    },
+    {
+      "bytes": 496,
+      "path": "source_tables/edep_reconstruction_heldout_E_raw_source.csv",
+      "sha256": "a39771923d5f42cace5037bde4323efbbbb5fa7c595ee48f88d19caf27290fed"
+    },
+    {
+      "bytes": 499,
+      "path": "source_tables/edep_reconstruction_heldout_E_vis_source.csv",
+      "sha256": "b9d48629e1ab9a99b297fd6b93266f3b31067c9348bac96a6a724c827483b0dc"
+    }
+  ],
+  "schema": "ccb-paper-a09-heldout-edep/2/manifest"
+}

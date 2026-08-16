@@ -1,0 +1,175 @@
+{
+  "mc_root": "/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root",
+  "tree": "hibeam",
+  "n_events_read": 1000000,
+  "per_event_rows": 237449,
+  "event_index_unique": 237449,
+  "event_index_unique_ok": true,
+  "event_index_range": [
+    9,
+    999995
+  ],
+  "stop_ke_threshold_mev": 1.0,
+  "layer_to_stave": {
+    "0": "B2",
+    "1": "B2",
+    "2": "B4",
+    "3": "B4",
+    "4": "B6",
+    "5": "B6",
+    "6": "B8",
+    "7": "B8"
+  },
+  "composite_key_note": "MC has no run/evt columns; per-event key=event_index (unique by construction). Data side uses (source_file_id,run,evt) per de_run.txt / mc01 composite-key contract.",
+  "primary_species": {
+    "beam": "pure proton (PrimaryPDG==2212, all primaries) on CD2"
+  },
+  "secondary_species_in_sci_bar": {
+    "deuteron_step_frac": 0.2459,
+    "deuteron_event_frac": 0.1446,
+    "alpha_step_frac": 0.0401,
+    "note": "recoil secondaries from CD2 breakup drive the dE-E band identity"
+  },
+  "geometry_layer_z_cm": {
+    "0": 8.655653826864306,
+    "1": 9.02770680302757,
+    "2": 9.604927898787597,
+    "3": 9.577735823084979,
+    "4": 9.305359885223774,
+    "5": 9.46787704789475,
+    "6": 9.9899936855589,
+    "7": 10.684071603651747
+  },
+  "dE_E_selected": 131198,
+  "dE_wmedian_MeV": 24.131146424050353,
+  "Eres_wmedian_MeV": 101.0250378377936,
+  "corr_dE_E": -0.5332012315371074,
+  "band_weighted_counts_by_species": {
+    "other": 326.5042782155824,
+    "proton": 299575.2138377192,
+    "deuteron": 8894.162077736764,
+    "alpha": 254.3018960315569
+  },
+  "band_unweighted_counts_by_species": {
+    "other": 194,
+    "proton": 95588,
+    "deuteron": 35238,
+    "alpha": 178
+  },
+  "pid_full_auc": 0.8976036882035276,
+  "pid_full_ap": 0.47185732598577074,
+  "pid_prevalence_deuteron": 0.028833209297815163,
+  "pid_oof_auc_5fold": [
+    0.9102781617762783,
+    0.8838601968138657,
+    0.8966396215686152,
+    0.8875047733298979,
+    0.9101361550510924
+  ],
+  "pid_oof_auc_5fold_mean": 0.8976837817079499,
+  "pid_split_note": "MC has no run column; contiguous 2000-event blocks as pseudo-runs, 5-fold (ML-002 run-disjoint proxy).",
+  "pid_op_threshold": 0.34,
+  "pid_op_confusion": {
+    "TP": 6963.888293313081,
+    "FP": 3296.8032291164564,
+    "FN": 1930.2737844236847,
+    "TN": 296278.4106086027
+  },
+  "pid_brier_weighted": 0.017033484156732157,
+  "pid_worst_slice_auc": {
+    "entry KE [MeV]": 0.687393097865781,
+    "last observed layer": 0.042350650794745724,
+    "dE [MeV] (saturation proxy)": 0.029318225384387858
+  },
+  "geometry": {
+    "stave_depth_cm_nominal": {
+      "B2": 0.0,
+      "B4": 4.0,
+      "B6": 8.0,
+      "B8": 12.0
+    },
+    "mc_global_position_z_cm_projection_nonmonotonic": {
+      "0": 8.655653826864306,
+      "1": 9.02770680302757,
+      "2": 9.604927898787597,
+      "3": 9.577735823084979,
+      "4": 9.305359885223774,
+      "5": 9.46787704789475,
+      "6": 9.9899936855589,
+      "7": 10.684071603651747
+    },
+    "scint_thk_cm": 2.0,
+    "scint_rho": 1.03,
+    "pstar_R_cm_at_190MeV": 20.768458248893804,
+    "source": "Sci_bar_GlobalPosition_Z (MC) + mv3b_material_budget.py nominal"
+  },
+  "termination_unweighted": {
+    "stop": 2964,
+    "escape": 28806,
+    "censored": 99428
+  },
+  "termination_weighted_by_species": {
+    "other": {
+      "stop": 6.752669236301767,
+      "escape": 0.0,
+      "censored": 319.7516089792806
+    },
+    "proton": {
+      "stop": 8199.193808365388,
+      "escape": 132035.45213332312,
+      "censored": 159340.56789603067
+    },
+    "deuteron": {
+      "stop": 118.24849706520588,
+      "escape": 15.415627677593427,
+      "censored": 8760.497952993966
+    },
+    "alpha": {
+      "stop": 8.572797109075097,
+      "escape": 1.4608418999281305,
+      "censored": 244.26825702255366
+    }
+  },
+  "data_side": {
+    "composite_key": {
+      "n_rows": 632939,
+      "composite_key_cols": [
+        "source_file_id",
+        "run",
+        "evt"
+      ],
+      "composite_key_unique": 385984,
+      "composite_key_unique_ok": false,
+      "n_duplicate_composite_keys": 246955,
+      "n_source_files": 1,
+      "run_range": [
+        31,
+        65
+      ],
+      "eventno_unique": 559841,
+      "eventno_only_join_would_corrupt": 73098,
+      "note": "632,939 rows -> 385,984 unique (source_file_id,run,evt) composite keys (reproduces de_run.txt n_events_composite_key=385984). Table is MULTI-row per event (246,955 duplicates); one-row-per-event aggregation needs canonical composite_merge (deltaE_E.py). eventno-only join corrupts 73,098 rows."
+    },
+    "data": {
+      "units": "ADC (raw beam data; never MeV)",
+      "selected_dE_E": 47390,
+      "deltaE_adc_median": 3221.0,
+      "E_adc_median": 3508.5,
+      "corr_dE_E": 0.18325985756612032,
+      "threshold_adc": 200.0,
+      "stopping_layer_data": {
+        "B2": 567925,
+        "B4": 26978,
+        "B6": 14586,
+        "B8": 8575,
+        "none": 14875
+      },
+      "category_data": {
+        "all_zero": 1,
+        "ok": 632938
+      }
+    },
+    "source_csv": "/projects/hep/fs10/shared/nnbar/billy/ccb_deltae_rerun/deltaE_E_events_data.csv",
+    "source_pulse_taxonomy": "reports/1781014251.574.7a497937/pulse_taxonomy_table.csv.gz"
+  }
+}

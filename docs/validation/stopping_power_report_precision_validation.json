@@ -1,0 +1,54 @@
+{
+  "correction": {
+    "all_float_fields_round_trip_exactly": true,
+    "console_energy_uses_round_trip_repr": true,
+    "distinct_post_change_csv_token_count": 2,
+    "float_serialization": "PYTHON_REPR_ROUND_TRIP",
+    "nonfinite_output_rejected": true,
+    "post_change_csv_tokens": [
+      "1.0000001",
+      "1.0000002"
+    ]
+  },
+  "defect_example": {
+    "distinct_input_float_count": 2,
+    "distinct_pre_change_csv_token_count": 1,
+    "input_energy_MeV": [
+      1.0000001,
+      1.0000002
+    ],
+    "pre_change_console_tokens": [
+      "1.00",
+      "1.00"
+    ],
+    "pre_change_csv_tokens": [
+      "1",
+      "1"
+    ]
+  },
+  "evidence_type": "synthetic_regression",
+  "files": {
+    "scripts/single_stave/compare_stopping_power.py": {
+      "bytes": 19191,
+      "git_blob_sha1": "5081da0b77bcfeba07dca95e5087c4b2057c362f",
+      "sha256": "838cdee5921f65f38e9cf8e0a1e7f39f94f62cc31815ce9315dbd46778571caa"
+    },
+    "tests/test_compare_stopping_power_report_precision.py": {
+      "bytes": 3036,
+      "git_blob_sha1": "0003cb29cb5a31a38186b589e030ad29263b5a4b",
+      "sha256": "b226f2b947585efbe3141fb40accc0c1788995bed35d2fff93bf3b1a78b3d180"
+    }
+  },
+  "not_detector_data": true,
+  "pre_change_blob_sha": "c3884d953a38b0dad69f50e3a9dc787bc1f29fd0",
+  "pre_change_float_format": ".6g",
+  "schema_version": 1,
+  "status": "VALIDATED",
+  "task_id": "AUD-G4-016",
+  "validation": {
+    "max_changed_python_line_length": 93,
+    "old_blob_negative_control": "2 failed, 1 passed",
+    "py_compile": "PASS",
+    "pytest": "3 passed in 0.03s"
+  }
+}

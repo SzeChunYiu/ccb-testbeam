@@ -1,0 +1,119 @@
+{
+  "auditor": "audit_p04p_winner_robustness.py",
+  "ci_lower_bound_rank": [
+    "mlp",
+    "traditional_rule",
+    "shuffled_target_gbt"
+  ],
+  "ci_lower_bound_winner": "mlp",
+  "coverage_threshold": 0.5,
+  "fixture_scope": "Source-faithful reduced JSON containing the committed winner and the four methods that are eligible under the 0.50 point-estimate gate or lower-95%-bound sensitivity gate. It is software-method regression evidence, not a detector-data reproduction.",
+  "interpretation": "This is a model-selection robustness audit. It does not designate the CI-lower-bound winner as canonical unless that rule is preregistered.",
+  "issues": [
+    {
+      "code": "COVERAGE_GATE_UNCERTAINTY_POLICY_MISSING",
+      "detail": "winner selection uses a hard coverage threshold but the result does not declare whether point or interval coverage controls eligibility"
+    },
+    {
+      "ci_lower_bound_winner": "mlp",
+      "code": "WINNER_CHANGES_UNDER_CI_LOWER_BOUND_GATE",
+      "coverage_threshold": 0.5,
+      "reported_winner": "gradient_boosted_trees"
+    }
+  ],
+  "methods": [
+    {
+      "accepted_charge_res68_frac": 0.03902452880489024,
+      "accepted_coverage": 0.5016432417313474,
+      "accepted_coverage_ci95": [
+        0.4781032287979763,
+        0.5382552094265317
+      ],
+      "accepted_timing_abs68_ns": 0.039143681860957444,
+      "calibration_ece": 0.0750709805072009,
+      "ci_lower_bound_eligible": false,
+      "method": "gradient_boosted_trees",
+      "point_estimate_eligible": true
+    },
+    {
+      "accepted_charge_res68_frac": 0.04055070702536622,
+      "accepted_coverage": 0.5470846194571808,
+      "accepted_coverage_ci95": [
+        0.5225633159229767,
+        0.580955936618611
+      ],
+      "accepted_timing_abs68_ns": 0.04517760365138898,
+      "calibration_ece": 0.007440736549030646,
+      "ci_lower_bound_eligible": true,
+      "method": "mlp",
+      "point_estimate_eligible": true
+    },
+    {
+      "accepted_charge_res68_frac": 0.11166921405901398,
+      "accepted_coverage": 1.0,
+      "accepted_coverage_ci95": [
+        1.0,
+        1.0
+      ],
+      "accepted_timing_abs68_ns": 0.07317504179325625,
+      "calibration_ece": 0.09800307334250893,
+      "ci_lower_bound_eligible": true,
+      "method": "shuffled_target_gbt",
+      "point_estimate_eligible": true
+    },
+    {
+      "accepted_charge_res68_frac": 0.07854122474166687,
+      "accepted_coverage": 0.7965177260331445,
+      "accepted_coverage_ci95": [
+        0.7726672918889558,
+        0.823106967936089
+      ],
+      "accepted_timing_abs68_ns": 0.03807678647200362,
+      "calibration_ece": 0.13158170757289703,
+      "ci_lower_bound_eligible": true,
+      "method": "traditional_rule",
+      "point_estimate_eligible": true
+    }
+  ],
+  "n_issues": 2,
+  "policy": "COVERAGE_GATE_MUST_USE_PREDECLARED_UNCERTAINTY_RULE",
+  "recomputed_point_estimate_rank": [
+    "gradient_boosted_trees",
+    "mlp",
+    "traditional_rule",
+    "shuffled_target_gbt"
+  ],
+  "recomputed_point_estimate_winner": "gradient_boosted_trees",
+  "reported_winner": "gradient_boosted_trees",
+  "reported_winner_selection": "coverage>=0.50 then min accepted_charge_res68_frac, accepted_timing_abs68_ns, calibration_ece",
+  "repository_evidence": {
+    "claim_ledger_prechange_git_blob": "009f48e218b2439f80b2cebf8ebb06a845488089",
+    "p04p_config_git_blob": "d11592ba547a7028527dea3ac5fc3329362cb9a4",
+    "p04p_manifest_git_blob": "00b244470bb9dbd4060769e69e720b79c07f756d",
+    "p04p_report_git_blob": "b9029f1c7f8d8d87499b8a7a88d807692b56ae71",
+    "p04p_result_git_blob": "e2c75352b5c66f70923ef525d8251be3af9cfdc8",
+    "p04p_script_git_blob": "6f3bbf1638b8729e425088e6b1f8a0663b3a5615",
+    "source_commit": "c31b40fdadff23272b13e3824e769f518c53b38e"
+  },
+  "result_json": {
+    "bytes": 1557,
+    "path": "docs/validation/p04p_winner_robustness_fixture.json",
+    "sha256": "c04950cefbb2631d5597ae175c4204a2c7ec49893d7c4e5d1d8543545b1d7717",
+    "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+  },
+  "status": "FLAWED",
+  "study": "P04p",
+  "validated_code_git_blobs": {
+    "audit_tests": "c913edafb1f65ca8c8fb58f5e61fedfe6a2565a0",
+    "auditor": "faea3340ef55b9e1fd5f84c1813d65e88d4cce2a",
+    "ledger_row_test": "0a762b80f477f897cd6dbdba9fea22d38cf0318b"
+  },
+  "validation": {
+    "json_parsed": true,
+    "pytest": "6 passed in 1.14s",
+    "python_max_line_length": 100,
+    "svg_xml_parsed": true
+  },
+  "version": "1.0.0",
+  "winner_stable_to_ci_lower_bound_gate": false
+}

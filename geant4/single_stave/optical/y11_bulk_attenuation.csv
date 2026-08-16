@@ -1,0 +1,11 @@
+# Kuraray Y-11 fibre: bulk (long-component) attenuation length of re-emitted light
+# units_x: nm
+# units_y: cm   (ABSLENGTH of the fibre core for green light)
+# source: Kuraray Y-11(200) S-type attenuation length >3.5 m long component, representative
+# status: MANUFACTURER_REPRESENTATIVE  (scan with --attenuation-scale; measure per-fibre)
+# note: modelled as wavelength-independent long attenuation; scaled at run time.
+# wavelength_nm, atten_length_cm
+440, 350.0
+476, 400.0
+520, 380.0
+560, 300.0

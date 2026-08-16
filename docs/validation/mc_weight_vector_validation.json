@@ -1,0 +1,149 @@
+{
+  "corrected_files": {
+    "docs/contracts/MC_WEIGHT_POLICY.md": {
+      "git_blob": "c24e7f1a529b7d709fd0b71db105164e84a4d576",
+      "sha256": "a241a932d8bdd7d7d1633f5474e8de3942614e25d8fe00d79ea629ef7e87b647",
+      "size_bytes": 3224
+    },
+    "tests/test_audit_mc_weight_usage_strict.py": {
+      "git_blob": "4217beb2cb0bd0a8df39fa5169541be590e587a2",
+      "sha256": "e3b413ac5e2a8689eda80a13fe86428cf3bc3af9dac1c13cc99f9b6fa778675a",
+      "size_bytes": 5296
+    },
+    "tools/audit/audit_mc_weight_usage.py": {
+      "git_blob": "d304aff96aa5321be5cff6d26f981657145d4e56",
+      "sha256": "789d344eb08bc1cbdaf1db789bd34b1c4e9f3f8da86c562890d5cf9c5ce114b0",
+      "size_bytes": 8434
+    },
+    "tools/audit/render_mc_weight_vector_validation_evidence.py": {
+      "git_blob": "ffef2dbdb9bbde05f674abe5bc0f46abf2155b21",
+      "sha256": "614153a7b49662fa04d377967b66350bc7ece7cc8c3dd29e0d22ae6fd39ebbd7",
+      "size_bytes": 2228
+    }
+  },
+  "former_source": {
+    "git_blob": "9b2375b98fd76784ce3fb961e4dcdbf169f7495e",
+    "path": "tools/audit/audit_mc_weight_usage.py",
+    "sha256": "16977d2ef277dd3cdeb3dea9047e09db84a3a6881d1d2bf278fff72d698bd7ed",
+    "size_bytes": 2414
+  },
+  "initial_main_sha": "f01b16fba39bcd21bb57a10638d36dcfe521b01f",
+  "limitations": [
+    "Production ROOT bytes on fs10 were unavailable.",
+    "The audit validates a weight vector but does not prove downstream consumers use it.",
+    "No weighted detector-data closure, generator regeneration, ROOT runtime, or repository-wide CI was executed."
+  ],
+  "negative_control": {
+    "ambiguous_branch_silently_selected": {
+      "branch": "PrimaryWeight",
+      "ess": 3.0,
+      "ess_fraction": 1.0,
+      "max": 1.0,
+      "min": 1.0,
+      "n": 3,
+      "quantiles": {
+        "0": 1.0,
+        "0.01": 1.0,
+        "0.5": 1.0,
+        "0.99": 1.0,
+        "1": 1.0
+      },
+      "status": "OK",
+      "sum_w": 3.0,
+      "tree": "hibeam"
+    },
+    "input_output_alias_overwrite": {
+      "after_sha256": "352c05a0940c3c8ac708589fb34a34fb8ce091f728b2218d8c1f61e747f36874",
+      "after_starts_with_json": true,
+      "before_sha256": "747f014492eac371c58a294bc2a97c41a9cbf380db921276c91e1e26ce39020e",
+      "exit_code": 0,
+      "input_preserved": false
+    },
+    "matrix_silently_flattened": {
+      "branch": "PrimaryWeight",
+      "ess": 4.0,
+      "ess_fraction": 1.0,
+      "max": 1.0,
+      "min": 1.0,
+      "n": 4,
+      "quantiles": {
+        "0": 1.0,
+        "0.01": 1.0,
+        "0.5": 1.0,
+        "0.99": 1.0,
+        "1": 1.0
+      },
+      "status": "OK",
+      "sum_w": 4.0,
+      "tree": "hibeam"
+    },
+    "nonfinite_silently_filtered": {
+      "branch": "PrimaryWeight",
+      "ess": 1.8,
+      "ess_fraction": 0.9,
+      "max": 2.0,
+      "min": 1.0,
+      "n": 2,
+      "quantiles": {
+        "0": 1.0,
+        "0.01": 1.01,
+        "0.5": 1.5,
+        "0.99": 1.99,
+        "1": 2.0
+      },
+      "status": "OK",
+      "sum_w": 3.0,
+      "tree": "hibeam"
+    }
+  },
+  "policy": "MC_WEIGHT_VECTOR_MUST_BE_UNAMBIGUOUS_FINITE_NONNEGATIVE_AND_EVENT_ALIGNED",
+  "scientific_scope": "synthetic software and provenance validation; no production ROOT rerun",
+  "session_stamp_utc": "2026-07-25T021422Z",
+  "status": "VALIDATED",
+  "synthetic_cases": [
+    {
+      "case": "finite nonnegative 1D weights, one per entry",
+      "interpretation": "ESS allowed",
+      "status": "OK"
+    },
+    {
+      "case": "one NaN weight",
+      "interpretation": "no silent filtering",
+      "status": "P0_NONFINITE_WEIGHT"
+    },
+    {
+      "case": "PrimaryWeight and EventWeight both present",
+      "interpretation": "branch identity required",
+      "status": "P0_AMBIGUOUS_WEIGHT_BRANCHES"
+    },
+    {
+      "case": "2D weight array",
+      "interpretation": "no flattening",
+      "status": "P0_WEIGHT_SHAPE_INVALID"
+    },
+    {
+      "case": "weight count differs from tree entries",
+      "interpretation": "event alignment required",
+      "status": "P0_WEIGHT_LENGTH_MISMATCH"
+    },
+    {
+      "case": "output path aliases input ROOT",
+      "interpretation": "input bytes preserved",
+      "status": "INPUT_OUTPUT_ALIAS"
+    }
+  ],
+  "task_id": "AUD-MC-001",
+  "validation": {
+    "commands": [
+      "python -m py_compile tools/audit/audit_mc_weight_usage.py tests/test_audit_mc_weight_usage_strict.py tools/audit/render_mc_weight_vector_validation_evidence.py",
+      "pytest -q tests/test_audit_mc_weight_usage_strict.py"
+    ],
+    "json_parse": "PASS",
+    "max_python_line_length": 100,
+    "numpy": "2.3.5",
+    "pytest": "8 passed in 0.04s",
+    "pytest_version": "9.0.2",
+    "python": "3.13.5",
+    "svg_xml_parse": "PASS"
+  }
+}

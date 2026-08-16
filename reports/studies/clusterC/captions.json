@@ -1,0 +1,37 @@
+{
+  "VIS-PU-001": "Average single-hit pulse with \u00b11 SEM band and leading-edge / constant-fraction threshold lines (left); crossing-time density for the two \u03c4 estimators plus the decay-time fit (centre); fraction of total pulse area captured vs acquisition window length, marking the 180 ns production window (right).",
+  "VIS-PU-001_pulse_tail_live_time": [
+    "VIS-PU-001_pulse_tail_live_time.png",
+    ""
+  ],
+  "VIS-PU-002": "Pile-up overlap probability vs beam rate: MC measurement against the Poisson 1\u2212exp(\u2212T_acq\u00b7rate) expectation and a dead-time-corrected alternative, with the explicit quality gate (Rmax) and the distinct 5% reference line; bottom panel shows the observed/expected ratio.",
+  "VIS-PU-002_pileup_occupancy_rate": [
+    "VIS-PU-002_pileup_occupancy_rate.png",
+    ""
+  ],
+  "VIS-PU-003": "Two-pulse recovery: efficiency (top-left), amplitude bias \u00b1RMS (top-right), RMS (bottom-left) and catastrophic-failure rate (bottom-right) vs delay, split by secondary/primary amplitude ratio. LSQ template fit (ML-proxy) and the peak-finding baseline are evaluated against the same truth.",
+  "VIS-PU-003_two_pulse_recovery": [
+    "VIS-PU-003_two_pulse_recovery.png",
+    ""
+  ],
+  "VIS-PU-004": "Window censoring: recovered secondary tail fraction (left) and Rmax at the explicit quality gate (right) vs acquisition window length. The production 180 ns window is marked.",
+  "VIS-PU-004_window_censoring": [
+    "VIS-PU-004_window_censoring.png",
+    ""
+  ],
+  "VIS-ENE-001": "ADC response vs true kinetic energy per species with linear fits (ADC/MeV slope), and per-file residual (lower-left) and pull (lower-right) panels. edep_scint_MeV (Birks-visible) is fed through the production digitizer.",
+  "VIS-ENE-001_adc_calibration": [
+    "VIS-ENE-001_adc_calibration.png",
+    ""
+  ],
+  "VIS-ENE-002": "Birks quenching: visible vs raw energy by species with the fitted Birks curve (left); reduced-\u03c7\u00b2 kB scan contrasting the total-edep proxy (the digitizer's birks_quench form) against per-track dE/dx path-length semantics (centre); and the data/MC ratio vs dE/dx for both models (right). NOTE: sys_birks_smoke2 was not present, so the i885_v1 raw/visible pair \u2014 which carries both quantities \u2014 is used directly.",
+  "VIS-ENE-002_birks_quenching": [
+    "VIS-ENE-002_birks_quenching.png",
+    ""
+  ],
+  "VIS-ENE-003": "Saturation: observed peak ADC vs true edep with the ADC ceiling and the analytic clipping threshold (left); saturation probability with the 50% point flagged to match the actual clipping amplitude (centre); and recovery bias with coverage (right).",
+  "VIS-ENE-003_saturation": [
+    "VIS-ENE-003_saturation.png",
+    ""
+  ]
+}

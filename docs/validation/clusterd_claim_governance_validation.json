@@ -1,0 +1,146 @@
+{
+  "task_id": "AUD-CLD-001",
+  "session_stamp_utc": "2026-07-25T170507Z",
+  "policy": "CLUSTERD_PUBLIC_STATUS_MUST_NOT_OVERRIDE_CANONICAL_CLAIM_GATES",
+  "status": "VALIDATED",
+  "n_issues": 0,
+  "initial_main_sha": "5367ec7bbf5f37989cd29eedd0700bd77542049b",
+  "validated_code_head_sha": "18f6aabc2daf5f1e6c24e42eec3a199bfdc55f3b",
+  "delivery_main_sha": "fd3212db157efae56986ffa626257b73facdfb87",
+  "source_merge": {
+    "pull_request": 919,
+    "merge_commit": "5367ec7bbf5f37989cd29eedd0700bd77542049b",
+    "title": "Cluster D: regenerate MV0-MV6 + aggregate single-stave Geant4/SiPM campaigns"
+  },
+  "corrected_files": {
+    "reports/studies/clusterD/SUMMARY.md": {
+      "git_blob": "1c163e72917d74c96c145f5cd3ba056d1d0689a6",
+      "bytes": 7587,
+      "sha256": "15a84d01dc632f4281a02cb459a18183c8c112ffc711f9efd46c0bfd9953e4a0",
+      "commit": "f05971e9e889b3ef232fa84067da196eb39281ef"
+    },
+    "reports/studies/clusterD/mv_runs/mv0/REPORT.md": {
+      "git_blob": "c50b46d722e2dd7f582f7189c6b1f35eba90e020",
+      "bytes": 3000,
+      "sha256": "55a35b4f646a6b4138e20bf4d5b956b47fc78bd92fcccb315046f52c6d03a656",
+      "commit": "f914bda5ffaa44a745022dab2fbf7ec6de65bee6"
+    },
+    "reports/studies/clusterD/mv_runs/mv5/REPORT.md": {
+      "git_blob": "aa17d56899a8b1fef2a9f01119818c28829d1f71",
+      "bytes": 2209,
+      "sha256": "3b4f6536b1012eb04532e76a423018120776f1158a75e8609f085586c5aa62af",
+      "commit": "cb0f77baead16bf6b251e1d76a5a0d93e8836e28"
+    },
+    "reports/studies/clusterD/mv_runs/mv6/REPORT.md": {
+      "git_blob": "58179b70e4cd3d260dc1e42ae3bb4cd86b31443b",
+      "bytes": 2350,
+      "sha256": "8007dc78dcba13e7909a0bbecc9c4cbd131d9bea9eb940f4f7f3615d836cbdfc",
+      "commit": "76399bc6b92e227a86f174b04e6d3fdb92dc7c51"
+    }
+  },
+  "audit_code": {
+    "validator": {
+      "path": "tools/audit/validate_clusterd_claim_governance.py",
+      "git_blob": "63b2c1747d34c8746685a6ca15b745b04039c39a",
+      "commit": "8011274a9ca26449e9d8e0936fb4a982b0d75b98",
+      "version": "1.0.0"
+    },
+    "tests": {
+      "path": "tests/test_validate_clusterd_claim_governance.py",
+      "git_blob": "708a968538c9bf46c9c83f768f0ede0c06c64b30",
+      "commit": "64ef6819010abc7857429bf16e4b64b0a9809702"
+    },
+    "renderer": {
+      "path": "tools/audit/render_clusterd_claim_governance_evidence.py",
+      "git_blob": "7920c8e62da78d65f72977491050c72bfdd3c3db",
+      "commit": "18f6aabc2daf5f1e6c24e42eec3a199bfdc55f3b",
+      "version": "1.0.0"
+    }
+  },
+  "source_facts": {
+    "mv0": {
+      "calibration_json_blob": "6400ccbf611abf335a942623368d254ffa95e3a7",
+      "gain_adc_per_mev": 110.0,
+      "ks_statistic": 0.10773131550396098,
+      "chi2_per_ndf": 2928.1720074390482,
+      "per_stave_ks_range": [
+        0.19709479433376512,
+        0.6026529124293721
+      ],
+      "interpretation": "source-specific marginal data/MC proxy; not production calibration"
+    },
+    "mv5": {
+      "summary_json_blob": "460b68ddc6e0655554c00720e77ce4ba6f99463c",
+      "tau_eff_input_ns": 124.8,
+      "duty_factor": 0.38,
+      "duty_product_mhz": 3.0448717948717947,
+      "rmax_from_failure_ceiling_mhz": null,
+      "interpretation": "duty-factor arithmetic is superseded; canonical Rmax remains blocked"
+    },
+    "mv6": {
+      "summary_json_blob": "e9e15afa90ae838ec575e4db0b2cec28250a1877",
+      "n_tracks": 7848,
+      "n_early_peak": 38,
+      "n_early_peak_c12": 25,
+      "cluster_3_c12_purity": 0.464339908952959,
+      "interpretation": "truth-labelled toy MC only; no beam-data species identity"
+    },
+    "campaign_pstar": {
+      "helper_blob": "4715435602ce076a7ff069e0ec162dcc16574a33",
+      "reference_contract": "embedded coarse PSTAR_POLYSTYRENE table",
+      "interpretation": "not source-bound to the canonical committed CSV parser"
+    }
+  },
+  "canonical_ledger": {
+    "git_blob": "254dc5b64945260193d6b1bd4146bd6400ad28cf",
+    "claim_ids": [
+      "CL-010",
+      "CL-011",
+      "CL-012",
+      "CL-013",
+      "CL-014",
+      "CL-022"
+    ],
+    "required_states": {
+      "CL-010": "BLOCKED",
+      "CL-011": "DONE_DATA_ONLY",
+      "CL-012": "SUPERSEDED",
+      "CL-013": "GATED",
+      "CL-014": "TENSION",
+      "CL-022": "TRUTH_LEVEL_MC_ONLY"
+    }
+  },
+  "validation": {
+    "environment": "isolated repo-shaped fixture reconstructed from exact corrected Markdown bytes and tracked source values",
+    "commands": [
+      "python -m py_compile tools/audit/validate_clusterd_claim_governance.py tests/test_validate_clusterd_claim_governance.py",
+      "pytest -q tests/test_validate_clusterd_claim_governance.py"
+    ],
+    "result": "6 passed in 1.63s",
+    "corrected_fixture": {
+      "status": "VALIDATED",
+      "n_issues": 0
+    },
+    "negative_controls": [
+      "stale PASS/PRODUCTION, Rmax, species-ID, and proving-simulation wording fails closed",
+      "nonnull rmax_from_failure_ceiling_mhz fails closed",
+      "invalid UTF-8 returns controlled status 2",
+      "output aliasing is rejected",
+      "JSON publication is atomic"
+    ],
+    "max_python_line_length": {
+      "validator_fixture": 100,
+      "tests_fixture": 97,
+      "renderer_exact_committed_blob": 96
+    },
+    "full_checkout_current_repository_test": "NOT_RUN_DNS_COULD_NOT_RESOLVE_GITHUB_COM"
+  },
+  "scientific_boundary": "Documentation and source-binding validation only. No raw data, ROOT file, Geant4 event, simulation result, calibration, Rmax, PID performance, or beam-data anomaly identity was regenerated or newly validated.",
+  "unresolved": [
+    "BLK-MV0-001 precision calibration and data/MC transfer",
+    "S-STAT-003 Rmax definition and uncertainty",
+    "AUD-ANOM-001 matched data/MC anomaly closure",
+    "canonical PSTAR parser integration for Cluster D VIS-MC-002",
+    "content-addressed hashes for external Cluster D ROOT/CSV/NPZ inputs"
+  ]
+}

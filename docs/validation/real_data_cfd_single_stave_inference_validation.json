@@ -1,0 +1,109 @@
+{
+  "findings": [
+    {
+      "code": "PAIR_SIGMA68_DIVIDED_BY_SQRT2",
+      "detail": "The source converts pair sigma68 to a single-stave number by dividing by sqrt(2)."
+    },
+    {
+      "code": "PAIR_ONLY_RESULT_PROMOTED_TO_SINGLE_STAVE_CLAIM",
+      "detail": "The report presents a pair-only residual width as a single-stave estimate."
+    },
+    {
+      "code": "SINGLE_STAVE_INFERENCE_NOT_MACHINE_READABLE",
+      "detail": "The result JSON has no explicit single-stave inference object or authorization state."
+    },
+    {
+      "code": "NO_COVARIANCE_OR_COMMON_MODE_MODEL",
+      "detail": "The pair-difference width is interpreted without a covariance/common-mode model."
+    },
+    {
+      "code": "NO_INDIVIDUAL_STAVE_DECONVOLUTION",
+      "detail": "No independent B6/B8 resolution constraint or three-detector deconvolution is recorded."
+    },
+    {
+      "code": "NON_GAUSSIAN_PAIR_WIDTH_USED_FOR_SQRT2_SCALING",
+      "detail": "The headline pair has full_rms/sigma68=10.794 and tail=0.159; sigma68 has no general quadrature deconvolution law."
+    },
+    {
+      "code": "SINGLE_STAVE_UNCERTAINTY_NOT_PROPAGATED",
+      "detail": "A pair bootstrap interval exists, but no single-stave interval or assumption uncertainty is reported."
+    },
+    {
+      "code": "EQUAL_STAVE_ASSUMPTION_UNVALIDATED",
+      "detail": "The source says 'assume equal', while recorded B6/B8 pulse counts are 17197/10619 and median widths are 8.0/10.0 samples; equality of timing resolution is not tested."
+    }
+  ],
+  "headline_pair": {
+    "ci68_ns": [
+      0.8123935669551073,
+      1.0723601562332614
+    ],
+    "core_chi2_ndf": 1.9732016178698852,
+    "core_sigma_ns": 0.5511423021269959,
+    "fraction": 0.1,
+    "full_rms_ns": 9.69875913667869,
+    "median_ns": 59.60530122976422,
+    "method": "t_cfd10",
+    "n": 1888,
+    "sigma68_ns": 0.8985129399585929,
+    "tail_frac_gt5ns": 0.15889830508474576
+  },
+  "inputs": {
+    "result": {
+      "path": "docs/validation/fixtures/pr939_real_data_cfd_single_stave_result_subset.json",
+      "sha256": "465cc4de72860cd17022cac7b7f4be6da476ba593ca0c8fd5f0e9464676ab9e7",
+      "size_bytes": 903
+    },
+    "source": {
+      "path": "docs/validation/fixtures/pr939_real_data_cfd_single_stave_relevant.py",
+      "sha256": "63676dbb0a995f9663df5dae2b40a8b98f188ceb5b57a094f8ac1b67ba4c5600",
+      "size_bytes": 1034
+    }
+  },
+  "n_findings": 8,
+  "naive_single_stave_ns": 0.6353445928285822,
+  "policy": "PAIR_SIGMA68_DIV_SQRT2_REQUIRES_VALIDATED_IDENTICAL_INDEPENDENT_GAUSSIAN_OR_EXPLICIT_DECONVOLUTION",
+  "required_contract": {
+    "authorization_requires": [
+      "variance-compatible estimator or validated distributional deconvolution",
+      "individual-stave or external-reference constraints",
+      "covariance/common-mode treatment",
+      "uncertainty propagation including assumption sensitivity"
+    ],
+    "pair_only_default": true,
+    "single_stave_inference_authorized": false
+  },
+  "status": "FLAWED",
+  "toy_controls": [
+    {
+      "case": "iid_normal",
+      "pair_div_sqrt2": 0.9917945109036891,
+      "relative_error": -0.0052518304481180555,
+      "single_a_sigma68": 0.9970307473402806
+    },
+    {
+      "case": "iid_laplace",
+      "pair_div_sqrt2": 1.2517298356798583,
+      "relative_error": 0.1065423658276119,
+      "single_a_sigma68": 1.1312082341679317
+    },
+    {
+      "case": "iid_heavy_tail_mixture",
+      "pair_div_sqrt2": 1.4892209336904716,
+      "relative_error": 0.2173463258765047,
+      "single_a_sigma68": 1.2233338221300447
+    },
+    {
+      "case": "unequal_normal",
+      "pair_div_sqrt2": 0.9428102849716709,
+      "relative_error": 0.5741535573937473,
+      "single_a_sigma68": 0.5989315848783126
+    },
+    {
+      "case": "equal_normal_rho_0p5",
+      "pair_div_sqrt2": 0.7036958718071002,
+      "relative_error": -0.2931059914515757,
+      "single_a_sigma68": 0.995475790284471
+    }
+  ]
+}

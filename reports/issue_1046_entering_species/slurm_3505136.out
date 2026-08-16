@@ -1,0 +1,21 @@
+/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/scripts/mc01_trigger_split_truth.py:960: UserWarning: No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+  ax.legend(fontsize=8)
+/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/scripts/mc01_trigger_split_truth.py:984: UserWarning: No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+  ax.legend(fontsize=8)
+[plots] All 8 MC figures generated.
+{
+  "sampleI_d_fraction": 0.5928,
+  "sampleII_d_fraction": 0.1729,
+  "sampleI_frac_large": 0.5869565217391305,
+  "sampleII_frac_large": 0.17652799804806638,
+  "sampleI_mean_edep_MeV": 27.929882033617083,
+  "sampleII_mean_edep_MeV": 14.81042532568005,
+  "sampleI_d_fraction_weighted": 0.5928,
+  "sampleII_d_fraction_weighted": 0.1729,
+  "sampleI_frac_large_weighted": 0.5869565217391305,
+  "sampleII_frac_large_weighted": 0.17652799804806638,
+  "sampleI_mean_edep_MeV_weighted": 27.929882033617083,
+  "sampleII_mean_edep_MeV_weighted": 14.81042532568005
+}
+[ok] wrote reports/issue_1046_entering_species/cmc_2m_regenerated_20260814/mc_trigger_split_summary.json  (events read=2000000, enterB=14112, coinc=1106)
+EXIT_CODE=0

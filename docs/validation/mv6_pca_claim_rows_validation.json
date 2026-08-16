@@ -1,0 +1,91 @@
+{
+  "claims": {
+    "CL-023": {
+      "component_count": 3,
+      "current_value": "0.7254602133437841",
+      "issues": [],
+      "row_columns": 43,
+      "source_value": 0.7254602133437841
+    },
+    "CL-024": {
+      "component_count": 8,
+      "current_value": "0.821883926913117",
+      "issues": [],
+      "row_columns": 43,
+      "source_value": 0.821883926913117
+    }
+  },
+  "execution_scope": {
+    "corrected_claim_ledger": {
+      "commit_sha": "bf584eec7d64c6f78cd782b7b1ff84387d0f2bfe",
+      "git_blob_sha": "d33180f144cca10a6e310b3e89b5ab1d065d7e66",
+      "sha256": "3a08d0d561de0ad11f2bbbf4a6cc1284af2315e30bbb3ded39be308b6d5125ff"
+    },
+    "full_producer_inspection": {
+      "git_blob_sha": "f965823518b22908f3e8974f280bff5c970368d0",
+      "local_full_file_execution": false,
+      "method": "authenticated GitHub full-file/ranged reads",
+      "path": "scripts/mv6_representation_study.py"
+    },
+    "ledger_candidate": "exact current ledger bytes with only CL-023/CL-024 reconstructed",
+    "prechange_claim_ledger": {
+      "git_blob_sha": "e489555f3a520c7cc64b8a7d858a0e93622b9de6",
+      "sha256": "9a099f76609c51b7400c8615a46c5e873058ac00e0fa9e3a0e2877a1d5e5db5c"
+    },
+    "producer_execution_input": "exact PCA/GMM contract excerpt copied from current producer",
+    "summary_input": "exact repository summary bytes reconstructed from authenticated GitHub content"
+  },
+  "inputs": {
+    "claim_ledger": {
+      "bytes": 13413,
+      "path": "docs/claim_ledger.csv",
+      "sha256": "3a08d0d561de0ad11f2bbbf4a6cc1284af2315e30bbb3ded39be308b6d5125ff",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    },
+    "mv6_producer": {
+      "bytes": 569,
+      "path": "scripts/mv6_representation_study_pca_contract_excerpt.py",
+      "sha256": "b4c71f8ec87f89d0a261150112fb601b3ae5b3cb6870a0697b5bd0678232c1dc",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    },
+    "mv6_summary": {
+      "bytes": 5070,
+      "path": "reports/mv6_representation_1782678362/mv6_representation_summary.json",
+      "sha256": "62c574fad724688e1fb9d455aec14ea273d089708c5593a2324e38e3eadc3be4",
+      "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+    }
+  },
+  "issues": [],
+  "n_issues": 0,
+  "policy": "MV6_PCA_CLAIMS_MUST_MATCH_TRACKED_SYNTHETIC_WAVEFORM_OUTPUT",
+  "producer_contract": {
+    "gmm_components": 4,
+    "gmm_pcs": 4,
+    "normalization": "PEDESTAL_SUBTRACTED_PEAK_NORMALIZED",
+    "pca_components_fitted": 10,
+    "seed": 42
+  },
+  "source_summary": {
+    "cumulative_at_3": 0.7254602133437841,
+    "cumulative_at_4": 0.745517570480533,
+    "cumulative_at_8": 0.821883926913117,
+    "n_events_scanned": 220000,
+    "n_tracks": 87555,
+    "pca_variance_ratios": [
+      0.6397275304111596,
+      0.05803144748933653,
+      0.027701235443287935,
+      0.02005735713674897,
+      0.01943928056747368,
+      0.01915966934733869,
+      0.01891806012034366,
+      0.018849346397427923,
+      0.018760204253971523,
+      0.018666385239326882
+    ],
+    "seed": 42
+  },
+  "status": "VALIDATED",
+  "validator": "validate_mv6_pca_claim_rows.py",
+  "version": "1.0.0"
+}

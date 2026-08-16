@@ -1,0 +1,13 @@
+registry_version: "2026.0-waveC-lane05"
+kind: step_convergence
+fail_closed_when_unset: true
+default_step_convergence_profile_id: null
+claims_policy: >
+  No authorizing Bragg/quenching/stopping-power claim may treat Geant4
+  step-wise visible energy as a converged detector observable without an
+  explicit step_convergence_profile_id. Physical step-limit values are NOT
+  invented here; profiles document study status only (#1095).
+profiles:
+  - hyp_physicslist_default_step_policy_unvalidated
+  - hyp_em_option4_stricter_step_unvalidated
+  - hyp_user_max_step_study_pending

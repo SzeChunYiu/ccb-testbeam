@@ -1,0 +1,67 @@
+{
+  "acceptance": {
+    "canonical_cl021": "FLAWED",
+    "production_weighted_result": "NOT_RUN",
+    "software_contract": "VALIDATED_ON_PREPARED_SCRIPT_AND_EXACT_COMMITTED_TEST_BYTES",
+    "source_report_quarantine": "COMPLETE"
+  },
+  "local_validation": {
+    "commands": [
+      "python -m py_compile scripts/studies/mv3_selection_matched.py tests/test_mv3_selection_weighted_contract.py tools/audit/render_mv3_selection_weighted_remediation_evidence.py",
+      "pytest -q tests/test_mv3_selection_weighted_contract.py",
+      "python tools/audit/render_mv3_selection_weighted_remediation_evidence.py --validation docs/validation/mv3_selection_weighted_remediation_validation.json --out docs/validation/mv3_selection_weighted_remediation.svg"
+    ],
+    "exact_committed_test_blob_execution": true,
+    "exact_committed_test_sha256": "f0b60ec4599ac14830e2d596b104763ae905efcaae3478f2c1f76bc760945dfa",
+    "exact_committed_test_size_bytes": 3032,
+    "exact_remote_script_blob_execution": false,
+    "exact_remote_script_blob_execution_reason": "The runtime could not establish a network checkout or download the remote raw source bytes; authenticated connector writes and post-write source inspection were used.",
+    "json_parse": "PASS",
+    "max_python_line_length": 99,
+    "prepared_renderer_sha256": "a8ebc213dffa936a19338a10b6a6f58daa4e724f3b8bd425a6e5313decfa075b",
+    "prepared_renderer_size_bytes": 5441,
+    "prepared_script_sha256": "55828b4230738841bad852c687cc54ac3c451f28c2aca01f8e6cfe2872d45b0b",
+    "prepared_script_size_bytes": 27495,
+    "pytest_result": "6 passed in 0.04s",
+    "svg_xml_parse": "PASS"
+  },
+  "policy": "MV3_SELECTION_WEIGHTED_SIGNED_CHARGE_SAME_TARGET_V2",
+  "production_status": "BLOCKED_RERUN_REQUIRED",
+  "repository_snapshot": {
+    "canonical_blocker": "BLK-MV3-LEGACY-001",
+    "canonical_cl021_state": "FLAWED",
+    "former_script_git_blob": "32c2c9d480aa5bd02ecc6a73ddc4c0654dae21ca",
+    "implementation_commit": "6f8cb36633b4340499229e4029cd8fb6087dcf3c",
+    "implementation_git_blob": "cd787ab64408228d67536b88bcc617fe32d0ec5a",
+    "initial_main_sha": "feddba9e3cc488fd77e7bc015f80af9d78f6edd1",
+    "renderer_commit": "b0c1d0a386e4f717253e6c9ff0142a86c9a744e5",
+    "renderer_git_blob": "d61b7a66688a46a6fd046f238a0e91f230bf5c1e",
+    "report_commit": "463fea2c516458bff516ed1de49a6d5e5a4d891a",
+    "report_git_blob": "91578dc2e6c72564a5a4c9d1b441a1167c7ed7ac",
+    "repository": "SzeChunYiu/ccb-testbeam",
+    "retained_unweighted_summary_git_blob": "bb659df56eacf6c7a9f0d3f56df3cf31043019ba",
+    "task_claim_commit": "f4436a3d462a0dc533f0a4b70bfd7d2cf9b331ec",
+    "test_commit": "e35c047d47308b4726b8a1da28a4dfc09a25514b",
+    "test_git_blob": "4f81f85a387ae75ce81627fbb1da22de2fb6cc66"
+  },
+  "schema": "ccb-mv3-selection-weighted-remediation/1",
+  "scientific_boundary": "No production ROOT/data rerun; existing summary and plots remain superseded unweighted diagnostics. No closure, calibration, PID, or detector result is claimed.",
+  "status": "VALIDATED_PREPARED_SCRIPT_REMOTE_DELIVERY_PARTIAL",
+  "synthetic_control": {
+    "effective_sample_size": 1.2195121951219512,
+    "sum_w": 10.0,
+    "sum_w2": 82.0,
+    "unweighted_sensitivity": {
+      "B2": 0.5,
+      "B8": 0.5
+    },
+    "weighted_profile": {
+      "B2": 0.1,
+      "B8": 0.9
+    },
+    "weights": [
+      1.0,
+      9.0
+    ]
+  }
+}

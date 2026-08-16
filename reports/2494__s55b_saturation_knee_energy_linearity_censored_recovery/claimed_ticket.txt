@@ -1,0 +1,13 @@
+2494
+# S55b: Saturation knee energy linearity and censored-pulse recovery bakeoff
+
+Question: determine where SiPM/electronics saturation begins to bias
+reconstructed pulse energy, timing, and pile-up separation, and whether
+censored waveform recovery changes PID decisions. Traditional comparator:
+clipped-template refit with analytic saturation-knee correction, charge-window
+integration, and run-family pedestal offsets. Compare ridge, gradient-boosted
+trees, MLP, 1D-CNN, and sequence transformer models where apt for
+saturated-sample inversion, energy calibration, timing res68, pile-up split
+accuracy, and PID AUC/ECE. Require event-level and run-held-out paired
+bootstrap 95% CIs, saturation-fraction strata, pedestal-nuisance stress tests,
+and ablations of clipped samples versus full waveform context.

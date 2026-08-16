@@ -1,6 +1,6 @@
 # Chapter 7: Energy Calibration — Digitizer Gain, Birks Quenching, and Range-Energy
 
-> **ACCEPTED by nature-reviewer (3/3).** 9,100 words, 7 figures. All standard fixes applied.
+> **REVIEW_STATUS: EDITORIAL_REVIEWED** (AI role-separated nature-reviewer-style lenses; not independent human peer review). Scope: readability/structure only. Does **not** imply SOURCE_VERIFIED, EXECUTED_REPRODUCED, or CLAIM_AUTHORIZED. Open factual blockers remain tracked in GitHub issues / claim ledger. Contract: `docs/contracts/REVIEW_STATUS_TAXONOMY.json` / `chatgpt_todo/ATOMIC_RESEARCH_PROTOCOL.md`.
 
 ## Abstract
 

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="520" viewBox="0 0 1000 520" role="img" aria-labelledby="title desc">
+  <title id="title">PSTAR CSV reference-integrity gate</title>
+  <desc id="desc">Synthetic schematic contrasting silent row skipping and sorting with strict fail-closed validation.</desc>
+  <rect x="0" y="0" width="1000" height="520" fill="white"/>
+  <text x="500" y="42" text-anchor="middle" font-family="sans-serif" font-size="26" font-weight="bold">PSTAR reference-integrity gate</text>
+  <text x="500" y="70" text-anchor="middle" font-family="sans-serif" font-size="15">Synthetic regression schematic — not detector data</text>
+
+  <rect x="55" y="115" width="390" height="300" rx="14" fill="#f8f8f8" stroke="#555" stroke-width="2"/>
+  <text x="250" y="150" text-anchor="middle" font-family="sans-serif" font-size="22" font-weight="bold">Former parser</text>
+  <text x="90" y="195" font-family="monospace" font-size="16">1, 9,      1, 10</text>
+  <text x="90" y="228" font-family="monospace" font-size="16">2, broken, 1,  5</text>
+  <text x="90" y="261" font-family="monospace" font-size="16">3, 2,      1,  3</text>
+  <path d="M250 280 L250 330" stroke="#555" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="250" y="355" text-anchor="middle" font-family="sans-serif" font-size="17">skip malformed row; sort survivors</text>
+  <text x="250" y="390" text-anchor="middle" font-family="sans-serif" font-size="19" font-weight="bold">Possible numerical PASS</text>
+
+  <rect x="555" y="115" width="390" height="300" rx="14" fill="#f8f8f8" stroke="#555" stroke-width="2"/>
+  <text x="750" y="150" text-anchor="middle" font-family="sans-serif" font-size="22" font-weight="bold">Strict parser</text>
+  <text x="590" y="195" font-family="monospace" font-size="16">1, 9,      1, 10</text>
+  <text x="590" y="228" font-family="monospace" font-size="16">2, broken, 1,  5</text>
+  <text x="590" y="261" font-family="monospace" font-size="16">3, 2,      1,  3</text>
+  <path d="M750 280 L750 330" stroke="#555" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="750" y="355" text-anchor="middle" font-family="sans-serif" font-size="17">reject line 3; preserve declared order</text>
+  <text x="750" y="390" text-anchor="middle" font-family="sans-serif" font-size="19" font-weight="bold">Status 2; no numerical PASS</text>
+
+  <text x="500" y="462" text-anchor="middle" font-family="sans-serif" font-size="16">Accepted rows require complete columns, finite physical values, and strictly increasing energy.</text>
+  <text x="500" y="490" text-anchor="middle" font-family="sans-serif" font-size="15">This gate validates reference-table integrity only; stopping-power physics remains DIAGNOSTIC_ONLY.</text>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="5" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#555"/>
+    </marker>
+  </defs>
+</svg>

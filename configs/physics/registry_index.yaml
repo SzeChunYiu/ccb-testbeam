@@ -1,0 +1,9 @@
+# Wave B Lane 03 — hadronic reference-list provenance (#1006)
+registry_version: "2026.0-waveB-lane03-physics-v1"
+default_profile_id: null
+fail_closed_when_unset: true
+# No silent production default. The Geant4 CLI likewise requires --physics-list.
+profile_ids:
+  - hyp_qgsp_bic_legacy_hardcoded
+  - hyp_qgsp_inclxx_candidate
+  - hyp_ftfp_bert_out_of_domain_control

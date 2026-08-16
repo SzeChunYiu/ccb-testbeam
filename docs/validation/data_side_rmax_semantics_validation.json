@@ -1,0 +1,77 @@
+{
+  "session_stamp": "2026-07-25T210216Z",
+  "task_id": "AUD-LEDGER-004",
+  "initial_remote_main": "5f4847036ab6d3ee8fb268f9ed96abc36852bbc4",
+  "policy": "OCCUPANCY_DOES_NOT_IDENTIFY_ABSOLUTE_RMAX_WITHOUT_RATE_EXPOSURE",
+  "repository_observations": {
+    "claim_ledger": {
+      "path": "docs/claim_ledger.csv",
+      "git_blob": "83238de4b244b741bd2227986455edf04bff3265",
+      "CL-010.current_value": "2.92",
+      "CL-010.stat_unc": "0.10",
+      "CL-010.syst_unc": "0.20",
+      "CL-010.status": "DONE_DATA_ONLY",
+      "CL-010.blocked_by": ""
+    },
+    "data_side_script": {
+      "path": "scripts/studies/data_side_real_beam.py",
+      "git_blob": "22a86dd5c5c8fa9f993e501abd426791034ac16c",
+      "observed": [
+        "tau_eff_ns = ACQ_WINDOW_NS - 30.0",
+        "mu_max = 0.38",
+        "Rmax_data_derived_Hz",
+        "Rmax(data-derived)"
+      ]
+    },
+    "data_side_report": {
+      "path": "reports/studies/data_side/REPORT.md",
+      "git_blob": "daf9ba94b66eac6988f748597fa0fae799f6aea4",
+      "observed": [
+        "Rmax from real-data occupancy",
+        "data-derived",
+        "corroborates canonical CL-010",
+        "DONE_DATA_ONLY"
+      ]
+    }
+  },
+  "current_like_executable_fixture": {
+    "status": "FLAWED",
+    "n_issues": 34,
+    "issue_counts": {
+      "LEDGER_FIELD_MISMATCH": 8,
+      "CL010_QUARANTINE_NOTE_MISSING": 3,
+      "SCRIPT_OVERAUTHORIZES_RMAX": 5,
+      "SCRIPT_FAIL_CLOSED_CONTRACT_MISSING": 6,
+      "REPORT_OVERAUTHORIZES_RMAX": 6,
+      "REPORT_FAIL_CLOSED_SCOPE_MISSING": 6
+    },
+    "accepted_rmax_mhz": null,
+    "scientific_acceptance": "BLOCKED",
+    "independent_calculations": {
+      "legacy_mu_convention": 0.38,
+      "cl011_tau_ns": 124.79018394263471,
+      "model_sensitivity_only_mhz": 3.045111305987686,
+      "former_130ns_model_mhz": 2.923076923076923,
+      "former_minus_exact_mhz": -0.1220343829107633,
+      "former_relative_difference_percent": -4.007550813357914,
+      "interpretation": "Both rates are model/convention calculations; selected-pulse occupancy does not identify mu_max, live exposure, or an absolute arrival rate."
+    }
+  },
+  "corrected_contract_fixture": {
+    "status": "VALIDATED",
+    "n_issues": 0,
+    "accepted_rmax_mhz": null,
+    "scientific_acceptance": "BLOCKED"
+  },
+  "validation": {
+    "commands": [
+      "python -m py_compile tools/audit/audit_data_side_rmax_semantics.py tests/test_audit_data_side_rmax_semantics.py tools/audit/render_data_side_rmax_semantics_evidence.py",
+      "pytest -q tests/test_audit_data_side_rmax_semantics.py"
+    ],
+    "pytest": "6 passed in 0.03s",
+    "json_parse": "PASS",
+    "svg_xml_parse": "PASS",
+    "max_python_line_length": 93
+  },
+  "scientific_boundary": "Software/documentation and estimand audit only. No absolute event rate, beam luminosity, live exposure, pile-up tolerance, calibration, or detector performance was measured."
+}

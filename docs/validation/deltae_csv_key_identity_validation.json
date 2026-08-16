@@ -1,0 +1,76 @@
+{
+  "schema": "ccb-deltae-csv-key-identity-audit/2",
+  "policy": "DELTAE_CSV_COMPOSITE_KEYS_MUST_BE_READ_AS_LOSSLESS_TEXT",
+  "status": "VALIDATED",
+  "repository_snapshot": {
+    "repository": "SzeChunYiu/ccb-testbeam",
+    "branch": "main",
+    "initial_main_sha": "87e81a490dd9889901fbfb18604685bc2e437d27",
+    "implementation_commit": "0565f4bc29c5d8230cd84c767339105adc28e5d6",
+    "front_door_path": "scripts/single_stave/deltaE_E.py",
+    "front_door_git_blob": "90e0709f5f065062bb4dc9f990975992a53d76b1",
+    "front_door_bytes": 5854,
+    "front_door_sha256": "edbf8f5513a39c95fdab7a6f895c7b5a4868ee1dad0b41148f195ceeab1c9c21",
+    "core_path": "scripts/single_stave/_deltaE_E_core.py",
+    "core_git_blob": "fe5dd5e4673f32fa5a4b94776531f2b392e12414",
+    "core_change": "NONE_EXACT_BLOB_RETAINED",
+    "test_path": "tests/test_deltae_csv_key_remediation.py",
+    "test_git_blob": "0c9fdf933e4749a2fbbd585c4a831cdc428ae599"
+  },
+  "reader_contract": {
+    "single_read_bytes_present": true,
+    "strict_decode_present": true,
+    "read_csv_has_dtype": true,
+    "policy_present": true,
+    "all_key_tokens_present": true,
+    "key_dtypes": {
+      "source_file_id": "string",
+      "run_id": "string",
+      "event_id": "string"
+    },
+    "manifest_uses_retained_csv_snapshot": true,
+    "result_publishes_reader_contract": true
+  },
+  "controls": {
+    "raw_source_file_tokens": ["001", "1"],
+    "default_inferred_tokens": ["1", "1"],
+    "lossless_text_tokens": ["001", "1"],
+    "default_distinct_composite_keys": 1,
+    "lossless_distinct_composite_keys": 2,
+    "default_false_cross_file_matches": 1,
+    "lossless_cross_file_matches": 0,
+    "same_snapshot_manifest_mutation_control": "PASS"
+  },
+  "findings": [],
+  "validation": {
+    "environment": {
+      "python": "3.13.5",
+      "pandas": "2.2.3"
+    },
+    "commands": [
+      "python -m py_compile deltaE_E.py test_deltae_csv_key_remediation.py",
+      "PYTHONPATH=. pytest -q test_wrapper.py",
+      "python equivalent_ast_reader_contract_check.py"
+    ],
+    "results": [
+      "compilation passed",
+      "4 passed in 0.03s against the exact front-door bytes and an isolated retained-core stub",
+      "dtype/read_bytes/decode/policy AST checks all true",
+      "JSON parse passed",
+      "SVG XML parse passed"
+    ],
+    "committed_but_not_locally_executed": [
+      "tests/test_deltae_csv_key_remediation.py::test_current_source_audit_returns_zero_findings",
+      "tests/test_deltae_csv_key_remediation.py::test_direct_cli_preserves_distinct_exact_keys"
+    ],
+    "reason": "The execution container could not clone GitHub; the full 761-line retained core was preserved by exact Git blob reference but was not materialized locally."
+  },
+  "acceptance": {
+    "focused_software_remediation": "VALIDATED",
+    "production_csv_reader": "VALIDATED",
+    "production_a002_rerun": "NOT_PERFORMED",
+    "expected_distinct_keys": 2,
+    "expected_false_cross_file_matches": 0
+  },
+  "scientific_boundary": "This validates CSV event-identifier and provenance integrity only. It does not validate A-002 amplitudes, pulse polarity, stopping fractions, DeltaE-E PID, calibration, uncertainty, or detector performance."
+}

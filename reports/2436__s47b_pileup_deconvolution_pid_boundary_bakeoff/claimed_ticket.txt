@@ -1,0 +1,4 @@
+manual_claim_issue: 2436
+claim_helper_command: tn-ticket claim testbeam-laptop-1 --project testbeam
+claim_helper_output: null/# null/null; manual recovery label swap used once
+# S47b: Pile-up deconvolution PID boundary robustness bakeoff

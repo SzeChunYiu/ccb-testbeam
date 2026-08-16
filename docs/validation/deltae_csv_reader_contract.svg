@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="776" viewBox="0 0 1200 776">
+  <title>DeltaE CSV provenance identifier validation</title>
+  <desc>Software and provenance validation evidence; not detector data.</desc>
+  <style>
+    .body { font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 18px; fill: #111; }
+    .frame { fill: #fff; stroke: #222; stroke-width: 2; }
+  </style>
+  <rect x="20" y="20" width="1160" height="736" rx="12" class="frame"/>
+  <text x="55" y="55" class="body">DeltaE-E CSV provenance identifier contract</text>
+<text x="55" y="84" class="body">Policy: DELTAE_CSV_IDENTIFIERS_MUST_USE_AN_EXPLICIT_TEXT_READER_CONTRACT</text>
+<text x="55" y="113" class="body"></text>
+<text x="55" y="142" class="body">Observed CI failure (Python 3.11 / pandas 3.0.5)</text>
+<text x="55" y="171" class="body">  all-digit 40-character commit inferred as: integer</text>
+<text x="55" y="200" class="body">  expected semantic type: string</text>
+<text x="55" y="229" class="body"></text>
+<text x="55" y="258" class="body">Remediation</text>
+<text x="55" y="287" class="body">  explicit text columns: 9</text>
+<text x="55" y="316" class="body">  authoritative typed metadata: result.json</text>
+<text x="55" y="345" class="body">  all-digit identifier preserved: True</text>
+<text x="55" y="374" class="body">  leading-zero identifier preserved: True</text>
+<text x="55" y="403" class="body"></text>
+<text x="55" y="432" class="body">Focused validation</text>
+<text x="55" y="461" class="body">  pytest: 3 passed in 0.03s</text>
+<text x="55" y="490" class="body">  Python: 3.13.5; pandas: 2.2.3</text>
+<text x="55" y="519" class="body"></text>
+<text x="55" y="548" class="body">Version-controlled inputs</text>
+<text x="55" y="577" class="body">  contract blob: 3721a06aca5c228dbd38ba502c6b5a5bdd521f0d</text>
+<text x="55" y="606" class="body">  contract SHA-256: f6c07e245ce2fdd83f7190f9c2aa2bb0b633f9e5c61cd437ba01cb32d1934fbb</text>
+<text x="55" y="635" class="body">  test blob: 3e580de8a3b29ab1950fd6e4bbea94ee9c59f681</text>
+<text x="55" y="664" class="body">  test SHA-256: a5c8b68a203d6e3beb46f513a937efd115246f7358ce144933e68e2cb154461f</text>
+<text x="55" y="693" class="body"></text>
+<text x="55" y="722" class="body">Boundary: software/provenance validation only; no A-002 physics result.</text>
+</svg>

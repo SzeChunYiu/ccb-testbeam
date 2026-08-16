@@ -1,0 +1,33 @@
+{
+  "schema": "ccb-clusterA-data-side-semantics-validation/1",
+  "policy": "DATA_ROWS_MUST_BE_FINITE_AND_ROW_LEVEL_RESULTS_MUST_NOT_POSE_AS_EVENTS",
+  "status": "VALIDATED",
+  "finding_count": 0,
+  "reviewed_old_blob": "ccdc21dd967d0a25694261d488f959d89286a88d",
+  "validated_script_blob": "8bda06c55dc00c1af3e025411fcc55df43f1487e",
+  "validated_test_blob": "21d3c9ecdd2f9837cd8776adc69fccf5a9a11b63",
+  "confirmed_defects": [
+    "invalid numeric cells were converted to zero and nonfinite values were not rejected",
+    "the MC comparison loaded PrimaryWeight but plotted an unweighted hexbin",
+    "multi-row table quantities were labelled as event counts and stopping distributions",
+    "input bytes and exact hashes were not retained"
+  ],
+  "negative_control": {
+    "primary_weights": [1.0, 100.0],
+    "unweighted_bin_value": 2.0,
+    "interpretation": "former hexbin counted events and ignored the weight vector"
+  },
+  "corrected_control": {
+    "primary_weights": [1.0, 100.0],
+    "primary_weight_sum": 101.0,
+    "interpretation": "corrected hexbin uses C=PrimaryWeight and reduce_C_function=sum"
+  },
+  "validation": {
+    "py_compile": "PASS",
+    "pytest": "7 passed in 0.36s",
+    "empty_selected_sample": "REJECTED",
+    "json_parse": "PASS",
+    "svg_parse": "PASS"
+  },
+  "scientific_boundary": "No production CSV or ROOT file was available; this validates software semantics and fail-closed behavior only."
+}

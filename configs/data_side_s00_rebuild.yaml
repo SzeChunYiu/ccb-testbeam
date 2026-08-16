@@ -1,0 +1,59 @@
+# Production config: rebuild S00 selected B-pulse table from REAL raw HRDv
+# waveforms staged on LUNARC at /projects/hep/fs10/shared/nnbar/ccb_data/hrd/root
+# (data located 2026-07-25; previously BLOCKED_DATA).
+#
+# KEY DATA-SIDE FIX: samples_per_channel = 16 (raw ccb_data HRDv = 128 = 8x16),
+# NOT 18 as in the laptop-era s01d config (8x18=144). The amplitude cut and
+# baseline-sample selection are sample-count-independent, so the canonical
+# S00 count (640,737, CL-001) must reproduce from this raw source.
+study_id: DATA-S00-LUNARC
+title: S00 selected B-pulse table rebuilt from real raw HRDv (LUNARC ccb_data)
+worker: lunarc-fs10
+
+raw_root_dir: /projects/hep/fs10/shared/nnbar/ccb_data/hrd/root
+sorted_b_dir: /projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/_sorted_not_present
+output_dir: reports/studies/data_side/s00_rebuild
+pulse_table_path: reports/studies/data_side/s00_rebuild/s00_selected_b_pulses.csv.gz
+
+amplitude_cut_adc: 1000.0
+baseline_samples: [0, 1, 2, 3]
+samples_per_channel: 16
+
+staves:
+  B2: 0
+  B4: 2
+  B6: 4
+  B8: 6
+
+run_groups:
+  sample_i_calib: [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42]
+  sample_i_analysis: [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+  sample_ii_calib: [64]
+  sample_ii_analysis: [58, 59, 60, 61, 62, 63, 65]
+
+expected_counts:
+  total_selected_pulses: 640737
+  groups:
+    sample_i_calib: {events: 239559, pulses: 248745}
+    sample_i_analysis:
+      events: 243133
+      pulses: 252266
+      staves: {B2: 241422, B4: 6451, B6: 3094, B8: 1299}
+    sample_ii_calib: {events: 12103, pulses: 14630}
+    sample_ii_analysis:
+      events: 89807
+      pulses: 125096
+      staves: {B2: 88213, B4: 21229, B6: 11148, B8: 4506}
+
+ml_check:
+  random_seed: 20260610
+  heldout_runs: [57, 65]
+  cv_folds: 3
+  regularization_c: [0.01, 0.1, 1.0, 10.0]
+  max_train_per_class: 60000
+  max_test_per_class: 30000
+  selected_keep_probability: 0.20
+  nonselected_keep_probability: 0.04
+  near_threshold_low_adc: 700.0
+  near_threshold_high_adc: 1300.0
+  bootstrap_samples: 1000

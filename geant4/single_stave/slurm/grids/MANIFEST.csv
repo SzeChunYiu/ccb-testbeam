@@ -1,0 +1,13 @@
+knob,channel,target,unit,npoints,n_replicates,rationale
+pde_scale,cli,--pde-scale,x PDE table,15,3,"+/-40% spans the OV range + device spread (S13360-3050CS ~25-50% peak)."
+collection_efficiency,cli,--collection-efficiency,frac,15,3,"Post-transport collection efficiency in [0,1]; 0.5 = poor, 1.0 = ideal."
+recovery_time,env,CCB_SIPM_RECOVERY_TIME_NS,ns,15,3,"Microcell RC recovery; S13360-3050CS tens of ns, swept 5-100 ns."
+dark_count,env,CCB_SIPM_DARK_COUNT_RATE_HZ,Hz,15,3,"DCR: 0 (cold) to 2 MHz (hot/irradiated); nominal ~0.5 MHz/cell model."
+crosstalk,env,CCB_SIPM_CROSSTALK_PROB,prob,15,3,"Prompt crosstalk; S13360-3050CS spec ~3% typ, swept 0-15%."
+afterpulse,env,CCB_SIPM_AFTERPULSE_FAST_PROB,prob,15,3,"Fast afterpulse; ~1% nominal, swept 0-8% (trap-density growth)."
+window_end,env,CCB_SIPM_WINDOW_END_NS,ns,15,3,"Integration window end; 50-1000 ns (signal completeness vs dark noise)."
+birks_kB,cli,--birks-kB,mm/MeV,15,3,"Birks kB; 0 = no quench, 0.126 nominal, 0.22 heavy quencher."
+reflectivity,cli,--reflectivity-scale,x TiO2,15,3,"TiO2 reflectivity scale; 0.6 degraded - 1.05 (upper tolerance)."
+attenuation,cli,--attenuation-scale,x attenuation len,15,3,"Y-11 attenuation-length scale; 0.5 high loss - 2.0 low loss."
+far_end,cli,--far-end,mode,12,3,"Far-end boundary; absorb|open|mirror|instrumented (near/far split)."
+sipm_n_cells,cli,--sipm-n-cells,cells,15,3,"Microcell count for saturation; 1600-6400 (S13360-3050CS = 3600)."

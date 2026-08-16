@@ -1,0 +1,17 @@
+\section{Reproducibility and figure-generation requirements}
+
+Every quantitative paper figure must be generated from a tracked machine-readable result or source table. The producing record must include source commit, producer hash, input paths and SHA-256 values, event/run population, selection, weights, uncertainty method and evidence class. No headline number should be manually copied into a plotting script or caption.
+
+Data and MC must use compatible observable definitions. Beam ADC amplitudes and truth-level Geant4 energy deposits may be shown in separate panels, but they must not be placed on a shared calibrated energy axis without a validated response transformation. Weighted MC results must state the weight semantics and report \(\sum w\), \(\sum w^2\), effective sample size and weight pathologies relevant to the estimand.
+
+Timing and energy calibrations must be fit on declared calibration/training populations and evaluated on held-out runs or simulation populations without retuning. Resampling must preserve the physical/statistical source unit, normally DAQ run/event for beam data and generator event for MC, rather than assuming every exported hit/pulse row is independent.
+
+The canonical publication workflow is
+\[
+\begin{aligned}
+\text{physics/provenance contract} &\rightarrow \text{result + manifest + source table} \\
+&\rightarrow \text{claim ledger} \rightarrow \text{figure/table} \\
+&\rightarrow \text{manuscript} \rightarrow \text{adversarial review}.
+\end{aligned}
+\]
+An issue is not publication-complete when code alone runs successfully.

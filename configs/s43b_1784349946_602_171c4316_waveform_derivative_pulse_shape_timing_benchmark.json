@@ -1,0 +1,39 @@
+{
+  "ticket_id": "1784349946.602.171c4316",
+  "study_id": "S43b",
+  "worker": "testbeam-laptop-3",
+  "title": "waveform derivative pulse-shape timing benchmark",
+  "claimed_ticket_text": "1784349946.602.171c4316\n# s43b waveform derivative pulse-shape timing benchmark\n\nAcademic-grade study: compare a traditional constant-fraction plus template-derivative timing fit against ridge, gradient-boosted trees, MLP, 1D-CNN, and a compact waveform transformer for extracting pulse shape and arrival timing under pedestal drift. Use run-held-out splits, ablate derivative/curvature windows, report timing resolution and bias with paired bootstrap 95% CIs, and stratify by amplitude, pedestal state, and late-tail morphology.\n",
+  "output_dir": "reports/1784349946.602.171c4316__s43b_waveform_derivative_pulse_shape_timing_benchmark",
+  "raw_root_dir": "data/root/root",
+  "samples_per_channel": 18,
+  "baseline_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "duplicate_readout_channels": {"B2": 1, "B4": 3, "B6": 5, "B8": 7},
+  "expected_selected_pulses": 640737,
+  "expected_group_counts": {
+    "sample_i_calib": 248745,
+    "sample_i_analysis": 252266,
+    "sample_ii_calib": 14630,
+    "sample_ii_analysis": 125096
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "heldout_runs": [42, 50, 57, 58, 60, 62, 64, 65],
+  "max_per_run_stave": 180,
+  "bootstrap_replicates": 500,
+  "random_seed": 20430718,
+  "mlp_max_iter": 35,
+  "nn": {
+    "epochs": 6,
+    "transformer_epochs": 5,
+    "batch_size": 1024,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001
+  }
+}

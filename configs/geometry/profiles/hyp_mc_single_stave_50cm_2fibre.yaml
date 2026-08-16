@@ -1,0 +1,30 @@
+schema: ccb-geometry-profile/1
+profile_id: hyp_mc_single_stave_50cm_2fibre
+status: HYPOTHESIS
+claims_authorized: false
+issues: [987, 991, 999]
+adr: docs/adr/ADR-0002-geometry-kinematics-hypotheses.md
+source_type: CODE
+source_refs:
+  - geant4/single_stave/include/DetectorConstruction.hh
+  - docs/stave-geometry.md
+contradicts:
+  - hyp_docs_stave_100cm_1fibre
+parameters:
+  kind: single_stave_optical
+  stave_half_x_cm: 25.0
+  stave_half_y_cm: 2.59
+  stave_half_z_cm: 1.0
+  stave_length_cm: 50.0
+  n_fibres: 2
+  fibre_y_cm: [-1.0, 1.0]
+  fibre_radius_mm: 0.90
+  hole_radius_mm: 1.0
+  fibre_half_x_cm: 26.0
+  physical_readout_channels: ["F1+x"]
+  control_channels: ["F1-x", "F2+x", "F2-x"]
+notes: >
+  Matches current Geant4 single-stave compile-time constants (kStaveHalfX=25 cm,
+  two fibres at y=±1 cm). Does NOT authorize ~1 m beam-test stave claims (#991)
+  or singular-fibre Chapter-2 claims (#987). Use for MC prototype / optical
+  systematic campaigns that explicitly accept the 50 cm / 2-fibre hypothesis.

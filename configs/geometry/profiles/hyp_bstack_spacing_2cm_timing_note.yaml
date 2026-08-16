@@ -1,0 +1,22 @@
+schema: ccb-geometry-profile/1
+profile_id: hyp_bstack_spacing_2cm_timing_note
+status: HYPOTHESIS
+claims_authorized: false
+issues: [992]
+adr: docs/adr/ADR-0002-geometry-kinematics-hypotheses.md
+source_type: DOC_CLAIM
+source_refs:
+  - docs/01_setup_and_detector.md
+contradicts:
+  - hyp_bstack_spacing_4cm_newer_report
+parameters:
+  kind: bstack_layer_spacing
+  analysed_stave_labels: ["B2", "B4", "B6", "B8"]
+  analysed_stave_centres_cm: [0.0, 2.0, 4.0, 6.0]
+  analysed_stave_spacing_cm: 2.0
+  spacing_convention: centre_to_centre_analysed_staves_timing_note
+notes: >
+  Older B-stack timing note uses 2 cm per analysed-stave step (e.g. B2–B8
+  depth 6 cm). Contradicts the 4 cm newer-report spacing (#992). Selecting
+  this profile documents the timing-note hypothesis only; it does not
+  authorize TOF/range claims until the physical stack table is closed.

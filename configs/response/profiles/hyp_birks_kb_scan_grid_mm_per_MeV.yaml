@@ -1,0 +1,19 @@
+schema: ccb-response-profile/1
+profile_id: hyp_birks_kb_scan_grid_mm_per_MeV
+kind: quenching
+status: HYPOTHESIS
+claims_authorized: false
+issues: [1008]
+adr: docs/adr/ADR-0004-quenching-material-obs-window-hypotheses.md
+source_type: CODE
+source_refs:
+  - geant4/single_stave/macros
+parameters:
+  model_form: birks
+  model_form_family: first_order_birks
+  kB_grid_mm_per_MeV: [0.0, 0.08, 0.126, 0.17, 0.22]
+  kB_unit: mm/MeV
+  production_validity: SENSITIVITY_ONLY
+notes: >
+  Existing systematic grid scans kB inside one functional form. Useful for
+  parameter uncertainty under Birks; NOT a substitute for model-form comparison.

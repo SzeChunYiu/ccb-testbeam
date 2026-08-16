@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="650" viewBox="0 0 1040 650" role="img" aria-labelledby="title desc">
+<title id="title">Legacy MV1 row-index split versus group-disjoint split</title>
+<desc id="desc">Synthetic software-method evidence. Two events each contribute two tracks. Row-index parity places tracks from each event in both train and test, whereas a group-disjoint split keeps each event on one side.</desc>
+<defs><pattern id="diag" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#333" stroke-width="2"/></pattern></defs>
+<rect width="100%" height="100%" fill="white"/>
+<text x="30" y="38" font-family="sans-serif" font-size="24" font-weight="bold">MV1 PID split audit</text>
+<text x="30" y="66" font-family="sans-serif" font-size="14">Synthetic regression evidence — not beam data and not a performance estimate.</text>
+<text x="30" y="102" font-family="sans-serif" font-size="16" font-weight="bold">Legacy producer: row index parity</text>
+<text x="45" y="152" font-family="monospace" font-size="14">row 0: Event A / track 0</text>
+<rect x="340" y="132" width="180" height="30" fill="#dddddd" stroke="black"/>
+<text x="430" y="153" text-anchor="middle" font-family="sans-serif" font-size="14">TRAIN</text>
+<text x="45" y="200" font-family="monospace" font-size="14">row 1: Event A / track 1</text>
+<rect x="340" y="180" width="180" height="30" fill="url(#diag)" stroke="black"/>
+<text x="430" y="201" text-anchor="middle" font-family="sans-serif" font-size="14">TEST</text>
+<text x="45" y="248" font-family="monospace" font-size="14">row 2: Event B / track 0</text>
+<rect x="340" y="228" width="180" height="30" fill="#dddddd" stroke="black"/>
+<text x="430" y="249" text-anchor="middle" font-family="sans-serif" font-size="14">TRAIN</text>
+<text x="45" y="296" font-family="monospace" font-size="14">row 3: Event B / track 1</text>
+<rect x="340" y="276" width="180" height="30" fill="url(#diag)" stroke="black"/>
+<text x="430" y="297" text-anchor="middle" font-family="sans-serif" font-size="14">TEST</text>
+<text x="560" y="170" font-family="sans-serif" font-size="15" font-weight="bold">Failure mode</text>
+<text x="560" y="198" font-family="sans-serif" font-size="14">Each event appears in both train and test.</text>
+<text x="560" y="224" font-family="sans-serif" font-size="14">Event-correlated detector or generator features can leak.</text>
+<text x="30" y="350" font-family="sans-serif" font-size="16" font-weight="bold">Required remediation: group-disjoint event split</text>
+<text x="45" y="407" font-family="monospace" font-size="14">Event A / tracks 0 and 1</text>
+<rect x="340" y="387" width="180" height="30" fill="#dddddd" stroke="black"/>
+<text x="430" y="408" text-anchor="middle" font-family="sans-serif" font-size="14">TRAIN</text>
+<text x="45" y="467" font-family="monospace" font-size="14">Event B / tracks 0 and 1</text>
+<rect x="340" y="447" width="180" height="30" fill="url(#diag)" stroke="black"/>
+<text x="430" y="468" text-anchor="middle" font-family="sans-serif" font-size="14">TEST</text>
+<text x="560" y="414" font-family="sans-serif" font-size="15" font-weight="bold">Acceptance boundary</text>
+<text x="560" y="442" font-family="sans-serif" font-size="14">Keep every event wholly in train or test.</text>
+<text x="560" y="468" font-family="sans-serif" font-size="14">Rerun the exact 400369-track source and evaluate uncertainty.</text>
+<line x1="30" y1="515" x2="1010" y2="515" stroke="black"/>
+<text x="30" y="548" font-family="sans-serif" font-size="14">Legacy fixed outputs: HGB AUC 0.9859658513538254; purity@nominal 90% efficiency 0.9644090769970706.</text>
+<text x="30" y="576" font-family="sans-serif" font-size="14">These values are GATED: no event-group-disjoint rerun, no uncertainty, and no beam-data PID closure.</text>
+<text x="30" y="618" font-family="sans-serif" font-size="12">Policy: LEGACY_MV1_PID_OUTPUTS_REQUIRE_GROUP_DISJOINT_RERUN_AND_UNCERTAINTY</text>
+</svg>

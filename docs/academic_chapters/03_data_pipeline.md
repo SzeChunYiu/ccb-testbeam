@@ -1,6 +1,6 @@
 # §3 — Data Pipeline: From Raw Waveforms to Truth-Bridged Analysis
 
-> **ACCEPTED by nature-reviewer (3/3).** 5,900 words, 8 figures. All 6 reviewer fixes implemented: Data Availability and Code Availability statements added, Reporting Summary compatibility noted, figure count verified, MC calibration/validation split declared, dead-channel claim caveated.
+> **REVIEW_STATUS: EDITORIAL_REVIEWED** (AI role-separated nature-reviewer-style lenses; not independent human peer review). Scope: readability/structure only. Does **not** imply SOURCE_VERIFIED, EXECUTED_REPRODUCED, or CLAIM_AUTHORIZED. Open factual blockers remain tracked in GitHub issues / claim ledger. Contract: `docs/contracts/REVIEW_STATUS_TAXONOMY.json` / `chatgpt_todo/ATOMIC_RESEARCH_PROTOCOL.md`.
 
 The analysis of the CCB test-beam data proceeds through a three-stage pipeline that reduces 110 raw ROOT files to a unified selected-pulse table, distributes the reduced data into parallel analysis branches, and cross-validates every result against a GEANT4 Monte Carlo simulation equipped with a custom digitizer that converts truth-level energy depositions into synthetic ADC waveforms. This pipeline architecture ensures that every physics result — timing resolution, pile-up tolerance, particle identification — is assessed against a truth-labelled reference obtained by running the identical analysis code on digitised Monte Carlo events.
 
@@ -201,7 +201,7 @@ The absence of dead or bad channels is a notable validation of the HRD detector'
 
 The selected-pulse table serves as the single point of entry for all downstream physics analyses, which are organised into four parallel branches:
 
-**Timing branch (Studies S02-S06, Chapter 4).** This branch extracts particle arrival times using two complementary algorithms: a constant-fraction discriminator (CFD) at 20% of peak amplitude, and an optimal filter (OF) matched to the average pulse template. Inter-stave time residuals provide the primary observable for timing resolution. Corrections for amplitude-dependent timewalk are applied using an analytic parametrisation derived from the pulse shape. The combined multi-stave timing resolution reaches sigma_68 approximately 0.54-0.56 ns for the B4+B6+B8 combination.
+**Timing branch (Studies S02-S06, Chapter 4).** This branch extracts particle arrival times using two complementary algorithms: a constant-fraction discriminator (CFD) at 20% of peak amplitude, and an optimal filter (OF) matched to the average pulse template. Inter-stave time residuals provide the primary observable for timing resolution. Corrections for amplitude-dependent timewalk are applied using an analytic parametrisation derived from the pulse shape. The combined multi-stave timing resolution was historically quoted as sigma_68 approximately 0.54-0.56 ns for the B4+B6+B8 combination (legacy value, withheld — source-absent, CL-004/CL-005; see the §4 quarantine note).
 
 **Pile-up branch (Studies S10-S11, Chapter 5).** This branch characterises the rate of overlapping pulses within the 180 ns acquisition window. The live-time method counts the fraction of events in which the pre-trigger baseline region is free of preceding pulses, yielding an effective beam rate and a maximum tolerable rate R_max approximately 3.05 MHz, validated by Monte Carlo to 0.2%.
 

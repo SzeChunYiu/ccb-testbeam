@@ -6,37 +6,55 @@ build-backend = "setuptools.build_meta"
 name = "ccb-mc-validation"
 version = "0.1.0"
 description = "Monte Carlo validation framework for CCB HiBeam testbeam analysis"
-requires-python = ">=3.9"
+# Narrowed to the version actually exercised in CI (3.11); the
+# matrix does not test 3.9/3.10, so claiming >=3.9 would be dishonest.
+requires-python = ">=3.11"
 dependencies = [
     "numpy>=1.23",
     "pandas>=1.5",
     "scipy>=1.10",
     "matplotlib>=3.7",
+    "pillow>=9.0",
+    "pypdf>=5.0",
     "scikit-learn>=1.2",
     "pyyaml>=6.0",
+    "pyarrow>=14.0",
 ]
 
 [project.optional-dependencies]
-root = ["uproot>=5.6"]
+# uproot 5.6.9's RNTuple write path has a circular self-import bug:
+# `_cascade.add_rntuple` imports `_cascadentuple`, whose top-level `import
+# uproot` finds a half-initialized `SimpleNamespace` placeholder in
+# `sys.modules['uproot']` and raises `AttributeError: no attribute 'writing'`.
+# The test fixtures therefore use the explicit TTree path (`mktree` + `extend`)
+# instead of dict-assignment, which avoids the RNTuple cascade entirely.
+# uproot 5.7.x is not a drop-in fix: it has a different cascade bug
+# (`_cascadentuple._regularize_input_type_to_awkward` chokes on `np.dtype`),
+# so pin to the last 5.6.x release until that is fixed upstream.
+root = ["uproot>=5.6,<5.7", "awkward>=2.6,<3.0"]
 dev = [
     "pytest>=7.0",
     "ruff>=0.1",
+    "jsonschema>=4.0",
     "ccb-mc-validation[root]",
 ]
 
 [project.scripts]
 ccb-mc-validation = "ccb_mc_validation.cli:main"
+ccb-paper-plots = "ccb_plotting.wiki_figures:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-pythonpath = ["src"]
+# Both `src/` (packages) and the repo root (top-level `tools/` and `scripts/`
+# modules imported by the tests) must be importable when pytest runs.
+pythonpath = ["src", "."]
 
 [tool.ruff]
 line-length = 100
-target-version = "py39"
+target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP"]

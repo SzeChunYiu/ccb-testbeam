@@ -1,0 +1,98 @@
+{
+  "bindings_checked": [
+    {
+      "claim_id": "CL-010",
+      "label": "Rmax (pile-up tolerance)",
+      "required_status": "BLOCKED",
+      "required_truth_tokens": [
+        "derived",
+        "conflicted"
+      ],
+      "required_value_tokens": [
+        "Withheld",
+        "unresolved"
+      ]
+    },
+    {
+      "claim_id": "CL-011",
+      "label": "τeff (effective live-time)",
+      "required_status": "VALIDATED",
+      "required_truth_tokens": [
+        "data",
+        "MC",
+        "self-consistent"
+      ],
+      "required_value_tokens": []
+    },
+    {
+      "claim_id": "CL-007",
+      "label": "MV4 raw timing pull",
+      "required_status": "VALIDATED",
+      "required_truth_tokens": [],
+      "required_value_tokens": []
+    },
+    {
+      "claim_id": "CL-015",
+      "label": "ML duplicate-readout selection",
+      "required_status": "GATED",
+      "required_truth_tokens": [
+        "data",
+        "external duplicate readout"
+      ],
+      "required_value_tokens": [
+        "No canonical winner",
+        "coverage"
+      ]
+    },
+    {
+      "claim_id": "CL-016",
+      "label": "ML saturation recovery",
+      "required_status": "GATED",
+      "required_truth_tokens": [
+        "data",
+        "external duplicate readout"
+      ],
+      "required_value_tokens": [
+        "Withheld",
+        "worse than raw"
+      ]
+    }
+  ],
+  "claim_ledger": {
+    "bytes": 4458,
+    "path": "docs/validation/executive_summary_relevant_claims.csv",
+    "sha256": "0e2865740a1b6cdac49790209efa1bcf09ca76f0eee409372c8f5b60b2d14bd0"
+  },
+  "evidence_class": "repository_documentation_and_source_backed_claim_governance",
+  "issues": [],
+  "n_issues": 0,
+  "negative_control": {
+    "confirmed_issue_classes": [
+      "EXECUTIVE_STATUS_MISMATCH",
+      "MISSING_EXECUTIVE_CLAIM_ROW",
+      "UNSUPPORTED_EXECUTIVE_STATEMENT",
+      "C12_MC_TRUTH_STATUS_MISSING"
+    ],
+    "expected_status": "FLAWED",
+    "fixture": "pre-change-like executive summary"
+  },
+  "policy": "EXECUTIVE_SUMMARY_MUST_MATCH_EXACT_WIDTH_CANONICAL_CLAIMS",
+  "repository_source_blobs": {
+    "claim_ledger": "853d955f449268ec614ac61f33f243d30cf473e0",
+    "executive_summary_before": "eb8c2f5d287ff227a15522754f48a0c75c1336ca"
+  },
+  "scientific_boundary": [
+    "does not resolve Rmax physics criterion",
+    "does not establish a P04p production winner",
+    "does not authorize P07e saturation recovery",
+    "does not identify C12 in real data"
+  ],
+  "status": "VALIDATED",
+  "summary": {
+    "bytes": 12239,
+    "path": "docs/academic_chapters/01_executive_summary.md",
+    "sha256": "af76aa164cc5a7f994a135acaf4f15961d30e53d4d27346ec21443444b2f15d1"
+  },
+  "validator": "validate_executive_summary_claims.py",
+  "version": "1.0.0"
+}

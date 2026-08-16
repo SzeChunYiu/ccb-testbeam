@@ -297,20 +297,13 @@ def write_resolved_config(config: ResolvedConfig, destination: Path | None = Non
         "detector": config.detector,
         "logging_level": config.logging_level,
         "studies": config.studies,
-        "resolved_digest": sha256_bytes(
-            json.dumps(
-                {
-                    "schema_version": config.schema_version,
-                    "content_sha256": config.content_sha256,
-                    "paths": {
-                        "mc_root": str(config.mc_root),
-                        "data_pulses": str(config.data_pulses),
-                    },
-                },
-                sort_keys=True,
-            ).encode("utf-8")
-        ),
     }
+    # PROV-002: digest the FULLY resolved config (seeds, units, waveform,
+    # detector, coincidence, logging, studies, paths), not just a 4-field subset,
+    # so two effective runs sharing a config file cannot collide on the digest.
+    payload["resolved_digest"] = sha256_bytes(
+        json.dumps(payload, sort_keys=True).encode("utf-8")
+    )
 
     with out_path.open("w", encoding="utf-8") as handle:
         yaml.safe_dump(payload, handle, sort_keys=False)

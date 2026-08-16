@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="560" viewBox="0 0 1040 560">
+<rect width="100%" height="100%" fill="white" stroke="black"/>
+<text x="48" y="58" font-size="30" font-weight="bold">AUD-FIG-005 registry snapshot provenance</text>
+<text x="48" y="94" font-size="18">build_report.json now identifies the exact duplicate-key-safe registry bytes</text>
+<text x="48" y="126" font-size="16">main 03851ff128a5 → bd81bce0fa07 | status VALIDATED</text>
+<text x="48" y="154" font-size="15">solid = former contract; outlined = corrected contract</text>
+<text x="48" y="208" font-size="20">Registry identity fields</text>
+<rect x="360" y="190" width="560" height="28" fill="none" stroke="black"/>
+<rect x="360" y="190" width="0" height="12" fill="black"/>
+<rect x="360" y="206" width="560" height="12" fill="none" stroke="black" stroke-width="3"/>
+<text x="938" y="201" font-size="16">before 0</text>
+<text x="938" y="219" font-size="16">after 5</text>
+<text x="48" y="300" font-size="20">Controlled format failures</text>
+<rect x="360" y="282" width="560" height="28" fill="none" stroke="black"/>
+<rect x="360" y="282" width="0" height="12" fill="black"/>
+<rect x="360" y="298" width="560" height="12" fill="none" stroke="black" stroke-width="3"/>
+<text x="938" y="293" font-size="16">before 0</text>
+<text x="938" y="311" font-size="16">after 2</text>
+<text x="48" y="392" font-size="20">Focused tests</text>
+<rect x="360" y="374" width="560" height="28" fill="none" stroke="black"/>
+<rect x="360" y="374" width="0" height="12" fill="black"/>
+<rect x="360" y="390" width="560" height="12" fill="none" stroke="black" stroke-width="3"/>
+<text x="938" y="385" font-size="16">before 0</text>
+<text x="938" y="403" font-size="16">after 12</text>
+<text x="48" y="510" font-size="15">Scientific boundary: software/provenance only; no figure value or detector result was revalidated.</text>
+</svg>

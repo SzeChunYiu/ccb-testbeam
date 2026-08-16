@@ -6,7 +6,7 @@
 
 [![Studies](https://img.shields.io/badge/studies-~230-blue)](studies/STUDIES.md)
 [![MC Validations](https://img.shields.io/badge/MC%20validations-6-green)](studies/MC_VALIDATION_PROGRAM.md)
-[![Python](https://img.shields.io/badge/python-3.11-3776AB)](pyproject.toml)
+[![Python](https://img.shields.io/badge/python->=3.11-3776AB)](pyproject.toml)
 [![Status](https://img.shields.io/badge/status-research%20in%20progress-yellow)](WIKI.md)
 
 ---
@@ -16,6 +16,7 @@
 | You want to... | Read this |
 |---|---|
 | **Understand the whole project** | → **[`WIKI.md`](WIKI.md)** — illustrated, comprehensive, self-contained |
+| **Canonical one-screen dashboard** | → **[`reports/PROJECT_DASHBOARD.md`](reports/PROJECT_DASHBOARD.md)** — proven vs BLOCKED at a glance |
 | **See the key results** | → [WIKI.md §1 Executive Summary](WIKI.md#1-executive-summary) |
 | **See what's missing / what to do next** | → **[`STUDY_GAPS.md`](STUDY_GAPS.md)** — gap analysis & open questions |
 | **Get the one-page status** | → [`PROJECT_REPORT.md`](PROJECT_REPORT.md) |
@@ -26,14 +27,43 @@
 
 ## Headline Results
 
-| Measurement | Value | Confidence |
-|---|---|---|
-| Selected pulses | **640,737** (exact reproduction) | ✅ |
-| Best timing (B6) | **σ₆₈ ≈ 0.68–0.75 ns** | ✅ MC-validated |
-| Combined 3-stave (B4+B6+B8) | **σ₆₈ ≈ 0.54–0.56 ns** | ⚠️ Data-only |
-| Pile-up tolerance | **R_max ≈ 3.05 MHz** (corrected from 4.22 MHz) | ✅ MC-validated |
-| Proton/deuteron PID | **AUC = 0.986** | ✅ MC-validated |
-| Anomaly identity | **C12 nuclear recoils** (0.32%) | ✅ MC-identified |
+> **All results are preliminary and study-scoped, not peer-reviewed.**
+> Canonical entry point: [`reports/PROJECT_DASHBOARD.md`](reports/PROJECT_DASHBOARD.md).
+> Machine-readable public authority: [`docs/contracts/PUBLIC_CLAIM_AUTHORITY.json`](docs/contracts/PUBLIC_CLAIM_AUTHORITY.json).
+> The row-by-row claim ledger is [`docs/claim_ledger.csv`](docs/claim_ledger.csv); this
+> section mirrors [`reports/studies/clusterE/claims_table.csv`](reports/studies/clusterE/claims_table.csv)
+> and must not advertise a stronger status than the ledger.
+
+**MC method closure proven; detector-performance transfer to beam data remains gated.**
+The full analysis chain — timing, ΔE-E PID, ADC/Birks energy calibration, and pile-up —
+is demonstrated end-to-end on the Krakow 1M-event Geant4 Monte Carlo (clusters A–D +
+Opticks, all merged on `origin/main`). Raw beam ROOT files are **located on LUNARC at `/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/`** (2026-07-25; see `reports/studies/data_side/REPORT.md`), but the **canonical archive not yet populated** at `/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam-data/` (`DATA.md`). Located
+waveforms are 16-sample; detector-resolution claims remain gated by format/lineage
+(#952/#962) and bench calibration. Public headlines are governed by
+`docs/contracts/PUBLIC_CLAIM_AUTHORITY.json` + `docs/claim_ledger.csv`.
+
+| Claim | Value | Evidence class | Status | Source |
+|---|---|---|---|---|
+| Selected B-stack pulses (S00 gate) | **640,737** | DATA_MEASUREMENT | 🔒 GATED | CL-001 |
+| Combined timing σ₆₈ (4-sensor, MC) | **0.089 ns** | MC_METHOD_CLOSURE | ✅ PASS | clusterB #918 |
+| PID p-vs-d AUC (realistic chain, MC) | **0.898** | SIMULATION_RESULT | ✅ PASS | clusterA #921 |
+| ADC calibration (digitizer gain, MC) | **119.17 ADC/MeV** | SIMULATION_RESULT | ✅ PASS | clusterC #917 |
+| Birks kB (per-track dE/dx, MC) | **0.0156 cm/MeV** | SIMULATION_RESULT | ✅ PASS | clusterC #917 |
+| Digitizer-domain Rmax (0% gate, MC) | **0.605 MHz** | SIMULATION_RESULT | ✅ PASS | clusterC #917 |
+| Opticks GPU/CPU parity | 0 GPU hits / 4592 CPU; CPU ctest 9/9 | SIMULATION_RESULT | 🟡 PARTIAL | opticks #920 |
+| Detector timing resolution (data) | withheld | BLOCKED_DATA | ⛔ BLOCKED | CL-002..006 |
+| Canonical pile-up Rmax | withheld | BLOCKED | ⛔ BLOCKED | CL-010 (S-STAT-003) |
+| Legacy Rmax = 3.044 MHz | SUPERSEDED | SUPERSEDED | 🚫 SUPERSEDED | CL-012 (do not use) |
+| ADC gain (data/MC proxy, MV0) | **92 ADC/MeV** (heuristic ±30% envelope) | DATA_MC_PROXY | 🟡 GATED | CL-013 |
+| PID on beam data | deferred | BLOCKED_DATA | ⛔ BLOCKED | format/lineage gates #952/#962 |
+| Stopping-depth data/MC | χ²/ndf ≈ 6.8e4 — FAIL | MC_DIAGNOSTIC | 🟠 TENSION | CL-021 |
+
+**Read the statuses literally.** The ±30% MV0 envelope is a heuristic, **not a
+confidence interval**. The data anomaly near 4% is **not** identified as C12
+(CL-022). The systematic budget is incomplete (CL-026). For the publication narrative
+see [`docs/PUBLICATION_NARRATIVE.md`](docs/PUBLICATION_NARRATIVE.md); for the
+synthesis figures see [`reports/PROJECT_DASHBOARD.md`](reports/PROJECT_DASHBOARD.md).
+
 
 ## Repository Layout
 

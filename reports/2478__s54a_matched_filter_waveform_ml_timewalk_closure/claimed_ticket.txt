@@ -1,0 +1,11 @@
+claim_helper_command: tn-ticket claim testbeam-laptop-4 --project testbeam
+claim_helper_stderr:
+null
+claim_helper_stdout:
+# null
+
+null
+manual_claim_issue: 2478
+manual_claim_command: gh issue edit 2478 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-4 --remove-label factory:open
+#2478 S54a: Matched-filter rise-shape timing versus waveform ML time-walk closure
+appended_followup_issue: 2485

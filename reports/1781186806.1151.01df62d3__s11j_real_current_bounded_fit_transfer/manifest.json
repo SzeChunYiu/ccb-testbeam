@@ -1,0 +1,128 @@
+{
+  "command": "/home/billy/anaconda3/bin/python scripts/s11j_1781186806_1151_01df62d3_real_current_bounded_fit_transfer.py --config configs/s11j_1781186806_1151_01df62d3_real_current_bounded_fit_transfer.json",
+  "created_utc": "2026-07-10T09:40:30Z",
+  "git_commit": "159b6b607a5ccb388ce91a78626d1b65ad1b24ab",
+  "inputs": [
+    {
+      "bytes": 9623179,
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0058.root",
+      "sha256": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1"
+    },
+    {
+      "bytes": 12032616,
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0059.root",
+      "sha256": "64fced477c9c45f9726cde0d466c15a6d776b8bb1b22a0043510dc73c884ae0e"
+    },
+    {
+      "bytes": 10174098,
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0060.root",
+      "sha256": "f466b5af260d9fadba426280f6313bac1381c1441c569c7094a8a9d61373030d"
+    },
+    {
+      "bytes": 10362658,
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0061.root",
+      "sha256": "c57d1f18f79f11fb0d3a0bbbf42f978cff1ec704dc08337c600c17354099d61d"
+    },
+    {
+      "bytes": 10634393,
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0062.root",
+      "sha256": "2530c56acb462473c6b5c316c0689491ec044f01a8c623624eebafbd271fdfbe"
+    },
+    {
+      "bytes": 10494181,
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0063.root",
+      "sha256": "3fd42501e2c53a914b535616bc7bb7b8fb5554cd4f46d890023db6877a720a53"
+    },
+    {
+      "bytes": 10600278,
+      "path": "/home/billy/ccb-data/extracted/root/root/hrdb_run_0065.root",
+      "sha256": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb"
+    },
+    {
+      "bytes": 626,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-3/configs/s11j_1781186806_1151_01df62d3_real_current_bounded_fit_transfer.json",
+      "sha256": "e87d742c56415a72ba2fda3ea71fb239438abf91f9141a3a43ab89240ce6f706"
+    },
+    {
+      "bytes": 1578,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-3/configs/s07f_1781012109_1290_18206042.json",
+      "sha256": "e9feebbf0592bd6c9dcc4877ee5c0479c46400ec68cc5c9c3fd45504182bf701"
+    },
+    {
+      "bytes": 26225,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-3/scripts/s07f_independent_all_three_appi_validation.py",
+      "sha256": "08a25eaeaf8a027e78fc4aea646d53d7a3e47d57fb0fd2730787eb176ee2013d"
+    },
+    {
+      "bytes": 44475,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-3/reports/1781006037.1502.693f2c73__s07d_injected_timing_corruption/s07d_injected_timing_corruption.py",
+      "sha256": "923bcd4a801c1cc1d284508063e168f74dcab9053bb08a6bd635ea878575f6c8"
+    },
+    {
+      "bytes": 1458,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-3/reports/1781065299.555.20535839/result.json",
+      "sha256": "de8cd6360ab9b83bb63432b391bef0d3d02cc32a82f28f69bca6ba9dfc4ba390"
+    },
+    {
+      "bytes": 5408,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-3/reports/1781065299.555.20535839/global_scoreboard.csv",
+      "sha256": "1b99d8f397b1009ac359ce99eec26f0da7fd68ca60a34ffd8a279a03b9d3b995"
+    },
+    {
+      "bytes": 623548,
+      "path": "/home/billy/.tb-workers/testbeam-laptop-3/reports/1781065299.555.20535839/oof_predictions.csv",
+      "sha256": "2c9fd78e9e722f8195a510511c71a64e92c3bebff0a626a7ce428ba08008c936"
+    }
+  ],
+  "outputs": {
+    "REPORT.md": {
+      "bytes": 11636,
+      "sha256": "f70ed56296485f07078a2f86c8a8e272634389d9fa4832994d9073cbfcbe98ce"
+    },
+    "input_sha256.csv": {
+      "bytes": 2167,
+      "sha256": "3e64a4ad63ea4200d982d1f6db76ac438fe9547b14100218bad4126e290b423a"
+    },
+    "raw_run_counts.csv": {
+      "bytes": 184,
+      "sha256": "88f2966d7456e9ac42d941b8ff8efc5a88a6b1930bea166624b2bca558e1d827"
+    },
+    "real_current_counts_by_run.csv": {
+      "bytes": 221,
+      "sha256": "5a795d8ce662117c6f493d0d71a4fe71dcaddb144744cfbeb1a6b158003f48ae"
+    },
+    "real_current_rate_summary.csv": {
+      "bytes": 205,
+      "sha256": "001f556c092b972863319a83e2cddc6b34ed847d72f64d80e8ab6e9836b969c5"
+    },
+    "reproduction_match_table.csv": {
+      "bytes": 250,
+      "sha256": "4d7bafa7f6e30c0e63cc728aba10153c048e13f01d9812309f64b734c467531c"
+    },
+    "result.json": {
+      "bytes": 1271,
+      "sha256": "ab1a4e7ca74d915b4e845267651902037c1c2649b0e2b7db542d679fa387fc49"
+    },
+    "s11i_benchmark_global_scoreboard.csv": {
+      "bytes": 5299,
+      "sha256": "72bdf7c85cd2c670ca2ca892f13d5f385c829d1745a9a7b33f8e5635780881d7"
+    },
+    "s11i_delay_scale_cell_metrics.csv": {
+      "bytes": 25423,
+      "sha256": "227062cca6bcdbf42c20c272989a3848b31544db929d57fc9a2506f021f096d4"
+    },
+    "s11i_leakage_checks.csv": {
+      "bytes": 875,
+      "sha256": "12c40a9070dcd80ebfd0e3c9512c74076cfe4d63f22ad6eeab464e12e6a99e69"
+    },
+    "transfer_method_summary.csv": {
+      "bytes": 1927,
+      "sha256": "ba7de7f22731ee861f3ff587096c229598488b5e15a3641a9b5427098197bb04"
+    }
+  },
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "study_id": "S11j",
+  "ticket_id": "1781186806.1151.01df62d3",
+  "worker": "testbeam-laptop-3"
+}

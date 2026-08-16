@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="520" viewBox="0 0 1000 520" role="img" aria-labelledby="title desc">
+  <title id="title">PSTAR component-sum rounding-interval validation</title>
+  <desc id="desc">Synthetic schematic showing an overlapping valid total interval and a separated invalid total interval. This is regression evidence, not detector data.</desc>
+  <rect width="1000" height="520" fill="white"/>
+  <text x="40" y="45" font-family="sans-serif" font-size="28" font-weight="bold">PSTAR total = electronic + nuclear</text>
+  <text x="40" y="78" font-family="sans-serif" font-size="17">Decimal rounding intervals are checked row by row — synthetic regression schematic, not detector data</text>
+
+  <text x="40" y="125" font-family="sans-serif" font-size="22" font-weight="bold">VALID: intervals overlap</text>
+  <line x1="80" y1="190" x2="920" y2="190" stroke="black" stroke-width="2"/>
+  <rect x="300" y="155" width="430" height="30" fill="#9ecae1" stroke="black"/>
+  <text x="310" y="148" font-family="sans-serif" font-size="16">electronic + nuclear interval [226.225, 227.235]</text>
+  <rect x="520" y="195" width="65" height="30" fill="#a1d99b" stroke="black"/>
+  <text x="500" y="248" font-family="sans-serif" font-size="16">declared total interval [226.75, 226.85]</text>
+  <line x1="520" y1="145" x2="520" y2="235" stroke="#555" stroke-dasharray="5,5"/>
+  <line x1="585" y1="145" x2="585" y2="235" stroke="#555" stroke-dasharray="5,5"/>
+  <text x="500" y="275" font-family="sans-serif" font-size="17" font-weight="bold">ACCEPT: non-empty overlap</text>
+
+  <text x="40" y="330" font-family="sans-serif" font-size="22" font-weight="bold">INVALID: intervals are disjoint</text>
+  <line x1="80" y1="395" x2="920" y2="395" stroke="black" stroke-width="2"/>
+  <rect x="520" y="360" width="210" height="30" fill="#9ecae1" stroke="black"/>
+  <text x="505" y="353" font-family="sans-serif" font-size="16">component-sum interval</text>
+  <rect x="180" y="400" width="120" height="30" fill="#fcae91" stroke="black"/>
+  <text x="155" y="455" font-family="sans-serif" font-size="16">modified total interval</text>
+  <line x1="300" y1="350" x2="300" y2="440" stroke="#b30000" stroke-dasharray="5,5"/>
+  <line x1="520" y1="350" x2="520" y2="440" stroke="#b30000" stroke-dasharray="5,5"/>
+  <text x="340" y="425" font-family="sans-serif" font-size="17" font-weight="bold" fill="#b30000">REJECT: positive gap</text>
+
+  <text x="40" y="500" font-family="sans-serif" font-size="15">Acceptance rule: overlap after half-unit-in-last-place rounding intervals; no arbitrary floating-point tolerance.</text>
+</svg>

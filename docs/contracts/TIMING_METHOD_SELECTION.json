@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0.0",
+  "contract_id": "TIMING_METHOD_SELECTION",
+  "issue": "#1062",
+  "audit_id": "ARU-TIMING-WINNER-SELECTION-001",
+  "policy": "SAME_SAMPLE_MINIMUM_EXPLORATORY_ONLY",
+  "rules": [
+    "same-sample min(sigma68) across CFD fractions/template is exploratory only",
+    "authorising detector-resolution claims must not use selected_exploratory_minimum",
+    "best_pair_sigma68_authorising must be false when policy is SAME_SAMPLE_MINIMUM_EXPLORATORY_ONLY"
+  ],
+  "required_result_fields": [
+    "method_selection.policy",
+    "method_selection.authorising",
+    "best_pair_sigma68_authorising"
+  ]
+}

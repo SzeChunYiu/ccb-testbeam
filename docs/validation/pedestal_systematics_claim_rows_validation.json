@@ -1,0 +1,26 @@
+{
+  "claim_ledger": {
+    "bytes": 14220,
+    "path": "docs/claim_ledger.csv",
+    "sha256": "d7231b66b477fffb3766bab68129ab8e4e56f37d3e84630d89bf5016023dfb79",
+    "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+  },
+  "expected_columns": 43,
+  "issues": [],
+  "n_issues": 0,
+  "policy": "BLOCKED_GOVERNANCE_CLAIMS_REQUIRE_EXACT_WIDTH_AND_SOURCE_EVIDENCE",
+  "source_commit_required": "779740b15c66842144fd191e304a28d7eb31bad5",
+  "source_document": {
+    "bytes": 5917,
+    "path": "docs/SYSTEMATIC_UNCERTAINTIES.md",
+    "sha256": "2c2c9c44c57cddae3fb956281e70842627140e8b3a1b510c946385e8f4ec7ace",
+    "snapshot_method": "SINGLE_READ_EXACT_BYTES"
+  },
+  "status": "VALIDATED",
+  "validated_claim_ids": [
+    "CL-025",
+    "CL-026"
+  ],
+  "validator": "validate_pedestal_systematics_claim_rows.py",
+  "version": "1.0.0"
+}

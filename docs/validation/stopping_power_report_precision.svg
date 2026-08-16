@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="420" viewBox="0 0 960 420" role="img" aria-labelledby="title desc">
+  <title id="title">Stopping-power report precision regression</title>
+  <desc id="desc">Synthetic evidence showing two distinct configured energies collapsing to one six-digit token before the fix, and remaining distinct with round-trip serialization.</desc>
+  <rect width="960" height="420" fill="white" stroke="black"/>
+  <text x="480" y="35" text-anchor="middle" font-family="sans-serif" font-size="24" font-weight="bold">Stopping-power report precision gate</text>
+  <text x="480" y="62" text-anchor="middle" font-family="sans-serif" font-size="15">Synthetic regression evidence — not detector data</text>
+  <line x1="480" y1="85" x2="480" y2="360" stroke="black" stroke-width="2"/>
+  <text x="240" y="105" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="bold">Former .6g output</text>
+  <text x="720" y="105" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="bold">Round-trip output</text>
+  <text x="70" y="155" font-family="monospace" font-size="18">1.0000001 MeV</text>
+  <text x="70" y="205" font-family="monospace" font-size="18">1.0000002 MeV</text>
+  <line x1="260" y1="150" x2="390" y2="180" stroke="black" stroke-width="2"/>
+  <line x1="260" y1="200" x2="390" y2="180" stroke="black" stroke-width="2"/>
+  <rect x="390" y="155" width="55" height="50" fill="none" stroke="black" stroke-width="3"/>
+  <text x="418" y="187" text-anchor="middle" font-family="monospace" font-size="22">1</text>
+  <text x="240" y="250" text-anchor="middle" font-family="sans-serif" font-size="16">2 distinct floats → 1 CSV token</text>
+  <line x1="95" y1="275" x2="385" y2="330" stroke="black" stroke-width="5"/>
+  <line x1="385" y1="275" x2="95" y2="330" stroke="black" stroke-width="5"/>
+  <text x="535" y="155" font-family="monospace" font-size="18">1.0000001 MeV</text>
+  <text x="535" y="205" font-family="monospace" font-size="18">1.0000002 MeV</text>
+  <line x1="735" y1="150" x2="850" y2="150" stroke="black" stroke-width="2"/>
+  <line x1="735" y1="200" x2="850" y2="200" stroke="black" stroke-width="2"/>
+  <text x="855" y="156" font-family="monospace" font-size="18">1.0000001</text>
+  <text x="855" y="206" font-family="monospace" font-size="18">1.0000002</text>
+  <text x="720" y="250" text-anchor="middle" font-family="sans-serif" font-size="16">2 distinct floats → 2 round-trip tokens</text>
+  <rect x="570" y="280" width="300" height="60" fill="none" stroke="black" stroke-width="3"/>
+  <text x="720" y="307" text-anchor="middle" font-family="sans-serif" font-size="16">float(token) reproduces</text>
+  <text x="720" y="329" text-anchor="middle" font-family="sans-serif" font-size="16">the exact calculation float</text>
+  <text x="480" y="395" text-anchor="middle" font-family="sans-serif" font-size="14">Task AUD-G4-016 · serialization identity only · no physics closure claim</text>
+</svg>

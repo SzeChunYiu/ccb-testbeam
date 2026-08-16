@@ -1,0 +1,22 @@
+{
+  "ticket_id": "2456",
+  "git_commit": "634b439de6c5daf1a79ec812d3beb969d82f136b",
+  "command": "/home/billy/.cache/uv/builds-v0/.tmpOlYxMP/bin/python scripts/s51b_2456_saturated_pileup_censored_recovery.py",
+  "runtime_seconds": 97.67684936523438,
+  "python": "3.11.14 (main, Feb  3 2026, 22:51:56) [Clang 21.1.4 ]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+  "outputs_sha256": {
+    "REPORT.md": "3226d0844e6e1ecc3e711bdc8b418bc38c15099ac10853ed290e1682da6f4693",
+    "claimed_ticket.txt": "0995aaca23757a08e29d108ee63b0860d26a8da0e44a863c6f86896e14997ff3",
+    "endpoint_metrics_ci.csv": "1ef6af0fe19f09f20613dc8e32d8ee04ad0ae2b8c904e31c1357c489e01a2ba9",
+    "event_predictions.csv": "7bbf5def9622e7d28501aad3db2fcab1edfa09fb32513b3807cfe3c695ad3fd9",
+    "input_sha256.csv": "cc17da0dcd3e7e732b81a17f3c35833f026fdec912538d28d7d71b9af71a46f6",
+    "method_metrics.csv": "a0c493e153a9283501fad7e6dec0a2107a20e49ddad8cbe309acb86ee2f2bd37",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "c97fd3e7390db16f4244f993e8143dd549c464c120d1e0219252960d454f27a1",
+    "run_heldout_metrics.csv": "9f742878c46ceeec3549af15ea44ce439cd0420ad56867b698997def5051514f",
+    "strata_metrics.csv": "88d7cc49953fd2a2ca98e0243d6e8a2072e551d2c4658f8f24b6496d3dde9823",
+    "template_summary.csv": "eca9592b05cf73d43c290f57231745f4d3949abede50e928ded39b460577385c",
+    "winner_ranked_metrics.csv": "a7fdef742b2a1750d1efe11b0702dd182c198e6ab1395f46624a996942161ddf"
+  }
+}

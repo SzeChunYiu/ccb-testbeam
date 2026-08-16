@@ -1,0 +1,14 @@
+2523
+# NEW S61b trigger-phase aliasing study for pedestal timing and pile-up inference
+
+Benchmark a traditional phase-binned CFD/template residual model and harmonic regression against ridge, gradient-boosted trees, MLP, 1D-CNN, and transformer sequence models. Test whether ADC sampling phase and trigger alignment aliases create apparent pulse-shape classes, pedestal excursions, pile-up labels, saturation tails, energy shifts, or PID boundaries. Report bootstrap CIs by run and phase bin for timing bias, pile-up false-positive rate, pedestal residual, energy scale drift, and PID boundary movement; require held-out-run validation and phase-scrambled nulls.
+
+claim_helper_command: tn-ticket claim testbeam-laptop-3 --project testbeam
+claim_helper_output:
+null
+# null
+
+null
+
+manual_claim_workaround:
+gh issue edit 2523 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-3 --remove-label factory:open

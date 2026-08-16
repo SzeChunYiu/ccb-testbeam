@@ -1,0 +1,177 @@
+{
+  "study": "S13-2388",
+  "ticket": "2388",
+  "worker": "testbeam-laptop-3",
+  "git_commit": "784cb9e2817df87e7b94e60d71a395c582794228",
+  "python": "3.7.6",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "random_seed": 238813,
+  "config": "configs/s13_2388_current_cwola_architecture_bakeoff.json",
+  "commands": [
+    "/home/billy/anaconda3/bin/python scripts/s13_2388_current_cwola_architecture_bakeoff.py --config configs/s13_2388_current_cwola_architecture_bakeoff.json"
+  ],
+  "inputs": [
+    {
+      "file": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0044.root",
+      "sha256": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50",
+      "bytes": 1227977
+    },
+    {
+      "file": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0045.root",
+      "sha256": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b",
+      "bytes": 13786671
+    },
+    {
+      "file": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0046.root",
+      "sha256": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3",
+      "bytes": 412227
+    },
+    {
+      "file": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0047.root",
+      "sha256": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3",
+      "bytes": 3098718
+    },
+    {
+      "file": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0048.root",
+      "sha256": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8",
+      "bytes": 8995827
+    },
+    {
+      "file": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0049.root",
+      "sha256": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744",
+      "bytes": 9203548
+    },
+    {
+      "file": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0050.root",
+      "sha256": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799",
+      "bytes": 13217424
+    },
+    {
+      "file": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0051.root",
+      "sha256": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e",
+      "bytes": 6036876
+    },
+    {
+      "file": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0052.root",
+      "sha256": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af",
+      "bytes": 2941826
+    },
+    {
+      "file": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0053.root",
+      "sha256": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c",
+      "bytes": 11713879
+    },
+    {
+      "file": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0054.root",
+      "sha256": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c",
+      "bytes": 11056922
+    },
+    {
+      "file": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0055.root",
+      "sha256": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c",
+      "bytes": 7153324
+    },
+    {
+      "file": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0056.root",
+      "sha256": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb",
+      "bytes": 15273160
+    },
+    {
+      "file": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0057.root",
+      "sha256": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16",
+      "bytes": 8881910
+    }
+  ],
+  "outputs": [
+    {
+      "file": "REPORT.md",
+      "sha256": "2ff9a3f5f42256a7e5ab0a24adb288d5826fc5e23c339957a46a3aef35160318",
+      "bytes": 11121
+    },
+    {
+      "file": "claimed_ticket.txt",
+      "sha256": "c1aebb44c2ccf92e9bfd4fcdcd86ed011ca92d5478bfdc676398bf7731319a1e",
+      "bytes": 384
+    },
+    {
+      "file": "current_rate_comparison.csv",
+      "sha256": "3b421562b97751ad4baed1f8ac4370f3d3f1199dc9c558e9b145fdf70cc4277a",
+      "bytes": 385
+    },
+    {
+      "file": "current_scaling_fit.csv",
+      "sha256": "103e0d8060fdf0e601a6d3ae4b7bb030565a0db8edc0101d9d954b178baf2af8",
+      "bytes": 452
+    },
+    {
+      "file": "fig_current_scaling_rates.png",
+      "sha256": "7b459b5245db99cae4001b3e20c4ae7ca9e1ae198096755e8cd3cd9cc62dcd76",
+      "bytes": 60422
+    },
+    {
+      "file": "fig_method_auc_ci.png",
+      "sha256": "3973e1f3cd3bea7d4e7fcdd9c2531df404b7a46250f44f964f1e4897ece701d3",
+      "bytes": 43678
+    },
+    {
+      "file": "fold_method_metrics.csv",
+      "sha256": "a63d133e5005fc665817e791d987f053ca6adab08e4d9c8b94149053a68539ce",
+      "bytes": 4814
+    },
+    {
+      "file": "heldout_scores_by_pulse.csv.gz",
+      "sha256": "30e9c92b6b092191e2dc7500cded0af2990d6a930f563aaf01314d0c6115419f",
+      "bytes": 1914419
+    },
+    {
+      "file": "input_sha256.csv",
+      "sha256": "b38e66517a0343bf77a5fae789883a9b51afce5592a191b1b4a7d3bd8c66c902",
+      "bytes": 1954
+    },
+    {
+      "file": "leakage_checks.csv",
+      "sha256": "21331d875fb4d5f99cd41b5f6412ee5b13355260fff18ba59a20e8a4e557bdd7",
+      "bytes": 615
+    },
+    {
+      "file": "method_summary.csv",
+      "sha256": "c0154c788f1c0e1d0e0be78c16ca2949960aaffedc75eccbf3556064278748b6",
+      "bytes": 2631
+    },
+    {
+      "file": "reproduction_match_table.csv",
+      "sha256": "93ea126c1e6807f118e30aa508b173deb6ebc4059b6f92b79efd5f4b01a124a3",
+      "bytes": 347
+    },
+    {
+      "file": "result.json",
+      "sha256": "91e9d12a99b7b88c81ab34565658ca3df52650d28c6a3c3f5e944f485b2a2f3c",
+      "bytes": 8795
+    },
+    {
+      "file": "s10_reproduction_ml_benchmark.csv",
+      "sha256": "28ee4908116c908b7e6d94d40477ebe0c85822245f1b1e3c031e9116fefe2f0a",
+      "bytes": 211
+    },
+    {
+      "file": "s10_reproduction_ml_cv.csv",
+      "sha256": "874998dfbf50c6fdc92653369efec605f18191b5031aa8c6ed42794b0e700a52",
+      "bytes": 215
+    },
+    {
+      "file": "s10_reproduction_ml_score_by_group.csv",
+      "sha256": "4136df5bd3f60bdca8c84f5ae94e8eba0f9b3e1f477370322d411ee8571c3381",
+      "bytes": 231
+    },
+    {
+      "file": "selected_pulse_counts.csv",
+      "sha256": "208813dc81034f1d707a979fe25df8a5756c9d4a32d716c0094ee723f2272ed3",
+      "bytes": 1151
+    },
+    {
+      "file": "topology_by_run.csv",
+      "sha256": "a84ad4305c7ec50a4153d693335d5aebbb4e121a9fa043d3c077f2d3cf83b518",
+      "bytes": 1516
+    }
+  ]
+}

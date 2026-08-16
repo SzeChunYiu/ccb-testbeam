@@ -1,0 +1,7 @@
+fold,check,value,flag,note
+A_to_B,train_test_run_overlap,0,False,Run split must be disjoint.
+A_to_B,forbidden_columns_used,0,False,"Model features exclude run, eventno, current labels, and topology labels."
+A_to_B,traditional_feature_choice,width_10_samples,False,"Train-only selected feature, sign=-1.0, train_auc=0.658."
+B_to_A,train_test_run_overlap,0,False,Run split must be disjoint.
+B_to_A,forbidden_columns_used,0,False,"Model features exclude run, eventno, current labels, and topology labels."
+B_to_A,traditional_feature_choice,tail_fraction,False,"Train-only selected feature, sign=1.0, train_auc=0.626."

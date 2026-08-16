@@ -1,0 +1,40 @@
+{
+  "ticket_id": "2538",
+  "ticket_number": 2538,
+  "study_id": "S64a",
+  "worker": "testbeam-laptop-1",
+  "title": "time-warped template pulse-shape timing under pedestal drift and pile-up",
+  "claimed_ticket_text": "2538\n# NEW S64a time-warped template pulse-shape timing under pedestal drift and pile-up\n\nAcademic-grade study: quantify how pedestal drift, sub-sample timing phase, and early pile-up distort pulse shape and timing. Compare a traditional time-warped matched-template/constant-fraction discriminator baseline against ridge regression on engineered waveform moments, gradient-boosted trees on shape/timing features, an MLP on normalized windows, a 1D-CNN on raw waveforms, and a compact waveform transformer where statistics allow. Report bootstrap CIs for timing bias/resolution, shape residuals, pile-up strata, pedestal bins, energy slices, and PID-conditioned residuals; include ablations for saturation masks and pre-trigger pedestal estimates.\n",
+  "output_dir": "reports/2538__s64a_time_warped_template_pedestal_pileup",
+  "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+  "samples_per_channel": 18,
+  "baseline_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "duplicate_readout_channels": {"B2": 1, "B4": 3, "B6": 5, "B8": 7},
+  "expected_selected_pulses": 640737,
+  "expected_group_counts": {
+    "sample_i_calib": 248745,
+    "sample_i_analysis": 252266,
+    "sample_ii_calib": 14630,
+    "sample_ii_analysis": 125096
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "heldout_runs": [42, 50, 57, 58, 60, 62, 64, 65],
+  "max_per_run_stave": 180,
+  "bootstrap_replicates": 500,
+  "random_seed": 2538064,
+  "mlp_max_iter": 35,
+  "nn": {
+    "epochs": 6,
+    "transformer_epochs": 5,
+    "batch_size": 1024,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001
+  }
+}

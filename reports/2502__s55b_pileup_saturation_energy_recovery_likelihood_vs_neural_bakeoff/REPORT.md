@@ -344,8 +344,7 @@ observed held-out score gain.
 
 Runtime was `35.9` s on `Linux-5.15.0-139-generic-x86_64-with-glibc2.35`.
 
-
-    ## Ticket-Specific Sideband Validation
+## Ticket-Specific Sideband Validation
 
 The real-data sideband validation uses held-out clean single-pulse controls
 sampled directly from raw ROOT residual families.  These rows test whether a

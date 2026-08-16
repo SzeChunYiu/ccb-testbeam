@@ -11,7 +11,6 @@ from __future__ import annotations
 import json
 import os
 import sys
-import textwrap
 from pathlib import Path
 
 import numpy as np
@@ -142,9 +141,9 @@ def patch_report(sideband: pd.DataFrame, ablation: pd.DataFrame, calibration: pd
     )
     text = text.replace("Ticket `2502` asks", "Ticket `#2502` asks", 1)
     text = text.replace("preferred S32b", "preferred S55b", 1)
-    text += textwrap.dedent(f"""
+    text += f"""
 
-    ## Ticket-Specific Sideband Validation
+## Ticket-Specific Sideband Validation
 
 The real-data sideband validation uses held-out clean single-pulse controls
 sampled directly from raw ROOT residual families.  These rows test whether a
@@ -164,12 +163,12 @@ tail-recovery region named in the ticket.
 
 ## Uncertainty Calibration
 
-    The per-event uncertainty proxy is a transparent function of clipped samples,
-    plateau width, and reconstructed close-pulse spacing.  It uses
-    `hat Delta_i = |hat t_2 - hat t_1|`; injected truth separation is excluded
-    from the proxy and used only for residual scoring:
+The per-event uncertainty proxy is a transparent function of clipped samples,
+plateau width, and reconstructed close-pulse spacing.  It uses
+`hat Delta_i = |hat t_2 - hat t_1|`; injected truth separation is excluded
+from the proxy and used only for residual scoring:
 
-    `u_i = 0.030 + 0.006 n_clip + 0.004 max(W_plateau-2,0) + 0.002 max(4-hat Delta_i,0)`.
+`u_i = 0.030 + 0.006 n_clip + 0.004 max(W_plateau-2,0) + 0.002 max(4-hat Delta_i,0)`.
 
 Coverage is reported against the absolute fractional energy residual.
 
@@ -181,14 +180,8 @@ The required single claim command was run once as `{CLAIM_COMMAND}` and returned
 the null pseudo-ticket output `{CLAIM_OUTPUT}`.  Because the project queue was
 not empty, issue `#2502` was recovered without a second `tn-ticket claim` by
 applying the same label transition directly: `{MANUAL_RECOVERY}`.  Completion is
-    recorded with `{DONE_COMMAND}`.  No novel follow-up ticket was appended.
-    """)
-    text = text.replace("\n    The per-event uncertainty", "\nThe per-event uncertainty")
-    text = text.replace("\n    plateau width", "\nplateau width")
-    text = text.replace("\n    `hat Delta_i", "\n`hat Delta_i")
-    text = text.replace("\n    from the proxy", "\nfrom the proxy")
-    text = text.replace("\n    `u_i", "\n`u_i")
-    text = text.replace("\n    recorded with", "\nrecorded with")
+recorded with `{DONE_COMMAND}`.  No novel follow-up ticket was appended.
+"""
     report_path.write_text(text, encoding="utf-8")
 
 

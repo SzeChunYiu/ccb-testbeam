@@ -82,7 +82,7 @@ AUTHORISING = os.environ.get("CCB_CFD_AUTHORISING", "1").strip() not in {"0", "f
 CFD_AMPLITUDE_MODE = os.environ.get("CCB_CFD_AMPLITUDE_MODE", "first_local_peak")
 POLARITY_PATH = Path(os.environ.get(
     "CCB_CHANNEL_POLARITY_PATH",
-    str(HERE.parent / "configs" / "channel_polarity_v1.json"),
+    str(HERE.parent / "configs" / "channel_polarity_v2.json"),
 ))
 CALIBRATION_RUNS = [
     int(x) for x in os.environ.get("CCB_CALIBRATION_RUNS", "").split(",") if x.strip()

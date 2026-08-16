@@ -40,8 +40,12 @@ EVENT_TABLE_PATH = INPUT_DIR / "event_table_8x16.parquet"
 MANIFEST_PATH = INPUT_DIR / "manifest_8x16.json"
 OUTPUT_DIR = INPUT_DIR / "results"
 
-# Stave-to-channel mapping
-STAVE_CHANNEL = {"B2": 0, "B4": 2, "B6": 4, "B8": 6}
+# Stave-to-channel mapping. Each stave is read out by TWO duplicate channels
+# (even/odd readout pair). The even map is canonical; the odd map is carried as
+# a duplicate-channel nuisance envelope (issues #954/#1383). The measured
+# polarity map (configs/channel_polarity_v2.json) applies to BOTH hypotheses.
+STAVE_CHANNEL = {"B2": 0, "B4": 2, "B6": 4, "B8": 6}  # canonical (even)
+STAVE_CHANNEL_DUPLICATE = {"B2": 1, "B4": 3, "B6": 5, "B8": 7}  # odd duplicates
 CHANNEL_STAVE = {v: k for k, v in STAVE_CHANNEL.items()}
 STAVE_ORDER = ["B2", "B4", "B6", "B8"]  # Physical depth order
 
@@ -73,12 +77,15 @@ BASELINE_VARIATIONS = [
 @dataclass
 class ProfileResult:
     """Result of depth profile analysis."""
-    schema_version: str = "depth_profile_8x16_v1"
+    schema_version: str = "depth_profile_8x16_v2"
     producer_script: str = "analyze_depth_profile_8x16.py"
     git_commit: str = ""
     input_manifest_hash: str = ""
     threshold_adc: int = 0
     baseline_samples: List[int] = None
+    channel_polarity_source: str = ""
+    stave_channel_map: Dict[str, int] = None
+    duplicate_channel_parity_path: str = ""
 
     # Per-stave results
     stave_amplitudes: Dict[str, float] = None
@@ -103,6 +110,8 @@ class ProfileResult:
     def __post_init__(self):
         if self.baseline_samples is None:
             self.baseline_samples = [0, 1, 2, 3]
+        if self.stave_channel_map is None:
+            self.stave_channel_map = {}
         if self.stave_amplitudes is None:
             self.stave_amplitudes = {}
         if self.stave_occupancies is None:
@@ -125,26 +134,32 @@ class ProfileResult:
             self.amplitude_ci_95 = {}
 
 
-def load_event_table(path: Path, threshold_adc: float = 0) -> pd.DataFrame:
+def load_event_table(path: Path, threshold_adc: float = 0,
+                     channel_map: Optional[Dict[str, int]] = None) -> pd.DataFrame:
     """Load event table and apply amplitude threshold."""
+    if channel_map is None:
+        channel_map = STAVE_CHANNEL
     df = pd.read_parquet(path)
 
     # Apply threshold to all B-stack channels
     mask = pd.Series([True] * len(df), index=df.index)
-    for stave, ch in STAVE_CHANNEL.items():
+    for stave, ch in channel_map.items():
         col = f"ch{ch}_amplitude"
         mask &= (df[col] >= threshold_adc) | (df[col] < 0)  # Keep negative/error values
 
     return df[mask].copy()
 
 
-def compute_per_stave_stats(df: pd.DataFrame, sample: Optional[str] = None) -> Dict:
+def compute_per_stave_stats(df: pd.DataFrame, sample: Optional[str] = None,
+                           channel_map: Optional[Dict[str, int]] = None) -> Dict:
     """Compute amplitude and occupancy statistics per stave."""
+    if channel_map is None:
+        channel_map = STAVE_CHANNEL
     if sample is not None:
         df = df[df["sample"] == sample].copy()
 
     stats = {}
-    for stave, ch in STAVE_CHANNEL.items():
+    for stave, ch in channel_map.items():
         col = f"ch{ch}_amplitude"
         state_col = f"ch{ch}_state"
 
@@ -208,6 +223,52 @@ def compute_normalized_profile(sample_stats: Dict) -> Dict:
         stave: sample_stats[stave]["amplitude_mean"] / total_amplitude
         for stave in STAVE_CHANNEL
     }
+
+
+def compute_duplicate_channel_parity(df: pd.DataFrame, threshold_adc: float = 0) -> Dict:
+    """Duplicate-channel (parity) nuisance envelope for #1383.
+
+    The stave->readout-channel assignment is ambiguous: each stave has an
+    even/odd duplicate readout pair. Recompute the headline observable under
+    both maps. The even map stays canonical; the odd map bounds the envelope.
+    """
+    envelope = {
+        "schema_version": "duplicate_channel_parity_v1",
+        "canonical_map": dict(STAVE_CHANNEL),
+        "duplicate_map": dict(STAVE_CHANNEL_DUPLICATE),
+        "threshold_adc": threshold_adc,
+        "hypotheses": {},
+    }
+    for name, cmap in (("even", STAVE_CHANNEL), ("odd", STAVE_CHANNEL_DUPLICATE)):
+        stats_i = compute_per_stave_stats(df, sample="I", channel_map=cmap)
+        stats_ii = compute_per_stave_stats(df, sample="II", channel_map=cmap)
+        norm_i = compute_normalized_profile(stats_i)
+        norm_ii = compute_normalized_profile(stats_ii)
+        envelope["hypotheses"][name] = {
+            "normalized_profile_sample_i": norm_i,
+            "normalized_profile_sample_ii": norm_ii,
+            "b8_over_b2_sample_i": norm_i["B8"] / norm_i["B2"] if norm_i["B2"] > 0 else None,
+            "b8_over_b2_sample_ii": norm_ii["B8"] / norm_ii["B2"] if norm_ii["B2"] > 0 else None,
+        }
+    hyps = envelope["hypotheses"]
+    envelope["envelope"] = {
+        stave: {
+            "sample_i": sorted((hyps["even"]["normalized_profile_sample_i"][stave],
+                                hyps["odd"]["normalized_profile_sample_i"][stave])),
+            "sample_ii": sorted((hyps["even"]["normalized_profile_sample_ii"][stave],
+                                 hyps["odd"]["normalized_profile_sample_ii"][stave])),
+        }
+        for stave in STAVE_ORDER
+    }
+    # Headline qualitative comparison must hold under BOTH hypotheses
+    envelope["b8_over_b2_ii_exceeds_i_under_both"] = all(
+        h["b8_over_b2_sample_ii"] is not None and h["b8_over_b2_sample_i"] is not None
+        and h["b8_over_b2_sample_ii"] > h["b8_over_b2_sample_i"]
+        for h in hyps.values())
+    envelope["sample_ii_b6_b8_share_exceeds_i_under_both"] = all(
+        h["normalized_profile_sample_ii"][s] > h["normalized_profile_sample_i"][s]
+        for h in hyps.values() for s in ("B6", "B8"))
+    return envelope
 
 
 def create_depth_profile_figure(
@@ -421,10 +482,21 @@ def main():
     save_source_data_csv(stats_i, stats_ii, ci_results, csv_path, threshold_adc)
 
     # Build result object
+    # Duplicate-channel parity nuisance envelope (#1383)
+    print("\nComputing duplicate-channel (parity) nuisance envelope...")
+    parity = compute_duplicate_channel_parity(df, threshold_adc=threshold_adc)
+    parity_path = OUTPUT_DIR / "duplicate_channel_parity.json"
+    with parity_path.open("w") as f:
+        json.dump(parity, f, indent=2)
+    print(f"Saved parity envelope to {parity_path}")
+
     result = ProfileResult(
         git_commit=git_commit,
         input_manifest_hash=input_hash,
         threshold_adc=threshold_adc,
+        channel_polarity_source=str(manifest.get("channel_polarity_source", "")),
+        stave_channel_map=dict(STAVE_CHANNEL),
+        duplicate_channel_parity_path=str(parity_path),
         stave_occupancies={s: stats_i[s]["occupancy"] + stats_ii[s]["occupancy"] for s in STAVE_ORDER},
         stave_amplitudes={s: (stats_i[s]["amplitude_mean"] + stats_ii[s]["amplitude_mean"]) / 2
                          for s in STAVE_ORDER},
@@ -464,6 +536,9 @@ def main():
     print(f"Normalized B2 amplitude - Sample II: {result.normalized_profile_sample_ii['B2']:.3f}")
     print(f"Normalized B8 amplitude - Sample I: {result.normalized_profile_sample_i['B8']:.3f}")
     print(f"Normalized B8 amplitude - Sample II: {result.normalized_profile_sample_ii['B8']:.3f}")
+    print(f"Parity envelope B2 (I, even-odd): {parity['envelope']['B2']['sample_i']}")
+    print(f"Parity envelope B2 (II, even-odd): {parity['envelope']['B2']['sample_ii']}")
+    print(f"B8/B2 II>I under both hypotheses: {parity['b8_over_b2_ii_exceeds_i_under_both']}")
 
 
 def hashlib_json(obj, hash_alg="sha256"):

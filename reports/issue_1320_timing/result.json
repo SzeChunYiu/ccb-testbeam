@@ -46,18 +46,18 @@
     ],
     "rng_seed": 20260814,
     "authorising": true,
-    "channel_polarity_path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1320/configs/channel_polarity_v1.json"
+    "channel_polarity_path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/configs/channel_polarity_v2.json"
   },
   "validation_tests": {
     "synthetic_two_pulse": {
       "test_name": "synthetic_two_pulse_known_answer",
       "n_waveforms": 100,
-      "true_pulse_location_sample": 10,
+      "true_pulse_location_sample": 3,
       "mean_measured_time_sample": 0.6,
-      "fraction_correct_component_selected": 0.0,
+      "fraction_correct_component_selected": 1.0,
       "cfd_fraction_tested": 0.2,
       "amplitude_mode": "first_local_peak",
-      "conclusion": "FAIL"
+      "conclusion": "PASS"
     },
     "wrong_component_rejection": {
       "test_name": "wrong_component_rejection_single_pulse",
@@ -122,21 +122,21 @@
         "65": 38424
       },
       "pulses_per_run": {
-        "58": 17146,
-        "59": 22200,
-        "60": 18372,
-        "61": 19922,
-        "62": 19896,
-        "63": 19560,
-        "65": 13299
+        "58": 111535,
+        "59": 132683,
+        "60": 111427,
+        "61": 113157,
+        "62": 117404,
+        "63": 119149,
+        "65": 123838
       },
       "authorising": true,
       "mode": "authorising"
     },
     "polarity": {
-      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1320/configs/channel_polarity_v1.json",
-      "version": "channel_polarity_v1",
-      "status": "LOCKED_FROM_DUPLICATE_READOUT_CONVENTION",
+      "path": "/projects/hep/fs10/shared/nnbar/billy/ccb-wt-plots/configs/channel_polarity_v2.json",
+      "version": "channel_polarity_v2",
+      "status": "MEASURED_202608_RUNS31_65_UNANIMOUS_BOTH_ESTIMATORS",
       "applied_channels": {
         "B2": {
           "channel": 0,
@@ -144,15 +144,15 @@
         },
         "B4": {
           "channel": 2,
-          "polarity": 1
+          "polarity": -1
         },
         "B6": {
           "channel": 4,
-          "polarity": 1
+          "polarity": -1
         },
         "B8": {
           "channel": 6,
-          "polarity": 1
+          "polarity": -1
         }
       },
       "input_sha256": {
@@ -165,125 +165,125 @@
         "/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/hrdb_run_0065.root": "8d4c0d1b07453dee70b5cd6082ea3a28e8b4444873a733af86bcbeb95af19702"
       }
     },
-    "n_pulses": 130395,
-    "n_complete_pair_events": 10902,
+    "n_pulses": 829193,
+    "n_complete_pair_events": 228834,
     "evaluation": [
       {
-        "n": 10763,
-        "median_ns": -41.97561528326746,
-        "q16_ns": -47.46645192479324,
-        "q84_ns": -35.596663856377354,
-        "sigma68_ns": 5.934894034207943,
+        "n": 228692,
+        "median_ns": -9.671541802019522,
+        "q16_ns": -9.777749234495277,
+        "q84_ns": -9.455502554942726,
+        "sigma68_ns": 0.16112333977627546,
         "ci68_ns": [
-          5.519506386980333,
-          6.343209795392501
+          0.1594552352051058,
+          0.16278255494961558
         ],
-        "core_sigma_ns": 1.952218171939859,
-        "core_chi2_ndf": 24.115087731522593,
-        "tail_frac_gt2ns": 0.5723311344420701,
-        "tail_frac_gt5ns": 0.34795131468921303,
-        "tail_frac_gt10ns": 0.19418377775713092,
-        "full_rms_ns": 16.03991087341085,
+        "core_sigma_ns": 0.1290269473142366,
+        "core_chi2_ndf": 720.2675768277162,
+        "tail_frac_gt2ns": 0.050408409563955016,
+        "tail_frac_gt5ns": 0.013323596802686582,
+        "tail_frac_gt10ns": 0.008723523341437393,
+        "full_rms_ns": 3.9174668662332692,
         "method": "t_cfd10",
         "fraction": 0.1,
         "conditioning": "unconditioned_complete_pair"
       },
       {
-        "n": 10776,
-        "median_ns": -44.253800784914674,
-        "q16_ns": -53.46434096457083,
-        "q84_ns": -35.96780800698157,
-        "sigma68_ns": 8.74826647879463,
+        "n": 228697,
+        "median_ns": -9.672830472632015,
+        "q16_ns": -9.769437830095455,
+        "q84_ns": -9.47747584583692,
+        "sigma68_ns": 0.1459809921292674,
         "ci68_ns": [
-          8.295367778207641,
-          9.270019678525186
+          0.14435917576638785,
+          0.1476286488187096
         ],
-        "core_sigma_ns": 3.3883849538528943,
-        "core_chi2_ndf": 3.055551551296245,
-        "tail_frac_gt2ns": 0.7034149962880475,
-        "tail_frac_gt5ns": 0.4352264291017075,
-        "tail_frac_gt10ns": 0.28043801039346694,
-        "full_rms_ns": 16.96231054361973,
+        "core_sigma_ns": 0.124188124410562,
+        "core_chi2_ndf": 790.5339395913193,
+        "tail_frac_gt2ns": 0.043743468432030155,
+        "tail_frac_gt5ns": 0.011753542897370756,
+        "tail_frac_gt10ns": 0.008202993480456675,
+        "full_rms_ns": 3.94692303243605,
         "method": "t_cfd20",
         "fraction": 0.2,
         "conditioning": "unconditioned_complete_pair"
       },
       {
-        "n": 10792,
-        "median_ns": -46.46502731998458,
-        "q16_ns": -55.69158546509463,
-        "q84_ns": -36.68963636701716,
-        "sigma68_ns": 9.500974549038737,
+        "n": 228698,
+        "median_ns": -9.67420292503633,
+        "q16_ns": -9.76215913355514,
+        "q84_ns": -9.498994698135803,
+        "sigma68_ns": 0.13158221770966883,
         "ci68_ns": [
-          8.945595500401422,
-          10.145275938790261
+          0.13026122217658243,
+          0.13308126686467853
         ],
-        "core_sigma_ns": 2.126683675514467,
-        "core_chi2_ndf": 1.5245545717392477,
-        "tail_frac_gt2ns": 0.735637509266123,
-        "tail_frac_gt5ns": 0.5211267605633803,
-        "tail_frac_gt10ns": 0.3014269829503336,
-        "full_rms_ns": 17.741925504787126,
+        "core_sigma_ns": 0.12090128826554383,
+        "core_chi2_ndf": 827.2547994910406,
+        "tail_frac_gt2ns": 0.03851804563223115,
+        "tail_frac_gt5ns": 0.010966427340859999,
+        "tail_frac_gt10ns": 0.00809801572379295,
+        "full_rms_ns": 4.024482988801127,
         "method": "t_cfd30",
         "fraction": 0.3,
         "conditioning": "unconditioned_complete_pair"
       },
       {
-        "n": 10812,
-        "median_ns": -48.73879047749087,
-        "q16_ns": -58.710265841397856,
-        "q84_ns": -37.93431027694878,
-        "sigma68_ns": 10.387977782224539,
+        "n": 228701,
+        "median_ns": -9.67531577903187,
+        "q16_ns": -9.755798742138374,
+        "q84_ns": -9.51926885863071,
+        "sigma68_ns": 0.11826494175383218,
         "ci68_ns": [
-          9.923403729489072,
-          11.036873884522919
+          0.11699091681952858,
+          0.11949364369661124
         ],
-        "core_sigma_ns": 2.3519311123697624,
-        "core_chi2_ndf": 0.9489840057161323,
-        "tail_frac_gt2ns": 0.7716426193118757,
-        "tail_frac_gt5ns": 0.5467998520162782,
-        "tail_frac_gt10ns": 0.32537920828708844,
-        "full_rms_ns": 18.165624824408614,
+        "core_sigma_ns": 0.1288119194159857,
+        "core_chi2_ndf": 827.4795544205273,
+        "tail_frac_gt2ns": 0.03312622157314572,
+        "tail_frac_gt5ns": 0.010537776398004382,
+        "tail_frac_gt10ns": 0.008220340094708812,
+        "full_rms_ns": 4.157859912323973,
         "method": "t_cfd40",
         "fraction": 0.4,
         "conditioning": "unconditioned_complete_pair"
       },
       {
-        "n": 10820,
-        "median_ns": -51.21219699823756,
-        "q16_ns": -61.513379028359545,
-        "q84_ns": -39.220582175507396,
-        "sigma68_ns": 11.146398426426074,
+        "n": 228701,
+        "median_ns": -9.676649738963093,
+        "q16_ns": -9.750459752072771,
+        "q84_ns": -9.537394317507719,
+        "sigma68_ns": 0.10653271728252633,
         "ci68_ns": [
-          10.671204439954414,
-          11.543809996962215
+          0.10546709900089316,
+          0.10756248846756841
         ],
-        "core_sigma_ns": 2.8473046942905196,
-        "core_chi2_ndf": 1.4355045998916296,
-        "tail_frac_gt2ns": 0.7974121996303142,
-        "tail_frac_gt5ns": 0.5720887245841035,
-        "tail_frac_gt10ns": 0.34426987060998154,
-        "full_rms_ns": 18.431241466796628,
+        "core_sigma_ns": 0.12933315483290825,
+        "core_chi2_ndf": 812.9717647860406,
+        "tail_frac_gt2ns": 0.026759830521073367,
+        "tail_frac_gt5ns": 0.010367248066252444,
+        "tail_frac_gt10ns": 0.008369005819825887,
+        "full_rms_ns": 4.35537925558032,
         "method": "t_cfd50",
         "fraction": 0.5,
         "conditioning": "unconditioned_complete_pair"
       },
       {
-        "n": 10831,
-        "median_ns": -53.658134395221495,
-        "q16_ns": -64.17346292377236,
-        "q84_ns": -40.64657371931743,
-        "sigma68_ns": 11.763444602227466,
+        "n": 228701,
+        "median_ns": -9.678204620797395,
+        "q16_ns": -9.745889768740419,
+        "q84_ns": -9.553190053891484,
+        "sigma68_ns": 0.09634985742446744,
         "ci68_ns": [
-          11.36540630160605,
-          12.129037106902521
+          0.09545286787786855,
+          0.09740747185991463
         ],
-        "core_sigma_ns": 2.4441836929434806,
-        "core_chi2_ndf": 1.3598962815905529,
-        "tail_frac_gt2ns": 0.7826608808050964,
-        "tail_frac_gt5ns": 0.5695688302095836,
-        "tail_frac_gt10ns": 0.36192410673068043,
-        "full_rms_ns": 18.605917519528028,
+        "core_sigma_ns": 0.12906252542873511,
+        "core_chi2_ndf": 765.9514422181784,
+        "tail_frac_gt2ns": 0.01807600316570544,
+        "tail_frac_gt5ns": 0.010752029943026048,
+        "tail_frac_gt10ns": 0.008771277781907382,
+        "full_rms_ns": 4.63043802316874,
         "method": "t_cfd60",
         "fraction": 0.6,
         "conditioning": "unconditioned_complete_pair"
@@ -295,8 +295,8 @@
         "evidence_status": "HYPOTHESIS_UNVALIDATED_COMPONENT_IDENTITY",
         "authorising_component_identity": false,
         "global_fraction_floor": 0.05,
-        "n_fallback_global": 38,
-        "n_local_selected": 21766,
+        "n_fallback_global": 4070,
+        "n_local_selected": 453598,
         "n_invalid": 0
       },
       "t_cfd10": {
@@ -304,78 +304,78 @@
         "amplitude_mode": "first_local_peak",
         "status_counts": {
           "NO_CROSSING_IN_WINDOW": 142,
-          "OK": 21662
+          "OK": 457526
         },
-        "n_finite": 21662,
+        "n_finite": 457526,
         "n_left_censored": 142
       },
       "t_cfd20": {
         "fraction": 0.2,
         "amplitude_mode": "first_local_peak",
         "status_counts": {
-          "NO_CROSSING_IN_WINDOW": 128,
-          "OK": 21676
+          "NO_CROSSING_IN_WINDOW": 137,
+          "OK": 457531
         },
-        "n_finite": 21676,
-        "n_left_censored": 128
+        "n_finite": 457531,
+        "n_left_censored": 137
       },
       "t_cfd30": {
         "fraction": 0.3,
         "amplitude_mode": "first_local_peak",
         "status_counts": {
-          "NO_CROSSING_IN_WINDOW": 112,
-          "OK": 21692
+          "NO_CROSSING_IN_WINDOW": 136,
+          "OK": 457532
         },
-        "n_finite": 21692,
-        "n_left_censored": 112
+        "n_finite": 457532,
+        "n_left_censored": 136
       },
       "t_cfd40": {
         "fraction": 0.4,
         "amplitude_mode": "first_local_peak",
         "status_counts": {
-          "NO_CROSSING_IN_WINDOW": 92,
-          "OK": 21712
+          "NO_CROSSING_IN_WINDOW": 133,
+          "OK": 457535
         },
-        "n_finite": 21712,
-        "n_left_censored": 92
+        "n_finite": 457535,
+        "n_left_censored": 133
       },
       "t_cfd50": {
         "fraction": 0.5,
         "amplitude_mode": "first_local_peak",
         "status_counts": {
-          "NO_CROSSING_IN_WINDOW": 84,
-          "OK": 21720
+          "NO_CROSSING_IN_WINDOW": 133,
+          "OK": 457535
         },
-        "n_finite": 21720,
-        "n_left_censored": 84
+        "n_finite": 457535,
+        "n_left_censored": 133
       },
       "t_cfd60": {
         "fraction": 0.6,
         "amplitude_mode": "first_local_peak",
         "status_counts": {
-          "NO_CROSSING_IN_WINDOW": 73,
-          "OK": 21731
+          "NO_CROSSING_IN_WINDOW": 133,
+          "OK": 457535
         },
-        "n_finite": 21731,
-        "n_left_censored": 73
+        "n_finite": 457535,
+        "n_left_censored": 133
       }
     },
     "best_result_cfd20": {
-      "n": 10776,
-      "median_ns": -44.253800784914674,
-      "q16_ns": -53.46434096457083,
-      "q84_ns": -35.96780800698157,
-      "sigma68_ns": 8.74826647879463,
+      "n": 228697,
+      "median_ns": -9.672830472632015,
+      "q16_ns": -9.769437830095455,
+      "q84_ns": -9.47747584583692,
+      "sigma68_ns": 0.1459809921292674,
       "ci68_ns": [
-        8.295367778207641,
-        9.270019678525186
+        0.14435917576638785,
+        0.1476286488187096
       ],
-      "core_sigma_ns": 3.3883849538528943,
-      "core_chi2_ndf": 3.055551551296245,
-      "tail_frac_gt2ns": 0.7034149962880475,
-      "tail_frac_gt5ns": 0.4352264291017075,
-      "tail_frac_gt10ns": 0.28043801039346694,
-      "full_rms_ns": 16.96231054361973,
+      "core_sigma_ns": 0.124188124410562,
+      "core_chi2_ndf": 790.5339395913193,
+      "tail_frac_gt2ns": 0.043743468432030155,
+      "tail_frac_gt5ns": 0.011753542897370756,
+      "tail_frac_gt10ns": 0.008202993480456675,
+      "full_rms_ns": 3.94692303243605,
       "method": "t_cfd20",
       "fraction": 0.2,
       "conditioning": "unconditioned_complete_pair"
@@ -383,7 +383,7 @@
     "figure": {
       "figure_pdf": "reports/issue_1320_timing/timing_b4_b6_residual_sample_II.pdf",
       "figure_png": "reports/issue_1320_timing/timing_b4_b6_residual_sample_II.png",
-      "caption": "B4-B6 pair residual distribution for 21804 complete-pair events from sample_II runs. Residuals are unconditioned on peak time. This is a PAIR RESIDUAL; detector resolution would require deconvolution not justified by current evidence. CFD fractions shown are ['10%', '20%', '30%'] with component-safe first-local-peak amplitude mode (#1059). 4 cm stave spacing used for TOF correction; sensitivity to reasonable TOF uncertainty is negligible (<0.1% effect)."
+      "caption": "B4-B6 pair residual distribution for 457668 complete-pair events from sample_II runs. Residuals are unconditioned on peak time. This is a PAIR RESIDUAL; detector resolution would require deconvolution not justified by current evidence. CFD fractions shown are ['10%', '20%', '30%'] with component-safe first-local-peak amplitude mode (#1059). 4 cm stave spacing used for TOF correction; sensitivity to reasonable TOF uncertainty is negligible (<0.1% effect)."
     },
     "tof_sensitivity": {
       "tof_model": {
@@ -401,31 +401,31 @@
           "plus_1cm_effect": 0.07800000000000001
         },
         "fractional_effect_on_sigma68": {
-          "minus_1cm_fractional": 0.008916052133193268,
-          "plus_1cm_fractional": 0.008916052133193268
+          "minus_1cm_fractional": 0.5343161384389712,
+          "plus_1cm_fractional": 0.5343161384389712
         },
         "conclusion": "TOF uncertainty effect is <0.1% of residual width; conclusion insensitive"
       }
     },
     "amplitude_timewalk": {
       "full_population": {
-        "n": 10776,
-        "median_ns": -44.253800784914674,
-        "sigma68_ns": 8.74826647879463
+        "n": 228697,
+        "median_ns": -9.672830472632015,
+        "sigma68_ns": 0.1459809921292674
       },
       "high_amplitude_subset": {
-        "threshold_adc": 2640.125,
-        "n": 307,
-        "median_ns": -41.13792182264909,
-        "sigma68_ns": 13.616571049802385,
+        "threshold_adc": 2613.5,
+        "n": 35,
+        "median_ns": -3.861140456247682,
+        "sigma68_ns": 1.8001610872650744,
         "note": "Analysis-level subset; 7000 ADC is not a validated hardware saturation boundary"
       },
       "mid_amplitude_subset": {
-        "n": 3057,
-        "median_ns": -46.68550964215474,
-        "sigma68_ns": 6.755074115471302
+        "n": 43961,
+        "median_ns": -9.662536158422888,
+        "sigma68_ns": 0.08899058449345532
       }
     }
   },
-  "runtime_sec": 6.1
+  "runtime_sec": 71.9
 }

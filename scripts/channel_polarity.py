@@ -17,7 +17,7 @@ from typing import Mapping
 
 import numpy as np
 
-DEFAULT_POLARITY_PATH = Path(__file__).resolve().parents[1] / "configs" / "channel_polarity_v1.json"
+DEFAULT_POLARITY_PATH = Path(__file__).resolve().parents[1] / "configs" / "channel_polarity_v2.json"
 
 
 @dataclass(frozen=True)

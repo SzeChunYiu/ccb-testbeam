@@ -24,6 +24,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import uproot
 from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.exceptions import ConvergenceWarning
 from sklearn.linear_model import LogisticRegression
@@ -55,6 +56,8 @@ P09A = ROOT / "reports" / "1781005319.615.15053b04__p09a_rare_waveform_anomaly_t
 P06E = ROOT / "reports" / "1781070978.431.052370d7__p06e_dropout_phase_timing_frontier"
 P06F = ROOT / "reports" / "1783640227.9868.547c3cd0__p06f_calibration_frozen_support_thresholds"
 RNG_SEED = 2452
+RAW_ROOT_DIR = ROOT / "data" / "root" / "root"
+EXPECTED_S00_B_SELECTED = 640737
 
 
 def sha256(path: Path) -> str:
@@ -235,6 +238,46 @@ def add_frontier_features(df: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
+def reproduce_raw_root_count() -> dict:
+    expected_runs = pd.read_csv(P09A / "reproduction_counts_by_run.csv")["run"].astype(int).tolist()
+    files = [RAW_ROOT_DIR / f"hrdb_run_{run:04d}.root" for run in expected_runs]
+    missing = [str(path.relative_to(ROOT)) for path in files if not path.exists()]
+    if missing:
+        return {
+            "raw_root_dir": str(RAW_ROOT_DIR.relative_to(ROOT)),
+            "root_files": len(files) - len(missing),
+            "configured_runs": expected_runs,
+            "missing_files": missing,
+            "selected_b_stave_pulses": 0,
+            "expected_selected_b_stave_pulses": EXPECTED_S00_B_SELECTED,
+            "delta": -EXPECTED_S00_B_SELECTED,
+            "pass": False,
+            "per_run": [],
+        }
+    per_run = []
+    total = 0
+    for path in files:
+        run = int(path.stem.split("_")[-1])
+        run_total = 0
+        tree = uproot.open(path)["h101"]
+        for batch in tree.iterate(["HRDv"], step_size=25000, library="np"):
+            waves = np.stack(batch["HRDv"]).astype(np.float32).reshape(-1, 8, 18)
+            baseline = np.median(waves[:, :, :4], axis=2, keepdims=True)
+            amp = (waves - baseline).max(axis=2)
+            run_total += int((amp[:, [0, 2, 4, 6]] > 1000.0).sum())
+        per_run.append({"run": run, "selected_b_stave_pulses": run_total, "path": str(path.relative_to(ROOT))})
+        total += run_total
+    return {
+        "raw_root_dir": str(RAW_ROOT_DIR.relative_to(ROOT)),
+        "root_files": len(files),
+        "selected_b_stave_pulses": int(total),
+        "expected_selected_b_stave_pulses": EXPECTED_S00_B_SELECTED,
+        "delta": int(total - EXPECTED_S00_B_SELECTED),
+        "pass": bool(total == EXPECTED_S00_B_SELECTED and len(files) > 0),
+        "per_run": per_run,
+    }
+
+
 def load_and_match() -> tuple[pd.DataFrame, dict]:
     rows = pd.read_csv(P09 / "fixed_coverage_selected_rows.csv")
     rows = add_frontier_features(rows)
@@ -402,10 +445,11 @@ def write_report(result: dict, metrics_df: pd.DataFrame, ci_df: pd.DataFrame, co
         "",
         "The required `tn-ticket claim testbeam-laptop-2 --project testbeam` helper was run once.  It returned `null`, `# null`, and `null` because of the known null existing-ticket edge case recorded as issue #2440; a second helper claim was not run.  Issue #2452 was then manually label-swapped in GitHub to `factory:claimed` with `worker:testbeam-laptop-2`, and the evidence is preserved in `claimed_ticket.txt`.",
         "",
-        "The local `data/root`, `data/extracted`, and `data/sorted-b` directories were empty on this host.  Therefore the raw ROOT file streams were not reread in this run.  Instead, the reproduction gate uses frozen upstream raw-derived artifacts: P09a reports 88 held-out `dropout` taxonomy rows from the raw ROOT selection, and P09i reviewer adjudication supplies 49 method-expanded consensus-dropout rows that de-duplicate to 16 source-unique positives in the fixed-coverage selected-row table used here.  This limitation is a first-order caveat and is encoded in `result.json`.",
+        f"The raw ROOT reproduction gate was rerun from `{result['raw_root_reproduction']['raw_root_dir']}` before model fitting.  The scan opens each B-stack `h101/HRDv` tree, reshapes every event to eight channels by eighteen samples, subtracts the per-channel median pedestal from samples 0--3, and counts B2/B4/B6/B8 pulses with baseline-subtracted maximum amplitude greater than 1000 ADC.  It reproduces `{result['raw_root_reproduction']['selected_b_stave_pulses']:,}` selected B-stave pulses against the registered `{result['raw_root_reproduction']['expected_selected_b_stave_pulses']:,}` count, delta `{result['raw_root_reproduction']['delta']:+d}`.  The downstream real-dropout endpoint uses frozen upstream raw-derived artifacts: P09a reports 88 held-out `dropout` taxonomy rows from the same raw-selection family, and P09i reviewer adjudication supplies 49 method-expanded consensus-dropout rows that de-duplicate to 16 source-unique positives in the fixed-coverage selected-row table used here.",
         "",
         "## Reproduction gate",
         "",
+        f"- S00 raw ROOT selected B-stave pulse count: `{result['raw_root_reproduction']['selected_b_stave_pulses']}` vs expected `{result['raw_root_reproduction']['expected_selected_b_stave_pulses']}`; pass `{result['raw_root_reproduction']['pass']}`.",
         f"- P09a raw-derived held-out dropout count: `{result['reproduction']['p09a_raw_derived_dropout_count']}`.",
         f"- P09i reviewer-confirmed dropout rows used as positives: `{counts['reviewer_confirmed_dropout_rows']}`.",
         f"- Matched benchmark cohort: `{counts['matched_rows']}` rows across `{len(counts['matched_runs'])}` held-out runs, with `{counts['matched_positive_rows']}` positives.",
@@ -434,7 +478,7 @@ def write_report(result: dict, metrics_df: pd.DataFrame, ci_df: pd.DataFrame, co
         "",
         "## Systematics and caveats",
         "",
-        "- The local raw ROOT mirror was empty, so this run does not independently reread ROOT bytes; it relies on upstream raw-derived P09 reproduction artifacts and records their SHA-256 hashes.",
+        "- The raw ROOT reproduction gate verifies the canonical selected-pulse support, but the real-dropout labels themselves remain reviewer-confirmed P09 artifacts rather than labels recomputed from raw bytes in this ticket.",
         "- The real-dropout endpoint is reviewer-confirmed morphology, not a measured clean counterfactual recovery error.  Transfer is therefore measured as candidate ranking and support discovery.",
         "- Only 49 reviewer-consensus positives are available.  Run-block CIs are intentionally wide and should be preferred over row-level uncertainty.",
         "- Matching reduces obvious run/stave/amplitude/phase confounding but cannot eliminate unobserved DAQ-state or channel-history confounding.",
@@ -467,6 +511,9 @@ def main() -> int:
     (OUT / "claimed_ticket.txt").write_text(claim_text + "\n", encoding="utf-8")
 
     matched, counts = load_and_match()
+    raw_root_reproduction = reproduce_raw_root_count()
+    if not raw_root_reproduction["pass"]:
+        raise RuntimeError(f"raw ROOT reproduction failed: {raw_root_reproduction}")
     matched.to_csv(OUT / "matched_candidate_rows.csv", index=False)
     pred, metrics_df, by_run = run_benchmark(matched)
     ci_df = bootstrap_ci(by_run)
@@ -489,14 +536,10 @@ def main() -> int:
         "claim_command_ran_once": True,
         "claim_helper_returned_null": True,
         "manual_claim_issue": 2452,
-        "raw_root_available_in_data_folder": False,
-        "data_folder_probe": {
-            "data/root": 0,
-            "data/extracted": 0,
-            "data/sorted-b": 0,
-        },
+        "raw_root_available_in_data_folder": True,
+        "raw_root_reproduction": raw_root_reproduction,
         "reproduction": {
-            "source": "upstream raw-derived P09a/P09i artifacts because local raw ROOT mirror was empty",
+            "source": "raw ROOT S00 selected-pulse gate plus upstream raw-derived P09a/P09i dropout artifacts",
             "p09a_raw_derived_dropout_count": p09a_dropout,
             "p09i_reviewer_confirmed_dropout_rows": counts["reviewer_confirmed_dropout_rows"],
             "matched_benchmark_rows": counts["matched_rows"],
@@ -539,7 +582,9 @@ def main() -> int:
     pd.DataFrame(input_rows).to_csv(OUT / "input_sha256.csv", index=False)
 
     result["runtime_sec"] = round(time.time() - t0, 3)
-    (OUT / "result.json").write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    result_text = json.dumps(result, indent=2, sort_keys=True) + "\n"
+    (OUT / "result.json").write_text(result_text, encoding="utf-8")
+    (ROOT / "result.json").write_text(result_text, encoding="utf-8")
     outputs = [p for p in OUT.iterdir() if p.is_file()]
     manifest = {
         "ticket_id": "2452",

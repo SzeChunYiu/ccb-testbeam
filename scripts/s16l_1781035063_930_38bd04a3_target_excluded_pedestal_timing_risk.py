@@ -113,11 +113,38 @@ def configured_runs(config: dict) -> List[int]:
 
 
 def raw_file(config: dict, run: int) -> Path:
-    return Path(config["raw_root_dir"]) / ("hrdb_run_%04d.root" % int(run))
+    root = Path(config["raw_root_dir"])
+    canonical = root / ("hrdb_run_%04d.root" % int(run))
+    if canonical.exists():
+        return canonical
+    sorted_name = root / ("hrdb_run_%04d-sorted.root" % int(run))
+    if sorted_name.exists():
+        return sorted_name
+    return canonical
 
 
 def iter_raw(path: Path, branches: Sequence[str], step_size: int = 20000) -> Iterable[dict]:
-    tree = uproot.open(path)["h101"]
+    root_file = uproot.open(path)
+    tree_name = "h101" if "h101" in root_file else "tree"
+    tree = root_file[tree_name]
+    keys = set(tree.keys())
+    if "HRDv" not in keys and "hrd/hrd.sample" in keys:
+        actual = []
+        if any(branch in branches for branch in ("EVENTNO", "EVT")):
+            actual.append("hrdEvtNo")
+        if "HRDv" in branches:
+            actual.append("hrd/hrd.sample")
+        actual = list(dict.fromkeys(actual))
+        for batch in tree.iterate(actual, step_size=step_size, library="np"):
+            out = {}
+            if "HRDv" in branches:
+                out["HRDv"] = batch["hrd/hrd.sample"]
+            if "EVENTNO" in branches:
+                out["EVENTNO"] = batch["hrdEvtNo"]
+            if "EVT" in branches:
+                out["EVT"] = batch["hrdEvtNo"]
+            yield out
+        return
     yield from tree.iterate(list(branches), step_size=step_size, library="np")
 
 

@@ -1,0 +1,541 @@
+{
+  "ticket_id": "2544",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-4",
+  "title": "S65b: Censored Saturation Energy Recovery with Pile-Up-Resolved Pulse Decomposition",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-4 --project testbeam",
+  "claimed_ticket_text": "#2544 NEW S65b censored saturation energy recovery with pile-up-resolved pulse decomposition",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "adc_clip": 11800.0,
+    "bootstrap": "held-out run-block percentile 95% CI",
+    "bootstrap_replicates": 400,
+    "negative_control": "clipped clean single-pulse controls with matched source-run distribution",
+    "winner_score": "energy_fractional_sigma68 + 0.20*abs(energy_fractional_bias) + 0.008*time_sigma68_ns + 0.04*pileup_miss_rate + 0.04*false_split_rate"
+  },
+  "required_method_coverage": {
+    "traditional": "analytic_clipped_template_sideband_traditional",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "transformer_sequence_model": "tiny_sequence_transformer",
+    "new_architecture": "saturation_residual_fusion_new"
+  },
+  "winner": {
+    "name": "saturation_residual_fusion_new",
+    "criterion": "minimum held-out composite saturation-energy closure score with run-block bootstrap CIs reported",
+    "winner_score": 0.15399692015643066,
+    "energy_fractional_bias": -0.005489553200678442,
+    "energy_fractional_sigma68": 0.06687760559944919,
+    "energy_fractional_sigma68_ci95": [
+      0.06049694508622296,
+      0.07066574077417023
+    ],
+    "time_sigma68_ns": 8.368060104990338,
+    "time_sigma68_ci95": [
+      7.756472546236974,
+      8.74739059160854
+    ],
+    "pileup_miss_rate": 0.34102564102564104,
+    "false_split_rate": 0.1358974358974359,
+    "uncertainty_calibration": {
+      "method": "saturation_residual_fusion_new",
+      "n_valid_doublets": 257.0,
+      "median_abs_energy_residual": 0.04662559257289152,
+      "p68_abs_energy_residual": 0.06790941983634236,
+      "nominal_68_proxy_width": 0.034999999999999996,
+      "coverage_abs_resid_le_proxy": 0.4085603112840467,
+      "coverage_abs_resid_le_2proxy": 0.6964980544747081,
+      "calibration_ratio_p68_over_proxy": 1.9402691381812103
+    },
+    "pileup_separation_error_rate": 0.2205128205128205,
+    "pileup_separation_error_ci95": [
+      0.18461538461538463,
+      0.258974358974359
+    ],
+    "pedestal_state_bias_span": 0.00738542677663464
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv",
+    "real_data_sideband_validation": "real_data_sideband_validation.csv",
+    "saturation_mask_ablation": "saturation_mask_ablation.csv",
+    "uncertainty_calibration": "uncertainty_calibration.csv",
+    "saturation_knee_bias": "saturation_knee_bias.csv",
+    "pileup_separation_error": "pileup_separation_error.csv",
+    "pedestal_covariance_sensitivity": "pedestal_covariance_sensitivity.csv",
+    "downstream_pid_stability": "downstream_pid_stability.csv"
+  },
+  "novel_tickets_appended": [],
+  "caveats": [
+    "Truth comes from controlled injections into raw-ROOT-derived clean pulses.",
+    "ADC clipping is an explicit benchmark stressor rather than decoded electronics metadata.",
+    "Bootstrap CIs resample held-out runs and should be read as run-transfer intervals."
+  ],
+  "issue_number": 2544,
+  "issue_url": "https://github.com/SzeChunYiu/factory-tickets/issues/2544",
+  "claim_command_output": "null / # null / null",
+  "done_command": "tn-ticket done 2544",
+  "manual_claim_recovery": {
+    "reason": "tn-ticket claim returned a null pseudo-ticket despite a non-empty testbeam queue",
+    "manual_recovery": "gh issue edit 2544 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-4 --remove-label factory:open",
+    "reran_claim": false
+  },
+  "required_outputs": {
+    "injected_overlap_closure": "method_metrics.csv, run_heldout_metrics.csv, event_predictions.csv",
+    "real_data_sideband_validation": "real_data_sideband_validation.csv",
+    "saturation_mask_ablation": "saturation_mask_ablation.csv",
+    "uncertainty_calibration": "uncertainty_calibration.csv",
+    "saturation_knee_bias": "saturation_knee_bias.csv",
+    "pileup_separation_error": "pileup_separation_error.csv",
+    "pedestal_covariance_sensitivity": "pedestal_covariance_sensitivity.csv",
+    "downstream_pid_stability": "downstream_pid_stability.csv",
+    "traditional_vs_neural_failure_interpretation": "REPORT.md"
+  },
+  "queue_provenance": {
+    "claimed_once": true,
+    "claim_command_run_once": "tn-ticket claim testbeam-laptop-4 --project testbeam",
+    "claim_command_output": "null / # null / null",
+    "manual_claim_recovery": "gh issue edit 2544 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-4 --remove-label factory:open",
+    "done_command": "tn-ticket done 2544",
+    "novel_tickets_appended": []
+  },
+  "ticket_specific_artifacts": {
+    "saturation_knee_bias": [
+      {
+        "method": "1d_cnn",
+        "saturation_knee_bin": "unsaturated",
+        "n_valid_doublets": 275,
+        "energy_fractional_bias": 0.06299282944431692,
+        "energy_fractional_sigma68": 0.10096235972288733,
+        "median_plateau_width": 2.0
+      },
+      {
+        "method": "analytic_clipped_template_sideband_traditional",
+        "saturation_knee_bin": "unsaturated",
+        "n_valid_doublets": 157,
+        "energy_fractional_bias": 0.0816320497812446,
+        "energy_fractional_sigma68": 0.10147770905963596,
+        "median_plateau_width": 2.0
+      },
+      {
+        "method": "gradient_boosted_trees",
+        "saturation_knee_bin": "unsaturated",
+        "n_valid_doublets": 243,
+        "energy_fractional_bias": -0.0016151027440502257,
+        "energy_fractional_sigma68": 0.0731658450900055,
+        "median_plateau_width": 2.0
+      },
+      {
+        "method": "mlp",
+        "saturation_knee_bin": "unsaturated",
+        "n_valid_doublets": 231,
+        "energy_fractional_bias": 0.005945584715686102,
+        "energy_fractional_sigma68": 0.15892786253839258,
+        "median_plateau_width": 2.0
+      },
+      {
+        "method": "ridge",
+        "saturation_knee_bin": "unsaturated",
+        "n_valid_doublets": 262,
+        "energy_fractional_bias": 0.008649330803921053,
+        "energy_fractional_sigma68": 0.06716926128854817,
+        "median_plateau_width": 2.0
+      },
+      {
+        "method": "saturation_residual_fusion_new",
+        "saturation_knee_bin": "unsaturated",
+        "n_valid_doublets": 248,
+        "energy_fractional_bias": -0.0005697949302383906,
+        "energy_fractional_sigma68": 0.06707860395727867,
+        "median_plateau_width": 2.0
+      },
+      {
+        "method": "tiny_sequence_transformer",
+        "saturation_knee_bin": "unsaturated",
+        "n_valid_doublets": 140,
+        "energy_fractional_bias": -0.004859054715694636,
+        "energy_fractional_sigma68": 0.1020939040096345,
+        "median_plateau_width": 2.0
+      }
+    ],
+    "pileup_separation_error": [
+      {
+        "method": "analytic_clipped_template_sideband_traditional",
+        "n_doublets": 390,
+        "pileup_separation_error_rate": 0.21025641025641026,
+        "pileup_separation_error_ci_low": 0.17435897435897435,
+        "pileup_separation_error_ci_high": 0.24615384615384617,
+        "pileup_miss_rate": 0.5846153846153846
+      },
+      {
+        "method": "gradient_boosted_trees",
+        "n_doublets": 390,
+        "pileup_separation_error_rate": 0.2128205128205128,
+        "pileup_separation_error_ci_low": 0.18717948717948718,
+        "pileup_separation_error_ci_high": 0.2512820512820513,
+        "pileup_miss_rate": 0.35384615384615387
+      },
+      {
+        "method": "saturation_residual_fusion_new",
+        "n_doublets": 390,
+        "pileup_separation_error_rate": 0.2205128205128205,
+        "pileup_separation_error_ci_low": 0.18461538461538463,
+        "pileup_separation_error_ci_high": 0.258974358974359,
+        "pileup_miss_rate": 0.34102564102564104
+      },
+      {
+        "method": "ridge",
+        "n_doublets": 390,
+        "pileup_separation_error_rate": 0.28974358974358977,
+        "pileup_separation_error_ci_low": 0.2564102564102564,
+        "pileup_separation_error_ci_high": 0.32564102564102565,
+        "pileup_miss_rate": 0.30512820512820515
+      },
+      {
+        "method": "1d_cnn",
+        "n_doublets": 390,
+        "pileup_separation_error_rate": 0.36923076923076925,
+        "pileup_separation_error_ci_low": 0.3255769230769231,
+        "pileup_separation_error_ci_high": 0.4206410256410255,
+        "pileup_miss_rate": 0.2717948717948718
+      },
+      {
+        "method": "mlp",
+        "n_doublets": 390,
+        "pileup_separation_error_rate": 0.382051282051282,
+        "pileup_separation_error_ci_low": 0.320448717948718,
+        "pileup_separation_error_ci_high": 0.44365384615384607,
+        "pileup_miss_rate": 0.38461538461538464
+      },
+      {
+        "method": "tiny_sequence_transformer",
+        "n_doublets": 390,
+        "pileup_separation_error_rate": 0.7487179487179487,
+        "pileup_separation_error_ci_low": 0.7051282051282052,
+        "pileup_separation_error_ci_high": 0.7897435897435897,
+        "pileup_miss_rate": 0.6230769230769231
+      }
+    ],
+    "pedestal_covariance_sensitivity": [
+      {
+        "method": "saturation_residual_fusion_new",
+        "n_pedestal_states": 2,
+        "state_bias_span": 0.00738542677663464,
+        "state_sigma68_span": 0.013842243937218113,
+        "worst_state": "nominal",
+        "worst_abs_state_bias": 0.005258135854541808
+      },
+      {
+        "method": "analytic_clipped_template_sideband_traditional",
+        "n_pedestal_states": 2,
+        "state_bias_span": 0.013281921837991803,
+        "state_sigma68_span": 0.007737491186841194,
+        "worst_state": "shifted",
+        "worst_abs_state_bias": 0.09021761102569853
+      },
+      {
+        "method": "gradient_boosted_trees",
+        "n_pedestal_states": 2,
+        "state_bias_span": 0.013630692042912082,
+        "state_sigma68_span": 0.0050388811156978075,
+        "worst_state": "nominal",
+        "worst_abs_state_bias": 0.010735082987226629
+      },
+      {
+        "method": "1d_cnn",
+        "n_pedestal_states": 2,
+        "state_bias_span": 0.027487939105396625,
+        "state_sigma68_span": 0.03256364267860548,
+        "worst_state": "shifted",
+        "worst_abs_state_bias": 0.07138769667255013
+      },
+      {
+        "method": "ridge",
+        "n_pedestal_states": 2,
+        "state_bias_span": 0.040787310688531,
+        "state_sigma68_span": 0.025911838172368695,
+        "worst_state": "shifted",
+        "worst_abs_state_bias": 0.022150950193204864
+      },
+      {
+        "method": "tiny_sequence_transformer",
+        "n_pedestal_states": 2,
+        "state_bias_span": 0.05349833345539995,
+        "state_sigma68_span": 0.028459096085075963,
+        "worst_state": "nominal",
+        "worst_abs_state_bias": 0.039385041589010066
+      },
+      {
+        "method": "mlp",
+        "n_pedestal_states": 2,
+        "state_bias_span": 0.0914549489756363,
+        "state_sigma68_span": 0.042694639590248745,
+        "worst_state": "nominal",
+        "worst_abs_state_bias": 0.05414363752169587
+      }
+    ],
+    "downstream_pid_stability": [
+      {
+        "stability_axis": "amp_stratum",
+        "method": "gradient_boosted_trees",
+        "n_strata": 4,
+        "energy_sigma68_stratum_median": 0.07611955210931215,
+        "energy_sigma68_stratum_span": 0.04191592601764581,
+        "pid_stability_proxy": 1.1423412123007541
+      },
+      {
+        "stability_axis": "amp_stratum",
+        "method": "saturation_residual_fusion_new",
+        "n_strata": 4,
+        "energy_sigma68_stratum_median": 0.06869119185337857,
+        "energy_sigma68_stratum_span": 0.05949494121434919,
+        "pid_stability_proxy": 1.173147080553217
+      },
+      {
+        "stability_axis": "amp_stratum",
+        "method": "1d_cnn",
+        "n_strata": 4,
+        "energy_sigma68_stratum_median": 0.0916988096327323,
+        "energy_sigma68_stratum_span": 0.09197141388220749,
+        "pid_stability_proxy": 1.274302986176781
+      },
+      {
+        "stability_axis": "amp_stratum",
+        "method": "tiny_sequence_transformer",
+        "n_strata": 4,
+        "energy_sigma68_stratum_median": 0.08904753878334884,
+        "energy_sigma68_stratum_span": 0.10742857425863299,
+        "pid_stability_proxy": 1.5089590763687448
+      },
+      {
+        "stability_axis": "amp_stratum",
+        "method": "ridge",
+        "n_strata": 4,
+        "energy_sigma68_stratum_median": 0.05804936334844125,
+        "energy_sigma68_stratum_span": 0.062038431748937715,
+        "pid_stability_proxy": 1.5527356097562255
+      },
+      {
+        "stability_axis": "amp_stratum",
+        "method": "analytic_clipped_template_sideband_traditional",
+        "n_strata": 3,
+        "energy_sigma68_stratum_median": 0.08720281092475593,
+        "energy_sigma68_stratum_span": 0.07618431606066815,
+        "pid_stability_proxy": 1.5950129577440202
+      },
+      {
+        "stability_axis": "amp_stratum",
+        "method": "mlp",
+        "n_strata": 4,
+        "energy_sigma68_stratum_median": 0.11672258848050071,
+        "energy_sigma68_stratum_span": 0.16778671683255186,
+        "pid_stability_proxy": 1.8655816767464117
+      },
+      {
+        "stability_axis": "pid_proxy_class",
+        "method": "saturation_residual_fusion_new",
+        "n_strata": 2,
+        "energy_sigma68_stratum_median": 0.07143374047551702,
+        "energy_sigma68_stratum_span": 0.0028092878367330654,
+        "pid_stability_proxy": 1.0196635918687187
+      },
+      {
+        "stability_axis": "pid_proxy_class",
+        "method": "gradient_boosted_trees",
+        "n_strata": 2,
+        "energy_sigma68_stratum_median": 0.07866162894300884,
+        "energy_sigma68_stratum_span": 0.006772678470300081,
+        "pid_stability_proxy": 1.043049442029779
+      },
+      {
+        "stability_axis": "pid_proxy_class",
+        "method": "ridge",
+        "n_strata": 2,
+        "energy_sigma68_stratum_median": 0.06616648736583744,
+        "energy_sigma68_stratum_span": 0.00868788889114263,
+        "pid_stability_proxy": 1.0656517312390101
+      },
+      {
+        "stability_axis": "pid_proxy_class",
+        "method": "tiny_sequence_transformer",
+        "n_strata": 2,
+        "energy_sigma68_stratum_median": 0.1024325410979999,
+        "energy_sigma68_stratum_span": 0.024127289571224772,
+        "pid_stability_proxy": 1.1177716051588604
+      },
+      {
+        "stability_axis": "pid_proxy_class",
+        "method": "1d_cnn",
+        "n_strata": 2,
+        "energy_sigma68_stratum_median": 0.09395715116883384,
+        "energy_sigma68_stratum_span": 0.026088368031836062,
+        "pid_stability_proxy": 1.1388311996867446
+      },
+      {
+        "stability_axis": "pid_proxy_class",
+        "method": "analytic_clipped_template_sideband_traditional",
+        "n_strata": 2,
+        "energy_sigma68_stratum_median": 0.08781399998988172,
+        "energy_sigma68_stratum_span": 0.052286592341639626,
+        "pid_stability_proxy": 1.29771216632692
+      },
+      {
+        "stability_axis": "pid_proxy_class",
+        "method": "mlp",
+        "n_strata": 2,
+        "energy_sigma68_stratum_median": 0.12267007997010909,
+        "energy_sigma68_stratum_span": 0.0984727272792748,
+        "pid_stability_proxy": 1.4013722307153853
+      },
+      {
+        "stability_axis": "source_run",
+        "method": "gradient_boosted_trees",
+        "n_strata": 5,
+        "energy_sigma68_stratum_median": 0.07977467327783949,
+        "energy_sigma68_stratum_span": 0.027842960518637924,
+        "pid_stability_proxy": 1.0482385395089595
+      },
+      {
+        "stability_axis": "source_run",
+        "method": "1d_cnn",
+        "n_strata": 5,
+        "energy_sigma68_stratum_median": 0.10582791635870355,
+        "energy_sigma68_stratum_span": 0.02648860527886432,
+        "pid_stability_proxy": 1.0835399138972108
+      },
+      {
+        "stability_axis": "source_run",
+        "method": "saturation_residual_fusion_new",
+        "n_strata": 5,
+        "energy_sigma68_stratum_median": 0.07043306943470873,
+        "energy_sigma68_stratum_span": 0.010560576108809769,
+        "pid_stability_proxy": 1.101895365749159
+      },
+      {
+        "stability_axis": "source_run",
+        "method": "mlp",
+        "n_strata": 5,
+        "energy_sigma68_stratum_median": 0.1557709091168858,
+        "energy_sigma68_stratum_span": 0.03858073318104743,
+        "pid_stability_proxy": 1.136303653837568
+      },
+      {
+        "stability_axis": "source_run",
+        "method": "tiny_sequence_transformer",
+        "n_strata": 5,
+        "energy_sigma68_stratum_median": 0.11960005138515868,
+        "energy_sigma68_stratum_span": 0.04385717732761557,
+        "pid_stability_proxy": 1.1591254161741298
+      },
+      {
+        "stability_axis": "source_run",
+        "method": "analytic_clipped_template_sideband_traditional",
+        "n_strata": 5,
+        "energy_sigma68_stratum_median": 0.1011297014714475,
+        "energy_sigma68_stratum_span": 0.028756216681322763,
+        "pid_stability_proxy": 1.2033953779346447
+      },
+      {
+        "stability_axis": "source_run",
+        "method": "ridge",
+        "n_strata": 5,
+        "energy_sigma68_stratum_median": 0.0652851797767291,
+        "energy_sigma68_stratum_span": 0.02876614471785037,
+        "pid_stability_proxy": 1.2731940462320686
+      },
+      {
+        "stability_axis": "timing_stratum",
+        "method": "1d_cnn",
+        "n_strata": 3,
+        "energy_sigma68_stratum_median": 0.10644343071491241,
+        "energy_sigma68_stratum_span": 0.012409688886590275,
+        "pid_stability_proxy": 1.0544184762912714
+      },
+      {
+        "stability_axis": "timing_stratum",
+        "method": "mlp",
+        "n_strata": 3,
+        "energy_sigma68_stratum_median": 0.1563607906142685,
+        "energy_sigma68_stratum_span": 0.050203285537000236,
+        "pid_stability_proxy": 1.2814260888640832
+      },
+      {
+        "stability_axis": "timing_stratum",
+        "method": "analytic_clipped_template_sideband_traditional",
+        "n_strata": 3,
+        "energy_sigma68_stratum_median": 0.09146101497451725,
+        "energy_sigma68_stratum_span": 0.04774292079666173,
+        "pid_stability_proxy": 1.438745604723408
+      },
+      {
+        "stability_axis": "timing_stratum",
+        "method": "gradient_boosted_trees",
+        "n_strata": 3,
+        "energy_sigma68_stratum_median": 0.07003658572641965,
+        "energy_sigma68_stratum_span": 0.04458173690230027,
+        "pid_stability_proxy": 1.5431922302510526
+      },
+      {
+        "stability_axis": "timing_stratum",
+        "method": "ridge",
+        "n_strata": 3,
+        "energy_sigma68_stratum_median": 0.060774964233169165,
+        "energy_sigma68_stratum_span": 0.03941856896579468,
+        "pid_stability_proxy": 1.5996289235399908
+      },
+      {
+        "stability_axis": "timing_stratum",
+        "method": "saturation_residual_fusion_new",
+        "n_strata": 3,
+        "energy_sigma68_stratum_median": 0.06102551338794808,
+        "energy_sigma68_stratum_span": 0.043009825631831915,
+        "pid_stability_proxy": 1.6676247662524022
+      },
+      {
+        "stability_axis": "timing_stratum",
+        "method": "tiny_sequence_transformer",
+        "n_strata": 3,
+        "energy_sigma68_stratum_median": 0.07348879910598788,
+        "energy_sigma68_stratum_span": 0.1126263475897086,
+        "pid_stability_proxy": 2.4670002946891625
+      }
+    ]
+  }
+}

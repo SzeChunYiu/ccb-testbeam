@@ -1,0 +1,13 @@
+claim_helper_command: tn-ticket claim testbeam-laptop-1 --project testbeam
+claim_helper_output:
+null
+# null
+
+null
+manual_claim_issue: 2473
+manual_claim_command: gh issue edit 2473 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-1 --remove-label factory:open
+manual_claim_evidence: issue #2473 labels include factory:claimed, project:testbeam, worker:testbeam-laptop-1
+
+# S54a: Matched-filter timing versus neural pulse-shape encoders for pedestal-drift closure
+
+Academic-grade study: quantify how pulse shape and timing drift under pedestal-memory and current stratification. Compare traditional constant-fraction timing, template matched filtering, cross-correlation, and run-wise mixed-effects calibration against ridge, gradient-boosted trees, MLP, 1D-CNN, and transformer sequence encoders. Use run-block splits, leakage guards, bootstrap confidence intervals for sigma68/bias/failure rate, and ablations over pretrigger pedestal samples, rising edge, peak, and tail. Report where each method changes physical interpretation of shape, timing, pedestal, pile-up susceptibility, saturation flags, energy proxy stability, and PID separability.

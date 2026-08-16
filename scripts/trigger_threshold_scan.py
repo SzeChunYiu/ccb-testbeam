@@ -312,7 +312,9 @@ def run_threshold_scan(config: ScanConfig, mode: str) -> List[ScanResult]:
                     species_breakdown=stats["species"],
                 ))
                 
-                print(f"    Efficiency: {efficiency:.4f} ({stats["n_pass"]}/{stats["n_events"]})")
+                n_pass_str = str(stats["n_pass"])
+                n_events_str = str(stats["n_events"])
+                print(f"    Efficiency: {efficiency:.4f} ({n_pass_str}/{n_events_str})")
     
     return results
 

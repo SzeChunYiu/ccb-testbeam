@@ -45,6 +45,24 @@ A_ARM = 2
 B_ARM = 1
 COINC_NS = 15.0
 
+# T1/T2 sensitive-detector branch names as actually written by the Phase 2
+# trigger-logging SD (verified against output_krakow_phase2_10k.root):
+# T1_trigger_log_EDep / T1_trigger_log_Time / T2_trigger_log_EDep /
+# T2_trigger_log_Time. Internal keys stay short ("T1_EDep" ...); the mapping
+# is applied only at the uproot boundary.
+HARDWARE_BRANCH_MAP = {
+    "T1_EDep": "T1_trigger_log_EDep",
+    "T1_Time": "T1_trigger_log_Time",
+    "T2_EDep": "T2_trigger_log_EDep",
+    "T2_Time": "T2_trigger_log_Time",
+}
+HARDWARE_BRANCHES = list(HARDWARE_BRANCH_MAP.values())
+
+# HRD proxy branches; when present alongside the T1/T2 branches they give
+# hardware mode the same per-species "enter" denominator as proxy mode, so
+# the Phase 4 quadrant comparison is exact rather than interval-bounded.
+PROXY_BRANCHES = ["Sci_bar_LayerID", "Sci_bar_LayerID1", "Sci_bar_PDG", "Sci_bar_Time"]
+
 
 # Config-driven grid defaults (can be overridden via env vars)
 DEFAULT_THRESHOLDS = [float(x) for x in os.getenv(
@@ -226,59 +244,79 @@ def run_threshold_scan(config: ScanConfig, mode: str) -> List[ScanResult]:
         
         # Determine branches based on mode
         if mode == "hardware":
-            required_branches = ["T1_EDep", "T1_Time", "T2_EDep", "T2_Time"]
+            required_branches = HARDWARE_BRANCHES
         else:  # proxy mode
-            required_branches = ["Sci_bar_LayerID", "Sci_bar_LayerID1", "Sci_bar_PDG", "Sci_bar_Time"]
-        
+            required_branches = PROXY_BRANCHES
+
         # Check branch presence
         available_branches = tree.keys()
         missing = [b for b in required_branches if b not in available_branches]
         if missing:
             raise ValueError(f"Missing required branches for {mode}-response mode: {missing}")
-        
+
+        # In hardware mode, load the HRD proxy branches alongside T1/T2 when
+        # present so the species breakdown uses the same "enter" denominator
+        # as proxy mode (enables exact Phase 4 quadrants).
+        hrd_join = (
+            mode == "hardware"
+            and all(b in available_branches for b in PROXY_BRANCHES)
+        )
+        load_branches = list(required_branches) + (PROXY_BRANCHES if hrd_join else [])
+
         chunk_size = 10000
-        
+
         for threshold_mev in config.thresholds:
             for coinc_ns in config.coincidence_windows:
                 print(f"  Scanning: threshold={threshold_mev} MeV, coinc={coinc_ns} ns")
-                
+
                 stats = {
                     "n_events": 0,
                     "n_pass": 0,
                     "species": {},
                 }
-                
+
                 for start in range(0, n_entries, chunk_size):
                     end = min(start + chunk_size, n_entries)
-                    
-                    if mode == "hardware":
-                        chunk = tree.arrays(
-                            ["T1_EDep", "T1_Time", "T2_EDep", "T2_Time"],
-                            entry_start=start, entry_stop=end, library="np"
-                        )
-                    else:  # proxy mode
-                        chunk = tree.arrays(
-                            ["Sci_bar_LayerID", "Sci_bar_LayerID1", "Sci_bar_PDG", "Sci_bar_Time"],
-                            entry_start=start, entry_stop=end, library="np"
-                        )
-                    
-                    for i in range(len(chunk[required_branches[0]])):
+
+                    chunk = tree.arrays(
+                        load_branches,
+                        entry_start=start, entry_stop=end, library="np"
+                    )
+
+                    for i in range(len(chunk[load_branches[0]])):
                         stats["n_events"] += 1
-                        
+
                         if mode == "hardware":
-                            t1_edep = chunk["T1_EDep"][i]
-                            t1_time = chunk["T1_Time"][i]
-                            t2_edep = chunk["T2_EDep"][i]
-                            t2_time = chunk["T2_Time"][i]
-                            
+                            t1_edep = chunk[HARDWARE_BRANCH_MAP["T1_EDep"]][i]
+                            t1_time = chunk[HARDWARE_BRANCH_MAP["T1_Time"]][i]
+                            t2_edep = chunk[HARDWARE_BRANCH_MAP["T2_EDep"]][i]
+                            t2_time = chunk[HARDWARE_BRANCH_MAP["T2_Time"]][i]
+
                             flags = classify_event_hardware_response(
                                 t1_edep, t1_time, t2_edep, t2_time,
                                 threshold_mev, coinc_ns
                             )
                             pass_trigger = flags["coincidence"]
-                            
-                            # For species breakdown, we need HRD branches (may not be available)
-                            # This is a limitation of hardware-only mode
+
+                            # Species breakdown in hardware mode: only when the
+                            # HRD proxy branches are present in the same file.
+                            # n_enter mirrors proxy mode's enter_B so the
+                            # Phase 4 quadrant denominators match exactly.
+                            if hrd_join:
+                                layer = chunk["Sci_bar_LayerID"][i]
+                                layer1 = chunk["Sci_bar_LayerID1"][i]
+                                pdg = chunk["Sci_bar_PDG"][i]
+                                htime = chunk["Sci_bar_Time"][i]
+
+                                pflags = classify_event_proxy(layer, layer1, pdg, htime, coinc_ns)
+                                primary_pdg = get_primary_species(pdg)
+                                if primary_pdg and pflags["enter_B"]:
+                                    species = pdg_to_species(primary_pdg)
+                                    if species not in stats["species"]:
+                                        stats["species"][species] = {"n_enter": 0, "n_pass": 0}
+                                    stats["species"][species]["n_enter"] += 1
+                                    if pass_trigger:
+                                        stats["species"][species]["n_pass"] += 1
                         else:  # proxy mode
                             layer = chunk["Sci_bar_LayerID"][i]
                             layer1 = chunk["Sci_bar_LayerID1"][i]
@@ -322,7 +360,7 @@ def run_threshold_scan(config: ScanConfig, mode: str) -> List[ScanResult]:
 def detect_mode(tree) -> str:
     """Detect whether file has hardware-response or proxy branches."""
     branches = tree.keys()
-    if "T1_EDep" in branches and "T2_EDep" in branches:
+    if all(b in branches for b in HARDWARE_BRANCHES):
         return "hardware"
     elif "Sci_bar_LayerID" in branches and "Sci_bar_LayerID1" in branches:
         return "proxy"
@@ -404,9 +442,9 @@ def main():
             mode = args.mode
             # Verify mode is valid
             branches = tree.keys()
-            if mode == "hardware" and ("T1_EDep" not in branches or "T2_EDep" not in branches):
+            if mode == "hardware" and not all(b in branches for b in HARDWARE_BRANCHES):
                 raise ValueError(f"Requested hardware mode but T1/T2 branches not found")
-            if mode == "proxy" and ("Sci_bar_LayerID" not in branches or "Sci_bar_LayerID1" not in branches):
+            if mode == "proxy" and not all(b in branches for b in PROXY_BRANCHES):
                 raise ValueError(f"Requested proxy mode but HRD branches not found")
     
     print(f"Mode: {mode}-response")

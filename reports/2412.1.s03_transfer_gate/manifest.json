@@ -1,0 +1,22 @@
+{
+  "study": "S03-followup-2412",
+  "ticket": "2412",
+  "worker": "testbeam-laptop-2",
+  "config": "/home/billy/.tb-workers/testbeam-laptop-2/configs/s03_followup_2412_transfer_gate.json",
+  "command": "/home/billy/anaconda3/bin/python scripts/s03_followup_2412_transfer_gate.py --config configs/s03_followup_2412_transfer_gate.json",
+  "elapsed_s": 45.677937746047974,
+  "git_commit": "cfc84ffc12926fe2fca17b0a32418b9557a5054d",
+  "outputs": {
+    "REPORT.md": "7f5941c0c456806481df46077b2cdd2acc4ad448bb22ca2783202e54b3fa7e9e",
+    "amplitude_support.csv": "bf6fd5582132fb210bfd2a8b71ad567d7ad8d75b0d9d72a7616462e922832f40",
+    "input_sha256.csv": "2093bc7d4809d7d39bf444fddea81623ef195b00c4efb3bc4bb86cca64140fb9",
+    "model_diagnostics.csv": "2cc19dd520dc68740623f8c86dab9a9199b72a17329461d581ee19cb70b9cc75",
+    "pairwise_residuals.csv": "3a38f4763c6dfed094b2fb6d30ce3ae1dff0b218a013b3ca73cbe1f5080e6bfe",
+    "per_run_summary.csv": "d0f5d31b6ac54d209466f4a49b5c70f58080a0c7847f62c9775b70a772bca390",
+    "pooled_eval_summary.csv": "955c4852a0e69b21dc26fdbf454ab0b9817c4a46e92a143e59489502fbf7c632",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "99edd7475e55217d848abf2de074d8e57beb60c18a89be978f48543920003370",
+    "sample_i_pooled_summary.csv": "e6bb51c20ea27739378af906abe4dc8555b2a469e4630e77ae8d83b282368a26",
+    "traditional_diagnostics.csv": "b59ea0e06f0cdd77d72d377d58e63cfa681883adb1a0c2466b7ed86c2d1e3e3d"
+  }
+}

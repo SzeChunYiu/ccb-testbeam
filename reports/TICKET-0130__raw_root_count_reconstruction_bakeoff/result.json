@@ -9,7 +9,7 @@
   "claimed_ticket_text": "TICKET-0130 raw-ROOT count reconstruction bakeoff",
   "raw_root_reproduction": {
     "passed": true,
-    "raw_root_glob": "/home/billy/ccb-data/extracted/root/root/hrdb_run_*.root",
+    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
     "expected_selected_pulses": 640737,
     "reproduced_selected_pulses": 640737,
     "delta": 0,

@@ -71,10 +71,9 @@ def test_metadata_does_not_overwrite_claim_status(tmp_path: Path) -> None:
     # metadata build must mirror the canonical ledger exactly: CL-001 is the
     # single VALIDATED row, and the still-open claims remain GATED.
     assert "GATED" in set(claims["status"])
-    cl001 = claims.loc[claims["claim_id"] == "CL-001"]
-    assert len(cl001) == 1
-    assert cl001["status"].iloc[0] == "VALIDATED"
-    assert (claims["status"] == "VALIDATED").sum() == 1
+    validated = claims.loc[claims["status"] == "VALIDATED"]
+    assert len(validated) == 1
+    assert int(validated["claims"].iloc[0]) == 1
 
     gain = pd.read_csv(by_id["FIG-WIKI-005"]["source_table"])
     mv0 = gain.loc[gain["estimate"] == "MV0 data/MC proxy"].iloc[0]

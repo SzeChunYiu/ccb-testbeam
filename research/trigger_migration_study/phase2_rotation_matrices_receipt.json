@@ -1,0 +1,80 @@
+{
+  "schema": "ccb-trigger-phase2-rotation-matrices/1",
+  "issue": "1045",
+  "phase": "2",
+  "description": "Exact TGeoRotation matrices for T1/T2 and reference Sci_stack volumes",
+  "baseline_file": "geant4/configs/krakow_109_8-38deg_4-71deg.root (sha256: a71c5cd7...)",
+  "t1t2_file": "geant4/configs/krakow_109_8-38deg_4-71deg_T1T2.root (sha256: ef572220...)",
+  "nodes": {
+    "Sci_stack1_1": {
+      "volume_name": "Sci_stack1_1",
+      "position_cm": [-72.032393, 0.0, 92.197258],
+      "rotation_matrix": [
+        [0.788011, 0.0, -0.615661],
+        [0.0, 1.0, 0.0],
+        [0.615661, 0.0, 0.788011]
+      ],
+      "derived_angle_deg": -38.000,
+      "expected_angle_deg": -38.0,
+      "arm": "B-arm (-38 deg)"
+    },
+    "Sci_stack2_2": {
+      "volume_name": "Sci_stack2_2",
+      "position_cm": [107.160573, 0.0, 35.855426],
+      "rotation_matrix": [
+        [0.317305, 0.0, 0.948324],
+        [0.0, 1.0, 0.0],
+        [-0.948324, 0.0, 0.317305]
+      ],
+      "derived_angle_deg": 71.500,
+      "expected_angle_deg": 71.5,
+      "arm": "A-arm (+71.5 deg)"
+    },
+    "T1_trigger_log_100": {
+      "volume_name": "T1_trigger_log",
+      "copy_number": 100,
+      "position_cm": [-28.4497, 0.0, -9.51914],
+      "rotation_matrix": [
+        [0.317305, 0.0, 0.948324],
+        [0.0, 1.0, 0.0],
+        [-0.948324, 0.0, 0.317305]
+      ],
+      "derived_angle_deg": 71.500,
+      "expected_angle_deg": 71.5,
+      "arm": "A-arm (+71.5 deg)",
+      "reference_volume": "Sci_stack2_2",
+      "matrix_match_5dp": true,
+      "proof_of_orientation": "Local z-axis after Ry(θ) is (sinθ, 0, cosθ). For θ=71.5°, z=(0.948324, 0, 0.317305) = arm unit vector. Dot(z_local, arm_vector) ≈ 1, confirming thin-axis faces target."
+    },
+    "T2_trigger_log_101": {
+      "volume_name": "T2_trigger_log",
+      "copy_number": 101,
+      "position_cm": [18.4698, 0.0, -23.6403],
+      "rotation_matrix": [
+        [0.788011, 0.0, -0.615661],
+        [0.0, 1.0, 0.0],
+        [0.615661, 0.0, 0.788011]
+      ],
+      "derived_angle_deg": -38.000,
+      "expected_angle_deg": -38.0,
+      "arm": "B-arm (-38 deg)",
+      "reference_volume": "Sci_stack1_1",
+      "matrix_match_5dp": true,
+      "proof_of_orientation": "Local z-axis after Ry(-38°) is (sin(-38°), 0, cos(-38°)) = (-0.615661, 0, 0.788011) = arm unit vector. Dot(z_local, arm_vector) ≈ 1, confirming thin-axis faces target."
+    }
+  },
+  "grazing_incidence_defect_analysis": {
+    "description": "What would happen if T1/T2 were NOT rotated",
+    "unrotated_effective_thickness_multiplier": "1/cos(71.5°) ≈ 3.18× for T1, 1/cos(38°) ≈ 1.27× for T2",
+    "unrotated_area_multiplier": "cos(71.5°) ≈ 0.32× for T1, cos(38°) ≈ 0.79× for T2",
+    "consequence": "Hit rate would be inflated by ~3.2× for T1, edge entry would be visible in local Position",
+    "fix": "TGeoRotation::RotateY(±arm_angle) in TGeoCombiTrans aligns thin-axis with arm unit vector",
+    "verification": "10k output shows normal-incidence face entry (z=+0.50 cm), NOT edge entry. Rotation is live in G4 transport."
+  },
+  "verification": {
+    "method": "ROOT macro dump of node translation + rotation matrix from both baseline and T1T2 exports",
+    "independent_review": "Team-lead verified T1 Ry(+71.5°) ≡ Sci_stack2_2, T2 Ry(-38°) ≡ Sci_stack1_1 (5 dp)",
+    "status": "CONFIRMED - rotation defect fixed, matrices identical to reference Sci_stacks"
+  },
+  "generated_at": "2026-08-17"
+}

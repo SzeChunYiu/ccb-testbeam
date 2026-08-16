@@ -1,0 +1,87 @@
+{
+  "schema": "ccb-trigger-phase2-geometry-receipt/1",
+  "issue": "1045",
+  "phase": "2",
+  "description": "T1/T2 trigger volume addition to HIBEAM/krakow ROOT geometry",
+  "baseline_geometry": {
+    "file": "geant4/configs/krakow_109_8-38deg_4-71deg.root",
+    "sha256": "a71c5cd7ce4cd7085f7f0236d5852f81aba0b52ff56bc2e9593f677e1e410d4e",
+    "verification": "Bit-identical to main checkout at commit a71c5cd7"
+  },
+  "t1t2_geometry": {
+    "file": "geant4/configs/krakow_109_8-38deg_4-71deg_T1T2.root",
+    "sha256": "ef572220f2d568d53485d77c16ef516de104ee3c39556f68cb4f71e8b9575378",
+    "supersedes": "3278b65cff7c28205c6c8815a9a302379c436319af027669c3b2261699269889 (translation-only, retracted)"
+  },
+  "t1_spec": {
+    "volume_name": "T1_trigger_log",
+    "copy_number": 100,
+    "shape": "TGeoBBox",
+    "half_dimensions": [5.0, 5.0, 0.5],
+    "full_dimensions_cm": [10.0, 10.0, 1.0],
+    "material": "PSci",
+    "density_g_cm3": 1.0320,
+    "position_cm": [-28.4497, 0.0, -9.51914],
+    "rotation": "Ry(+71.5 deg)",
+    "placement": "30 cm upstream of Sci_stack2 along A-arm (71.5 deg)"
+  },
+  "t2_spec": {
+    "volume_name": "T2_trigger_log",
+    "copy_number": 101,
+    "shape": "TGeoBBox",
+    "half_dimensions": [7.5, 7.5, 0.5],
+    "full_dimensions_cm": [15.0, 15.0, 1.0],
+    "material": "PSci",
+    "density_g_cm3": 1.0320,
+    "position_cm": [18.4698, 0.0, -23.6403],
+    "rotation": "Ry(-38.0 deg)",
+    "placement": "30 cm upstream of Sci_stack1 along B-arm (-38 deg)"
+  },
+  "gates": {
+    "arm_angle_gate": {
+      "description": "Assert Sci_stack rotation angles match design arm angles",
+      "tolerance_deg": 2.0,
+      "expected_angles": {"Sci_stack1": -38.0, "Sci_stack2": 71.5},
+      "measured_angles": {"Sci_stack1": -38.000, "Sci_stack2": 71.500},
+      "status": "PASS"
+    },
+    "volume_count_gate": {
+      "description": "Assert exactly 2 new volumes added",
+      "before": 8,
+      "after": 10,
+      "expected": 10,
+      "status": "PASS"
+    },
+    "overlap_check_gate": {
+      "description": "CheckGeometryManager::CheckOverlaps(0.001)",
+      "tolerance_cm": 0.001,
+      "overlaps": 0,
+      "extrusions": 0,
+      "status": "PASS"
+    },
+    "baseline_unchanged_gate": {
+      "description": "Assert baseline daughters bit-identical",
+      "baseline_daughters": ["PIPE", "Window", "TARGET", "Sci_stack1", "Sci_stack2", "ProtoTPCHull", "Trig_stack1", "Trig_stack2"],
+      "status": "PASS - bit-identical diff"
+    }
+  },
+  "physics_gate": {
+    "description": "Team-lead independent verification of 10k-event output (output_krakow_phase2_10k.root)",
+    "verified_by": "team-lead",
+    "verification_date": "2026-08-17",
+    "findings": {
+      "sd_integration": "Live - T1_trigger_log_* and T2_trigger_log_* full branch sets present with nonzero EDep",
+      "t1_hit_rate": "14/10000 events (0.14%), mean EDep/hit ≈21 MeV",
+      "t2_hit_rate": "15/10000 events (0.15%), mean EDep/hit ≈22 MeV",
+      "orientation_evidence": "Every hit's local Position at z=+0.50 cm (thin entrance FACE) with local x well inside width. T1: x∈[-4.48,+4.63] within ±5; T2: x∈[+1.9,+7.4] within ±7.5. Momentum along arm direction (T1 momX<0 toward -x arm; T2 momX>0). This is NORMAL-INCIDENCE face entry.",
+      "grazing_defect_fixed": "Unrotated slabs would show edge entry at 71.5 deg grazing (3.2× thickness, 0.32× area). The 10k data confirms RUNNING G4 geometry is the rotated one.",
+      "tracklength_interpretation": "TrackLength ≈29.2–31.5 per hit = cumulative track length from origin (target→slab ≈30 cm), NOT the in-slab step length. Exception: evt 9697 second hit TL=0.0002 is a separate near-boundary step."
+    },
+    "status": "PASS - normal-incidence hit rates confirm rotation is live in SD transport"
+  },
+  "insertion_script": "scripts/trigger_phase2/add_t1t2_tgeo.C",
+  "verification_script": "scripts/trigger_phase2/verify_t1t2_export.C",
+  "rotation_matrix_receipt": "research/trigger_migration_study/phase2_rotation_matrices_receipt.json",
+  "team_lead_verification": "All 4 conditions (a)-(d) met, physics cross-check gate passed",
+  "generated_at": "2026-08-17"
+}

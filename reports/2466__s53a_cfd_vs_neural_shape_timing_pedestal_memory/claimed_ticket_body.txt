@@ -1,0 +1,3 @@
+S53a: Constant-fraction timing versus neural shape encoders under pedestal-memory drift
+
+Academic-grade study: compare a traditional constant-fraction discriminator plus spline/analytic pulse-template fit against ridge regression, gradient-boosted trees, MLP, 1D-CNN, and a causal waveform transformer for sub-sample timing under baseline wander and pedestal-memory shifts. Use run-heldout splits, event-level leakage guards, and bootstrap confidence intervals for timing bias, sigma68, calibration slope, and shape residuals. Stratify by pulse shape family, rise-time, amplitude, pedestal state, and near-threshold energy so the result deepens understanding of shape-timing coupling rather than only ranking models.

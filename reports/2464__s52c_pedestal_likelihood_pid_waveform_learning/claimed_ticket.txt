@@ -1,0 +1,14 @@
+Single required claim command:
+tn-ticket claim testbeam-laptop-3 --project testbeam
+
+Command output:
+null
+# null
+
+null
+
+The command hit the known null existing-ticket edge case documented in factory-tickets issue #2440. The project queue was verified non-empty with open analysis tickets. Issue #2464 was then manually label-swapped exactly once to:
+factory:claimed, project:testbeam, worker:testbeam-laptop-3.
+
+Claimed issue:
+#2464 S52c: Pedestal-state likelihood PID versus multitask waveform representation learning

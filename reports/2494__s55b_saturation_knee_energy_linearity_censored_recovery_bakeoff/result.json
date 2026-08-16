@@ -1,0 +1,106 @@
+{
+  "ticket_id": "2494",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-2",
+  "title": "S55b: Saturation knee energy linearity and censored-pulse recovery bakeoff",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-2 --project testbeam",
+  "claimed_ticket_text": "S55b: Saturation knee energy linearity and censored-pulse recovery bakeoff",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "adc_clip": 11800.0,
+    "bootstrap": "held-out run-block percentile 95% CI",
+    "bootstrap_replicates": 400,
+    "negative_control": "clipped clean single-pulse controls with matched source-run distribution",
+    "winner_score": "energy_residual_sigma68 + 0.20*abs(energy_residual_bias) + 0.004*pileup_separation_sigma68_ns + 0.004*leading_timing_shift_sigma68_ns + 0.05*pileup_miss_rate + 0.05*false_split_rate + 0.08*pedestal_shift_false_split_span + 0.08*pid_energy_bias_span + 0.03*(1-pid_proxy_auc) + 0.05*pid_proxy_ece",
+    "pid_endpoint": "train-calibrated held-out AUC/ECE for inner_high_charge PID proxy versus all other stave/charge states"
+  },
+  "required_method_coverage": {
+    "traditional": "analytic_clipped_template_sideband_traditional",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "transformer_sequence_model": "tiny_sequence_transformer",
+    "new_architecture": "saturation_residual_fusion_new"
+  },
+  "winner": {
+    "name": "saturation_residual_fusion_new",
+    "criterion": "minimum registered S55b held-out energy-plus-pileup composite score with run-block bootstrap CIs",
+    "winner_score": 0.16427667020086878,
+    "energy_residual_bias": -0.006656992530493892,
+    "energy_residual_sigma68": 0.06563534357869912,
+    "energy_residual_sigma68_ci95": [
+      0.05659020784346654,
+      0.07611305096525706
+    ],
+    "saturation_onset_energy_sigma68": 0.05421711578932977,
+    "pileup_separation_sigma68_ns": 10.628063159413484,
+    "pileup_separation_sigma68_ci95": [
+      9.474765589178652,
+      12.372423868180622
+    ],
+    "leading_timing_shift_sigma68_ns": 5.498511625719544,
+    "pedestal_shift_false_split_span": 0.03504111321948136,
+    "pid_energy_bias_span": 0.046491097842457675,
+    "pid_proxy_auc": 0.9928999877585996,
+    "pid_proxy_auc_ci95": [
+      0.9867586513853344,
+      0.9976890062726973
+    ],
+    "pid_proxy_ece": 0.01648298568634507,
+    "pid_proxy_ece_ci95": [
+      0.012660252787526631,
+      0.022176545007482257
+    ],
+    "pileup_miss_rate": 0.3024390243902439,
+    "false_split_rate": 0.20243902439024392
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "endpoint_metrics_ci": "endpoint_metrics_ci.csv",
+    "pid_proxy_metrics_ci": "pid_proxy_metrics_ci.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv"
+  },
+  "novel_tickets_appended": [],
+  "caveats": [
+    "Truth comes from controlled injections into raw-ROOT-derived clean pulses.",
+    "ADC clipping is a benchmark stressor, not decoded electronics metadata.",
+    "PID-dependent failure is represented by stave and charge-support proxies.",
+    "Bootstrap CIs resample held-out runs and quantify run-transfer uncertainty."
+  ]
+}

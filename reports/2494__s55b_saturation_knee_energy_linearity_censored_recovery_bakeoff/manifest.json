@@ -1,0 +1,23 @@
+{
+  "ticket_id": "2494",
+  "git_commit": "bcb7c94c53d027096c53fb0ef3d2c7a1f331b372",
+  "command": "/home/billy/.tb-workers/testbeam-laptop-2/.venv-s55b/bin/python scripts/s55b_2494_saturation_knee_energy_linearity_censored_recovery_bakeoff.py",
+  "runtime_seconds": 79.97494649887085,
+  "python": "3.8.10 (default, Mar 18 2025, 20:04:55) \n[GCC 9.4.0]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.29",
+  "outputs_sha256": {
+    "REPORT.md": "f31a2c21d30624ffd53f674e780882e2791c13230131d5836a9a9b88cbf0d9be",
+    "claimed_ticket.txt": "dec6e83738c13b2bf865d20e73a9263637ddd3f29ec4bb142e82880c76651ff9",
+    "endpoint_metrics_ci.csv": "c4e2de91d7b2538b3549ac7f692b52a5aaf53398c0cdbdf589775876d35d2190",
+    "event_predictions.csv": "1b7edfdfd8bcbb08edc07812c28db22771ac205094a17527e1c171ddaf312dea",
+    "input_sha256.csv": "cc17da0dcd3e7e732b81a17f3c35833f026fdec912538d28d7d71b9af71a46f6",
+    "method_metrics.csv": "d2da07ff3ee7a14b6ee4eba59df7765c48b66bbfa79a48806f07f767e29721ad",
+    "pid_proxy_metrics_ci.csv": "67c845e2b6befac7045e2887fa06ac701980a22f55ae9fd4e247052c07817f4e",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "dd368c96381e29a2ac6ca1c2a36c7cdafa5b6ac129e2884397ad10ac80a48d4c",
+    "run_heldout_metrics.csv": "b8debe0f52bb318ec40a33ea2300b1abb9b7b03e54bee7cb9472f6f5f0e8a264",
+    "strata_metrics.csv": "0dfa6174d32983962a8b599f177eabecfc13fe237b9c693828c2bedc4f688a5a",
+    "template_summary.csv": "eca9592b05cf73d43c290f57231745f4d3949abede50e928ded39b460577385c",
+    "winner_ranked_metrics.csv": "4e3a92a5a7bc6a70a7fe8bea792d74fdc18631e687110d044e86051fa5f1d896"
+  }
+}

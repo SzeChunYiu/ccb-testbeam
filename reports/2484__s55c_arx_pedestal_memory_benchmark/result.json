@@ -1,0 +1,155 @@
+{
+  "ticket_id": "2484",
+  "study_id": "S55c",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-4",
+  "title": "ARX pedestal-memory deconvolution versus multitask neural pulse representations",
+  "status": "complete",
+  "claim_command": "tn-ticket claim testbeam-laptop-4 --project testbeam",
+  "claim_note": "The claim command was run exactly once. It returned null|null|null because the local shim treats the no-existing-claim jq interpolation as non-null; issue #2484 was then label-swapped manually to worker:testbeam-laptop-4 without rerunning claim.",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_dir": "data/extracted/root/root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0
+  },
+  "external_join": {
+    "source_report_dir": "reports/1783883140.39222.3c4045b1__g4_08_keyed_digitized_geant4_native_join",
+    "joined_rows": 1056,
+    "join_key": [
+      "daq_run",
+      "EVENTNO",
+      "EVT",
+      "TRIGGER",
+      "g4_entry",
+      "digitizer_seed",
+      "native_row"
+    ],
+    "audit_passed": true
+  },
+  "split": {
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "bootstrap_replicates": 500
+  },
+  "required_method_coverage": {
+    "strong_traditional": "traditional_ar1_deltaE_over_E",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "new_architecture": "pedestal_memory_transformer_multitask_new"
+  },
+  "winner": {
+    "name": "gradient_boosted_trees",
+    "criterion": "minimum held-out S55c multitask score",
+    "winner_score": 0.410496109517683,
+    "pid_auc": 0.8836647850629613,
+    "pid_balanced_accuracy": 0.8239253148067738,
+    "pid_confusion": {
+      "tn": 190,
+      "fp": 55,
+      "fn": 30,
+      "tp": 205
+    },
+    "energy_fractional_sigma68": 0.26785041885967087,
+    "energy_fractional_sigma68_ci95": [
+      0.240699715116493,
+      0.29985064530366673
+    ],
+    "pedestal_residual_rms_adc": 28.172491103932174,
+    "pedestal_residual_rms_adc_ci95": [
+      19.371313674128483,
+      35.71111000921527
+    ],
+    "timing_jitter_ns": 2.3369008892396983,
+    "timing_jitter_ns_ci95": [
+      2.059879908184348,
+      2.534259881848571
+    ],
+    "pileup_balanced_accuracy": 0.7291666666666666,
+    "pileup_balanced_accuracy_ci95": [
+      0.71875,
+      0.7437499999999999
+    ],
+    "pedestal_counterfactual_span": 0.011195068143034614
+  },
+  "traditional_comparator": {
+    "pid_auc": 0.829109856708641,
+    "pid_balanced_accuracy": 0.7673903603994789,
+    "pid_ece": 0.145086208579577,
+    "pileup_auc": 0.7310243055555556,
+    "pileup_balanced_accuracy": 0.6833333333333333,
+    "pileup_ece": 0.049995713553396895,
+    "pid_confusion_tn": 204,
+    "pid_confusion_fp": 41,
+    "pid_confusion_fn": 70,
+    "pid_confusion_tp": 165,
+    "energy_fractional_bias": 0.05497286433851961,
+    "energy_fractional_sigma68": 0.32692409579652804,
+    "pedestal_residual_rms_adc": 46.50603407421698,
+    "pedestal_residual_bias_adc": 4.439597899045054,
+    "timing_jitter_ns": 5.926557182845608,
+    "timing_bias_ns": 0.2448484841564209,
+    "n_events": 480,
+    "n_deuteron": 235,
+    "method": "traditional_ar1_deltaE_over_E",
+    "pedestal_counterfactual_span": 0.017642149169632415,
+    "pid_auc_ci_low": 0.8110206070732384,
+    "pid_auc_ci_high": 0.83991683991684,
+    "pid_balanced_accuracy_ci_low": 0.7525027808676307,
+    "pid_balanced_accuracy_ci_high": 0.7808005003126954,
+    "pid_ece_ci_low": 0.11789620921652144,
+    "pid_ece_ci_high": 0.1956169296575423,
+    "pileup_auc_ci_low": 0.711736111111111,
+    "pileup_auc_ci_high": 0.7489730902777778,
+    "pileup_balanced_accuracy_ci_low": 0.6625,
+    "pileup_balanced_accuracy_ci_high": 0.7063541666666665,
+    "pileup_ece_ci_low": 0.03988526140613809,
+    "pileup_ece_ci_high": 0.1122237674885528,
+    "energy_fractional_bias_ci_low": 0.01397695272992137,
+    "energy_fractional_bias_ci_high": 0.07953097298618594,
+    "energy_fractional_sigma68_ci_low": 0.3062332634408809,
+    "energy_fractional_sigma68_ci_high": 0.34906486636437395,
+    "pedestal_residual_rms_adc_ci_low": 32.91794484942257,
+    "pedestal_residual_rms_adc_ci_high": 59.128948859927696,
+    "pedestal_residual_bias_adc_ci_low": 4.012189750776734,
+    "pedestal_residual_bias_adc_ci_high": 4.837690787112024,
+    "timing_jitter_ns_ci_low": 5.562074356927045,
+    "timing_jitter_ns_ci_high": 6.343176186206422,
+    "timing_bias_ns_ci_low": -0.23758215736854993,
+    "timing_bias_ns_ci_high": 0.6728178219445794,
+    "winner_score": 0.7352340529025978
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "method_summary": "method_summary.csv",
+    "heldout_predictions": "heldout_predictions.csv.gz",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "pedestal_counterfactuals": "pedestal_counterfactuals.csv",
+    "external_native_join_audit": "external_native_join_audit.csv",
+    "reproduction_match_table": "reproduction_match_table.csv",
+    "bootstrap_intervals": "bootstrap_intervals_long.csv",
+    "saturation_mask_stress": "saturation_mask_stress.csv"
+  },
+  "novel_tickets_appended": [],
+  "runtime_sec": 25.993451356887817,
+  "git_commit": "6fa77fd58f8f6c65ef4b42675de0793c404f1eca",
+  "python": "3.8.10"
+}

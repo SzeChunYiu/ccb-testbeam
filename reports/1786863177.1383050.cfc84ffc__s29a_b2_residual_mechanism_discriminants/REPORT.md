@@ -133,7 +133,18 @@ Per the module this is an **effective-representation** statement, **not** a
 microscopic mechanism identification.
 
 Module class labels (non-authorizing): `b2_broad_residual_unresolved` /
-`b2_broad_residual_mechanism_ambiguous`.
+`b2_broad_residual_mechanism_ambiguous`. Mapped to the issue-#968 required
+mechanism-neutral labels:
+
+- **`B2_BROAD_RESIDUAL`** — the population class: every selected B2 pulse belongs
+  here; the measured population properties are the delay-spectrum shift,
+  saturation coupling and duplicate-chain replication above.
+- **`LATE_COMPONENT_CANDIDATE`** — the sub-population with a resolvable
+  secondary peak (module `has_secondary`): 383,252/579,424 B2 pulses (66.1%),
+  18,483/36,116 B4, 7,643/17,945 B6, 4,060/7,252 B8. "Candidate" is the strongest
+  permitted word: the microscopic identity stays undetermined.
+
+No stronger (microscopic) label is used anywhere in this report.
 
 ## Authorization gate outcome
 
@@ -164,5 +175,28 @@ microscopic wording is authorized by this study, and none is used above.
   parity test).
 
 `result.json` carries all per-run closure records, per-proxy regression numbers,
-per-stave delay histograms and the full support table; `pulses.parquet` (not
-committed; regenerate via the script) holds the per-pulse observable table.
+per-stave delay histograms and the full support table; `pulses.parquet` holds the
+per-pulse observable table.
+
+## Issue acceptance coverage
+
+| #968 acceptance | status |
+|---|---|
+| mechanism-neutral labels (`B2_BROAD_RESIDUAL`, `LATE_COMPONENT_CANDIDATE`) | used; no stronger label |
+| discriminating observables per mechanism | delivered (parity → single-chain electronics; rate proxies → pile-up; clip counts → ADC-word; delay shape/scales → afterpulse/WLS vs buffer) |
+| mechanisms reproducing waveform morphology **and** inter-stave residual distribution | morphology-level discrimination done here (B2-vs-downstream KS D=0.268); full reproduction requires the injected-MC discriminant — explicitly NOT_EXECUTED, follow-up |
+| pile-up claims need rate dependence or multi-particle evidence | rate dependence measured ABSENT in three proxies; no pile-up claim made |
+| classification / timing-calibration separation | untouched: this study classifies waveforms only and does not modify any timing-extraction or calibration path |
+
+## References (primary-method, from the repo literature map)
+
+- J. Rosado & J. M. Hidalgo, *Characterization and modeling of crosstalk and
+  afterpulsing in Hamamatsu silicon photomultipliers*, arXiv:1509.02286 —
+  prompt/delayed crosstalk + afterpulse separation via amplitude-delay
+  distributions and MC; the method family the delay-spectrum discriminant
+  instantiates (amplitude-delay, not morphology alone).
+- Gallego et al., *Modeling crosstalk in silicon photomultipliers*,
+  arXiv:1302.1455 — finite-neighbour crosstalk models with recovery/dead-time
+  effects and dedicated waveform measurements; the reproduction standard the
+  injected-MC follow-up must meet (morphology + inter-stave residuals).
+- Literature map: `chatgpt_todo/LITERATURE_AND_METHOD_MAP_20260808.md`.

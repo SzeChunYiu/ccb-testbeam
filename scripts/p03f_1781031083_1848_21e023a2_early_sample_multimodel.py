@@ -541,7 +541,7 @@ def prepare_fold_pulses(pulses_all: pd.DataFrame, config: dict) -> Tuple[pd.Data
     return work, pd.concat([alignment.assign(table="alignment"), tw_cv_global.assign(table="timewalk_cv")], ignore_index=True, sort=False), pd.concat([tw_cal, tw_coef], ignore_index=True, sort=False)
 
 
-def run_one_fold(pulses_all: pd.DataFrame, config: dict, heldout_run: int, rng: np.random.Generator) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+def run_one_fold(pulses_all: pd.DataFrame, config: dict, heldout_run: int, rng: np.random.Generator) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     cfg = fold_config(config, heldout_run)
     work, diagnostics, calibration = prepare_fold_pulses(pulses_all, cfg)
     target = s02.event_residual_targets(work, "template_phase_timewalk", float(cfg["spacing_cm"]), cfg)
@@ -554,6 +554,7 @@ def run_one_fold(pulses_all: pd.DataFrame, config: dict, heldout_run: int, rng: 
     masks = ["full", "no_samples_0_3", "only_samples_0_3"]
     model_kinds = ["ridge", "hgb", "mlp", "cnn1d", "early_late_gated"]
     shuffled_methods = []
+    uncertainty_rows = []
 
     for mask_name in masks:
         X, feature_names = flat_features(work, cfg, mask_name)
@@ -565,6 +566,7 @@ def run_one_fold(pulses_all: pd.DataFrame, config: dict, heldout_run: int, rng: 
             seed = seed0 + 17 * model_i + 101 * masks.index(mask_name)
             if kind in {"ridge", "hgb"}:
                 pred, cv, info = fit_predict_tabular(kind, X, target, train_idx, cfg, seed, shuffle_y=False)
+                sigma = None
                 if len(cv):
                     cv_parts.append(cv.assign(heldout_run=int(heldout_run), mask=mask_name))
                 pred_shuf, _, _ = fit_predict_tabular(kind, X, target, train_idx, cfg, seed + 777, shuffle_y=True)
@@ -576,6 +578,25 @@ def run_one_fold(pulses_all: pd.DataFrame, config: dict, heldout_run: int, rng: 
                 pred_shuf, _, _ = fit_predict_wave_net(kind, wave, aux, target, train_idx, cfg, seed + 777, shuffle_y=True)
             work[f"t_{suffix}_ns"] = work["t_template_phase_timewalk_ns"].to_numpy(dtype=float) - pred
             work[f"t_{suffix}_shuffled_ns"] = work["t_template_phase_timewalk_ns"].to_numpy(dtype=float) - pred_shuf
+            if sigma is not None:
+                held_mask = np.isin(runs, cfg["timing"]["heldout_runs"]) & np.isfinite(target) & np.isfinite(pred) & np.isfinite(sigma) & (sigma > 0)
+                pulls = (target[held_mask] - pred[held_mask]) / sigma[held_mask]
+                residual = target[held_mask] - pred[held_mask]
+                uncertainty_rows.append(
+                    {
+                        "heldout_run": int(heldout_run),
+                        "method": suffix,
+                        "family": "ml",
+                        "n_pulses": int(np.sum(held_mask)),
+                        "pred_sigma_median_ns": float(np.nanmedian(sigma[held_mask])) if np.any(held_mask) else float("nan"),
+                        "pred_sigma_p16_ns": float(np.nanpercentile(sigma[held_mask], 16)) if np.any(held_mask) else float("nan"),
+                        "pred_sigma_p84_ns": float(np.nanpercentile(sigma[held_mask], 84)) if np.any(held_mask) else float("nan"),
+                        "residual_sigma68_ns": s02.sigma68(residual),
+                        "pull_width68_empirical": s02.sigma68(pulls),
+                        "pull_median": float(np.nanmedian(pulls)) if np.any(held_mask) else float("nan"),
+                        "nominal_pull_width": 1.0,
+                    }
+                )
             methods.append((suffix, suffix, "ml"))
             methods.append((f"{suffix}_shuffled", f"{suffix}_shuffled", "shuffled_target_control"))
             shuffled_methods.append(f"{suffix}_shuffled")
@@ -650,7 +671,8 @@ def run_one_fold(pulses_all: pd.DataFrame, config: dict, heldout_run: int, rng: 
     diagnostics["heldout_run"] = int(heldout_run)
     calibration["heldout_run"] = int(heldout_run)
     cv_table = pd.concat(cv_parts, ignore_index=True) if cv_parts else pd.DataFrame()
-    return pair_frame, per_run, pd.DataFrame(leak_rows), pd.concat([diagnostics, calibration, cv_table, pd.DataFrame(model_rows)], ignore_index=True, sort=False)
+    uncertainty = pd.DataFrame(uncertainty_rows)
+    return pair_frame, per_run, pd.DataFrame(leak_rows), pd.concat([diagnostics, calibration, cv_table, pd.DataFrame(model_rows)], ignore_index=True, sort=False), uncertainty
 
 
 def markdown_table(df: pd.DataFrame, columns: Sequence[str], n: int | None = None) -> str:
@@ -660,11 +682,11 @@ def markdown_table(df: pd.DataFrame, columns: Sequence[str], n: int | None = Non
     return view.to_markdown(index=False)
 
 
-def write_report(out_dir: Path, config: dict, result: dict, match: pd.DataFrame, pooled: pd.DataFrame, per_run: pd.DataFrame, leakage: pd.DataFrame) -> None:
+def write_report(out_dir: Path, config: dict, result: dict, match: pd.DataFrame, pooled: pd.DataFrame, per_run: pd.DataFrame, leakage: pd.DataFrame, uncertainty: pd.DataFrame) -> None:
     nominal = pooled[~pooled["family"].isin(["shuffled_target_control", "run_family_control"])].copy()
     controls = pooled[pooled["family"].isin(["shuffled_target_control", "run_family_control"])].copy()
     mask_compare = nominal[nominal["method"].str.contains("full|no_samples_0_3|only_samples_0_3", regex=True)].copy()
-    text = f"""# P03f: early-sample waveform ablation against S02b residuals
+    text = f"""# {config.get('study_id', 'P03f')}: {config['title']}
 
 - **Ticket:** `{config['ticket_id']}`
 - **Worker:** `{config['worker']}`
@@ -675,7 +697,7 @@ def write_report(out_dir: Path, config: dict, result: dict, match: pd.DataFrame,
 
 ## Question and preregistered estimand
 
-The ticket asks whether samples 0-3 carry causal timing information, or mainly nuisance/run structure, before proxy terms are adopted downstream.  The estimand is the B4/B6/B8 event-paired timing width after the S02b global-template timewalk correction:
+The ticket asks for deep single-pulse timing regression with calibrated per-pulse uncertainty, benchmarked fairly against CFD/OF/template-style S02 timing.  The estimand is the B4/B6/B8 event-paired timing width after the S02b global-template timewalk correction:
 
 `r_ab(e; m) = [t_a(e;m) - z_a v^-1] - [t_b(e;m) - z_b v^-1]`,
 
@@ -713,6 +735,16 @@ Masks are `full`, `no_samples_0_3`, and `only_samples_0_3`. Features exclude run
 
 {markdown_table(mask_compare.sort_values(['method']), ['method', 'sigma68_ns', 'ci_low', 'ci_high', 'delta_vs_traditional_ns', 'tail_frac_vs_traditional_p95'], n=40)}
 
+## Per-Pulse Sigma Calibration
+
+The heteroskedastic MLP, 1D-CNN, and early/late gated network emit a predicted
+per-pulse `sigma_i`.  The calibration diagnostic is the empirical width of
+`(y_i - \\hat y_i) / \\sigma_i` on the held-out run.  A value of one is nominal;
+values above one mean the model is over-confident, and values below one mean it
+is conservative for the residual target used to correct the time pickoff.
+
+{markdown_table(uncertainty.sort_values(['method', 'heldout_run']), ['heldout_run', 'method', 'n_pulses', 'pred_sigma_median_ns', 'residual_sigma68_ns', 'pull_width68_empirical', 'pull_median'], n=120)}
+
 ## Controls
 
 {markdown_table(controls.sort_values('sigma68_ns'), ['method', 'family', 'sigma68_ns', 'ci_low', 'ci_high', 'delta_vs_traditional_ns'], n=35)}
@@ -745,10 +777,10 @@ Interpretation: {result['verdict']}
 Command:
 
 ```bash
-/home/billy/anaconda3/bin/python scripts/p03f_1781031083_1848_21e023a2_early_sample_multimodel.py --config configs/p03f_1781031083_1848_21e023a2_early_sample_multimodel.json
+/home/billy/anaconda3/bin/python scripts/p03f_1781031083_1848_21e023a2_early_sample_multimodel.py --config {config.get('_config_path', 'configs/p03f_1781031083_1848_21e023a2_early_sample_multimodel.json')}
 ```
 
-Artifacts include `reproduction_match_table.csv`, `heldout_run_summary.csv`, `pooled_run_block_summary.csv`, `pairwise_residuals.csv`, `leakage_checks.csv`, `model_diagnostics.csv`, figures, `input_sha256.csv`, `result.json`, and `manifest.json`.
+Artifacts include `reproduction_match_table.csv`, `heldout_run_summary.csv`, `pooled_run_block_summary.csv`, `pairwise_residuals.csv`, `leakage_checks.csv`, `model_diagnostics.csv`, `uncertainty_calibration.csv`, figures, `input_sha256.csv`, `result.json`, and `manifest.json`.
 """
     (out_dir / "REPORT.md").write_text(text, encoding="utf-8")
 
@@ -793,6 +825,7 @@ def main() -> int:
     t0 = time.time()
     config_path = Path(args.config)
     config = load_config(config_path)
+    config["_config_path"] = str(config_path)
     out_dir = Path(config["output_dir"])
     out_dir.mkdir(parents=True, exist_ok=True)
     rng = np.random.default_rng(int(config["ml"]["random_seed"]))
@@ -811,17 +844,20 @@ def main() -> int:
     per_run_parts = []
     leak_parts = []
     diag_parts = []
+    uncertainty_parts = []
     for heldout_run in config["timing"]["loro_runs"]:
-        pair_frame, per_run, leakage, diagnostics = run_one_fold(pulses_all, config, int(heldout_run), rng)
+        pair_frame, per_run, leakage, diagnostics, uncertainty = run_one_fold(pulses_all, config, int(heldout_run), rng)
         pair_parts.append(pair_frame)
         per_run_parts.append(per_run)
         leak_parts.append(leakage)
         diag_parts.append(diagnostics)
+        uncertainty_parts.append(uncertainty)
 
     all_pairs = pd.concat(pair_parts, ignore_index=True)
     per_run = pd.concat(per_run_parts, ignore_index=True)
     leakage = pd.concat(leak_parts, ignore_index=True)
     diagnostics = pd.concat(diag_parts, ignore_index=True, sort=False)
+    uncertainty = pd.concat(uncertainty_parts, ignore_index=True, sort=False)
     pooled = run_block_bootstrap(all_pairs, "s02b_global_template_timewalk", rng, int(config["ml"]["bootstrap_samples"]))
 
     all_pairs.to_csv(out_dir / "pairwise_residuals.csv", index=False)
@@ -829,6 +865,7 @@ def main() -> int:
     pooled.to_csv(out_dir / "pooled_run_block_summary.csv", index=False)
     leakage.to_csv(out_dir / "leakage_checks.csv", index=False)
     diagnostics.to_csv(out_dir / "model_diagnostics.csv", index=False)
+    uncertainty.to_csv(out_dir / "uncertainty_calibration.csv", index=False)
     pd.DataFrame([{"path": str(raw_file(config, run)), "sha256": sha256_file(raw_file(config, run))} for run in configured_runs(config)]).to_csv(out_dir / "input_sha256.csv", index=False)
 
     nominal = pooled[~pooled["family"].isin(["shuffled_target_control", "run_family_control", "traditional"])].copy()
@@ -876,6 +913,11 @@ def main() -> int:
             "run_family_control_best_sigma68_ns": float(pooled[pooled["family"] == "run_family_control"]["sigma68_ns"].min()),
             "max_train_heldout_event_overlap": int(leakage[leakage["check"] == "train_heldout_event_id_overlap"]["value"].max()),
         },
+        "uncertainty_calibration": {
+            "best_pull_width_method": str(uncertainty.iloc[(uncertainty["pull_width68_empirical"] - 1.0).abs().argmin()]["method"]) if len(uncertainty) else None,
+            "best_pull_width68_empirical": float(uncertainty.iloc[(uncertainty["pull_width68_empirical"] - 1.0).abs().argmin()]["pull_width68_empirical"]) if len(uncertainty) else None,
+            "median_pull_width68_empirical": float(uncertainty["pull_width68_empirical"].median()) if len(uncertainty) else None,
+        },
         "verdict": verdict,
         "next_tickets": [
             "P03g: blinded pedestal-proxy residualization of samples 0-3 before repeating the P03f multimodel ablation"
@@ -884,7 +926,7 @@ def main() -> int:
     }
     (out_dir / "result.json").write_text(json.dumps(result, indent=2), encoding="utf-8")
     plot_outputs(out_dir, pooled, all_pairs)
-    write_report(out_dir, config, result, match, pooled, per_run, leakage)
+    write_report(out_dir, config, result, match, pooled, per_run, leakage, uncertainty)
     manifest = {
         "study": "P03f",
         "ticket": config["ticket_id"],

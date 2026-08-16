@@ -1,0 +1,33 @@
+{
+  "study": "P03-ticket-2389",
+  "ticket": "2389",
+  "ticket_issue": 2389,
+  "worker": "testbeam-laptop-2",
+  "config": "/home/billy/.tb-workers/testbeam-laptop-2/configs/p03_ticket_2389_deep_timing_sigma.json",
+  "claim_command": "tn-ticket claim testbeam-laptop-2 --project testbeam",
+  "claim_note": "The single tn-ticket claim invocation returned null due to a local CLI empty-existing-claim bug; issue #2389 was claimed by equivalent gh label swap without running claim again.",
+  "benchmark_command": "MPLCONFIGDIR=/tmp/matplotlib-p03-ticket-2389 uv run --no-project --index-strategy unsafe-best-match --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple --with uproot --with awkward --with numpy --with pandas --with scipy --with pyyaml --with scikit-learn --with tabulate --with matplotlib --with 'torch==2.5.1+cpu' python scripts/p03f_1781031083_1848_21e023a2_early_sample_multimodel.py --config configs/p03_ticket_2389_deep_timing_sigma.json",
+  "finalized_from_completed_tables": true,
+  "plot_status": "skipped_backend_agg_missing_in_isolated_matplotlib_wheel",
+  "git_commit": "e911cfc59b772e150beb5dd2c080b020066a3bd4",
+  "created_unix": 1786875753.7620447,
+  "outputs": {
+    "REPORT.md": "cdd91489244bcb64e2e7f36062f45628415eb3ef24f31a3dab34d67e53293884",
+    "claimed_ticket.txt": "1d133593f1392993f53714d327db83074681627619f68b8c98364b21e7635e0f",
+    "claimed_ticket_body.txt": "bf1e206fd3e99b21addc134fb884a9f158a4dc89456dc36b7219938960736a04",
+    "heldout_run_summary.csv": "a779608b1f532c647f54464c51425650d7e2f1f3cf86c8fa37a3ffef4b9b48ec",
+    "input_sha256.csv": "2093bc7d4809d7d39bf444fddea81623ef195b00c4efb3bc4bb86cca64140fb9",
+    "leakage_checks.csv": "cedb957bdbdd3b3396ed5881ec611392f3e830ac43434cbee16928dc4495f486",
+    "model_diagnostics.csv": "029be05bccb609101da38941115eff32006bb14a34191cbd6843c4a536ddbb63",
+    "pairwise_residuals.csv": "29bbe40cb83a0322c95b7b5a1f875c781922230d65c3bc97c3d603991322c655",
+    "pooled_run_block_summary.csv": "bd1dfce0f4cc2685bc4686d0133fc56fee1f5d5b24192ecb27f8c8dcf1a23b1a",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "7a1b2445f2b338a0a54cb1750e6967600d0540023b98d060d690e160680d6d05",
+    "traditional_s02_baselines.csv": "d4bf97aa8ba345def66506037f311cfb9d9d9ba9e7b9ca8cf11de036c174a99e",
+    "traditional_s02_baselines_by_run.csv": "6de902dc7755e33dabf6c5e4609678a9de41c9e3f7159e843255f1b909e51e85",
+    "traditional_s02_pairwise_residuals.csv": "7923460f5fbb1c30d908bd9375f01d3e5605c721887f5be82faf528ff241bdaf",
+    "uncertainty_calibration.csv": "d767afee1729a51eac5fd81da9b2acd5f1b6c2c1803e901a3255cd4392a6196e"
+  },
+  "traditional_s02_supplement": "traditional_s02_baselines.csv recomputes CFD, OF, template, and S02b template-timewalk baselines by held-out run.",
+  "updated_unix": 1786875953.1829543
+}

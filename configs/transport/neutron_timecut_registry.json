@@ -1,5 +1,5 @@
 {
-  "policy_version": "2026.0-waveB-lane06",
+  "policy_version": "2026.1-issue1091-ladder",
   "default_policy_id": null,
   "fail_closed_when_unset": true,
   "qgsp_bic_documented_default_us": 10.0,
@@ -16,6 +16,19 @@
         "domain": null
       },
       "notes": "Explicit pin of the reference-list default. Does not authorize negligibility claims."
+    },
+    "wiring_test_1ns": {
+      "status": "WIRING_TEST",
+      "claims_authorized": false,
+      "physics_list": "QGSP_BIC",
+      "neutron_time_cut_us": 0.001,
+      "neutron_energy_cut_MeV": 0.0,
+      "source": "issue #1091 wiring test — an artificially short cut that must visibly remove late neutron history in a neutron-rich fixture; diagnostic only, never production.",
+      "sensitivity_study": {
+        "digest": null,
+        "domain": null
+      },
+      "notes": "Known-answer control for the ladder harness."
     },
     "diagnostic_extended_or_disabled": {
       "status": "HYPOTHESIS",

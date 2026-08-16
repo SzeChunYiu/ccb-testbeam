@@ -1,0 +1,123 @@
+{
+  "ticket_id": "2503",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-1",
+  "title": "S55c pedestal-memory energy PID disentanglement benchmark",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-1 --project testbeam",
+  "claimed_ticket_text": "S55c: pedestal-memory energy PID disentanglement benchmark",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "adc_clip": 11800.0,
+    "bootstrap": "held-out run-block percentile 95% CI",
+    "bootstrap_replicates": 120,
+    "pedestal_counterfactuals": "nominal versus shifted pretrigger-state strata in held-out runs",
+    "pid_target": "raw-ROOT-derived proxy: stave in B2/B4 and injected total charge above 9000 ADC"
+  },
+  "required_method_coverage": {
+    "traditional": "ar1_charge_ratio_likelihood_traditional",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "cross_channel_attention_transformer_when_available": "tiny_sequence_transformer",
+    "new_architecture": "pedestal_memory_fusion_new"
+  },
+  "winner": {
+    "name": "ridge",
+    "criterion": "minimum registered S55c held-out PID-energy-pedestal composite score with run-block bootstrap CIs",
+    "winner_score": 0.15236879794029082,
+    "pid_auc": 0.996,
+    "pid_confusion_offdiag_rate": 0.011764705882352941,
+    "energy_residual_bias": -0.006725836468834518,
+    "energy_residual_sigma68": 0.07612626103723891,
+    "energy_residual_sigma68_ci95": [
+      0.0646092617878562,
+      0.10162714169638792
+    ],
+    "saturated_energy_residual_sigma68": 0.06296130921178965,
+    "timing_pull_width": 1.1019459096961244,
+    "timing_sigma68_ns": 11.019459096961244,
+    "pedestal_offset_recovery_error": 0.005387933404685762,
+    "pedestal_false_split_span": 0.032726150046310576,
+    "shape_latent_stability_span": 0.05108296410291409,
+    "pileup_miss_rate": 0.2916666666666667,
+    "false_split_rate": 0.21666666666666667
+  },
+  "pedestal_memory_verdict": "pedestal memory is a mixed nuisance/shape signal: useful for morphology checks but unsafe as a PID primitive",
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "endpoint_metrics_ci": "endpoint_metrics_ci.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "pedestal_counterfactual_metrics": "pedestal_counterfactual_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv",
+    "pedestal_state_holdout_metrics": "pedestal_state_holdout_metrics.csv",
+    "negative_control_pedestal_shuffles": "negative_control_pedestal_shuffles.csv",
+    "calibration_curves": "calibration_curves.csv",
+    "attribution_ablation_summary": "attribution_ablation_summary.csv"
+  },
+  "next_tickets": [],
+  "novel_tickets_appended": [],
+  "caveats": [
+    "Truth comes from controlled injections into raw-ROOT-derived clean pulses.",
+    "PID is a charge/stave proxy because reduced ROOT lacks external particle truth.",
+    "ADC clipping is a benchmark stressor, not decoded electronics metadata.",
+    "Pedestal counterfactuals are observational pretrigger-state strata, not hardware interventions.",
+    "Bootstrap CIs resample held-out runs and quantify run-transfer uncertainty."
+  ],
+  "ticket_number": 2503,
+  "study_id": "S55c",
+  "claim_command_output": "tn-ticket claim testbeam-laptop-1 --project testbeam returned malformed null / # null / null",
+  "claim_command_run_count": 1,
+  "manual_claim_performed": false,
+  "ticket_body_source": "read-only gh issue view/list after malformed claim output",
+  "s55c_additional_outputs": {
+    "pedestal_state_holdout_metrics": "pedestal_state_holdout_metrics.csv",
+    "negative_control_pedestal_shuffles": "negative_control_pedestal_shuffles.csv",
+    "calibration_curves": "calibration_curves.csv",
+    "attribution_ablation_summary": "attribution_ablation_summary.csv"
+  },
+  "wrapper_runtime_sec": 41.36440682411194,
+  "methods_required_by_ticket": {
+    "traditional": "ar1_charge_ratio_likelihood_traditional",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "new_architecture": "pedestal_memory_fusion_new",
+    "extra_nn_when_sensible": "tiny_sequence_transformer"
+  }
+}

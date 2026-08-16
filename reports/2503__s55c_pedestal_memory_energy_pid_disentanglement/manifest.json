@@ -1,0 +1,28 @@
+{
+  "ticket_id": "2503",
+  "git_commit": "b3627abca9fdc535eb8ae51a0791c6c23fe9a688",
+  "command": "/home/billy/anaconda3/bin/python scripts/ticket_2503_s55c_pedestal_memory_energy_pid_disentanglement.py",
+  "runtime_seconds": 41.36440682411194,
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "outputs_sha256": {
+    "REPORT.md": "b12065358e66e98717b802a2235beb9aff4e06d94e4b7a820a12f70dbb8882ba",
+    "attribution_ablation_summary.csv": "faae1c2dd48f15aba921351f875aa9888256cd168bc7a17da1e267a463bfad2d",
+    "calibration_curves.csv": "b292b12a4cbd99b8910dc8ed323bdb28b79dc1c7c02135b8149518852532eb28",
+    "claimed_ticket.txt": "b6a0880d4aebc13f4a672ea573ab68436376e702e8c2e04d4d5ab20be4fd3b2a",
+    "claimed_ticket_body.txt": "82e48424de3578387f72b23e2482653c8091c32eb5cd4afee33c32b6caf77c9e",
+    "endpoint_metrics_ci.csv": "1304b08a3228b41cdca40d45d63e89fa229190e4864439172940095e200e865c",
+    "event_predictions.csv": "b00b5fc10bfb2ea2242b5b1147d9c1bb53bcb6db38d127f355fa3abdf6e9b993",
+    "input_sha256.csv": "cc17da0dcd3e7e732b81a17f3c35833f026fdec912538d28d7d71b9af71a46f6",
+    "method_metrics.csv": "778e3540e2cfa3aa38259866665dd9bdbd4e39584724291dec9fddd2e183e687",
+    "negative_control_pedestal_shuffles.csv": "b49b732163d636da687a9442edfce607ba79ae473d9b6659092191e8bb8f0684",
+    "pedestal_counterfactual_metrics.csv": "7d6a6c7e83bac4d20aaee5401553b7912f9fe57d5648032c18dedae96d4db4a5",
+    "pedestal_state_holdout_metrics.csv": "f61bda12cd1016dab4eb935fbbb24e5db758d8cf5924a0f749402c32a080d56a",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "9ce08f9930d2a2222b33f92641bf54955ef24b7b1c21c8b5b2d58e8e898153fe",
+    "run_heldout_metrics.csv": "2fd49d2317b8de13a7aa847317fcb1cf099d079a36eb5a0d98bbf593398e68aa",
+    "strata_metrics.csv": "5efd79671dfc798947c46a3bc00434efcb6989f005cf7d6971dd389761bfa66a",
+    "template_summary.csv": "8e12474290e6025e0726860132f791fbb2418dda04773ba04fef40add0aea27e",
+    "winner_ranked_metrics.csv": "ed48721ed69e417724e212a81072c87e7a10943810f4dbd1d411e91d52dc4f21"
+  }
+}

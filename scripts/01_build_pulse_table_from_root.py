@@ -381,7 +381,7 @@ def resolve_analysis_polarity(n_channels: int, config: dict | None = None) -> tu
 
     path = Path(os.environ.get(
         "CCB_CHANNEL_POLARITY_PATH",
-        str(Path(__file__).resolve().parents[1] / "configs" / "channel_polarity_v2.json"),
+        str(Path(__file__).resolve().parents[1] / "configs" / "channel_polarity_v1.json"),
     ))
     polarity_map = load_polarity_map(path)
     vec = polarity_map.polarity_vector(n_channels)

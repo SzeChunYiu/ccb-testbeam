@@ -1,0 +1,11 @@
+claim_helper_command: tn-ticket claim testbeam-laptop-1 --project testbeam
+claim_helper_stdout:
+null
+# null
+
+null
+manual_claim_issue: 2467
+manual_claim_command: gh issue edit 2467 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-1 --remove-label factory:open
+manual_claim_evidence: issue #2467 labels include factory:claimed, project:testbeam, worker:testbeam-laptop-1
+done_command: tn-ticket done 2467
+#2467 S53b: Censored template deconvolution versus neural pile-up energy recovery

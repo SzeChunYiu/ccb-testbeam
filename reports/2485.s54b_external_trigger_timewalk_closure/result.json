@@ -1,0 +1,242 @@
+{
+  "ticket_id": "2485",
+  "study_id": "S54b",
+  "title": "external trigger-reference validation for waveform time-walk closure",
+  "worker": "testbeam-laptop-2",
+  "raw_root_dir": "data/root/root",
+  "claim_provenance": {
+    "claim_command": "tn-ticket claim testbeam-laptop-2 --project testbeam",
+    "claim_command_runs": 1,
+    "claim_stdout_observed": "# null\\n\\nnull",
+    "manual_claim_issue": 2485,
+    "manual_claim_reason": "claim helper null edge case; no second tn-ticket claim call made"
+  },
+  "reproduction": {
+    "expected_selected_pulses": 640737,
+    "selected_pulses": 640737,
+    "passed": true
+  },
+  "split": {
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63
+    ],
+    "heldout_runs": [
+      42,
+      57,
+      64,
+      65
+    ],
+    "train_pulses": 581124,
+    "heldout_pulses": 59613,
+    "bootstrap_replicates": 500
+  },
+  "trigger_reference": {
+    "branch": "TRIGGER",
+    "branch_is_constant": true,
+    "estimand": "trigger-aligned waveform phase residual after held-out run/stave nuisance centering"
+  },
+  "methods_benchmarked": [
+    "matched_filter_template",
+    "matched_filter_timewalk",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn_1d",
+    "compact_transformer",
+    "trigger_residual_fusion"
+  ],
+  "traditional_method": "matched_filter_timewalk",
+  "new_architecture": "compact_transformer; trigger_residual_fusion",
+  "winner": {
+    "method": "mlp",
+    "selection_metric": "minimum held-out trigger-reference sigma68_ns",
+    "trigger_sigma68_ns": 2.057959737614494,
+    "ci_low": 1.371201778743674,
+    "ci_high": 2.4069857555028094
+  },
+  "trapezoid": {
+    "rise": 2,
+    "flat": 2
+  },
+  "template_grid": {
+    "min": -1.4,
+    "max": 1.4,
+    "step": 0.02
+  },
+  "method_summary": [
+    {
+      "method": "matched_filter_template",
+      "n_pulses": 59613,
+      "trigger_sigma68_ns": 8.863900987256883,
+      "trigger_sigma68_ci_low": 7.957008339547006,
+      "trigger_sigma68_ci_high": 10.172667771424074,
+      "median_abs_residual_ns": 4.684929486998605,
+      "median_abs_residual_ci_low": 3.6274909412736704,
+      "median_abs_residual_ci_high": 6.864437157161477,
+      "abs_timewalk_slope_ns_per_log_adc": 3.224169254565761,
+      "abs_timewalk_slope_ci_low": 2.5560755242066153,
+      "abs_timewalk_slope_ci_high": 3.478927637131226
+    },
+    {
+      "method": "matched_filter_timewalk",
+      "n_pulses": 59613,
+      "trigger_sigma68_ns": 7.914004628087973,
+      "trigger_sigma68_ci_low": 6.7196736725666275,
+      "trigger_sigma68_ci_high": 8.66003020136794,
+      "median_abs_residual_ns": 4.113513821322762,
+      "median_abs_residual_ci_low": 2.733616837036088,
+      "median_abs_residual_ci_high": 5.964484759804911,
+      "abs_timewalk_slope_ns_per_log_adc": 0.38832303430150283,
+      "abs_timewalk_slope_ci_low": 0.020780109108521128,
+      "abs_timewalk_slope_ci_high": 1.0697537658034015
+    },
+    {
+      "method": "ridge",
+      "n_pulses": 59613,
+      "trigger_sigma68_ns": 2.7546185908158236,
+      "trigger_sigma68_ci_low": 2.6047244745642715,
+      "trigger_sigma68_ci_high": 3.1075394269256122,
+      "median_abs_residual_ns": 1.927018232233877,
+      "median_abs_residual_ci_low": 1.6542081399298318,
+      "median_abs_residual_ci_high": 2.0770763718819794,
+      "abs_timewalk_slope_ns_per_log_adc": 2.11786553965755,
+      "abs_timewalk_slope_ci_low": 1.9835179703735986,
+      "abs_timewalk_slope_ci_high": 2.427752296930617
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "n_pulses": 59613,
+      "trigger_sigma68_ns": 2.0810947474198747,
+      "trigger_sigma68_ci_low": 1.4000043805168363,
+      "trigger_sigma68_ci_high": 2.4040710353451473,
+      "median_abs_residual_ns": 1.3491574978350869,
+      "median_abs_residual_ci_low": 0.9288406307242987,
+      "median_abs_residual_ci_high": 1.8857433853603283,
+      "abs_timewalk_slope_ns_per_log_adc": 1.6406231317884088,
+      "abs_timewalk_slope_ci_low": 1.3883367873137702,
+      "abs_timewalk_slope_ci_high": 2.2788456287733294
+    },
+    {
+      "method": "mlp",
+      "n_pulses": 59613,
+      "trigger_sigma68_ns": 2.057959737614494,
+      "trigger_sigma68_ci_low": 1.371201778743674,
+      "trigger_sigma68_ci_high": 2.4069857555028094,
+      "median_abs_residual_ns": 1.2637232529728166,
+      "median_abs_residual_ci_low": 0.8680543741704412,
+      "median_abs_residual_ci_high": 1.8724091423235407,
+      "abs_timewalk_slope_ns_per_log_adc": 1.7257500119711149,
+      "abs_timewalk_slope_ci_low": 1.4772006744919564,
+      "abs_timewalk_slope_ci_high": 2.3133556084228912
+    },
+    {
+      "method": "cnn_1d",
+      "n_pulses": 59613,
+      "trigger_sigma68_ns": 3.20862509648044,
+      "trigger_sigma68_ci_low": 2.8988870158636892,
+      "trigger_sigma68_ci_high": 3.768242521091228,
+      "median_abs_residual_ns": 2.239508376533834,
+      "median_abs_residual_ci_low": 1.907980607274805,
+      "median_abs_residual_ci_high": 2.636060542852988,
+      "abs_timewalk_slope_ns_per_log_adc": 1.5273053574753435,
+      "abs_timewalk_slope_ci_low": 1.319545439532488,
+      "abs_timewalk_slope_ci_high": 2.0116791391410795
+    },
+    {
+      "method": "compact_transformer",
+      "n_pulses": 59613,
+      "trigger_sigma68_ns": 2.649755666752299,
+      "trigger_sigma68_ci_low": 2.5616534008540186,
+      "trigger_sigma68_ci_high": 2.9265821955832183,
+      "median_abs_residual_ns": 1.9012293815612793,
+      "median_abs_residual_ci_low": 1.874682777978272,
+      "median_abs_residual_ci_high": 1.9159714084101083,
+      "abs_timewalk_slope_ns_per_log_adc": 2.5073370424740635,
+      "abs_timewalk_slope_ci_low": 2.1210340882683782,
+      "abs_timewalk_slope_ci_high": 2.5908631315341037
+    },
+    {
+      "method": "trigger_residual_fusion",
+      "n_pulses": 59613,
+      "trigger_sigma68_ns": 2.1907964642189164,
+      "trigger_sigma68_ci_low": 1.6659585813032427,
+      "trigger_sigma68_ci_high": 2.580337326246289,
+      "median_abs_residual_ns": 1.4734057577691786,
+      "median_abs_residual_ci_low": 1.1048626721445984,
+      "median_abs_residual_ci_high": 1.9646899905478037,
+      "abs_timewalk_slope_ns_per_log_adc": 1.6218076188945743,
+      "abs_timewalk_slope_ci_low": 1.4716470555711085,
+      "abs_timewalk_slope_ci_high": 2.0941301913436376
+    }
+  ],
+  "leakage_checks": [
+    {
+      "check": "manual_claim_after_null_claim_helper",
+      "pass": true,
+      "value": "2485",
+      "detail": "tn-ticket claim was run once and returned null; #2485 was labeled claimed via gh without a second claim call"
+    },
+    {
+      "check": "raw_root_reproduction",
+      "pass": true,
+      "value": 640737,
+      "detail": "canonical selected-pulse count must match exactly"
+    },
+    {
+      "check": "train_heldout_run_overlap",
+      "pass": true,
+      "value": 0,
+      "detail": "split by run"
+    },
+    {
+      "check": "trigger_branch_constant",
+      "pass": true,
+      "value": 1,
+      "detail": "reduced ROOT has trigger gate but no TDC timestamp"
+    },
+    {
+      "check": "training_target_rows",
+      "pass": true,
+      "value": 581124,
+      "detail": "absolute trigger-phase residual targets from train runs"
+    },
+    {
+      "check": "winner_named_in_result_json",
+      "pass": true,
+      "value": "mlp",
+      "detail": "winner selected by minimum held-out trigger sigma68"
+    }
+  ],
+  "novel_ticket_appended": false,
+  "next_tickets": [],
+  "runtime_sec": 78.1,
+  "git_commit": "5dc9c9ec095c487a0716b074b96ebc998bd47d2b"
+}

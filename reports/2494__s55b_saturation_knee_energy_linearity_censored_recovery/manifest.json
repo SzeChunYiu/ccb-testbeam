@@ -1,0 +1,24 @@
+{
+  "ticket_id": "2494",
+  "git_commit": "bcb7c94c53d027096c53fb0ef3d2c7a1f331b372",
+  "command": "/home/billy/.cache/uv/builds-v0/.tmpGDFCi1/bin/python scripts/ticket_2494_s55b_saturation_knee_energy_linearity.py",
+  "runtime_seconds": 47.014002323150635,
+  "python": "3.11.14 (main, Feb  3 2026, 22:51:56) [Clang 21.1.4 ]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+  "outputs_sha256": {
+    "REPORT.md": "ce92d37ec34290ded38467414a384596871e96622136f090d878b0c0dfd488ae",
+    "claimed_ticket.txt": "3c856a4f16760334f01429ada5d72c951cb065ec5762623afff00817d9b60f75",
+    "event_predictions.csv": "0c9f868a66b5935156e50f714d26ac845a4da787b499d746e6e591d5a13968ab",
+    "input_sha256.csv": "cc17da0dcd3e7e732b81a17f3c35833f026fdec912538d28d7d71b9af71a46f6",
+    "method_metrics.csv": "45c5125392a9a32685851e5aa337893a8326acf13aa671849459a76da9143374",
+    "pid_proxy_metrics.csv": "90a6cdd0b5d71472280d2329a3a743a8243cc3a1e1ea2d111e239a8c75237759",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "7f7900050cef9c632b6cf1dbc3d3ccac3235518afdc94095449d0008e9ce2a5e",
+    "run_heldout_metrics.csv": "3cbdf879caad7906f6c349151c180e4d7bfce657634e68ff7f2e3b422fe3f573",
+    "strata_metrics.csv": "b05f55e2f0f931ee728043b7abdaba6731a0249d7fc540342708e72591ef537e",
+    "template_summary.csv": "70811c144799226d495253dcf99ec44c6cea6b9a7de91249cd5ea72526581b13",
+    "winner_ranked_metrics.csv": "147760fc03c257dcc6dadabb8573e312ea4abd316c6c6f29dca7acbf6a5c4ed1"
+  },
+  "factory_issue": 2494,
+  "worker": "testbeam-laptop-3"
+}

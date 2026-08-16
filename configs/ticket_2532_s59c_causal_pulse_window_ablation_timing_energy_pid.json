@@ -1,0 +1,79 @@
+{
+  "ticket_id": "2532",
+  "study_id": "S59c",
+  "title": "causal pulse-window ablation for timing-energy-PID disentanglement",
+  "worker": "testbeam-laptop-3",
+  "claimed_ticket_text": "2532\n# S59c causal pulse-window ablation for timing-energy-PID disentanglement\n\nAcademic-grade study. Map which pretrigger, leading-edge, peak, and tail windows carry independent information for pulse shape, timing, pile-up, saturation, pedestal, energy, and PID.\n\nCompare a traditional spline timewalk correction plus matched-filter/template charge estimator against ridge, gradient-boosted trees, MLP, 1D-CNN, and an attention/transformer ablation model. Use blocked/run-held-out evaluation with bootstrap CIs on timing residuals, energy resolution, PID confusion, pile-up detection, and pedestal-transfer robustness.\n",
+  "claim_command_output": "null\n# null\n\nnull\n",
+  "manual_claim_workaround": {
+    "reason": "tn-ticket claim returned a malformed null payload and did not attach worker:testbeam-laptop-3; the helper was not run a second time.",
+    "issue": 2532,
+    "command": "gh issue edit 2532 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-3 --remove-label factory:open"
+  },
+  "output_dir": "reports/2532__s59c_causal_pulse_window_ablation_timing_energy_pid",
+  "raw_root_dir_candidates": [
+    "data/root/root",
+    "data/extracted/root/root",
+    "/home/billy/ccb-data/data/extracted/root/root",
+    "/home/billy/ccb-data/extracted/root/root",
+    "/home/billy/Desktop/test_beam/data/root/root",
+    "/home/billy/Desktop/test_beam/data/extracted/root/root"
+  ],
+  "amplitude_cut_adc": 1000.0,
+  "expected_total_selected_pulses": 640737,
+  "baseline_samples": [0, 1, 2, 3],
+  "pretrigger_ablation_windows": {
+    "pretrigger_0_2": [0, 1, 2],
+    "nominal_pretrigger_0_3": [0, 1, 2, 3],
+    "shifted_pretrigger_1_4": [1, 2, 3, 4]
+  },
+  "samples_per_channel": 18,
+  "sample_period_ns": 10.0,
+  "tof_per_cm_ns": 0.078,
+  "spacing_cm": 2.0,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "heldout_runs": [42, 50, 57, 58, 60, 62, 64, 65],
+  "timing_downstream_staves": ["B4", "B6", "B8"],
+  "bootstrap_replicates": 500,
+  "random_seed": 25320593,
+  "max_train_pulses": 70000,
+  "max_nn_train_pulses": 30000,
+  "amplitude_bins": 6,
+  "pedestal_bins": 3,
+  "pileup_tail_threshold": 0.18,
+  "saturation_mask_thresholds_adc": [3600, 3800, 4000],
+  "template_shift_grid": {
+    "min": -1.4,
+    "max": 1.4,
+    "step": 0.02
+  },
+  "trapezoid": {
+    "rise": 2,
+    "flat": 2
+  },
+  "models": {
+    "ridge_alphas": [0.1, 1.0, 10.0],
+    "hgb_max_iter": 160,
+    "mlp_hidden": [64, 32],
+    "mlp_max_iter": 160,
+    "transformer_epochs": 4,
+    "transformer_batch_size": 512,
+    "transformer_learning_rate": 0.001,
+    "transformer_d_model": 24,
+    "transformer_heads": 4,
+    "cnn_epochs": 4,
+    "cnn_batch_size": 512,
+    "cnn_learning_rate": 0.001
+  }
+}

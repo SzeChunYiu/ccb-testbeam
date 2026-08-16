@@ -1,0 +1,39 @@
+{
+  "ticket_id": "2532",
+  "study": "S59c",
+  "worker": "testbeam-laptop-3",
+  "command": "/home/billy/.tb-workers/testbeam-laptop-3/scripts/ticket_2501_s55a_phase_conditioned_timing.py --config /home/billy/.tb-workers/testbeam-laptop-3/configs/ticket_2532_s59c_causal_pulse_window_ablation_timing_energy_pid.json",
+  "script": "scripts/ticket_2501_s55a_phase_conditioned_timing.py",
+  "config": "/home/billy/.tb-workers/testbeam-laptop-3/configs/ticket_2532_s59c_causal_pulse_window_ablation_timing_energy_pid.json",
+  "git_commit": "cec9edc28257e0699c70c17fa9b2e8d806a3d42a",
+  "python": "3.11.14",
+  "packages": {
+    "uproot": "5.6.9",
+    "numpy": "2.4.6",
+    "pandas": "3.0.5",
+    "torch": "not-installed; sklearn fallback used for sequence slots"
+  },
+  "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+  "input_file_count": 33,
+  "reproduction_passed": true,
+  "outputs": {
+    "REPORT.md": "d1ad53813303052d7042d09ec97aa3c1031a9f68e9c1bbe122b9036b376708fb",
+    "causal_window_attribution.csv": "4a8b15fa18930b54e6fe9d41d92a9f5f9cd51995d8d4518f39cdc5fce4ef0a39",
+    "claimed_ticket.txt": "c32155a99f3f1b4e5cf7d0be9777ea45483c65417630a4cd0f8e4fac736e5504",
+    "claimed_ticket_body.txt": "7755688f801bb35c54a7fa0f3856e89a7891af945ea1f73a5002fb0eacb7e834",
+    "endpoint_metrics.csv": "9ef3d0b26c335c1e5dc82134015f09162582dc4c9a46bab470488bddb1950cc0",
+    "heldout_pair_residuals.csv": "7992c2ac4dce60469315637e4de32077959ccf53f564fe6496e53e0a652b6cb4",
+    "input_sha256.csv": "6e2e4a924403c2dc070c509f98323147b6f2d5cc6220076489925ae6270e93b3",
+    "leakage_checks.csv": "ba23b8f98ffaea9f0ddac9878b087a46d7b1700103910d2301e83a99d86cf0ed",
+    "method_summary.csv": "72ee542819cb49fa3be6a95ada023f70a7f8b53d2cea480cf55975994d497b84",
+    "pretrigger_pedestal_window_ablation.csv": "89ef2342b88e860263ec19eb28a56f6d4dc267360cb5884a2d67373411a9b349",
+    "pretrigger_pedestal_window_counts_by_run.csv": "24da88a26da9194702236d954c969864c587d1264a467746da580299f60dceaa",
+    "reproduction_counts_by_run.csv": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+    "reproduction_match_table.csv": "e70f583e1fd72a6ff544cbf9253ee1f265c694da1d93ee26ada9f644caef0755",
+    "result.json": "ee4d110b0991369cba08e0050f18527595e85a4f0808ac7c283ddaadd0e2cb48",
+    "saturation_mask_ablation.csv": "08972015542321c3e0295b6ebf3b2b22b5477cad71ee9c0cbc4b4f473cf977f9",
+    "stratified_errors.csv": "b38903ebf07f0477f396f37952c46694a9a24e50fba098c84691eef379bdfd26",
+    "training_summary.csv": "1616b81649c76efb60261d52f15405d3c2775a388bf5ab12540dc15843cd1270"
+  },
+  "wrapper": "scripts/ticket_2532_s59c_causal_pulse_window_ablation_timing_energy_pid.py"
+}

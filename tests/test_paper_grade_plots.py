@@ -65,11 +65,16 @@ def test_metadata_does_not_overwrite_claim_status(tmp_path: Path) -> None:
     assert "status" in claims.columns
     assert "figure_status" in claims.columns
     assert set(claims["figure_status"]) == {"REVIEW"}
-    # CL-001 was reclassified from VALIDATED to GATED (issue #955); the ledger
-    # must still contain at least one GATED row and the historical VALIDATED
-    # status must not reappear while the data-contract gates are open.
+    # CL-001 was reclassified VALIDATED to GATED while the data-contract gates
+    # were open (issue #955), then re-validated on the corrected 144-word
+    # staging once #952/#953/#954 and lineage #993 closed (2026-08-16). The
+    # metadata build must mirror the canonical ledger exactly: CL-001 is the
+    # single VALIDATED row, and the still-open claims remain GATED.
     assert "GATED" in set(claims["status"])
-    assert "VALIDATED" not in set(claims["status"])
+    cl001 = claims.loc[claims["claim_id"] == "CL-001"]
+    assert len(cl001) == 1
+    assert cl001["status"].iloc[0] == "VALIDATED"
+    assert (claims["status"] == "VALIDATED").sum() == 1
 
     gain = pd.read_csv(by_id["FIG-WIKI-005"]["source_table"])
     mv0 = gain.loc[gain["estimate"] == "MV0 data/MC proxy"].iloc[0]

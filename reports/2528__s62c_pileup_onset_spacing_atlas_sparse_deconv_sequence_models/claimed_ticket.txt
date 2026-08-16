@@ -1,0 +1,12 @@
+claim_helper_command: tn-ticket claim testbeam-laptop-4 --project testbeam
+claim_helper_stderr:
+null
+claim_helper_stdout:
+# null
+
+null
+manual_claim_issue: 2528
+manual_claim_command: gh issue edit 2528 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-4 --remove-label factory:open
+manual_claim_evidence: issue #2528 labels include factory:claimed, project:testbeam, worker:testbeam-laptop-4
+done_command: tn-ticket done 2528
+#2528 NEW S62c pile-up onset and spacing atlas with sparse deconvolution versus sequence models

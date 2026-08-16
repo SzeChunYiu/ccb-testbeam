@@ -1,0 +1,15 @@
+claim_helper_command: tn-ticket claim testbeam-laptop-3 --project testbeam
+claim_helper_stderr:
+null
+claim_helper_stdout:
+# null
+
+null
+manual_claim_issue: 2513
+manual_claim_command: gh issue edit 2513 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-3 --remove-label factory:open
+#2513 NEW S58a causal pedestal-phase pulse-shape timing atlas
+Question: Can a causal pedestal-state plus phase model separate pulse-shape drift from timing bias under mild pile-up?
+
+Compare traditional generalized least-squares matched-template/CFD fits against ridge, gradient-boosted trees, MLP, 1D-CNN, and a small waveform transformer. Use run-heldout splits, pedestal strata, pile-up strata, and bootstrap CIs for timing bias, sigma68, shape residuals, and failure rates.
+
+Deliverable: a compact scoreboard plus calibration plots identifying where pedestal memory changes pulse shape versus timing pickoff.

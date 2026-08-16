@@ -1,0 +1,23 @@
+{
+  "command": "python3 scripts/s58a_2513_causal_pedestal_phase_timing_atlas.py",
+  "created_utc": "2026-08-16T18:01:57Z",
+  "files": {
+    "REPORT.md": "8e47860bd9c46404493550fa5ea96cb1c5e0862356129e8366bd1dff4bb2e9c6",
+    "bootstrap_metrics.csv": "b225b982dd6e076ece9ce326ad5b2190822d383aae916478b1899e29b68a16b8",
+    "claimed_ticket.txt": "ac7fc6cf8a26cc74b23f7ada864bcdb31a2034864ae27353c0cc2512cf97a8ce",
+    "config.json": "0ca34a3d5db5d77b09bfc1c56c304b40ca17e623b49e15d036525555dc85adad",
+    "input_sha256.csv": "31806d4510da151af4d9e44c36c378041d6922bd6d86bd0067f40098ad9ccba0",
+    "manifest.json": "93e9363560ca3926e4182fe3a3dc10d41799fb3eea051a9caa6a2c23d440ea3a",
+    "method_metrics.csv": "7d201cbdf821335e93dcc97b11bb463c48a464e8df08f01bdd7180c318573a2b",
+    "method_predictions.csv.gz": "a54fa57e3e2d4aa24343663dc23e212942c981ff6ac07571c4a592dfc763698f",
+    "method_sigma68.png": "1d1ce62c1cacac3a175ed6dd2ed96a997813f0495b4548c878fc515e85ce70f6",
+    "pair_rows.csv.gz": "f4e90f0b01e926dd30674f7b657fe60ced8a11062262ed45e01007927c1a49fb",
+    "per_run_metrics.csv": "105ba6ffdfaf10824e36baa1c7f6d70c8808ee26901f56d855fbb1c4fed7fb8e",
+    "reproduction_counts.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "residual_distributions.png": "5cbebe9cbbc25b8723d61068c59ccc9eebb828dd49214b68ec11b0db660302af",
+    "result.json": "41c7b90d4e730dd4b51a46d48b5cdc52acc6be53f9684f0e7d569f425ede3190",
+    "stratified_metrics.csv": "975411b13b574afcc0b95eb6f05f34c8452e90e7809c3ec253ed317e85aec997"
+  },
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "python": "3.7.6"
+}

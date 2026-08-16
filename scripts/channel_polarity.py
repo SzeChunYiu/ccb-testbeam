@@ -84,6 +84,8 @@ def apply_polarity(
         vec = np.asarray([int(polarity[ch]) for ch in range(wave.shape[1])], dtype=float)
         return wave * vec[None, :, None]
     vec = np.asarray(polarity, dtype=float)
+    if not np.all(np.isin(vec, (-1.0, 1.0))):
+        raise ValueError(f"polarity values must be ±1, got {vec.tolist()}")
     if wave.ndim == 3:
         if vec.shape != (wave.shape[1],):
             raise ValueError("polarity vector length must match n_channels")
@@ -93,6 +95,33 @@ def apply_polarity(
             return wave * float(vec.reshape(-1)[0])
         raise ValueError("2-D waveforms require a scalar polarity or use 3-D apply")
     raise ValueError("waveforms must be 2-D or 3-D")
+
+
+def mask_isolated_dropouts(corrected: np.ndarray) -> np.ndarray:
+    """Zero isolated single-sample outliers (e.g. ADC low-word defects, #954).
+
+    A sample is masked when its absolute deviation exceeds 4x the next-largest
+    deviation in the same waveform AND both immediate neighbours stay below 25%
+    of it. Physical pulses span several samples, so a genuine pulse is never
+    masked; an isolated corrupt word cannot outvote it.
+    """
+    y = np.asarray(corrected, dtype=float).copy()
+    absd = np.abs(y)
+    n = y.shape[-1]
+    order = np.argsort(absd, axis=-1)
+    idx = order[..., -1]
+    largest = np.take_along_axis(absd, idx[..., None], axis=-1)[..., 0]
+    second = np.take_along_axis(absd, order[..., -2:-1], axis=-1)[..., 0]
+    left = np.take_along_axis(absd, np.clip(idx - 1, 0, n - 1)[..., None], axis=-1)[..., 0]
+    right = np.take_along_axis(absd, np.clip(idx + 1, 0, n - 1)[..., None], axis=-1)[..., 0]
+    lonely = (left < 0.25 * largest) & (right < 0.25 * largest)
+    dominant = largest > 4.0 * np.maximum(second, 1.0)
+    mask = lonely & dominant
+    if not np.any(mask):
+        return y
+    peaks = np.take_along_axis(y, idx[..., None], axis=-1)
+    np.put_along_axis(y, idx[..., None], np.where(mask[..., None], 0.0, peaks), axis=-1)
+    return y
 
 
 def infer_channel_polarity(
@@ -113,6 +142,7 @@ def infer_channel_polarity(
     n_events, n_channels, _ = raw.shape
     base = np.median(raw[:, :, baseline_samples], axis=-1)
     corrected = raw - base[:, :, None]
+    corrected = mask_isolated_dropouts(corrected)
     polarities = np.ones(n_channels, dtype=int)
     diagnostics: dict[str, dict] = {}
     for ch in range(n_channels):

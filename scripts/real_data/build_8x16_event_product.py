@@ -91,17 +91,30 @@ class ProductManifest:
             self.missing_channels = {}
 
 
+# Fail-closed allowlist of polarity-map statuses (issue #954).
+# v1 (LOCKED_FROM_DUPLICATE_READOUT_CONVENTION) was falsified for channels 2-7
+# by the measured study reports/studies/paper_954_polarity/: under v1 the B4/B6/B8
+# amplitudes are noise-side maxima, not pulse heights. v1 stays accepted ONLY so
+# legacy artifacts remain bit-for-bit reproducible; new products must use
+# configs/channel_polarity_v2.json.
+ACCEPTED_POLARITY_STATUSES = {
+    "LOCKED_FROM_DUPLICATE_READOUT_CONVENTION",
+    "MEASURED_202608_RUNS31_65_UNANIMOUS_BOTH_ESTIMATORS",
+}
+
+
 def load_polarity_map(path: Path) -> Dict:
     """Load the locked channel polarity map."""
     with path.open() as f:
         data = json.load(f)
 
-    if data.get("status") == "LOCKED_FROM_DUPLICATE_READOUT_CONVENTION":
+    if data.get("status") in ACCEPTED_POLARITY_STATUSES:
         return data["channel_polarity"]
 
     raise ValueError(
-        f"Channel polarity status is {data.get('status')}, not LOCKED. "
-        "Cannot proceed with unresolved polarity (issue #954)."
+        f"Channel polarity status is {data.get('status')!r}, not an accepted "
+        f"status ({sorted(ACCEPTED_POLARITY_STATUSES)}). Cannot proceed with "
+        "unresolved polarity (issue #954)."
     )
 
 

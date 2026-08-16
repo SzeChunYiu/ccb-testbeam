@@ -1,0 +1,4942 @@
+{
+ "schema": "issue_954_polarity_measurement_v1",
+ "issue": 954,
+ "manifest_source": "reports/studies/paper_1318_depth_profile/manifest_8x16.json",
+ "n_runs": 33,
+ "sha256_all_verified": true,
+ "snr_cut": 8.0,
+ "baseline_samples": [
+  0,
+  1,
+  2,
+  3
+ ],
+ "per_run": {
+  "31": {
+   "n_events": 39990,
+   "module": {
+    "0": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 33590,
+     "frac_positive_preference": 0.8905328966954451,
+     "authorising": true
+    },
+    "1": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 20064,
+     "frac_positive_preference": 0.0268640350877193,
+     "authorising": true
+    },
+    "2": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 23106,
+     "frac_positive_preference": 0.20791136501341642,
+     "authorising": true
+    },
+    "3": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 39774,
+     "frac_positive_preference": 0.9917785488007241,
+     "authorising": true
+    },
+    "4": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 39650,
+     "frac_positive_preference": 0.0043883984867591425,
+     "authorising": true
+    },
+    "5": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 39910,
+     "frac_positive_preference": 0.9965672763718366,
+     "authorising": true
+    },
+    "6": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 39898,
+     "frac_positive_preference": 0.0031831169482179557,
+     "authorising": true
+    },
+    "7": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 39925,
+     "frac_positive_preference": 0.999448966812774,
+     "authorising": true
+    }
+   },
+   "independent": {
+    "0": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 27274,
+     "votes_neg": 2200,
+     "n_both_sided": 1916,
+     "n_no_excursion": 8600,
+     "frac_positive": 0.9253579425934723,
+     "authorising": true
+    },
+    "1": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 335,
+     "votes_neg": 17426,
+     "n_both_sided": 1140,
+     "n_no_excursion": 21089,
+     "frac_positive": 0.018861550588367772,
+     "authorising": true
+    },
+    "2": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 3388,
+     "votes_neg": 16850,
+     "n_both_sided": 367,
+     "n_no_excursion": 19385,
+     "frac_positive": 0.1674078466251606,
+     "authorising": true
+    },
+    "3": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 36378,
+     "votes_neg": 222,
+     "n_both_sided": 3057,
+     "n_no_excursion": 333,
+     "frac_positive": 0.9939344262295082,
+     "authorising": true
+    },
+    "4": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 116,
+     "votes_neg": 34563,
+     "n_both_sided": 4868,
+     "n_no_excursion": 443,
+     "frac_positive": 0.0033449638109518728,
+     "authorising": true
+    },
+    "5": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 35481,
+     "votes_neg": 82,
+     "n_both_sided": 4280,
+     "n_no_excursion": 147,
+     "frac_positive": 0.9976942327700138,
+     "authorising": true
+    },
+    "6": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 101,
+     "votes_neg": 34870,
+     "n_both_sided": 4885,
+     "n_no_excursion": 134,
+     "frac_positive": 0.0028881072888965144,
+     "authorising": true
+    },
+    "7": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 33827,
+     "votes_neg": 15,
+     "n_both_sided": 6075,
+     "n_no_excursion": 73,
+     "frac_positive": 0.9995567637846463,
+     "authorising": true
+    }
+   }
+  },
+  "32": {
+   "n_events": 41921,
+   "module": {
+    "0": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 34784,
+     "frac_positive_preference": 0.8831071757129715,
+     "authorising": true
+    },
+    "1": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 19855,
+     "frac_positive_preference": 0.029967262654243265,
+     "authorising": true
+    },
+    "2": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 24994,
+     "frac_positive_preference": 0.1867248139553493,
+     "authorising": true
+    },
+    "3": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 41715,
+     "frac_positive_preference": 0.9923768428622798,
+     "authorising": true
+    },
+    "4": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 41593,
+     "frac_positive_preference": 0.004544033851850071,
+     "authorising": true
+    },
+    "5": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 41837,
+     "frac_positive_preference": 0.9972512369433755,
+     "authorising": true
+    },
+    "6": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 41842,
+     "frac_positive_preference": 0.0027962334496438985,
+     "authorising": true
+    },
+    "7": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 41868,
+     "frac_positive_preference": 0.9990923855928155,
+     "authorising": true
+    }
+   },
+   "independent": {
+    "0": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 27846,
+     "votes_neg": 2391,
+     "n_both_sided": 2077,
+     "n_no_excursion": 9607,
+     "frac_positive": 0.9209246949102093,
+     "authorising": true
+    },
+    "1": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 370,
+     "votes_neg": 17120,
+     "n_both_sided": 1155,
+     "n_no_excursion": 23276,
+     "frac_positive": 0.02115494568324757,
+     "authorising": true
+    },
+    "2": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 3258,
+     "votes_neg": 18772,
+     "n_both_sided": 358,
+     "n_no_excursion": 19533,
+     "frac_positive": 0.14788924194280526,
+     "authorising": true
+    },
+    "3": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 38176,
+     "votes_neg": 203,
+     "n_both_sided": 3206,
+     "n_no_excursion": 336,
+     "frac_positive": 0.9947106490528674,
+     "authorising": true
+    },
+    "4": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 115,
+     "votes_neg": 36187,
+     "n_both_sided": 5186,
+     "n_no_excursion": 433,
+     "frac_positive": 0.003167869538868382,
+     "authorising": true
+    },
+    "5": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 36987,
+     "votes_neg": 73,
+     "n_both_sided": 4725,
+     "n_no_excursion": 136,
+     "frac_positive": 0.998030221262817,
+     "authorising": true
+    },
+    "6": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 86,
+     "votes_neg": 36500,
+     "n_both_sided": 5225,
+     "n_no_excursion": 110,
+     "frac_positive": 0.0023506259224840105,
+     "authorising": true
+    },
+    "7": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 35648,
+     "votes_neg": 25,
+     "n_both_sided": 6175,
+     "n_no_excursion": 73,
+     "frac_positive": 0.9992991898634822,
+     "authorising": true
+    }
+   }
+  },
+  "33": {
+   "n_events": 57173,
+   "module": {
+    "0": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 52521,
+     "frac_positive_preference": 0.9598446335751414,
+     "authorising": true
+    },
+    "1": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 40580,
+     "frac_positive_preference": 0.0049285362247412515,
+     "authorising": true
+    },
+    "2": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 16483,
+     "frac_positive_preference": 0.20141964448219377,
+     "authorising": true
+    },
+    "3": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 56962,
+     "frac_positive_preference": 0.9952775534566904,
+     "authorising": true
+    },
+    "4": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 56888,
+     "frac_positive_preference": 0.002707073548024188,
+     "authorising": true
+    },
+    "5": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 57064,
+     "frac_positive_preference": 0.9974064208607879,
+     "authorising": true
+    },
+    "6": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 57100,
+     "frac_positive_preference": 0.0031873905429071806,
+     "authorising": true
+    },
+    "7": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 57096,
+     "frac_positive_preference": 0.9994570547849236,
+     "authorising": true
+    }
+   },
+   "independent": {
+    "0": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 48619,
+     "votes_neg": 1180,
+     "n_both_sided": 1142,
+     "n_no_excursion": 6232,
+     "frac_positive": 0.9763047450752023,
+     "authorising": true
+    },
+    "1": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 134,
+     "votes_neg": 35032,
+     "n_both_sided": 2477,
+     "n_no_excursion": 19530,
+     "frac_positive": 0.0038104987772280044,
+     "authorising": true
+    },
+    "2": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 2026,
+     "votes_neg": 12001,
+     "n_both_sided": 212,
+     "n_no_excursion": 42934,
+     "frac_positive": 0.14443573109004063,
+     "authorising": true
+    },
+    "3": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 51545,
+     "votes_neg": 186,
+     "n_both_sided": 5129,
+     "n_no_excursion": 313,
+     "frac_positive": 0.9964044770060505,
+     "authorising": true
+    },
+    "4": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 97,
+     "votes_neg": 48777,
+     "n_both_sided": 7919,
+     "n_no_excursion": 380,
+     "frac_positive": 0.00198469533903507,
+     "authorising": true
+    },
+    "5": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 50571,
+     "votes_neg": 111,
+     "n_both_sided": 6334,
+     "n_no_excursion": 157,
+     "frac_positive": 0.9978098733278087,
+     "authorising": true
+    },
+    "6": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 141,
+     "votes_neg": 49792,
+     "n_both_sided": 7124,
+     "n_no_excursion": 116,
+     "frac_positive": 0.0028237838703863176,
+     "authorising": true
+    },
+    "7": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 48443,
+     "votes_neg": 21,
+     "n_both_sided": 8611,
+     "n_no_excursion": 98,
+     "frac_positive": 0.9995666886761307,
+     "authorising": true
+    }
+   }
+  },
+  "34": {
+   "n_events": 39765,
+   "module": {
+    "0": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 36707,
+     "frac_positive_preference": 0.9624867191543848,
+     "authorising": true
+    },
+    "1": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 29584,
+     "frac_positive_preference": 0.0038872363439697135,
+     "authorising": true
+    },
+    "2": {
+     "assigned": null,
+     "status": "AMBIGUOUS",
+     "n_strong": 12967,
+     "frac_positive_preference": 0.32636693144135115,
+     "authorising": false
+    },
+    "3": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 39616,
+     "frac_positive_preference": 0.9954311389337641,
+     "authorising": true
+    },
+    "4": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 39574,
+     "frac_positive_preference": 0.0030070248142719967,
+     "authorising": true
+    },
+    "5": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 39683,
+     "frac_positive_preference": 0.9972028324471436,
+     "authorising": true
+    },
+    "6": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 39700,
+     "frac_positive_preference": 0.0031738035264483625,
+     "authorising": true
+    },
+    "7": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 39717,
+     "frac_positive_preference": 0.9995467935644686,
+     "authorising": true
+    }
+   },
+   "independent": {
+    "0": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 33993,
+     "votes_neg": 714,
+     "n_both_sided": 931,
+     "n_no_excursion": 4127,
+     "frac_positive": 0.9794277811392514,
+     "authorising": true
+    },
+    "1": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 78,
+     "votes_neg": 26453,
+     "n_both_sided": 1797,
+     "n_no_excursion": 11437,
+     "frac_positive": 0.0029399570313972333,
+     "authorising": true
+    },
+    "2": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 2776,
+     "votes_neg": 8030,
+     "n_both_sided": 169,
+     "n_no_excursion": 28790,
+     "frac_positive": 0.2568943179714973,
+     "authorising": true
+    },
+    "3": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 36094,
+     "votes_neg": 115,
+     "n_both_sided": 3336,
+     "n_no_excursion": 220,
+     "frac_positive": 0.9968239940346323,
+     "authorising": true
+    },
+    "4": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 69,
+     "votes_neg": 34027,
+     "n_both_sided": 5403,
+     "n_no_excursion": 266,
+     "frac_positive": 0.0020236977944626936,
+     "authorising": true
+    },
+    "5": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 35237,
+     "votes_neg": 87,
+     "n_both_sided": 4327,
+     "n_no_excursion": 114,
+     "frac_positive": 0.9975370852678066,
+     "authorising": true
+    },
+    "6": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 91,
+     "votes_neg": 34640,
+     "n_both_sided": 4942,
+     "n_no_excursion": 92,
+     "frac_positive": 0.0026201376292073362,
+     "authorising": true
+    },
+    "7": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 33624,
+     "votes_neg": 16,
+     "n_both_sided": 6064,
+     "n_no_excursion": 61,
+     "frac_positive": 0.9995243757431629,
+     "authorising": true
+    }
+   }
+  },
+  "35": {
+   "n_events": 27786,
+   "module": {
+    "0": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 19693,
+     "frac_positive_preference": 0.7821560960747473,
+     "authorising": true
+    },
+    "1": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 4574,
+     "frac_positive_preference": 0.14123305640577175,
+     "authorising": true
+    },
+    "2": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 23029,
+     "frac_positive_preference": 0.03143862086933866,
+     "authorising": true
+    },
+    "3": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 27639,
+     "frac_positive_preference": 0.992329679076667,
+     "authorising": true
+    },
+    "4": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 27575,
+     "frac_positive_preference": 0.004823209428830463,
+     "authorising": true
+    },
+    "5": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 27729,
+     "frac_positive_preference": 0.9969346171877818,
+     "authorising": true
+    },
+    "6": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 27736,
+     "frac_positive_preference": 0.003389097202192097,
+     "authorising": true
+    },
+    "7": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 27735,
+     "frac_positive_preference": 0.9993870560663421,
+     "authorising": true
+    }
+   },
+   "independent": {
+    "0": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 13320,
+     "votes_neg": 2546,
+     "n_both_sided": 1167,
+     "n_no_excursion": 10753,
+     "frac_positive": 0.8395310727341485,
+     "authorising": true
+    },
+    "1": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 396,
+     "votes_neg": 3188,
+     "n_both_sided": 209,
+     "n_no_excursion": 23993,
+     "frac_positive": 0.11049107142857142,
+     "authorising": true
+    },
+    "2": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 468,
+     "votes_neg": 20935,
+     "n_both_sided": 402,
+     "n_no_excursion": 5981,
+     "frac_positive": 0.021866093538289024,
+     "authorising": true
+    },
+    "3": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 25589,
+     "votes_neg": 145,
+     "n_both_sided": 1832,
+     "n_no_excursion": 220,
+     "frac_positive": 0.9943654309473848,
+     "authorising": true
+    },
+    "4": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 87,
+     "votes_neg": 24509,
+     "n_both_sided": 2909,
+     "n_no_excursion": 281,
+     "frac_positive": 0.0035371605139046997,
+     "authorising": true
+    },
+    "5": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 24714,
+     "votes_neg": 53,
+     "n_both_sided": 2926,
+     "n_no_excursion": 93,
+     "frac_positive": 0.9978600557193039,
+     "authorising": true
+    },
+    "6": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 70,
+     "votes_neg": 24185,
+     "n_both_sided": 3461,
+     "n_no_excursion": 70,
+     "frac_positive": 0.002886002886002886,
+     "authorising": true
+    },
+    "7": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 23564,
+     "votes_neg": 12,
+     "n_both_sided": 4149,
+     "n_no_excursion": 61,
+     "frac_positive": 0.999491007804547,
+     "authorising": true
+    }
+   }
+  },
+  "36": {
+   "n_events": 21764,
+   "module": {
+    "0": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 15896,
+     "frac_positive_preference": 0.8073729240060392,
+     "authorising": true
+    },
+    "1": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 4887,
+     "frac_positive_preference": 0.10313075506445672,
+     "authorising": true
+    },
+    "2": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 17067,
+     "frac_positive_preference": 0.05970586511982188,
+     "authorising": true
+    },
+    "3": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 21641,
+     "frac_positive_preference": 0.9913127859156231,
+     "authorising": true
+    },
+    "4": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 21572,
+     "frac_positive_preference": 0.00551641016132023,
+     "authorising": true
+    },
+    "5": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 21704,
+     "frac_positive_preference": 0.9968669369701437,
+     "authorising": true
+    },
+    "6": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 21719,
+     "frac_positive_preference": 0.003683410838436392,
+     "authorising": true
+    },
+    "7": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 21713,
+     "frac_positive_preference": 0.9993091696218855,
+     "authorising": true
+    }
+   },
+   "independent": {
+    "0": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 11186,
+     "votes_neg": 1844,
+     "n_both_sided": 958,
+     "n_no_excursion": 7776,
+     "frac_positive": 0.8584804297774367,
+     "authorising": true
+    },
+    "1": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 317,
+     "votes_neg": 3700,
+     "n_both_sided": 237,
+     "n_no_excursion": 17510,
+     "frac_positive": 0.07891461289519541,
+     "authorising": true
+    },
+    "2": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 739,
+     "votes_neg": 14966,
+     "n_both_sided": 313,
+     "n_no_excursion": 5746,
+     "frac_positive": 0.04705507800063674,
+     "authorising": true
+    },
+    "3": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 19924,
+     "votes_neg": 116,
+     "n_both_sided": 1509,
+     "n_no_excursion": 215,
+     "frac_positive": 0.9942115768463073,
+     "authorising": true
+    },
+    "4": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 71,
+     "votes_neg": 19010,
+     "n_both_sided": 2425,
+     "n_no_excursion": 258,
+     "frac_positive": 0.003720978984329962,
+     "authorising": true
+    },
+    "5": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 19244,
+     "votes_neg": 51,
+     "n_both_sided": 2387,
+     "n_no_excursion": 82,
+     "frac_positive": 0.9973568281938326,
+     "authorising": true
+    },
+    "6": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 61,
+     "votes_neg": 18872,
+     "n_both_sided": 2763,
+     "n_no_excursion": 68,
+     "frac_positive": 0.0032218877092906567,
+     "authorising": true
+    },
+    "7": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 18421,
+     "votes_neg": 9,
+     "n_both_sided": 3275,
+     "n_no_excursion": 59,
+     "frac_positive": 0.999511665762344,
+     "authorising": true
+    }
+   }
+  },
+  "37": {
+   "n_events": 50513,
+   "module": {
+    "0": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 36971,
+     "frac_positive_preference": 0.7902139514754808,
+     "authorising": true
+    },
+    "1": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 11992,
+     "frac_positive_preference": 0.11399266177451635,
+     "authorising": true
+    },
+    "2": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 39365,
+     "frac_positive_preference": 0.06686142512384098,
+     "authorising": true
+    },
+    "3": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 50170,
+     "frac_positive_preference": 0.988698425353797,
+     "authorising": true
+    },
+    "4": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 49991,
+     "frac_positive_preference": 0.006761217019063431,
+     "authorising": true
+    },
+    "5": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 50376,
+     "frac_positive_preference": 0.9952953787517865,
+     "authorising": true
+    },
+    "6": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 50386,
+     "frac_positive_preference": 0.004584606835232009,
+     "authorising": true
+    },
+    "7": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 50423,
+     "frac_positive_preference": 0.999087717906511,
+     "authorising": true
+    }
+   },
+   "independent": {
+    "0": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 25406,
+     "votes_neg": 4686,
+     "n_both_sided": 2341,
+     "n_no_excursion": 18080,
+     "frac_positive": 0.8442775488501928,
+     "authorising": true
+    },
+    "1": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 831,
+     "votes_neg": 9049,
+     "n_both_sided": 551,
+     "n_no_excursion": 40082,
+     "frac_positive": 0.08410931174089069,
+     "authorising": true
+    },
+    "2": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 1854,
+     "votes_neg": 34270,
+     "n_both_sided": 798,
+     "n_no_excursion": 13591,
+     "frac_positive": 0.05132322001993135,
+     "authorising": true
+    },
+    "3": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 46052,
+     "votes_neg": 339,
+     "n_both_sided": 3543,
+     "n_no_excursion": 579,
+     "frac_positive": 0.9926925481235584,
+     "authorising": true
+    },
+    "4": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 204,
+     "votes_neg": 44096,
+     "n_both_sided": 5513,
+     "n_no_excursion": 700,
+     "frac_positive": 0.0046049661399548535,
+     "authorising": true
+    },
+    "5": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 44843,
+     "votes_neg": 153,
+     "n_both_sided": 5288,
+     "n_no_excursion": 229,
+     "frac_positive": 0.9965996977509112,
+     "authorising": true
+    },
+    "6": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 187,
+     "votes_neg": 43966,
+     "n_both_sided": 6164,
+     "n_no_excursion": 196,
+     "frac_positive": 0.004235272801395149,
+     "authorising": true
+    },
+    "7": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 42854,
+     "votes_neg": 35,
+     "n_both_sided": 7513,
+     "n_no_excursion": 111,
+     "frac_positive": 0.9991839399379794,
+     "authorising": true
+    }
+   }
+  },
+  "39": {
+   "n_events": 30321,
+   "module": {
+    "0": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 21755,
+     "frac_positive_preference": 0.7745345897494829,
+     "authorising": true
+    },
+    "1": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 6454,
+     "frac_positive_preference": 0.12937713046172916,
+     "authorising": true
+    },
+    "2": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 24044,
+     "frac_positive_preference": 0.05390118116785893,
+     "authorising": true
+    },
+    "3": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 30084,
+     "frac_positive_preference": 0.9885653503523467,
+     "authorising": true
+    },
+    "4": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 29979,
+     "frac_positive_preference": 0.007104973481437006,
+     "authorising": true
+    },
+    "5": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 30214,
+     "frac_positive_preference": 0.9956973588402728,
+     "authorising": true
+    },
+    "6": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 30238,
+     "frac_positive_preference": 0.004398439050201733,
+     "authorising": true
+    },
+    "7": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 30262,
+     "frac_positive_preference": 0.9988764787522305,
+     "authorising": true
+    }
+   },
+   "independent": {
+    "0": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 14688,
+     "votes_neg": 2972,
+     "n_both_sided": 1341,
+     "n_no_excursion": 11320,
+     "frac_positive": 0.8317100792751981,
+     "authorising": true
+    },
+    "1": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 493,
+     "votes_neg": 4694,
+     "n_both_sided": 287,
+     "n_no_excursion": 24847,
+     "frac_positive": 0.09504530557162136,
+     "authorising": true
+    },
+    "2": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 876,
+     "votes_neg": 21183,
+     "n_both_sided": 474,
+     "n_no_excursion": 7788,
+     "frac_positive": 0.03971168230654155,
+     "authorising": true
+    },
+    "3": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 27551,
+     "votes_neg": 225,
+     "n_both_sided": 2178,
+     "n_no_excursion": 367,
+     "frac_positive": 0.9918994815668203,
+     "authorising": true
+    },
+    "4": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 126,
+     "votes_neg": 26461,
+     "n_both_sided": 3280,
+     "n_no_excursion": 454,
+     "frac_positive": 0.004739158235227743,
+     "authorising": true
+    },
+    "5": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 26730,
+     "votes_neg": 77,
+     "n_both_sided": 3342,
+     "n_no_excursion": 172,
+     "frac_positive": 0.9971276159212146,
+     "authorising": true
+    },
+    "6": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 104,
+     "votes_neg": 26338,
+     "n_both_sided": 3756,
+     "n_no_excursion": 123,
+     "frac_positive": 0.003933136676499509,
+     "authorising": true
+    },
+    "7": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 25743,
+     "votes_neg": 25,
+     "n_both_sided": 4476,
+     "n_no_excursion": 77,
+     "frac_positive": 0.9990298044085688,
+     "authorising": true
+    }
+   }
+  },
+  "40": {
+   "n_events": 32613,
+   "module": {
+    "0": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 23325,
+     "frac_positive_preference": 0.7737620578778135,
+     "authorising": true
+    },
+    "1": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 6360,
+     "frac_positive_preference": 0.15078616352201257,
+     "authorising": true
+    },
+    "2": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 26349,
+     "frac_positive_preference": 0.043075638544157274,
+     "authorising": true
+    },
+    "3": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 32372,
+     "frac_positive_preference": 0.9876127517607809,
+     "authorising": true
+    },
+    "4": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 32255,
+     "frac_positive_preference": 0.007905751046349403,
+     "authorising": true
+    },
+    "5": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 32495,
+     "frac_positive_preference": 0.9954454531466379,
+     "authorising": true
+    },
+    "6": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 32500,
+     "frac_positive_preference": 0.004553846153846154,
+     "authorising": true
+    },
+    "7": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 32549,
+     "frac_positive_preference": 0.9988939752373345,
+     "authorising": true
+    }
+   },
+   "independent": {
+    "0": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 15632,
+     "votes_neg": 3172,
+     "n_both_sided": 1403,
+     "n_no_excursion": 12406,
+     "frac_positive": 0.8313124867049564,
+     "authorising": true
+    },
+    "1": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 582,
+     "votes_neg": 4397,
+     "n_both_sided": 298,
+     "n_no_excursion": 27336,
+     "frac_positive": 0.1168909419562161,
+     "authorising": true
+    },
+    "2": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 759,
+     "votes_neg": 23610,
+     "n_both_sided": 533,
+     "n_no_excursion": 7711,
+     "frac_positive": 0.031146128277729904,
+     "authorising": true
+    },
+    "3": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 29727,
+     "votes_neg": 244,
+     "n_both_sided": 2231,
+     "n_no_excursion": 411,
+     "frac_positive": 0.9918587968369423,
+     "authorising": true
+    },
+    "4": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 167,
+     "votes_neg": 28403,
+     "n_both_sided": 3545,
+     "n_no_excursion": 498,
+     "frac_positive": 0.005845292264613231,
+     "authorising": true
+    },
+    "5": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 28815,
+     "votes_neg": 102,
+     "n_both_sided": 3524,
+     "n_no_excursion": 172,
+     "frac_positive": 0.9964726631393298,
+     "authorising": true
+    },
+    "6": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 117,
+     "votes_neg": 28231,
+     "n_both_sided": 4115,
+     "n_no_excursion": 150,
+     "frac_positive": 0.004127275292789615,
+     "authorising": true
+    },
+    "7": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 27619,
+     "votes_neg": 26,
+     "n_both_sided": 4883,
+     "n_no_excursion": 85,
+     "frac_positive": 0.9990595044311811,
+     "authorising": true
+    }
+   }
+  },
+  "41": {
+   "n_events": 33997,
+   "module": {
+    "0": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 24705,
+     "frac_positive_preference": 0.782716049382716,
+     "authorising": true
+    },
+    "1": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 7411,
+     "frac_positive_preference": 0.12090136283902307,
+     "authorising": true
+    },
+    "2": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 26820,
+     "frac_positive_preference": 0.05499627143922446,
+     "authorising": true
+    },
+    "3": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 33733,
+     "frac_positive_preference": 0.9873417721518988,
+     "authorising": true
+    },
+    "4": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 33589,
+     "frac_positive_preference": 0.007770401024144809,
+     "authorising": true
+    },
+    "5": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 33876,
+     "frac_positive_preference": 0.9960443972133664,
+     "authorising": true
+    },
+    "6": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 33900,
+     "frac_positive_preference": 0.004631268436578171,
+     "authorising": true
+    },
+    "7": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 33912,
+     "frac_positive_preference": 0.998761500353857,
+     "authorising": true
+    }
+   },
+   "independent": {
+    "0": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 16830,
+     "votes_neg": 3247,
+     "n_both_sided": 1518,
+     "n_no_excursion": 12402,
+     "frac_positive": 0.838272650296359,
+     "authorising": true
+    },
+    "1": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 543,
+     "votes_neg": 5450,
+     "n_both_sided": 327,
+     "n_no_excursion": 27677,
+     "frac_positive": 0.09060570665776739,
+     "authorising": true
+    },
+    "2": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 1001,
+     "votes_neg": 23651,
+     "n_both_sided": 546,
+     "n_no_excursion": 8799,
+     "frac_positive": 0.04060522472821678,
+     "authorising": true
+    },
+    "3": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 30853,
+     "votes_neg": 289,
+     "n_both_sided": 2433,
+     "n_no_excursion": 422,
+     "frac_positive": 0.9907199280714148,
+     "authorising": true
+    },
+    "4": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 151,
+     "votes_neg": 29475,
+     "n_both_sided": 3819,
+     "n_no_excursion": 552,
+     "frac_positive": 0.005096874367109971,
+     "authorising": true
+    },
+    "5": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 30046,
+     "votes_neg": 98,
+     "n_both_sided": 3685,
+     "n_no_excursion": 168,
+     "frac_positive": 0.9967489384288747,
+     "authorising": true
+    },
+    "6": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 120,
+     "votes_neg": 29517,
+     "n_both_sided": 4217,
+     "n_no_excursion": 143,
+     "frac_positive": 0.004048992813037756,
+     "authorising": true
+    },
+    "7": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 28818,
+     "votes_neg": 33,
+     "n_both_sided": 5042,
+     "n_no_excursion": 104,
+     "frac_positive": 0.9988561921597172,
+     "authorising": true
+    }
+   }
+  },
+  "42": {
+   "n_events": 33972,
+   "module": {
+    "0": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 25627,
+     "frac_positive_preference": 0.8063760877199828,
+     "authorising": true
+    },
+    "1": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 9905,
+     "frac_positive_preference": 0.08581524482584553,
+     "authorising": true
+    },
+    "2": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 25309,
+     "frac_positive_preference": 0.0991346951677269,
+     "authorising": true
+    },
+    "3": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 33722,
+     "frac_positive_preference": 0.987901073483186,
+     "authorising": true
+    },
+    "4": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 33585,
+     "frac_positive_preference": 0.007324698526127735,
+     "authorising": true
+    },
+    "5": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 33832,
+     "frac_positive_preference": 0.9959505793331757,
+     "authorising": true
+    },
+    "6": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 33857,
+     "frac_positive_preference": 0.004371326461293085,
+     "authorising": true
+    },
+    "7": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 33896,
+     "frac_positive_preference": 0.9990559358036346,
+     "authorising": true
+    }
+   },
+   "independent": {
+    "0": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 18045,
+     "votes_neg": 3066,
+     "n_both_sided": 1675,
+     "n_no_excursion": 11186,
+     "frac_positive": 0.8547676566718773,
+     "authorising": true
+    },
+    "1": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 518,
+     "votes_neg": 7880,
+     "n_both_sided": 441,
+     "n_no_excursion": 25133,
+     "frac_positive": 0.06168135270302453,
+     "authorising": true
+    },
+    "2": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 1722,
+     "votes_neg": 21212,
+     "n_both_sided": 501,
+     "n_no_excursion": 10537,
+     "frac_positive": 0.07508502659806401,
+     "authorising": true
+    },
+    "3": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 30885,
+     "votes_neg": 253,
+     "n_both_sided": 2415,
+     "n_no_excursion": 419,
+     "frac_positive": 0.9918748795683731,
+     "authorising": true
+    },
+    "4": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 153,
+     "votes_neg": 29420,
+     "n_both_sided": 3879,
+     "n_no_excursion": 520,
+     "frac_positive": 0.005173638115848916,
+     "authorising": true
+    },
+    "5": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 30089,
+     "votes_neg": 96,
+     "n_both_sided": 3601,
+     "n_no_excursion": 186,
+     "frac_positive": 0.9968196123902601,
+     "authorising": true
+    },
+    "6": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 120,
+     "votes_neg": 29473,
+     "n_both_sided": 4219,
+     "n_no_excursion": 160,
+     "frac_positive": 0.004055013009833406,
+     "authorising": true
+    },
+    "7": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 28869,
+     "votes_neg": 23,
+     "n_both_sided": 4987,
+     "n_no_excursion": 93,
+     "frac_positive": 0.9992039318842586,
+     "authorising": true
+    }
+   }
+  },
+  "44": {
+   "n_events": 4294,
+   "module": {
+    "0": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 3065,
+     "frac_positive_preference": 0.7843393148450245,
+     "authorising": true
+    },
+    "1": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 957,
+     "frac_positive_preference": 0.12330198537095088,
+     "authorising": true
+    },
+    "2": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 3375,
+     "frac_positive_preference": 0.05451851851851852,
+     "authorising": true
+    },
+    "3": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 4262,
+     "frac_positive_preference": 0.9887376818395119,
+     "authorising": true
+    },
+    "4": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 4238,
+     "frac_positive_preference": 0.005427088249174139,
+     "authorising": true
+    },
+    "5": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 4275,
+     "frac_positive_preference": 0.9943859649122807,
+     "authorising": true
+    },
+    "6": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 4277,
+     "frac_positive_preference": 0.006546644844517185,
+     "authorising": true
+    },
+    "7": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 4284,
+     "frac_positive_preference": 0.9983660130718954,
+     "authorising": true
+    }
+   },
+   "independent": {
+    "0": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 2085,
+     "votes_neg": 399,
+     "n_both_sided": 197,
+     "n_no_excursion": 1613,
+     "frac_positive": 0.8393719806763285,
+     "authorising": true
+    },
+    "1": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 67,
+     "votes_neg": 694,
+     "n_both_sided": 42,
+     "n_no_excursion": 3491,
+     "frac_positive": 0.08804204993429698,
+     "authorising": true
+    },
+    "2": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 121,
+     "votes_neg": 2988,
+     "n_both_sided": 76,
+     "n_no_excursion": 1109,
+     "frac_positive": 0.03891926664522354,
+     "authorising": true
+    },
+    "3": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 3916,
+     "votes_neg": 32,
+     "n_both_sided": 292,
+     "n_no_excursion": 54,
+     "frac_positive": 0.9918946301925026,
+     "authorising": true
+    },
+    "4": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 12,
+     "votes_neg": 3753,
+     "n_both_sided": 453,
+     "n_no_excursion": 76,
+     "frac_positive": 0.0031872509960159364,
+     "authorising": true
+    },
+    "5": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 3767,
+     "votes_neg": 14,
+     "n_both_sided": 482,
+     "n_no_excursion": 31,
+     "frac_positive": 0.9962972758529489,
+     "authorising": true
+    },
+    "6": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 23,
+     "votes_neg": 3729,
+     "n_both_sided": 515,
+     "n_no_excursion": 27,
+     "frac_positive": 0.0061300639658848615,
+     "authorising": true
+    },
+    "7": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 3646,
+     "votes_neg": 6,
+     "n_both_sided": 629,
+     "n_no_excursion": 13,
+     "frac_positive": 0.9983570646221248,
+     "authorising": true
+    }
+   }
+  },
+  "45": {
+   "n_events": 48181,
+   "module": {
+    "0": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 35599,
+     "frac_positive_preference": 0.796145959156156,
+     "authorising": true
+    },
+    "1": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 12486,
+     "frac_positive_preference": 0.10011212558065033,
+     "authorising": true
+    },
+    "2": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 36687,
+     "frac_positive_preference": 0.07754790525254177,
+     "authorising": true
+    },
+    "3": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 47838,
+     "frac_positive_preference": 0.9892763075379406,
+     "authorising": true
+    },
+    "4": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 47669,
+     "frac_positive_preference": 0.006712958106945814,
+     "authorising": true
+    },
+    "5": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 48037,
+     "frac_positive_preference": 0.9957532735183297,
+     "authorising": true
+    },
+    "6": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 48059,
+     "frac_positive_preference": 0.004619322083272644,
+     "authorising": true
+    },
+    "7": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 48085,
+     "frac_positive_preference": 0.9986898201102214,
+     "authorising": true
+    }
+   },
+   "independent": {
+    "0": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 24762,
+     "votes_neg": 4348,
+     "n_both_sided": 2291,
+     "n_no_excursion": 16780,
+     "frac_positive": 0.8506355204397115,
+     "authorising": true
+    },
+    "1": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 772,
+     "votes_neg": 9570,
+     "n_both_sided": 579,
+     "n_no_excursion": 37260,
+     "frac_positive": 0.07464707019918777,
+     "authorising": true
+    },
+    "2": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 2030,
+     "votes_neg": 31482,
+     "n_both_sided": 702,
+     "n_no_excursion": 13967,
+     "frac_positive": 0.0605753163046073,
+     "authorising": true
+    },
+    "3": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 43878,
+     "votes_neg": 323,
+     "n_both_sided": 3435,
+     "n_no_excursion": 545,
+     "frac_positive": 0.9926924730209724,
+     "authorising": true
+    },
+    "4": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 191,
+     "votes_neg": 41818,
+     "n_both_sided": 5484,
+     "n_no_excursion": 688,
+     "frac_positive": 0.004546644766597634,
+     "authorising": true
+    },
+    "5": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 42690,
+     "votes_neg": 142,
+     "n_both_sided": 5130,
+     "n_no_excursion": 219,
+     "frac_positive": 0.9966847217033993,
+     "authorising": true
+    },
+    "6": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 173,
+     "votes_neg": 41987,
+     "n_both_sided": 5847,
+     "n_no_excursion": 174,
+     "frac_positive": 0.004103415559772296,
+     "authorising": true
+    },
+    "7": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 40819,
+     "votes_neg": 51,
+     "n_both_sided": 7187,
+     "n_no_excursion": 124,
+     "frac_positive": 0.9987521409346709,
+     "authorising": true
+    }
+   }
+  },
+  "46": {
+   "n_events": 1441,
+   "module": {
+    "0": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 1094,
+     "frac_positive_preference": 0.8354661791590493,
+     "authorising": true
+    },
+    "1": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 306,
+     "frac_positive_preference": 0.0392156862745098,
+     "authorising": true
+    },
+    "2": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 1125,
+     "frac_positive_preference": 0.052444444444444446,
+     "authorising": true
+    },
+    "3": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 1439,
+     "frac_positive_preference": 0.9993050729673384,
+     "authorising": true
+    },
+    "4": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 1438,
+     "frac_positive_preference": 0.0006954102920723226,
+     "authorising": true
+    },
+    "5": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 1440,
+     "frac_positive_preference": 0.9986111111111111,
+     "authorising": true
+    },
+    "6": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 1441,
+     "frac_positive_preference": 0.002081887578070784,
+     "authorising": true
+    },
+    "7": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 1439,
+     "frac_positive_preference": 1.0,
+     "authorising": true
+    }
+   },
+   "independent": {
+    "0": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 804,
+     "votes_neg": 101,
+     "n_both_sided": 74,
+     "n_no_excursion": 462,
+     "frac_positive": 0.8883977900552487,
+     "authorising": true
+    },
+    "1": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 5,
+     "votes_neg": 242,
+     "n_both_sided": 14,
+     "n_no_excursion": 1180,
+     "frac_positive": 0.020242914979757085,
+     "authorising": true
+    },
+    "2": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 38,
+     "votes_neg": 1004,
+     "n_both_sided": 8,
+     "n_no_excursion": 391,
+     "frac_positive": 0.036468330134357005,
+     "authorising": true
+    },
+    "3": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 1333,
+     "votes_neg": 1,
+     "n_both_sided": 103,
+     "n_no_excursion": 4,
+     "frac_positive": 0.9992503748125937,
+     "authorising": true
+    },
+    "4": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 0,
+     "votes_neg": 1250,
+     "n_both_sided": 187,
+     "n_no_excursion": 4,
+     "frac_positive": 0.0,
+     "authorising": true
+    },
+    "5": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 1300,
+     "votes_neg": 1,
+     "n_both_sided": 138,
+     "n_no_excursion": 2,
+     "frac_positive": 0.9992313604919293,
+     "authorising": true
+    },
+    "6": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 3,
+     "votes_neg": 1264,
+     "n_both_sided": 174,
+     "n_no_excursion": 0,
+     "frac_positive": 0.0023677979479084454,
+     "authorising": true
+    },
+    "7": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 1255,
+     "votes_neg": 0,
+     "n_both_sided": 184,
+     "n_no_excursion": 2,
+     "frac_positive": 1.0,
+     "authorising": true
+    }
+   }
+  },
+  "47": {
+   "n_events": 10970,
+   "module": {
+    "0": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 8378,
+     "frac_positive_preference": 0.8443542611601814,
+     "authorising": true
+    },
+    "1": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 2543,
+     "frac_positive_preference": 0.051120723554856466,
+     "authorising": true
+    },
+    "2": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 8508,
+     "frac_positive_preference": 0.061824165491302305,
+     "authorising": true
+    },
+    "3": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 10939,
+     "frac_positive_preference": 0.9967090227625925,
+     "authorising": true
+    },
+    "4": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 10914,
+     "frac_positive_preference": 0.0016492578339747114,
+     "authorising": true
+    },
+    "5": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 10956,
+     "frac_positive_preference": 0.9979006936838262,
+     "authorising": true
+    },
+    "6": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 10964,
+     "frac_positive_preference": 0.002645020065669464,
+     "authorising": true
+    },
+    "7": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 10953,
+     "frac_positive_preference": 0.9997261024376883,
+     "authorising": true
+    }
+   },
+   "independent": {
+    "0": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 6177,
+     "votes_neg": 751,
+     "n_both_sided": 507,
+     "n_no_excursion": 3535,
+     "frac_positive": 0.8915993071593533,
+     "authorising": true
+    },
+    "1": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 75,
+     "votes_neg": 2074,
+     "n_both_sided": 109,
+     "n_no_excursion": 8712,
+     "frac_positive": 0.03489995346672871,
+     "authorising": true
+    },
+    "2": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 378,
+     "votes_neg": 7518,
+     "n_both_sided": 119,
+     "n_no_excursion": 2955,
+     "frac_positive": 0.047872340425531915,
+     "authorising": true
+    },
+    "3": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 10116,
+     "votes_neg": 20,
+     "n_both_sided": 782,
+     "n_no_excursion": 52,
+     "frac_positive": 0.9980268350434096,
+     "authorising": true
+    },
+    "4": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 10,
+     "votes_neg": 9638,
+     "n_both_sided": 1254,
+     "n_no_excursion": 68,
+     "frac_positive": 0.0010364842454394694,
+     "authorising": true
+    },
+    "5": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 9655,
+     "votes_neg": 16,
+     "n_both_sided": 1272,
+     "n_no_excursion": 27,
+     "frac_positive": 0.9983455692275877,
+     "authorising": true
+    },
+    "6": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 22,
+     "votes_neg": 9474,
+     "n_both_sided": 1456,
+     "n_no_excursion": 18,
+     "frac_positive": 0.002316764953664701,
+     "authorising": true
+    },
+    "7": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 9337,
+     "votes_neg": 2,
+     "n_both_sided": 1606,
+     "n_no_excursion": 25,
+     "frac_positive": 0.9997858443088125,
+     "authorising": true
+    }
+   }
+  },
+  "48": {
+   "n_events": 31713,
+   "module": {
+    "0": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 22783,
+     "frac_positive_preference": 0.7790457797480578,
+     "authorising": true
+    },
+    "1": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 5974,
+     "frac_positive_preference": 0.14579845999330432,
+     "authorising": true
+    },
+    "2": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 25703,
+     "frac_positive_preference": 0.04104579231996265,
+     "authorising": true
+    },
+    "3": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 31502,
+     "frac_positive_preference": 0.9901910989778426,
+     "authorising": true
+    },
+    "4": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 31402,
+     "frac_positive_preference": 0.005827654289535698,
+     "authorising": true
+    },
+    "5": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 31625,
+     "frac_positive_preference": 0.9959209486166007,
+     "authorising": true
+    },
+    "6": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 31633,
+     "frac_positive_preference": 0.004046407232952929,
+     "authorising": true
+    },
+    "7": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 31656,
+     "frac_positive_preference": 0.9988311852413444,
+     "authorising": true
+    }
+   },
+   "independent": {
+    "0": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 15298,
+     "votes_neg": 3034,
+     "n_both_sided": 1369,
+     "n_no_excursion": 12012,
+     "frac_positive": 0.8344970543312241,
+     "authorising": true
+    },
+    "1": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 542,
+     "votes_neg": 4256,
+     "n_both_sided": 256,
+     "n_no_excursion": 26659,
+     "frac_positive": 0.1129637348895373,
+     "authorising": true
+    },
+    "2": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 708,
+     "votes_neg": 23098,
+     "n_both_sided": 472,
+     "n_no_excursion": 7435,
+     "frac_positive": 0.029740401579433758,
+     "authorising": true
+    },
+    "3": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 28931,
+     "votes_neg": 191,
+     "n_both_sided": 2254,
+     "n_no_excursion": 337,
+     "frac_positive": 0.993441384520294,
+     "authorising": true
+    },
+    "4": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 121,
+     "votes_neg": 27828,
+     "n_both_sided": 3355,
+     "n_no_excursion": 409,
+     "frac_positive": 0.004329314107839279,
+     "authorising": true
+    },
+    "5": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 28112,
+     "votes_neg": 90,
+     "n_both_sided": 3372,
+     "n_no_excursion": 139,
+     "frac_positive": 0.9968087369690093,
+     "authorising": true
+    },
+    "6": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 101,
+     "votes_neg": 27687,
+     "n_both_sided": 3804,
+     "n_no_excursion": 121,
+     "frac_positive": 0.003634662444220527,
+     "authorising": true
+    },
+    "7": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 26945,
+     "votes_neg": 30,
+     "n_both_sided": 4659,
+     "n_no_excursion": 79,
+     "frac_positive": 0.9988878591288229,
+     "authorising": true
+    }
+   }
+  },
+  "49": {
+   "n_events": 32354,
+   "module": {
+    "0": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 23393,
+     "frac_positive_preference": 0.7775402898302911,
+     "authorising": true
+    },
+    "1": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 6451,
+     "frac_positive_preference": 0.1292822818167726,
+     "authorising": true
+    },
+    "2": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 25934,
+     "frac_positive_preference": 0.046888254800647795,
+     "authorising": true
+    },
+    "3": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 32114,
+     "frac_positive_preference": 0.9897552469328019,
+     "authorising": true
+    },
+    "4": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 32018,
+     "frac_positive_preference": 0.006496345805484415,
+     "authorising": true
+    },
+    "5": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 32236,
+     "frac_positive_preference": 0.9952847747859536,
+     "authorising": true
+    },
+    "6": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 32245,
+     "frac_positive_preference": 0.004837959373546286,
+     "authorising": true
+    },
+    "7": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 32285,
+     "frac_positive_preference": 0.9987300603995664,
+     "authorising": true
+    }
+   },
+   "independent": {
+    "0": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 15788,
+     "votes_neg": 3158,
+     "n_both_sided": 1387,
+     "n_no_excursion": 12021,
+     "frac_positive": 0.8333157394700729,
+     "authorising": true
+    },
+    "1": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 513,
+     "votes_neg": 4603,
+     "n_both_sided": 298,
+     "n_no_excursion": 26940,
+     "frac_positive": 0.10027365129007036,
+     "authorising": true
+    },
+    "2": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 837,
+     "votes_neg": 23104,
+     "n_both_sided": 543,
+     "n_no_excursion": 7870,
+     "frac_positive": 0.0349609456580761,
+     "authorising": true
+    },
+    "3": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 29499,
+     "votes_neg": 219,
+     "n_both_sided": 2273,
+     "n_no_excursion": 363,
+     "frac_positive": 0.9926307288512013,
+     "authorising": true
+    },
+    "4": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 124,
+     "votes_neg": 28119,
+     "n_both_sided": 3655,
+     "n_no_excursion": 456,
+     "frac_positive": 0.004390468434656375,
+     "authorising": true
+    },
+    "5": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 28580,
+     "votes_neg": 102,
+     "n_both_sided": 3496,
+     "n_no_excursion": 176,
+     "frac_positive": 0.9964437626385887,
+     "authorising": true
+    },
+    "6": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 118,
+     "votes_neg": 28178,
+     "n_both_sided": 3898,
+     "n_no_excursion": 160,
+     "frac_positive": 0.004170200735086231,
+     "authorising": true
+    },
+    "7": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 27442,
+     "votes_neg": 27,
+     "n_both_sided": 4791,
+     "n_no_excursion": 94,
+     "frac_positive": 0.9990170737922749,
+     "authorising": true
+    }
+   }
+  },
+  "50": {
+   "n_events": 44804,
+   "module": {
+    "0": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 39650,
+     "frac_positive_preference": 0.9333417402269861,
+     "authorising": true
+    },
+    "1": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 29220,
+     "frac_positive_preference": 0.011806981519507187,
+     "authorising": true
+    },
+    "2": {
+     "assigned": null,
+     "status": "AMBIGUOUS",
+     "n_strong": 21841,
+     "frac_positive_preference": 0.35213589121377226,
+     "authorising": false
+    },
+    "3": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 44543,
+     "frac_positive_preference": 0.9925240778573513,
+     "authorising": true
+    },
+    "4": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 44453,
+     "frac_positive_preference": 0.004454142577553821,
+     "authorising": true
+    },
+    "5": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 44688,
+     "frac_positive_preference": 0.9961958467597566,
+     "authorising": true
+    },
+    "6": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 44711,
+     "frac_positive_preference": 0.004271879403278835,
+     "authorising": true
+    },
+    "7": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 44712,
+     "frac_positive_preference": 0.999194847020934,
+     "authorising": true
+    }
+   },
+   "independent": {
+    "0": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 34565,
+     "votes_neg": 1517,
+     "n_both_sided": 1854,
+     "n_no_excursion": 6868,
+     "frac_positive": 0.9579568760046561,
+     "authorising": true
+    },
+    "1": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 209,
+     "votes_neg": 26259,
+     "n_both_sided": 1616,
+     "n_no_excursion": 16720,
+     "frac_positive": 0.007896327640924891,
+     "authorising": true
+    },
+    "2": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 5454,
+     "votes_neg": 13147,
+     "n_both_sided": 307,
+     "n_no_excursion": 25896,
+     "frac_positive": 0.2932100424708349,
+     "authorising": true
+    },
+    "3": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 40255,
+     "votes_neg": 219,
+     "n_both_sided": 3946,
+     "n_no_excursion": 384,
+     "frac_positive": 0.9945891189405545,
+     "authorising": true
+    },
+    "4": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 121,
+     "votes_neg": 37576,
+     "n_both_sided": 6646,
+     "n_no_excursion": 461,
+     "frac_positive": 0.0032098044937262913,
+     "authorising": true
+    },
+    "5": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 39483,
+     "votes_neg": 131,
+     "n_both_sided": 5024,
+     "n_no_excursion": 166,
+     "frac_positive": 0.9966930883021154,
+     "authorising": true
+    },
+    "6": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 152,
+     "votes_neg": 38941,
+     "n_both_sided": 5569,
+     "n_no_excursion": 142,
+     "frac_positive": 0.003888164121453969,
+     "authorising": true
+    },
+    "7": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 37973,
+     "votes_neg": 21,
+     "n_both_sided": 6690,
+     "n_no_excursion": 120,
+     "frac_positive": 0.9994472811496552,
+     "authorising": true
+    }
+   }
+  },
+  "51": {
+   "n_events": 20569,
+   "module": {
+    "0": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 17408,
+     "frac_positive_preference": 0.9048713235294118,
+     "authorising": true
+    },
+    "1": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 11647,
+     "frac_positive_preference": 0.022752640164849316,
+     "authorising": true
+    },
+    "2": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 11191,
+     "frac_positive_preference": 0.2575283710124207,
+     "authorising": true
+    },
+    "3": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 20450,
+     "frac_positive_preference": 0.9928606356968215,
+     "authorising": true
+    },
+    "4": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 20414,
+     "frac_positive_preference": 0.0049965709806995195,
+     "authorising": true
+    },
+    "5": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 20512,
+     "frac_positive_preference": 0.9952710608424337,
+     "authorising": true
+    },
+    "6": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 20517,
+     "frac_positive_preference": 0.004727786713457133,
+     "authorising": true
+    },
+    "7": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 20539,
+     "frac_positive_preference": 0.9989288670334485,
+     "authorising": true
+    }
+   },
+   "independent": {
+    "0": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 14599,
+     "votes_neg": 1019,
+     "n_both_sided": 781,
+     "n_no_excursion": 4170,
+     "frac_positive": 0.9347547701370214,
+     "authorising": true
+    },
+    "1": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 168,
+     "votes_neg": 10246,
+     "n_both_sided": 683,
+     "n_no_excursion": 9472,
+     "frac_positive": 0.01613212982523526,
+     "authorising": true
+    },
+    "2": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 1986,
+     "votes_neg": 7756,
+     "n_both_sided": 148,
+     "n_no_excursion": 10679,
+     "frac_positive": 0.20385957708889346,
+     "authorising": true
+    },
+    "3": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 18625,
+     "votes_neg": 99,
+     "n_both_sided": 1673,
+     "n_no_excursion": 172,
+     "frac_positive": 0.9947126682332835,
+     "authorising": true
+    },
+    "4": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 64,
+     "votes_neg": 17459,
+     "n_both_sided": 2842,
+     "n_no_excursion": 204,
+     "frac_positive": 0.003652342635393483,
+     "authorising": true
+    },
+    "5": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 18133,
+     "votes_neg": 57,
+     "n_both_sided": 2280,
+     "n_no_excursion": 99,
+     "frac_positive": 0.9968664101154481,
+     "authorising": true
+    },
+    "6": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 74,
+     "votes_neg": 17896,
+     "n_both_sided": 2521,
+     "n_no_excursion": 78,
+     "frac_positive": 0.004117974401780746,
+     "authorising": true
+    },
+    "7": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 17380,
+     "votes_neg": 16,
+     "n_both_sided": 3132,
+     "n_no_excursion": 41,
+     "frac_positive": 0.9990802483329501,
+     "authorising": true
+    }
+   }
+  },
+  "52": {
+   "n_events": 10005,
+   "module": {
+    "0": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 8477,
+     "frac_positive_preference": 0.9027958004010853,
+     "authorising": true
+    },
+    "1": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 5684,
+     "frac_positive_preference": 0.021287825475017595,
+     "authorising": true
+    },
+    "2": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 5425,
+     "frac_positive_preference": 0.25880184331797235,
+     "authorising": true
+    },
+    "3": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 9950,
+     "frac_positive_preference": 0.9933668341708543,
+     "authorising": true
+    },
+    "4": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 9938,
+     "frac_positive_preference": 0.005131817267055746,
+     "authorising": true
+    },
+    "5": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 9975,
+     "frac_positive_preference": 0.9962907268170426,
+     "authorising": true
+    },
+    "6": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 9980,
+     "frac_positive_preference": 0.004609218436873747,
+     "authorising": true
+    },
+    "7": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 9990,
+     "frac_positive_preference": 0.9987987987987988,
+     "authorising": true
+    }
+   },
+   "independent": {
+    "0": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 7056,
+     "votes_neg": 458,
+     "n_both_sided": 450,
+     "n_no_excursion": 2041,
+     "frac_positive": 0.9390471120574927,
+     "authorising": true
+    },
+    "1": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 73,
+     "votes_neg": 5020,
+     "n_both_sided": 319,
+     "n_no_excursion": 4593,
+     "frac_positive": 0.014333398782642844,
+     "authorising": true
+    },
+    "2": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 965,
+     "votes_neg": 3754,
+     "n_both_sided": 75,
+     "n_no_excursion": 5211,
+     "frac_positive": 0.20449247721974995,
+     "authorising": true
+    },
+    "3": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 9089,
+     "votes_neg": 39,
+     "n_both_sided": 786,
+     "n_no_excursion": 91,
+     "frac_positive": 0.9957274320771253,
+     "authorising": true
+    },
+    "4": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 24,
+     "votes_neg": 8534,
+     "n_both_sided": 1350,
+     "n_no_excursion": 97,
+     "frac_positive": 0.002804393549894835,
+     "authorising": true
+    },
+    "5": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 8807,
+     "votes_neg": 28,
+     "n_both_sided": 1127,
+     "n_no_excursion": 43,
+     "frac_positive": 0.9968307866440295,
+     "authorising": true
+    },
+    "6": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 35,
+     "votes_neg": 8688,
+     "n_both_sided": 1247,
+     "n_no_excursion": 35,
+     "frac_positive": 0.004012381061561389,
+     "authorising": true
+    },
+    "7": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 8451,
+     "votes_neg": 7,
+     "n_both_sided": 1525,
+     "n_no_excursion": 22,
+     "frac_positive": 0.9991723811775833,
+     "authorising": true
+    }
+   }
+  },
+  "53": {
+   "n_events": 39612,
+   "module": {
+    "0": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 35576,
+     "frac_positive_preference": 0.9394535642005847,
+     "authorising": true
+    },
+    "1": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 26995,
+     "frac_positive_preference": 0.010742730135210224,
+     "authorising": true
+    },
+    "2": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 14947,
+     "frac_positive_preference": 0.2552351642470061,
+     "authorising": true
+    },
+    "3": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 39384,
+     "frac_positive_preference": 0.9926873857404022,
+     "authorising": true
+    },
+    "4": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 39336,
+     "frac_positive_preference": 0.0047284929835265405,
+     "authorising": true
+    },
+    "5": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 39507,
+     "frac_positive_preference": 0.9960007087351609,
+     "authorising": true
+    },
+    "6": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 39518,
+     "frac_positive_preference": 0.004099397742800749,
+     "authorising": true
+    },
+    "7": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 39532,
+     "frac_positive_preference": 0.9991652332287767,
+     "authorising": true
+    }
+   },
+   "independent": {
+    "0": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 31978,
+     "votes_neg": 1251,
+     "n_both_sided": 953,
+     "n_no_excursion": 5430,
+     "frac_positive": 0.9623521622678985,
+     "authorising": true
+    },
+    "1": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 181,
+     "votes_neg": 23793,
+     "n_both_sided": 1681,
+     "n_no_excursion": 13957,
+     "frac_positive": 0.007549845666138317,
+     "authorising": true
+    },
+    "2": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 2483,
+     "votes_neg": 10306,
+     "n_both_sided": 222,
+     "n_no_excursion": 26601,
+     "frac_positive": 0.19415122370787397,
+     "authorising": true
+    },
+    "3": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 35522,
+     "votes_neg": 181,
+     "n_both_sided": 3565,
+     "n_no_excursion": 344,
+     "frac_positive": 0.9949303980057699,
+     "authorising": true
+    },
+    "4": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 119,
+     "votes_neg": 33440,
+     "n_both_sided": 5678,
+     "n_no_excursion": 375,
+     "frac_positive": 0.0035459936231711313,
+     "authorising": true
+    },
+    "5": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 34895,
+     "votes_neg": 111,
+     "n_both_sided": 4451,
+     "n_no_excursion": 155,
+     "frac_positive": 0.9968291150088556,
+     "authorising": true
+    },
+    "6": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 127,
+     "votes_neg": 34302,
+     "n_both_sided": 5051,
+     "n_no_excursion": 132,
+     "frac_positive": 0.003688750762438642,
+     "authorising": true
+    },
+    "7": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 33432,
+     "votes_neg": 27,
+     "n_both_sided": 6055,
+     "n_no_excursion": 98,
+     "frac_positive": 0.99919304223079,
+     "authorising": true
+    }
+   }
+  },
+  "54": {
+   "n_events": 37413,
+   "module": {
+    "0": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 33559,
+     "frac_positive_preference": 0.9421615661968473,
+     "authorising": true
+    },
+    "1": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 25498,
+     "frac_positive_preference": 0.009334065416895443,
+     "authorising": true
+    },
+    "2": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 14058,
+     "frac_positive_preference": 0.2570066865841514,
+     "authorising": true
+    },
+    "3": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 37204,
+     "frac_positive_preference": 0.993119019460273,
+     "authorising": true
+    },
+    "4": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 37152,
+     "frac_positive_preference": 0.00436046511627907,
+     "authorising": true
+    },
+    "5": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 37319,
+     "frac_positive_preference": 0.9958466196843431,
+     "authorising": true
+    },
+    "6": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 37325,
+     "frac_positive_preference": 0.004259879437374414,
+     "authorising": true
+    },
+    "7": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 37338,
+     "frac_positive_preference": 0.9990626171728534,
+     "authorising": true
+    }
+   },
+   "independent": {
+    "0": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 30201,
+     "votes_neg": 1139,
+     "n_both_sided": 910,
+     "n_no_excursion": 5163,
+     "frac_positive": 0.9636566687938737,
+     "authorising": true
+    },
+    "1": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 131,
+     "votes_neg": 22416,
+     "n_both_sided": 1637,
+     "n_no_excursion": 13229,
+     "frac_positive": 0.005810085598971038,
+     "authorising": true
+    },
+    "2": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 2318,
+     "votes_neg": 9677,
+     "n_both_sided": 240,
+     "n_no_excursion": 25178,
+     "frac_positive": 0.19324718632763652,
+     "authorising": true
+    },
+    "3": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 33812,
+     "votes_neg": 176,
+     "n_both_sided": 3130,
+     "n_no_excursion": 295,
+     "frac_positive": 0.9948217017770978,
+     "authorising": true
+    },
+    "4": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 104,
+     "votes_neg": 31750,
+     "n_both_sided": 5215,
+     "n_no_excursion": 344,
+     "frac_positive": 0.0032648960884033404,
+     "authorising": true
+    },
+    "5": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 32860,
+     "votes_neg": 114,
+     "n_both_sided": 4295,
+     "n_no_excursion": 144,
+     "frac_positive": 0.9965427306362589,
+     "authorising": true
+    },
+    "6": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 110,
+     "votes_neg": 32350,
+     "n_both_sided": 4821,
+     "n_no_excursion": 132,
+     "frac_positive": 0.0033887861983980284,
+     "authorising": true
+    },
+    "7": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 31663,
+     "votes_neg": 24,
+     "n_both_sided": 5629,
+     "n_no_excursion": 97,
+     "frac_positive": 0.9992425915990785,
+     "authorising": true
+    }
+   }
+  },
+  "55": {
+   "n_events": 24416,
+   "module": {
+    "0": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 20684,
+     "frac_positive_preference": 0.8992941403983755,
+     "authorising": true
+    },
+    "1": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 13635,
+     "frac_positive_preference": 0.022735606894022736,
+     "authorising": true
+    },
+    "2": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 13028,
+     "frac_positive_preference": 0.2331132944427387,
+     "authorising": true
+    },
+    "3": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 24283,
+     "frac_positive_preference": 0.9922991393155706,
+     "authorising": true
+    },
+    "4": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 24231,
+     "frac_positive_preference": 0.004704717097932401,
+     "authorising": true
+    },
+    "5": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 24352,
+     "frac_positive_preference": 0.9956882391590013,
+     "authorising": true
+    },
+    "6": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 24350,
+     "frac_positive_preference": 0.004640657084188911,
+     "authorising": true
+    },
+    "7": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 24368,
+     "frac_positive_preference": 0.9988509520682862,
+     "authorising": true
+    }
+   },
+   "independent": {
+    "0": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 17282,
+     "votes_neg": 1205,
+     "n_both_sided": 858,
+     "n_no_excursion": 5071,
+     "frac_positive": 0.9348190620435982,
+     "authorising": true
+    },
+    "1": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 209,
+     "votes_neg": 12014,
+     "n_both_sided": 776,
+     "n_no_excursion": 11417,
+     "frac_positive": 0.017098911887425346,
+     "authorising": true
+    },
+    "2": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 2070,
+     "votes_neg": 9316,
+     "n_both_sided": 201,
+     "n_no_excursion": 12829,
+     "frac_positive": 0.18180221324433515,
+     "authorising": true
+    },
+    "3": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 22371,
+     "votes_neg": 126,
+     "n_both_sided": 1721,
+     "n_no_excursion": 198,
+     "frac_positive": 0.9943992532337645,
+     "authorising": true
+    },
+    "4": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 61,
+     "votes_neg": 21157,
+     "n_both_sided": 2956,
+     "n_no_excursion": 242,
+     "frac_positive": 0.0028749175228579508,
+     "authorising": true
+    },
+    "5": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 21549,
+     "votes_neg": 73,
+     "n_both_sided": 2689,
+     "n_no_excursion": 105,
+     "frac_positive": 0.996623809083341,
+     "authorising": true
+    },
+    "6": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 91,
+     "votes_neg": 21125,
+     "n_both_sided": 3111,
+     "n_no_excursion": 89,
+     "frac_positive": 0.00428921568627451,
+     "authorising": true
+    },
+    "7": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 20724,
+     "votes_neg": 15,
+     "n_both_sided": 3610,
+     "n_no_excursion": 67,
+     "frac_positive": 0.9992767250108491,
+     "authorising": true
+    }
+   }
+  },
+  "56": {
+   "n_events": 51823,
+   "module": {
+    "0": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 45655,
+     "frac_positive_preference": 0.926864527434016,
+     "authorising": true
+    },
+    "1": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 32702,
+     "frac_positive_preference": 0.012873830346767782,
+     "authorising": true
+    },
+    "2": {
+     "assigned": null,
+     "status": "AMBIGUOUS",
+     "n_strong": 26176,
+     "frac_positive_preference": 0.33225091687041564,
+     "authorising": false
+    },
+    "3": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 51515,
+     "frac_positive_preference": 0.9921188003494128,
+     "authorising": true
+    },
+    "4": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 51415,
+     "frac_positive_preference": 0.005290284936302635,
+     "authorising": true
+    },
+    "5": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 51673,
+     "frac_positive_preference": 0.9957618098426645,
+     "authorising": true
+    },
+    "6": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 51704,
+     "frac_positive_preference": 0.004467739439888597,
+     "authorising": true
+    },
+    "7": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 51726,
+     "frac_positive_preference": 0.999052700769439,
+     "authorising": true
+    }
+   },
+   "independent": {
+    "0": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 39455,
+     "votes_neg": 1940,
+     "n_both_sided": 2132,
+     "n_no_excursion": 8296,
+     "frac_positive": 0.9531344365261505,
+     "authorising": true
+    },
+    "1": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 278,
+     "votes_neg": 29323,
+     "n_both_sided": 1787,
+     "n_no_excursion": 20435,
+     "frac_positive": 0.009391574608965914,
+     "authorising": true
+    },
+    "2": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 6025,
+     "votes_neg": 16246,
+     "n_both_sided": 364,
+     "n_no_excursion": 29188,
+     "frac_positive": 0.270531184051008,
+     "authorising": true
+    },
+    "3": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 47511,
+     "votes_neg": 269,
+     "n_both_sided": 3582,
+     "n_no_excursion": 461,
+     "frac_positive": 0.9943700293009627,
+     "authorising": true
+    },
+    "4": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 168,
+     "votes_neg": 44879,
+     "n_both_sided": 6221,
+     "n_no_excursion": 555,
+     "frac_positive": 0.0037294381423846204,
+     "authorising": true
+    },
+    "5": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 45623,
+     "votes_neg": 163,
+     "n_both_sided": 5821,
+     "n_no_excursion": 216,
+     "frac_positive": 0.9964399598130433,
+     "authorising": true
+    },
+    "6": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 176,
+     "votes_neg": 44693,
+     "n_both_sided": 6773,
+     "n_no_excursion": 181,
+     "frac_positive": 0.003922530031870556,
+     "authorising": true
+    },
+    "7": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 44004,
+     "votes_neg": 35,
+     "n_both_sided": 7659,
+     "n_no_excursion": 125,
+     "frac_positive": 0.9992052498921411,
+     "authorising": true
+    }
+   }
+  },
+  "57": {
+   "n_events": 31284,
+   "module": {
+    "0": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 22400,
+     "frac_positive_preference": 0.7765178571428571,
+     "authorising": true
+    },
+    "1": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 5803,
+     "frac_positive_preference": 0.14199551955884887,
+     "authorising": true
+    },
+    "2": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 25419,
+     "frac_positive_preference": 0.04138636453046934,
+     "authorising": true
+    },
+    "3": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 31063,
+     "frac_positive_preference": 0.9887647683739497,
+     "authorising": true
+    },
+    "4": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 30936,
+     "frac_positive_preference": 0.0068851823118696665,
+     "authorising": true
+    },
+    "5": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 31182,
+     "frac_positive_preference": 0.9956385093964467,
+     "authorising": true
+    },
+    "6": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 31196,
+     "frac_positive_preference": 0.004840364149249904,
+     "authorising": true
+    },
+    "7": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 31210,
+     "frac_positive_preference": 0.9988465235501441,
+     "authorising": true
+    }
+   },
+   "independent": {
+    "0": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 15022,
+     "votes_neg": 3085,
+     "n_both_sided": 1329,
+     "n_no_excursion": 11848,
+     "frac_positive": 0.829623902358204,
+     "authorising": true
+    },
+    "1": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 499,
+     "votes_neg": 4138,
+     "n_both_sided": 257,
+     "n_no_excursion": 26390,
+     "frac_positive": 0.10761268061246496,
+     "authorising": true
+    },
+    "2": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 717,
+     "votes_neg": 22808,
+     "n_both_sided": 472,
+     "n_no_excursion": 7287,
+     "frac_positive": 0.030478214665249734,
+     "authorising": true
+    },
+    "3": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 28606,
+     "votes_neg": 222,
+     "n_both_sided": 2088,
+     "n_no_excursion": 368,
+     "frac_positive": 0.992299153600666,
+     "authorising": true
+    },
+    "4": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 133,
+     "votes_neg": 27227,
+     "n_both_sided": 3467,
+     "n_no_excursion": 457,
+     "frac_positive": 0.004861111111111111,
+     "authorising": true
+    },
+    "5": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 27517,
+     "votes_neg": 90,
+     "n_both_sided": 3522,
+     "n_no_excursion": 155,
+     "frac_positive": 0.9967399572572174,
+     "authorising": true
+    },
+    "6": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 113,
+     "votes_neg": 27080,
+     "n_both_sided": 3963,
+     "n_no_excursion": 128,
+     "frac_positive": 0.004155481190012135,
+     "authorising": true
+    },
+    "7": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 26416,
+     "votes_neg": 26,
+     "n_both_sided": 4748,
+     "n_no_excursion": 94,
+     "frac_positive": 0.9990167158308751,
+     "authorising": true
+    }
+   }
+  },
+  "58": {
+   "n_events": 34141,
+   "module": {
+    "0": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 25909,
+     "frac_positive_preference": 0.8665714616542515,
+     "authorising": true
+    },
+    "1": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 6285,
+     "frac_positive_preference": 0.022593476531424024,
+     "authorising": true
+    },
+    "2": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 26761,
+     "frac_positive_preference": 0.025895893277530734,
+     "authorising": true
+    },
+    "3": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 33929,
+     "frac_positive_preference": 0.9910695864894338,
+     "authorising": true
+    },
+    "4": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 33848,
+     "frac_positive_preference": 0.005879224769558024,
+     "authorising": true
+    },
+    "5": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 34059,
+     "frac_positive_preference": 0.9955665169265099,
+     "authorising": true
+    },
+    "6": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 34060,
+     "frac_positive_preference": 0.004345273047563124,
+     "authorising": true
+    },
+    "7": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 34090,
+     "frac_positive_preference": 0.9991786447638604,
+     "authorising": true
+    }
+   },
+   "independent": {
+    "0": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 19848,
+     "votes_neg": 1846,
+     "n_both_sided": 1444,
+     "n_no_excursion": 11003,
+     "frac_positive": 0.9149073476537292,
+     "authorising": true
+    },
+    "1": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 85,
+     "votes_neg": 5151,
+     "n_both_sided": 268,
+     "n_no_excursion": 28637,
+     "frac_positive": 0.016233766233766232,
+     "authorising": true
+    },
+    "2": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 374,
+     "votes_neg": 24233,
+     "n_both_sided": 497,
+     "n_no_excursion": 9037,
+     "frac_positive": 0.015198927134555208,
+     "authorising": true
+    },
+    "3": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 31216,
+     "votes_neg": 224,
+     "n_both_sided": 2394,
+     "n_no_excursion": 307,
+     "frac_positive": 0.9928753180661578,
+     "authorising": true
+    },
+    "4": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 125,
+     "votes_neg": 29725,
+     "n_both_sided": 3895,
+     "n_no_excursion": 396,
+     "frac_positive": 0.0041876046901172526,
+     "authorising": true
+    },
+    "5": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 30240,
+     "votes_neg": 112,
+     "n_both_sided": 3663,
+     "n_no_excursion": 126,
+     "frac_positive": 0.996309963099631,
+     "authorising": true
+    },
+    "6": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 117,
+     "votes_neg": 29634,
+     "n_both_sided": 4277,
+     "n_no_excursion": 113,
+     "frac_positive": 0.003932640919632953,
+     "authorising": true
+    },
+    "7": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 29000,
+     "votes_neg": 24,
+     "n_both_sided": 5053,
+     "n_no_excursion": 64,
+     "frac_positive": 0.9991730981256891,
+     "authorising": true
+    }
+   }
+  },
+  "59": {
+   "n_events": 42303,
+   "module": {
+    "0": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 27843,
+     "frac_positive_preference": 0.7922637646805302,
+     "authorising": true
+    },
+    "1": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 4081,
+     "frac_positive_preference": 0.16442048517520216,
+     "authorising": true
+    },
+    "2": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 38285,
+     "frac_positive_preference": 0.04500457098080188,
+     "authorising": true
+    },
+    "3": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 40028,
+     "frac_positive_preference": 0.9598531028280204,
+     "authorising": true
+    },
+    "4": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 39556,
+     "frac_positive_preference": 0.0294519162706037,
+     "authorising": true
+    },
+    "5": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 41553,
+     "frac_positive_preference": 0.9636127355425601,
+     "authorising": true
+    },
+    "6": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 41698,
+     "frac_positive_preference": 0.03940236941819752,
+     "authorising": true
+    },
+    "7": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 41802,
+     "frac_positive_preference": 0.9930864551935314,
+     "authorising": true
+    }
+   },
+   "independent": {
+    "0": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 18264,
+     "votes_neg": 3160,
+     "n_both_sided": 1764,
+     "n_no_excursion": 19115,
+     "frac_positive": 0.8525018670649739,
+     "authorising": true
+    },
+    "1": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 425,
+     "votes_neg": 2644,
+     "n_both_sided": 179,
+     "n_no_excursion": 39055,
+     "frac_positive": 0.13848159009449332,
+     "authorising": true
+    },
+    "2": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 964,
+     "votes_neg": 34134,
+     "n_both_sided": 1574,
+     "n_no_excursion": 5631,
+     "frac_positive": 0.027465952475924555,
+     "authorising": true
+    },
+    "3": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 35495,
+     "votes_neg": 1200,
+     "n_both_sided": 2752,
+     "n_no_excursion": 2856,
+     "frac_positive": 0.9672979970023164,
+     "authorising": true
+    },
+    "4": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 629,
+     "votes_neg": 33933,
+     "n_both_sided": 4203,
+     "n_no_excursion": 3538,
+     "frac_positive": 0.0181991782882935,
+     "authorising": true
+    },
+    "5": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 35602,
+     "votes_neg": 1181,
+     "n_both_sided": 4479,
+     "n_no_excursion": 1041,
+     "frac_positive": 0.9678927765543865,
+     "authorising": true
+    },
+    "6": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 1266,
+     "votes_neg": 34914,
+     "n_both_sided": 5153,
+     "n_no_excursion": 970,
+     "frac_positive": 0.03499170812603648,
+     "authorising": true
+    },
+    "7": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 35202,
+     "votes_neg": 223,
+     "n_both_sided": 6248,
+     "n_no_excursion": 630,
+     "frac_positive": 0.9937050105857446,
+     "authorising": true
+    }
+   }
+  },
+  "60": {
+   "n_events": 36074,
+   "module": {
+    "0": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 23366,
+     "frac_positive_preference": 0.7654284002396645,
+     "authorising": true
+    },
+    "1": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 2688,
+     "frac_positive_preference": 0.24776785714285715,
+     "authorising": true
+    },
+    "2": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 33466,
+     "frac_positive_preference": 0.04789936054503078,
+     "authorising": true
+    },
+    "3": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 34306,
+     "frac_positive_preference": 0.9427796886841951,
+     "authorising": true
+    },
+    "4": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 33852,
+     "frac_positive_preference": 0.04484225451967387,
+     "authorising": true
+    },
+    "5": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 35433,
+     "frac_positive_preference": 0.9563683571811588,
+     "authorising": true
+    },
+    "6": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 35486,
+     "frac_positive_preference": 0.04503184354393282,
+     "authorising": true
+    },
+    "7": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 35519,
+     "frac_positive_preference": 0.9920042793997579,
+     "authorising": true
+    }
+   },
+   "independent": {
+    "0": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 14637,
+     "votes_neg": 2920,
+     "n_both_sided": 1574,
+     "n_no_excursion": 16943,
+     "frac_positive": 0.8336845702568776,
+     "authorising": true
+    },
+    "1": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 399,
+     "votes_neg": 1501,
+     "n_both_sided": 178,
+     "n_no_excursion": 33996,
+     "frac_positive": 0.21,
+     "authorising": true
+    },
+    "2": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 872,
+     "votes_neg": 29804,
+     "n_both_sided": 1778,
+     "n_no_excursion": 3620,
+     "frac_positive": 0.02842613117746773,
+     "authorising": true
+    },
+    "3": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 30019,
+     "votes_neg": 1504,
+     "n_both_sided": 2267,
+     "n_no_excursion": 2284,
+     "frac_positive": 0.9522888049995242,
+     "authorising": true
+    },
+    "4": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 803,
+     "votes_neg": 28819,
+     "n_both_sided": 3415,
+     "n_no_excursion": 3037,
+     "frac_positive": 0.0271082303693201,
+     "authorising": true
+    },
+    "5": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 30200,
+     "votes_neg": 1267,
+     "n_both_sided": 3748,
+     "n_no_excursion": 859,
+     "frac_positive": 0.9597355960212286,
+     "authorising": true
+    },
+    "6": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 1248,
+     "votes_neg": 29691,
+     "n_both_sided": 4219,
+     "n_no_excursion": 916,
+     "frac_positive": 0.040337438184815284,
+     "authorising": true
+    },
+    "7": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 29927,
+     "votes_neg": 203,
+     "n_both_sided": 5260,
+     "n_no_excursion": 684,
+     "frac_positive": 0.9932625290408231,
+     "authorising": true
+    }
+   }
+  },
+  "61": {
+   "n_events": 36535,
+   "module": {
+    "0": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 23875,
+     "frac_positive_preference": 0.7819895287958115,
+     "authorising": true
+    },
+    "1": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 2984,
+     "frac_positive_preference": 0.23089812332439677,
+     "authorising": true
+    },
+    "2": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 33445,
+     "frac_positive_preference": 0.04341456121991329,
+     "authorising": true
+    },
+    "3": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 34467,
+     "frac_positive_preference": 0.9425247338033481,
+     "authorising": true
+    },
+    "4": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 34055,
+     "frac_positive_preference": 0.04754074291587138,
+     "authorising": true
+    },
+    "5": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 35804,
+     "frac_positive_preference": 0.9520444643056641,
+     "authorising": true
+    },
+    "6": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 35912,
+     "frac_positive_preference": 0.05034528848295834,
+     "authorising": true
+    },
+    "7": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 35953,
+     "frac_positive_preference": 0.9914054459989431,
+     "authorising": true
+    }
+   },
+   "independent": {
+    "0": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 15410,
+     "votes_neg": 2812,
+     "n_both_sided": 1598,
+     "n_no_excursion": 16715,
+     "frac_positive": 0.8456810448907913,
+     "authorising": true
+    },
+    "1": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 396,
+     "votes_neg": 1716,
+     "n_both_sided": 226,
+     "n_no_excursion": 34197,
+     "frac_positive": 0.1875,
+     "authorising": true
+    },
+    "2": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 782,
+     "votes_neg": 29912,
+     "n_both_sided": 1560,
+     "n_no_excursion": 4281,
+     "frac_positive": 0.025477291978888383,
+     "authorising": true
+    },
+    "3": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 30112,
+     "votes_neg": 1465,
+     "n_both_sided": 2239,
+     "n_no_excursion": 2719,
+     "frac_positive": 0.9536054723374608,
+     "authorising": true
+    },
+    "4": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 866,
+     "votes_neg": 28769,
+     "n_both_sided": 3543,
+     "n_no_excursion": 3357,
+     "frac_positive": 0.029222203475620045,
+     "authorising": true
+    },
+    "5": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 30432,
+     "votes_neg": 1393,
+     "n_both_sided": 3716,
+     "n_no_excursion": 994,
+     "frac_positive": 0.956229379418696,
+     "authorising": true
+    },
+    "6": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 1405,
+     "votes_neg": 29891,
+     "n_both_sided": 4226,
+     "n_no_excursion": 1013,
+     "frac_positive": 0.044893916155419225,
+     "authorising": true
+    },
+    "7": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 30344,
+     "votes_neg": 235,
+     "n_both_sided": 5219,
+     "n_no_excursion": 737,
+     "frac_positive": 0.9923149874096602,
+     "authorising": true
+    }
+   }
+  },
+  "62": {
+   "n_events": 37584,
+   "module": {
+    "0": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 24880,
+     "frac_positive_preference": 0.7934485530546623,
+     "authorising": true
+    },
+    "1": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 3144,
+     "frac_positive_preference": 0.21087786259541985,
+     "authorising": true
+    },
+    "2": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 34409,
+     "frac_positive_preference": 0.04245982155831323,
+     "authorising": true
+    },
+    "3": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 35535,
+     "frac_positive_preference": 0.9542141550583931,
+     "authorising": true
+    },
+    "4": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 35137,
+     "frac_positive_preference": 0.036115775393459885,
+     "authorising": true
+    },
+    "5": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 36858,
+     "frac_positive_preference": 0.9582994193933474,
+     "authorising": true
+    },
+    "6": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 37008,
+     "frac_positive_preference": 0.045152399481193255,
+     "authorising": true
+    },
+    "7": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 37107,
+     "frac_positive_preference": 0.9919691702374215,
+     "authorising": true
+    }
+   },
+   "independent": {
+    "0": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 16304,
+     "votes_neg": 2726,
+     "n_both_sided": 1688,
+     "n_no_excursion": 16866,
+     "frac_positive": 0.8567524960588544,
+     "authorising": true
+    },
+    "1": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 407,
+     "votes_neg": 1888,
+     "n_both_sided": 211,
+     "n_no_excursion": 35078,
+     "frac_positive": 0.17734204793028321,
+     "authorising": true
+    },
+    "2": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 807,
+     "votes_neg": 30805,
+     "n_both_sided": 1505,
+     "n_no_excursion": 4467,
+     "frac_positive": 0.02552828039984816,
+     "authorising": true
+    },
+    "3": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 31357,
+     "votes_neg": 1229,
+     "n_both_sided": 2440,
+     "n_no_excursion": 2558,
+     "frac_positive": 0.9622844166206346,
+     "authorising": true
+    },
+    "4": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 641,
+     "votes_neg": 30118,
+     "n_both_sided": 3613,
+     "n_no_excursion": 3212,
+     "frac_positive": 0.020839429110179136,
+     "authorising": true
+    },
+    "5": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 31469,
+     "votes_neg": 1247,
+     "n_both_sided": 3911,
+     "n_no_excursion": 957,
+     "frac_positive": 0.9618840934099523,
+     "authorising": true
+    },
+    "6": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 1322,
+     "votes_neg": 30853,
+     "n_both_sided": 4478,
+     "n_no_excursion": 931,
+     "frac_positive": 0.041087801087801086,
+     "authorising": true
+    },
+    "7": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 31245,
+     "votes_neg": 222,
+     "n_both_sided": 5497,
+     "n_no_excursion": 620,
+     "frac_positive": 0.9929449899895129,
+     "authorising": true
+    }
+   }
+  },
+  "63": {
+   "n_events": 37030,
+   "module": {
+    "0": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 25717,
+     "frac_positive_preference": 0.8277792899638372,
+     "authorising": true
+    },
+    "1": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 4567,
+     "frac_positive_preference": 0.08889862053864682,
+     "authorising": true
+    },
+    "2": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 32313,
+     "frac_positive_preference": 0.042088323584934854,
+     "authorising": true
+    },
+    "3": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 35731,
+     "frac_positive_preference": 0.9735523774873359,
+     "authorising": true
+    },
+    "4": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 35429,
+     "frac_positive_preference": 0.018148974004346723,
+     "authorising": true
+    },
+    "5": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 36653,
+     "frac_positive_preference": 0.9812293673096336,
+     "authorising": true
+    },
+    "6": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 36758,
+     "frac_positive_preference": 0.02189999455900756,
+     "authorising": true
+    },
+    "7": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 36805,
+     "frac_positive_preference": 0.995897296562967,
+     "authorising": true
+    }
+   },
+   "independent": {
+    "0": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 18139,
+     "votes_neg": 2326,
+     "n_both_sided": 1611,
+     "n_no_excursion": 14954,
+     "frac_positive": 0.8863425360371365,
+     "authorising": true
+    },
+    "1": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 242,
+     "votes_neg": 3410,
+     "n_both_sided": 210,
+     "n_no_excursion": 33168,
+     "frac_positive": 0.06626506024096386,
+     "authorising": true
+    },
+    "2": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 847,
+     "votes_neg": 29082,
+     "n_both_sided": 889,
+     "n_no_excursion": 6212,
+     "frac_positive": 0.02830031073540713,
+     "authorising": true
+    },
+    "3": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 32157,
+     "votes_neg": 708,
+     "n_both_sided": 2526,
+     "n_no_excursion": 1639,
+     "frac_positive": 0.9784573254221817,
+     "authorising": true
+    },
+    "4": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 350,
+     "votes_neg": 30834,
+     "n_both_sided": 3781,
+     "n_no_excursion": 2065,
+     "frac_positive": 0.011223704463827604,
+     "authorising": true
+    },
+    "5": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 31815,
+     "votes_neg": 553,
+     "n_both_sided": 4152,
+     "n_no_excursion": 510,
+     "frac_positive": 0.9829152249134948,
+     "authorising": true
+    },
+    "6": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 621,
+     "votes_neg": 31322,
+     "n_both_sided": 4641,
+     "n_no_excursion": 446,
+     "frac_positive": 0.019440879065836022,
+     "authorising": true
+    },
+    "7": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 31257,
+     "votes_neg": 109,
+     "n_both_sided": 5363,
+     "n_no_excursion": 301,
+     "frac_positive": 0.9965248995727858,
+     "authorising": true
+    }
+   }
+  },
+  "64": {
+   "n_events": 35943,
+   "module": {
+    "0": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 24363,
+     "frac_positive_preference": 0.8056068628658212,
+     "authorising": true
+    },
+    "1": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 3468,
+     "frac_positive_preference": 0.09746251441753172,
+     "authorising": true
+    },
+    "2": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 32101,
+     "frac_positive_preference": 0.024391763496464283,
+     "authorising": true
+    },
+    "3": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 35130,
+     "frac_positive_preference": 0.9832621690862511,
+     "authorising": true
+    },
+    "4": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 34961,
+     "frac_positive_preference": 0.011469923629186808,
+     "authorising": true
+    },
+    "5": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 35727,
+     "frac_positive_preference": 0.9872925238615053,
+     "authorising": true
+    },
+    "6": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 35774,
+     "frac_positive_preference": 0.014004584334991894,
+     "authorising": true
+    },
+    "7": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 35797,
+     "frac_positive_preference": 0.9978489817582479,
+     "authorising": true
+    }
+   },
+   "independent": {
+    "0": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 16574,
+     "votes_neg": 2521,
+     "n_both_sided": 1490,
+     "n_no_excursion": 15358,
+     "frac_positive": 0.8679759099240639,
+     "authorising": true
+    },
+    "1": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 212,
+     "votes_neg": 2523,
+     "n_both_sided": 166,
+     "n_no_excursion": 33042,
+     "frac_positive": 0.07751371115173675,
+     "authorising": true
+    },
+    "2": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 479,
+     "votes_neg": 29731,
+     "n_both_sided": 810,
+     "n_no_excursion": 4923,
+     "frac_positive": 0.01585567692816948,
+     "authorising": true
+    },
+    "3": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 31992,
+     "votes_neg": 432,
+     "n_both_sided": 2479,
+     "n_no_excursion": 1040,
+     "frac_positive": 0.9866765358993338,
+     "authorising": true
+    },
+    "4": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 224,
+     "votes_neg": 30657,
+     "n_both_sided": 3789,
+     "n_no_excursion": 1273,
+     "frac_positive": 0.007253651112334445,
+     "authorising": true
+    },
+    "5": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 31441,
+     "votes_neg": 354,
+     "n_both_sided": 3839,
+     "n_no_excursion": 309,
+     "frac_positive": 0.988866173926718,
+     "authorising": true
+    },
+    "6": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 380,
+     "votes_neg": 30911,
+     "n_both_sided": 4375,
+     "n_no_excursion": 277,
+     "frac_positive": 0.012144066984116839,
+     "authorising": true
+    },
+    "7": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 30321,
+     "votes_neg": 61,
+     "n_both_sided": 5370,
+     "n_no_excursion": 191,
+     "frac_positive": 0.9979922322427753,
+     "authorising": true
+    }
+   }
+  },
+  "65": {
+   "n_events": 38424,
+   "module": {
+    "0": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 26104,
+     "frac_positive_preference": 0.8062365920931658,
+     "authorising": true
+    },
+    "1": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 2970,
+     "frac_positive_preference": 0.09057239057239057,
+     "authorising": true
+    },
+    "2": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 34833,
+     "frac_positive_preference": 0.013464243676972985,
+     "authorising": true
+    },
+    "3": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 38052,
+     "frac_positive_preference": 0.9920634920634921,
+     "authorising": true
+    },
+    "4": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 37968,
+     "frac_positive_preference": 0.0055309734513274336,
+     "authorising": true
+    },
+    "5": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 38315,
+     "frac_positive_preference": 0.9956413937100352,
+     "authorising": true
+    },
+    "6": {
+     "assigned": -1,
+     "status": "MEASURED",
+     "n_strong": 38335,
+     "frac_positive_preference": 0.004799791313421156,
+     "authorising": true
+    },
+    "7": {
+     "assigned": 1,
+     "status": "MEASURED",
+     "n_strong": 38370,
+     "frac_positive_preference": 0.9993484493093563,
+     "authorising": true
+    }
+   },
+   "independent": {
+    "0": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 17700,
+     "votes_neg": 2608,
+     "n_both_sided": 1604,
+     "n_no_excursion": 16512,
+     "frac_positive": 0.8715777033681308,
+     "authorising": true
+    },
+    "1": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 154,
+     "votes_neg": 2109,
+     "n_both_sided": 116,
+     "n_no_excursion": 36045,
+     "frac_positive": 0.06805125939019001,
+     "authorising": true
+    },
+    "2": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 253,
+     "votes_neg": 32925,
+     "n_both_sided": 667,
+     "n_no_excursion": 4579,
+     "frac_positive": 0.007625534993067696,
+     "authorising": true
+    },
+    "3": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 35242,
+     "votes_neg": 206,
+     "n_both_sided": 2479,
+     "n_no_excursion": 497,
+     "frac_positive": 0.9941886707289551,
+     "authorising": true
+    },
+    "4": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 118,
+     "votes_neg": 33762,
+     "n_both_sided": 3954,
+     "n_no_excursion": 590,
+     "frac_positive": 0.0034828807556080282,
+     "authorising": true
+    },
+    "5": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 34138,
+     "votes_neg": 121,
+     "n_both_sided": 4007,
+     "n_no_excursion": 158,
+     "frac_positive": 0.9964680813800753,
+     "authorising": true
+    },
+    "6": {
+     "sign": -1,
+     "status": "MEASURED",
+     "votes_pos": 141,
+     "votes_neg": 33549,
+     "n_both_sided": 4606,
+     "n_no_excursion": 128,
+     "frac_positive": 0.004185218165627782,
+     "authorising": true
+    },
+    "7": {
+     "sign": 1,
+     "status": "MEASURED",
+     "votes_pos": 32619,
+     "votes_neg": 11,
+     "n_both_sided": 5713,
+     "n_no_excursion": 81,
+     "frac_positive": 0.9996628869138829,
+     "authorising": true
+    }
+   }
+  }
+ },
+ "stationarity": {
+  "0": {
+   "module_signs": [
+    1
+   ],
+   "independent_signs": [
+    1
+   ],
+   "module_stationary": true,
+   "independent_stationary": true,
+   "estimators_agree": true
+  },
+  "1": {
+   "module_signs": [
+    -1
+   ],
+   "independent_signs": [
+    -1
+   ],
+   "module_stationary": true,
+   "independent_stationary": true,
+   "estimators_agree": true
+  },
+  "2": {
+   "module_signs": [
+    -1
+   ],
+   "independent_signs": [
+    -1
+   ],
+   "module_stationary": true,
+   "independent_stationary": true,
+   "estimators_agree": true
+  },
+  "3": {
+   "module_signs": [
+    1
+   ],
+   "independent_signs": [
+    1
+   ],
+   "module_stationary": true,
+   "independent_stationary": true,
+   "estimators_agree": true
+  },
+  "4": {
+   "module_signs": [
+    -1
+   ],
+   "independent_signs": [
+    -1
+   ],
+   "module_stationary": true,
+   "independent_stationary": true,
+   "estimators_agree": true
+  },
+  "5": {
+   "module_signs": [
+    1
+   ],
+   "independent_signs": [
+    1
+   ],
+   "module_stationary": true,
+   "independent_stationary": true,
+   "estimators_agree": true
+  },
+  "6": {
+   "module_signs": [
+    -1
+   ],
+   "independent_signs": [
+    -1
+   ],
+   "module_stationary": true,
+   "independent_stationary": true,
+   "estimators_agree": true
+  },
+  "7": {
+   "module_signs": [
+    1
+   ],
+   "independent_signs": [
+    1
+   ],
+   "module_stationary": true,
+   "independent_stationary": true,
+   "estimators_agree": true
+  }
+ },
+ "agreement_with_locked_map": {
+  "0": {
+   "locked": 1,
+   "measured_module": [
+    1
+   ],
+   "measured_independent": [
+    1
+   ],
+   "confirmed": true
+  },
+  "1": {
+   "locked": -1,
+   "measured_module": [
+    -1
+   ],
+   "measured_independent": [
+    -1
+   ],
+   "confirmed": true
+  },
+  "2": {
+   "locked": 1,
+   "measured_module": [
+    -1
+   ],
+   "measured_independent": [
+    -1
+   ],
+   "confirmed": false
+  },
+  "3": {
+   "locked": -1,
+   "measured_module": [
+    1
+   ],
+   "measured_independent": [
+    1
+   ],
+   "confirmed": false
+  },
+  "4": {
+   "locked": 1,
+   "measured_module": [
+    -1
+   ],
+   "measured_independent": [
+    -1
+   ],
+   "confirmed": false
+  },
+  "5": {
+   "locked": -1,
+   "measured_module": [
+    1
+   ],
+   "measured_independent": [
+    1
+   ],
+   "confirmed": false
+  },
+  "6": {
+   "locked": 1,
+   "measured_module": [
+    -1
+   ],
+   "measured_independent": [
+    -1
+   ],
+   "confirmed": false
+  },
+  "7": {
+   "locked": -1,
+   "measured_module": [
+    1
+   ],
+   "measured_independent": [
+    1
+   ],
+   "confirmed": false
+  }
+ },
+ "negative_controls": {
+  "sign_truth": [
+   1,
+   -1,
+   1,
+   -1,
+   1,
+   -1,
+   1,
+   -1
+  ],
+  "synthetic_truth_recovered": true,
+  "sign_flipped_truth_recovered": true,
+  "low_snr_fails_closed": true,
+  "dropout_does_not_flip_module": true,
+  "dropout_independent_signs": {
+   "0": 1,
+   "1": -1,
+   "2": 1,
+   "3": -1,
+   "4": 1,
+   "5": -1,
+   "6": 1,
+   "7": -1
+  },
+  "dropout_does_not_flip_independent": true
+ },
+ "verdict": {
+  "all_runs_sha_verified": true,
+  "all_channels_measured": true,
+  "stationary_across_runs": true,
+  "estimators_agree": true,
+  "locked_map_confirmed": false,
+  "negative_controls_pass": true
+ }
+}

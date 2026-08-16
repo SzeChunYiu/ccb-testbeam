@@ -1,0 +1,66 @@
+{
+  "ticket_id": "2556",
+  "ticket_number": 2556,
+  "study_id": "S68c",
+  "worker": "testbeam-laptop-3",
+  "title": "NEW S68c joint PID boundary study from timing-energy-pedestal pulse representations",
+  "output_dir": "reports/2556__s68c_joint_pid_boundary_study_from_timing_energy_pedestal_pulse_representations",
+  "raw_root_dir_candidates": [
+    "/home/billy/ccb-data/data/extracted/root/root",
+    "data/extracted/root/root",
+    "data/root/root",
+    "/home/billy/ccb-data/extracted/root/root",
+    "/home/billy/Desktop/test_beam/data/root/root"
+  ],
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "duplicate_readout_channels": {
+    "B2": 1,
+    "B4": 3,
+    "B6": 5,
+    "B8": 7
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "heldout_runs": [42, 50, 57, 58, 60, 62, 64, 65],
+  "particle_holdout_family": "high_amplitude_tail_family",
+  "expected_total_selected_pulses": 640737,
+  "amplitude_cut_adc": 1000.0,
+  "baseline_samples": [0, 1, 2, 3],
+  "samples_per_channel": 18,
+  "max_per_run_stave": 130,
+  "bootstrap_replicates": 320,
+  "random_seed": 20680817,
+  "mlp_max_iter": 34,
+  "nn": {
+    "epochs": 4,
+    "batch_size": 1024,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "max_train_rows": 19000
+  },
+  "joint_score_weights": {
+    "pid_auc_loss": 0.34,
+    "energy_sigma68": 0.18,
+    "pileup_auc_loss": 0.10,
+    "saturation_auc_loss": 0.10,
+    "pedestal_auc_loss": 0.14,
+    "tail_harmonic_auc_loss": 0.14
+  },
+  "claim_command": "tn-ticket claim testbeam-laptop-3 --project testbeam",
+  "claim_command_exit_code": 0,
+  "claim_command_stdout": "# null\n\nnull\n",
+  "claim_command_stderr": "null\n",
+  "manual_claim_recovery": {
+    "reason": "The required claim helper was run exactly once and returned the malformed null payload without mutating labels; the already-visible lowest open ticket was manually label-swapped without invoking claim again.",
+    "command": "gh issue edit 2556 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-3 --remove-label factory:open"
+  }
+}

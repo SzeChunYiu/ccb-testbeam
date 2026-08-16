@@ -35,6 +35,7 @@ struct EventData {
   // Photon generation counters (by creator process).
   long n_scint_generated = 0;         // scintillation photons created
   long n_wls_generated   = 0;         // OpWLS re-emitted photons created
+  long n_wls_absorbed    = 0;         // optical photons ended by OpWLS (#1088)
   long n_cerenkov_generated = 0;
 
   // Per-sensor: photons reaching the end, and detected PE after PDE+coupling.
@@ -70,7 +71,7 @@ struct EventData {
     primary_pdg = 0;
     has_entry = false;
     for (int i = 0; i < 3; ++i) entry[i] = exit[i] = 0.0;
-    n_scint_generated = n_wls_generated = n_cerenkov_generated = 0;
+    n_scint_generated = n_wls_generated = n_wls_absorbed = n_cerenkov_generated = 0;
     n_end_arrival.fill(0);
     n_detected.fill(0);
     pe_saturated.fill(0.0);

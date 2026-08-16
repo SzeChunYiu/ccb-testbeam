@@ -234,6 +234,23 @@ if(CCB_PYTHON3)
     PASS_REGULAR_EXPRESSION "CLADDING_DISTINCTION_PASS")
 endif()
 
+# 1088) WLS fluorescence multiplicity known-answer (issue #1088). Runs the sim
+#       in three multiplicity modes on the same seed and asserts the
+#       n_wls_generated / n_wls_absorbed ratio equals the mode mean (1, mu, q).
+#       Reads the events ntuple via uproot; exits 77 (SKIP) when uproot absent.
+if(CCB_PYTHON3)
+  add_test(
+    NAME ccb_stave_wls_multiplicity
+    COMMAND ${CCB_PYTHON3}
+            "${PROJECT_SOURCE_DIR}/tests/test_wls_multiplicity.py"
+            --exe "$<TARGET_FILE:ccb_stave_sim>"
+            --optical-dir "${CMAKE_BINARY_DIR}/optical")
+  set_tests_properties(ccb_stave_wls_multiplicity PROPERTIES
+    TIMEOUT 3600
+    SKIP_RETURN_CODE 77
+    FAIL_REGULAR_EXPRESSION "WLS_MULTIPLICITY_FAIL")
+endif()
+
 # 1089) Production-cut regression (issue #1089). Proves --production-cut is
 #    wired through the CLI, the RUN_CONFIG line, and the .meta.json sidecar, and
 #    that it changes the explicit secondary population enough to move the

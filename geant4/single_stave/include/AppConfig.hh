@@ -119,10 +119,21 @@ struct AppConfig {
   // air_massless_placeholder | tio2_paint_hypothesis (#1005)
   std::string coating_material = "air_massless_placeholder";
   std::string coating_material_status = "BLOCKED_UNVERIFIED_HARDWARE";
-  // WLS fluorescence multiplicity (#1088)
+  // WLS fluorescence multiplicity (#1088). Three mutually exclusive modes:
+  //  geant4_default_one_secondary: WLSMEANNUMBERPHOTONS property ABSENT ->
+  //    G4OpWLS re-emits exactly one secondary per absorption.
+  //  geant4_poisson_mean: property set -> G4OpWLS samples Poisson(mu)
+  //    secondaries per absorption (Geant4 11.2.2 samples Poisson whenever the
+  //    property exists, even at mu=1: P(0)=0.368, P(>=2)=0.264).
+  //  bernoulli_thinned: property absent; StackingAction kills each OpWLS
+  //    re-emission with probability (1-q) -> Bernoulli(q) effective yield.
   double wls_mean_number_photons = 1.0;
   std::string wls_fluorescence_model = "geant4_default_one_secondary";
   std::string wls_fluorescence_status = "ASSUMPTION_UNIT_YIELD";
+  // Bernoulli re-emission probability q for bernoulli_thinned. Y-11(K27)
+  // quantum yield 0.70: Pla-Dalmau, Foster, Zhang, NIM A361 (1995) 192-196;
+  // Bernoulli implementation precedent: Elpers et al., arXiv:1911.03790 sec. 4.
+  double wls_fluorescence_yield = 0.70;
   // Direct Y-11 charged-particle light (#1035); 0 keeps current omission.
   double y11_direct_scint_yield_per_MeV = 0.0;
   std::string y11_direct_scint_status = "OMISSION_UNKNOWN_EXTERNAL";

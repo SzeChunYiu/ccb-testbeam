@@ -65,9 +65,11 @@ DetectorConstruction::DetectorConstruction(const AppConfig& cfg) : cfg_(cfg) {
   physics_hash_ = Sha256::hex(ps.str());
 
   std::ostringstream os;
-  os << "schema=optical_v1"
+  os << "schema=optical_v2"
      << ";optical_interface_model=" << cfg_.optical_interface_model
+     << ";wls_fluorescence_model=" << cfg_.wls_fluorescence_model
      << ";wls_mean_number_photons=" << CanonFloat(cfg_.wls_mean_number_photons)
+     << ";wls_fluorescence_yield=" << CanonFloat(cfg_.wls_fluorescence_yield)
      << ";y11_direct_scint_yield_per_MeV="
      << CanonFloat(cfg_.y11_direct_scint_yield_per_MeV)
      << ";tio2_finish=" << cfg_.tio2_finish
@@ -188,9 +190,19 @@ G4Material* DetectorConstruction::BuildFibreCore() {
   FillFromCurve(mpt, "ABSLENGTH", tables.Get("y11_bulk_attenuation"),
                 cfg_.y11_bulk_attenuation_scale, CLHEP::cm);
   mpt->AddConstProperty("WLSTIMECONSTANT", cfg_.wls_time_constant_ns * ns);
-  // Explicit fluorescence multiplicity contract (#1088). Geant4 samples Poisson(mu)
-  // when WLSMEANNUMBERPHOTONS is set; mu=1 documents the historic unit-yield assumption.
-  mpt->AddConstProperty("WLSMEANNUMBERPHOTONS", cfg_.wls_mean_number_photons);
+  // WLS fluorescence multiplicity contract (#1088):
+  //  * geant4_default_one_secondary: property ABSENT -> G4OpWLS re-emits
+  //    exactly one secondary per absorption (true Geant4 default).
+  //  * geant4_poisson_mean: property set -> G4OpWLS samples Poisson(mu)
+  //    secondaries per absorption (Geant4 11.2.2 samples Poisson whenever the
+  //    property exists, even at mu=1: P(0)=0.368, P(>=2)=0.264).
+  //  * bernoulli_thinned: property absent; StackingAction kills each OpWLS
+  //    re-emission with probability (1-q) -> Bernoulli(q) effective yield
+  //    (Y-11/K27 quantum yield q=0.70, Pla-Dalmau et al., NIM A361 (1995)
+  //    192-196; Bernoulli precedent Elpers et al., arXiv:1911.03790 sec. 4).
+  if (cfg_.wls_fluorescence_model == "geant4_poisson_mean") {
+    mpt->AddConstProperty("WLSMEANNUMBERPHOTONS", cfg_.wls_mean_number_photons);
+  }
   // Optional direct charged-particle scintillation in the fibre core (#1035).
   // Default 0 keeps the historic WLS-only omission; nonzero is a named hypothesis.
   if (cfg_.y11_direct_scint_yield_per_MeV > 0.0) {

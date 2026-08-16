@@ -1,0 +1,21 @@
+claim_helper_command: tn-ticket claim testbeam-laptop-1 --project testbeam
+claim_helper_output:
+null
+# null
+
+null
+manual_claim_issue: 2454
+manual_claim_command: gh issue edit 2454 --add-label factory:claimed --add-label worker:testbeam-laptop-1 --remove-label factory:open
+manual_claim_evidence: issue #2454 labels include factory:claimed, project:testbeam, worker:testbeam-laptop-1
+
+# S51a: Waveform shape-time identifiability atlas with template and NN bakeoff
+
+Academic-grade study: build a pulse shape and timing identifiability atlas across stave, run family, amplitude, peak phase, pedestal state, and mild pile-up strata.
+
+Traditional method: aligned median-template fitting with CFD/optimal-filter timing and explicit time-walk terms.
+
+ML/NN comparison: ridge regression on hand pulse-shape features, gradient-boosted trees on waveform summaries, MLP on normalized windows, 1D-CNN on raw samples, and a compact waveform transformer when support permits.
+
+Metrics: timing residual RMS/core width, bias vs amplitude and pedestal, q_template/shape reconstruction error, calibration slope, and failure/abstention rate. Report run-block and source-run bootstrap 95% CIs plus method-minus-template deltas.
+
+Pulse-understanding target: separate genuine pulse-shape variation from timing pickoff, pedestal drift, and unresolved pile-up without letting ML exploit run or amplitude leakage.

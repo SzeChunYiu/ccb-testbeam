@@ -1,0 +1,38 @@
+{
+  "ticket_id": "2437",
+  "study_id": "S47c",
+  "worker": "testbeam-laptop-3",
+  "title": "pedestal-memory transfer map for energy timing and PID",
+  "claimed_ticket_text": "claim_helper_command: tn-ticket claim testbeam-laptop-3 --project testbeam\nclaim_helper_return_code: 0\nclaim_helper_stderr: null\nclaim_helper_stdout: # null\\n\\nnull\nmanual_claim_issue: 2437\nmanual_claim_command: gh issue edit 2437 --add-label factory:claimed --add-label worker:testbeam-laptop-3 --remove-label factory:open\nmanual_claim_evidence: issue #2437 labels include factory:claimed, project:testbeam, worker:testbeam-laptop-3\n\n# S47c: Pedestal-memory transfer map for energy timing and PID\n\nAcademic-grade study: map pedestal drift and baseline memory into pulse-shape descriptors, timing residuals, pile-up tagging, saturation recovery, energy scale, and PID stability across run conditions. Compare traditional rolling-pedestal subtraction/AR(1) baseline models/GLS calibration with ridge, gradient-boosted trees, MLP, 1D-CNN, and masked-waveform transformer variants where apt. Provide bootstrap confidence intervals for transfer error, bias closure, resolution, and PID operating-point shifts.",
+  "output_dir": "reports/2437__s47c_pedestal_memory_transfer_map",
+  "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+  "samples_per_channel": 18,
+  "baseline_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "duplicate_readout_channels": {"B2": 1, "B4": 3, "B6": 5, "B8": 7},
+  "expected_selected_pulses": 640737,
+  "expected_group_counts": {
+    "sample_i_calib": 248745,
+    "sample_i_analysis": 252266,
+    "sample_ii_calib": 14630,
+    "sample_ii_analysis": 125096
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "heldout_runs": [42, 50, 57, 58, 60, 62, 64, 65],
+  "max_per_run_stave": 170,
+  "bootstrap_replicates": 400,
+  "random_seed": 47243003,
+  "nn": {
+    "epochs": 6,
+    "transformer_epochs": 5,
+    "batch_size": 1024,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001
+  }
+}

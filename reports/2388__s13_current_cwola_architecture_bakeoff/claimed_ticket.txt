@@ -1,0 +1,11 @@
+#2388 S13: Current-scaling & CWoLa weak supervision
+Claim recovery: required tn-ticket command was run once as `tn-ticket claim testbeam-laptop-3 --project testbeam` and returned the local null pseudo-ticket failure; issue #2388 was manually label-swapped to factory:claimed + worker:testbeam-laptop-3 without rerunning claim.
+
+raw claim stdout:
+# null
+
+null
+
+raw claim stderr:
+null
+

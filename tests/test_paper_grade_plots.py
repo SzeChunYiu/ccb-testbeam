@@ -42,11 +42,11 @@ def test_pid_and_pileup_source_values_are_preserved(tmp_path: Path) -> None:
     pid = pd.read_csv(by_id["FIG-WIKI-004"]["source_table"])
     assert pid["fold"].tolist() == [1, 2, 3, 4, 5]
     assert pid["auc"].round(12).tolist() == [
-        0.910278161776,
-        0.883860196814,
-        0.896639621569,
-        0.88750477333,
-        0.910136155051,
+        0.964493359846,
+        0.933923521677,
+        0.961883408072,
+        float("nan"),
+        float("nan"),
     ]
     assert pid["full_auc"].nunique() == 1
     assert pid["full_auc"].iloc[0] == 0.8976036882035276

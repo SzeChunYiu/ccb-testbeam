@@ -1,0 +1,26 @@
+{
+  "ticket_id": "2395",
+  "git_commit": "e911cfc59b772e150beb5dd2c080b020066a3bd4",
+  "command": "/home/billy/.cache/uv/builds-v0/.tmpjJAjQI/bin/python scripts/s32b_1783884181_2140_09a136f2_analytic_pileup_saturation_energy_closure_bakeoff.py",
+  "runtime_seconds": 145.3190655708313,
+  "python": "3.11.14 (main, Feb  3 2026, 22:51:56) [Clang 21.1.4 ]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+  "outputs_sha256": {
+    "REPORT.md": "6e87da81a88f888d293acb3c6149c5adbcf38da01ad2faa7c28ec4b2a0a62ac4",
+    "claimed_ticket.txt": "97c302ea560d537a53d8e65c3edc9a79db188095099ef283fa7d67500a2d6b95",
+    "event_predictions.csv": "be10cdaa8c60a4bf2ab0c16217799de828b657d91e8bd3927b6db629d20ca47c",
+    "input_sha256.csv": "cc17da0dcd3e7e732b81a17f3c35833f026fdec912538d28d7d71b9af71a46f6",
+    "method_metrics.csv": "3b5ad65e3747cb6327c5968285b81dcf797e5324ca52fc19a027328ca2c4233c",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "bbecfe93c4b44347752db3701d8326b687d7de57c59eeabe0c346108bbbdf1ae",
+    "run_heldout_metrics.csv": "8143cdcd40b422332a11c51634dffa1b37488e644434181f3b208e4efc470f62",
+    "strata_metrics.csv": "37180e00dc8099c8c4d163e044461e27ae20f1aa8d35ea6ba5bb4ced14f0f33f",
+    "template_summary.csv": "70811c144799226d495253dcf99ec44c6cea6b9a7de91249cd5ea72526581b13",
+    "winner_ranked_metrics.csv": "7b3e3f44900bc797ef0aa0969029f5ab25dc4d9930116d8471425a8791a0a688"
+  },
+  "issue_number": 2395,
+  "study_id": "P07-2395",
+  "worker": "testbeam-laptop-3",
+  "config": "configs/p07_2395_high_amplitude_b2_saturation_recovery_bakeoff.json",
+  "wrapper_runtime_seconds": 145.99834823608398
+}

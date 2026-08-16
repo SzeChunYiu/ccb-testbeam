@@ -1,0 +1,4 @@
+2395
+# P07: Saturation recovery for high-amplitude B2
+
+Reconstruct true amplitude from unsaturated rising edge (30-40% of B2 >7000 ADC); template/edge extrapolation vs ML; test on artificially clipped clean pulses. See studies/STUDIES.md for full spec. RULES: reproduce-first where a number exists; BOTH traditional AND ML with fair benchmark; atomic; pre-register metric; provenance manifest; data READ-ONLY at ./data; write only your own reports/<id> dir; use STUDY_TEMPLATE.md. Needs S00 (done).

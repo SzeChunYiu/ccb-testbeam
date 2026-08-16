@@ -1,0 +1,25 @@
+{
+  "ticket_id": "2395",
+  "study_id": "P07-2395",
+  "worker": "testbeam-laptop-3",
+  "title": "P07 high-amplitude B2 saturation recovery bakeoff",
+  "output_dir": "reports/2395__p07_high_amplitude_b2_saturation_recovery_bakeoff",
+  "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+  "random_seed": 2026081603,
+  "max_clean_pulses_per_run_stave": 96,
+  "injected_per_train_run": 58,
+  "clean_per_train_run": 58,
+  "injected_per_heldout_run": 78,
+  "clean_per_heldout_run": 78,
+  "benchmark_runs": {
+    "train": [50, 51, 52, 53, 54, 55, 56, 57],
+    "heldout": [58, 60, 62, 64, 65]
+  },
+  "ml": {
+    "bootstrap_samples": 400,
+    "cnn_epochs": 90,
+    "cnn_channels": 12,
+    "max_iter": 260
+  },
+  "adc_clip": 11800.0
+}

@@ -1,0 +1,5 @@
+Academic-grade study: test whether slow pedestal memory and baseline drift confound energy calibration and PID boundaries in waveform-level analyses.
+
+Compare a traditional pedestal-subtracted charge integration plus deltaE-E/PID calibration baseline against ridge, gradient-boosted trees, MLP, 1D-CNN, and a multichannel transformer when auxiliary channels are available. Report bootstrap CIs for PID AUC or balanced accuracy, energy residuals, pedestal-state transfer, and pile-up/saturation interaction terms.
+
+Required outputs: run-held-out and pedestal-state-held-out splits, negative-control pedestal shuffles, calibration curves, model attribution or ablation tables, and a concise physics interpretation of which pulse-shape and timing features survive leakage controls.

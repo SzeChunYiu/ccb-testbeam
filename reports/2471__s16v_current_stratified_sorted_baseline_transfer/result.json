@@ -1,0 +1,238 @@
+{
+  "bootstrap": {
+    "paired": true,
+    "replicates": 300,
+    "unit": "held-out source run"
+  },
+  "current_families": {
+    "sample_i": {
+      "high_20nA": [
+        44,
+        45,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57
+      ],
+      "low_2nA": [
+        46,
+        47
+      ]
+    },
+    "sample_ii": {
+      "high_all_three_rate": [
+        60,
+        61,
+        62
+      ],
+      "low_all_three_rate_edge": [
+        58,
+        65
+      ],
+      "mid_all_three_rate": [
+        59,
+        63
+      ]
+    }
+  },
+  "git_commit": "30ffd0c257768d8a1e64f40e3306c256af5b3768",
+  "input_root_files": 66,
+  "methods": [
+    "gradient_boosted_trees",
+    "mlp",
+    "nuisance_gated_pair_cnn",
+    "one_dimensional_cnn",
+    "ridge",
+    "traditional_binned_median",
+    "uncorrected"
+  ],
+  "n_pairs": 21528,
+  "next_tickets": [],
+  "outputs": [
+    "REPORT.md",
+    "claimed_ticket.txt",
+    "claimed_ticket_body.txt",
+    "result.json",
+    "reproduction_counts.csv",
+    "input_sha256.csv",
+    "pair_rows.csv.gz",
+    "method_predictions.csv.gz",
+    "method_metrics.csv",
+    "current_stratified_method_metrics.csv",
+    "per_run_metrics.csv",
+    "proxy_coefficient_sign_transfer.csv",
+    "pooled_method_benchmark.png",
+    "current_family_winners.png",
+    "proxy_coefficient_sign_transfer.png"
+  ],
+  "primary_metric": "sigma68_ns",
+  "proxy_coefficient_sign_transfer": [
+    {
+      "coef_ci_high": 0.016908634085134388,
+      "coef_ci_low": -1.9758210407837915,
+      "current_family": "high_20nA",
+      "n_pairs": 3383,
+      "n_runs": 12,
+      "positive_bootstrap_fraction": 0.02666666666666667,
+      "sample_period": "sample_i",
+      "sign": "negative",
+      "standardized_proxy_coef_ns": -1.038435781865005
+    },
+    {
+      "coef_ci_high": 0.40275993084975364,
+      "coef_ci_low": -2.7102282026500197,
+      "current_family": "high_all_three_rate",
+      "n_pairs": 11778,
+      "n_runs": 3,
+      "positive_bootstrap_fraction": 0.056666666666666664,
+      "sample_period": "sample_ii",
+      "sign": "negative",
+      "standardized_proxy_coef_ns": -1.0499249609443515
+    },
+    {
+      "coef_ci_high": 0.42542375277870154,
+      "coef_ci_low": -0.28936846566446417,
+      "current_family": "low_all_three_rate_edge",
+      "n_pairs": 751,
+      "n_runs": 2,
+      "positive_bootstrap_fraction": 0.76,
+      "sample_period": "sample_ii",
+      "sign": "positive",
+      "standardized_proxy_coef_ns": 0.42542375277870176
+    },
+    {
+      "coef_ci_high": 1.2267266740134484,
+      "coef_ci_low": -2.751485468152133,
+      "current_family": "mid_all_three_rate",
+      "n_pairs": 5569,
+      "n_runs": 2,
+      "positive_bootstrap_fraction": 0.22,
+      "sample_period": "sample_ii",
+      "sign": "negative",
+      "standardized_proxy_coef_ns": -0.558240419358712
+    }
+  ],
+  "raw_reproduction": {
+    "all_pass": true,
+    "rows": [
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "total selected B-stave pulses",
+        "report_value": 640737,
+        "reproduced": 640737,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_i_analysis B2",
+        "report_value": 241422,
+        "reproduced": 241422,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_i_analysis B4",
+        "report_value": 6451,
+        "reproduced": 6451,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_i_analysis B6",
+        "report_value": 3094,
+        "reproduced": 3094,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_i_analysis B8",
+        "report_value": 1299,
+        "reproduced": 1299,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_i_analysis selected_pulses",
+        "report_value": 252266,
+        "reproduced": 252266,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_ii_analysis B2",
+        "report_value": 88213,
+        "reproduced": 88213,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_ii_analysis B4",
+        "report_value": 21229,
+        "reproduced": 21229,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_ii_analysis B6",
+        "report_value": 11148,
+        "reproduced": 11148,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_ii_analysis B8",
+        "report_value": 4506,
+        "reproduced": 4506,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_ii_analysis selected_pulses",
+        "report_value": 125096,
+        "reproduced": 125096,
+        "tolerance": 0
+      }
+    ]
+  },
+  "runtime_seconds": 110.036,
+  "sign_transfer_verdict": "same_point_sign_but_ci_ambiguous",
+  "split": "leave-one-run-out within Sample-I and Sample-II analysis periods",
+  "status": "complete",
+  "study": "S16v",
+  "ticket": "2471",
+  "title": "current-stratified sorted-baseline timing-tail transfer",
+  "winner": "mlp",
+  "winner_metrics": {
+    "bias_ns": 0.09627254559620209,
+    "bias_ns_ci_high": 0.2710251207922916,
+    "bias_ns_ci_low": -0.0853082134891168,
+    "method": "mlp",
+    "n_pairs": 21528,
+    "rms_ns": 3.754006760811978,
+    "sigma68_ns": 1.1566722709092714,
+    "sigma68_ns_ci_high": 1.3140606792637994,
+    "sigma68_ns_ci_low": 1.0842857881443781,
+    "tail_abs_gt_0p5_ns": 0.6321534745447789,
+    "tail_abs_gt_0p5_ns_ci_high": 0.6748117984939207,
+    "tail_abs_gt_0p5_ns_ci_low": 0.6103133935682838,
+    "tail_abs_gt_1p0_ns": 0.380248978075065
+  },
+  "worker": "testbeam-laptop-3"
+}

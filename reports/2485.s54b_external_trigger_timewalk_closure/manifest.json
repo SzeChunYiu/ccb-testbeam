@@ -1,0 +1,33 @@
+{
+  "ticket_id": "2485",
+  "study": "S54b",
+  "worker": "testbeam-laptop-2",
+  "command": "scripts/s54b_2485_external_trigger_timewalk_closure.py",
+  "script": "scripts/s54b_2485_external_trigger_timewalk_closure.py",
+  "config": "configs/s54b_2485_external_trigger_timewalk_closure.json",
+  "git_commit": "5dc9c9ec095c487a0716b074b96ebc998bd47d2b",
+  "python": "3.11.14",
+  "packages": {
+    "uproot": "5.6.9",
+    "numpy": "2.4.6",
+    "pandas": "3.0.5",
+    "torch": "2.5.1+cpu"
+  },
+  "raw_root_dir": "data/root/root",
+  "input_file_count": 33,
+  "reproduction_passed": true,
+  "outputs": {
+    "REPORT.md": "8b0ed771e3dcf70a8023120189e7b356805a6f4035fbb635a69bf258418de68a",
+    "heldout_trigger_residuals.csv.gz": "3a1195017abf452f61aef564d96956832b1817df74a03620e40c4187783d35d1",
+    "input_sha256.csv": "cd3f048457d7f847fe9caec1fcb36352b90c9e8595300b7193a3575afcfec2ce",
+    "leakage_checks.csv": "ec57d5f9bfb338227966c9ebd87ff13d95ee792010dded7d3b6a17dfc7a06605",
+    "method_summary.csv": "669f73960f142575d90f8e8eb1eeec161895bf89c76a59947b22ad4fa1625756",
+    "per_run_method_summary.csv": "b31a6e52dcebdb5202717d45027a2da468d5650a4a7f7c766f96b228bf2d0ab4",
+    "reproduction_counts_by_run.csv": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+    "reproduction_match_table.csv": "3af64ec7248b80bb89cce26ff877bd5e84da2b3d6ac58d5723eb9cb5f424ae8d",
+    "result.json": "6c6421d4686ca05d9d3fc774da0f304faba26edd03db5acccb9ca421cfe23d00",
+    "stratified_errors.csv": "0913fd08c7668cc2b2f440d3e0cab978022e374ae5bd2ae6854d98e088c93ba3",
+    "training_summary.csv": "1775abbebeb8ea7b46093d4eebefd5964724a7439246ebc0fc8e795192a43f5b",
+    "trigger_branch_audit.csv": "98fae90598203ee477f212562ddef2ae1a5210331cd2009272cae86dd2b4dfb0"
+  }
+}

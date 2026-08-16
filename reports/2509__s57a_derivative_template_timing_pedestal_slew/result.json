@@ -1,0 +1,89 @@
+{
+  "ticket_id": "2509",
+  "issue_number": 2509,
+  "issue_url": "https://github.com/SzeChunYiu/factory-tickets/issues/2509",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-3",
+  "title": "NEW S57a derivative-template timing vs neural shape encoders under pedestal slew",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-3 --project testbeam",
+  "claim_note": "single permitted helper invocation returned null; issue #2509 label-swapped manually without rerunning claim",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "bootstrap": "paired held-out run-block percentile 95% CI",
+    "bootstrap_replicates": 800,
+    "winner_score": "time_sigma68_ns + 0.35*abs(time_bias_ns) + 4*late_tail_rate + 1.5*abs(calibration_slope-1) + 3*abs(pedestal_slew_slope) + 3*pileup_miss_rate + 1.5*false_split_rate"
+  },
+  "required_method_coverage": {
+    "traditional": "deltaE_over_E_likelihood_template",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "compact_transformer": "joint_sequence_transformer",
+    "new_architecture": "derivative_slew_residual_fusion_new"
+  },
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "score": 10.257026728365016,
+    "selection_rule": "minimum S57a timing/pedestal-slew composite score",
+    "time_bias_ns": -0.7346297374868804,
+    "time_bias_ns_ci": [
+      -1.019646963383396,
+      -0.20436359985383845
+    ],
+    "time_sigma68_ns": 7.942589696454695,
+    "time_sigma68_ns_ci": [
+      7.313561569577061,
+      9.13409263435604
+    ],
+    "late_tail_rate_abs_gt_15ns": 0.11873840445269017,
+    "calibration_slope": 0.8072499298518317,
+    "pedestal_slew_slope_ns_per_adc": 0.002291421464421095,
+    "pileup_miss_rate": 0.30606060606060603,
+    "false_split_rate": 0.24545454545454545
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "method_metrics": "method_metrics.csv",
+    "method_deltas_vs_traditional": "method_deltas_vs_traditional.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "leakage_checks": "leakage_checks.csv",
+    "timing_pulse_errors": "timing_pulse_errors.csv.gz",
+    "event_predictions": "event_predictions.csv.gz",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "input_sha256": "input_sha256.csv"
+  },
+  "novel_tickets_appended": [],
+  "done_command": "tn-ticket done 2509",
+  "git_commit": "49e6d8ec20bba57f7218a2be8e361486515c170f",
+  "python": "3.11.14",
+  "elapsed_seconds": 112.165842294693
+}

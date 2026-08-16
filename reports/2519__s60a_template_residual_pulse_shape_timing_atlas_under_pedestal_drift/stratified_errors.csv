@@ -1,0 +1,15 @@
+method,pid_proxy,pedestal_bin,pileup_bin,saturation_bin,n_pair_residuals,timing_sigma68_ns,ci_low,ci_high
+trapezoid_template,low_dE_proxy,0,mild_pileup,unsaturated_proxy,90,2.391440027779513,2.0232176780700684,2.5847132956183865
+trapezoid_template,mid_dE_proxy,0,mild_pileup,unsaturated_proxy,183,2.724067984794804,2.023217678070065,2.9658498866935776
+ridge,low_dE_proxy,0,mild_pileup,unsaturated_proxy,90,1.6105699186038265,1.1259708135522466,2.0633077777543747
+ridge,mid_dE_proxy,0,mild_pileup,unsaturated_proxy,183,1.5798556719485095,1.3055070657491152,1.7017929119281066
+gradient_boosted_trees,low_dE_proxy,0,mild_pileup,unsaturated_proxy,90,1.0706612498377117,1.0008360976390143,1.1706654511936174
+gradient_boosted_trees,mid_dE_proxy,0,mild_pileup,unsaturated_proxy,183,1.4330463639812636,1.1268317237519911,1.5444429836772573
+mlp,low_dE_proxy,0,mild_pileup,unsaturated_proxy,90,1.3962745574103805,1.043907206663178,1.5164406266011383
+mlp,mid_dE_proxy,0,mild_pileup,unsaturated_proxy,183,1.5134524928015152,1.278285917097513,1.6411189654552132
+cnn_1d,low_dE_proxy,0,mild_pileup,unsaturated_proxy,90,1.12703959941864,0.7930310873985285,1.2681149212407152
+cnn_1d,mid_dE_proxy,0,mild_pileup,unsaturated_proxy,183,1.7424098063060243,1.3748534231185943,1.8015780788623
+compact_waveform_transformer,low_dE_proxy,0,mild_pileup,unsaturated_proxy,90,1.2355127265167232,0.9965484647750849,1.3155101776123046
+compact_waveform_transformer,mid_dE_proxy,0,mild_pileup,unsaturated_proxy,183,1.7632900758561414,1.4236591793994717,1.8102264579676506
+phase_conditioned_residual_fusion,low_dE_proxy,0,mild_pileup,unsaturated_proxy,90,1.05907901118664,0.9013622727996169,1.315144148691143
+phase_conditioned_residual_fusion,mid_dE_proxy,0,mild_pileup,unsaturated_proxy,183,1.4497261556987784,1.1825348332210996,1.619832184781913

@@ -5,7 +5,7 @@ This ticket uses the existing S32b saturation/energy-closure benchmark
 implementation because it already performs the required raw ROOT reproduction,
 run-held-out split, bootstrap confidence intervals, and method panel including
 traditional, ridge, gradient-boosted trees, MLP, 1D-CNN, and a new architecture.
-The wrapper isolates ticket metadata and output paths for testbeam-laptop-4.
+The wrapper isolates ticket metadata and output paths for testbeam-laptop-2.
 """
 
 from __future__ import annotations
@@ -20,10 +20,11 @@ import s32b_1783884181_2140_09a136f2_analytic_pileup_saturation_energy_closure_b
 
 ROOT = Path(__file__).resolve().parents[1]
 TICKET = "TICKET-0130"
-WORKER = "testbeam-laptop-4"
+WORKER = "testbeam-laptop-2"
 SLUG = "raw_root_count_reconstruction_bakeoff"
 TITLE = "TICKET-0130 raw-ROOT count reconstruction bakeoff"
 OUT = ROOT / "reports" / f"{TICKET}__{SLUG}"
+RAW_ROOT_DIR = ROOT / "data" / "root" / "root"
 
 
 def sha256_file(path: Path) -> str:
@@ -80,6 +81,7 @@ def main() -> None:
     s32b.SLUG = SLUG
     s32b.TITLE = TITLE
     s32b.OUT = OUT
+    s32b.RAW_ROOT_DIR = RAW_ROOT_DIR
     s32b.main()
     postprocess_ticket_metadata()
 

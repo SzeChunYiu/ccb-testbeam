@@ -1,0 +1,109 @@
+{
+  "ticket_id": "2474",
+  "issue_number": 2474,
+  "issue_url": "https://github.com/SzeChunYiu/factory-tickets/issues/2474",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-3",
+  "status": "complete",
+  "winner": "saturation_residual_fusion_new",
+  "winner_metrics": {
+    "name": "saturation_residual_fusion_new",
+    "criterion": "minimum held-out composite saturation-energy closure score with run-block bootstrap CIs reported",
+    "winner_score": 0.15399692015643066,
+    "energy_fractional_bias": -0.005489553200678442,
+    "energy_fractional_sigma68": 0.06687760559944919,
+    "energy_fractional_sigma68_ci95": [
+      0.06049694508622296,
+      0.07066574077417023
+    ],
+    "time_sigma68_ns": 8.368060104990338,
+    "time_sigma68_ci95": [
+      7.756472546236974,
+      8.74739059160854
+    ],
+    "pileup_miss_rate": 0.34102564102564104,
+    "false_split_rate": 0.1358974358974359,
+    "detection_auc": 0.8397830374753452,
+    "detection_auc_ci95": [
+      0.8189013806706115,
+      0.8610831689677844
+    ],
+    "detection_ap": 0.8629389145095496,
+    "detection_ap_ci95": [
+      0.8455545527065589,
+      0.8815130006334493
+    ],
+    "energy_fractional_bias_ci95": [
+      -0.0223854594013083,
+      0.0112927914295234
+    ],
+    "time_bias_ns_ci95": [
+      -1.1668145417702114,
+      0.5237836691952236
+    ],
+    "pileup_recovery_failure_rate": 0.341025641025641,
+    "pileup_recovery_failure_rate_ci95": [
+      0.2923076923076923,
+      0.3923717948717948
+    ]
+  },
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "split": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "adc_clip": 11800.0,
+    "bootstrap": "held-out run-block percentile 95% CI",
+    "bootstrap_replicates": 400,
+    "negative_control": "clipped clean single-pulse controls with matched source-run distribution",
+    "winner_score": "energy_fractional_sigma68 + 0.20*abs(energy_fractional_bias) + 0.008*time_sigma68_ns + 0.04*pileup_miss_rate + 0.04*false_split_rate"
+  },
+  "required_method_coverage": {
+    "traditional": "analytic_clipped_template_sideband_traditional",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "transformer_sequence_model": "tiny_sequence_transformer",
+    "new_architecture": "saturation_residual_fusion_new"
+  },
+  "artifacts": {
+    "report": "reports/2474__s54b_parametric_pileup_deconvolution_neural_saturation_energy_recovery/REPORT.md",
+    "result": "reports/2474__s54b_parametric_pileup_deconvolution_neural_saturation_energy_recovery/result.json",
+    "method_metrics": "reports/2474__s54b_parametric_pileup_deconvolution_neural_saturation_energy_recovery/method_metrics.csv",
+    "run_heldout_metrics": "reports/2474__s54b_parametric_pileup_deconvolution_neural_saturation_energy_recovery/run_heldout_metrics.csv",
+    "strata_metrics": "reports/2474__s54b_parametric_pileup_deconvolution_neural_saturation_energy_recovery/strata_metrics.csv"
+  },
+  "queue_provenance": {
+    "claimed_once": true,
+    "claim_command_run_once": "tn-ticket claim testbeam-laptop-3 --project testbeam",
+    "claim_command_output": "null / # null / null",
+    "manual_claim_recovery": "gh issue edit 2474 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-3 --remove-label factory:open",
+    "done_command": "tn-ticket done 2474",
+    "novel_tickets_appended": []
+  },
+  "done_command": "tn-ticket done 2474",
+  "novel_tickets_appended": []
+}

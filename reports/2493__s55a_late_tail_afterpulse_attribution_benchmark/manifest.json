@@ -1,0 +1,119 @@
+{
+  "ticket_id": "2493",
+  "generated_at_unix": 1786895661.9452024,
+  "artifacts": [
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/reports/2493__s55a_late_tail_afterpulse_attribution_benchmark/REPORT.md",
+      "sha256": "467fc215527ca2498b668d89a2ca330d8a42e0015cfa0c413b938d0b995d0a29",
+      "bytes": 8493
+    },
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/reports/2493__s55a_late_tail_afterpulse_attribution_benchmark/exponential_tail_diagnostics.csv",
+      "sha256": "bfcb5b4ad7aa5025ee66c836eaafe94895c5e1fba14feb413bc6eb27779d68fe",
+      "bytes": 440
+    },
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/reports/2493__s55a_late_tail_afterpulse_attribution_benchmark/heldout_predictions.csv.gz",
+      "sha256": "f725a234b772a296e0351dbc043f5fa332e7549199b1f7ad7bbb88b4abf1b1b3",
+      "bytes": 8431666
+    },
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/reports/2493__s55a_late_tail_afterpulse_attribution_benchmark/label_counts.csv",
+      "sha256": "f5862fd6303d7a1f03f5f28f9fe7a8c33a02c6bb75125af6e65ce8b6b41555d3",
+      "bytes": 151
+    },
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/reports/2493__s55a_late_tail_afterpulse_attribution_benchmark/late_tail_afterpulse_labels.csv",
+      "sha256": "7c855b2f1c0665a47fb71733a66f05bd32bd1c343aa53d42da066a4909d69f28",
+      "bytes": 7410649
+    },
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/reports/2493__s55a_late_tail_afterpulse_attribution_benchmark/method_summary_all.csv",
+      "sha256": "174a53deb4a64186080e07b81b4cc6cd4ec5c6989c5529fa586e2b93a290f936",
+      "bytes": 9275
+    },
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/reports/2493__s55a_late_tail_afterpulse_attribution_benchmark/primary_auc_ci.png",
+      "sha256": "30423b684cb5ba9ccc444a4de3abe42267fc1ceaa6147ac4ded402209582d5e3",
+      "bytes": 42468
+    },
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/reports/2493__s55a_late_tail_afterpulse_attribution_benchmark/primary_method_summary.csv",
+      "sha256": "c3fa23479917eeb1d0f2f438d7a3236d7ccb73a03752cff1f27110091d227850",
+      "bytes": 846
+    },
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/reports/2493__s55a_late_tail_afterpulse_attribution_benchmark/reproduction_counts_by_run.csv",
+      "sha256": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+      "bytes": 1896
+    },
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/reports/2493__s55a_late_tail_afterpulse_attribution_benchmark/reproduction_match_table.csv",
+      "sha256": "89ac7b77d6d795904d0bb951ab4966fe544a8a568b4124e54a5a8c95dfe5f432",
+      "bytes": 89
+    },
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/reports/2493__s55a_late_tail_afterpulse_attribution_benchmark/result.json",
+      "sha256": "794cb505ff5ef515f94879aca59d6792ae9e0404ee1c2f8838c2d2588e146bd2",
+      "bytes": 7834
+    },
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/reports/2493__s55a_late_tail_afterpulse_attribution_benchmark/run_heldout_metrics.csv",
+      "sha256": "1f6cc8bbfeba1a8a03435cfa0a0b8a067115c79b67f0fe6e2b2dbf5ad12f593f",
+      "bytes": 39267
+    },
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/reports/2493__s55a_late_tail_afterpulse_attribution_benchmark/systematic_bootstrap_cis.csv",
+      "sha256": "01b1634d74a811daad70583e93c12515dc1cda0e6d5b91022c20911b28914f07",
+      "bytes": 1049
+    },
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/reports/2493__s55a_late_tail_afterpulse_attribution_benchmark/tail_perturbation_negative_controls.csv",
+      "sha256": "49f7ac1cef8f4b5c37d36638454c765751a7f899f4d62a7791957da1dfeab75f",
+      "bytes": 343
+    },
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/reports/2493__s55a_late_tail_afterpulse_attribution_benchmark/time_shuffle_negative_controls.csv",
+      "sha256": "5f9052a44061305317af8be766d91794ffd73b0f24b14519e41f3acd66b74ba8",
+      "bytes": 773
+    },
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/reports/2493__s55a_late_tail_afterpulse_attribution_benchmark/traditional_feature_families.csv",
+      "sha256": "4742b2eed43305990befb1f3f7744df335902527852655bdcf7b632f18ff5bb7",
+      "bytes": 1690
+    },
+    {
+      "path": "/home/billy/.tb-workers/testbeam-laptop-4/reports/2493__s55a_late_tail_afterpulse_attribution_benchmark/traditional_method_summary.csv",
+      "sha256": "1a7e99b343af90850e08898db099906e59526b7e5409322e8b5be90545264f94",
+      "bytes": 8694
+    }
+  ],
+  "study_id": "S55a",
+  "worker": "testbeam-laptop-4",
+  "git_commit": "bcb7c94c53d027096c53fb0ef3d2c7a1f331b372",
+  "command": "/home/billy/.cache/uv/builds-v0/.tmpnAm9WJ/bin/python scripts/ticket_2493_s55a_late_tail_afterpulse_attribution.py",
+  "outputs_sha256": {
+    "REPORT.md": "285536051cfd59f6c7329812945f385d638ea3b2ed6c1822cf7ada1f9ff6c110",
+    "ablation_metrics.csv": "ab9dde34bb79eec004ac37a3089ceebaa9899063acbeccc2a4f8d1c8a95f8281",
+    "claimed_ticket.txt": "71646298a776ade1ceff89c09ac583a93eac5e4220db01953db0d96a95f789f4",
+    "exponential_tail_diagnostics.csv": "bfcb5b4ad7aa5025ee66c836eaafe94895c5e1fba14feb413bc6eb27779d68fe",
+    "heldout_predictions.csv.gz": "f725a234b772a296e0351dbc043f5fa332e7549199b1f7ad7bbb88b4abf1b1b3",
+    "heldout_predictions_with_strata.csv.gz": "842839b8f5238339a2dd1977b115223c03b8a8dab949c8a96ed9f9cc567993f5",
+    "label_counts.csv": "f5862fd6303d7a1f03f5f28f9fe7a8c33a02c6bb75125af6e65ce8b6b41555d3",
+    "late_tail_afterpulse_labels.csv": "7c855b2f1c0665a47fb71733a66f05bd32bd1c343aa53d42da066a4909d69f28",
+    "late_tail_afterpulse_labels_indexed.csv": "8fc36c16e963e7d30dfc7f02e629593b9719c5a45c144997d4dd70ac4b291ed1",
+    "method_summary_all.csv": "174a53deb4a64186080e07b81b4cc6cd4ec5c6989c5529fa586e2b93a290f936",
+    "primary_auc_ci.png": "30423b684cb5ba9ccc444a4de3abe42267fc1ceaa6147ac4ded402209582d5e3",
+    "primary_method_summary.csv": "c3fa23479917eeb1d0f2f438d7a3236d7ccb73a03752cff1f27110091d227850",
+    "reproduction_counts_by_run.csv": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+    "reproduction_match_table.csv": "89ac7b77d6d795904d0bb951ab4966fe544a8a568b4124e54a5a8c95dfe5f432",
+    "result.json": "0b11809f8cb695a4369db83183c0c79a4ebfe8c272a6400fcb1ddfcf240bc007",
+    "run_heldout_metrics.csv": "1f6cc8bbfeba1a8a03435cfa0a0b8a067115c79b67f0fe6e2b2dbf5ad12f593f",
+    "stratified_method_metrics.csv": "1c4e5507951cf71dc06c40bc747d5231b1f8796f126bd08f63785b81c3ac56b8",
+    "systematic_bootstrap_cis.csv": "01b1634d74a811daad70583e93c12515dc1cda0e6d5b91022c20911b28914f07",
+    "tail_perturbation_negative_controls.csv": "49f7ac1cef8f4b5c37d36638454c765751a7f899f4d62a7791957da1dfeab75f",
+    "time_shuffle_negative_controls.csv": "5f9052a44061305317af8be766d91794ffd73b0f24b14519e41f3acd66b74ba8",
+    "traditional_feature_families.csv": "4742b2eed43305990befb1f3f7744df335902527852655bdcf7b632f18ff5bb7",
+    "traditional_method_summary.csv": "1a7e99b343af90850e08898db099906e59526b7e5409322e8b5be90545264f94"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "ticket_id": "2502",
+  "issue_number": 2502,
+  "project": "testbeam",
+  "worker": "testbeam-laptop-2",
+  "title": "NEW s55b pile-up saturation energy recovery likelihood-vs-neural bakeoff",
+  "claim_command": "tn-ticket claim testbeam-laptop-2 --project testbeam",
+  "claim_command_output": "null / # null / null",
+  "manual_claim_recovery": "gh issue edit 2502 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-2 --remove-label factory:open",
+  "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+  "output_dir": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff",
+  "random_seed": 2026081602,
+  "next_tickets": []
+}

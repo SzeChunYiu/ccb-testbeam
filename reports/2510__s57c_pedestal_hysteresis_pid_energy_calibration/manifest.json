@@ -1,0 +1,24 @@
+{
+  "ticket_id": "2510",
+  "worker": "testbeam-laptop-3",
+  "script": "scripts/s57c_2510_pedestal_hysteresis_pid_energy_calibration.py",
+  "created_unix": 1786902287.5839741,
+  "source": "reports/1783809265.5764.0f2a2dda__s29a_digitized_g4_multitask_truth_benchmark",
+  "outputs_sha256": {
+    "REPORT.md": "0bd3deff597609d0b6f9067ba517885bb262d916bcccfd069309ec2d6d57740b",
+    "boundary_displacement.csv": "e5c2b1303b8942a1dbf17ec9ec474f89f773ef7d1b6b3e01f3d374438ccc448d",
+    "claimed_ticket.txt": "c01d0ace1e0547abd04b3eeedf29c6a91b50ba21acfdb89400bb3762ec3c4e43",
+    "claimed_ticket_body.txt": "379245d79827afe70c15b3a42c8d075e835a2727f0a187993f0306e3dfb5bf0a",
+    "input_sha256.csv": "999800f8e297b6945ca3a02754a43db6498ca7e171afd6b29c4d0814465bade8",
+    "method_metrics.csv": "ec707bba7978f235f5a72476bc8e34dd85b813a8b36c4411e775d9c8c556b06b",
+    "method_pair_deltas_vs_traditional.csv": "306652e7ded03822b0e8da564a4c4aee6abe2347b26c20d67cfbcfa914685e74",
+    "pedestal_hysteresis_sensitivity.csv": "76eca732020c505290d03b876cca20543dc81f7cc91351739efded3b55faa766",
+    "pid_confusion_by_stratum.csv": "56e48feb8c1d4d624e8d5383299dfe2ce29d8d3c6654d8e74eb6e333bd2965d2",
+    "reproduction_counts_by_run.csv": "6f5a2c5fbd8805fdd462204535903eae8479abf31059c5d933ab988b4343ac5b",
+    "reproduction_match_table.csv": "c8bfba74c8d39f9d9adb02559bcd6b2a433d75285e641530f69757974674a53c",
+    "result.json": "db5ab17e8abb0df23a336d9d707fcaa9537fa718e76792ef7392fc2e1351b081",
+    "run_heldout_metrics.csv": "b3561043b54b9ea9bf79866eb9b90d1aa24494a62edb3fb5b5e9963095dda060",
+    "shortcut_diagnostics.csv": "66776f4f8062208bc55ec5ca39bc2ac94cdbf6a766816b6271a5f9f894d00e56",
+    "source_strata_metrics.csv": "df037764aa06a26bd05a3b29a68ac8234ce81a947142463c6a927bd9ac93b37c"
+  }
+}

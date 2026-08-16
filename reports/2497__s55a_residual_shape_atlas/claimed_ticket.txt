@@ -1,0 +1,13 @@
+claim_helper_command: tn-ticket claim testbeam-laptop-3 --project testbeam
+claim_helper_output:
+null
+# null
+
+null
+manual_claim_issue: 2497
+manual_claim_command: gh issue edit 2497 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-3 --remove-label factory:open
+manual_claim_evidence: issue #2497 labels include factory:claimed, project:testbeam, worker:testbeam-laptop-3
+
+#2497 S55a residual-shape atlas: matched-template fits vs neural embeddings
+
+Academic-grade study of pulse-shape residuals after amplitude-normalized matched-template fits. Compare a traditional template fit plus PCA/residual moments against ridge, gradient-boosted trees, MLP, 1D-CNN, and a compact waveform transformer. Use run-held-out folds, blinded handscan/adjudicated labels where available, and bootstrap CIs for timing bias, shape-cluster stability, pile-up score separation, pedestal coupling, and energy/PID downstream deltas. Deliver a short report with calibration curves, ablations by pedestal state and saturation, and release criteria for whether residual shape encodes physical pulse classes rather than acquisition artifacts.

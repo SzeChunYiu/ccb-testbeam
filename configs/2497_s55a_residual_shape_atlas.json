@@ -1,0 +1,39 @@
+{
+  "ticket_id": "2497",
+  "study_id": "S55a",
+  "worker": "testbeam-laptop-3",
+  "title": "residual-shape atlas: matched-template fits vs neural embeddings",
+  "claimed_ticket_text": "claim_helper_command: tn-ticket claim testbeam-laptop-3 --project testbeam\nclaim_helper_output:\nnull\n# null\n\nnull\nmanual_claim_issue: 2497\nmanual_claim_command: gh issue edit 2497 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-3 --remove-label factory:open\nmanual_claim_evidence: issue #2497 labels include factory:claimed, project:testbeam, worker:testbeam-laptop-3\n\n#2497 S55a residual-shape atlas: matched-template fits vs neural embeddings\n\nAcademic-grade study of pulse-shape residuals after amplitude-normalized matched-template fits. Compare a traditional template fit plus PCA/residual moments against ridge, gradient-boosted trees, MLP, 1D-CNN, and a compact waveform transformer. Use run-held-out folds, blinded handscan/adjudicated labels where available, and bootstrap CIs for timing bias, shape-cluster stability, pile-up score separation, pedestal coupling, and energy/PID downstream deltas. Deliver a short report with calibration curves, ablations by pedestal state and saturation, and release criteria for whether residual shape encodes physical pulse classes rather than acquisition artifacts.\n",
+  "output_dir": "reports/2497__s55a_residual_shape_atlas",
+  "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+  "samples_per_channel": 18,
+  "baseline_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "duplicate_readout_channels": {"B2": 1, "B4": 3, "B6": 5, "B8": 7},
+  "expected_selected_pulses": 640737,
+  "expected_group_counts": {
+    "sample_i_calib": 248745,
+    "sample_i_analysis": 252266,
+    "sample_ii_calib": 14630,
+    "sample_ii_analysis": 125096
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "heldout_runs": [42, 50, 57, 58, 60, 62, 64, 65],
+  "max_per_run_stave": 160,
+  "bootstrap_replicates": 300,
+  "random_seed": 24975501,
+  "mlp_max_iter": 35,
+  "nn": {
+    "epochs": 6,
+    "transformer_epochs": 5,
+    "batch_size": 1024,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001
+  }
+}

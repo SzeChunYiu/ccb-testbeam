@@ -1,0 +1,16 @@
+{
+  "probes": [
+    {
+      "exists": true,
+      "is_dir": true,
+      "n_hrda": 57,
+      "n_hrdb": 53,
+      "n_total": 110,
+      "path": "/home/billy/ccb-data/data/extracted/root/root",
+      "role": "canonical-worker-mount",
+      "usable": true
+    }
+  ],
+  "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+  "source": "canonical-worker-mount"
+}

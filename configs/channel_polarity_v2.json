@@ -13,7 +13,7 @@
     "6": -1,
     "7": 1
   },
-  "status": "MEASURED_202608_RUNS31_65_UNANIMOUS_BOTH_ESTIMATORS",
+  "status": "RETRACTED_20260816_TRUNCATED_STAGING_DESYNC",
   "provenance": {
     "basis": "Direct per-run measurement on the 33-run pre-threshold 8x16 raw product (runs 31-65, 1,096,728 events, SHA-256-verified against manifest_8x16.json) by two independent estimators: scripts/channel_polarity.py::infer_channel_polarity (locked module, isolated-dropout-masked) and an independent MAD-vote estimator (sigma = 1.4826*MAD of raw pretrigger samples, k=8 exclusive votes). Every channel unanimous across all 33 runs in both estimators.",
     "v1_falsified_for_channels": ["2", "3", "4", "5", "6", "7"],
@@ -38,6 +38,13 @@
     "authorising_for_odd_duplicates": true,
     "note": "Measured pattern is pair-alternating (+,-),(-,+),(-,+),(-,+): only pair (ch0,ch1) matches the v1 even-positive convention. Under v1 the B4/B6/B8 amplitudes in the 8x16 event product are noise-side maxima (e.g. ch4 median 14.5 ADC vs 2422.5 ADC true pulse height). Results consuming the v1 product (depth profile #1318, timing #1320) are FLAWED pending regeneration with this map. Odd channels 3/5/7 are the high-purity positive-going duplicate partners (frac_positive_preference >= 0.992).",
     "measurement_study": "reports/studies/paper_954_polarity/",
-    "audit_issue": 954
+    "audit_issue": 954,
+    "retraction": {
+      "date": "2026-08-16",
+      "root_cause": "The 33-run raw product this map was measured on was built from the LUNARC staging /projects/hep/fs10/shared/nnbar/ccb_data/hrd/root, which stores only the FIRST 128 WORDS of the true 144-word (8 channel x 18 sample) channel-major frame. Reading it as 8x16 desynchronises channels by +2 words per channel: file 16-word block c = the 2-word tail of true channel (c-1) followed by the head of true channel c. The measured pair-alternating polarity pattern and the 'measured' amplitudes (e.g. ch4 2422.5 ADC) are even/odd pedestal offsets (true ch3 pedestal ~9360 vs true ch4 pedestal ~6935), not pulses.",
+      "evidence": "Laptop 144-word extraction /home/billy/ccb-data/data/extracted/root/root (hrdb_run_0044.root: HRD=144 words/event) vs the LUNARC staging (same events 1:1 by EVT number, HRD=128 words/event). Desync model verified on all 4294 run-44 events: pedestal steps appear at position 2c within file block c (ch2@4, ch3@6, ch4@8, ch5@10, ch6@12, ch7@14). On the correct 144-word data only ch0/ch1 (B2 + duplicate) carry pulses; B4/B6/B8 (true ch2/4/6) are quiet pedestal channels.",
+      "consequences": "v1 (LOCKED_FROM_DUPLICATE_READOUT_CONVENTION, configs/channel_polarity_v1.json) is restored as the operative map. The v1_falsified claim in this file is void - it read B4/B6/B8 pedestal tails as pulses. The FLAWED markings demanded below for v1-consumer results (#1318 depth profile, #1320 timing) are withdrawn pending the consumer audit against correct 144-word data.",
+      "audit_issues": [952, 953, 954]
+    }
   }
 }

@@ -1,0 +1,111 @@
+{
+  "ticket_id": "2482",
+  "factory_issue": 2482,
+  "project": "testbeam",
+  "worker": "testbeam-laptop-2",
+  "title": "S55a: Wiener-template timing versus waveform ML for pile-up phase disentanglement",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-2 --project testbeam",
+  "manual_claim_recovery": {
+    "reason": "tn-ticket claim returned null pseudo-ticket despite non-empty queue",
+    "reran_claim": false,
+    "manual_command": "gh --repo SzeChunYiu/factory-tickets issue edit 2482 --add-label factory:claimed --add-label worker:testbeam-laptop-2 --remove-label factory:open"
+  },
+  "ticket_workflow": {
+    "claim_command": "tn-ticket claim testbeam-laptop-2 --project testbeam",
+    "claim_command_status": "null_pseudo_ticket_returned",
+    "manual_claim_recovery": "gh --repo SzeChunYiu/factory-tickets issue edit 2482 --add-label factory:claimed --add-label worker:testbeam-laptop-2 --remove-label factory:open",
+    "done_command": "tn-ticket done 2482",
+    "done_command_status": "success",
+    "done_command_output": "Closed issue SzeChunYiu/factory-tickets#2482",
+    "factory_issue_url": "https://github.com/SzeChunYiu/factory-tickets/issues/2482"
+  },
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "bootstrap": "held-out run-block percentile 95% CI",
+    "bootstrap_replicates": 400,
+    "adc_clip": 11800.0,
+    "negative_control": "clipped clean single-pulse controls with matched source-run distribution",
+    "winner_score": "timing_rmse_ns + 5*abs(energy_fractional_bias) + 8*pileup_miss_rate + 4*false_split_rate - 2*pileup_auc"
+  },
+  "required_method_coverage": {
+    "traditional": "wiener_template_cfd_traditional",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "transformer_sequence_model": "tiny_sequence_transformer",
+    "new_architecture": "phase_residual_fusion_new"
+  },
+  "winner": {
+    "name": "phase_residual_fusion_new",
+    "criterion": "minimum held-out composite timing/energy/AUC score with run-block bootstrap CIs reported",
+    "winner_score": 10.772170150117581,
+    "timing_rmse_ns": 9.16752403171131,
+    "timing_rmse_ci95": [
+      8.861892587199838,
+      9.421918058909439
+    ],
+    "energy_fractional_bias": -0.005688482940513669,
+    "energy_fractional_bias_ci95": [
+      -0.016197484342602816,
+      0.0069746227482070135
+    ],
+    "pileup_auc": 0.8230092592592594,
+    "pileup_auc_ci95": [
+      0.7925925925925927,
+      0.8436822916666668
+    ],
+    "late_tail_rate_abs_gt_15ns": 0.1007905138339921,
+    "pileup_miss_rate": 0.2972222222222222,
+    "false_split_rate": 0.2111111111111111
+  },
+  "ablation_finding": {
+    "pedestal_subtraction_is_not_settled": true,
+    "note": "The no_pedestal_subtraction ablation has lower composite score than the nominal full-feature new architecture; this is reported as a systematic caveat rather than changing the prespecified main-panel winner."
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "ablation_metrics": "ablation_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv"
+  },
+  "novel_tickets_appended": [],
+  "caveats": [
+    "Truth comes from controlled doublet injection into raw-ROOT-derived clean pulses.",
+    "ADC clipping is a benchmark stressor rather than decoded electronics metadata.",
+    "Current and energy strata are waveform/run proxies."
+  ]
+}

@@ -5,7 +5,7 @@ This ticket uses the existing S32b saturation/energy-closure benchmark
 implementation because it already performs the required raw ROOT reproduction,
 run-held-out split, bootstrap confidence intervals, and method panel including
 traditional, ridge, gradient-boosted trees, MLP, 1D-CNN, and a new architecture.
-The wrapper isolates ticket metadata and output paths for testbeam-laptop-4.
+The wrapper isolates ticket metadata and output paths for testbeam-laptop-1.
 """
 
 from __future__ import annotations
@@ -20,7 +20,7 @@ import s32b_1783884181_2140_09a136f2_analytic_pileup_saturation_energy_closure_b
 
 ROOT = Path(__file__).resolve().parents[1]
 TICKET = "TICKET-0130"
-WORKER = "testbeam-laptop-4"
+WORKER = "testbeam-laptop-1"
 SLUG = "raw_root_count_reconstruction_bakeoff"
 TITLE = "TICKET-0130 raw-ROOT count reconstruction bakeoff"
 OUT = ROOT / "reports" / f"{TICKET}__{SLUG}"
@@ -51,7 +51,9 @@ def postprocess_ticket_metadata() -> None:
     result_path = OUT / "result.json"
     result = json.loads(result_path.read_text(encoding="utf-8"))
     result["ticket_id"] = TICKET
+    result["worker"] = WORKER
     result["title"] = TITLE
+    result["claim_command"] = f"tn-ticket claim {WORKER} --project testbeam"
     result["claimed_ticket_text"] = "TICKET-0130 raw-ROOT count reconstruction bakeoff"
     result["execution_command"] = (
         "MPLCONFIGDIR=/tmp/matplotlib-ticket0130 "
@@ -63,6 +65,7 @@ def postprocess_ticket_metadata() -> None:
         f"python {Path(__file__).resolve().relative_to(ROOT)}"
     )
     result_path.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+    (ROOT / "result.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
 
     manifest_path = OUT / "manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))

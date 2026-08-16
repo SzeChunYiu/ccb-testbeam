@@ -5,7 +5,7 @@
 Ticket `TICKET-0130` asks for an academic-grade comparison of a strong traditional
 multi-pulse analytic method against ridge, gradient-boosted trees, MLP, 1D-CNN,
 transformer sequence models, and a sensible new architecture for energy
-reconstruction under pile-up and ADC saturation.  The worker is `testbeam-laptop-4`.  The
+reconstruction under pile-up and ADC saturation.  The worker is `testbeam-laptop-1`.  The
 winner is **`saturation_residual_fusion_new`**, selected by held-out run-block energy closure:
 fractional energy sigma68 `0.06688` with 95%
 CI [`0.0605`,
@@ -324,6 +324,8 @@ pulse morphology, amplitude ratio, stave, and a PID proxy class.
 | stave            | B4                | tiny_sequence_transformer                      |                0.02227   |                    0.1156   |     -16.26     |            19.69  |            0.6355  |
 | stave            | B6                | tiny_sequence_transformer                      |               -0.02059   |                    0.1035   |     -15.94     |            18.8   |            0.5529  |
 | stave            | B8                | tiny_sequence_transformer                      |                0.01309   |                    0.1031   |     -14.41     |            14.57  |            0.4673  |
+
+## Caveats and Limitations
 
 Systematic caveats are material.  First, pile-up truth is from controlled
 overlays into raw-ROOT-derived residuals; it validates reconstruction under known

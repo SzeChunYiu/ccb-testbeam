@@ -1,11 +1,11 @@
 {
   "ticket_id": "TICKET-0130",
   "project": "testbeam",
-  "worker": "testbeam-laptop-4",
+  "worker": "testbeam-laptop-1",
   "title": "TICKET-0130 raw-ROOT count reconstruction bakeoff",
   "status": "complete",
   "claimed_once": true,
-  "claim_command": "tn-ticket claim testbeam-laptop-4 --project testbeam",
+  "claim_command": "tn-ticket claim testbeam-laptop-1 --project testbeam",
   "claimed_ticket_text": "TICKET-0130 raw-ROOT count reconstruction bakeoff",
   "raw_root_reproduction": {
     "passed": true,

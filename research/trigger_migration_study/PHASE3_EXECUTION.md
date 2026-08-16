@@ -47,3 +47,5 @@ migration.
 yield ~400 two-arm events, ~1400/1500 T1/T2 hit events -> conditional
 hardware efficiency measurable to O(5%). Scan + matrix to be re-run on
 the 1M output; the |M-1| decision matrix applies to THAT result.
+
+> **Update 2026-08-17:** job 3506983 ran the wrong (base) config; superseded by job 3506988 with krakow_phase2.config + T1T2 geometry. Final 1M verdict: PHASE5_1M_RESULT.md (regeneration via Phase 2 geometry iteration). See PHASE5_1M_RESULT.md

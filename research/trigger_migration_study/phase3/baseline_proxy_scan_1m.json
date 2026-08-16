@@ -1,0 +1,682 @@
+{
+  "scan_config": {
+    "input_file": "/projects/hep/fs10/shared/nnbar/billy/ccb_1045_phase2_1M/output_krakow_1M_phase2.root",
+    "mode": "proxy",
+    "thresholds_mev": [
+      0.5,
+      1.0,
+      2.0,
+      5.0
+    ],
+    "coincidence_windows_ns": [
+      5.0,
+      10.0,
+      15.0,
+      20.0,
+      30.0
+    ],
+    "max_events": null
+  },
+  "results": [
+    {
+      "threshold_mev": 0.5,
+      "coinc_ns": 5.0,
+      "n_events": 1000000,
+      "n_trigger_pass": 386,
+      "efficiency": 0.000386,
+      "species_breakdown": {
+        "deuteron": {
+          "n_enter": 1487,
+          "n_pass": 382
+        },
+        "proton": {
+          "n_enter": 5598,
+          "n_pass": 4
+        },
+        "electron": {
+          "n_enter": 13,
+          "n_pass": 0
+        },
+        "alpha": {
+          "n_enter": 0,
+          "n_pass": 0
+        },
+        "C12": {
+          "n_enter": 1,
+          "n_pass": 0
+        },
+        "he3": {
+          "n_enter": 1,
+          "n_pass": 0
+        }
+      }
+    },
+    {
+      "threshold_mev": 0.5,
+      "coinc_ns": 10.0,
+      "n_events": 1000000,
+      "n_trigger_pass": 387,
+      "efficiency": 0.000387,
+      "species_breakdown": {
+        "deuteron": {
+          "n_enter": 1487,
+          "n_pass": 383
+        },
+        "proton": {
+          "n_enter": 5598,
+          "n_pass": 4
+        },
+        "electron": {
+          "n_enter": 13,
+          "n_pass": 0
+        },
+        "alpha": {
+          "n_enter": 0,
+          "n_pass": 0
+        },
+        "C12": {
+          "n_enter": 1,
+          "n_pass": 0
+        },
+        "he3": {
+          "n_enter": 1,
+          "n_pass": 0
+        }
+      }
+    },
+    {
+      "threshold_mev": 0.5,
+      "coinc_ns": 15.0,
+      "n_events": 1000000,
+      "n_trigger_pass": 554,
+      "efficiency": 0.000554,
+      "species_breakdown": {
+        "deuteron": {
+          "n_enter": 1487,
+          "n_pass": 550
+        },
+        "proton": {
+          "n_enter": 5598,
+          "n_pass": 4
+        },
+        "electron": {
+          "n_enter": 13,
+          "n_pass": 0
+        },
+        "alpha": {
+          "n_enter": 0,
+          "n_pass": 0
+        },
+        "C12": {
+          "n_enter": 1,
+          "n_pass": 0
+        },
+        "he3": {
+          "n_enter": 1,
+          "n_pass": 0
+        }
+      }
+    },
+    {
+      "threshold_mev": 0.5,
+      "coinc_ns": 20.0,
+      "n_events": 1000000,
+      "n_trigger_pass": 557,
+      "efficiency": 0.000557,
+      "species_breakdown": {
+        "deuteron": {
+          "n_enter": 1487,
+          "n_pass": 553
+        },
+        "proton": {
+          "n_enter": 5598,
+          "n_pass": 4
+        },
+        "electron": {
+          "n_enter": 13,
+          "n_pass": 0
+        },
+        "alpha": {
+          "n_enter": 0,
+          "n_pass": 0
+        },
+        "C12": {
+          "n_enter": 1,
+          "n_pass": 0
+        },
+        "he3": {
+          "n_enter": 1,
+          "n_pass": 0
+        }
+      }
+    },
+    {
+      "threshold_mev": 0.5,
+      "coinc_ns": 30.0,
+      "n_events": 1000000,
+      "n_trigger_pass": 557,
+      "efficiency": 0.000557,
+      "species_breakdown": {
+        "deuteron": {
+          "n_enter": 1487,
+          "n_pass": 553
+        },
+        "proton": {
+          "n_enter": 5598,
+          "n_pass": 4
+        },
+        "electron": {
+          "n_enter": 13,
+          "n_pass": 0
+        },
+        "alpha": {
+          "n_enter": 0,
+          "n_pass": 0
+        },
+        "C12": {
+          "n_enter": 1,
+          "n_pass": 0
+        },
+        "he3": {
+          "n_enter": 1,
+          "n_pass": 0
+        }
+      }
+    },
+    {
+      "threshold_mev": 1.0,
+      "coinc_ns": 5.0,
+      "n_events": 1000000,
+      "n_trigger_pass": 386,
+      "efficiency": 0.000386,
+      "species_breakdown": {
+        "deuteron": {
+          "n_enter": 1487,
+          "n_pass": 382
+        },
+        "proton": {
+          "n_enter": 5598,
+          "n_pass": 4
+        },
+        "electron": {
+          "n_enter": 13,
+          "n_pass": 0
+        },
+        "alpha": {
+          "n_enter": 0,
+          "n_pass": 0
+        },
+        "C12": {
+          "n_enter": 1,
+          "n_pass": 0
+        },
+        "he3": {
+          "n_enter": 1,
+          "n_pass": 0
+        }
+      }
+    },
+    {
+      "threshold_mev": 1.0,
+      "coinc_ns": 10.0,
+      "n_events": 1000000,
+      "n_trigger_pass": 387,
+      "efficiency": 0.000387,
+      "species_breakdown": {
+        "deuteron": {
+          "n_enter": 1487,
+          "n_pass": 383
+        },
+        "proton": {
+          "n_enter": 5598,
+          "n_pass": 4
+        },
+        "electron": {
+          "n_enter": 13,
+          "n_pass": 0
+        },
+        "alpha": {
+          "n_enter": 0,
+          "n_pass": 0
+        },
+        "C12": {
+          "n_enter": 1,
+          "n_pass": 0
+        },
+        "he3": {
+          "n_enter": 1,
+          "n_pass": 0
+        }
+      }
+    },
+    {
+      "threshold_mev": 1.0,
+      "coinc_ns": 15.0,
+      "n_events": 1000000,
+      "n_trigger_pass": 554,
+      "efficiency": 0.000554,
+      "species_breakdown": {
+        "deuteron": {
+          "n_enter": 1487,
+          "n_pass": 550
+        },
+        "proton": {
+          "n_enter": 5598,
+          "n_pass": 4
+        },
+        "electron": {
+          "n_enter": 13,
+          "n_pass": 0
+        },
+        "alpha": {
+          "n_enter": 0,
+          "n_pass": 0
+        },
+        "C12": {
+          "n_enter": 1,
+          "n_pass": 0
+        },
+        "he3": {
+          "n_enter": 1,
+          "n_pass": 0
+        }
+      }
+    },
+    {
+      "threshold_mev": 1.0,
+      "coinc_ns": 20.0,
+      "n_events": 1000000,
+      "n_trigger_pass": 557,
+      "efficiency": 0.000557,
+      "species_breakdown": {
+        "deuteron": {
+          "n_enter": 1487,
+          "n_pass": 553
+        },
+        "proton": {
+          "n_enter": 5598,
+          "n_pass": 4
+        },
+        "electron": {
+          "n_enter": 13,
+          "n_pass": 0
+        },
+        "alpha": {
+          "n_enter": 0,
+          "n_pass": 0
+        },
+        "C12": {
+          "n_enter": 1,
+          "n_pass": 0
+        },
+        "he3": {
+          "n_enter": 1,
+          "n_pass": 0
+        }
+      }
+    },
+    {
+      "threshold_mev": 1.0,
+      "coinc_ns": 30.0,
+      "n_events": 1000000,
+      "n_trigger_pass": 557,
+      "efficiency": 0.000557,
+      "species_breakdown": {
+        "deuteron": {
+          "n_enter": 1487,
+          "n_pass": 553
+        },
+        "proton": {
+          "n_enter": 5598,
+          "n_pass": 4
+        },
+        "electron": {
+          "n_enter": 13,
+          "n_pass": 0
+        },
+        "alpha": {
+          "n_enter": 0,
+          "n_pass": 0
+        },
+        "C12": {
+          "n_enter": 1,
+          "n_pass": 0
+        },
+        "he3": {
+          "n_enter": 1,
+          "n_pass": 0
+        }
+      }
+    },
+    {
+      "threshold_mev": 2.0,
+      "coinc_ns": 5.0,
+      "n_events": 1000000,
+      "n_trigger_pass": 386,
+      "efficiency": 0.000386,
+      "species_breakdown": {
+        "deuteron": {
+          "n_enter": 1487,
+          "n_pass": 382
+        },
+        "proton": {
+          "n_enter": 5598,
+          "n_pass": 4
+        },
+        "electron": {
+          "n_enter": 13,
+          "n_pass": 0
+        },
+        "alpha": {
+          "n_enter": 0,
+          "n_pass": 0
+        },
+        "C12": {
+          "n_enter": 1,
+          "n_pass": 0
+        },
+        "he3": {
+          "n_enter": 1,
+          "n_pass": 0
+        }
+      }
+    },
+    {
+      "threshold_mev": 2.0,
+      "coinc_ns": 10.0,
+      "n_events": 1000000,
+      "n_trigger_pass": 387,
+      "efficiency": 0.000387,
+      "species_breakdown": {
+        "deuteron": {
+          "n_enter": 1487,
+          "n_pass": 383
+        },
+        "proton": {
+          "n_enter": 5598,
+          "n_pass": 4
+        },
+        "electron": {
+          "n_enter": 13,
+          "n_pass": 0
+        },
+        "alpha": {
+          "n_enter": 0,
+          "n_pass": 0
+        },
+        "C12": {
+          "n_enter": 1,
+          "n_pass": 0
+        },
+        "he3": {
+          "n_enter": 1,
+          "n_pass": 0
+        }
+      }
+    },
+    {
+      "threshold_mev": 2.0,
+      "coinc_ns": 15.0,
+      "n_events": 1000000,
+      "n_trigger_pass": 554,
+      "efficiency": 0.000554,
+      "species_breakdown": {
+        "deuteron": {
+          "n_enter": 1487,
+          "n_pass": 550
+        },
+        "proton": {
+          "n_enter": 5598,
+          "n_pass": 4
+        },
+        "electron": {
+          "n_enter": 13,
+          "n_pass": 0
+        },
+        "alpha": {
+          "n_enter": 0,
+          "n_pass": 0
+        },
+        "C12": {
+          "n_enter": 1,
+          "n_pass": 0
+        },
+        "he3": {
+          "n_enter": 1,
+          "n_pass": 0
+        }
+      }
+    },
+    {
+      "threshold_mev": 2.0,
+      "coinc_ns": 20.0,
+      "n_events": 1000000,
+      "n_trigger_pass": 557,
+      "efficiency": 0.000557,
+      "species_breakdown": {
+        "deuteron": {
+          "n_enter": 1487,
+          "n_pass": 553
+        },
+        "proton": {
+          "n_enter": 5598,
+          "n_pass": 4
+        },
+        "electron": {
+          "n_enter": 13,
+          "n_pass": 0
+        },
+        "alpha": {
+          "n_enter": 0,
+          "n_pass": 0
+        },
+        "C12": {
+          "n_enter": 1,
+          "n_pass": 0
+        },
+        "he3": {
+          "n_enter": 1,
+          "n_pass": 0
+        }
+      }
+    },
+    {
+      "threshold_mev": 2.0,
+      "coinc_ns": 30.0,
+      "n_events": 1000000,
+      "n_trigger_pass": 557,
+      "efficiency": 0.000557,
+      "species_breakdown": {
+        "deuteron": {
+          "n_enter": 1487,
+          "n_pass": 553
+        },
+        "proton": {
+          "n_enter": 5598,
+          "n_pass": 4
+        },
+        "electron": {
+          "n_enter": 13,
+          "n_pass": 0
+        },
+        "alpha": {
+          "n_enter": 0,
+          "n_pass": 0
+        },
+        "C12": {
+          "n_enter": 1,
+          "n_pass": 0
+        },
+        "he3": {
+          "n_enter": 1,
+          "n_pass": 0
+        }
+      }
+    },
+    {
+      "threshold_mev": 5.0,
+      "coinc_ns": 5.0,
+      "n_events": 1000000,
+      "n_trigger_pass": 386,
+      "efficiency": 0.000386,
+      "species_breakdown": {
+        "deuteron": {
+          "n_enter": 1487,
+          "n_pass": 382
+        },
+        "proton": {
+          "n_enter": 5598,
+          "n_pass": 4
+        },
+        "electron": {
+          "n_enter": 13,
+          "n_pass": 0
+        },
+        "alpha": {
+          "n_enter": 0,
+          "n_pass": 0
+        },
+        "C12": {
+          "n_enter": 1,
+          "n_pass": 0
+        },
+        "he3": {
+          "n_enter": 1,
+          "n_pass": 0
+        }
+      }
+    },
+    {
+      "threshold_mev": 5.0,
+      "coinc_ns": 10.0,
+      "n_events": 1000000,
+      "n_trigger_pass": 387,
+      "efficiency": 0.000387,
+      "species_breakdown": {
+        "deuteron": {
+          "n_enter": 1487,
+          "n_pass": 383
+        },
+        "proton": {
+          "n_enter": 5598,
+          "n_pass": 4
+        },
+        "electron": {
+          "n_enter": 13,
+          "n_pass": 0
+        },
+        "alpha": {
+          "n_enter": 0,
+          "n_pass": 0
+        },
+        "C12": {
+          "n_enter": 1,
+          "n_pass": 0
+        },
+        "he3": {
+          "n_enter": 1,
+          "n_pass": 0
+        }
+      }
+    },
+    {
+      "threshold_mev": 5.0,
+      "coinc_ns": 15.0,
+      "n_events": 1000000,
+      "n_trigger_pass": 554,
+      "efficiency": 0.000554,
+      "species_breakdown": {
+        "deuteron": {
+          "n_enter": 1487,
+          "n_pass": 550
+        },
+        "proton": {
+          "n_enter": 5598,
+          "n_pass": 4
+        },
+        "electron": {
+          "n_enter": 13,
+          "n_pass": 0
+        },
+        "alpha": {
+          "n_enter": 0,
+          "n_pass": 0
+        },
+        "C12": {
+          "n_enter": 1,
+          "n_pass": 0
+        },
+        "he3": {
+          "n_enter": 1,
+          "n_pass": 0
+        }
+      }
+    },
+    {
+      "threshold_mev": 5.0,
+      "coinc_ns": 20.0,
+      "n_events": 1000000,
+      "n_trigger_pass": 557,
+      "efficiency": 0.000557,
+      "species_breakdown": {
+        "deuteron": {
+          "n_enter": 1487,
+          "n_pass": 553
+        },
+        "proton": {
+          "n_enter": 5598,
+          "n_pass": 4
+        },
+        "electron": {
+          "n_enter": 13,
+          "n_pass": 0
+        },
+        "alpha": {
+          "n_enter": 0,
+          "n_pass": 0
+        },
+        "C12": {
+          "n_enter": 1,
+          "n_pass": 0
+        },
+        "he3": {
+          "n_enter": 1,
+          "n_pass": 0
+        }
+      }
+    },
+    {
+      "threshold_mev": 5.0,
+      "coinc_ns": 30.0,
+      "n_events": 1000000,
+      "n_trigger_pass": 557,
+      "efficiency": 0.000557,
+      "species_breakdown": {
+        "deuteron": {
+          "n_enter": 1487,
+          "n_pass": 553
+        },
+        "proton": {
+          "n_enter": 5598,
+          "n_pass": 4
+        },
+        "electron": {
+          "n_enter": 13,
+          "n_pass": 0
+        },
+        "alpha": {
+          "n_enter": 0,
+          "n_pass": 0
+        },
+        "C12": {
+          "n_enter": 1,
+          "n_pass": 0
+        },
+        "he3": {
+          "n_enter": 1,
+          "n_pass": 0
+        }
+      }
+    }
+  ]
+}

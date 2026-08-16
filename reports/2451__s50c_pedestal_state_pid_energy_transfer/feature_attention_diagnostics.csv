@@ -1,0 +1,17 @@
+diagnostic,region,n,value,interpretation
+pedestal_state_energy_bias,nominal,111,0.0017070867882963147,winner residual energy bias by pretrigger pedestal-memory stratum
+pedestal_state_energy_bias,shifted,183,0.01302000210409614,winner residual energy bias by pretrigger pedestal-memory stratum
+morphology_score_mean,late_tail_high,103,0.8608118355007871,model acceptance score tied to waveform late-tail/pulse-shape region
+morphology_score_mean,late_tail_low,191,0.8536492071538856,model acceptance score tied to waveform late-tail/pulse-shape region
+waveform_region_energy_bias,pretrigger_samples_0_3,183,0.01302000210409614,winner residual energy bias localized to an interpretable waveform time region
+waveform_region_timing_sigma68_ns,pretrigger_samples_0_3,183,7.950093240771034,winner timing width localized to an interpretable waveform time region
+waveform_region_energy_bias,leading_edge_samples_4_7,212,0.006155667072684441,winner residual energy bias localized to an interpretable waveform time region
+waveform_region_timing_sigma68_ns,leading_edge_samples_4_7,212,7.353227252026031,winner timing width localized to an interpretable waveform time region
+waveform_region_energy_bias,overlap_core_sep_lt_10ns,55,0.018801472209548427,winner residual energy bias localized to an interpretable waveform time region
+waveform_region_timing_sigma68_ns,overlap_core_sep_lt_10ns,55,7.1123051101541295,winner timing width localized to an interpretable waveform time region
+waveform_region_energy_bias,rising_overlap_sep_10_25ns,81,0.02398450789069754,winner residual energy bias localized to an interpretable waveform time region
+waveform_region_timing_sigma68_ns,rising_overlap_sep_10_25ns,81,6.9187770329600005,winner timing width localized to an interpretable waveform time region
+waveform_region_energy_bias,late_tail_sep_gt_45ns,77,-0.025569775238292937,winner residual energy bias localized to an interpretable waveform time region
+waveform_region_timing_sigma68_ns,late_tail_sep_gt_45ns,77,8.744809838525313,winner timing width localized to an interpretable waveform time region
+waveform_region_energy_bias,saturation_plateau_samples,11,-0.01635183454924482,winner residual energy bias localized to an interpretable waveform time region
+waveform_region_timing_sigma68_ns,saturation_plateau_samples,11,5.053336840892167,winner timing width localized to an interpretable waveform time region

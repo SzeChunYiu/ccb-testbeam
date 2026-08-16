@@ -1,0 +1,26 @@
+{
+  "ticket_id": "2451",
+  "git_commit": "847ec659e8145e498d977a85278082934fe2d262",
+  "command": "/home/billy/anaconda3/bin/python scripts/s50c_2451_pedestal_state_pid_energy_transfer.py",
+  "runtime_seconds": 317.4952402114868,
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "outputs_sha256": {
+    "REPORT.md": "b482c65a32e9b1710c8467c6507d1deb815a1bcea5779cdd69f88840f77e91d9",
+    "calibration_curve_winner.csv": "ea7ef11741f8c5718d87b18abd7245d7ab5312a38434deaf796158c7a11a0ff6",
+    "claimed_ticket.txt": "635ba9f9ab5cba90dbc3ea15b4163c0c663be4c7f0c99bca44502b6f5c1cc0f6",
+    "confusion_matrix_winner.csv": "9a43861cbf6b55d011a114edf293fbee1ff946de1f7818239ef6888bbc9588a7",
+    "endpoint_metrics_ci.csv": "735511b849fe2751d56074bf0a68ce8b938c2c1f07e47a48e84961467c3ded65",
+    "event_predictions.csv": "98bb58d746f1ea5bc029bf260e1ce6dc091e7552aff2f322e3723f132a809e51",
+    "feature_attention_diagnostics.csv": "52caad111603b626b74a1cee836ffc89fa4bd03b782293fdefc26df6051747eb",
+    "input_sha256.csv": "cc17da0dcd3e7e732b81a17f3c35833f026fdec912538d28d7d71b9af71a46f6",
+    "method_metrics.csv": "e7a9ae81a0bbaef9d72b8d2348c6c6168372a858b796d387a997b360159b077a",
+    "pedestal_counterfactual_metrics.csv": "4966e859aa72c52d1b4f8e84cc4b641f3de24499d30904297e2c73546cfbbf6a",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "9fa7a1d1e17c7fed50ced8aaff21666cc44f2fc06c743eebd1966f7c72db696d",
+    "run_heldout_metrics.csv": "faca1357177e225e2bc3350b2068d668100f2a437454176ca7bbf027fc9397dd",
+    "strata_metrics.csv": "846dadf87c8453de1353e1cc9b3a1c053a446ba0a9719fe628e597b2c4b9e525",
+    "template_summary.csv": "7d2ab6b9fe7c5078caeb794130de89df2d7ee40a71e02d25354796a0cd78c363",
+    "winner_ranked_metrics.csv": "32ead78c0381116ad20582d369e6c1c04f0b3bb0eabf66469a8a3849aa8f430a"
+  }
+}

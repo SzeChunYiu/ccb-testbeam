@@ -1,0 +1,14 @@
+# Macro file for hibeam_g4 - 1M event AUTHORISING campaign
+# Provenance: Phase 1B issue #1045
+# Sampler: linear_node_pdf_exact_inverse_v1 + measured_table_support_truncate_v1
+# Weight: unit event weight (direct sampling)
+# Source: hibeam_g4 commit b73ea2a1bd2419e7c4a25a3bf23a419ad619234c + scatter patch
+#
+/run/initialize
+
+/ElGen/E 190. MeV
+/ElGen/TargetThickness 2.3 mm
+/ElGen/Beamspot 10 mm
+/ElGen/CSFile ./sigma_pd_cm_190.txt
+
+/run/beamOn 1000000

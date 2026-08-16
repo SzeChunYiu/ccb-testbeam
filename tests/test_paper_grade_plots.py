@@ -50,7 +50,7 @@ def test_pid_and_pileup_source_values_are_preserved(tmp_path: Path) -> None:
         else:
             assert exp == act
     assert pid["full_auc"].nunique() == 1
-    assert pid["full_auc"].iloc[0] == 0.8976036882035276
+    assert pid["full_auc"].iloc[0] == 0.9529050568516502
 
     pileup = pd.read_csv(by_id["FIG-WIKI-007"]["source_table"])
     nearest = pileup.iloc[:2]

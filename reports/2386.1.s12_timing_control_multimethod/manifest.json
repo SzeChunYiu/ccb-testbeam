@@ -1,0 +1,29 @@
+{
+  "ticket_id": "2386",
+  "git_commit": "784cb9e2817df87e7b94e60d71a395c582794228",
+  "command": "scripts/s12_2386_timing_control_multimethod.py",
+  "python": "3.8.10 (default, Mar 18 2025, 20:04:55) \n[GCC 9.4.0]",
+  "runtime_seconds": 50.81472206115723,
+  "inputs": {
+    "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0058.root": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1",
+    "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0059.root": "64fced477c9c45f9726cde0d466c15a6d776b8bb1b22a0043510dc73c884ae0e",
+    "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0060.root": "f466b5af260d9fadba426280f6313bac1381c1441c569c7094a8a9d61373030d",
+    "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0061.root": "c57d1f18f79f11fb0d3a0bbbf42f978cff1ec704dc08337c600c17354099d61d",
+    "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0062.root": "2530c56acb462473c6b5c316c0689491ec044f01a8c623624eebafbd271fdfbe",
+    "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0063.root": "3fd42501e2c53a914b535616bc7bb7b8fb5554cd4f46d890023db6877a720a53",
+    "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0065.root": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb"
+  },
+  "outputs_sha256": {
+    "REPORT.md": "34e636886f2c93608eaeb001c3e02295d4fbdeb4295852e65cb6664e5bc6bd9e",
+    "claimed_ticket.txt": "9ab78c1c2d9142cd267c6a3a9bd936fa5ed67bdddf01b82f1da7c5fd5485e676",
+    "class_counts_by_run.csv": "94f3fb7eb71dfeea1ea3972c2a5bc9b7be9ada0fbfc276fa76f6d4dceade1c64",
+    "heldout_fixed_efficiency.csv": "9a481a4a7a2f5b9121bc5053ccbb032c041203a16fdbc58a34265d030c82f556",
+    "input_sha256.csv": "3122215212d75fa1a1386ea4058f7b746664167a170fd1a1d03a83c958411716",
+    "leakage_checks.csv": "4c9d05ef387138e570bb38f16a8e2110ce659594f199fd74863950e3d5a11882",
+    "oof_predictions.csv.gz": "4940ed7c478644e25f31011f9aeecc6c7e1ad87307ae891dffd2f81e9ef8a4de",
+    "reproduction_match_table.csv": "f43b8e5a19ca0564e7a8ec995611553d7f1948a8f7a243915b7cddf49a32c1c4",
+    "result.json": "d89a57e8f53794321a92ce16f28787e2f5f90288e07be580cfe95f48627fb0e3",
+    "run_counts.csv": "a0fc28acdbda45841ae2a72c692fb7cf8c63db103f780eabb9575a62a3df4413",
+    "scoreboard.csv": "8c14c2e83eedb996d26e480a31b33e13534e48f2d6b93d47868587c38a569fad"
+  }
+}

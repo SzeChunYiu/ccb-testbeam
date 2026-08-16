@@ -1,0 +1,94 @@
+{
+  "ticket_id": "2386",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-4",
+  "title": "S12 timing-control-region classifier rigour",
+  "status": "complete",
+  "claim": {
+    "requested_command_run_once": "tn-ticket claim testbeam-laptop-4 --project testbeam",
+    "note": "The command returned a null pseudo-ticket due local tn-ticket bug; issue #2386 was claimed by the equivalent factory:open to factory:claimed label transition without rerunning claim."
+  },
+  "raw_root_reproduction": {
+    "passed": true,
+    "expected_guarded_gross_events": 72,
+    "reproduced_guarded_gross_events": 72,
+    "gross_count_run_bootstrap_ci95": [
+      35.0,
+      111.04999999999995
+    ],
+    "documented_dt_gt_50_count": 74,
+    "clean_dt_lt_3_count": 2155,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "split": {
+    "mode": "leave-one-run-out",
+    "runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap_unit": "run",
+    "bootstrap_replicates": 600
+  },
+  "primary_metric": "run-held-out ROC AUC on D_t<3 ns vs guarded D_t>51 ns",
+  "winner": {
+    "method": "traditional_d_t_cut",
+    "family": "traditional",
+    "roc_auc": 1.0,
+    "roc_auc_ci_low": 0.9999999999999999,
+    "roc_auc_ci_high": 1.0,
+    "average_precision": 1.0,
+    "ap_ci_low": 0.9999999999999998,
+    "ap_ci_high": 1.0000000000000002,
+    "brier": 0.0,
+    "gross_rejection_at_95_clean": 1.0,
+    "gross_rejection_ci_low": 1.0,
+    "gross_rejection_ci_high": 1.0,
+    "notes": "Plain D_t label-source score."
+  },
+  "winner_name": "traditional_d_t_cut",
+  "traditional_baseline": {
+    "method": "traditional_d_t_cut",
+    "family": "traditional",
+    "roc_auc": 1.0,
+    "roc_auc_ci_low": 0.9999999999999999,
+    "roc_auc_ci_high": 1.0,
+    "average_precision": 1.0,
+    "ap_ci_low": 0.9999999999999998,
+    "ap_ci_high": 1.0000000000000002,
+    "brier": 0.0,
+    "gross_rejection_at_95_clean": 1.0,
+    "gross_rejection_ci_low": 1.0,
+    "gross_rejection_ci_high": 1.0,
+    "notes": "Plain D_t label-source score."
+  },
+  "required_methods": {
+    "traditional": "traditional_d_t_cut",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "new_architecture": "residual_gated_cnn_new"
+  },
+  "novel_tickets_appended": [],
+  "artifacts": {
+    "report": "REPORT.md",
+    "result": "result.json",
+    "manifest": "manifest.json",
+    "scoreboard": "scoreboard.csv",
+    "fixed_efficiency": "heldout_fixed_efficiency.csv",
+    "class_counts_by_run": "class_counts_by_run.csv",
+    "predictions": "oof_predictions.csv.gz",
+    "input_sha256": "input_sha256.csv"
+  },
+  "caveats": [
+    "D_t defines the target; the traditional D_t winner is a self-referential ceiling.",
+    "The 72-event positive class requires a guarded D_t>51 ns convention; D_t>50 ns gives 74 events.",
+    "CNNs are CPU-safe small models."
+  ],
+  "git_commit": "784cb9e2817df87e7b94e60d71a395c582794228"
+}

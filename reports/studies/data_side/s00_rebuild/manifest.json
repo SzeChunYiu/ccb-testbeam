@@ -7,7 +7,7 @@
     "selector": "ccb_mc_validation.selector v1_first_four_median",
     "hrd_waveform_schema": "hrd-8x18-v1",
     "config_digest": "38d6f0be27338709",
-    "source_commit": "0a861bd34e0f4bb7b0a7d46de896d4280f1d5c1b",
+    "source_commit": "9f630842f0814d1554ff6d5b52942132c3eb576f",
     "selector_id": "v1_first_four_median",
     "baseline_indices": [
       0,
@@ -20,7 +20,7 @@
   "canonical": true,
   "count_match_passed": true,
   "authorising": true,
-  "selected_pulse_table": "reports/studies/data_side/.s00_rebuild.staging-2753761/s00_selected_b_pulses.csv.gz",
+  "selected_pulse_table": "reports/studies/data_side/s00_rebuild/s00_selected_b_pulses.csv.gz",
   "amplitude_cut_adc": 1000.0,
   "amplitude_cut_source": "config(1000.0)",
   "amplitude_cut_env_var": "CCB_AMPLITUDE_CUT_ADC",

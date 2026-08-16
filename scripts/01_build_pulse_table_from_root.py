@@ -1298,7 +1298,11 @@ canonical: bool, model_identity: dict, gate_states: dict,
     """Write self-describing manifest with model identity + gate state.
 
     Every downstream consumer must resolve artifacts via this model-bound
-    manifest rather than assuming a mutable canonical path is authoritative
+    manifest rather than assuming a mutable canonical path is authoritative.
+    selected_path MUST be the FINAL published pulse-table path (never the
+    staging path): staging dirs are ephemeral rename targets, and the first
+    corrected-staging run recorded `.s00_rebuild.staging-<pid>/...` here,
+    breaking manifest-based downstream resolution (2026-08-16).
     (ARU-S00-OVERRIDE-ARTIFACT-001 acceptance: downstream resolves via a
 model-bound manifest/pointer). An authorising run requires every P0 gate
     to be PASS (issue #972): a skipped or failed gate is recorded as a
@@ -1533,7 +1537,7 @@ def main() -> int:
         # ---- Canonical production: authorising transaction ----
         if authorising:
             # Write manifest, then atomically publish staging -> canonical out_dir
-            write_manifest(staging, args.config, comparison, staging_selected, cut, cut_source,
+            write_manifest(staging, args.config, comparison, selected_path, cut, cut_source,
                            canonical=True, model_identity=model_identity, gate_states=gate_states,
                            input_hashes=input_hashes,
                            saturation_contract=getattr(scan_raw, 'saturation_contract', None))
@@ -1543,7 +1547,7 @@ def main() -> int:
         else:
             # Gate failure: write the failure manifest to staging but DO NOT
             # publish. The last authorising artifact set is preserved byte-identical.
-            write_manifest(staging, args.config, comparison, staging_selected, cut, cut_source,
+            write_manifest(staging, args.config, comparison, selected_path, cut, cut_source,
                            canonical=True, model_identity=model_identity, gate_states=gate_states,
                            input_hashes=input_hashes,
                            saturation_contract=getattr(scan_raw, 'saturation_contract', None))
@@ -1562,7 +1566,7 @@ def main() -> int:
         # report effective threshold, selection counts and migration matrix.
         # Canonical expected counts are retained only as a negative/control reference.
         write_sensitivity_report(staging, cut, cut_source, counts_by_group, comparison)
-        write_manifest(staging, args.config, comparison, staging_selected, cut, cut_source,
+        write_manifest(staging, args.config, comparison, selected_path, cut, cut_source,
                        canonical=False, model_identity=model_identity, gate_states=gate_states,
                        input_hashes=input_hashes,
                        saturation_contract=getattr(scan_raw, 'saturation_contract', None))

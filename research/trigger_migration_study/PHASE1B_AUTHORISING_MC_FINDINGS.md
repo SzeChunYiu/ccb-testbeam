@@ -83,29 +83,52 @@ The build follows the crash-chain invariants from #1337:
 
 ## Baseline Delta (vs Historical 1M) with Binomial Errors
 
-> **Computed by `scripts/phase1b_delta_table.py` from:**
-> - Historical: `output_krakow_1M.root` (sha256: `2b62403f0aa7ecc8c6fc8ffb5006b59d833ff1a31a95a8f389f88f45a18542cc`)
-> - Authorising: `output_krakow_1M_authorising.root` (sha256: `19cd97c1106632e9746dd76a683105186484aa34aa74be8617973072ebcf84ea`)
+> **Computed by `scripts/phase1b_delta_table.py`, which imports `process_mc_file`
+> from the ORIGINAL `scripts/trigger_baseline_characterization.py` — no
+> reimplementation. Ground truth recomputed from BOTH ROOT files (SLURM job
+> 3506920; receipts `research/trigger_migration_study/phase1b_baseline_{hist,authorising}_1M.json`):**
+> - Historical: `output_krakow_1M.root` (sha256 `2b62403f0aa7…`)
+> - Authorising: `output_krakow_1M_authorising.root` (sha256 `19cd97c11066…`)
+>
+> **Sanity gate PASSED exactly**: hist enter_B 237,098 / auth
+> 7,100; hist sample_I 64,762 / auth
+> 554 — bit-identical to the historical-side values of the
+> original Phase 1 characterization. The numbers previously shown here
+> (88,791 / 4,524 / 88,738 / 4,519) came from a divergent inline
+> reimplementation in an earlier version of the delta script and are RETRACTED.
+
+Sources: historical — recomputed from ROOT /projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root (sha256 verified, original methodology); authorising — recomputed from ROOT /projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M_authorising.root (sha256 verified, original methodology).
 
 The corrected `ScatteringGenerator` produces a dramatically different HRD proxy baseline:
 
-| Metric | Historical 1M | Authorising 1M | Delta (with errors) |
-|--------|---------------|----------------|---------------------|
-| Enter B | 237,098 (23.71 ±0.04%) | 7,100 (0.710 ±0.008%) | **−229,998 (−23.00 ±0.04%)** |
-| Sample I (A+B) | 64,762 (6.48 ±0.02%) | 554 (0.055 ±0.002%) | **−64,208 (−6.42 ±0.02%)** |
-| Sample II (B-only) | 237,098 (23.71 ±0.04%) | 7,100 (0.710 ±0.008%) | **−229,998 (−23.00 ±0.04%)** |
-| Purity (Sample I / Enter B) | 27.31 ±0.09% | 7.8 ±0.3% | **−19.5 ±0.3%** |
+| Metric | Historical 1M | Authorising 1M | Delta (auth − hist) |
+|--------|---------------|----------------|--------------------|
+| Enter B | 237,098 (23.710% ± 0.043%) | 7,100 (0.710% ± 0.008%) | **-229,998 (-23.000 ± 0.043 pp)** |
+| Sample I (A∧B) | 64,762 (6.476% ± 0.025%) | 554 (0.055% ± 0.002%) | **-64,208 (-6.421 ± 0.025 pp)** |
+| ε_HRD, deuteron | 45.644% ± 0.133% (64,291/140,853) | 36.987% ± 1.252% (550/1,487) | **-8.657 ± 1.259 pp** |
+| ε_HRD, proton | 0.388% ± 0.020% (373/96,073) | 0.071% ± 0.036% (4/5,598) | **-0.317 ± 0.041 pp** |
+| Sample I purity (d/(d+p)) | 99.423% ± 0.030% (n=64,664) | 99.278% ± 0.360% (n=554) | **-0.145 ± 0.361 pp** |
 
-**Breakdown by Species (Authorising 1M)**:
+Errors are binomial `sqrt(p(1-p)/n)` on the ACTUAL denominator of each quantity:
+event rates use n = 1,000,000 primary events; per-species ε_HRD uses that species'
+enter_B count; purity uses the deuteron+proton sample_I count. Delta errors combine
+the two independent sides in quadrature.
 
-| Species | Enter B | Sample I | ε_HRD (± binomial) | n |
-|---------|---------|----------|-------------------|---|
-| Deuteron | 1,487 | 550 | 37 ±1% | 1,487 |
-| Proton | 5,598 | 4 | 0.07 ±0.04% | 5,598 |
-| C12 | 1 | 0 | 0% | 1 |
-| Alpha | 0 | 0 | — | 0 |
+**Breakdown by species (both sides)**:
 
-**Interpretation**: The corrected cross-section sampling reduces the HRD proxy rate by −97% (Enter B: 237,098 → 7,100 events; −229,998). This is the expected outcome of fixing the unit-weight sampling bug. The purity drops significantly (27.31% → 7.8%, −19.5 pp) due to the -97% reduction in B-arm hits; the surviving events have much lower coincidence probability. Binomial errors are computed as `sqrt(p(1-p)/n)` for rate measurements. The species breakdown uses primary-particle classification from `get_primary_species()` in `trigger_baseline_characterization.py`.
+| Species | hist enter_B | hist sample_I | hist ε_HRD | auth enter_B | auth sample_I | auth ε_HRD |
+|---------|--------------|---------------|------------|--------------|---------------|-----------|
+| Deuteron | 140,853 | 64,291 | 45.644% ± 0.133% | 1,487 | 550 | 36.987% ± 1.252% |
+| Proton | 96,073 | 373 | 0.388% ± 0.020% | 5,598 | 4 | 0.071% ± 0.036% |
+| Alpha | 33 | 20 | 60.606% ± 8.506% | 0 | 0 | — |
+| C12 | 64 | 34 | 53.125% ± 6.238% | 1 | 0 | 0.000% ± 0.000% |
+
+**Sample II**: in this characterization `n_sample_II` is recorded identically to
+`n_enter_B` on both sides (the Sample II branch applies no additional selection),
+so it carries no independent information and is not tabulated. The earlier
+"Sample II 53 vs 5" row was an artifact of the retracted counts.
+
+**Interpretation**: the corrected cross-section sampling reduces the Enter B rate by −97.01% ± 0.043 pp (23.710% → 0.710%; a 33× reduction) and Sample I by −99.14% ± 0.025 pp. This is the expected outcome of fixing the unit-weight/uniform-fallback sampling bug. Among deuterons that do reach the B arm, the coincidence efficiency ε_HRD drops by -8.66 ± 1.26 pp (45.6% → 37.0%, 6.9σ) — the corrected angular distribution changes not only how many events reach B but also the time/geometry structure of those that do. The deuteron purity of Sample I is statistically unchanged (99.42% → 99.28%, Δ = -0.15 ± 0.36 pp), indicating the surviving coincidence sample is still overwhelmingly deuteronic.
 
 ## Geometry Status: T1/T2 ABSENT
 

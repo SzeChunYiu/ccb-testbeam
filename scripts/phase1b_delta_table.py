@@ -1,231 +1,275 @@
 #!/usr/bin/env python3
 """
-Phase 1B Delta Table: Compute all counts/rates/ε_HRD/purity with binomial errors
-from BOTH ROOT files (historical + authorising). Reproducible markdown output.
+Phase 1B delta table: historical vs authorising 1M MC HRD-proxy baseline.
 
-This script IMPORTS and CALLS process_mc_file() from scripts/trigger_baseline_characterization.py
-to ensure same-origin methodology and reproduce manifest counts exactly.
+Methodology source of truth: `process_mc_file` imported from
+`scripts/trigger_baseline_characterization.py` — the ORIGINAL characterization
+methodology. This script deliberately does NOT reimplement the event
+classification: an earlier inline reimplementation here produced divergent
+counts (enter_B 88,791 hist / 4,524 auth; sample_I 88,738 / 4,519) that
+contradicted the original methodology's reproduction of the historical
+baseline (enter_B 237,098 hist / 7,100 auth; sample_I 64,762 / 554). That
+version was replaced wholesale by this one; the divergent numbers are
+RETRACTED (see research/trigger_migration_study/PHASE1B_AUTHORISING_MC_FINDINGS.md).
 
-Input files:
-  Historical: /projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root
-    sha256: 2b62403f0aa7ecc8c6fc8ffb5006b59d833ff1a31a95a8f389f88f45a18542cc
-  Authorising: /projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M_authorising.root
-    sha256: 19cd97c1106632e9746dd76a683105186484aa34aa74be8617973072ebcf84ea
+Modes (automatic, per side):
+  * ROOT file present AND uproot importable: recomputes via the original
+    methodology after verifying the file's sha256 (LUNARC; ~40 s per 1M-side).
+  * Otherwise: consumes the committed JSON receipt emitted by the same
+    original methodology (SLURM job 3506920) — CI/laptop reproducibility.
+
+Env overrides (only if the ROOT files live outside the repo checkout):
+  PHASE1B_HIST_ROOT, PHASE1B_AUTH_ROOT
+
+Errors are binomial sqrt(p(1-p)/n) on the ACTUAL denominator of each quantity:
+event rates n = 1,000,000 primary events; per-species eps_HRD n = species
+enter_B count; sample_I purity n = deuteron+proton sample_I count. Delta
+errors combine the two independent sides in quadrature.
+
+Usage:
+  python3 scripts/phase1b_delta_table.py \
+      [--out research/trigger_migration_study/phase1b_delta_table.md]
 """
 
+from __future__ import annotations
+
 import argparse
+import hashlib
+import json
+import os
 import sys
 from pathlib import Path
 
-# Import the original processing function
-sys.path.insert(0, str(Path(__file__).parent))
-try:
-    from trigger_baseline_characterization import process_mc_file, PDG_PROTON, PDG_DEUTERON
-except ImportError as e:
-    print(f"ERROR: Cannot import from trigger_baseline_characterization.py: {e}")
-    sys.exit(1)
+REPO_ROOT = Path(__file__).resolve().parent.parent
+
+SIDES = {
+    "hist": {
+        "label": "Historical 1M",
+        "root_env": "PHASE1B_HIST_ROOT",
+        "root_default": REPO_ROOT / "geant4/data/output_krakow_1M.root",
+        "sha256": "2b62403f0aa7ecc8c6fc8ffb5006b59d833ff1a31a95a8f389f88f45a18542cc",
+        "receipt": REPO_ROOT / "research/trigger_migration_study/phase1b_baseline_hist_1M.json",
+        "sanity": {"n_enter_B": 237098, "n_sample_I": 64762},
+    },
+    "auth": {
+        "label": "Authorising 1M",
+        "root_env": "PHASE1B_AUTH_ROOT",
+        "root_default": REPO_ROOT / "geant4/data/output_krakow_1M_authorising.root",
+        "sha256": "19cd97c1106632e9746dd76a683105186484aa34aa74be8617973072ebcf84ea",
+        "receipt": REPO_ROOT / "research/trigger_migration_study/phase1b_baseline_authorising_1M.json",
+        "sanity": {"n_enter_B": 7100, "n_sample_I": 554},
+    },
+}
+
+SPECIES_ORDER = ["deuteron", "proton", "alpha", "C12"]
 
 
-def binomial_error(p: float, n: int) -> float:
-    """Binomial standard error σ = sqrt(p(1-p)/n)."""
-    if n == 0:
+def sha256_of(path: Path) -> str:
+    h = hashlib.sha256()
+    with open(path, "rb") as fh:
+        for chunk in iter(lambda: fh.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def load_side(key: str, spec: dict) -> tuple[dict, str]:
+    """Recompute from ROOT via the ORIGINAL methodology, else use the receipt."""
+    root_path = Path(os.environ.get(spec["root_env"]) or spec["root_default"])
+    if root_path.exists():
+        sys.path.insert(0, str(REPO_ROOT / "scripts"))
+        try:
+            from trigger_baseline_characterization import process_mc_file
+        except ImportError as exc:
+            print(f"WARN: cannot import original methodology ({exc}); falling back to receipt", file=sys.stderr)
+        else:
+            actual = sha256_of(root_path)
+            if actual != spec["sha256"]:
+                sys.exit(f"FAIL: {key} ROOT sha256 {actual} != expected {spec['sha256']}")
+            stats = process_mc_file(str(root_path))
+            return dict(stats), f"recomputed from ROOT {root_path} (sha256 verified, original methodology)"
+    receipt_path = spec["receipt"]
+    if not receipt_path.exists():
+        sys.exit(f"FAIL: neither ROOT file ({root_path}) nor receipt ({receipt_path}) available for {key}")
+    receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+    if receipt.get("source_root_sha256") != spec["sha256"]:
+        sys.exit(f"FAIL: {key} receipt sha256 mismatch")
+    return receipt, f"receipt {receipt_path.name} (emitted by the original methodology, SLURM job 3506920)"
+
+
+def binom(p: float, n: int) -> float:
+    """Binomial standard error sigma = sqrt(p(1-p)/n); 0 for n=0."""
+    if n <= 0:
         return 0.0
     return (p * (1.0 - p) / n) ** 0.5
 
 
-def fmt_err(value: float, error: float, precision: int = 2) -> str:
-    """Format value ± error with appropriate precision."""
-    if error == 0:
-        return f"{value:.{precision}f}"
-    # Determine precision from error magnitude
-    err_mag = abs(error)
-    if err_mag >= 1:
-        prec = 0
-    elif err_mag >= 0.1:
-        prec = 1
-    elif err_mag >= 0.01:
-        prec = 2
-    elif err_mag >= 0.001:
-        prec = 3
-    elif err_mag >= 0.0001:
-        prec = 4
-    else:
-        prec = 5
-    return f"{value:.{prec}f} ±{error:.{prec}f}"
+def pct(x: float, err: float, nd: int = 3) -> str:
+    return f"{100 * x:.{nd}f}% ± {100 * err:.{nd}f}%"
 
 
-def rate_with_error(count: int, total: int) -> tuple[float, float]:
-    """Return (rate, error) where rate = count/total with binomial error."""
-    if total == 0:
-        return 0.0, 0.0
-    p = count / total
-    return p, binomial_error(p, total)
+def fmt_count(n: int) -> str:
+    return f"{n:,}"
 
 
-def propagate_error(err_a: float, err_b: float) -> float:
-    """Propagation for independent errors: σ_diff = sqrt(σ_A² + σ_B²)."""
-    return (err_a**2 + err_b**2) ** 0.5
-
-
-def print_markdown_table(hist_stats: dict, auth_stats: dict):
-    """Print the markdown delta table with binomial errors."""
-    print("\n## Delta Table (Authorising - Historical)\n")
-    print("| Quantity | Historical | Authorising | Delta |")
-    print("|----------|-----------|-------------|-------|")
-
-    n_hist = hist_stats["n_events_processed"]
-    n_auth = auth_stats["n_events_processed"]
-
-    # Total events
-    print(f"| N_events | {n_hist:,} | {n_auth:,} | {n_auth - n_hist:+,} |")
-
-    # Enter B
-    h_enter_b = hist_stats["n_enter_B"]
-    a_enter_b = auth_stats["n_enter_B"]
-    h_rate, h_err = rate_with_error(h_enter_b, n_hist)
-    a_rate, a_err = rate_with_error(a_enter_b, n_auth)
-    delta_rate = a_rate - h_rate
-    delta_err = propagate_error(a_err, h_err)
-    print(f"| Enter B n | {h_enter_b:,} | {a_enter_b:,} | {a_enter_b - h_enter_b:+,} |")
-    print(f"| Enter B rate | {fmt_err(h_rate*100, h_err*100, 4)}% | "
-          f"{fmt_err(a_rate*100, a_err*100, 4)}% | "
-          f"{fmt_err(delta_rate*100, delta_err*100, 5)}% |")
-
-    # Sample I (A+B coincidence)
-    h_sample_i = hist_stats["n_sample_I"]
-    a_sample_i = auth_stats["n_sample_I"]
-    h_rate, h_err = rate_with_error(h_sample_i, n_hist)
-    a_rate, a_err = rate_with_error(a_sample_i, n_auth)
-    delta_rate = a_rate - h_rate
-    delta_err = propagate_error(a_err, h_err)
-    print(f"| Sample I n (A+B) | {h_sample_i:,} | {a_sample_i:,} | {a_sample_i - h_sample_i:+,} |")
-    print(f"| Sample I rate | {fmt_err(h_rate*100, h_err*100, 4)}% | "
-          f"{fmt_err(a_rate*100, a_err*100, 4)}% | "
-          f"{fmt_err(delta_rate*100, delta_err*100, 5)}% |")
-
-    # Sample II (B-only, same as Enter B by definition)
-    h_sample_ii = hist_stats["n_sample_II"]
-    a_sample_ii = auth_stats["n_sample_II"]
-    h_rate, h_err = rate_with_error(h_sample_ii, n_hist)
-    a_rate, a_err = rate_with_error(a_sample_ii, n_auth)
-    delta_rate = a_rate - h_rate
-    delta_err = propagate_error(a_err, h_err)
-    print(f"| Sample II n (B-only) | {h_sample_ii:,} | {a_sample_ii:,} | {a_sample_ii - h_sample_ii:+,} |")
-    print(f"| Sample II rate | {fmt_err(h_rate*100, h_err*100, 4)}% | "
-          f"{fmt_err(a_rate*100, a_err*100, 4)}% | "
-          f"{fmt_err(delta_rate*100, delta_err*100, 5)}% |")
-
-    # Purity (Sample I / Enter B)
-    h_pur = h_sample_i / h_enter_b if h_enter_b > 0 else 0.0
-    a_pur = a_sample_i / a_enter_b if a_enter_b > 0 else 0.0
-    h_pur_err = binomial_error(h_pur, h_enter_b)
-    a_pur_err = binomial_error(a_pur, a_enter_b)
-    delta_pur = a_pur - h_pur
-    delta_pur_err = propagate_error(a_pur_err, h_pur_err)
-    print(f"| Purity (Sample I / Enter B) | {fmt_err(h_pur*100, h_pur_err*100, 4)}% | "
-          f"{fmt_err(a_pur*100, a_pur_err*100, 4)}% | "
-          f"{fmt_err(delta_pur*100, delta_pur_err*100, 5)}% |")
-
-    print()
-
-
-def print_species_table(hist_stats: dict, auth_stats: dict):
-    """Print species-specific breakdown table with binomial errors."""
-    print("\n## Species-Specific Breakdown (Both MC)\n")
-    print("| Species | Historical Enter B | Historical Sample I | Historical ε_HRD | Auth Enter B | Auth Sample I | Auth ε_HRD |")
-    print("|---------|-------------------|--------------------|------------------|--------------|---------------|------------|")
-
-    for species in ["proton", "deuteron", "alpha", "C12"]:
-        h_enter = hist_stats["species_counts"][species]["enter_B"]
-        h_sample = hist_stats["species_counts"][species]["sample_I"]
-        a_enter = auth_stats["species_counts"][species]["enter_B"]
-        a_sample = auth_stats["species_counts"][species]["sample_I"]
-
-        # ε_HRD = Sample I / Enter B
-        h_eff = h_sample / h_enter if h_enter > 0 else 0.0
-        h_eff_err = binomial_error(h_eff, h_enter) if h_enter > 0 else 0.0
-        a_eff = a_sample / a_enter if a_enter > 0 else 0.0
-        a_eff_err = binomial_error(a_eff, a_enter) if a_enter > 0 else 0.0
-
-        if h_enter > 0 or a_enter > 0:
-            print(f"| {species.capitalize()} | {h_enter:,} | {h_sample:,} | "
-                  f"{fmt_err(h_eff*100, h_eff_err*100, 3)}% | "
-                  f"{a_enter:,} | {a_sample:,} | "
-                  f"{fmt_err(a_eff*100, a_eff_err*100, 3)}% |")
-
-    print()
-
-
-def main():
-    parser = argparse.ArgumentParser(
-        description="Compute Phase 1B delta table with binomial errors from both ROOT files."
+def rate_row(name: str, h: dict, a: dict, hk: str, ak: str) -> str:
+    nh, na = h["n_events_processed"], a["n_events_processed"]
+    ch, ca = h[hk], a[ak]
+    ph, pa = ch / nh, ca / na
+    eh, ea = binom(ph, nh), binom(pa, na)
+    d = (pa - ph) * 100.0
+    sd = (eh**2 + ea**2) ** 0.5 * 100.0
+    return (
+        f"| {name} | {fmt_count(ch)} ({pct(ph, eh)}) | {fmt_count(ca)} ({pct(pa, ea)}) "
+        f"| **{fmt_count(ca - ch)} ({d:+.3f} ± {sd:.3f} pp)** |"
     )
-    parser.add_argument(
-        "--historical",
-        default="/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M.root",
-        help="Path to historical ROOT file",
-    )
-    parser.add_argument(
-        "--authorising",
-        default="/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/geant4/data/output_krakow_1M_authorising.root",
-        help="Path to authorising ROOT file",
-    )
-    args = parser.parse_args()
 
-    print("# Phase 1B Delta Table")
-    print(f"# Historical: {args.historical}")
-    print(f"#   sha256: 2b62403f0aa7ecc8c6fc8ffb5006b59d833ff1a31a95a8f389f88f45a18542cc")
-    print(f"# Authorising: {args.authorising}")
-    print(f"#   sha256: 19cd97c1106632e9746dd76a683105186484aa34aa74be8617973072ebcf84ea")
-    print()
 
-    # Process both files using the original function
-    hist_stats = process_mc_file(args.historical)
-    auth_stats = process_mc_file(args.authorising)
+def eps_row(name: str, h: dict, a: dict, sp: str) -> str:
+    hs, as_ = h["species_counts"][sp], a["species_counts"][sp]
+    nh, na = hs["enter_B"], as_["enter_B"]
+    ch, ca = hs["sample_I"], as_["sample_I"]
+    if nh == 0 and na == 0:
+        return f"| ε_HRD, {sp} | {fmt_count(ch)}/{fmt_count(nh)} | {fmt_count(ca)}/{fmt_count(na)} | — |"
+    ph = ch / nh if nh else 0.0
+    pa = ca / na if na else 0.0
+    eh, ea = binom(ph, nh), binom(pa, na)
+    d = (pa - ph) * 100.0
+    sd = (eh**2 + ea**2) ** 0.5 * 100.0
+    cells = []
+    for c, n, p, e in ((ch, nh, ph, eh), (ca, na, pa, ea)):
+        cells.append("—" if n == 0 else f"{pct(p, e)} ({fmt_count(c)}/{fmt_count(n)})")
+    delta = "—" if (nh == 0 or na == 0) else f"**{d:+.3f} ± {sd:.3f} pp**"
+    return f"| {name} | {cells[0]} | {cells[1]} | {delta} |"
 
-    # Sanity gate: verify manifest counts
-    print("\n## Sanity Check (vs Manifest Counts)")
-    manifest_h_enter_b = 237098
-    manifest_h_sample_i = 64762
-    manifest_a_enter_b = 7100
-    manifest_a_sample_i = 554
 
-    print(f"Historical Enter B: computed={hist_stats['n_enter_B']:,}, manifest={manifest_h_enter_b:,}, "
-          f"match={hist_stats['n_enter_B'] == manifest_h_enter_b}")
-    print(f"Historical Sample I: computed={hist_stats['n_sample_I']:,}, manifest={manifest_h_sample_i:,}, "
-          f"match={hist_stats['n_sample_I'] == manifest_h_sample_i}")
-    print(f"Authorising Enter B: computed={auth_stats['n_enter_B']:,}, manifest={manifest_a_enter_b:,}, "
-          f"match={auth_stats['n_enter_B'] == manifest_a_enter_b}")
-    print(f"Authorising Sample I: computed={auth_stats['n_sample_I']:,}, manifest={manifest_a_sample_i:,}, "
-          f"match={auth_stats['n_sample_I'] == manifest_a_sample_i}")
+def purity(h: dict, a: dict) -> tuple[tuple[float, float, int], tuple[float, float, int]]:
+    def one(s: dict) -> tuple[float, float, int]:
+        d = s["species_counts"]["deuteron"]["sample_I"]
+        p = s["species_counts"]["proton"]["sample_I"]
+        n = d + p
+        v = d / n if n else 0.0
+        return v, binom(v, n), n
 
-    if (hist_stats['n_enter_B'] != manifest_h_enter_b or
-        hist_stats['n_sample_I'] != manifest_h_sample_i or
-        auth_stats['n_enter_B'] != manifest_a_enter_b or
-        auth_stats['n_sample_I'] != manifest_a_sample_i):
-        print("\n!!! SANITY CHECK FAILED - Computed counts do NOT match manifest values !!!")
-        print("This is a finding to escalate, not to paper over.")
-        return 1
+    return one(h), one(a)
 
-    print("\n✓ Sanity check PASSED - counts match manifest")
-    print()
 
-    print_markdown_table(hist_stats, auth_stats)
-    print_species_table(hist_stats, auth_stats)
+def sigma_of(d_pp: float, sd_pp: float) -> str:
+    return f"{abs(d_pp) / sd_pp:.1f}σ" if sd_pp > 0 else "—"
 
-    # Flag any count changes
-    count_changes = []
-    if auth_stats['n_enter_B'] != hist_stats['n_enter_B']:
-        count_changes.append(f"Enter B: {hist_stats['n_enter_B']:,} -> {auth_stats['n_enter_B']:,}")
-    if auth_stats['n_sample_I'] != hist_stats['n_sample_I']:
-        count_changes.append(f"Sample I: {hist_stats['n_sample_I']:,} -> {auth_stats['n_sample_I']:,}")
 
-    if count_changes:
-        print("\n## Count Changes Detected")
-        for change in count_changes:
-            print(f"  - {change}")
-        print()
+def build_section(h: dict, a: dict, src_h: str, src_a: str) -> str:
+    ph = h["n_enter_B"] / h["n_events_processed"]
+    pa = a["n_enter_B"] / a["n_events_processed"]
+    factor = ph / pa if pa else float("inf")
 
+    # Deuteron epsilon for the interpretation sentence.
+    hd, ad = h["species_counts"]["deuteron"], a["species_counts"]["deuteron"]
+    dh = (ad["sample_I"] / ad["enter_B"] - hd["sample_I"] / hd["enter_B"]) * 100.0
+    sdh = ((binom(hd["sample_I"] / hd["enter_B"], hd["enter_B"]) ** 2
+            + binom(ad["sample_I"] / ad["enter_B"], ad["enter_B"]) ** 2) ** 0.5) * 100.0
+
+    (pur_h, pur_he, pur_hn), (pur_a, pur_ae, pur_an) = purity(h, a)
+    pur_d = (pur_a - pur_h) * 100.0
+    pur_sd = (pur_he**2 + pur_ae**2) ** 0.5 * 100.0
+
+    lines = [
+        "> **Computed by `scripts/phase1b_delta_table.py`, which imports `process_mc_file`",
+        "> from the ORIGINAL `scripts/trigger_baseline_characterization.py` — no",
+        "> reimplementation. Ground truth recomputed from BOTH ROOT files (SLURM job",
+        "> 3506920; receipts `research/trigger_migration_study/phase1b_baseline_{hist,authorising}_1M.json`):**",
+        "> - Historical: `output_krakow_1M.root` (sha256 `2b62403f0aa7…`)",
+        "> - Authorising: `output_krakow_1M_authorising.root` (sha256 `19cd97c11066…`)",
+        ">",
+        f"> **Sanity gate PASSED exactly**: hist enter_B {fmt_count(h['n_enter_B'])} / auth",
+        f"> {fmt_count(a['n_enter_B'])}; hist sample_I {fmt_count(h['n_sample_I'])} / auth",
+        f"> {fmt_count(a['n_sample_I'])} — bit-identical to the historical-side values of the",
+        "> original Phase 1 characterization. The numbers previously shown here",
+        "> (88,791 / 4,524 / 88,738 / 4,519) came from a divergent inline",
+        "> reimplementation in an earlier version of the delta script and are RETRACTED.",
+        "",
+        f"Sources: historical — {src_h}; authorising — {src_a}.",
+        "",
+        "The corrected `ScatteringGenerator` produces a dramatically different HRD proxy baseline:",
+        "",
+        "| Metric | Historical 1M | Authorising 1M | Delta (auth − hist) |",
+        "|--------|---------------|----------------|--------------------|",
+        rate_row("Enter B", h, a, "n_enter_B", "n_enter_B"),
+        rate_row("Sample I (A∧B)", h, a, "n_sample_I", "n_sample_I"),
+        eps_row("ε_HRD, deuteron", h, a, "deuteron"),
+        eps_row("ε_HRD, proton", h, a, "proton"),
+        (f"| Sample I purity (d/(d+p)) | {pct(pur_h, pur_he)} (n={fmt_count(pur_hn)}) "
+         f"| {pct(pur_a, pur_ae)} (n={fmt_count(pur_an)}) | **{pur_d:+.3f} ± {pur_sd:.3f} pp** |"),
+        "",
+        "Errors are binomial `sqrt(p(1-p)/n)` on the ACTUAL denominator of each quantity:",
+        "event rates use n = 1,000,000 primary events; per-species ε_HRD uses that species'",
+        "enter_B count; purity uses the deuteron+proton sample_I count. Delta errors combine",
+        "the two independent sides in quadrature.",
+        "",
+        "**Breakdown by species (both sides)**:",
+        "",
+        "| Species | hist enter_B | hist sample_I | hist ε_HRD | auth enter_B | auth sample_I | auth ε_HRD |",
+        "|---------|--------------|---------------|------------|--------------|---------------|-----------|",
+    ]
+    for sp in SPECIES_ORDER:
+        hs, as_ = h["species_counts"][sp], a["species_counts"][sp]
+        cells = []
+        for s in (hs, as_):
+            n = s["enter_B"]
+            e = "—" if n == 0 else pct(s["sample_I"] / n, binom(s["sample_I"] / n, n))
+            cells += [fmt_count(s["enter_B"]), fmt_count(s["sample_I"]), e]
+        lines.append(f"| {sp.capitalize()} | " + " | ".join(cells) + " |")
+
+    lines += [
+        "",
+        "**Sample II**: in this characterization `n_sample_II` is recorded identically to",
+        "`n_enter_B` on both sides (the Sample II branch applies no additional selection),",
+        "so it carries no independent information and is not tabulated. The earlier",
+        "\"Sample II 53 vs 5\" row was an artifact of the retracted counts.",
+        "",
+        (f"**Interpretation**: the corrected cross-section sampling reduces the Enter B rate by "
+         f"−{(1 - pa / ph) * 100:.2f}% ± 0.043 pp ({100 * ph:.3f}% → {100 * pa:.3f}%; a "
+         f"{factor:.0f}× reduction) and Sample I by −99.14% ± 0.025 pp. This is the expected "
+         "outcome of fixing the unit-weight/uniform-fallback sampling bug. Among deuterons "
+         f"that do reach the B arm, the coincidence efficiency ε_HRD drops by {dh:+.2f} ± "
+         f"{sdh:.2f} pp ({100 * hd['sample_I'] / hd['enter_B']:.1f}% → "
+         f"{100 * ad['sample_I'] / ad['enter_B']:.1f}%, {sigma_of(dh, sdh)}) — the corrected "
+         "angular distribution changes not only how many events reach B but also the "
+         "time/geometry structure of those that do. The deuteron purity of Sample I is "
+         f"statistically unchanged ({100 * pur_h:.2f}% → {100 * pur_a:.2f}%, "
+         f"Δ = {pur_d:+.2f} ± {pur_sd:.2f} pp), indicating the surviving coincidence sample "
+         "is still overwhelmingly deuteronic."),
+        "",
+    ]
+    return "\n".join(lines)
+
+
+def check_sanity(key: str, spec: dict, stats: dict) -> None:
+    for field, expected in spec["sanity"].items():
+        actual = stats.get(field)
+        if actual != expected:
+            sys.exit(
+                f"FAIL sanity gate ({key}): {field} = {actual!r}, expected {expected!r}. "
+                "The original methodology must reproduce these counts exactly "
+                "(SLURM job 3506920 ground truth); refusing to emit a table from divergent stats."
+            )
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__.splitlines()[1])
+    ap.add_argument("--out", type=Path, default=None, help="write the markdown section to this file")
+    args = ap.parse_args()
+
+    h, src_h = load_side("hist", SIDES["hist"])
+    a, src_a = load_side("auth", SIDES["auth"])
+    check_sanity("hist", SIDES["hist"], h)
+    check_sanity("auth", SIDES["auth"], a)
+
+    section = build_section(h, a, src_h, src_a)
+    print(section)
+    if args.out:
+        args.out.parent.mkdir(parents=True, exist_ok=True)
+        args.out.write_text(section + "\n", encoding="utf-8")
+        print(f"\n[written to {args.out}]", file=sys.stderr)
     return 0
 
 

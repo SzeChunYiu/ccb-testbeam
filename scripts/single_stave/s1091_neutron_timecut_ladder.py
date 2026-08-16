@@ -24,8 +24,11 @@ exactly the affected (delayed-neutron) population.
             deposits that the 10 us policy keeps.
 
 Gates (pre-registered in configs/s1091_neutron_timecut_ladder.json)
-  G1 wiring-bites     1 ns policy: zero neutron steps beyond ~1 ns AND zero
-                      in-scint neutron Edep beyond it, while the 10 us policy
+  G1 wiring-bites     1 ns policy: no neutron steps beyond
+                      1 ns + wiring_step_overshoot_ns (G4 kills per-step, so a
+                      step in flight at the boundary completes one step past
+                      it; observed endpoint overshoot 2.31 ns) AND zero
+                      in-scint neutron Edep beyond 1 ns, while the 10 us policy
                       retains >= wiring_min_rows_beyond_1ns rows and > 0 MeV.
                       If the fixture itself has no >1 ns history: INCONCLUSIVE
                       (loud), never a pass.
@@ -159,6 +162,7 @@ def time_partition(ns: dict) -> dict:
 
 def wiring_gate(cut1: dict, pin: dict, ext: dict, cfg: dict) -> dict:
     eps = cfg["wiring_cut_epsilon_ns"]
+    over = cfg["wiring_step_overshoot_ns"]
     min_rows = cfg["wiring_min_rows_beyond_1ns"]
     min_edep = cfg["wiring_min_edep_MeV_beyond_1ns"]
 
@@ -167,18 +171,28 @@ def wiring_gate(cut1: dict, pin: dict, ext: dict, cfg: dict) -> dict:
         e = ns["edep_MeV"][m & (ns["in_scint"] == 1)]
         return int(m.sum()), float(e.sum())
 
-    n1, e1 = beyond(cut1, 1.0 + eps)
+    # G4NeutronTrackingCut kills per-step: a step in flight at the cut time
+    # completes, so endpoints land one step past the boundary. G1a therefore
+    # allows rows up to 1 ns + wiring_step_overshoot_ns (observed endpoint
+    # overshoot: 2.31 ns max in the 1000-event 1 GeV fixture); G1b stays
+    # strict at >1 ns because all overshoot rows carry edep=0.
+    n1, e1 = beyond(cut1, 1.0 + eps)  # rows strict-beyond kept for reporting
+    t_cut1 = cut1["t_ns"][(cut1["kind"] == 0)]
+    max_over = float(t_cut1.max()) if len(t_cut1) else 0.0
+    n1_over, _ = beyond(cut1, 1.0 + over)
     np_, ep = beyond(pin, 1.0)
     ne, ee = beyond(ext, 1.0)
     late1 = float(cut1["edep_MeV"][(cut1["kind"] == 1)].sum())
     latep = float(pin["edep_MeV"][(pin["kind"] == 1)].sum())
     latee = float(ext["edep_MeV"][(ext["kind"] == 1)].sum())
     fixture_adequate = (np_ >= min_rows) and (ep >= min_edep)
-    g1a = (n1 == 0) if fixture_adequate else None
+    g1a = (n1_over == 0) if fixture_adequate else None
     g1b = (e1 == 0.0) if fixture_adequate else None
     g1c = (latee >= latep >= late1) if fixture_adequate else None
     return {
         "rows_beyond_1ns": {"cut1ns": n1, "pin10us": np_, "ext1e9us": ne},
+        "cut1ns_max_t_ns": max_over,
+        "rows_beyond_1ns_plus_overshoot": n1_over,
         "in_scint_neutron_edep_beyond_1ns_MeV": {"cut1ns": e1, "pin10us": ep, "ext1e9us": ee},
         "late_deposit_edep_MeV": {"cut1ns": late1, "pin10us": latep, "ext1e9us": latee},
         "fixture_adequate": bool(fixture_adequate),

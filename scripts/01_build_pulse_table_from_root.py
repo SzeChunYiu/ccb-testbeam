@@ -662,30 +662,105 @@ def compare_expected(config: dict, counts_by_group: pd.DataFrame) -> pd.DataFram
 
 
 def sorted_crosscheck(config: dict) -> pd.DataFrame:
-    """Count hrdMax in sorted files for even channels only."""
+    """Like-for-like selection crosscheck + waveform identity vs the sorted-B tree.
+
+    The sorted tree stores per event: ``hrd/hrd.sample`` (baseline-subtracted,
+    sign-inverted on the odd duplicate channels per the duplicate-readout
+    convention), ``hrd/hrd.baseline`` (per-channel pedestal broadcast across
+    the channel's samples), and ``hrdMax`` (max of the sorted pipeline's OWN
+    firmware-baseline-subtracted samples). Counting ``hrdMax > cut`` is NOT
+    comparable to the raw-side pulse_schema_v1 selector (first-four-median
+    baseline): on run 44 hrdMax exceeds the raw-path amplitude by a mean
+    +149 ADC, and its near-threshold selection counts exceed the raw counts on
+    every run — two different estimators, not two different datasets.
+
+    This crosscheck instead RECONSTRUCTS the absolute word frame from the
+    sorted tree (``baseline + polarity * sample``, polarity from the SAME
+    authorising map as scan_raw) and (a) verifies cell-exact identity with the
+    raw HRDv frame of the same EVT number — the staging-integrity detector
+    that would have caught the 128-word truncation desync (#952) — and
+    (b) runs the identical pulse_quantities selector on the reconstructed
+    words, so the per-run counts are comparable at zero tolerance.
+    """
     sorted_b_dir = Path(config["sorted_b_dir"])
+    raw_root_dir = Path(config["raw_root_dir"])
     cut = float(config["amplitude_cut_adc"])
+    baseline_indices = [int(i) for i in config["baseline_samples"]]
+    samples_per_channel = int(config["samples_per_channel"])
+    n_channels = 8
     staves = {name: int(idx) for name, idx in config["staves"].items()}
+    stave_names = list(staves.keys())
+    stave_channels = np.asarray([staves[name] for name in stave_names], dtype=int)
+    full_polarity, _polarity_meta = resolve_analysis_polarity(n_channels, config)
+    stave_polarity = full_polarity[stave_channels]
+    # Per-channel polarity repeated across that channel's sample slots.
+    sign_row = np.repeat(np.asarray(full_polarity, dtype=np.int64), samples_per_channel)
     rows = []
     for run in configured_runs(config):
         path = sorted_file(sorted_b_dir, run)
         if not path.exists():
             raise FileNotFoundError(f"Configured run {run} is missing: {path}")
+        raw_path = raw_file(raw_root_dir, run)
+        if not raw_path.exists():
+            raise FileNotFoundError(f"Configured run {run} is missing: {raw_path}")
         counts = defaultdict(int)
         events_with_selected = 0
-        tree = uproot.open(path)["tree"]
-        for batch in tree.iterate(["hrdMax"], step_size=10000, library="np"):
-            for values in batch["hrdMax"]:
-                arr = np.asarray(values, dtype=float)
-                selected = 0
-                for stave, channel in staves.items():
-                    if arr[channel] > cut:
-                        counts[stave] += 1
-                        selected += 1
-                if selected:
-                    events_with_selected += 1
-        row = {"run": run, "events_with_selected": events_with_selected, "selected_pulses": sum(counts.values())}
-        row.update({stave: int(counts[stave]) for stave in staves})
+        events_total = 0
+        exact_events = 0
+        mismatch_cells = 0
+        evt_mismatch = 0
+        raw_tree = uproot.open(raw_path)["h101"]
+        sorted_tree = uproot.open(path)["tree"]
+        n_raw, n_sorted = raw_tree.num_entries, sorted_tree.num_entries
+        raw_iter = raw_tree.iterate(["EVT", "HRDv"], step_size=10000, library="np")
+        sorted_iter = sorted_tree.iterate(
+            ["hrdEvtNo", "hrd/hrd.sample", "hrd/hrd.baseline"],
+            step_size=10000,
+            library="np",
+        )
+        while True:
+            rb = next(raw_iter, None)
+            sb = next(sorted_iter, None)
+            if rb is None or sb is None:
+                break
+            r_evt = np.asarray(rb["EVT"])
+            s_evt = np.asarray(sb["hrdEvtNo"])
+            n_pair = min(len(r_evt), len(s_evt))
+            evt_mismatch += abs(len(r_evt) - len(s_evt))
+            evt_mismatch += int((r_evt[:n_pair] != s_evt[:n_pair]).sum())
+            R = np.vstack([np.asarray(w, dtype=np.int64) for w in rb["HRDv"][:n_pair]])
+            S = np.vstack([np.asarray(x, dtype=np.int64) for x in sb["hrd/hrd.sample"][:n_pair]])
+            B = np.vstack([np.asarray(x, dtype=np.int64) for x in sb["hrd/hrd.baseline"][:n_pair]])
+            if R.shape[1] != sign_row.size or S.shape[1] != sign_row.size:
+                raise ValueError(
+                    "sorted crosscheck width contract (#952): expected "
+                    f"{sign_row.size} words/event ({n_channels}x{samples_per_channel}), "
+                    f"got raw {R.shape[1]} / sorted {S.shape[1]}"
+                )
+            reconstructed = B + sign_row * S
+            mismatch_cells += int((reconstructed != R).sum())
+            exact_events += int((reconstructed == R).all(axis=1).sum())
+            events_total += n_pair
+            waveforms = reconstructed.astype(np.float64).reshape(n_pair, n_channels, samples_per_channel)
+            waveforms = waveforms[:, stave_channels, :]
+            _, amplitude, _, _ = pulse_quantities(
+                waveforms, baseline_indices, polarity=stave_polarity
+            )
+            selected_mask = amplitude > cut
+            events_with_selected += int(selected_mask.any(axis=1).sum())
+            for idx, stave in enumerate(stave_names):
+                counts[stave] += int(selected_mask[:, idx].sum())
+        evt_mismatch += abs(n_raw - n_sorted)
+        row = {
+            "run": run,
+            "events_with_selected": events_with_selected,
+            "selected_pulses": sum(counts.values()),
+            "identity_events": events_total,
+            "identity_exact_events": exact_events,
+            "identity_mismatch_cells": mismatch_cells,
+            "identity_evt_mismatches": evt_mismatch,
+        }
+        row.update({stave: int(counts[stave]) for stave in stave_names})
         rows.append(row)
     return pd.DataFrame(rows)
 
@@ -1194,16 +1269,25 @@ def atomic_publish(staging_dir: Path, target_dir: Path) -> None:
     Writes go to a sibling temp dir that is renamed over the target only after
     all gates pass. On any left-over staging from a prior interrupted run the
     rename is still atomic (POSIX rename). The canonical namespace is only
-    touched by this transaction, never by direct writes.
+    touched by this transaction, never by direct writes. Stale staging dirs
+    from interrupted prior runs are swept once the new set is in place.
     """
     target_dir.parent.mkdir(parents=True, exist_ok=True)
-    tmp = target_dir.parent / f".{target_dir.name}.staging-{os.getpid()}"
+    # The publish temp dir MUST NOT share main()'s staging-name formula
+    # (`.{name}.staging-{pid}`): sharing it made the rmtree guard below delete
+    # the run's own staging before the rename, so every authorising publish
+    # self-destructed (found on the #952 corrected-staging rerun, 2026-08-16).
+    tmp = target_dir.parent / f".{target_dir.name}.publish-{os.getpid()}"
     if tmp.exists():
         shutil.rmtree(tmp)
     staging_dir.rename(tmp)
     if target_dir.exists():
         shutil.rmtree(target_dir)
     tmp.rename(target_dir)
+    # Sweep staging dirs left over from interrupted prior runs; the canonical
+    # namespace is now authoritative so none of them can become visible.
+    for stale in target_dir.parent.glob(f".{target_dir.name}.staging-*"):
+        shutil.rmtree(stale, ignore_errors=True)
 
 
 def write_manifest(out_dir: Path, config_path: Path, comparison: pd.DataFrame, selected_path: Path,
@@ -1221,7 +1305,12 @@ model-bound manifest/pointer). An authorising run requires every P0 gate
     non-authorising condition, never fabricated as a measured PASS.
     """
     passed = bool(comparison["pass"].all()) if len(comparison) else False
-    authorising = bool(canonical and passed and gate_states.get("sorted_even_channel_crosscheck") == GATE_PASS)
+    authorising = bool(
+        canonical
+        and passed
+        and gate_states.get("sorted_even_channel_crosscheck") == GATE_PASS
+        and gate_states.get("sorted_waveform_identity") == GATE_PASS
+    )
     manifest = {
         "config": str(config_path),
         "schema_version": SCHEMA_VERSION,
@@ -1357,13 +1446,27 @@ def main() -> int:
         sorted_gate_pass = True
     else:
         sorted_counts = sorted_crosscheck(config)
+        identity_cols = [
+            "identity_events",
+            "identity_exact_events",
+            "identity_mismatch_cells",
+            "identity_evt_mismatches",
+        ]
         sorted_compare = counts_by_run[["run", "selected_pulses", "B2", "B4", "B6", "B8"]].merge(
-            sorted_counts[["run", "selected_pulses", "B2", "B4", "B6", "B8"]],
+            sorted_counts[["run", "selected_pulses", "B2", "B4", "B6", "B8"] + identity_cols],
             on="run",
             suffixes=("_raw", "_sorted_even"),
         )
         sorted_diff = sorted_compare["selected_pulses_raw"] - sorted_compare["selected_pulses_sorted_even"]
-        sorted_gate_pass = bool((sorted_diff.abs() <= 0).all())
+        # Identity gate (#952): the absolute words reconstructed from the sorted
+        # tree must equal the raw HRDv frame cell for cell and EVT numbers must
+        # align 1:1. Any mismatch is exactly the staging-desync failure mode
+        # (128-word truncation read as 8x16) this gate exists to catch.
+        identity_pass = bool(
+            (sorted_counts["identity_mismatch_cells"] == 0).all()
+            and (sorted_counts["identity_evt_mismatches"] == 0).all()
+        )
+        sorted_gate_pass = identity_pass and bool((sorted_diff.abs() <= 0).all())
         sorted_compare["gate_state"] = GATE_PASS if sorted_gate_pass else GATE_FAIL
 
 # ---- All gates pass? ----
@@ -1406,11 +1509,14 @@ def main() -> int:
     # structurally PASS here (the selected table is written by this selector).
     if args.skip_sorted or not Path(config.get("sorted_b_dir", "")).exists():
         sorted_gate_state = GATE_NOT_RUN_MISSING_INPUT
+        sorted_identity_state = GATE_NOT_RUN_MISSING_INPUT
     else:
         sorted_gate_state = GATE_PASS if sorted_gate_pass else GATE_FAIL
+        sorted_identity_state = GATE_PASS if identity_pass else GATE_FAIL
     gate_states = {
         "count_match": GATE_PASS if fixed_count_pass else GATE_FAIL,
         "sorted_even_channel_crosscheck": sorted_gate_state,
+        "sorted_waveform_identity": sorted_identity_state,
         "pulse_schema_v1": GATE_PASS,
     }
 
@@ -1419,6 +1525,7 @@ def main() -> int:
     authorising = (
         bool(comparison["pass"].all())
         and gate_states["sorted_even_channel_crosscheck"] == GATE_PASS
+        and gate_states["sorted_waveform_identity"] == GATE_PASS
         and gate_states["pulse_schema_v1"] == GATE_PASS
     )
 

@@ -1,0 +1,3 @@
+NEW S61c saturation recovery calibration transfer with pile-up and pedestal nuisance
+
+Compare a traditional censored-response likelihood and monotone spline saturation correction against ridge, gradient-boosted trees, MLP, 1D-CNN, and transformer models where sequence context is useful. Measure how saturated leading samples, pile-up overlap, pedestal memory, and pulse-shape taxonomy affect recovered energy and PID stability. Use artificially clipped clean pulses plus real high-ADC candidates; report run/block bootstrap CIs for charge bias, energy ordering, PID AUC/PR, pile-up recovery error, saturation-knee location, and transfer degradation across samples.

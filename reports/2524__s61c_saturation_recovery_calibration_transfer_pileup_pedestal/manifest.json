@@ -1,0 +1,32 @@
+{
+  "ticket_id": "2524",
+  "worker": "testbeam-laptop-1",
+  "script": "scripts/ticket_2524_s61c_saturation_transfer_pedestal_pileup_benchmark.py",
+  "created_unix": 1786908834.0608523,
+  "source": "reports/1783809265.5764.0f2a2dda__s29a_digitized_g4_multitask_truth_benchmark",
+  "outputs_sha256": {
+    "REPORT.md": "51f5f28b48625261c30601b5dcb16a0f7cd59d7228256bc90224b1c88450afda",
+    "boundary_displacement.csv": "e5c2b1303b8942a1dbf17ec9ec474f89f773ef7d1b6b3e01f3d374438ccc448d",
+    "claimed_ticket.txt": "5a46dc705ac4c1aab0726918aee5e630f69b7c9df55a1e777b376260d213b811",
+    "claimed_ticket_body.txt": "fd5fab78a747edd8d92cb9cabd6e0092e8d76d4200332c0e447894dc75411442",
+    "input_sha256.csv": "04828a38e65391f82be14fd48386bee97d33ee08273b163047b7e6b8b9b4cd6e",
+    "method_metrics.csv": "d4c71a2ef62890a0669da29d55a1a69641f81b4b9d7985b551258080534edd5e",
+    "method_pair_deltas_vs_traditional.csv": "306652e7ded03822b0e8da564a4c4aee6abe2347b26c20d67cfbcfa914685e74",
+    "pedestal_hysteresis_sensitivity.csv": "76eca732020c505290d03b876cca20543dc81f7cc91351739efded3b55faa766",
+    "pid_confusion_by_stratum.csv": "56e48feb8c1d4d624e8d5383299dfe2ce29d8d3c6654d8e74eb6e333bd2965d2",
+    "reproduction_counts_by_run.csv": "6f5a2c5fbd8805fdd462204535903eae8479abf31059c5d933ab988b4343ac5b",
+    "reproduction_match_table.csv": "c8bfba74c8d39f9d9adb02559bcd6b2a433d75285e641530f69757974674a53c",
+    "result.json": "db3facb435ff3f9fc7797230236ed8332a4ae333c19fec5307741cf68a9d0891",
+    "run_heldout_metrics.csv": "b3561043b54b9ea9bf79866eb9b90d1aa24494a62edb3fb5b5e9963095dda060",
+    "s61c_method_pair_deltas_vs_traditional.csv": "a391688be54522ef0c96f4592ddbfa15e57feffb55a5d933a11bd4f4d8e05967",
+    "s61c_transfer_degradation.csv": "6f6a428bec3c27c71ccdcf2249aba1a6b2179e723c009dc8c0db5b05e4fdca9e",
+    "s61c_transfer_strata_metrics.csv": "1797f60a97e0a5a24e319183ad0a96365795c8af25291d596d0dd2607ee58176",
+    "shortcut_diagnostics.csv": "7c9fba4e4f349796ade4c1994dc323c49f8ac90a16602141ebf898b839d0b9be",
+    "source_strata_metrics.csv": "df037764aa06a26bd05a3b29a68ac8234ce81a947142463c6a927bd9ac93b37c"
+  },
+  "issue_number": 2524,
+  "claim_command_run_once": "tn-ticket claim testbeam-laptop-1 --project testbeam",
+  "claim_command_output": "# null / null / null",
+  "manual_claim_recovery": "gh issue edit 2524 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-1 --remove-label factory:open",
+  "done_command": "tn-ticket done 2524"
+}

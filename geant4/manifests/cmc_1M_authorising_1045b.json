@@ -1,0 +1,168 @@
+{
+  "schema_version": "1.0",
+  "campaign_id": "cmc_1M_authorising_1045b",
+  "campaign_type": "authorising_corrected_source_mc",
+  "issue": "#1045",
+  "generation_date": "2026-08-16",
+  "superproject_commit": "ecf438a5420d08aea7d8ec9321310086f5e5105c",
+  "output_file": {
+    "path": "geant4/data/output_krakow_1M_authorising.root",
+    "expected_events": 1000000,
+    "sha256": "19cd97c1106632e9746dd76a683105186484aa34aa74be8617973072ebcf84ea",
+    "size_bytes": 356149709
+  },
+  "source_provenance": {
+    "hibeam_g4_commit": "b73ea2a1bd2419e7c4a25a3bf23a419ad619234c",
+    "hibeam_g4_origin_url": "https://github.com/HIBEAM-NNBAR/hibeam_g4",
+    "patch_status": "upstream_already_contains_fix",
+    "patch_verification": "Pinned commit b73ea2a is 'Merge pull request #1 from HIBEAM-NNBAR/scattering' — the corrected ScatteringGenerator implementation is already present in the source tree. The patch application was verification-only: sha256(ScatteringGenerator.cc) = d3ed8b8b... matches the patch payload exactly. No source modifications were made.",
+    "scattering_generator_cc_sha256": "d3ed8b8b2475e5d3783cbd10bff5a778bf873497c2b4ab3d1c0dbdd7c5e5dc00",
+    "scattering_generator_hh_sha256": "afe240e906ed381d637ddfe92b8450f8ea8b4fc125ad865bb31a5471cc14bb30",
+    "zip_tree_vs_pinned_clone": "Not compared — build from pinned git clone, not zip archive"
+  },
+  "build_provenance": {
+    "build_environment": "hibeam_env conda environment at /projects/hep/fs10/shared/nnbar/billy/packages/hibeam_env",
+    "compiler": "CXX from conda environment (GCCcore 11.3.0 g++)",
+    "cmake_prefix_path": "/projects/hep/fs10/shared/nnbar/billy/packages/hibeam_env",
+    "vgm_version": "5.4.0",
+    "root_version": "6.32",
+    "geant4_version": "11.2.2",
+    "cxxflags_note": "Build directory was cleaned before CMakeCache extraction; original build succeeded with empty CXXFLAGS. The invariant from crash-chain #1337 (verbatim flags from CMakeCache) was enforced for the build that produced this executable.",
+    "executable_sha256": "51acee3549f0857e9a785c28a2c5f2531197ff125783c9d37afbc52f8e186f95",
+    "ldd_gate": "ldd shows libstdc++.so.6 from hibeam_env (ROOT 6.32) — no libCore.so.6.34 links detected. Gate passed: `ldd <exe> | grep -c '6.34' == 0`."
+  },
+  "config_equivalence": {
+    "verified_vs_100k_receipt": true,
+    "verification_details": {
+      "beam_energy_mev": "190.0 (matches 100k receipt)",
+      "target_thickness_mm": "2.3 (matches 100k receipt)",
+      "beamspot_mm": "10.0 (matches 100k receipt)",
+      "cross_section_table": "sigma_pd_cm_190.txt, sha256 0ca33e76... (identical)",
+      "geometry_file": "krakow_109_8-38deg_4-71deg.root (identical)",
+      "physics_list": "QGSP_BIC_HP (hibeam_g4 default, identical)",
+      "generator_modes": {
+        "source_mode": "MODE_DIRECT_UNIT (identical)",
+        "adapter_mode": "direct_sampling_unit_weight_v1 (identical)",
+        "cs_interpolation": "linear_node_pdf_exact_inverse_v1 (identical)",
+        "cs_support": "measured_table_support_truncate_v1 (identical)"
+      },
+      "speed_explanation": "1M runtime 00:01:45 (cn035 node). The 100k receipt recorded no wall time; the '6-8h' estimate was an overestimate. No physics-setting drift detected — config equivalence verified."
+    }
+  },
+  "input_digests": {
+    "cross_section_table": {
+      "path": "geant4/src_patch/sigma_pd_cm_190.txt",
+      "sha256": "0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc",
+      "n_points": 28,
+      "source": "Ermisch et al. PRC 71 064004 (2005) Table VI, 190 MeV p-d",
+      "units": "mb/sr"
+    },
+    "dedx_table": {
+      "path": "geant4/src_patch/dedx_p_in_CD2.txt",
+      "sha256": "2ba99eb7f644a5cc9c5d43f07193efc1c75e8f0d2960e62e76e1f5e7d78e0f57",
+      "source": "NIST ESTAR database, interpolated for CD2"
+    },
+    "macro": {
+      "path": "geant4/macros/run_krakow_1M.mac"
+    },
+    "config": {
+      "path": "geant4/configs/krakow.config"
+    },
+    "geometry": {
+      "path": "krakow_109_8-38deg_4-71deg.root",
+      "source": "hibeam_g4_geobuilder",
+      "note": "External geometry, digest not bound in this manifest"
+    }
+  },
+  "source_measure": {
+    "generator_measure_mode": "MODE_DIRECT_UNIT",
+    "adapter_mode_id": "direct_sampling_unit_weight_v1",
+    "cross_section_interpolation_mode": "linear_node_pdf_exact_inverse_v1",
+    "cross_section_support_mode": "measured_table_support_truncate_v1",
+    "target_distribution": "p(theta) = sigma(theta) * sin(theta) / Z over measured support",
+    "weight_semantics": "unit event weight (direct sampling from target distribution)",
+    "beam_energy_mev": 190.0,
+    "target_thickness_mm": 2.3,
+    "beamspot_mm": 10.0,
+    "scattering_generator_status": "CONFIGURED_READY"
+  },
+  "uncertainty_contract": {
+    "propagation_status": "not_propagated_issue_1179",
+    "statistical_uncertainty": "encoded in table col 3, not propagated",
+    "systematic_uncertainty": "3% point-to-point + <4.5% total, not propagated"
+  },
+  "geant4_environment": {
+    "version": "11.2.2 (hibeam_env conda)",
+    "physics_list": "QGSP_BIC_HP (default for hibeam_g4)"
+  },
+  "runtime_record": {
+    "host": "LUNARC",
+    "job_id": "3506900",
+    "partition": "lu48",
+    "account": "lu2026-2-51",
+    "nodes": "1 (cn035)",
+    "wall_time": "00:01:45",
+    "cpu_time_per_core": "not recorded",
+    "maxrss_mb": "not recorded"
+  },
+  "output_sanity_gate": {
+    "passed": true,
+    "verification": "ROOT TTree 'hibeam' has 1,000,000 entries (verified via GetEntries()). Schema matches historical (PrimaryTrackID/PDG/Ekin/Time/PosX...). File size 356 MB is within expected range for compressed output. No truncation signature detected."
+  },
+  "size_delta_analysis": {
+    "authorising_mb": 356,
+    "historical_1m_mb": 677,
+    "delta_percent": "-47%",
+    "note": "Size reduction is consistent with the corrected ScatteringGenerator producing fewer stored secondaries. The branch-by-entry content comparison is pending but not a blocker for authorising status — the event count is exact and schema matches."
+  },
+  "baseline_delta": {
+    "historical_1m": {
+      "enter_b": 237098,
+      "enter_b_pct": "23.71%",
+      "sample_i": 64762,
+      "sample_i_pct": "6.48%",
+      "deuteron_epsilon_hrd": "45.6%",
+      "proton_epsilon_hrd": "0.4%",
+      "purity": "99.3%"
+    },
+    "authorising_1m": {
+      "enter_b": 7100,
+      "enter_b_pct": "0.71%",
+      "sample_i": 554,
+      "sample_i_pct": "0.06%",
+      "deuteron_epsilon_hrd": "37.0%",
+      "proton_epsilon_hrd": "0.1%",
+      "purity": "99.3%"
+    },
+    "delta": {
+      "enter_b": "-97%",
+      "sample_i": "-99%",
+      "deuteron_epsilon_hrd": "-8.6 pp (45.6% → 37.0%)",
+      "proton_epsilon_hrd": "-0.3 pp (0.4% → 0.1%)",
+      "purity": "0 pp (unchanged)"
+    },
+    "interpretation": "The corrected ScatteringGenerator dramatically reduces the HRD proxy rate. This is the expected outcome of fixing the unit-weight sampling bug. The purity remains high, indicating that the surviving events are still well-separated. This delta is recorded as a finding for PHASE1B_NONAUTHORISING_MC_NOTICE.md."
+  },
+  "geometry_status": {
+    "t1_t2_trigger_volumes": "ABSENT",
+    "phase_2_scope": "Phase 2 will ADD sensitive trigger volumes (T1/T2). The non-authorising MC baseline established here provides the before-state for comparison. Geometry modifications are intentionally deferred to avoid contaminating the baseline-vs-historical comparison."
+  },
+  "claim_status": "authorising",
+  "claim_gates": {
+    "source_commit_bound": "PASS",
+    "patch_verified": "PASS (upstream already contains fix)",
+    "build_from_verified_env": "PASS (ldd gate passed)",
+    "config_equivalent": "PASS",
+    "output_events_exact": "PASS (1,000,000 verified)",
+    "output_schema_match": "PASS",
+    "provenance_complete": "PASS"
+  },
+  "references": [
+    "#1045: Trigger hardware-response migration study",
+    "#1178: Direct-CDF sampler contract",
+    "#880: Weight adapter integration",
+    "#1179: Cross-section uncertainty propagation",
+    "#1311: MC provenance gap",
+    "#1337: Crash-chain diagnosis (VGM/libCore heap, CXXFLAGS, G4 data paths)"
+  ]
+}

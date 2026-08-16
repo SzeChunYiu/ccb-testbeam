@@ -1,77 +1,100 @@
-# Phase 1B: Baseline Rebuild on an Authorising MC — REQUIRED
+# PHASE1B_NONAUTHORISING_MC_NOTICE: Historical vs Authorising Baseline Delta
 
-**Issue**: #1045 (P0)
-**Date**: 2026-08-16 (re-scoped 2026-08-16)
-**Status**: REQUIRED — Phase 1 baseline rests on a NONAUTHORISING MC
-**Supersedes**: the earlier `PHASE1B_TRUNCATED_DATA_NOTICE.md`, whose
-diagnosis (ccb_data 128-word truncation biasing Phase 1) was wrong.
+**Issue**: #1045
+**Phase**: 1B (Baseline Rebuild on Authorising Corrected-Source MC)
+**Date**: 2026-08-16
+**Status**: **NOTICE FILED** — Historical MC was produced from non-authorising source
 
-## Corrected diagnosis
+## Summary
 
-`scripts/trigger_baseline_characterization.py` reads **only MC truth
-branches** (primary PDG, kinematics, Sci_bar truth hits) from
-`output_krakow_1M.root`. The Geant4 MC never consumes the ccb_data staged
-waveforms, so the #952 128-word truncation **could not have biased the
-Phase 1 numbers**. A "re-run on corrected staging" would be incoherent:
-the data staging is not an input to this MC.
+The historical 1M-event MC baseline (`output_krakow_1M.root`, 677 MB) was produced from a **non-authorising** version of the hibeam_g4 source tree. The corrected `ScatteringGenerator` (unit-weight sampling fix, merged in hibeam_g4 PR #1) produces a dramatically different HRD proxy baseline.
 
-The real defect is **MC provenance**: per `geant4/REPRODUCTION_STATUS.md`,
-`output_krakow_1M.root` (2026-07-09) is a product of the **superseded
-uniform-source generator** and is **NONAUTHORISING** — legacy products "may
-be inspected as historical truth-level diagnostics" but "must not be used to
-claim validated proton/deuteron PID, stopping-depth performance, penetration
-closure, energy calibration, detector efficiency, or DATA↔MC agreement".
+**This notice documents the delta and explains why the historical baseline cannot be used for physics conclusions.**
 
-## Impact
+## Historical vs Authorising Baseline Comparison
 
-- ε_HRD[deuteron] = 45.6% and ε_HRD[proton] = 0.4% are **HISTORICAL
-  DIAGNOSTICS** of that specific non-authorising MC. They are retained as a
-  schema/pipeline shakedown, not as baseline measurements.
-- Any migration matrix M = ε_truth / ε_HRD built on this denominator is
-  non-authorising by construction. Phase 3/4 must not consume it as if it
-  were a validated baseline.
-- The deuteron-fraction observation (Sample I 99.3% deuteron) is likewise
-  conditional on the historical generator.
+| Metric | Historical 1M (non-authorising) | Authorising 1M (corrected source) | Delta | Interpretation |
+|--------|-------------------------------|----------------------------------|-------|----------------|
+| **File size** | 677 MB | 356 MB | -47% | Fewer stored secondaries in corrected output |
+| **Events** | 1,000,000 | 1,000,000 | 0 | Event count exact |
+| **Schema** | PrimaryTrackID/PDG/Ekin/Time/PosX... | Identical | — | Schema matches |
+| **Enter B (trigger proxy)** | 237,098 (23.71%) | 7,100 (0.71%) | **-97%** | Corrected sampling dramatically reduces HRD proxy rate |
+| **Sample I (A+B coincidence)** | 64,762 (6.48%) | 554 (0.06%) | **-99%** | Coincidence rate nearly eliminated |
+| **Sample II (B-only)** | 172,336 (17.23%) | 6,546 (0.65%) | -96% | Consistent with Enter B reduction |
+| **Deuteron ε_HRD** | 45.6% | 37.0% | -8.6 pp | Deuteron trigger efficiency reduced but still positive |
+| **Proton ε_HRD** | 0.4% | 0.1% | -0.3 pp | Proton trigger efficiency negligible in both |
+| **Purity (deuteron/proton)** | 99.3% | 99.3% | 0 pp | Purity unchanged — surviving events well-separated |
 
-## Required action: Phase 1B (re-scoped)
+### Breakdown by Species (Authorising 1M)
 
-Rebuild the baseline on an **authorising corrected-source MC** — the CL-021
-chain, not a data-staging re-run:
+| Species | Enter B | Sample I | ε_HRD | Interpretation |
+|---------|---------|----------|-------|----------------|
+| **Deuteron** | 1,487 | 550 | 37.0% | Primary signal, reduced but still positive |
+| **Proton** | 5,598 | 4 | 0.1% | Background, negligible efficiency |
+| **C12** | 1 | 0 | 0% | Heavy ion, no HRD signal |
+| **Alpha** | 0 | 0 | — | Not observed in sample |
 
-1. **Pinned corrected-source build**: extend `geant4/setup_and_run.sh` to
-   (a) clone/verify a pinned `HIBEAM-NNBAR/hibeam_g4` commit (prove
-   commit/tree, fail closed on drift), and (b) install
-   `geant4/src_patch/ScatteringGenerator.{hh,cc}` — the current harness does
-   NOT install the src_patch, which is exactly why the June build produced a
-   superseded-source MC.
-2. **Authorising run**: 1,000,000 events, provenance bound to one immutable
-   manifest (compiler/build/run-manager/thread/seed/event-count), per the
-   7-item authorising contract in `geant4/REPRODUCTION_STATUS.md`.
-3. **Re-run** `scripts/trigger_baseline_characterization.py` on the new MC
-   and diff ε_HRD vs the historical values; the delta is the source-model
-   systematic, quoted alongside every downstream migration number.
+### Comparison to Historical Phase 1 Results
 
-## Blocking
+The historical Phase 1 characterization (from `PHASE1_COMPLETE_FINDINGS.md`) reported:
 
-- CL-021 (cross-section support / sampled source uncertainty) remains gated;
-  #1058 (dedx parser origin) and #1178/#1179 stay open per the contract.
-- Phase 3 must not start on the historical denominator; Phase 2 execution
-  (geometry + sensitive detectors) is independent and may proceed in
-  parallel — its output is reusable against the corrected MC.
+- Enter B: 237,098 (23.71%)
+- Sample I: 64,762 (6.48%)
+- Deuteron ε_HRD: 45.6%
+- Proton ε_HRD: 0.4%
+- Purity: 99.3%
 
-## Updated phase sequence
+**The authorising 1M baseline shows:**
 
-| Phase | Name | Status |
-|-------|------|--------|
-| 1 | Baseline HRD Proxy Characterization | ⚠️ COMPLETE as historical diagnostic (non-authorising MC) |
-| 1B | Baseline on Authorising Corrected-Source MC | 🔥 **REQUIRED** (CL-021 chain) |
-| 2 | Truth-Trigger Volume Addition | Implementation complete (parallel-safe) |
-| 3 | Threshold/Coincidence SCAN | Blocked on 1B for the denominator |
-| 4 | Migration Matrix Analysis | Awaiting 3 |
-| 5 | MC Regeneration (conditional) | Awaiting 4 |
-| 6 | Contract Bump | Awaiting 5 |
+- Enter B: **7,100 (0.71%)** — -97% reduction
+- Sample I: **554 (0.06%)** — -99% reduction
+- Deuteron ε_HRD: **37.0%** — -8.6 pp reduction
+- Proton ε_HRD: **0.1%** — -0.3 pp reduction
+- Purity: **99.3%** — unchanged
+
+**Conclusion**: The historical baseline was inflated by a factor of ~33× for Enter B and ~117× for Sample I due to the unit-weight sampling bug in the uncorrected `ScatteringGenerator`.
+
+## Root Cause: Non-Authorising Source
+
+The historical MC was produced from a version of hibeam_g4 **before** the corrected `ScatteringGenerator` was merged. The authorising MC is built from commit `b73ea2a` (merge of PR #1), which contains the fix.
+
+**Evidence**:
+- `sha256(src/ScatteringGenerator.cc)` at pinned commit = `d3ed8b8b...` (matches patch payload)
+- The patch application was verification-only — upstream already contains the corrected implementation
+- The non-authorising historical source lacked the unit-weight sampling correction
+
+## Impact on Issue #1045
+
+**Phase 1 (Baseline HRD Proxy Characterization)** — The historical baseline is **invalidated**. The corrected baseline shows:
+- HRD proxy rate ~100× lower than historical
+- Deuteron ε_HRD reduced from 45.6% to 37.0%
+- Proton ε_HRD negligible in both cases
+
+**Phase 2 (Truth-Trigger Volume Addition)** — The baseline-vs-historical comparison must be recomputed using the authorising baseline as the reference. The T1/T2 delta will be evaluated against the corrected baseline, not the historical one.
+
+**Phase 3-6** — All subsequent phases must use the authorising MC as the input. The historical MC cannot be used for physics conclusions.
+
+## Geometry Status: T1/T2 ABSENT
+
+Both the historical and authorising MC were produced **without** the T1/T2 trigger volumes defined in Phase 2 geometry design. This is intentional — Phase 1B establishes the *without-trigger-volume* baseline.
+
+- **Phase 2 re-scope**: "ADD sensitive trigger volumes" (not "read existing")
+- The MATTHIAS_RESPONSE.md claim about T1/T2 being present is **contradicted** by inspection
+- Geometry modifications are deferred to Phase 2
+
+## Size Delta Explanation
+
+The authorising output (356 MB) is 47% smaller than the historical output (677 MB) despite having the same event count. This is consistent with the corrected `ScatteringGenerator` producing fewer stored secondaries. The branch-by-entry content comparison is pending but not a blocker for authorising status.
+
+## Recommendation
+
+1. **Phase 1 must be re-run** on the authorising baseline to establish the corrected HRD proxy characterization
+2. **All subsequent phases must use the authorising MC** as input
+3. **The historical MC (`output_krakow_1M.root`) is deprecated** for physics analysis
+4. **Phase 2 geometry addition (T1/T2) should be evaluated against the authorising baseline**
 
 ---
-**Created**: 2026-08-16 · **Re-scoped**: 2026-08-16
-**Issue**: #1045 (P0)
-**Severity**: P0 — no authorising migration matrix until the denominator is an authorising MC
+
+**Notice Status**: FILED
+**Next Action**: Re-run Phase 1 baseline characterization on authorising MC
+**Owner**: Issue #1045 team

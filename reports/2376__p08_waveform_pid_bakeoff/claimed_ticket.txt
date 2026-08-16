@@ -1,0 +1,4 @@
+2376
+# P08: Pulse-shape discrimination for p vs d PID (waveform-only)
+
+Does the waveform shape alone separate protons from deuterons (different dE/dx -> quenching -> shape)? Traditional: charge-comparison PSD (tail/total) + dE-E band cuts. ML: classifier on waveform/latent. Benchmark purity vs efficiency; be explicit there is NO truth label without GEANT4 (S17).

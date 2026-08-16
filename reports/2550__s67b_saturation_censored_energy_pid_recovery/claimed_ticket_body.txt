@@ -1,0 +1,3 @@
+Academic study: quantify how clipped or saturated waveform tails bias energy calibration and PID boundaries across pedestal states and pile-up conditions.
+
+Compare a traditional censored-template likelihood plus integral/charge calibration against ridge regression, gradient-boosted trees, MLP, 1D-CNN, and a multitask transformer when sequence support is adequate. Report bootstrap CIs for energy residuals, PID AUC/boundary drift, saturation recovery error, pedestal-stratified calibration transfer, and pile-up-conditioned failure modes.

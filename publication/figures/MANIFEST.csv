@@ -28,5 +28,5 @@ gated/618_data_penetration_I_II.png,GATED,reports/paper_618_species_penetration_
 final/1303_stage_accounting.pdf,SIMULATION_RESULT,reports/paper_1303_optical_campaign_20260815T2209Z/figures/1303_stage_accounting.pdf,#1303 optical stage accounting (regenerated grid)
 final/1303_pe_per_mev.pdf,SIMULATION_RESULT,reports/paper_1303_optical_campaign_20260815T2209Z/figures/1303_pe_per_mev.pdf,#1303 per-point PE/MeV_vis and PE/MeV_raw yields (regenerated grid)
 final/1303_edep_vs_pe.pdf,SIMULATION_RESULT,reports/paper_1303_optical_campaign_20260815T2209Z/figures/1303_edep_vs_pe.pdf,#1303 detected PE vs E_vis/E_raw (regenerated grid)
-final/edep_reconstruction_heldout_E_vis.pdf,GATED,reports/paper_1303_optical_campaign_20260815T2209Z/edep_reconstruction_heldout_E_vis.pdf,#1297/#1303 held-out E_vis reconstruction (CL-029 GATED)
-final/edep_reconstruction_heldout_E_raw.pdf,GATED,reports/paper_1303_optical_campaign_20260815T2209Z/edep_reconstruction_heldout_E_raw.pdf,#1297/#1303 held-out E_raw negative control (CL-029 GATED)
+gated/edep_reconstruction_heldout_E_vis.pdf,GATED,reports/paper_1303_optical_campaign_20260815T2209Z/edep_reconstruction_heldout_E_vis.pdf,#1297/#1303 held-out E_vis reconstruction (CL-029 GATED)
+gated/edep_reconstruction_heldout_E_raw.pdf,GATED,reports/paper_1303_optical_campaign_20260815T2209Z/edep_reconstruction_heldout_E_raw.pdf,#1297/#1303 held-out E_raw negative control (CL-029 GATED)

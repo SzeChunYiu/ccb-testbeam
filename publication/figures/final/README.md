@@ -23,5 +23,3 @@ B4--B6 pair timing residual (Sample II). Copied verbatim from `reports/issue_132
 - 1303_stage_accounting.pdf -- #1303 optical stage accounting (MC_MODEL_DEPENDENT)
 - 1303_pe_per_mev.pdf -- #1303 per-point PE/MeV_vis + PE/MeV_raw yields (MC_MODEL_DEPENDENT)
 - 1303_edep_vs_pe.pdf -- #1303 detected PE vs deposited energy scatter (MC_MODEL_DEPENDENT)
-- edep_reconstruction_heldout_E_vis.pdf -- #1303/#1297 held-out E_vis reconstruction (GATED)
-- edep_reconstruction_heldout_E_raw.pdf -- #1303/#1297 held-out E_raw negative control (GATED)

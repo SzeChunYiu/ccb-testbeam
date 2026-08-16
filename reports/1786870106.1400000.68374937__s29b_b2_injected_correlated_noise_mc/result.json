@@ -1,0 +1,1080 @@
+{
+ "ticket": "1786870106.1400000.68374937",
+ "issue": 1400,
+ "config_sha256": "989fe92d2d983899e9091bfd9c768babaf7de7cd6262aecce036e0817369ae35",
+ "inputs": {
+  "config_sha256": "989fe92d2d983899e9091bfd9c768babaf7de7cd6262aecce036e0817369ae35",
+  "s29a_parquet_sha256": "a44d5ce01c7fdb502c81949e6c8bddf9ca15e9f5d5acf673c7b079214afadc1e",
+  "s29a_result_sha256": "d2e78706ef2a700882577c18cb69f621a424d83c598a611333bc46244d23a5f7",
+  "raw_files": {
+   "31": {
+    "sha256": "9921aa75c062d0b8994573299a201cbe2725673319fdf1b8cffb711fb9adcea7",
+    "bytes": 11638901
+   },
+   "32": {
+    "sha256": "649983bf173352b638bf57c099dc92741b70483feba8981172b26319fc9047ff",
+    "bytes": 12157812
+   },
+   "33": {
+    "sha256": "1b8f1dcda0e53b8c7b702f00801555f6d317a87bed8efef6d228b49146dbf973",
+    "bytes": 16781109
+   },
+   "34": {
+    "sha256": "69ef29a8d879aaa908ab4a076c82b3d10ac7b3e2622e491e017eb368290bdf51",
+    "bytes": 11697434
+   },
+   "35": {
+    "sha256": "a6e08e36ab103e76b53741b55ea7cd3e648d1800508d6144b96ab80820e156ea",
+    "bytes": 7793651
+   },
+   "36": {
+    "sha256": "1160bee157e233eb63421597b415f1aaf4dea2c1e7e4a804836c487704852fee",
+    "bytes": 6167361
+   },
+   "37": {
+    "sha256": "6bcebe85c0b1e38a42cc326cbcdc2107ccaee877372bffd537ce71baa1b22fd3",
+    "bytes": 14369738
+   },
+   "39": {
+    "sha256": "b875c8d45a62a39933d7d4648518040a645629e6fb60c9111a7d05c4d982c568",
+    "bytes": 8625385
+   },
+   "40": {
+    "sha256": "0d4ebb2f14673aea000c454fd8a4be2c56d6028c31e26a82c1ecd85578128f17",
+    "bytes": 9266489
+   },
+   "41": {
+    "sha256": "72f7a53810bcc4858c2d56e64bdc3bcbb94b9f8e34d35b79c202a77328eb8010",
+    "bytes": 9691925
+   },
+   "42": {
+    "sha256": "b941a6a777414912a0db865a87f68370accf916348340d2249972018f2e61898",
+    "bytes": 9767653
+   },
+   "44": {
+    "sha256": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50",
+    "bytes": 1227977
+   },
+   "45": {
+    "sha256": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b",
+    "bytes": 13786671
+   },
+   "46": {
+    "sha256": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3",
+    "bytes": 412227
+   },
+   "47": {
+    "sha256": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3",
+    "bytes": 3098718
+   },
+   "48": {
+    "sha256": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8",
+    "bytes": 8995827
+   },
+   "49": {
+    "sha256": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744",
+    "bytes": 9203548
+   },
+   "50": {
+    "sha256": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799",
+    "bytes": 13217424
+   },
+   "51": {
+    "sha256": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e",
+    "bytes": 6036876
+   },
+   "52": {
+    "sha256": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af",
+    "bytes": 2941826
+   },
+   "53": {
+    "sha256": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c",
+    "bytes": 11713879
+   },
+   "54": {
+    "sha256": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c",
+    "bytes": 11056922
+   },
+   "55": {
+    "sha256": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c",
+    "bytes": 7153324
+   },
+   "56": {
+    "sha256": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb",
+    "bytes": 15273160
+   },
+   "57": {
+    "sha256": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16",
+    "bytes": 8881910
+   },
+   "58": {
+    "sha256": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1",
+    "bytes": 9623179
+   },
+   "59": {
+    "sha256": "64fced477c9c45f9726cde0d466c15a6d776b8bb1b22a0043510dc73c884ae0e",
+    "bytes": 12032616
+   },
+   "60": {
+    "sha256": "f466b5af260d9fadba426280f6313bac1381c1441c569c7094a8a9d61373030d",
+    "bytes": 10174098
+   },
+   "61": {
+    "sha256": "c57d1f18f79f11fb0d3a0bbbf42f978cff1ec704dc08337c600c17354099d61d",
+    "bytes": 10362658
+   },
+   "62": {
+    "sha256": "2530c56acb462473c6b5c316c0689491ec044f01a8c623624eebafbd271fdfbe",
+    "bytes": 10634393
+   },
+   "63": {
+    "sha256": "3fd42501e2c53a914b535616bc7bb7b8fb5554cd4f46d890023db6877a720a53",
+    "bytes": 10494181
+   },
+   "64": {
+    "sha256": "e6661362dc89d934f42d1fa177bcb99e9c89e294b2f157a09ec1df4e50c89252",
+    "bytes": 10006223
+   },
+   "65": {
+    "sha256": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb",
+    "bytes": 10600278
+   }
+  }
+ },
+ "measured": {
+  "sat_split_ns": 8.87,
+  "pooled_downstream_sat_split_ns": 29.8,
+  "ks_b2_vs_dn": 0.2788,
+  "ks_cross_downstream": {
+   "B4vB6": 0.1531,
+   "B4vB8": 0.0405,
+   "B6vB8": 0.1243
+  },
+  "per_stave": {
+   "B2": {
+    "n": 571980,
+    "n_secondary": 383048,
+    "secondary_rate_by_band": {
+     "midhigh": 0.8618,
+     "sat": 0.6592
+    },
+    "ltf": 0.9589,
+    "delay_mean_ns": 53.76,
+    "delay_sat_mean_ns": 59.84,
+    "delay_unsat_mean_ns": 50.97,
+    "delay_hist": [
+     577,
+     11003,
+     99355,
+     71061,
+     11502,
+     635,
+     374,
+     540,
+     15048,
+     46519,
+     5684,
+     54,
+     18,
+     12,
+     5,
+     0
+    ],
+    "delay_sat_split_ns": 8.87
+   },
+   "B4": {
+    "n": 33721,
+    "n_secondary": 18472,
+    "secondary_rate_by_band": {
+     "midhigh": 0.6425,
+     "sat": 0.3357
+    },
+    "ltf": 0.933,
+    "delay_mean_ns": 34.81,
+    "delay_sat_mean_ns": 66.38,
+    "delay_unsat_mean_ns": 34.73,
+    "delay_hist": [
+     71,
+     2961,
+     10682,
+     3365,
+     41,
+     38,
+     30,
+     58,
+     598,
+     415,
+     148,
+     15,
+     2,
+     1,
+     0,
+     0
+    ],
+    "delay_sat_split_ns": 31.66
+   },
+   "B6": {
+    "n": 16935,
+    "n_secondary": 7641,
+    "secondary_rate_by_band": {
+     "midhigh": 0.6323,
+     "sat": 0.3
+    },
+    "ltf": 0.9339,
+    "delay_mean_ns": 34.02,
+    "delay_sat_mean_ns": 56.67,
+    "delay_unsat_mean_ns": 34.01,
+    "delay_hist": [
+     49,
+     1190,
+     3277,
+     2783,
+     130,
+     7,
+     5,
+     6,
+     119,
+     61,
+     8,
+     1,
+     1,
+     1,
+     0,
+     0
+    ],
+    "delay_sat_split_ns": 22.66
+   },
+   "B8": {
+    "n": 6809,
+    "n_secondary": 4059,
+    "secondary_rate_by_band": {
+     "midhigh": 0.6205,
+     "sat": 0.3846
+    },
+    "ltf": 0.9454,
+    "delay_mean_ns": 34.85,
+    "delay_sat_mean_ns": 50.0,
+    "delay_unsat_mean_ns": 34.83,
+    "delay_hist": [
+     11,
+     492,
+     2398,
+     912,
+     3,
+     1,
+     2,
+     2,
+     119,
+     92,
+     21,
+     1,
+     0,
+     0,
+     0,
+     0
+    ],
+    "delay_sat_split_ns": 15.17
+   }
+  }
+ },
+ "calibration": {
+  "per_stave": {
+   "B2": {
+    "n_unsat": 388930,
+    "white_noise_adc": 388.0,
+    "n_amps": 579424,
+    "lib_shapes": 571980
+   },
+   "B4": {
+    "n_unsat": 33581,
+    "white_noise_adc": 375.87,
+    "n_amps": 36116,
+    "lib_shapes": 33721
+   },
+   "B6": {
+    "n_unsat": 16925,
+    "white_noise_adc": 325.85,
+    "n_amps": 17945,
+    "lib_shapes": 16935
+   },
+   "B8": {
+    "n_unsat": 6796,
+    "white_noise_adc": 396.31,
+    "n_amps": 7252,
+    "lib_shapes": 6809
+   }
+  },
+  "v5": {
+   "mechanism": "smooth_tail_stratum_reweighting",
+   "p_mode": "piecewise_per_bin",
+   "island_window_k": [
+    9,
+    12
+   ],
+   "smooth_quantile": 0.1,
+   "p_hat": 0.5855,
+   "p_hat_spread_over_med": 0.1269,
+   "p_k": [
+    0.5155,
+    0.5898,
+    0.5855
+   ],
+   "p_centers_adc": [
+    1459.0,
+    3672.2,
+    5909.5,
+    8020.0
+   ],
+   "p_vals": [
+    0.0432,
+    0.5267,
+    0.7664,
+    0.3605
+   ],
+   "lin_summary_p0": 0.4007,
+   "lin_summary_p1_rel": 0.2407,
+   "nc2_p_const": 0.5855,
+   "a_ref_adc": 4342.0,
+   "elevation_k9_12": [
+    0.225,
+    0.1854,
+    0.1421,
+    0.0789
+   ],
+   "stratum_kpk_window": [
+    6,
+    8
+   ],
+   "stratum_n_shapes": 2878,
+   "p_bins": [
+    {
+     "lo": 1000,
+     "hi": 2000,
+     "n": 46345,
+     "center_adc": 1459.0,
+     "p": 0.0432,
+     "db_med": 0.0161,
+     "eb_med": 0.3909
+    },
+    {
+     "lo": 3000,
+     "hi": 4500,
+     "n": 103519,
+     "center_adc": 3672.0,
+     "p": 0.5267,
+     "db_med": 0.0399,
+     "eb_med": 0.097
+    },
+    {
+     "lo": 4500,
+     "hi": 7000,
+     "n": 188457,
+     "center_adc": 5910.0,
+     "p": 0.7664,
+     "db_med": 0.0638,
+     "eb_med": 0.0896
+    },
+    {
+     "lo": 7000,
+     "hi": 15000,
+     "n": 183050,
+     "center_adc": 8020.0,
+     "p": 0.3605,
+     "db_med": 0.0788,
+     "eb_med": 0.2251
+    }
+   ],
+   "p_bins_excluded": [
+    {
+     "lo": 2000,
+     "hi": 3000,
+     "n": 50609,
+     "eb_med": 0.1158,
+     "db_med": -0.0142,
+     "excluded": "fewer_than_2_valid_k"
+    }
+   ],
+   "v0_deficit": [
+    -0.0192,
+    0.0037,
+    0.0051,
+    -0.0346,
+    -0.012,
+    0.1638,
+    0.2162,
+    0.1507,
+    0.0954,
+    0.116,
+    0.1094,
+    0.0832,
+    0.0137,
+    -0.0485,
+    -0.1006,
+    -0.1244,
+    -0.1477,
+    -0.1779
+   ],
+   "mean_closure_tail": 0.7241,
+   "max_abs_resid": 0.192,
+   "rho_b2": [
+    0.359,
+    0.156,
+    0.147,
+    0.228,
+    0.298,
+    0.38,
+    0.334,
+    0.287,
+    0.314,
+    0.335,
+    0.353,
+    0.357,
+    0.358,
+    0.375,
+    0.405,
+    0.445,
+    0.474,
+    0.482
+   ],
+   "rho_dn": [
+    0.349,
+    0.155,
+    0.159,
+    0.309,
+    0.374,
+    0.394,
+    0.369,
+    0.357,
+    0.357,
+    0.355,
+    0.372,
+    0.394,
+    0.404,
+    0.411,
+    0.417,
+    0.435,
+    0.451,
+    0.459
+   ]
+  },
+  "manifold": {
+   "n_island": 57474,
+   "n_nonisland": 121672,
+   "island_nn": {
+    "med": 0.0635,
+    "p90": 0.1074,
+    "frac_nan": 0.0
+   },
+   "nonisland_nn": {
+    "med": 0.047,
+    "p90": 0.0992,
+    "frac_nan": 0.0
+   },
+   "dn_self_nn": {
+    "med": 0.0373,
+    "p90": 0.0689
+   },
+   "island_R": {
+    "q10": 0.08736,
+    "med": 0.10327
+   },
+   "dn_lib_R": {
+    "q01": 0.02514,
+    "q10": 0.03261,
+    "med": 0.05883,
+    "min": 0.01335
+   },
+   "island_frac_R_below_dn_min": 0.0,
+   "amp_window_rel": 0.3,
+   "island_over_scale_ratio": 1.351,
+   "island_outside_manifold": false
+  }
+ },
+ "g1": {
+  "per_stave_ks": {
+   "B2": 0.0067,
+   "B4": 0.0075,
+   "B6": 0.0087,
+   "B8": 0.0078
+  },
+  "threshold": 0.02,
+  "pass": true,
+  "boot_island_kpk_hist": {
+   "B2": [
+    4451,
+    4690,
+    174,
+    0,
+    0,
+    0,
+    3,
+    6,
+    3,
+    6
+   ],
+   "B4": [
+    415,
+    505,
+    333,
+    0,
+    0,
+    0,
+    0,
+    0,
+    26,
+    27
+   ],
+   "B6": [
+    97,
+    179,
+    157,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    2
+   ],
+   "B8": [
+    383,
+    348,
+    376,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  }
+ },
+ "g1b": {
+  "v0_split_ns": 27.21,
+  "pooled_downstream_split_ns": 29.8,
+  "abs_diff_ns": 2.59,
+  "pass": false
+ },
+ "g2": {
+  "V0": {
+   "ks": false,
+   "split": false,
+   "intershave": false,
+   "ltf": true,
+   "pass": false
+  },
+  "V5": {
+   "ks": false,
+   "split": false,
+   "intershave": false,
+   "ltf": true,
+   "pass": false
+  },
+  "NC2": {
+   "ks": false,
+   "split": false,
+   "intershave": false,
+   "ltf": false,
+   "pass": false
+  }
+ },
+ "metrics": {
+  "V0": {
+   "ks_b2_vs_measured": 0.1924,
+   "ks_b2_vs_dnsyn": 0.1563,
+   "sat_split_ns": 27.21,
+   "ltf_delta": {
+    "B2": 0.0001,
+    "B4": 0.0037,
+    "B6": 0.0067,
+    "B8": 0.0124
+   },
+   "n_secondary": {
+    "B2": 18553,
+    "B4": 26136,
+    "B6": 24321,
+    "B8": 28259
+   },
+   "secondary_rate_by_band": {
+    "B2": {
+     "midhigh": 0.5446,
+     "sat": 0.2217
+    },
+    "B4": {
+     "midhigh": 0.6214,
+     "sat": 0.3495
+    },
+    "B6": {
+     "midhigh": 0.6766,
+     "sat": 0.2941
+    },
+    "B8": {
+     "midhigh": 0.6078,
+     "sat": 0.4811
+    }
+   },
+   "delay_hist": {
+    "B2": [
+     34,
+     1170,
+     10210,
+     3120,
+     147,
+     30,
+     10,
+     51,
+     1235,
+     1359,
+     1096,
+     90,
+     1,
+     0,
+     0,
+     0
+    ],
+    "B4": [
+     76,
+     4470,
+     14238,
+     5564,
+     103,
+     38,
+     24,
+     57,
+     819,
+     531,
+     189,
+     19,
+     8,
+     0,
+     0,
+     0
+    ],
+    "B6": [
+     128,
+     4050,
+     13019,
+     6061,
+     168,
+     14,
+     26,
+     37,
+     473,
+     281,
+     51,
+     3,
+     10,
+     0,
+     0,
+     0
+    ],
+    "B8": [
+     62,
+     3927,
+     15804,
+     6568,
+     59,
+     15,
+     28,
+     39,
+     973,
+     569,
+     190,
+     11,
+     14,
+     0,
+     0,
+     0
+    ]
+   },
+   "kpk_island_hist": {
+    "B2": [
+     2892,
+     1064,
+     599,
+     0,
+     0,
+     0,
+     0,
+     2,
+     9,
+     9
+    ],
+    "B4": [
+     410,
+     454,
+     303,
+     0,
+     0,
+     0,
+     0,
+     2,
+     30,
+     15
+    ],
+    "B6": [
+     144,
+     243,
+     147,
+     0,
+     0,
+     0,
+     0,
+     6,
+     11,
+     5
+    ],
+    "B8": [
+     422,
+     458,
+     383,
+     0,
+     0,
+     0,
+     0,
+     6,
+     34,
+     14
+    ]
+   }
+  },
+  "V5": {
+   "ks_b2_vs_measured": 0.1109,
+   "ks_b2_vs_dnsyn": 0.3145,
+   "sat_split_ns": 21.08,
+   "ltf_delta": {
+    "B2": 0.004,
+    "B4": 0.0018,
+    "B6": 0.0081,
+    "B8": 0.0109
+   },
+   "n_secondary": {
+    "B2": 14435,
+    "B4": 26263,
+    "B6": 24388,
+    "B8": 28127
+   },
+   "secondary_rate_by_band": {
+    "B2": {
+     "midhigh": 0.3634,
+     "sat": 0.1172
+    },
+    "B4": {
+     "midhigh": 0.6262,
+     "sat": 0.3498
+    },
+    "B6": {
+     "midhigh": 0.6612,
+     "sat": 0.1951
+    },
+    "B8": {
+     "midhigh": 0.5976,
+     "sat": 0.3667
+    }
+   },
+   "delay_hist": {
+    "B2": [
+     29,
+     2160,
+     5326,
+     1499,
+     57,
+     8,
+     325,
+     1192,
+     975,
+     2407,
+     404,
+     49,
+     4,
+     0,
+     0,
+     0
+    ],
+    "B4": [
+     93,
+     4346,
+     14189,
+     5742,
+     123,
+     41,
+     32,
+     65,
+     875,
+     545,
+     183,
+     17,
+     12,
+     0,
+     0,
+     0
+    ],
+    "B6": [
+     111,
+     4149,
+     12764,
+     6259,
+     184,
+     14,
+     20,
+     43,
+     474,
+     319,
+     43,
+     2,
+     6,
+     0,
+     0,
+     0
+    ],
+    "B8": [
+     47,
+     3799,
+     15826,
+     6552,
+     72,
+     15,
+     21,
+     43,
+     961,
+     558,
+     202,
+     16,
+     15,
+     0,
+     0,
+     0
+    ]
+   },
+   "kpk_island_hist": {
+    "B2": [
+     1314,
+     2404,
+     682,
+     0,
+     0,
+     0,
+     0,
+     0,
+     8,
+     4
+    ],
+    "B4": [
+     394,
+     515,
+     321,
+     0,
+     0,
+     0,
+     0,
+     1,
+     29,
+     12
+    ],
+    "B6": [
+     141,
+     265,
+     146,
+     0,
+     0,
+     0,
+     0,
+     18,
+     11,
+     1
+    ],
+    "B8": [
+     417,
+     414,
+     380,
+     0,
+     0,
+     0,
+     0,
+     8,
+     25,
+     13
+    ]
+   }
+  },
+  "NC2": {
+   "ks_b2_vs_measured": 0.1221,
+   "ks_b2_vs_dnsyn": 0.3271,
+   "sat_split_ns": 17.18,
+   "ltf_delta": {
+    "B2": 0.0234,
+    "B4": 0.003,
+    "B6": 0.0078,
+    "B8": 0.0103
+   },
+   "n_secondary": {
+    "B2": 13868,
+    "B4": 26268,
+    "B6": 24392,
+    "B8": 28233
+   },
+   "secondary_rate_by_band": {
+    "B2": {
+     "midhigh": 0.3942,
+     "sat": 0.0877
+    },
+    "B4": {
+     "midhigh": 0.6215,
+     "sat": 0.3444
+    },
+    "B6": {
+     "midhigh": 0.6659,
+     "sat": 0.3846
+    },
+    "B8": {
+     "midhigh": 0.6106,
+     "sat": 0.41
+    }
+   },
+   "delay_hist": {
+    "B2": [
+     30,
+     2051,
+     5169,
+     1241,
+     64,
+     12,
+     304,
+     1133,
+     1041,
+     2366,
+     429,
+     28,
+     0,
+     0,
+     0,
+     0
+    ],
+    "B4": [
+     80,
+     4462,
+     14218,
+     5721,
+     117,
+     33,
+     36,
+     60,
+     824,
+     523,
+     169,
+     13,
+     12,
+     0,
+     0,
+     0
+    ],
+    "B6": [
+     105,
+     4139,
+     12747,
+     6337,
+     205,
+     21,
+     28,
+     40,
+     436,
+     283,
+     43,
+     5,
+     3,
+     0,
+     0,
+     0
+    ],
+    "B8": [
+     76,
+     3864,
+     15898,
+     6415,
+     92,
+     12,
+     26,
+     36,
+     1016,
+     575,
+     189,
+     17,
+     17,
+     0,
+     0,
+     0
+    ]
+   },
+   "kpk_island_hist": {
+    "B2": [
+     1147,
+     2293,
+     687,
+     0,
+     0,
+     0,
+     0,
+     2,
+     6,
+     6
+    ],
+    "B4": [
+     382,
+     479,
+     292,
+     0,
+     0,
+     0,
+     0,
+     4,
+     25,
+     18
+    ],
+    "B6": [
+     136,
+     229,
+     145,
+     0,
+     0,
+     0,
+     0,
+     26,
+     5,
+     3
+    ],
+    "B8": [
+     435,
+     442,
+     406,
+     0,
+     0,
+     0,
+     0,
+     5,
+     28,
+     13
+    ]
+   }
+  }
+ },
+ "nc": {
+  "nc1_v0_fails_g2": true,
+  "nc2_loadindep_fails_split": true
+ },
+ "alpha_scan": [],
+ "literature": {},
+ "literature_present": false,
+ "discriminant_status": {
+  "injected_correlated_noise_mc": "PARTIAL",
+  "electronics_impulse_response": "STRUCTURALLY_UNAVAILABLE"
+ },
+ "discriminants_unavailable": {
+  "electronics_impulse_response": {
+   "status": "STRUCTURALLY_UNAVAILABLE",
+   "issue": 1401,
+   "scope_justification": "No bench/SPE (single-photoelectron) electronics characterization exists in the 33 calibration runs or the extracted data tree (searched run content lists, config registry, and reports/; scope-justified NOT_FOUND, distinct from checked-and-absent). Extracted pulse shapes conflate electronics response with light-production timing, so only the conflated effective response is recoverable \u2014 the reason this study models the effective response empirically instead."
+  }
+ },
+ "runtime_s": 230.0
+}

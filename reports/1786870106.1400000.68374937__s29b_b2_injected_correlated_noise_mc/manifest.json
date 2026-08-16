@@ -1,0 +1,93 @@
+{
+ "script_sha256": "dd2799c9e593ce7761315d1cf9a24d9f2cb9367f632a86920542d4fae979e69b",
+ "config": {
+  "ticket": "1786870106.1400000.68374937",
+  "issue": 1400,
+  "extends_study": "1786863177.1383050.cfc84ffc__s29a_b2_residual_mechanism_discriminants",
+  "runs": [
+   31,
+   32,
+   33,
+   34,
+   35,
+   36,
+   37,
+   39,
+   40,
+   41,
+   42,
+   44,
+   45,
+   46,
+   47,
+   48,
+   49,
+   50,
+   51,
+   52,
+   53,
+   54,
+   55,
+   56,
+   57,
+   58,
+   59,
+   60,
+   61,
+   62,
+   63,
+   64,
+   65
+  ],
+  "saturation_amp_adc": 7000.0,
+  "amplitude_cut_adc": 1000.0,
+  "seed": 20260816,
+  "p_bins_adc": [
+   1000,
+   2000,
+   3000,
+   4500,
+   7000,
+   15000
+  ],
+  "smooth_quantile_scan": [
+   0.1,
+   0.2,
+   0.3,
+   0.4,
+   0.5
+  ],
+  "stratum_kpk_halfwin": 1,
+  "manifold_test": {
+   "n_island": 2000,
+   "n_null": 2000,
+   "n_dn_self": 1500,
+   "amp_window_rel": 0.3
+  },
+  "n_synthetic_per_stave": 50000,
+  "n_alpha_scan": 20000,
+  "shape_library_size": 20000,
+  "alpha_scan_adc_per_pe": [
+   2,
+   3,
+   5,
+   8,
+   12,
+   20,
+   30,
+   50,
+   80,
+   120,
+   180,
+   250
+  ],
+  "gates": {
+   "ks_b2_vs_measured_max": 0.05,
+   "sat_split_abs_ns": 2.0,
+   "ks_intershave_abs": 0.03,
+   "ltf_abs": 0.02
+  },
+  "literature": {}
+ },
+ "result_sha256": "22dbbfd7b5aa64d796cd1dc66957bd081a221e14b5db8f071cedd6d429df1ddf"
+}

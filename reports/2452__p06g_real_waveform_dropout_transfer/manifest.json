@@ -1,0 +1,58 @@
+{
+  "command": "/home/billy/anaconda3/bin/python scripts/p06g_2452_real_waveform_dropout_transfer.py",
+  "git_commit": "634b439de6c5daf1a79ec812d3beb969d82f136b",
+  "inputs": [
+    {
+      "bytes": 1160096,
+      "path": "reports/1781058292.535.650c13f1__p09i_broad_width_reviewer_disagreement_propagation/fixed_coverage_selected_rows.csv",
+      "sha256": "8772e4b0e8b5e3e05047e6fe0bc799aec61a4c1f6587f19a887758f42475b237"
+    },
+    {
+      "bytes": 12531,
+      "path": "reports/1781058292.535.650c13f1__p09i_broad_width_reviewer_disagreement_propagation/manifest.json",
+      "sha256": "943c243d131eb0d944859514512d35d8c53ca3c1d654208816857f75da4dd2e7"
+    },
+    {
+      "bytes": 516,
+      "path": "reports/1781005319.615.15053b04__p09a_rare_waveform_anomaly_taxonomy/taxonomy_counts.csv",
+      "sha256": "c00e62123770f396f1dfbdde455539cae9ed01650709044bccf99409dae7e7b9"
+    },
+    {
+      "bytes": 1896,
+      "path": "reports/1781005319.615.15053b04__p09a_rare_waveform_anomaly_taxonomy/reproduction_counts_by_run.csv",
+      "sha256": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744"
+    },
+    {
+      "bytes": 1287,
+      "path": "reports/1781070978.431.052370d7__p06e_dropout_phase_timing_frontier/method_metrics.csv",
+      "sha256": "aa94216692bd8e33a210e39222d090dcd808c5ada7f217fe18a6a2fa247402ca"
+    },
+    {
+      "bytes": 2156,
+      "path": "reports/1781070978.431.052370d7__p06e_dropout_phase_timing_frontier/method_metrics_bootstrap_ci.csv",
+      "sha256": "f48d1e269136ada9c8c891e080b55c9d70454e60608e184acb067626c90d456b"
+    },
+    {
+      "bytes": 6581,
+      "path": "reports/1783640227.9868.547c3cd0__p06f_calibration_frozen_support_thresholds/winner_scoreboard.csv",
+      "sha256": "e0623090141f3a4221ab9d0ba8c603573c9db2aad2c2708a9d0e8b0efe2079f2"
+    }
+  ],
+  "outputs": {
+    "REPORT.md": "799143c7b8e04a9735d3541a1ca256e16c23b5c252ec8d0c4b54e17c70ff18c6",
+    "claimed_ticket.txt": "2469a9f824ad6d02fb8a88f5c0f1e58f91cf4bcbcc4af4016b7d1dcc20e54489",
+    "heldout_predictions.csv": "b65d70560b3f72efe647a6d5f8ae64a5f15056dce4937c6ee0100cbd9df4d9b0",
+    "input_sha256.csv": "2c087cfc0caf44cd106704c854a62c924e50d65e8f9d77c6d42a0e892bf94b85",
+    "manifest.json": "16e737f2174d9199e9376d3275fcc60b44cfd5d9c830de8f23bb47f2b3f69cd5",
+    "matched_candidate_rows.csv": "3b59ac01e35395d3ab795fde5990f889e1d9907fe21591dde8f243dcdd5b00e0",
+    "method_by_run.csv": "4a61282b2c387e0327f2288a47b2bcb73fe3c4deb982b9177d06f71467519696",
+    "method_metrics.csv": "7f20e59c983560e70df432ca84b7b3947b6c8436f617fed20d24a4508a66a603",
+    "result.json": "485c98686e9c6eb2641c6405e436abeb0f02fdede3febd6e0c7ac1f67d5d6832",
+    "run_bootstrap_ci.csv": "f85d05ef0212d12c2be47ed9df8b4a5e330efa806ce509932477ddda5b2ec479"
+  },
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "random_seed": 2452,
+  "ticket_id": "2452",
+  "worker": "testbeam-laptop-2"
+}

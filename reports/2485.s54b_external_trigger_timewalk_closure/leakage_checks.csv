@@ -1,0 +1,7 @@
+check,pass,value,detail
+manual_claim_after_null_claim_helper,True,2485,tn-ticket claim was run once and returned null; #2485 was labeled claimed via gh without a second claim call
+raw_root_reproduction,True,640737,canonical selected-pulse count must match exactly
+train_heldout_run_overlap,True,0,split by run
+trigger_branch_constant,True,1,reduced ROOT has trigger gate but no TDC timestamp
+training_target_rows,True,581124,absolute trigger-phase residual targets from train runs
+winner_named_in_result_json,True,mlp,winner selected by minimum held-out trigger sigma68

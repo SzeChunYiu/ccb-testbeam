@@ -1,0 +1,23 @@
+claim_helper_command: tn-ticket claim testbeam-laptop-2 --project testbeam
+claim_helper_stderr:
+null
+claim_helper_stdout:
+# null
+
+null
+manual_claim_issue: 2482
+manual_claim_command: gh --repo SzeChunYiu/factory-tickets issue edit 2482 --add-label factory:claimed --add-label worker:testbeam-laptop-2 --remove-label factory:open
+manual_claim_evidence: issue #2482 labels include factory:claimed, project:testbeam, worker:testbeam-laptop-2
+done_command: tn-ticket done 2482
+done_command_output: Closed issue SzeChunYiu/factory-tickets#2482
+done_evidence: issue #2482 state CLOSED with labels factory:done, project:testbeam, worker:testbeam-laptop-2
+# S55a: Wiener-template timing versus waveform ML for pile-up phase disentanglement
+
+Academic-grade study: quantify how pulse timing, shape, and early pile-up phase
+bias energy estimates across current and pedestal strata. Compare a traditional
+Wiener/matched-template fit and constant-fraction timing against ridge
+regression, gradient-boosted trees, MLP, 1D-CNN, and a compact transformer
+sequence model where waveform length supports attention. Require run-blocked
+train/test splits, bootstrap 95% CIs for timing RMSE, energy bias, pile-up
+classification AUC, and stratified residual tails; include ablations for
+pedestal subtraction and saturation masks.

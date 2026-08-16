@@ -1,0 +1,3 @@
+NEW S57c pedestal-hysteresis PID energy calibration: likelihood templates vs multitask waveform nets
+
+Academic-grade study. Compare traditional pedestal-state likelihood templates and deltaE-E calibration against ridge, gradient-boosted trees, MLP, 1D-CNN, and multitask transformer/attention models for energy and PID. Stress pedestal hysteresis, pile-up, late tails, and saturation censoring. Report bootstrap CIs for PID AUC/confusion, calibrated energy error, pedestal-memory sensitivity, and method-pair deltas; include run-held-out validation and diagnostics linking pulse shape to PID boundary shifts.

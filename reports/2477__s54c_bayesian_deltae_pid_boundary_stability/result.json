@@ -1,0 +1,65 @@
+{
+  "ticket_id": "2477",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-2",
+  "title": "S54c Bayesian deltaE-E PID templates versus multitask waveform ML boundary stability",
+  "status": "complete",
+  "claim_command_run_once": "tn-ticket claim testbeam-laptop-2 --project testbeam",
+  "manual_claim_after_null_helper": 2477,
+  "raw_root_reproduction": {
+    "passed": true,
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "split": {
+    "grouping": "source_run",
+    "train_runs": [
+      58,
+      59,
+      60,
+      61,
+      62
+    ],
+    "heldout_runs": [
+      63,
+      65
+    ]
+  },
+  "methods": {
+    "strong_traditional": "bayesian_deltae_template_likelihood",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "1d_cnn": "1d_cnn",
+    "new_architecture": "multitask_waveform_transformer_new"
+  },
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "criterion": "minimum held-out boundary-stability score",
+    "winner_score": 0.026261427768431128,
+    "pid_auc": 0.9999023008995174,
+    "pid_balanced_accuracy": 0.9938295304958316,
+    "boundary_migration_rate": 0.0044444444444444444,
+    "energy_log_area_sigma68": 0.004513638109453844,
+    "timing_cfd20_sigma68_ns": 0.04306682713554929
+  },
+  "caveat": "Weak raw deltaE/E-depth PID boundary stability benchmark; not external particle-truth PID.",
+  "outputs": {
+    "report": "REPORT.md",
+    "result": "result.json",
+    "method_summary": "method_summary.csv",
+    "bootstrap_ci": "bootstrap_ci.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "sideband_systematics": "sideband_systematics.csv",
+    "event_predictions": "event_predictions.csv"
+  },
+  "followup_ticket_appended": {
+    "count": 1,
+    "issue": 2480,
+    "title": "S54d: external PID truth join for S54c boundary validation"
+  },
+  "git_commit": "aff63eae22303a09a488511c6fed4a54ae3c2fed",
+  "runtime_seconds": 71.71154236793518
+}

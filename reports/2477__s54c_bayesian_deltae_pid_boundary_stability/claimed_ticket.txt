@@ -1,0 +1,9 @@
+claim_helper_command: tn-ticket claim testbeam-laptop-2 --project testbeam
+claim_helper_output:
+null
+# null
+
+null
+manual_claim_issue: 2477
+manual_claim_command: gh --repo SzeChunYiu/factory-tickets issue edit 2477 --add-label factory:claimed --add-label worker:testbeam-laptop-2 --remove-label factory:open
+manual_claim_evidence: issue #2477 labels include factory:claimed, project:testbeam, worker:testbeam-laptop-2

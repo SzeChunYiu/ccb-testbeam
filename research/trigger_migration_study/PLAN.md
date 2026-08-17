@@ -4,21 +4,21 @@
 
 **Objective**: Replace the HRD first-stack-layer charged-hit proxy with a validated hardware-trigger response model by adding T1/T2 trigger scintillator volumes to the MC geometry and computing migration matrices.
 
-**Current Status**: Phase 1 COMPLETE as HISTORICAL DIAGNOSTIC (non-authorising MC — see PHASE1B_NONAUTHORISING_MC_NOTICE.md), Phase 1B REQUIRED, Phase 2 IMPLEMENTATION COMPLETE (awaiting LUNARC execution)
+**Current Status**: ALL PHASES CLOSED (1–6, 2026-08-17). Phase 4 corrected per-event joint matrix is authoritative; Phase 5 not needed (geometry-only delta); Phase 6 contract bump done (schema 1.1.0, ADR-1045).
 
-**Evidence State**: MC_TRIGGER_PROXY / UNKNOWN_EXTERNAL per docs/contracts/TRIGGER_HARDWARE_RESPONSE.json
+**Evidence State**: MIGRATION_VALIDATED / GEOMETRY_SOURCE_BOUND_ELECTRONICS_UNVALIDATED per docs/contracts/TRIGGER_HARDWARE_RESPONSE.json (production Sample I/II membership still MC_TRIGGER_PROXY)
 
 ## Phase Status Summary
 
 | Phase | Name | Status | Commit |
 |-------|------|--------|--------|
 | 1 | Baseline HRD Proxy Characterization | **COMPLETE — historical diagnostic only** (non-authorising MC) | f6f22dfd |
-| 1B | Baseline on Authorising Corrected-Source MC | **REQUIRED** (CL-021 chain) | — |
-| 2 | Truth-Trigger Volume Addition | **IMPLEMENTATION COMPLETE** | a223b807, 92b9e24c |
-| 3 | Threshold/Coincidence SCAN | PENDING | — |
-| 4 | Migration Matrix Analysis | PENDING | — |
-| 5 | MC Regeneration (conditional) | PENDING | — |
-| 6 | Contract Bump | PENDING | — |
+| 1B | Baseline on Authorising Corrected-Source MC | **COMPLETE** (CL-021 chain; two-arm anchor 554/1M) | PR #1542 lineage |
+| 2 | Truth-Trigger Volume Addition | **COMPLETE — v3** (real baseline counters instrumented; v1/v2 retracted) | PR #1542 lineage |
+| 3 | Threshold/Coincidence SCAN | **COMPLETE** (1M v3 run) | PR #1542 lineage |
+| 4 | Migration Matrix Analysis | **COMPLETE — corrected** (per-event joint matrix supersedes aggregate join) | PR #1542 lineage |
+| 5 | MC Regeneration (conditional) | **NOT NEEDED** (geometry-only delta established) | — |
+| 6 | Contract Bump | **COMPLETE** (evidence_state MIGRATION_VALIDATED; ADR-1045) | PR #1542 lineage |
 
 ## Phase 1: Baseline HRD Proxy Characterization ⚠️ COMPLETE (historical diagnostic)
 
@@ -95,11 +95,13 @@ the ccb_data staged waveforms. See `PHASE1B_NONAUTHORISING_MC_NOTICE.md`.
 - Runtime: ~10 hours
 - Storage: ~5 GB per 1M-event ROOT file
 
-## Phase 6: Contract Bump ⏳ PENDING
+## Phase 6: Contract Bump ✅ DONE (2026-08-17)
 
 **Deliverable**: Update `docs/contracts/TRIGGER_HARDWARE_RESPONSE.json`
-- Set evidence_state to "MIGRATION_VALIDATED" or "FULL_REGENERATION_COMPLETED"
-- Add trigger_hardware_schema with validated geometry/material/threshold/time response
+- ✅ evidence_state → `MIGRATION_VALIDATED` (schema 1.1.0); hardware_definition_status → `GEOMETRY_SOURCE_BOUND_ELECTRONICS_UNVALIDATED`
+- ✅ `hardware_response_study` block added: source-bound geometry (v3 receipt + sha256s), reference-point quadrants, retention, report/figure/ADR pointers — validator-pinned against the committed report (`tools/audit/validate_trigger_hardware_schema.py`)
+- ✅ ADR-1045 records the bump; ADR-0002 items 1/3/4 remain in force (real-data claims forbidden; electronics still unbound)
+- Note: FULL_REGENERATION_COMPLETED was NOT used — Phase 5 regeneration was not needed (geometry-only delta)
 
 ## Timeline Estimate (Remaining Work)
 
@@ -115,14 +117,14 @@ the ccb_data staged waveforms. See `PHASE1B_NONAUTHORISING_MC_NOTICE.md`.
 ## Success Criteria
 
 1. ⚠️ Phase 1: Baseline HRD proxy characterized — historical diagnostic only (non-authorising MC)
-1b. 🔥 Phase 1B: Baseline rebuilt on an authorising corrected-source MC (CL-021 chain)
-2. 🔄 Phase 2: T1/T2 volumes added to geometry with sensitive detectors (implementation complete, execution pending)
-3. ⏳ Phase 3: Migration matrices computed across all scan bands
-4. ⏳ Phase 4: Decision document with clear recommendation
-5. ⏳ Phase 5: MC regenerated (if needed)
-6. ⏳ Phase 6: Contract updated with evidence_state change
+1b. ✅ Phase 1B: Baseline rebuilt on an authorising corrected-source MC (CL-021 chain; two-arm anchor 554/1M)
+2. ✅ Phase 2: T1/T2 volumes in geometry (v3: real baseline counters instrumented, 8/8 gates; v1/v2 retracted)
+3. ✅ Phase 3: Threshold/coincidence scan computed across all 20 bands on the 1M v3 run
+4. ✅ Phase 4: Decision — retention 0.2978 ± 0.0194 vs ray prediction 0.289, threshold-insensitive, geometric loss; per-event joint matrix supersedes aggregate join
+5. ✅ Phase 5: Not needed — v3 reproduces the two-arm sample exactly (geometry-only delta)
+6. ✅ Phase 6: Contract updated (evidence_state MIGRATION_VALIDATED, schema 1.1.0, ADR-1045)
 
 ---
 **Issue**: #1045 (P0)
-**Updated**: 2026-08-16
-**Status**: Phase 1 complete as historical diagnostic; Phase 1B REQUIRED; Phase 2 implementation complete (awaiting LUNARC execution)
+**Updated**: 2026-08-17
+**Status**: ALL PHASES CLOSED (1–6); real-trigger closure remains open per the ADR-0002/ADR-1045 closure list

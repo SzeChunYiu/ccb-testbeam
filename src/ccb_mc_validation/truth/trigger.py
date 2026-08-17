@@ -11,12 +11,16 @@ from ccb_mc_validation.exceptions import ConfigurationError, DataContractError
 from ccb_mc_validation.truth.pdg import is_charged
 
 
-# Fail-closed evidence labelling for #1045 / ADR-0002.
+# Fail-closed evidence labelling for #1045 / ADR-0002 + ADR-1045.
 # The classifier below implements the HRD first-stack-layer charged-hit proxy
-# only. It is NOT a validated hardware-trigger response model.
-TRIGGER_EVIDENCE_STATE = "BLOCKED"
+# only. It is NOT a validated hardware-trigger response model: the MC-side
+# proxy -> instrumented-hardware-response migration has been quantified
+# (ADR-1045, evidence_state MIGRATION_VALIDATED), but real-data
+# hardware-trigger claims remain forbidden and Sample I/II production
+# membership continues to use this proxy.
+TRIGGER_EVIDENCE_STATE = "MIGRATION_VALIDATED"
 TRIGGER_LABEL = "MC_TRIGGER_PROXY"
-TRIGGER_HARDWARE_DEFINITION_STATUS = "UNKNOWN_EXTERNAL"
+TRIGGER_HARDWARE_DEFINITION_STATUS = "GEOMETRY_SOURCE_BOUND_ELECTRONICS_UNVALIDATED"
 _FORBIDDEN_HARDWARE_CLAIM_TOKENS = (
     "hardware-trigger reproduction",
     "hardware_trigger_validated",
@@ -33,6 +37,7 @@ def trigger_provenance() -> dict[str, str]:
         "proxy_id": "HRD_FIRST_STACK_LAYER_CHARGED_HIT",
         "contract": "docs/contracts/TRIGGER_HARDWARE_RESPONSE.json",
         "adr": "docs/mc_validation/ADR-0002-trigger-hardware-proxy-blocked.md",
+        "migration_adr": "docs/mc_validation/adr/ADR-1045-migration-validated.md",
     }
 
 
@@ -42,7 +47,9 @@ def assert_not_hardware_trigger_claim(text: str) -> None:
     for token in _FORBIDDEN_HARDWARE_CLAIM_TOKENS:
         if token in lowered:
             raise DataContractError(
-                f"forbidden hardware-trigger claim while evidence_state=BLOCKED: {token!r}"
+                "forbidden hardware-trigger claim (real-data hardware-trigger "
+                f"claims remain forbidden at evidence_state={TRIGGER_EVIDENCE_STATE}): "
+                f"{token!r}"
             )
 
 
@@ -89,8 +96,9 @@ def classify_event(
 ) -> dict[str, bool]:
     """Classify one event into Sample I and/or Sample II (HRD proxy only).
 
-    Evidence state is ``MC_TRIGGER_PROXY`` / ``BLOCKED`` until #1045 closes
-    (see :func:`trigger_provenance`). This is not a hardware-trigger model.
+    Sample I/II membership uses the ``MC_TRIGGER_PROXY`` definition; the
+    MC-side migration study (ADR-1045) does not change this classifier and
+    real-data hardware-trigger claims remain forbidden (ADR-0002).
 
     Semantics (legacy ``mc01_trigger_split_truth.py`` line 127):
 

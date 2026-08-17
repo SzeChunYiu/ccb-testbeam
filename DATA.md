@@ -46,7 +46,7 @@ When populated, the fleet archive should preserve immutable archives separately 
     └── sorted-b/
 ```
 
-The authoritative bytes must be verified against `reports/S00_data_integrity_pipeline_reproduction/input_sha256.csv`. That file contains archive and per-run hashes; for example, `hrdb_run_0031.root` is registered as SHA-256 `9921aa75c062d0b8994573299a201cbe2725673319fdf1b8cffb711fb9adcea7` with 11,638,901 bytes. The manifest, not a path name, is the byte-identity reference. filecite note: repository prose should not copy this sentence into generated artifacts; the hash above is sourced from the committed CSV.
+The authoritative bytes must be verified against `reports/S00_data_integrity_pipeline_reproduction/input_sha256.csv`. That file contains archive and per-run hashes; for example, `hrdb_run_0031.root` is registered as SHA-256 `9921aa75c062d0b8994573299a201cbe2725673319fdf1b8cffb711fb9adcea7` with 11,638,901 bytes. The manifest, not a path name, is the byte-identity reference.
 
 ## Registered archive hashes
 

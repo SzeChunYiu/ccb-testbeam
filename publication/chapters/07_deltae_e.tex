@@ -23,7 +23,7 @@ Alternating readout positions can miss the layer in which the stopping-power ris
 \subsection{Cycle-3 status of the current production bundle}
 
 \begin{publicationhold}
-The numerical bundle under \nolinkurl{reports/paper_956_deltaE_E_20260814T090700Z/} remains \textbf{not} publication-authorising. The producer was repaired in \#1336: (i) beam-data input now uses the authorising 8-by-16 raw schema; (ii) threshold-censoring order is corrected; (iii) physical-layer and readout namespaces are kept distinct. Corrected-run evidence is recorded in claims CL-030..CL-033 (\#1342). Gate status as of 2026-08-14: (iv) the channel-to-layer map remains a documented simulation contract, not a hardware-source-bound drawing (BOM row \texttt{B\_channel\_to\_G4\_layer\_map}; \#1296 closed scope-bound); (v) the saturation and transfer threshold remains a software contract without hardware source-binding (the ADR records BLOCKED as a preserved blocker for \#1014/\#1073 --- no hardware identity is invented); (vi) MC production provenance is closed: the regenerated 100{,}000-event campaign carries a complete production receipt (\#1311 closed via \#1354; \texttt{geant4/manifests/cmc\_100k\_regenerated\_20260814.json}). The quarantine on the OLD bundle stays; no promotion to VALIDATED is authorized until all gates pass and a final figure package is delivered.
+The numerical bundle under \nolinkurl{reports/paper_956_deltaE_E_20260814T090700Z/} remains \textbf{not} publication-authorising. The producer was repaired in \#1336: (i) beam-data input now uses the authorising 8-by-16 raw schema; (ii) threshold-censoring order is corrected; (iii) physical-layer and readout namespaces are kept distinct. Corrected-run evidence is recorded in claims CL-030..CL-033 (\#1342). Gate status as of 2026-08-14: (iv) the channel-to-layer map remains a documented simulation contract, not a hardware-source-bound drawing (BOM row \texttt{B\_channel\_to\_G4\_layer\_map}; \#1296 closed scope-bound); (v) the saturation and transfer threshold remains a software contract without hardware source-binding (the ADR records BLOCKED as a preserved blocker for \#1014/\#1073; no hardware identity is invented); (vi) MC production provenance is closed: the regenerated 100{,}000-event campaign carries a complete production receipt (\#1311 closed via \#1354; \texttt{geant4/manifests/cmc\_100k\_regenerated\_20260814.json}). The quarantine on the OLD bundle stays; no promotion to VALIDATED is authorized until all gates pass and a final figure package is delivered.
 \end{publicationhold}
 
 The quarantined plots are kept under \nolinkurl{publication/figures/gated/} to preserve provenance without allowing accidental use in the paper.
@@ -56,8 +56,8 @@ campaign). Because both campaigns run the default engine seed over the same
 sequential stream, the scale-up replicates the authorising campaign as a
 verified sequential prefix: the leading B-stack-entrance event rows are
 identical event-by-event, so the added 1.9 million events extend the same
-random stream --- the leading 100{,}000 are duplicated, not independently
-redrawn --- and only densify the same truth topology. The set is descriptive truth topology, not a detector-response
+random stream (the leading 100{,}000 are duplicated, not independently
+redrawn) and only densify the same truth topology. The set is descriptive truth topology, not a detector-response
 prediction: readout thresholds, light collection and digitisation are not in
 the loop, so no numeric agreement with the amplitude-domain data figures is
 claimed or implied. Beam-data figures remain GATED under the same Cycle-3

@@ -10,6 +10,7 @@ on:
       - "docs/SCIENTIFIC_AUDIT_STATUS.md"
       - "docs/PHYSICS_REFERENCE_BASELINE.md"
       - "docs/PHYSICS_DERIVATIONS_BASELINE.md"
+      - "docs/ML_VALIDATION_STANDARD.md"
       - "docs/SCIENTIFIC_FIGURE_STANDARD.md"
       - "docs/contracts/SCIENTIFIC_FIGURE_SIDECAR.schema.json"
       - "chatgpt_todo/**"
@@ -20,6 +21,7 @@ on:
       - "scripts/sipm_waveC_gates.py"
       - "scripts/check_global_scientific_audit_gate.py"
       - "scripts/check_scientific_promotion_rules.py"
+      - "scripts/check_ml_validation_promotion.py"
       - "scripts/check_s00_data_product_scope.py"
       - "scripts/check_rmax_formula.py"
       - "scripts/check_scattering_source_contract.py"
@@ -35,6 +37,7 @@ on:
       - "docs/SCIENTIFIC_AUDIT_STATUS.md"
       - "docs/PHYSICS_REFERENCE_BASELINE.md"
       - "docs/PHYSICS_DERIVATIONS_BASELINE.md"
+      - "docs/ML_VALIDATION_STANDARD.md"
       - "docs/SCIENTIFIC_FIGURE_STANDARD.md"
       - "docs/contracts/SCIENTIFIC_FIGURE_SIDECAR.schema.json"
       - "chatgpt_todo/**"
@@ -45,6 +48,7 @@ on:
       - "scripts/sipm_waveC_gates.py"
       - "scripts/check_global_scientific_audit_gate.py"
       - "scripts/check_scientific_promotion_rules.py"
+      - "scripts/check_ml_validation_promotion.py"
       - "scripts/check_s00_data_product_scope.py"
       - "scripts/check_rmax_formula.py"
       - "scripts/check_scattering_source_contract.py"
@@ -63,6 +67,8 @@ jobs:
         run: python scripts/check_global_scientific_audit_gate.py
       - name: Reject unsupported scientific promotion
         run: python scripts/check_scientific_promotion_rules.py
+      - name: Reject unsupported ML/model-selection promotion
+        run: python scripts/check_ml_validation_promotion.py
       - name: Bind historical S00 count to its exact waveform product
         run: python scripts/check_s00_data_product_scope.py
       - name: Regress fail-closed polarity authorization

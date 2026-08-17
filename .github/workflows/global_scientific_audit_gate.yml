@@ -1,0 +1,42 @@
+name: Global Scientific Audit Gate
+
+on:
+  push:
+    paths:
+      - "README.md"
+      - "WIKI.md"
+      - "docs/SCIENTIFIC_AUDIT_STATUS.md"
+      - "docs/PHYSICS_REFERENCE_BASELINE.md"
+      - "chatgpt_todo/NUMBER_AUDIT_LEDGER.csv"
+      - "chatgpt_todo/PHYSICS_JUSTIFICATION_LEDGER.csv"
+      - "chatgpt_todo/FIGURE_AUDIT_LEDGER.csv"
+      - "chatgpt_todo/REDO_QUEUE.csv"
+      - "chatgpt_todo/SCIENTIFIC_REVIEW_PROTOCOL.md"
+      - "chatgpt_todo/AI_SESSION_PICKUP_GUIDE_20260817_GLOBAL_AUDIT.md"
+      - "scripts/check_global_scientific_audit_gate.py"
+      - ".github/workflows/global_scientific_audit_gate.yml"
+  pull_request:
+    paths:
+      - "README.md"
+      - "WIKI.md"
+      - "docs/SCIENTIFIC_AUDIT_STATUS.md"
+      - "docs/PHYSICS_REFERENCE_BASELINE.md"
+      - "chatgpt_todo/**"
+      - "scripts/check_global_scientific_audit_gate.py"
+      - ".github/workflows/global_scientific_audit_gate.yml"
+
+jobs:
+  audit-governance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate global audit governance contract
+        run: python scripts/check_global_scientific_audit_gate.py
+
+  strict-front-door-diagnostic:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - name: Report unresolved front-door overclaims
+        run: python scripts/check_global_scientific_audit_gate.py --strict-front-door

@@ -1,0 +1,108 @@
+{
+  "ticket_id": "2560",
+  "generated_at_unix": 1786925622.6495316,
+  "command": "/home/billy/anaconda3/bin/python scripts/ticket_2560_s61c_energy_pid_pedestal_pileup_disentanglement.py --skip-base",
+  "artifacts": [
+    {
+      "path": "reports/2560__s61c_energy_pid_pedestal_pileup_disentanglement/REPORT.md",
+      "sha256": "99daa6292aa14704d57ef45f778908bb8986ad5cbdfd49df59a44acbaf566f28",
+      "bytes": 70006
+    },
+    {
+      "path": "reports/2560__s61c_energy_pid_pedestal_pileup_disentanglement/calibration_curves.csv",
+      "sha256": "55a66e95c350d7858be6f71b715a73be8d90f55d622b58cd7188d7682a5ed03b",
+      "bytes": 37692
+    },
+    {
+      "path": "reports/2560__s61c_energy_pid_pedestal_pileup_disentanglement/calibration_ece.csv",
+      "sha256": "3a6252857732a4f94703cc872fda47301c244effb9e758a58112a62b0e953036",
+      "bytes": 5829
+    },
+    {
+      "path": "reports/2560__s61c_energy_pid_pedestal_pileup_disentanglement/claimed_ticket.txt",
+      "sha256": "9bbeb01e825f75d9f55cef3059654c0049b336ef36c11a49b3a9efa2d6826b9b",
+      "bytes": 371
+    },
+    {
+      "path": "reports/2560__s61c_energy_pid_pedestal_pileup_disentanglement/endpoint_method_summary.csv",
+      "sha256": "9d1cf8f7949852f34529225612cda65778a7e56d786e2f0365bf806db1084a0f",
+      "bytes": 10327
+    },
+    {
+      "path": "reports/2560__s61c_energy_pid_pedestal_pileup_disentanglement/feature_family_audit.csv",
+      "sha256": "c635a2d72a26444f81cf00e9d9beab6ec2de60cbf2dc8e79874ff9ef08fcefa7",
+      "bytes": 1425
+    },
+    {
+      "path": "reports/2560__s61c_energy_pid_pedestal_pileup_disentanglement/heldout_predictions.csv.gz",
+      "sha256": "45184ef009a56d4d7092f73a7c8b70339c3383726baf832e1420c901a9b3ec4e",
+      "bytes": 497055
+    },
+    {
+      "path": "reports/2560__s61c_energy_pid_pedestal_pileup_disentanglement/heldout_predictions_with_strata.csv.gz",
+      "sha256": "7a5de19027bc2989d5133e34959ee29f6212bc388da688c954a6a37516951146",
+      "bytes": 639855
+    },
+    {
+      "path": "reports/2560__s61c_energy_pid_pedestal_pileup_disentanglement/heldout_strata_assignments.csv",
+      "sha256": "2a78f8088d72605cb80c93456d488a526a2c8c42c1f9b0a99cddb0de1124646e",
+      "bytes": 244029
+    },
+    {
+      "path": "reports/2560__s61c_energy_pid_pedestal_pileup_disentanglement/joint_scoreboard.csv",
+      "sha256": "bc13d58598d48cf34ef987f48c2606cec6ff24e246c4e393b0d49cd835337981",
+      "bytes": 2333
+    },
+    {
+      "path": "reports/2560__s61c_energy_pid_pedestal_pileup_disentanglement/leakage_audit.csv",
+      "sha256": "e490f774f8e23d23df8fdfbd3337929e3c815b788bc081e30e13b435be7863ab",
+      "bytes": 2857
+    },
+    {
+      "path": "reports/2560__s61c_energy_pid_pedestal_pileup_disentanglement/negative_control_pedestal_shuffles.csv",
+      "sha256": "bcaf5cd24527c76cf788841c7546c8e20b61ecbeb32ff76ea32bc1597d4a0398",
+      "bytes": 1974
+    },
+    {
+      "path": "reports/2560__s61c_energy_pid_pedestal_pileup_disentanglement/paired_bootstrap_deltas.csv",
+      "sha256": "9cbcffc5eacc10e546b3282f6cf499f8c3f7ad0fc08e314286527f5d0e33cf55",
+      "bytes": 10202
+    },
+    {
+      "path": "reports/2560__s61c_energy_pid_pedestal_pileup_disentanglement/pedestal_state_heldout_bootstrap.csv",
+      "sha256": "958f2dbe54f3efda27f42e16f787d601d4983e9ed3cda47d6dedd6f1bae5e3d6",
+      "bytes": 22971
+    },
+    {
+      "path": "reports/2560__s61c_energy_pid_pedestal_pileup_disentanglement/reproduction_counts_by_run.csv",
+      "sha256": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+      "bytes": 1896
+    },
+    {
+      "path": "reports/2560__s61c_energy_pid_pedestal_pileup_disentanglement/reproduction_match_table.csv",
+      "sha256": "30c27e630bc2f37a7e26cf4f3fac0ad2db556913c9a3725097ba16731535f2cf",
+      "bytes": 135
+    },
+    {
+      "path": "reports/2560__s61c_energy_pid_pedestal_pileup_disentanglement/result.json",
+      "sha256": "e6e8a44a2210f104ff4c6688fa7bf3d78639b0107a0fbefb3925c37f515cd8a5",
+      "bytes": 4190
+    },
+    {
+      "path": "reports/2560__s61c_energy_pid_pedestal_pileup_disentanglement/shape_timing_pedestal_pileup_saturation_ablation.csv",
+      "sha256": "c094ebb237a4fff1ea929f11727a853473f4b956ce68e6ec0b07bff427d72660",
+      "bytes": 77498
+    },
+    {
+      "path": "reports/2560__s61c_energy_pid_pedestal_pileup_disentanglement/strata_metrics.csv",
+      "sha256": "18430a459b4475683e884edcbfeff3eb659555afb6c57c3db85b46a5d703502c",
+      "bytes": 121004
+    },
+    {
+      "path": "reports/2560__s61c_energy_pid_pedestal_pileup_disentanglement/topology_matched_negative_controls.csv",
+      "sha256": "c424ac0fb4deddba8c6dc2f505b61bf98ca5135c7b9fa4ba80101b3600550cdc",
+      "bytes": 5105
+    }
+  ],
+  "s61c_wrapper_runtime_sec": 23.333038091659546
+}

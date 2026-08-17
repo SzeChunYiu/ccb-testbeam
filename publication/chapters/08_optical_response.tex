@@ -36,6 +36,15 @@ mode-complete, and adds a known-answer test that discriminates the modes; grid
 regeneration under the corrected contract is tracked as a \#1303 follow-up.
 \end{publicationhold}
 
+The regenerated grid evidence objects themselves are final-package artifacts
+(CL-1303-001, \textsc{truth\_level\_mc\_only}) and are rendered here with
+their model-dependence boundary stated on-caption. They are simulation
+results of the current optical model, not a calibrated light-yield claim.
+
+\PaperFigure{figures/final/1303_stage_accounting.pdf}{0.95}{Regenerated five-point optical grid (\#1303): stage-resolved accounting from scintillation production through WLS absorption/re-emission, guided transport, sensor arrival and detection to saturated-PE readout. Mean stage ratios: WLS capture $\approx0.19$, transport $\approx0.021$, detection-given-arrival $\approx0.30$, saturated-to-detected $\approx0.96$.}{\textsc{simulation\_result}, CL-1303-001: model-dependent optical MC (WLS fluorescence unit-yield, TiO$_2$ Lambertian hypothesis); machine-readable table \texttt{publication/tables/final/1303\_stage\_accounting.csv}.}
+\PaperFigure{figures/final/1303_pe_per_mev.pdf}{0.95}{Per-point detected-PE yields per visible MeV (flat within bootstrap intervals, 11.78--11.84) and per raw deposited MeV (8.6--10.6, species-split through the Birks quenching ratio) across the five-point grid (\#1303).}{\textsc{simulation\_result}, CL-1303-001: absolute light yield is \emph{not} claimed; the optical/SiPM nuisance envelope is not yet propagated; table \texttt{publication/tables/final/1303\_pe\_per\_mev.csv}.}
+\PaperFigure{figures/final/1303_edep_vs_pe.pdf}{0.95}{Detected PE versus $E_{\rm vis}$ and $E_{\rm raw}$ with pooled linear fits (vis: $11.78~\mathrm{PE/MeV_{vis}}$, offset $0.65$~PE, $r^2=0.976$, $n=10{,}000$).}{\textsc{simulation\_result}, CL-1303-001: the grid sampled Poisson(1) WLS re-emission multiplicity under a pre-\#1088 default-one label --- mean yields are unaffected in expectation, but per-event multiplicity variance and saturation-adjacent observables carry Poisson(1) semantics until the \#1088 three-mode contract regeneration lands; held-out reconstruction performance stays gated (CL-029).}
+
 The historical values and plots remain available under \texttt{publication/figures/gated/} and the source report for correction history only.
 
 \subsection{Required nominal optical campaign}

@@ -1,8 +1,8 @@
 \section{Publication status and open gates}
 
-This appendix is part of the working PDF so that exported copies cannot lose the scientific readiness state. It is collaboration-review metadata rather than a substitute for the final scientific results narrative; before journal submission, detailed issue bookkeeping should move to supplementary reproducibility material.
+This appendix records the scientific readiness state of the working manuscript. It is collaboration-review metadata rather than a substitute for the final scientific results narrative; before journal submission, detailed gate bookkeeping moves to supplementary reproducibility material.
 
-\begin{longtable}{p{0.18\linewidth}p{0.72\linewidth}}
+\begin{longtable}{p{0.26\linewidth}p{0.64\linewidth}}
 \toprule
 \textbf{Gate} & \textbf{Publication consequence}\\
 \midrule
@@ -11,19 +11,19 @@ This appendix is part of the working PDF so that exported copies cannot lose the
 \textbf{Gate} & \textbf{Publication consequence}\\
 \midrule
 \endhead
-\#1296 & Hardware/BOM/run record: source-bind installed stave, channel map, target, trigger and survey/run settings.\\
-\#962 / \#1045 & Run-role and trigger response: prevents over-interpreting Sample-I/Sample-II differences as pure trigger effects.\\
-\#869 / \#954 & Readout-map and waveform polarity: required before authorising event-level amplitude observables.\\
-\#956 / \#1321 & Regenerate beam/MC \(\Delta E\)--\(E\) from the authorising pre-threshold 8\(\times\)16 event product and corrected MC layer namespaces.\\
-\#1053 / \#1179 / \#1311 & MC event measure, source uncertainty and production provenance. The deterministic direct-CDF sampler defect tracked by \#1178 is repaired/closed; that bounded software closure does not authorise the historical paper MC.\\
-\#1088 / \#1303 / \#1322 & WLS photophysics and regeneration of the single-stave optical grid after superseded source defects, followed by replacement optical/energy figures.\\
-\#1302 / \#1297 & Raw deposited energy vs Birks-visible energy semantics and a corrected held-out reconstruction study.\\
-\#1317--\#1320 & Setup, longitudinal-profile and timing figure packages are wired into the submission manifests with SHA-bound machine-readable sources; the beam-data profile and timing artifacts remain gated on CL-1318-002 / CL-1320-002.\\
-\#1304 / \#1299 & Single scientific source of truth for claim status across figures, WIKI and manuscript, plus stale-document reconciliation.\\
-\#1301 / \#1305 & Umbrella submission and merged-state fail-closed gates.\\
+Installed-hardware record & Source-bind installed stave, channel map, target, trigger and survey/run settings.\\
+Run roles \& trigger response & Prevents over-interpreting Sample-I/Sample-II differences as pure trigger effects.\\
+Readout map \& waveform polarity & Required before authorising event-level amplitude observables.\\
+Beam/MC $\Delta E$--$E$ regeneration & Regenerate beam/MC \(\Delta E\)--\(E\) from the authorising pre-threshold 8\(\times\)16 event product and corrected MC layer namespaces.\\
+MC measure, source uncertainty \& provenance & The deterministic direct-CDF sampler defect is repaired and closed; that bounded software closure does not authorise the historical paper MC.\\
+WLS photophysics \& optical grid & Regeneration of the single-stave optical grid after superseded source defects, followed by replacement optical/energy figures.\\
+Energy semantics \& held-out study & Raw deposited energy vs Birks-visible energy semantics and a corrected held-out reconstruction study.\\
+Figure packages \& manifests & Setup, longitudinal-profile and timing figures are wired into the submission manifests with SHA-bound machine-readable sources; the beam-data profile and timing artifacts remain gated.\\
+Single source of truth & One scientific claim-status record across figures and manuscript, plus stale-document reconciliation.\\
+Submission fail-closed gates & Umbrella submission and merged-state fail-closed checks.\\
 \bottomrule
 \end{longtable}
 
-As of the 2026-08-17 manifest wiring, the final-figure namespace carries 15 figures and the final-table namespace 4 tables, each with artifact SHA-256, a repo-relative machine-readable source and resolved claim IDs; the source-data namespace carries the small per-figure source tables. The submission-readiness validator enforces this contract mechanically. The remaining violations are the known scientific blockers: the gated claims behind the beam-data profile, timing residual and held-out reconstruction summaries (CL-1318-002, CL-1320-002, CL-029), the STATUS.md hold, and the build receipt predating the current head.
+As of the 2026-08-17 manifest wiring, the final-figure namespace carries 15 figures and the final-table namespace 4 tables, each with artifact SHA-256 and a machine-readable source table; the source-data namespace carries the small per-figure source tables. A mechanical validator enforces this contract. The remaining violations are the known scientific blockers: the gated claims behind the beam-data profile, timing residual and held-out reconstruction summaries, the standing publication-hold record, and the build receipt predating the current head.
 
-The Cycle-3 audit documents the detailed failure modes under \nolinkurl{chatgpt_todo/PAPER_SUBMISSION_AUDIT_CYCLE3_20260812.md} and its addenda. The current-head dependency order and section-by-section review are recorded under \nolinkurl{chatgpt_todo/PAPER_COMPLETION_AUDIT_20260814.md}.
+The Cycle-3 audit documents the detailed failure modes in its audit record and addenda; the current-head dependency order and the section-by-section review are recorded in the corresponding review records.

@@ -61,7 +61,7 @@
   \IfFileExists{#1}{%
     \includegraphics[width=#2\linewidth]{#1}%
   }{%
-    \fbox{\parbox[c][4.2cm][c]{0.90\linewidth}{\centering\textbf{Figure not promoted into the publication build}\\[0.5em]\nolinkurl{#1}\\[0.5em]#4}}%
+    \fbox{\parbox[c][4.2cm][c]{0.90\linewidth}{\centering\textbf{Figure not promoted into the publication build}\\[0.5em]#4}}%
   }
   \caption{#3}
   \end{figure}
@@ -71,8 +71,7 @@
   \begin{figure}[H]
   \centering
   \fbox{\parbox[c][4.4cm][c]{0.90\linewidth}{\centering
-    \textbf{GATED FIGURE -- NOT RENDERED IN PUBLICATION PDF}\\[0.55em]
-    \nolinkurl{#1}\\[0.55em]
+    \textbf{Gated figure -- not rendered in the publication PDF}\\[0.55em]
     #4}}
   \caption{#3}
   \end{figure}
@@ -88,7 +87,7 @@
 \begin{center}
 \fbox{\parbox{0.92\linewidth}{\small
 \textbf{Working publication -- not submission-authorising.}
-This PDF is the canonical chapterised build surface for the paper, but the Cycle-3 adversarial audit on \texttt{main@32fd72b675aa4cba0da3bdee52561755be960ada} invalidates promotion of the current \(\Delta E\)--\(E\) production numbers, the July optical calibration grid, and the 8.9\% deposited-energy-resolution headline. Those quantities are kept only in clearly marked publication-hold text until their physics/provenance issues close. The hold is selective: results outside those quarantine scopes, such as the component-safe B4--B6 timing pair-residual analysis and the regenerated optical-response calibration grid (a declared MC-model-dependent diagnostic), stand as final-package artifacts, and each figure carries its own evidence-status note. The authoritative status is tracked in the repository claim ledger and publication audit files.
+This PDF is the canonical chapterised build surface for the paper, but the Cycle-3 adversarial audit invalidates promotion of the current \(\Delta E\)--\(E\) production numbers, the July optical calibration grid, and the 8.9\% deposited-energy-resolution headline. Those quantities are kept only in clearly marked publication-hold text until their physics/provenance issues close. The hold is selective: results outside those quarantine scopes, such as the component-safe B4--B6 timing pair-residual analysis and the regenerated optical-response calibration grid (a declared MC-model-dependent diagnostic), stand as final results, and each figure carries its own evidence-status note. The authoritative status is tracked in the collaboration's claim ledger and audit records.
 }}
 \end{center}
 

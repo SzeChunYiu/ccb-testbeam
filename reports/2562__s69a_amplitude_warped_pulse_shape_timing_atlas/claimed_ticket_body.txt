@@ -1,0 +1,4 @@
+2562
+# NEW S69a amplitude-warped pulse-shape timing atlas with pedestal and pile-up controls
+
+Academic-grade study. Deepen pulse-shape and timing understanding by testing whether amplitude-normalized leading-edge curvature, constant-fraction time, and pedestal phase explain residual timing tails under pile-up and mild saturation.

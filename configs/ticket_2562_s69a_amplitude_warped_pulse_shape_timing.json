@@ -1,0 +1,18 @@
+{
+  "ticket_id": 2562,
+  "study_id": "S69a",
+  "worker": "testbeam-laptop-1",
+  "title": "amplitude-warped pulse-shape timing atlas with pedestal and pile-up controls",
+  "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
+  "processed_selected_table": "/home/billy/ccb-data/data/processed/s00_selected_b_pulses.csv.gz",
+  "output_dir": "reports/2562__s69a_amplitude_warped_pulse_shape_timing_atlas",
+  "amplitude_cut_adc": 1000.0,
+  "sample_period_ns": 10.0,
+  "benchmark_max_rows_per_run": 1200,
+  "random_seed": 2562,
+  "heldout_runs": [42, 50, 57, 58, 60, 62, 64, 65],
+  "bootstrap_replicates": 500,
+  "torch_epochs": 80,
+  "torch_batch_size": 512,
+  "torch_learning_rate": 0.0015
+}

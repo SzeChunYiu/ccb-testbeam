@@ -1,0 +1,26 @@
+{
+  "ticket_id": "2559",
+  "git_commit": "cec9edc28257e0699c70c17fa9b2e8d806a3d42a",
+  "command": "/usr/bin/python3 scripts/ticket_2559_s61b_pileup_saturation_energy_recovery_bakeoff.py",
+  "runtime_seconds": 158.27781653404236,
+  "python": "3.8.10 (default, Mar 18 2025, 20:04:55) \n[GCC 9.4.0]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.29",
+  "outputs_sha256": {
+    "REPORT.md": "629858e0d04f0779d917b6bd6a867a998505d020342b1d7bfb7fb512c40582ca",
+    "abstention_curves.csv": "8a047b832b4c8e6d1a84de89d3b19e95f9d77bc2688cc6caeb40975eb0282c86",
+    "claimed_ticket.txt": "893e7d6900eb9073ec5488a7e61afc76e711dcf9605d20c3faeac784299db2ac",
+    "delay_ratio_recovery.csv": "ac3219c6e2bb4dd7efab63c0472d41cc7f8ac48ee0000241998b43cce504a551",
+    "endpoint_metrics_ci.csv": "c4e2de91d7b2538b3549ac7f692b52a5aaf53398c0cdbdf589775876d35d2190",
+    "event_predictions.csv": "1b7edfdfd8bcbb08edc07812c28db22771ac205094a17527e1c171ddaf312dea",
+    "input_sha256.csv": "cc17da0dcd3e7e732b81a17f3c35833f026fdec912538d28d7d71b9af71a46f6",
+    "method_metrics.csv": "d2da07ff3ee7a14b6ee4eba59df7765c48b66bbfa79a48806f07f767e29721ad",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "d8d4cdb5535d22498d5d705185e1a68621ab13ab0b58f51e623116f69f44a2e4",
+    "run_heldout_metrics.csv": "b8debe0f52bb318ec40a33ea2300b1abb9b7b03e54bee7cb9472f6f5f0e8a264",
+    "shuffled_overlay_controls.csv": "7f7cc8aa1075fdcbd63fd567ca8c9b9ddfcce37b240cf487dfa1fab76f407ff3",
+    "strata_metrics.csv": "0dfa6174d32983962a8b599f177eabecfc13fe237b9c693828c2bedc4f688a5a",
+    "template_summary.csv": "eca9592b05cf73d43c290f57231745f4d3949abede50e928ded39b460577385c",
+    "winner_ranked_metrics.csv": "99993aaa57af575b2144bdf5e235be5cfc2539b75caa3d40dbeeaf247facae7a"
+  },
+  "postprocess_note": "S61b ticket metadata plus delay/ratio, abstention, and shuffled-overlay addenda."
+}

@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ccb-testbeam/scientific-figure-sidecar/1",
+  "title": "CCB scientific figure sidecar",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "figure_id",
+    "status",
+    "evidence_class",
+    "claim_ids",
+    "source_artifacts",
+    "generator",
+    "quantities",
+    "selection",
+    "sample",
+    "uncertainty",
+    "normalization",
+    "provenance"
+  ],
+  "properties": {
+    "schema": {"const": "ccb-scientific-figure-sidecar/1"},
+    "figure_id": {"type": "string", "minLength": 1},
+    "status": {
+      "enum": ["SUPPORTED", "CONDITIONAL", "GATED", "BLOCKED", "DIAGNOSTIC", "TRUTH_LEVEL_MC_ONLY", "MC_METHOD_CLOSURE", "SUPERSEDED", "FLAWED"]
+    },
+    "evidence_class": {
+      "enum": ["DATA_MEASUREMENT", "MC_METHOD_CLOSURE", "TRUTH_LEVEL_MC_ONLY", "DETECTOR_MODEL_PREDICTION", "VALIDATED_TRANSFER", "EXTERNAL_REFERENCE", "DIAGNOSTIC", "MIXED"]
+    },
+    "claim_ids": {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true},
+    "source_artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256"],
+        "properties": {
+          "path": {"type": "string", "minLength": 1},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        }
+      }
+    },
+    "generator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["script", "commit"],
+      "properties": {
+        "script": {"type": "string", "minLength": 1},
+        "config": {"type": ["string", "null"]},
+        "commit": {"type": "string", "minLength": 7},
+        "command": {"type": ["string", "null"]}
+      }
+    },
+    "quantities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["x", "y"],
+      "properties": {
+        "x": {"$ref": "#/$defs/quantity"},
+        "y": {"$ref": "#/$defs/quantity"}
+      }
+    },
+    "selection": {"type": "string", "minLength": 1},
+    "sample": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["n_or_denominator", "split_or_run_scope"],
+      "properties": {
+        "n_or_denominator": {"type": "string", "minLength": 1},
+        "split_or_run_scope": {"type": "string", "minLength": 1}
+      }
+    },
+    "uncertainty": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["method"],
+      "properties": {
+        "method": {"type": "string", "minLength": 1},
+        "confidence_level": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "resampling_unit": {"type": ["string", "null"]},
+        "systematics": {"type": ["string", "null"]}
+      }
+    },
+    "fit": {
+      "type": ["object", "null"],
+      "properties": {
+        "model": {"type": "string"},
+        "domain": {"type": "string"},
+        "goodness_of_fit": {"type": "string"},
+        "residual_panel": {"type": "boolean"}
+      }
+    },
+    "normalization": {"type": "string", "minLength": 1},
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["data_mc_label", "notes"],
+      "properties": {
+        "data_mc_label": {"type": "string", "minLength": 1},
+        "notes": {"type": "string"}
+      }
+    }
+  },
+  "$defs": {
+    "quantity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "units"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "units": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

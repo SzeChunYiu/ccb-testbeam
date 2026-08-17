@@ -69,3 +69,33 @@ Chose Option A (modify base GDML directly) because:
 **Issue**: #1045 (P0)
 **Phase**: 2/6
 **Created**: 2026-08-16
+
+---
+
+## v3 Geometry — AUTHORITATIVE (2026-08-17)
+
+**v2 RETRACTED**: the rotated r=30 slab design gave two-arm & T1&T2 = **0/554** on 1M
+(job 3506988). Root cause: sign-flipped antipodal placement — `t_pos = -30*u_arm`
+placed both counters on the opposite side of the target from both arms.
+
+**v3 design**: the baseline geometry ALREADY contains the real T1/T2 counters as
+passive `Trig_stack_1/2` volumes (PSci bars, r=99 cm, on the B/A arm axes). v3
+instruments them — split shared `Trig_bar` into `T1_trigger_log` (stack_1, B arm,
+−38.0°) / `T2_trigger_log` (stack_2, A arm, +71.5°); zero invented geometry.
+Builder: `scripts/trigger_phase2/make_t1t2_v3.py` (8/8 gates PASS).
+Geometry sha256 `657661c8…` → `phase2_geometry_receipt.json`.
+
+**Validation chain**:
+- 10k (job 3507011): 96 branches / 36 T1/T2 branches; T1∧T2=4, all annihilations;
+  hits at r=99 on the arm axes.
+- 1M (job 3507013): two-arm = **554 exactly** (geometry-only change proven);
+  T1∧T2@0.5 MeV = 361; two-arm & T1∧T2 = **165/554 = 0.2978** vs independent
+  ray-projection prediction 0.289.
+
+**Phase 3/4 on v3 1M** (jobs 3507014/3507018): threshold scan flat (361→355 over
+0.5–5 MeV); **Phase 4 corrected via per-event joint matrix** — the aggregate
+matrix's "both=256 / hardware_only=0" was an artifact of joining two scans by
+aggregate arithmetic (see `phase4/JOINT_MATRIX_CORRECTION.md`). Corrected:
+**both=165, proxy_only=389, hardware_only=195; retention 29.8%**, threshold-
+insensitive, A-arm counter geometric bottleneck. Hardware sample ⊄ proxy sample
+(54% of hardware triggers lie outside the two-arm definition).

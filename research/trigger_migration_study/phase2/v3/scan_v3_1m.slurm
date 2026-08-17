@@ -1,0 +1,31 @@
+#!/bin/bash
+#SBATCH --job-name=v3scan1m
+#SBATCH --partition=lu48
+#SBATCH -A lu2026-2-51
+#SBATCH --time=04:00:00
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=16G
+#SBATCH --output=/projects/hep/fs10/shared/nnbar/billy/ccb_1045_v3/scan_v3_1m_%j.out
+#SBATCH --error=/projects/hep/fs10/shared/nnbar/billy/ccb_1045_v3/scan_v3_1m_%j.err
+
+# Phase 3/4 v3 on the 1M v3 file (issue #1045, instrumented baseline Trig stacks).
+set -euo pipefail
+PY=/projects/hep/fs10/shared/nnbar/billy/packages/hibeam_env/bin/python
+WT=/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/ccb-wt-1045-p3
+IN=/projects/hep/fs10/shared/nnbar/billy/ccb_1045_v3/output_krakow_v3_1M.root
+cd ${WT}
+echo "=== hardware scan v3 (1M) $(date) ==="
+${PY} scripts/trigger_threshold_scan.py --input ${IN} \
+  --output research/trigger_migration_study/phase3/hardware_scan_1m_v3.json \
+  --repo-root . --mode hardware
+echo "=== proxy scan v3 (1M) $(date) ==="
+${PY} scripts/trigger_threshold_scan.py --input ${IN} \
+  --output research/trigger_migration_study/phase3/baseline_proxy_scan_1m_v3.json \
+  --repo-root . --mode proxy
+echo "=== phase 4 matrix v3 (1M) $(date) ==="
+${PY} scripts/trigger_migration_matrix.py \
+  --proxy-json research/trigger_migration_study/phase3/baseline_proxy_scan_1m_v3.json \
+  --hardware-json research/trigger_migration_study/phase3/hardware_scan_1m_v3.json \
+  --output research/trigger_migration_study/phase4/migration_matrix_1m_v3.json
+echo "=== DONE $(date) ==="

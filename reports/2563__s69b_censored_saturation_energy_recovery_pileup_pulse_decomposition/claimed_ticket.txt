@@ -1,0 +1,5 @@
+#2563 NEW S69b censored saturation energy recovery from pile-up-aware pulse decomposition
+claim_command_run_once: tn-ticket claim testbeam-laptop-3 --project testbeam
+claim_command_output: null / # null / null
+manual_claim_recovery: gh issue edit 2563 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-3 --remove-label factory:open
+done_command: tn-ticket done 2563

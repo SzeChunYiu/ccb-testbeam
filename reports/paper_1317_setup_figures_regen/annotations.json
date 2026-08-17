@@ -1,0 +1,267 @@
+{
+ "bom": "publication/tables/hardware_bom.csv",
+ "figures": {
+  "ccb_layout": {
+   "annotations": {
+    "A_arm_angle": {
+     "claim_ids": "P-004",
+     "component": "A_arm_angle",
+     "evidence_path": "geant4/configs/krakow.geoconf",
+     "evidence_sha": "a2bfda12d722d07ea8993bfd765bf8f43e2921715cced9b1b739fd5ffd3871c7",
+     "notes": "Recoil A-stack angle in source-bound configuration",
+     "quantity": "1",
+     "status": "SIM_CONFIG",
+     "unit": "deg",
+     "value": "71.5"
+    },
+    "A_stack_physical_layers": {
+     "claim_ids": "P-004",
+     "component": "A_stack_physical_layers",
+     "evidence_path": "geant4/configs/krakow.geoconf",
+     "evidence_sha": "a2bfda12d722d07ea8993bfd765bf8f43e2921715cced9b1b739fd5ffd3871c7",
+     "notes": "krakow_nBars2; four physical A layers in compact geometry",
+     "quantity": "4",
+     "status": "SIM_CONFIG",
+     "unit": "bars",
+     "value": "4"
+    },
+    "B_arm_angle": {
+     "claim_ids": "P-004",
+     "component": "B_arm_angle",
+     "evidence_path": "geant4/configs/krakow.geoconf",
+     "evidence_sha": "a2bfda12d722d07ea8993bfd765bf8f43e2921715cced9b1b739fd5ffd3871c7",
+     "notes": "Downstream B-stack angle in source-bound configuration",
+     "quantity": "1",
+     "status": "SIM_CONFIG",
+     "unit": "deg",
+     "value": "-38"
+    },
+    "B_stack_physical_layers": {
+     "claim_ids": "P-004",
+     "component": "B_stack_physical_layers",
+     "evidence_path": "geant4/configs/krakow.geoconf",
+     "evidence_sha": "a2bfda12d722d07ea8993bfd765bf8f43e2921715cced9b1b739fd5ffd3871c7",
+     "notes": "krakow_nBars1; eight physical B layers in compact geometry",
+     "quantity": "8",
+     "status": "SIM_CONFIG",
+     "unit": "bars",
+     "value": "8"
+    },
+    "Sample_I_trigger_definition": {
+     "claim_ids": "P-014",
+     "component": "Sample_I_trigger_definition",
+     "evidence_path": "docs/contracts/TRIGGER_HARDWARE_RESPONSE.json",
+     "evidence_sha": "5268a45121516290ca1f305b8eb887ae800bc85850a241879aea0eda2b6fff22",
+     "notes": "Analysis convention only; hardware threshold/discriminator/coincidence record not yet bound",
+     "quantity": "1",
+     "status": "UNKNOWN_EXTERNAL",
+     "unit": "",
+     "value": "A_AND_B_coincidence"
+    },
+    "beam_kinetic_energy": {
+     "claim_ids": "P-002",
+     "component": "beam_kinetic_energy",
+     "evidence_path": "geant4/macros/run_krakow.mac",
+     "evidence_sha": "f9bb3d5e6e44971a4f52a836ff95aad8b20acc8804f5d44ca5399cd938afd5a7",
+     "notes": "CCB event-simulation macro parameter; not yet bound to an immutable collaboration run log",
+     "quantity": "1",
+     "status": "SIM_CONFIG",
+     "unit": "MeV",
+     "value": "190"
+    },
+    "geometry_distance_parameter": {
+     "claim_ids": "P-004",
+     "component": "geometry_distance_parameter",
+     "evidence_path": "geant4/configs/krakow.geoconf",
+     "evidence_sha": "a2bfda12d722d07ea8993bfd765bf8f43e2921715cced9b1b739fd5ffd3871c7",
+     "notes": "krakow_distance nominal parameter; not survey-grade metrology",
+     "quantity": "1",
+     "status": "SIM_CONFIG",
+     "unit": "cm",
+     "value": "109"
+    },
+    "target_material": {
+     "claim_ids": "P-003",
+     "component": "target_material",
+     "evidence_path": "geant4/macros/run_krakow.mac",
+     "evidence_sha": "f9bb3d5e6e44971a4f52a836ff95aad8b20acc8804f5d44ca5399cd938afd5a7",
+     "notes": "Deuterated polyethylene target in simulation configuration",
+     "quantity": "1",
+     "status": "SIM_CONFIG",
+     "unit": "",
+     "value": "CD2"
+    }
+   },
+   "pdf": "ccb_layout.pdf"
+  },
+  "channel_map": {
+   "annotations": {
+    "B_channel_to_G4_layer_map": {
+     "claim_ids": "P-004",
+     "component": "B_channel_to_G4_layer_map",
+     "evidence_path": "reports/1781091056.1272.7ad60e8d__s12b_detector_map_contract/REPORT.md",
+     "evidence_sha": "fa8dcca46cb73d351bf53710e238d391fd83631cfca928ba6f76d009fb4808fa",
+     "notes": "Documented GEANT4 detector-map contract for data-matched MC; not a hardware channel-map drawing",
+     "quantity": "4",
+     "status": "SIM_CONFIG",
+     "unit": "layer_id",
+     "value": "B2->0,B4->2,B6->4,B8->6"
+    },
+    "B_readout_channel_labels": {
+     "claim_ids": "P-004",
+     "component": "B_readout_channel_labels",
+     "evidence_path": "configs/s03e_1781020980_5750_33243f80_sample_i_analysis_population_transfer.yaml",
+     "evidence_sha": "8d4b5a775ecde700934f610371765e7e713836fc90addb962e6508710cab27f0",
+     "notes": "Four even-numbered B-stack readout channels in analysed beam data; eight physical layers with sparse instrumentation",
+     "quantity": "4",
+     "status": "DESIGN_SPEC",
+     "unit": "channels",
+     "value": "B2,B4,B6,B8"
+    },
+    "B_stack_physical_layers": {
+     "claim_ids": "P-004",
+     "component": "B_stack_physical_layers",
+     "evidence_path": "geant4/configs/krakow.geoconf",
+     "evidence_sha": "a2bfda12d722d07ea8993bfd765bf8f43e2921715cced9b1b739fd5ffd3871c7",
+     "notes": "krakow_nBars1; eight physical B layers in compact geometry",
+     "quantity": "8",
+     "status": "SIM_CONFIG",
+     "unit": "bars",
+     "value": "8"
+    },
+    "analysed_B_layer_centre_spacing": {
+     "claim_ids": "P-004",
+     "component": "analysed_B_layer_centre_spacing",
+     "evidence_path": "reports/1781091056.1272.7ad60e8d__s12b_detector_map_contract/REPORT.md",
+     "evidence_sha": "fa8dcca46cb73d351bf53710e238d391fd83631cfca928ba6f76d009fb4808fa",
+     "notes": "Truth median adjacent analysed-layer separation; rejects 2 cm analysed spacing hypothesis",
+     "quantity": "1",
+     "status": "SIM_CONFIG",
+     "unit": "cm",
+     "value": "4.0"
+    }
+   },
+   "pdf": "channel_map.pdf"
+  },
+  "stave_geometry": {
+   "annotations": {
+    "WLS_fibre_outer_diameter": {
+     "claim_ids": "P-007",
+     "component": "WLS_fibre_outer_diameter",
+     "evidence_path": "docs/stave_sim/STAVE_SIM_ENERGY_MODEL.md",
+     "evidence_sha": "bd2f6948c6a3c00c9ae2643c07c48bffa48bbe37162338d326000a887136105f",
+     "notes": "Implemented fibre outer-cladding radius 0.90 mm",
+     "quantity": "2",
+     "status": "DESIGN_SPEC",
+     "unit": "mm",
+     "value": "1.8"
+    },
+    "beam_test_optical_readout": {
+     "claim_ids": "P-008",
+     "component": "beam_test_optical_readout",
+     "evidence_path": "docs/stave_sim/STAVE_SIM_ENERGY_MODEL.md",
+     "evidence_sha": "bd2f6948c6a3c00c9ae2643c07c48bffa48bbe37162338d326000a887136105f",
+     "notes": "1 of 4 possible fibre-end channels instrumented; issues #796/#797",
+     "quantity": "1",
+     "status": "DESIGN_SPEC",
+     "unit": "",
+     "value": "one_fibre_one_end"
+    },
+    "fibre_hole_centre_separation": {
+     "claim_ids": "P-007",
+     "component": "fibre_hole_centre_separation",
+     "evidence_path": "docs/stave-geometry.md",
+     "evidence_sha": "5e75d4c9da1bacf7e6df0c4da46641dc66a0ca69970fdc1dfa3ddef535160ecd",
+     "notes": "kFibreSep=2.0 cm in geant4/single_stave/include/DetectorConstruction.hh",
+     "quantity": "1",
+     "status": "DESIGN_SPEC",
+     "unit": "cm",
+     "value": "2.0"
+    },
+    "fibre_hole_diameter": {
+     "claim_ids": "P-007",
+     "component": "fibre_hole_diameter",
+     "evidence_path": "docs/stave_sim/STAVE_SIM_ENERGY_MODEL.md",
+     "evidence_sha": "bd2f6948c6a3c00c9ae2643c07c48bffa48bbe37162338d326000a887136105f",
+     "notes": "Two longitudinal holes; kHoleRadius=1.0 mm in DetectorConstruction.hh",
+     "quantity": "2",
+     "status": "DESIGN_SPEC",
+     "unit": "mm",
+     "value": "2.0"
+    },
+    "photosensor_model": {
+     "claim_ids": "P-009",
+     "component": "photosensor_model",
+     "evidence_path": "docs/stave_sim/STAVE_SIM_ENERGY_MODEL.md",
+     "evidence_sha": "bd2f6948c6a3c00c9ae2643c07c48bffa48bbe37162338d326000a887136105f",
+     "notes": "Hamamatsu MPPC on carrier board; operating point not bound",
+     "quantity": "1",
+     "status": "DESIGN_SPEC",
+     "unit": "",
+     "value": "S13360-3050CS"
+    },
+    "reflective_coating": {
+     "claim_ids": "P-006",
+     "component": "reflective_coating",
+     "evidence_path": "docs/stave_sim/STAVE_SIM_ENERGY_MODEL.md",
+     "evidence_sha": "bd2f6948c6a3c00c9ae2643c07c48bffa48bbe37162338d326000a887136105f",
+     "notes": "Modelled as dielectric_metal shell in geant4/single_stave/",
+     "quantity": "1",
+     "status": "DESIGN_SPEC",
+     "unit": "",
+     "value": "TiO2_loaded"
+    },
+    "stave_length": {
+     "claim_ids": "P-006",
+     "component": "stave_length",
+     "evidence_path": "docs/stave_sim/STAVE_SIM_ENERGY_MODEL.md",
+     "evidence_sha": "bd2f6948c6a3c00c9ae2643c07c48bffa48bbe37162338d326000a887136105f",
+     "notes": "Issue #796 hardware clarification (David Milstead); conflicts with older ~1 m narrative in docs/01_setup_and_detector.md and academic chapter 2",
+     "quantity": "1",
+     "status": "DESIGN_SPEC",
+     "unit": "cm",
+     "value": "50"
+    },
+    "stave_material": {
+     "claim_ids": "P-006",
+     "component": "stave_material",
+     "evidence_path": "docs/stave_sim/STAVE_SIM_ENERGY_MODEL.md",
+     "evidence_sha": "bd2f6948c6a3c00c9ae2643c07c48bffa48bbe37162338d326000a887136105f",
+     "notes": "BC-408 equivalent noted in #796 model doc; older BC-408/~1 m BC-408 bars in academic chapter 2 are unresolved without primary build record",
+     "quantity": "1",
+     "status": "DESIGN_SPEC",
+     "unit": "",
+     "value": "extruded_polystyrene"
+    },
+    "stave_thickness_along_particle_path": {
+     "claim_ids": "P-006",
+     "component": "stave_thickness_along_particle_path",
+     "evidence_path": "docs/stave_sim/STAVE_SIM_ENERGY_MODEL.md",
+     "evidence_sha": "bd2f6948c6a3c00c9ae2643c07c48bffa48bbe37162338d326000a887136105f",
+     "notes": "Normal thickness crossed by primary; issue #796 early 5 cm thickness phrase is superseded by this clarification",
+     "quantity": "1",
+     "status": "DESIGN_SPEC",
+     "unit": "cm",
+     "value": "2.0"
+    },
+    "stave_width": {
+     "claim_ids": "P-006",
+     "component": "stave_width",
+     "evidence_path": "docs/stave_sim/STAVE_SIM_ENERGY_MODEL.md",
+     "evidence_sha": "bd2f6948c6a3c00c9ae2643c07c48bffa48bbe37162338d326000a887136105f",
+     "notes": "Issue #796 clarification; implemented in geant4/single_stave/",
+     "quantity": "1",
+     "status": "DESIGN_SPEC",
+     "unit": "cm",
+     "value": "5.18"
+    }
+   },
+   "pdf": "stave_geometry.pdf"
+  }
+ },
+ "rendering": {
+  "drawing_length_unit": "cm",
+  "visible_provenance_tags": false
+ },
+ "schema": "ccb-paper-1317-setup-figures/2"
+}

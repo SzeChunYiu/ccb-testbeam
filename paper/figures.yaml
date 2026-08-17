@@ -417,8 +417,8 @@ DELTA-E-SEGMENTATION:        # Segmentation mechanism illustration
 TRIG-MIGRATION:              # #1045 P4 -- joint migration quadrants + retention
   result: reports/paper_1045_trigger_migration_20260817T013155Z/result.json
   value_key: reference/retention
-  source_figure: publication/figures/gated/fig_trigger_migration_quadrants.png
-  claim_id: trigger/#1045-P4
+  source_figure: publication/figures/final/fig_trigger_migration_quadrants.png
+  claim_id: CL-1045-001
   evidence_class: mc_method_closure
   status: MC_METHOD_CLOSURE
   kind: quantitative
@@ -442,8 +442,8 @@ TRIG-MIGRATION:              # #1045 P4 -- joint migration quadrants + retention
 TRIG-SCAN:                   # #1045 P3 -- threshold/coincidence scan
   result: reports/paper_1045_trigger_migration_20260817T013155Z/result.json
   value_key: reference/hardware_total
-  source_figure: publication/figures/gated/fig_trigger_threshold_scan.png
-  claim_id: trigger/#1045-P3
+  source_figure: publication/figures/final/fig_trigger_threshold_scan.png
+  claim_id: CL-1045-002
   evidence_class: simulation_result
   status: SIMULATION_RESULT
   kind: quantitative

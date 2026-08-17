@@ -4,3 +4,5 @@ MT-002,2\.92\s*MHz,CL-010,model|gated|blocked|non-authorising,Rmax 2.92 MHz deri
 MT-003,0\.(54|68|75)\s*ns,CL-002..004,mc|toy|format|sampling|gated|withheld|superseded,Sub-ns beam-timing numbers are toy-digitizer MC estimates (CL-002..004 GATED; beam format limits sigma68 to >=38 ns)
 MT-004,(?<![\d.])(8\.9\s*%|0\.0887),CL-029,gated|model|non-authorising|birks|e_vis|mc,Energy resolution 8.9 percent is MC model-dependent optical (CL-029 GATED); manuscript must qualify it
 MT-005,38\s*ns,CL-002..004,format|sampling|limit|gated,38 ns is the sampling-limited floor of the 16-sample 100 MS/s format; it must be presented as a format limit
+MT-006,0\.29(78|8|42|89)\b,CL-1045-001,mc|simulation|instrumented|migration|proxy|selection-definition|gated,Trigger-migration retention numbers are MC selection-definition statements (CL-1045-001 TRUTH_LEVEL_MC_ONLY); the citing line must carry the MC qualifier
+MT-007,165\D{1,40}389\D{1,40}195,CL-1045-001,mc|simulation|instrumented|migration|proxy|selection-definition|gated,Joint-quadrant counts are MC selection-definition statements (CL-1045-001); the citing line must carry the MC qualifier

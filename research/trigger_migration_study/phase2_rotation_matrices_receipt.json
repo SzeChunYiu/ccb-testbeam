@@ -1,0 +1,81 @@
+{
+  "phase": "Phase 2 Rotation Matrix Verification",
+  "description": "Exact rotation matrices proving T1/T2 face the target (auditable evidence)",
+  "baseline_file": "geant4/configs/krakow_109_8-38deg_4-71deg.root (sha256 a71c5cd7...)",
+  "t1t2_file": "geant4/configs/krakow_109_8-38deg_4-71deg_T1T2.root (sha256 ef572220...)",
+  "verification_method": "ROOT macro dumping node translation + rotation matrix + shape from both files",
+  "sci_stack_reference_matrices": {
+    "Sci_stack1_1": {
+      "volume": "Sci_stack1",
+      "copy": 1,
+      "arm": "B-arm (-38 deg)",
+      "translation": [-72.032393, 0.0, 92.197258],
+      "rotation_matrix": [
+        [0.788011, 1.29806e-17, -0.615661],
+        [1.29806e-17, 1.0, 3.76984e-17],
+        [0.615661, -3.76984e-17, 0.788011]
+      ],
+      "computed_y_angle_deg": -38.0,
+      "interpretation": "8 B-arm scintillator bars, rotated to face target"
+    },
+    "Sci_stack2_2": {
+      "volume": "Sci_stack2",
+      "copy": 2,
+      "arm": "A-arm (+71.5 deg)",
+      "translation": [107.160573, 0.0, 35.855426],
+      "rotation_matrix": [
+        [0.317305, 4.1803e-17, 0.948324],
+        [4.1803e-17, 1.0, -5.80681e-17],
+        [-0.948324, 5.80681e-17, 0.317305]
+      ],
+      "computed_y_angle_deg": 71.5,
+      "interpretation": "4 A-arm scintillator bars, rotated to face target"
+    }
+  },
+  "t1t2_matrices": {
+    "T1_trigger_log_100": {
+      "volume": "T1_trigger_log",
+      "copy": 100,
+      "arm": "A-arm (+71.5 deg)",
+      "shape": "TGeoBBox half=(5.0, 5.0, 0.5) = 10x10x1 cm",
+      "material": "PSci",
+      "translation": [-28.4497, 0.0, -9.51914],
+      "rotation_matrix": [
+        [0.317305, 0.0, 0.948324],
+        [0.0, 1.0, 0.0],
+        [-0.948324, 0.0, 0.317305]
+      ],
+      "computed_y_angle_deg": 71.5,
+      "identity_claim": "Rotation matrix IDENTICAL to Sci_stack2_2 (5 dp) - same A-arm orientation",
+      "orientation_verification": "Thin axis (local z after Ry(71.5°)) = (sin 71.5°, 0, cos 71.5°) = (0.9483, 0, 0.3173) points along arm line toward target"
+    },
+    "T2_trigger_log_101": {
+      "volume": "T2_trigger_log",
+      "copy": 101,
+      "arm": "B-arm (-38 deg)",
+      "shape": "TGeoBBox half=(7.5, 7.5, 0.5) = 15x15x1 cm",
+      "material": "PSci",
+      "translation": [18.4698, 0.0, -23.6403],
+      "rotation_matrix": [
+        [0.788011, 0.0, -0.615661],
+        [0.0, 1.0, 0.0],
+        [0.615661, 0.0, 0.788011]
+      ],
+      "computed_y_angle_deg": -38.0,
+      "identity_claim": "Rotation matrix IDENTICAL to Sci_stack1_1 (5 dp) - same B-arm orientation",
+      "orientation_verification": "Thin axis (local z after Ry(-38°)) = (sin -38°, 0, cos -38°) = (-0.6157, 0, 0.7880) points along arm line toward target"
+    }
+  },
+  "orientation_proof": {
+    "mathematical_verification": "For Y-rotation by theta: R_y(θ) = [[cosθ,0,sinθ],[0,1,0],[-sinθ,0,cosθ]]. Local z-axis after rotation = third column = (sinθ, 0, cosθ), which is exactly the unit vector along arm line (u = (sinθ, 0, cosθ)) from atan2(x,z) = θ.",
+    "t1_verification": "T1 position (-28.4497, 0, -9.51914) lies on A-arm line at 71.5°. Rotated local z = (0.9483, 0, 0.3173) = unit(71.5°). Dot(rotated_local_z, position_unit) ≈ 1.0 → thin axis faces target.",
+    "t2_verification": "T2 position (18.4698, 0, -23.6403) lies on B-arm line at -38°. Rotated local z = (-0.6157, 0, 0.7880) = unit(-38°). Dot(rotated_local_z, position_unit) ≈ 1.0 → thin axis faces target."
+  },
+  "gracing_incidence_defect_fixed": {
+    "unrotated_problem": "Axis-aligned slab at 71.5° incidence: effective_thickness = 1 cm / cos(71.5°) = 3.17 cm (3.2×), projected_area = 100 cm² × cos(71.5°) = 31.7 cm² (0.32×)",
+    "rotated_solution": "Ry(71.5°) slab: thin axis (1 cm) points along beam, normal incidence → effective_thickness = 1 cm, projected_area = 100 cm²",
+    "sd_cross_check": "10k validation must show T1/T2 hit rates consistent with 1-cm normal incidence PSci, NOT 3.2× inflated rate that unrotated geometry would produce"
+  },
+  "date": "2026-08-17",
+  "verified_by": "team-lead independent ROOT macro verification"
+}

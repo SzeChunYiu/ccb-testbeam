@@ -1,0 +1,171 @@
+=== hardware scan v3 (1M) Mon Aug 17 02:46:11 AM CEST 2026 ===
+Mode: hardware-response
+Input: /projects/hep/fs10/shared/nnbar/billy/ccb_1045_v3/output_krakow_v3_1M.root
+Running threshold scan in hardware-response mode
+Thresholds: [0.5, 1.0, 2.0, 5.0]
+Coincidence windows: [5.0, 10.0, 15.0, 20.0, 30.0]
+Total entries to process: 1,000,000
+  Scanning: threshold=0.5 MeV, coinc=5.0 ns
+    Efficiency: 0.0004 (361/1000000)
+  Scanning: threshold=0.5 MeV, coinc=10.0 ns
+    Efficiency: 0.0004 (361/1000000)
+  Scanning: threshold=0.5 MeV, coinc=15.0 ns
+    Efficiency: 0.0004 (361/1000000)
+  Scanning: threshold=0.5 MeV, coinc=20.0 ns
+    Efficiency: 0.0004 (361/1000000)
+  Scanning: threshold=0.5 MeV, coinc=30.0 ns
+    Efficiency: 0.0004 (361/1000000)
+  Scanning: threshold=1.0 MeV, coinc=5.0 ns
+    Efficiency: 0.0004 (360/1000000)
+  Scanning: threshold=1.0 MeV, coinc=10.0 ns
+    Efficiency: 0.0004 (360/1000000)
+  Scanning: threshold=1.0 MeV, coinc=15.0 ns
+    Efficiency: 0.0004 (360/1000000)
+  Scanning: threshold=1.0 MeV, coinc=20.0 ns
+    Efficiency: 0.0004 (360/1000000)
+  Scanning: threshold=1.0 MeV, coinc=30.0 ns
+    Efficiency: 0.0004 (360/1000000)
+  Scanning: threshold=2.0 MeV, coinc=5.0 ns
+    Efficiency: 0.0004 (359/1000000)
+  Scanning: threshold=2.0 MeV, coinc=10.0 ns
+    Efficiency: 0.0004 (359/1000000)
+  Scanning: threshold=2.0 MeV, coinc=15.0 ns
+    Efficiency: 0.0004 (359/1000000)
+  Scanning: threshold=2.0 MeV, coinc=20.0 ns
+    Efficiency: 0.0004 (359/1000000)
+  Scanning: threshold=2.0 MeV, coinc=30.0 ns
+    Efficiency: 0.0004 (359/1000000)
+  Scanning: threshold=5.0 MeV, coinc=5.0 ns
+    Efficiency: 0.0004 (355/1000000)
+  Scanning: threshold=5.0 MeV, coinc=10.0 ns
+    Efficiency: 0.0004 (355/1000000)
+  Scanning: threshold=5.0 MeV, coinc=15.0 ns
+    Efficiency: 0.0004 (355/1000000)
+  Scanning: threshold=5.0 MeV, coinc=20.0 ns
+    Efficiency: 0.0004 (355/1000000)
+  Scanning: threshold=5.0 MeV, coinc=30.0 ns
+    Efficiency: 0.0004 (355/1000000)
+
+Results saved to: research/trigger_migration_study/phase3/hardware_scan_1m_v3.json
+
+Summary:
+  Total configurations scanned: 20
+
+Efficiency table:
+  Threshold (MeV) | Coinc (ns) | Efficiency
+  ---------------------------------------------
+            0.5 |          5 | 0.0004
+            0.5 |         10 | 0.0004
+            0.5 |         15 | 0.0004
+            0.5 |         20 | 0.0004
+            0.5 |         30 | 0.0004
+            1.0 |          5 | 0.0004
+            1.0 |         10 | 0.0004
+            1.0 |         15 | 0.0004
+            1.0 |         20 | 0.0004
+            1.0 |         30 | 0.0004
+            2.0 |          5 | 0.0004
+            2.0 |         10 | 0.0004
+            2.0 |         15 | 0.0004
+            2.0 |         20 | 0.0004
+            2.0 |         30 | 0.0004
+            5.0 |          5 | 0.0004
+            5.0 |         10 | 0.0004
+            5.0 |         15 | 0.0004
+            5.0 |         20 | 0.0004
+            5.0 |         30 | 0.0004
+=== proxy scan v3 (1M) Mon Aug 17 02:47:38 AM CEST 2026 ===
+Mode: proxy-response
+Input: /projects/hep/fs10/shared/nnbar/billy/ccb_1045_v3/output_krakow_v3_1M.root
+Running threshold scan in proxy-response mode
+Thresholds: [0.5, 1.0, 2.0, 5.0]
+Coincidence windows: [5.0, 10.0, 15.0, 20.0, 30.0]
+Total entries to process: 1,000,000
+  Scanning: threshold=0.5 MeV, coinc=5.0 ns
+    Efficiency: 0.0004 (386/1000000)
+  Scanning: threshold=0.5 MeV, coinc=10.0 ns
+    Efficiency: 0.0004 (387/1000000)
+  Scanning: threshold=0.5 MeV, coinc=15.0 ns
+    Efficiency: 0.0006 (554/1000000)
+  Scanning: threshold=0.5 MeV, coinc=20.0 ns
+    Efficiency: 0.0006 (557/1000000)
+  Scanning: threshold=0.5 MeV, coinc=30.0 ns
+    Efficiency: 0.0006 (557/1000000)
+  Scanning: threshold=1.0 MeV, coinc=5.0 ns
+    Efficiency: 0.0004 (386/1000000)
+  Scanning: threshold=1.0 MeV, coinc=10.0 ns
+    Efficiency: 0.0004 (387/1000000)
+  Scanning: threshold=1.0 MeV, coinc=15.0 ns
+    Efficiency: 0.0006 (554/1000000)
+  Scanning: threshold=1.0 MeV, coinc=20.0 ns
+    Efficiency: 0.0006 (557/1000000)
+  Scanning: threshold=1.0 MeV, coinc=30.0 ns
+    Efficiency: 0.0006 (557/1000000)
+  Scanning: threshold=2.0 MeV, coinc=5.0 ns
+    Efficiency: 0.0004 (386/1000000)
+  Scanning: threshold=2.0 MeV, coinc=10.0 ns
+    Efficiency: 0.0004 (387/1000000)
+  Scanning: threshold=2.0 MeV, coinc=15.0 ns
+    Efficiency: 0.0006 (554/1000000)
+  Scanning: threshold=2.0 MeV, coinc=20.0 ns
+    Efficiency: 0.0006 (557/1000000)
+  Scanning: threshold=2.0 MeV, coinc=30.0 ns
+    Efficiency: 0.0006 (557/1000000)
+  Scanning: threshold=5.0 MeV, coinc=5.0 ns
+    Efficiency: 0.0004 (386/1000000)
+  Scanning: threshold=5.0 MeV, coinc=10.0 ns
+    Efficiency: 0.0004 (387/1000000)
+  Scanning: threshold=5.0 MeV, coinc=15.0 ns
+    Efficiency: 0.0006 (554/1000000)
+  Scanning: threshold=5.0 MeV, coinc=20.0 ns
+    Efficiency: 0.0006 (557/1000000)
+  Scanning: threshold=5.0 MeV, coinc=30.0 ns
+    Efficiency: 0.0006 (557/1000000)
+
+Results saved to: research/trigger_migration_study/phase3/baseline_proxy_scan_1m_v3.json
+
+Summary:
+  Total configurations scanned: 20
+
+Efficiency table:
+  Threshold (MeV) | Coinc (ns) | Efficiency
+  ---------------------------------------------
+            0.5 |          5 | 0.0004
+            0.5 |         10 | 0.0004
+            0.5 |         15 | 0.0006
+            0.5 |         20 | 0.0006
+            0.5 |         30 | 0.0006
+            1.0 |          5 | 0.0004
+            1.0 |         10 | 0.0004
+            1.0 |         15 | 0.0006
+            1.0 |         20 | 0.0006
+            1.0 |         30 | 0.0006
+            2.0 |          5 | 0.0004
+            2.0 |         10 | 0.0004
+            2.0 |         15 | 0.0006
+            2.0 |         20 | 0.0006
+            2.0 |         30 | 0.0006
+            5.0 |          5 | 0.0004
+            5.0 |         10 | 0.0004
+            5.0 |         15 | 0.0006
+            5.0 |         20 | 0.0006
+            5.0 |         30 | 0.0006
+=== phase 4 matrix v3 (1M) Mon Aug 17 02:48:22 AM CEST 2026 ===
+
+Migration Matrix Analysis Complete
+============================================================
+Output: research/trigger_migration_study/phase4/migration_matrix_1m_v3.json
+
+Headline Metrics:
+  Proxy efficiency: 7.80%
+  Hardware efficiency: 3.61%
+  Migration loss: 53.79%
+  Dominant loss species: deuteron
+
+Aggregate Quadrants:
+  Both: 256
+  Neither: 6546
+  Proxy-only (loss): 298
+  Hardware-only (gain): 0
+
+=== DONE Mon Aug 17 02:48:22 AM CEST 2026 ===

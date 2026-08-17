@@ -1,0 +1,801 @@
+{
+  "script": "joint_matrix.py (per-event joint classification)",
+  "input_file": "/projects/hep/fs10/shared/nnbar/billy/ccb_1045_v3/output_krakow_v3_1M.root",
+  "n_events": 1000000,
+  "method": "per-event joint: proxy=classify_event_proxy sample_I; hardware=classify_event_hardware_response coincidence; quadrants exact, hardware_only NOT forced to 0",
+  "reference": {
+    "threshold_mev": 1.0,
+    "coinc_ns": 15.0
+  },
+  "grid": {
+    "0.5": {
+      "5.0": {
+        "n": 1000000,
+        "both": 165,
+        "proxy_only": 221,
+        "hardware_only": 196,
+        "neither": 999418,
+        "species": {
+          "deuteron": {
+            "proxy_n": 382,
+            "both": 162,
+            "hardware_only": 91
+          },
+          "proton": {
+            "proxy_n": 4,
+            "both": 3,
+            "hardware_only": 26
+          },
+          "electron": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "alpha": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "C12": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "he3": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          }
+        }
+      },
+      "10.0": {
+        "n": 1000000,
+        "both": 165,
+        "proxy_only": 222,
+        "hardware_only": 196,
+        "neither": 999417,
+        "species": {
+          "deuteron": {
+            "proxy_n": 383,
+            "both": 162,
+            "hardware_only": 91
+          },
+          "proton": {
+            "proxy_n": 4,
+            "both": 3,
+            "hardware_only": 26
+          },
+          "electron": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "alpha": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "C12": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "he3": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          }
+        }
+      },
+      "15.0": {
+        "n": 1000000,
+        "both": 165,
+        "proxy_only": 389,
+        "hardware_only": 196,
+        "neither": 999250,
+        "species": {
+          "deuteron": {
+            "proxy_n": 550,
+            "both": 162,
+            "hardware_only": 91
+          },
+          "proton": {
+            "proxy_n": 4,
+            "both": 3,
+            "hardware_only": 26
+          },
+          "electron": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "alpha": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "C12": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "he3": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          }
+        }
+      },
+      "20.0": {
+        "n": 1000000,
+        "both": 165,
+        "proxy_only": 392,
+        "hardware_only": 196,
+        "neither": 999247,
+        "species": {
+          "deuteron": {
+            "proxy_n": 553,
+            "both": 162,
+            "hardware_only": 91
+          },
+          "proton": {
+            "proxy_n": 4,
+            "both": 3,
+            "hardware_only": 26
+          },
+          "electron": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "alpha": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "C12": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "he3": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          }
+        }
+      },
+      "30.0": {
+        "n": 1000000,
+        "both": 165,
+        "proxy_only": 392,
+        "hardware_only": 196,
+        "neither": 999247,
+        "species": {
+          "deuteron": {
+            "proxy_n": 553,
+            "both": 162,
+            "hardware_only": 91
+          },
+          "proton": {
+            "proxy_n": 4,
+            "both": 3,
+            "hardware_only": 26
+          },
+          "electron": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "alpha": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "C12": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "he3": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          }
+        }
+      }
+    },
+    "1.0": {
+      "5.0": {
+        "n": 1000000,
+        "both": 165,
+        "proxy_only": 221,
+        "hardware_only": 195,
+        "neither": 999419,
+        "species": {
+          "deuteron": {
+            "proxy_n": 382,
+            "both": 162,
+            "hardware_only": 91
+          },
+          "proton": {
+            "proxy_n": 4,
+            "both": 3,
+            "hardware_only": 26
+          },
+          "electron": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "alpha": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "C12": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "he3": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          }
+        }
+      },
+      "10.0": {
+        "n": 1000000,
+        "both": 165,
+        "proxy_only": 222,
+        "hardware_only": 195,
+        "neither": 999418,
+        "species": {
+          "deuteron": {
+            "proxy_n": 383,
+            "both": 162,
+            "hardware_only": 91
+          },
+          "proton": {
+            "proxy_n": 4,
+            "both": 3,
+            "hardware_only": 26
+          },
+          "electron": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "alpha": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "C12": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "he3": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          }
+        }
+      },
+      "15.0": {
+        "n": 1000000,
+        "both": 165,
+        "proxy_only": 389,
+        "hardware_only": 195,
+        "neither": 999251,
+        "species": {
+          "deuteron": {
+            "proxy_n": 550,
+            "both": 162,
+            "hardware_only": 91
+          },
+          "proton": {
+            "proxy_n": 4,
+            "both": 3,
+            "hardware_only": 26
+          },
+          "electron": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "alpha": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "C12": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "he3": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          }
+        }
+      },
+      "20.0": {
+        "n": 1000000,
+        "both": 165,
+        "proxy_only": 392,
+        "hardware_only": 195,
+        "neither": 999248,
+        "species": {
+          "deuteron": {
+            "proxy_n": 553,
+            "both": 162,
+            "hardware_only": 91
+          },
+          "proton": {
+            "proxy_n": 4,
+            "both": 3,
+            "hardware_only": 26
+          },
+          "electron": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "alpha": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "C12": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "he3": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          }
+        }
+      },
+      "30.0": {
+        "n": 1000000,
+        "both": 165,
+        "proxy_only": 392,
+        "hardware_only": 195,
+        "neither": 999248,
+        "species": {
+          "deuteron": {
+            "proxy_n": 553,
+            "both": 162,
+            "hardware_only": 91
+          },
+          "proton": {
+            "proxy_n": 4,
+            "both": 3,
+            "hardware_only": 26
+          },
+          "electron": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "alpha": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "C12": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "he3": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          }
+        }
+      }
+    },
+    "2.0": {
+      "5.0": {
+        "n": 1000000,
+        "both": 164,
+        "proxy_only": 222,
+        "hardware_only": 195,
+        "neither": 999419,
+        "species": {
+          "deuteron": {
+            "proxy_n": 382,
+            "both": 161,
+            "hardware_only": 91
+          },
+          "proton": {
+            "proxy_n": 4,
+            "both": 3,
+            "hardware_only": 26
+          },
+          "electron": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "alpha": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "C12": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "he3": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          }
+        }
+      },
+      "10.0": {
+        "n": 1000000,
+        "both": 164,
+        "proxy_only": 223,
+        "hardware_only": 195,
+        "neither": 999418,
+        "species": {
+          "deuteron": {
+            "proxy_n": 383,
+            "both": 161,
+            "hardware_only": 91
+          },
+          "proton": {
+            "proxy_n": 4,
+            "both": 3,
+            "hardware_only": 26
+          },
+          "electron": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "alpha": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "C12": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "he3": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          }
+        }
+      },
+      "15.0": {
+        "n": 1000000,
+        "both": 164,
+        "proxy_only": 390,
+        "hardware_only": 195,
+        "neither": 999251,
+        "species": {
+          "deuteron": {
+            "proxy_n": 550,
+            "both": 161,
+            "hardware_only": 91
+          },
+          "proton": {
+            "proxy_n": 4,
+            "both": 3,
+            "hardware_only": 26
+          },
+          "electron": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "alpha": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "C12": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "he3": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          }
+        }
+      },
+      "20.0": {
+        "n": 1000000,
+        "both": 164,
+        "proxy_only": 393,
+        "hardware_only": 195,
+        "neither": 999248,
+        "species": {
+          "deuteron": {
+            "proxy_n": 553,
+            "both": 161,
+            "hardware_only": 91
+          },
+          "proton": {
+            "proxy_n": 4,
+            "both": 3,
+            "hardware_only": 26
+          },
+          "electron": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "alpha": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "C12": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "he3": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          }
+        }
+      },
+      "30.0": {
+        "n": 1000000,
+        "both": 164,
+        "proxy_only": 393,
+        "hardware_only": 195,
+        "neither": 999248,
+        "species": {
+          "deuteron": {
+            "proxy_n": 553,
+            "both": 161,
+            "hardware_only": 91
+          },
+          "proton": {
+            "proxy_n": 4,
+            "both": 3,
+            "hardware_only": 26
+          },
+          "electron": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "alpha": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "C12": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "he3": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          }
+        }
+      }
+    },
+    "5.0": {
+      "5.0": {
+        "n": 1000000,
+        "both": 163,
+        "proxy_only": 223,
+        "hardware_only": 192,
+        "neither": 999422,
+        "species": {
+          "deuteron": {
+            "proxy_n": 382,
+            "both": 160,
+            "hardware_only": 90
+          },
+          "proton": {
+            "proxy_n": 4,
+            "both": 3,
+            "hardware_only": 26
+          },
+          "electron": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "alpha": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "C12": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "he3": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          }
+        }
+      },
+      "10.0": {
+        "n": 1000000,
+        "both": 163,
+        "proxy_only": 224,
+        "hardware_only": 192,
+        "neither": 999421,
+        "species": {
+          "deuteron": {
+            "proxy_n": 383,
+            "both": 160,
+            "hardware_only": 90
+          },
+          "proton": {
+            "proxy_n": 4,
+            "both": 3,
+            "hardware_only": 26
+          },
+          "electron": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "alpha": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "C12": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "he3": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          }
+        }
+      },
+      "15.0": {
+        "n": 1000000,
+        "both": 163,
+        "proxy_only": 391,
+        "hardware_only": 192,
+        "neither": 999254,
+        "species": {
+          "deuteron": {
+            "proxy_n": 550,
+            "both": 160,
+            "hardware_only": 90
+          },
+          "proton": {
+            "proxy_n": 4,
+            "both": 3,
+            "hardware_only": 26
+          },
+          "electron": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "alpha": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "C12": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "he3": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          }
+        }
+      },
+      "20.0": {
+        "n": 1000000,
+        "both": 163,
+        "proxy_only": 394,
+        "hardware_only": 192,
+        "neither": 999251,
+        "species": {
+          "deuteron": {
+            "proxy_n": 553,
+            "both": 160,
+            "hardware_only": 90
+          },
+          "proton": {
+            "proxy_n": 4,
+            "both": 3,
+            "hardware_only": 26
+          },
+          "electron": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "alpha": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "C12": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "he3": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          }
+        }
+      },
+      "30.0": {
+        "n": 1000000,
+        "both": 163,
+        "proxy_only": 394,
+        "hardware_only": 192,
+        "neither": 999251,
+        "species": {
+          "deuteron": {
+            "proxy_n": 553,
+            "both": 160,
+            "hardware_only": 90
+          },
+          "proton": {
+            "proxy_n": 4,
+            "both": 3,
+            "hardware_only": 26
+          },
+          "electron": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "alpha": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "C12": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          },
+          "he3": {
+            "proxy_n": 0,
+            "both": 0,
+            "hardware_only": 0
+          }
+        }
+      }
+    }
+  },
+  "notes": "supersedes aggregate matrix: aggregate 'both' counted hardware_pass AND enter_B (not sample_I), inflating both and forcing hardware_only=0"
+}

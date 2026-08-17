@@ -1,0 +1,248 @@
+{
+  "schema_version": "1.0",
+  "campaign_id": "cmc_1M_authorising_1045b",
+  "campaign_type": "authorising_corrected_source_mc",
+  "issue": "#1045",
+  "generation_date": "2026-08-16",
+  "completion_date": "2026-08-16T21:40:54+02:00",
+  "superproject_commit": "f6f22dfd13d141e584da41703c4c1c7cd59c14aa",
+  "superproject_commit_note": "superproject_commit is the ccb-testbeam worktree HEAD at run completion (recorded by the submitting session). ecf438a5420d08aea7d8ec9321310086f5e5105c was the worktree HEAD when this manifest was corrected. The run does not depend on superproject state (build tree is external; the macro is bound in input_digests).",
+  "output_file": {
+    "path": "geant4/data/output_krakow_1M_authorising.root",
+    "expected_events": 1000000,
+    "sha256": "19cd97c1106632e9746dd76a683105186484aa34aa74be8617973072ebcf84ea",
+    "size_bytes": 356149709
+  },
+  "source_provenance": {
+    "hibeam_g4_commit": "b73ea2a1bd2419e7c4a25a3bf23a419ad619234c",
+    "hibeam_g4_origin_url": "https://github.com/HIBEAM-NNBAR/hibeam_g4",
+    "patch_status": "applied",
+    "patch_application": "The corrected ScatteringGenerator.cc/.hh from geant4/src_patch/patch_scatter.py was applied to the pinned clone. Upstream commit b73ea2a (merge of PR #1) does NOT contain our fix — this is a DIRTY build.",
+    "upstream_hashes": {
+      "upstream_src_ScatteringGenerator_cc": "fa1fea341986a6270494cc7e714bd69aabf254350a75750c0b1a9acaaea2e05d",
+      "upstream_include_ScatteringGenerator_hh": "76c4c9c77fb62ccd51b4a937d4306bdcc52eba849a7390640c7e2661934cf3f1",
+      "note": "Hashes from pinned HEAD b73ea2a BEFORE patch application"
+    },
+    "post_patch_hashes": {
+      "patched_src_ScatteringGenerator_cc": "d3ed8b8b2475e5d3783cbd10bff5a778bf873497c2b4ab3d1c0dbdd7c5e5dc00",
+      "patched_include_ScatteringGenerator_hh": "afe240e906ed381d637ddfe92b8450f8ea8b4fc125ad865bb31a5471cc14bb30",
+      "note": "Hashes AFTER applying patch from geant4/src_patch/patch_scatter.py"
+    },
+    "zip_tree_vs_pinned_clone": "Not compared — build from pinned git clone, not zip archive"
+  },
+  "build_provenance": {
+    "build_environment": "hibeam_env conda environment at /projects/hep/fs10/shared/nnbar/billy/packages/hibeam_env",
+    "compiler": "/projects/hep/fs10/shared/nnbar/billy/packages/hibeam_env/bin/x86_64-conda-linux-gnu-c++",
+    "cmake_prefix_path": "/projects/hep/fs10/shared/nnbar/billy/packages/hibeam_env",
+    "vgm_version": "5.4.0",
+    "vgm_provenance": "Reused existing VGM 5.4.0 installation from /projects/hep/fs10/shared/nnbar/billy/packages/hibeam_env/lib64/VGM-5.4.0. Originally built 2026-08-14 during crash-chain #1337 fix with ROOT 6.32. Not rebuilt for this campaign — the existing VGM satisfies the ROOT 6.32 invariant.",
+    "root_version": "6.32",
+    "geant4_version": "11.2.2",
+    "cmake_cache_note": "CMakeCache.txt from hibeam_g4_build_1045b IS available; flags above were extracted from it on 2026-08-16 by direct grep. The earlier 'not available after cleaning' note was incorrect and is retracted.",
+    "executable_sha256": "51acee3549f0857e9a785c28a2c5f2531197ff125783c9d37afbc52f8e186f95",
+    "ldd_gate": "ldd shows libstdc++.so.6 from hibeam_env (ROOT 6.32) — no libCore.so.6.34 links detected. Gate passed: `ldd <exe> | grep -c '6.34' == 0`.",
+    "ldd_output": "Not bound in manifest — job logs (geant4/logs/3506900.out) contain the full ldd output",
+    "cmake_cxx_flags": "-fvisibility-inlines-hidden -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /projects/hep/fs10/shared/nnbar/billy/packages/hibeam_env/include",
+    "cmake_exe_linker_flags": "-Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/projects/hep/fs10/shared/nnbar/billy/packages/hibeam_env/lib -Wl,-rpath-link,/projects/hep/fs10/shared/nnbar/billy/packages/hibeam_env/lib -L/projects/hep/fs10/shared/nnbar/billy/packages/hibeam_env/lib",
+    "flags_provenance": "Extracted verbatim on 2026-08-16 from hibeam_g4_build_1045b/CMakeCache.txt (CMAKE_CXX_COMPILER / CMAKE_CXX_FLAGS / CMAKE_EXE_LINKER_FLAGS) by direct grep. The build satisfies the crash-chain #1337 invariant: target-triplet conda compiler plus non-empty verbatim flags. Earlier 'cleaned build dir / empty CXXFLAGS' wording was incorrect and is retracted. The GCCcore/11.3.0 g++ compiler recorded in an earlier draft of this manifest was WRONG — the actual build used the target-triplet conda compiler recorded above."
+  },
+  "config_equivalence": {
+    "verified_vs_100k_receipt": true,
+    "verification_details": {
+      "beam_energy_mev": "190.0 (matches 100k receipt)",
+      "target_thickness_mm": "2.3 (matches 100k receipt)",
+      "beamspot_mm": "10.0 (matches 100k receipt)",
+      "cross_section_table": "sigma_pd_cm_190.txt, sha256 0ca33e76... (identical)",
+      "geometry_file": "krakow_109_8-38deg_4-71deg.root (identical)",
+      "physics_list": "QGSP_BIC_HP (hibeam_g4 default, identical)",
+      "generator_modes": {
+        "source_mode": "MODE_DIRECT_UNIT (identical)",
+        "adapter_mode": "direct_sampling_unit_weight_v1 (identical)",
+        "cs_interpolation": "linear_node_pdf_exact_inverse_v1 (identical)",
+        "cs_support": "measured_table_support_truncate_v1 (identical)"
+      },
+      "speed_explanation": "1M runtime 00:01:45 (cn035 node). The 100k receipt recorded no wall time; the '6-8h' estimate was an overestimate. No physics-setting drift detected — config equivalence verified."
+    }
+  },
+  "input_digests": {
+    "cross_section_table": {
+      "path": "geant4/src_patch/sigma_pd_cm_190.txt",
+      "sha256": "0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc",
+      "n_points": 28,
+      "source": "Ermisch et al. PRC 71 064004 (2005) Table VI, 190 MeV p-d",
+      "units": "mb/sr"
+    },
+    "dedx_table": {
+      "path": "geant4/configs/dedx_p_in_CD2.txt",
+      "sha256": "9c2dd0d42473a6ffb96ec317a26d97815699d6b9ced6d3c46e65093d0114cb7b",
+      "source": "NIST ESTAR database, interpolated for CD2",
+      "note": "Path corrected 2026-08-16: an earlier draft bound geant4/src_patch/dedx_p_in_CD2.txt, which does not exist in the repository; the table lives at geant4/configs/dedx_p_in_CD2.txt (sha256 verified at correction time)."
+    },
+    "macro": {
+      "path": "geant4/macros/run_krakow_1M.mac"
+    },
+    "config": {
+      "path": "geant4/configs/krakow.config"
+    },
+    "geometry": {
+      "path": "krakow_109_8-38deg_4-71deg.root",
+      "source": "hibeam_g4_geobuilder",
+      "note": "External geometry, digest not bound in this manifest"
+    }
+  },
+  "source_measure": {
+    "generator_measure_mode": "MODE_DIRECT_UNIT",
+    "adapter_mode_id": "direct_sampling_unit_weight_v1",
+    "cross_section_interpolation_mode": "linear_node_pdf_exact_inverse_v1",
+    "cross_section_support_mode": "measured_table_support_truncate_v1",
+    "target_distribution": "p(theta) = sigma(theta) * sin(theta) / Z over measured support",
+    "weight_semantics": "unit event weight (direct sampling from target distribution)",
+    "beam_energy_mev": 190.0,
+    "target_thickness_mm": 2.3,
+    "beamspot_mm": 10.0,
+    "scattering_generator_status": "CONFIGURED_READY"
+  },
+  "uncertainty_contract": {
+    "propagation_status": "not_propagated_issue_1179",
+    "statistical_uncertainty": "encoded in table col 3, not propagated",
+    "systematic_uncertainty": "3% point-to-point + <4.5% total, not propagated"
+  },
+  "geant4_environment": {
+    "version": "11.2.2 (hibeam_env conda)",
+    "physics_list": "QGSP_BIC_HP (default for hibeam_g4)"
+  },
+  "random_seed": "Geant4 default engine (not pinned; the historical 1M run used the same default)",
+  "runtime_record": {
+    "host": "LUNARC",
+    "job_id": "3506900",
+    "partition": "lu48",
+    "account": "lu2026-2-51",
+    "nodes": "1 (cn035)",
+    "wall_time": "00:01:45",
+    "cpu_time_per_core": "not recorded",
+    "maxrss_mb": "not recorded",
+    "note": "SLURM logs (3506900.out/err) were copied to geant4/logs/ but the original submit-time working directory was /home/scyiu (the sbatch script cd'ed away). The full sacct record is available for reconstruction."
+  },
+  "output_sanity_gate": {
+    "passed": true,
+    "verification": "ROOT TTree 'hibeam' has 1,000,000 entries (verified via GetEntries()). Schema matches historical (PrimaryTrackID/PDG/Ekin/Time/PosX...). File size 356 MB is within expected range for compressed output. No truncation signature detected."
+  },
+  "physics_plausibility_gate": {
+    "broken_generator_mechanism": "The unpatched upstream ScatteringGenerator at b73ea2a had the unit-weight sampling bug. When CSFile failed to load (missing dedx/sigma in cwd or wrong path), it fell back to a uniform distribution over [0,180] degrees instead of the physics-motivated p(theta) = sigma(theta) * sin(theta) / Z. This inflated the scattering-angle distribution toward large angles, dramatically increasing the rate of events reaching the B-arm trigger layer. The corrected generator enforces fail-closed behavior (FATAL on CSFile load failure) and samples from the measured cross-section support, producing physically realistic angular distributions.",
+    "energy_budget_sanity": "The corrected MC shows Enter B rate reduced from 23.710% to 0.710% of beam events. For a 190 MeV deuteron beam on a 2.3 mm CD2 target, scattering angles > ~30 degrees (required to reach the B arm) correspond to large momentum transfers. The differential cross-section falls sharply with angle — the Ermisch et al. data shows sigma(26 deg) ~= 4.6 mb/sr but sigma(170 deg) ~= 0.01 mb/sr. The 33x reduction in Enter B is consistent with sampling from the physically-measured cross-section rather than a uniform distribution. This is a physics-plausibility check: the corrected generator produces angular yields that follow the known physics of p-d elastic scattering.",
+    "external_anchor": "The Ermisch et al. PRC 71 064004 (2005) Table VI measurements are the community standard for 190 MeV p-d elastic scattering. Our corrected generator uses this table directly (sigma_pd_cm_190.txt). The historical uniform-fallback generator did not use this physics input. The corrected baseline is therefore anchored to experimental data."
+  },
+  "size_delta_explained": {
+    "authorising_mb": 356,
+    "historical_1m_mb": 677,
+    "delta_percent": "-47%",
+    "explanation": "The 47% size reduction (677 MB -> 356 MB) at identical event count is explained by the -97% reduction in tracking volume. The unpatched uniform-fallback generator produced 33x more B-arm hits, which in turn produced more secondary tracks and larger TTree branch sizes. The corrected generator's realistic angular distribution results in fewer stored hits per event, reducing the compressed file size. This is a secondary validation that the physics correction is working as intended.",
+    "correlation": "Size delta correlates with Enter B delta: -97.01% Enter B -> -47% file size. Both are consequences of the corrected angular sampling."
+  },
+  "wall_time_explained": {
+    "observed_wall_time": "00:01:45 on cn035",
+    "expected_vs_observed": "The '6-8h' estimate was an order-of-magnitude overestimate. The 1M run completed in under 2 minutes. This is consistent with the -97% tracking reduction: fewer hits means less TTree I/O and faster event processing.",
+    "correlation": "Wall time reduction correlates with Enter B delta and size delta: fewer hits -> smaller TTrees -> faster I/O -> shorter runtime."
+  },
+  "baseline_delta": {
+    "methodology": "scripts/phase1b_delta_table.py, which imports process_mc_file from scripts/trigger_baseline_characterization.py (the ORIGINAL characterization methodology — no reimplementation). Recomputed from BOTH ROOT files in SLURM job 3506920 after sha256 verification; receipts at research/trigger_migration_study/phase1b_baseline_{hist,authorising}_1M.json. Sanity gate passed exactly: hist enter_B 237,098 / auth 7,100; hist sample_I 64,762 / auth 554. The divergent counts published in an earlier draft (88,791 / 4,524 / 88,738 / 4,519, from an inline reimplementation) are RETRACTED.",
+    "error_convention": "Binomial sqrt(p(1-p)/n) on the ACTUAL denominator of each quantity: event rates n = 1,000,000 primary events; per-species eps_HRD n = species enter_B count; sample_I purity n = deuteron+proton sample_I count. Delta errors combine the two independent sides in quadrature. An earlier draft propagated errors on copy-pasted denominators (hist side used the AUTHORISING species counts 1,487 / 5,598 / 554; auth deuteron used the sample_I count 550 instead of enter_B 1,487) — those error columns were wrong and are corrected here.",
+    "historical_1m": {
+      "enter_b": 237098,
+      "enter_b_pct": "23.710%",
+      "enter_b_error": "±0.043% (binomial, n=1M)",
+      "sample_i": 64762,
+      "sample_i_pct": "6.476%",
+      "sample_i_error": "±0.025% (binomial, n=1M)",
+      "deuteron_enter_b": 140853,
+      "deuteron_sample_i": 64291,
+      "deuteron_epsilon_hrd": "45.644% (64291/140853)",
+      "deuteron_epsilon_hrd_error": "±0.133% (binomial, n=140853)",
+      "proton_enter_b": 96073,
+      "proton_sample_i": 373,
+      "proton_epsilon_hrd": "0.388% (373/96073)",
+      "proton_epsilon_hrd_error": "±0.020% (binomial, n=96073)",
+      "alpha_enter_b": 33,
+      "alpha_sample_i": 20,
+      "c12_enter_b": 64,
+      "c12_sample_i": 34,
+      "purity": "99.423% (64291/64664)",
+      "purity_error": "±0.030% (binomial, n=64664)"
+    },
+    "authorising_1m": {
+      "enter_b": 7100,
+      "enter_b_pct": "0.710%",
+      "enter_b_error": "±0.008% (binomial, n=1M)",
+      "sample_i": 554,
+      "sample_i_pct": "0.055%",
+      "sample_i_error": "±0.002% (binomial, n=1M)",
+      "deuteron_enter_b": 1487,
+      "deuteron_sample_i": 550,
+      "deuteron_epsilon_hrd": "36.987% (550/1487)",
+      "deuteron_epsilon_hrd_error": "±1.252% (binomial, n=1487)",
+      "proton_enter_b": 5598,
+      "proton_sample_i": 4,
+      "proton_epsilon_hrd": "0.071% (4/5598)",
+      "proton_epsilon_hrd_error": "±0.036% (binomial, n=5598)",
+      "c12_enter_b": 1,
+      "c12_epsilon_hrd": "0% (0/1)",
+      "alpha_enter_b": 0,
+      "purity": "99.278% (550/554)",
+      "purity_error": "±0.360% (binomial, n=554)"
+    },
+    "delta": {
+      "enter_b": "-97.01% ± 0.043 pp",
+      "sample_i": "-99.14% ± 0.025 pp",
+      "deuteron_epsilon_hrd": "-8.657 ± 1.259 pp (6.9 sigma)",
+      "proton_epsilon_hrd": "-0.317 ± 0.041 pp",
+      "purity": "-0.145 ± 0.361 pp (statistically unchanged)"
+    },
+    "interpretation": "The corrected ScatteringGenerator (physics-motivated cross-section sampling) reduces the HRD proxy rate by two orders of magnitude: Enter B 23.710% -> 0.710% (33x reduction, -97.01%), Sample I 6.476% -> 0.055%. Deuteron coincidence efficiency among B-arm deuterons drops 45.644% -> 36.987% (-8.66 ± 1.26 pp, 6.9 sigma): the fix changes not only how many events reach the B arm but the time/geometry structure of those that do. Proton eps_HRD drops 0.388% -> 0.071%. Deuteron purity of Sample I is statistically unchanged (99.423% -> 99.278%, delta -0.15 ± 0.36 pp): the surviving coincidence sample is still overwhelmingly deuteronic. Recorded as a finding in research/trigger_migration_study/PHASE1B_AUTHORISING_MC_FINDINGS.md; the table is regenerable via scripts/phase1b_delta_table.py."
+  },
+  "geometry_status": {
+    "t1_t2_trigger_volumes": "ABSENT",
+    "phase_2_scope": "Phase 2 will ADD sensitive trigger volumes (T1/T2). The non-authorising MC baseline established here provides the before-state for comparison. Geometry modifications are intentionally deferred to avoid contaminating the baseline-vs-historical comparison."
+  },
+  "downstream_consumer_gating": {
+    "status": "GATED_PENDING_REDERIVATION",
+    "gated_figures": [
+      {
+        "figure_id": "TIMING-MC",
+        "paper_row": "paper/figures.yaml TIMING-MC row (clusterB #918, VIS-TIM-005)",
+        "current_input": "geant4/data/output_krakow_1M.root (broken generator)",
+        "evidence_path": "reports/studies/clusterB/SUMMARY.md:21",
+        "new_status": "GATED — non-authorising generator source; pending re-derivation on output_krakow_1M_authorising.root"
+      },
+      {
+        "figure_id": "PID-MC",
+        "paper_row": "paper/figures.yaml PID-MC row (clusterA #921, VIS-PID-001)",
+        "current_input": "geant4/data/output_krakow_1M.root (broken generator)",
+        "evidence_path": "reports/studies/clusterA/SUMMARY.md:11",
+        "new_status": "GATED — non-authorising generator source; pending re-derivation on output_krakow_1M_authorising.root"
+      }
+    ],
+    "note": "All citations of the historical output_krakow_1M.root must be re-pointed to output_krakow_1M_authorising.root or explicitly marked GATED. The -97% Enter B delta materially changes the samples and topologies that these figures depend on. Re-derivation is in progress on lane #41 (PR #1554)."
+  },
+  "claim_status": "authorising",
+  "claim_gates": {
+    "source_commit_bound": "PASS",
+    "patch_applied": "PASS — patch applied to pinned clone (DIRTY BUILD, upstream does NOT contain fix)",
+    "build_from_verified_env": "PASS (ldd gate passed, ROOT 6.32 verified)",
+    "config_equivalent": "PASS",
+    "output_events_exact": "PASS (1,000,000 verified)",
+    "output_schema_match": "PASS",
+    "physics_plausible": "PASS — angular yields follow Ermisch et al. cross-section, size/wall-time reductions correlate with tracking reduction",
+    "baseline_reproduced": "PASS — original methodology reproduces the historical baseline bit-exactly (job 3506920); sanity gate 237,098 / 7,100 / 64,762 / 554 exact",
+    "downstream_gated": "PASS — TIMING-MC and PID-MC marked GATED in figures.yaml and clusterA/B SUMMARY.md",
+    "provenance_complete": "PASS"
+  },
+  "references": [
+    "#1045: Trigger hardware-response migration study",
+    "#1178: Direct-CDF sampler contract",
+    "#880: Weight adapter integration",
+    "#1179: Cross-section uncertainty propagation",
+    "#1311: MC provenance gap",
+    "#1337: Crash-chain diagnosis (VGM/libCore heap, CXXFLAGS, G4 data paths)",
+    "Ermisch et al. PRC 71 064004 (2005) — 190 MeV p-d elastic scattering cross-section"
+  ]
+}

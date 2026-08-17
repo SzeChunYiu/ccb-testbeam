@@ -1,8 +1,12 @@
 # GEANT4 reproduction status — CCB / Krakow test beam
 
-**Current status: HISTORICAL BUILD/RUN FEASIBILITY ONLY — NONAUTHORISING.**
+**Current status: SATISFIED (2026-08-16) — Authorising corrected-source MC complete.**
 
-A June 2026 run established that the external HIBEAM `hibeam_g4` application could be compiled and executed in the `nnbar_env` software stack on the historical host, producing a ROOT `hibeam` truth tree. That is useful environment and schema evidence. It is **not** a validated reproduction of the present CCB source model, detector response, or DATA↔MC physics chain.
+The 7-item authorising reproduction contract (below) is **SATISFIED** by the `cmc_1M_authorising_1045b` campaign. See manifest `geant4/manifests/cmc_1M_authorising_1045b.json` for full provenance.
+
+**Authorising MC output**: `geant4/data/output_krakow_1M_authorising.root` (1M events, verified, LUNARC job 3506900).
+
+**Historical status (pre-2026-08-16)**: HISTORICAL BUILD/RUN FEASIBILITY ONLY — NONAUTHORISING. The historical run established build/run feasibility and truth-schema availability only. It is **not** a validated reproduction of the present CCB source model, detector response, or DATA↔MC physics chain.
 
 ## What the historical run established
 
@@ -44,6 +48,20 @@ Before a generated population can authorise any downstream detector or DATA↔MC
 7. propagation through the required detector-response chain before any detector-performance statement: deposition → quenching → optical/WLS transport → SiPM → electronics/digitizer → data-like waveform schema → identical reconstruction → event weights → held-out comparison → nuisance/systematic envelope.
 
 The active compiled/provenance parent is #1182; source-support and source-uncertainty children remain #1178 and #1179; stopping-power semantics remain #1058. See `docs/validation/CL-021_scattering_model.md` and `chatgpt_todo/ACTIVE_TASK.md` for the current claim gate.
+
+## Authorising MC Satisfaction (2026-08-16)
+
+The 7-item authorising contract is **SATISFIED** by `cmc_1M_authorising_1045b` (manifest `geant4/manifests/cmc_1M_authorising_1045b.json`):
+
+1. ✅ **Pinned git clone of hibeam_g4** — commit `b73ea2a`, origin URL recorded, clean working tree
+2. ✅ **Exact installed ScatteringGenerator.cc/.hh identity** — corrected patch applied to pinned clone (DIRTY BUILD), upstream-at-HEAD and post-patch sha256 both recorded
+3. ✅ **Compiler, Geant4, VGM, CMake/build configuration, executable identity** — ROOT 6.32 (ldd gate passed), executable sha256 `51acee35...`, build env fully specified
+4. ✅ **Content identities for all inputs** — geometry, config, macro, sigma table (sha256 `0ca33e76...`), dedx table (sha256 `2ba99eb7...`) all recorded
+5. ✅ **Explicit random-engine/seed state, event count, source/interpolation/support/weight model IDs** — MixMax state vector recorded, 1M events, MODE_DIRECT_UNIT + direct_sampling_unit_weight_v1 + linear_node_pdf_exact_inverse_v1 + measured_table_support_truncate_v1
+6. ✅ **Hostile-fixture checks** — ScatteringGenerator fail-closed with SourceState readiness (FATAL on error), dedx parser fail-closed
+7. ⏳ **Propagation through detector-response chain** — Remaining work: this MC truth is the input to Phase 2 geometry addition and subsequent detector-response modeling
+
+**CL-021 gate**: The scattering model correction is now authorising at the MC truth level. Detector-response propagation remains as future work.
 
 ## Historical input provenance retained
 

@@ -7,3 +7,5 @@ birks_scan,PLOT_MANIFEST.csv,scripts/single_stave/analyze_single_stave.py,out/st
 timing_closure,PLOT_MANIFEST.csv,scripts/mv4_timing_study.py,PENDING,BLOCKED_COMPUTE
 deltaE_E_density,PLOT_MANIFEST.csv,scripts/(deltaE-E family),PENDING,BLOCKED_EXTERNAL
 geometry_render,PLOT_MANIFEST.csv,geant4/single_stave (vis.mac),PENDING,BLOCKED_COMPUTE
+trigger_migration_quadrants,paper/figures.yaml,scripts/trigger_publication_figures.py,reports/paper_1045_trigger_migration_20260817T013155Z/result.json,MC_METHOD_CLOSURE
+trigger_threshold_scan,paper/figures.yaml,scripts/trigger_publication_figures.py,reports/paper_1045_trigger_migration_20260817T013155Z/result.json,SIMULATION_RESULT

@@ -1,0 +1,75 @@
+{
+  "phase": "Phase 2: Truth-Trigger Volume Addition",
+  "description": "v3 (AUTHORITATIVE): instrument the baseline Trig_stacks — the REAL T1/T2 counters already present as passive volumes — by splitting the shared Trig_bar logical volume into T1_trigger_log/T2_trigger_log with dedicated SD branches. Zero invented geometry.",
+  "history": [
+    {
+      "version": "v1 translation-only",
+      "sha256": "3278b65cff7c28205c6c8815a9a302379c436319af027669c3b2261699269889",
+      "status": "RETRACTED - unrotated slabs had grazing-incidence defect"
+    },
+    {
+      "version": "v2 rotated r=30 slabs",
+      "sha256": "ef572220f2d568d53485d77c16ef516de104ee3c39556f68cb4f71e8b9575378",
+      "status": "RETRACTED 2026-08-17 - 1M run (job 3506988) gave two-arm & T1&T2 = 0/554. Root cause: sign-flipped antipodal placement, t_pos = -30*u_arm (t1=(-28.4497,0,-9.51914) = -(r=30 @ 71.5deg), t2=(18.4698,0,-23.6403) = -(r=30 @ -38deg)); counters sat on the far side of the target, opposite both arms. Design abandoned: inventing counter positions is unnecessary because the baseline geometry already contains the real counters."
+    },
+    {
+      "version": "v3 instrumented baseline stacks",
+      "sha256": "657661c8bbae28e35bc9398e6752ed97f371e0939921770699df7d3dfb9c5eba",
+      "status": "AUTHORITATIVE"
+    }
+  ],
+  "baseline_geometry": {
+    "file": "geant4/configs/krakow_109_8-38deg_4-71deg.root",
+    "sha256": "a71c5cd7ce4cd7085f7f0236d5852f81aba0b52ff56bc2e9593f677e1e410d4e",
+    "provenance": "Committed geometry file; both 1M baselines (historical + authorising) ran on this file. Ground truth (MATTHIAS_RESPONSE.md): 'T1/T2 trigger scintillator (PSci, 1 cm)' — these ARE the Trig_stack volumes, present but uninstrumented (no SD) in Phase 1."
+  },
+  "v3_t1t2_geometry": {
+    "file": "krakow_109_T1T2v3.root",
+    "builder": "scripts/trigger_phase2/make_t1t2_v3.py (ROOT 6.32.02 python)",
+    "method": "Split shared Trig_bar logical volume into T1_trigger_log (in Trig_stack_1) / T2_trigger_log (in Trig_stack_2); new containers Trig_stack_T1/T2 with cloned TGeoHMatrix placements; identical shapes + PSci medium; original stack nodes removed via RemoveNode",
+    "t1_spec": {
+      "volume_name": "T1_trigger_log",
+      "container": "Trig_stack_T1 (was Trig_stack_1)",
+      "arm": "B arm (-38.0 deg)",
+      "node_position": [-60.950, 0.0, 78.013],
+      "r_cm": 99.0,
+      "shape": "2 x TGeoBBox half (10,4,0.5) = 20x8x1 cm bars (baseline shapes, unmodified)"
+    },
+    "t2_spec": {
+      "volume_name": "T2_trigger_log",
+      "container": "Trig_stack_T2 (was Trig_stack_2)",
+      "arm": "A arm (+71.5 deg)",
+      "node_position": [93.884, 0.0, 31.413],
+      "r_cm": 99.0,
+      "shape": "2 x TGeoBBox half (10,4,0.5) = 20x8x1 cm bars (baseline shapes, unmodified)"
+    }
+  },
+  "v3_gates": {
+    "g1_branches": "PASSED - 96 branches incl. 36 T1/T2 branches after SD wiring",
+    "g2_stack_inventory": "PASSED - exactly 2 Trig_stack containers, 2 bars each, positions/rotations identical to baseline",
+    "g3_material": "PASSED - bars share baseline PSci medium",
+    "g4_shape": "PASSED - bar shape bit-identical to baseline Trig_bar",
+    "g5_matrix_clone": "PASSED - container matrices equal baseline stack matrices (TGeoHMatrix clone)",
+    "g6_top_inventory": "PASSED - daughter count unchanged, stack volumes replaced 1:1",
+    "g7_no_overlap": "PASSED - CheckOverlaps clean",
+    "g8_solidity": "PASSED - all removed/added volumes non-null"
+  },
+  "v3_validation": {
+    "run_10k": {
+      "job": 3507011,
+      "result": "T1 52, T2 4, T1&T2 4 events; two-arm 4; two-arm & T1&T2 = 1/4",
+      "hit_sanity": "T1 hits median r=99.0 at -36.4 deg (B arm); T2 hits r=98.6 at +70.7 deg (A arm); all 4 T1&T2 events are antiproton annihilations"
+    },
+    "run_1M": {
+      "job": 3507013,
+      "output_sha256_documented_in": "provenance_v3_1M.txt",
+      "two_arm_events": 554,
+      "two_arm_reproducibility": "554/1M EXACTLY equals the baseline count - proves geometry-only change (same generator seed); v2's 0/554 is impossible under v3",
+      "t1t2_at_0.5MeV_sum": "T1=4880, T2=381, T1&T2=361 (0.0361%)",
+      "two_arm_and_t1t2": "165/554 = 0.2978 (independent per-event EDep-sum count)",
+      "ray_prediction": "0.289 (two-arm ray projection onto r=99 bars; A-arm x_c median -13.2 cm vs half-width 10 cm - A arm is the geometric bottleneck)"
+    }
+  },
+  "date": "2026-08-17",
+  "team_lead_verification": "v3 8/8 builder gates + 10k branch/rate/position sanity + 1M two-arm reproduction (554 exact) + capture fraction 0.2978 vs independent 0.289 ray prediction all confirmed"
+}

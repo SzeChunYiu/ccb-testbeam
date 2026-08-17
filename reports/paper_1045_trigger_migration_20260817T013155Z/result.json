@@ -1,0 +1,129 @@
+{
+  "contract": "#1045 phase 4 (corrected)",
+  "n_events": 1000000,
+  "reference": {
+    "threshold_mev": 1.0,
+    "coinc_ns": 15.0,
+    "both": 165,
+    "proxy_only": 389,
+    "hardware_only": 195,
+    "proxy_total": 554,
+    "hardware_total": 360,
+    "retention": 0.29783393501805056,
+    "retention_se": 0.019429075041932482,
+    "hardware_purity_within_proxy": 0.4583333333333333,
+    "ray_projection_prediction": 0.289
+  },
+  "threshold_scan": [
+    {
+      "threshold_mev": 0.5,
+      "coinc_ns": 15.0,
+      "both": 165,
+      "proxy_only": 389,
+      "hardware_only": 196,
+      "proxy_total": 554,
+      "hardware_total": 361,
+      "retention": 0.29783393501805056,
+      "retention_se": 0.019429075041932482
+    },
+    {
+      "threshold_mev": 1.0,
+      "coinc_ns": 15.0,
+      "both": 165,
+      "proxy_only": 389,
+      "hardware_only": 195,
+      "proxy_total": 554,
+      "hardware_total": 360,
+      "retention": 0.29783393501805056,
+      "retention_se": 0.019429075041932482
+    },
+    {
+      "threshold_mev": 2.0,
+      "coinc_ns": 15.0,
+      "both": 164,
+      "proxy_only": 390,
+      "hardware_only": 195,
+      "proxy_total": 554,
+      "hardware_total": 359,
+      "retention": 0.296028880866426,
+      "retention_se": 0.0193949909123435
+    },
+    {
+      "threshold_mev": 5.0,
+      "coinc_ns": 15.0,
+      "both": 163,
+      "proxy_only": 391,
+      "hardware_only": 192,
+      "proxy_total": 554,
+      "hardware_total": 355,
+      "retention": 0.29422382671480146,
+      "retention_se": 0.01936054300545014
+    }
+  ],
+  "species_at_reference": {
+    "deuteron": {
+      "proxy_n": 550,
+      "both": 162,
+      "hardware_only": 91
+    },
+    "proton": {
+      "proxy_n": 4,
+      "both": 3,
+      "hardware_only": 26
+    },
+    "electron": {
+      "proxy_n": 0,
+      "both": 0,
+      "hardware_only": 0
+    },
+    "alpha": {
+      "proxy_n": 0,
+      "both": 0,
+      "hardware_only": 0
+    },
+    "C12": {
+      "proxy_n": 0,
+      "both": 0,
+      "hardware_only": 0
+    },
+    "he3": {
+      "proxy_n": 0,
+      "both": 0,
+      "hardware_only": 0
+    }
+  },
+  "proxy_vs_coincidence": [
+    {
+      "coinc_ns": 5.0,
+      "n_pass": 386
+    },
+    {
+      "coinc_ns": 10.0,
+      "n_pass": 387
+    },
+    {
+      "coinc_ns": 15.0,
+      "n_pass": 554
+    },
+    {
+      "coinc_ns": 20.0,
+      "n_pass": 557
+    },
+    {
+      "coinc_ns": 30.0,
+      "n_pass": 557
+    }
+  ],
+  "aggregate_superseded_quadrants": {
+    "both": 256,
+    "proxy_only": 298,
+    "hardware_only": 0,
+    "note": "aggregate join of two scan JSONs; assumed hardware subset of proxy; superseded by per-event joint quadrants"
+  },
+  "geometry": {
+    "baseline_sha256": "a71c5cd7ce4cd7085f7f0236d5852f81aba0b52ff56bc2e9593f677e1e410d4e",
+    "v3_sha256": "657661c8bbae28e35bc9398e6752ed97f371e0939921770699df7d3dfb9c5eba",
+    "v3_method": "instrument baseline Trig_stack_1/2 (real T1/T2 counters, r=99 cm) by splitting shared Trig_bar into T1_trigger_log/T2_trigger_log"
+  },
+  "generated_utc": "2026-08-17T01:31:56.405956+00:00"
+}

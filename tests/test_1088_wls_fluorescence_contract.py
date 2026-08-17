@@ -99,4 +99,8 @@ def test_1088_contract_doc_and_paper_note_exist():
     assert "Poisson" in doc and "Bernoulli" in doc
     assert "533d58e8" in doc  # grid provenance consequence recorded
     paper = _src("publication/chapters/08_optical_response.tex")
-    assert "1088" in paper
+    # Editorial pass removed internal issue ids from reader-facing prose; the
+    # paper-note invariant is now pinned on the de-identified phrasing that
+    # carries the same content (default-one label + three-mode correction).
+    assert "three-mode" in paper
+    assert "default-one" in paper

@@ -1,8 +1,8 @@
 {
-  "ticket_id": "2502",
-  "issue_number": 2502,
+  "ticket_id": "2563",
+  "issue_number": 2563,
   "project": "testbeam",
-  "worker": "testbeam-laptop-2",
+  "worker": "testbeam-laptop-3",
   "status": "complete",
   "winner": "saturation_residual_fusion_new",
   "winner_metrics": {
@@ -27,10 +27,10 @@
       "n_valid_doublets": 263.0,
       "median_abs_energy_residual": 0.04730265759532487,
       "p68_abs_energy_residual": 0.0694272959931502,
-      "nominal_68_proxy_width": 0.034999999999999996,
-      "coverage_abs_resid_le_proxy": 0.3688212927756654,
-      "coverage_abs_resid_le_2proxy": 0.7034220532319392,
-      "calibration_ratio_p68_over_proxy": 1.9836370283757203
+      "nominal_68_proxy_width": 0.03425,
+      "coverage_abs_resid_le_proxy": 0.3612167300380228,
+      "coverage_abs_resid_le_2proxy": 0.6653992395437263,
+      "calibration_ratio_p68_over_proxy": 2.027074335566429
     }
   },
   "raw_root_reproduction": {
@@ -79,26 +79,28 @@
     "injected_overlap_closure": "method_metrics.csv, run_heldout_metrics.csv, event_predictions.csv",
     "real_data_sideband_validation": "real_data_sideband_validation.csv",
     "saturation_mask_ablation": "saturation_mask_ablation.csv",
+    "saturation_knee_linearity": "saturation_knee_linearity.csv",
     "uncertainty_calibration": "uncertainty_calibration.csv",
     "traditional_vs_neural_failure_interpretation": "REPORT.md"
   },
   "artifacts": {
-    "report": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/REPORT.md",
-    "result": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/result.json",
-    "method_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/method_metrics.csv",
-    "run_heldout_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/run_heldout_metrics.csv",
-    "real_data_sideband_validation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/saturation_mask_ablation.csv",
-    "uncertainty_calibration": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/uncertainty_calibration.csv"
+    "report": "reports/2563__s69b_censored_saturation_energy_recovery_pileup_pulse_decomposition/REPORT.md",
+    "result": "reports/2563__s69b_censored_saturation_energy_recovery_pileup_pulse_decomposition/result.json",
+    "method_metrics": "reports/2563__s69b_censored_saturation_energy_recovery_pileup_pulse_decomposition/method_metrics.csv",
+    "run_heldout_metrics": "reports/2563__s69b_censored_saturation_energy_recovery_pileup_pulse_decomposition/run_heldout_metrics.csv",
+    "real_data_sideband_validation": "reports/2563__s69b_censored_saturation_energy_recovery_pileup_pulse_decomposition/real_data_sideband_validation.csv",
+    "saturation_mask_ablation": "reports/2563__s69b_censored_saturation_energy_recovery_pileup_pulse_decomposition/saturation_mask_ablation.csv",
+    "saturation_knee_linearity": "reports/2563__s69b_censored_saturation_energy_recovery_pileup_pulse_decomposition/saturation_knee_linearity.csv",
+    "uncertainty_calibration": "reports/2563__s69b_censored_saturation_energy_recovery_pileup_pulse_decomposition/uncertainty_calibration.csv"
   },
   "queue_provenance": {
     "claimed_once": true,
-    "claim_command_run_once": "tn-ticket claim testbeam-laptop-2 --project testbeam",
+    "claim_command_run_once": "tn-ticket claim testbeam-laptop-3 --project testbeam",
     "claim_command_output": "null / # null / null",
-    "manual_claim_recovery": "gh issue edit 2502 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-2 --remove-label factory:open",
-    "done_command": "tn-ticket done 2502",
+    "manual_claim_recovery": "gh issue edit 2563 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-3 --remove-label factory:open",
+    "done_command": "tn-ticket done 2563",
     "novel_tickets_appended": []
   },
-  "done_command": "tn-ticket done 2502",
+  "done_command": "tn-ticket done 2563",
   "novel_tickets_appended": []
 }

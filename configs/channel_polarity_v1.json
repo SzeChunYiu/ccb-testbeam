@@ -13,12 +13,13 @@
     "6": 1,
     "7": -1
   },
-  "status": "LOCKED_FROM_DUPLICATE_READOUT_CONVENTION",
+  "status": "GATED_FROM_DUPLICATE_READOUT_CONVENTION",
   "provenance": {
-    "basis": "Even B-stave channels are the primary positive-going analysis channels; odd duplicate readouts are inverted relative to the even partner (see s28a / duplicate-readout studies).",
-    "authorising_for_even_b_staves": true,
-    "authorising_for_odd_duplicates": true,
-    "note": "Odd-channel polarity is locked to -1 so polarity[c]*(raw-baseline) yields a positive physical pulse for both even and odd partners. Re-measure with scripts/channel_polarity.py::infer_channel_polarity before changing this map.",
-    "audit_issue": 954
+    "basis": "Even/odd signs are a hypothesis inherited from duplicate-readout analyses (s28a family), not an independent hardware or raw-waveform polarity measurement. The signs remain useful for diagnostics but must not authorize foundational amplitude/timing claims during global revalidation #1594.",
+    "authorising_for_even_b_staves": false,
+    "authorising_for_odd_duplicates": false,
+    "required_to_authorize": "Independent hardware/DAQ polarity documentation or a source-bound raw-waveform polarity measurement whose data product lineage is itself validated.",
+    "note": "Do not replace the missing polarity evidence with abs(raw-baseline). Downstream producers are expected to fail closed while this map is gated.",
+    "audit_issues": [954, 1594, 1603, 1617]
   }
 }

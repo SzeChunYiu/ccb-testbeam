@@ -1,107 +1,103 @@
-# Data manifest
+# Data lineage and integrity contract
 
-The raw data is **not in git** (it is ~6.4 GB compressed). This file is the single source of
-truth for where it lives and what it contains.
+> **GLOBAL REVALIDATION #1594 / RAW FOUNDATION #1603.** Raw data are not stored in git. A path appearing in a report is not, by itself, evidence that the bytes are the authoritative analysis product. Scientific use requires byte identity, waveform-width identity, and lineage identity.
 
-## Canonical locations
+## Current authoritative status
 
-| Copy | Path | Status |
-|---|---|---|
-| Local (laptop `billy`) | `/home/billy/Desktop/test_beam/data/` | working copy; gitignored |
-| LUNARC (canonical archive) | `/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam-data/` | **NOT YET POPULATED** — intended primary archive for the fleet |
+The historical S00 reproduction is registered against an **8-channel × 18-sample HRDv product (144 ADC words/event)**. Its exact expected-count gate (`640737` selected B-stave pulses) is now explicitly scoped in `configs/s00_reproduction.yaml` to `HRDv_8x18_S00_HISTORICAL`; that count must not be transferred to another waveform product.
 
-> **Status (DATA-008, 2026-07-23):** the canonical LUNARC archive is not yet
-> populated. The historical path on the fs9 tier does not exist either. Do not
-> invent data here: until the store is rsynced in, every worker must derive
-> inputs from its local working copy and record the source path + sha256 in the
-> run manifest. The intended archive layout (to be created on population):
+A separate LUNARC staging copy at
 
-```
+`/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/`
+
+is recorded by `configs/channel_polarity_v2.json` as a **truncated 128-word/event product**. Reading those 128 words as 8×16 channels desynchronizes the original channel-major 8×18 frame. The polarity inference made from that staging product was therefore retracted on 2026-08-16. **The 8×16 staging copy is non-authorizing for detector waveform physics.**
+
+The intended canonical fleet archive remains
+
+`/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam-data/`
+
+and is recorded as **not yet populated**. Populating and verifying that archive is an external action tracked by #1617.
+
+## Historical/local 144-word copies
+
+Repository records mention more than one local working-copy path:
+
+- `/home/billy/Desktop/test_beam/data/` — historical path in this manifest;
+- `/home/billy/ccb-data/data/extracted/root/root/` — 144-word extraction cited in the 2026-08-16 polarity-map retraction.
+
+These paths must be treated as **candidate copies of the historical 8×18 product until their bytes are matched to the committed S00 checksum manifest**. Do not choose a path by recency or by whether it reproduces an expected headline.
+
+## Required canonical archive layout
+
+When populated, the fleet archive should preserve immutable archives separately from extracted products:
+
+```text
 /projects/hep/fs10/shared/nnbar/billy/ccb-testbeam-data/
-├── raw/                       # original archives (immutable); sha256 below
+├── raw/
 │   ├── CCB Data.zip
-│   ├── CCB Data/{sorted-a.zip, sorted-b.zip, root.zip}
+│   ├── CCB Data/
+│   │   ├── sorted-a.zip
+│   │   ├── sorted-b.zip
+│   │   └── root.zip
 │   └── root.zip.tar
-└── extracted/                 # 6.1 GB (see "Extracted layout" below)
-    ├── root/root/             # hrda_run_NNNN.root / hrdb_run_NNNN.root
+└── extracted/
+    ├── root/root/          # hrda_run_NNNN.root / hrdb_run_NNNN.root
     ├── sorted-a/
     └── sorted-b/
 ```
 
-### Hash-verification procedure
+The authoritative bytes must be verified against `reports/S00_data_integrity_pipeline_reproduction/input_sha256.csv`. That file contains archive and per-run hashes; for example, `hrdb_run_0031.root` is registered as SHA-256 `9921aa75c062d0b8994573299a201cbe2725673319fdf1b8cffb711fb9adcea7` with 11,638,901 bytes. The manifest, not a path name, is the byte-identity reference. filecite note: repository prose should not copy this sentence into generated artifacts; the hash above is sourced from the committed CSV.
 
-When the archive is populated, every worker MUST verify byte-identical inputs
-using the sha256 manifest recorded by Study S00 in
-`reports/S00_data_integrity_pipeline_reproduction/input_sha256.csv` (raw-archive
-digests listed under "Integrity" below). Verify with:
+## Registered archive hashes
 
-```bash
-sha256sum -c reports/S00_data_integrity_pipeline_reproduction/input_sha256.csv
-```
+| Historical artifact | SHA-256 | Bytes |
+|---|---:|---:|
+| `data/raw/CCB Data.zip` | `01365d81479efbfc6fe4f975ee460be1db554ae21891ec7fa594ed8906e009eb` | 6,370,375,114 |
+| `data/raw/CCB Data/root.zip` | `19ba847cfbeb46d2944cf8d5c304afb52da6fcad991d1d402a6fd3e9a432efc1` | 809,855,166 |
+| `data/raw/CCB Data/sorted-a.zip` | `5504642819482198bc7f2cc4198fc91a4f7bcfdc538304c8759c090cf7578e7c` | 2,684,983,533 |
+| `data/raw/CCB Data/sorted-b.zip` | `f77835459bb1d797b8da74e6ac2fc88eab2402dd84b29965dc4f1dadcee1db94` | 2,874,563,960 |
+| `data/raw/root.zip.tar` | `5fdfa62223a4219c61d2bf15dd5480bcb144435f80f546f807452b298d019b68` | 543,196,672 |
 
-A mismatch is a hard stop: do not run downstream studies until the archive and
-the manifest agree. The PulseTable itself is versioned via the
-`schema_version` field mandated by `docs/contracts/PULSE_TABLE_CONTRACT.md`.
+These hashes establish historical file identity only. They do not, by themselves, prove channel mapping, polarity, trigger semantics, calibration, or detector performance.
 
-## Archive contents
+## Historical extracted layout
 
-`CCB Data.zip` (6.37 GB) contains three inner archives:
+The historical extraction was recorded as approximately 6.1 GB and included:
 
-| Inner archive | Size | Expected contents |
-|---|---|---|
-| `sorted-a.zip` | 2.68 GB | A-stack sorted data |
-| `sorted-b.zip` | 2.87 GB | B-stack sorted data |
-| `root.zip` | 810 MB | reduced HRD ROOT files (the inputs the reports were built from) |
+- 57 A-stack per-run ROOT files;
+- 53 B-stack per-run ROOT files;
+- sorted A/B products;
+- run numbers spanning 0012–0065.
 
-`root.zip.tar` (543 MB) → `root.zip.gz` → a separate copy of the ROOT bundle (provenance:
-nested re-compression; verify it matches `CCB Data/root.zip` before trusting either).
+Historical run groups used by S00 are encoded in `configs/s00_reproduction.yaml`. Their exact scientific interpretation is under #1603; trigger/run-quality semantics require hardware/run records rather than prose inheritance.
 
-### Extracted layout (verified)
+## S00 waveform contract
 
-```
-data/
-├── raw/                       # original archives (immutable)
-│   ├── CCB Data.zip
-│   ├── root.zip.tar
-│   └── CCB Data/{sorted-a.zip, sorted-b.zip, root.zip}
-└── extracted/                 # 6.1 GB
-    ├── root/root/             # 110 raw per-run ROOT files:
-    │                          #   hrda_run_NNNN.root  (57 files, A-stack)
-    │                          #   hrdb_run_NNNN.root  (53 files, B-stack)
-    ├── sorted-a/              # hrda_run_NNNN-sorted.root  (A-stack, sorted)
-    └── sorted-b/              # hrdb_run_NNNN-sorted.root  (B-stack, sorted)
-                               #   ← the B-stack reports are built from these
-```
+The S00 builder now performs a **per-event width validation before stacking/reshaping**, preventing a batch-total coincidence from silently converting 8×16 events into pseudo-8×18 events. The historical exact-count configuration additionally declares:
 
-Run numbers span 0012–0065. The report run-splits: Sample I = runs 31–57 (calib 31–42,
-analysis 44–57; run 43 removed, run 38 absent for A-stack), Sample II = runs 58–65 (calib 64).
+- `n_channels = 8`;
+- `samples_per_channel = 18`;
+- `expected_words_per_event = 144`;
+- `expected_counts_scope = THIS_EXACT_8X18_PRODUCT_ONLY`;
+- `authorising_detector_claims = false` until archive lineage is independently bound.
 
-### Environment (laptop `billy`)
+`python scripts/check_s00_data_product_scope.py` machine-checks this scope in the global audit workflow.
 
-Python 3.7.6 (anaconda base): `uproot 5.0.9`, `numpy 1.21.6`, `pandas 1.3.4`,
-`scikit-learn 1.0.1`, `torch 1.13.1+cu117` (CUDA available, RTX A3000 6 GB).
-Heavier deep-learning training should run on LUNARC GPU nodes with a newer env.
+## Polarity status
 
-## Reduced tables
+`configs/channel_polarity_v1.json` previously treated a duplicate-readout analysis convention as authorizing. Under the global audit this is no longer accepted as independent upstream evidence. The v1 map is now `GATED_FROM_DUPLICATE_READOUT_CONVENTION`, and foundational amplitude/timing claims require an independently measured/source-bound polarity status.
 
-The reports are built from a **selected-pulse table** of **640,737 B-stave pulse records**
-(cut: baseline-subtracted amplitude A > 1000 ADC), produced by:
-- `scripts/01_build_pulse_table_from_root.py` — ROOT → pulse table
-- `scripts/02_make_report_plots.py` — table → figures
+The retracted v2 map must **not** be restored merely because its per-run votes were internally consistent: those votes were performed on the truncated/desynchronized 128-word staging product.
 
-Reproducing those scripts and confirming the 640,737 count is **Study S00** (see
-`studies/STUDIES.md`).
+## What is safe to do now
 
-## Integrity
+- Use the committed checksum manifest to test candidate raw copies byte-for-byte.
+- Use the 8×18 product contract to reject width-incompatible data.
+- Run diagnostic/sensitivity code that clearly remains non-authorizing.
+- Audit code, equations, statistics, and simulation assumptions without pretending missing hardware evidence exists.
 
-Study S00 recorded the full checksum manifest for the raw archives and the B-stack ROOT inputs
-used by the reproduction gate in
-`reports/S00_data_integrity_pipeline_reproduction/input_sha256.csv`.
+## What remains externally blocked
 
-| File | sha256 |
-|---|---|
-| `data/raw/CCB Data.zip` | `01365d81479efbfc6fe4f975ee460be1db554ae21891ec7fa594ed8906e009eb` |
-| `data/raw/CCB Data/root.zip` | `19ba847cfbeb46d2944cf8d5c304afb52da6fcad991d1d402a6fd3e9a432efc1` |
-| `data/raw/CCB Data/sorted-a.zip` | `5504642819482198bc7f2cc4198fc91a4f7bcfdc538304c8759c090cf7578e7c` |
-| `data/raw/CCB Data/sorted-b.zip` | `f77835459bb1d797b8da74e6ac2fc88eab2402dd84b29965dc4f1dadcee1db94` |
-| `data/raw/root.zip.tar` | `5fdfa62223a4219c61d2bf15dd5480bcb144435f80f546f807452b298d019b68` |
+Issue #1617 contains only the evidence/actions that cannot be manufactured from git: populate/verify the canonical archive, confirm hardware channel/polarity/trigger semantics, provide detector/electronics calibration and material survey, provide/approve the p+d scattering reference/model and new MC production, identify an untouched validation sample, and provide beam-rate logs if available.
+
+A mismatch between candidate data and the committed S00 manifest is a **hard stop**, not an invitation to adjust expected counts or waveform interpretation.

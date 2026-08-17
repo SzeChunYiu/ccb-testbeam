@@ -1,0 +1,15 @@
+method,pid_proxy,pedestal_bin,pileup_bin,saturation_bin,n_pair_residuals,timing_sigma68_ns,ci_low,ci_high
+continuous_wavelet_cfd_template_atlas,low_dE_proxy,0,mild_pileup,unsaturated_proxy,90,2.391440027779513,2.0232176780700684,2.5847132956183865
+continuous_wavelet_cfd_template_atlas,mid_dE_proxy,0,mild_pileup,unsaturated_proxy,183,2.724067984794804,2.023217678070065,2.9456162590112767
+ridge,low_dE_proxy,0,mild_pileup,unsaturated_proxy,90,1.6105699186038265,1.1259708135522466,2.1056701347480526
+ridge,mid_dE_proxy,0,mild_pileup,unsaturated_proxy,183,1.5798556719485095,1.3313520647817014,1.7017929119281066
+gradient_boosted_trees,low_dE_proxy,0,mild_pileup,unsaturated_proxy,90,0.9930132079760944,0.9807176619089696,1.2233718575807626
+gradient_boosted_trees,mid_dE_proxy,0,mild_pileup,unsaturated_proxy,183,1.3867858960901167,1.1081337119657937,1.545503583548706
+mlp,low_dE_proxy,0,mild_pileup,unsaturated_proxy,90,1.0929508120390734,0.9192725496848042,1.3624845064036246
+mlp,mid_dE_proxy,0,mild_pileup,unsaturated_proxy,183,1.547903495653871,1.261005471483344,1.6388922216501312
+cnn_1d,low_dE_proxy,0,mild_pileup,unsaturated_proxy,90,1.1287259290612772,0.7276269702911371,1.2787295803833003
+cnn_1d,mid_dE_proxy,0,mild_pileup,unsaturated_proxy,183,1.685778314082223,1.3351144790649414,1.831670845059316
+compact_waveform_transformer,low_dE_proxy,0,mild_pileup,unsaturated_proxy,90,1.2811606457519529,0.8342828889083858,1.3215603550811537
+compact_waveform_transformer,mid_dE_proxy,0,mild_pileup,unsaturated_proxy,183,1.720517727108887,1.438998684158325,1.806972433399821
+wavelet_phase_space_residual_fusion,low_dE_proxy,0,mild_pileup,unsaturated_proxy,90,1.0673276960438076,0.934245023023468,1.189255293226919
+wavelet_phase_space_residual_fusion,mid_dE_proxy,0,mild_pileup,unsaturated_proxy,183,1.446863977239491,1.2282282616743272,1.6459566363509488

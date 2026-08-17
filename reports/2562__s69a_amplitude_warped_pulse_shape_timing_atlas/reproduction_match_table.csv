@@ -1,0 +1,6 @@
+group,events_total,selected_pulses,expected_selected_pulses,delta,pass
+sample_i_analysis,388879,252266,252266,0,True
+sample_i_calib,409815,248745,248745,0,True
+sample_ii_analysis,262091,125096,125096,0,True
+sample_ii_calib,35943,14630,14630,0,True
+all_registered_groups,1096728,640737,640737,0,True

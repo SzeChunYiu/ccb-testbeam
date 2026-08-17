@@ -1,38 +1,14 @@
 {
-  "ticket_id": "2502",
-  "issue_number": 2502,
+  "ticket_id": "2562",
+  "issue_number": 2562,
+  "study_id": "S69a",
   "project": "testbeam",
-  "worker": "testbeam-laptop-2",
+  "worker": "testbeam-laptop-1",
   "status": "complete",
-  "winner": "saturation_residual_fusion_new",
-  "winner_metrics": {
-    "name": "saturation_residual_fusion_new",
-    "criterion": "minimum held-out composite saturation-energy closure score with run-block bootstrap CIs reported",
-    "winner_score": 0.15172443008737868,
-    "energy_fractional_bias": -0.002906610021787798,
-    "energy_fractional_sigma68": 0.068387783415775,
-    "energy_fractional_sigma68_ci95": [
-      0.06183707932660469,
-      0.0751855124441164
-    ],
-    "time_sigma68_ns": 8.023902762892945,
-    "time_sigma68_ci95": [
-      7.365407249564567,
-      8.669358478772935
-    ],
-    "pileup_miss_rate": 0.32564102564102565,
-    "false_split_rate": 0.13846153846153847,
-    "uncertainty_calibration": {
-      "method": "saturation_residual_fusion_new",
-      "n_valid_doublets": 263.0,
-      "median_abs_energy_residual": 0.04730265759532487,
-      "p68_abs_energy_residual": 0.0694272959931502,
-      "nominal_68_proxy_width": 0.034999999999999996,
-      "coverage_abs_resid_le_proxy": 0.3688212927756654,
-      "coverage_abs_resid_le_2proxy": 0.7034220532319392,
-      "calibration_ratio_p68_over_proxy": 1.9836370283757203
-    }
-  },
+  "title": "amplitude-warped pulse-shape timing atlas with pedestal and pile-up controls",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-1 --project testbeam",
+  "manual_claim_recovery": "gh issue edit 2562 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-1 --remove-label factory:open",
   "raw_root_reproduction": {
     "passed": true,
     "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
@@ -42,63 +18,97 @@
     "evidence_table": "reproduction_match_table.csv"
   },
   "split": {
-    "split": "train and held-out sets are disjoint by source run",
     "train_runs": [
-      50,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
       51,
       52,
       53,
       54,
       55,
       56,
-      57
+      59,
+      61,
+      63
     ],
     "heldout_runs": [
+      42,
+      50,
+      57,
       58,
       60,
       62,
       64,
       65
     ],
-    "adc_clip": 11800.0,
-    "bootstrap": "held-out run-block percentile 95% CI",
-    "bootstrap_replicates": 400,
-    "negative_control": "clipped clean single-pulse controls with matched source-run distribution",
-    "winner_score": "energy_fractional_sigma68 + 0.20*abs(energy_fractional_bias) + 0.008*time_sigma68_ns + 0.04*pileup_miss_rate + 0.04*false_split_rate"
+    "train_rows": 29487,
+    "heldout_rows": 9600,
+    "split_unit": "run"
   },
+  "bootstrap": {
+    "unit": "held-out source run",
+    "replicates": 500,
+    "ci": "percentile 95%"
+  },
+  "methods": [
+    "traditional_cfd_template_curvature",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "1d_cnn",
+    "compact_waveform_transformer",
+    "amplitude_warped_derivative_cnn_new"
+  ],
   "required_method_coverage": {
-    "traditional": "analytic_clipped_template_sideband_traditional",
+    "strong_traditional": "traditional_cfd_template_curvature",
     "ridge": "ridge",
     "gradient_boosted_trees": "gradient_boosted_trees",
     "mlp": "mlp",
     "one_dimensional_cnn": "1d_cnn",
-    "transformer_sequence_model": "tiny_sequence_transformer",
-    "new_architecture": "saturation_residual_fusion_new"
+    "new_architecture": "amplitude_warped_derivative_cnn_new"
   },
-  "required_outputs": {
-    "injected_overlap_closure": "method_metrics.csv, run_heldout_metrics.csv, event_predictions.csv",
-    "real_data_sideband_validation": "real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "saturation_mask_ablation.csv",
-    "uncertainty_calibration": "uncertainty_calibration.csv",
-    "traditional_vs_neural_failure_interpretation": "REPORT.md"
+  "primary_metric": "held-out run-block bootstrap sigma68_ns of event-relative CFD20 timing residual; lower is better",
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "sigma68_ns": 0.05613986821411985,
+    "sigma68_ns_ci_low": 0.0,
+    "sigma68_ns_ci_high": 0.47423061476323647,
+    "bias_ns": 0.12297035948045704,
+    "bias_ns_ci_low": 0.12297035948045704,
+    "bias_ns_ci_high": 0.12297035948045704,
+    "tail_fraction_abs_gt_5ns": 0.042604166666666665,
+    "calibration_slope_pred_vs_target": 0.2572777492763836
   },
   "artifacts": {
-    "report": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/REPORT.md",
-    "result": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/result.json",
-    "method_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/method_metrics.csv",
-    "run_heldout_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/run_heldout_metrics.csv",
-    "real_data_sideband_validation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/saturation_mask_ablation.csv",
-    "uncertainty_calibration": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/uncertainty_calibration.csv"
+    "report": "reports/2562__s69a_amplitude_warped_pulse_shape_timing_atlas/REPORT.md",
+    "result": "reports/2562__s69a_amplitude_warped_pulse_shape_timing_atlas/result.json",
+    "method_metrics": "reports/2562__s69a_amplitude_warped_pulse_shape_timing_atlas/method_metrics.csv",
+    "paired_deltas": "reports/2562__s69a_amplitude_warped_pulse_shape_timing_atlas/paired_deltas_vs_traditional.csv",
+    "run_heldout_metrics": "reports/2562__s69a_amplitude_warped_pulse_shape_timing_atlas/run_heldout_metrics.csv",
+    "stave_heldout_metrics": "reports/2562__s69a_amplitude_warped_pulse_shape_timing_atlas/stave_heldout_metrics.csv",
+    "event_predictions": "reports/2562__s69a_amplitude_warped_pulse_shape_timing_atlas/event_predictions.csv",
+    "reproduction_match_table": "reports/2562__s69a_amplitude_warped_pulse_shape_timing_atlas/reproduction_match_table.csv",
+    "input_sha256": "reports/2562__s69a_amplitude_warped_pulse_shape_timing_atlas/input_sha256.csv"
   },
-  "queue_provenance": {
-    "claimed_once": true,
-    "claim_command_run_once": "tn-ticket claim testbeam-laptop-2 --project testbeam",
-    "claim_command_output": "null / # null / null",
-    "manual_claim_recovery": "gh issue edit 2502 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-2 --remove-label factory:open",
-    "done_command": "tn-ticket done 2502",
-    "novel_tickets_appended": []
-  },
-  "done_command": "tn-ticket done 2502",
+  "script_sha256": "0efdaa72210dd6ce51de3963129b52c5336438da35218604779566e11a3db1b8",
+  "config_sha256": "3b5b22bf31475b2b9a7006ef2207102aa0302bebf61e842d8c114d14da2f0c3b",
+  "git_commit": "cec9edc28257e0699c70c17fa9b2e8d806a3d42a",
+  "runtime_sec": 158.93643975257874,
+  "python": "3.7.6",
+  "done_command": "tn-ticket done 2562",
   "novel_tickets_appended": []
 }

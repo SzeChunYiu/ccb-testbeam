@@ -406,3 +406,51 @@ DELTA-E-SEGMENTATION:        # Segmentation mechanism illustration
     physical-layer sums are required for validation. DONE_DATA_ONLY with
     corrected producer; remaining gates: layer-map offset (#1296), saturation
     source-binding, MC provenance (#1311).
+
+# === Trigger hardware-response migration (#1045 P0) ============================
+# Authoritative per-event joint matrix, v3-instrumented geometry, 1M events on
+# the authorising corrected-source chain (CL-021 satisfied: two-arm sample 554
+# reproduced exactly -> geometry-only delta). Supersedes the aggregate-join
+# matrix (256/298/0); see research/trigger_migration_study/phase4/
+# JOINT_MATRIX_CORRECTION.md.
+
+TRIG-MIGRATION:              # #1045 P4 -- joint migration quadrants + retention
+  result: reports/paper_1045_trigger_migration_20260817T013155Z/result.json
+  value_key: reference/retention
+  source_figure: publication/figures/gated/fig_trigger_migration_quadrants.png
+  claim_id: trigger/#1045-P4
+  evidence_class: mc_method_closure
+  status: MC_METHOD_CLOSURE
+  kind: quantitative
+  caption: >-
+    Two-arm (proxy sample I) retention of the real-counter T1-and-T2 hardware
+    trigger, v3-instrumented geometry (baseline Trig_stack_1/2 split into
+    T1/T2_trigger_log, r=99 cm), 1M events on the authorising corrected-source
+    chain (two-arm sample 554 reproduced exactly, proving a geometry-only
+    delta). Per-event joint quadrants at 1.0 MeV / 15 ns: both = 165,
+    proxy-only = 389, hardware-only = 195; retention 165/554 = 0.2978 +/- 0.0194
+    (binomial), consistent with the independent ray-projection prediction 0.289.
+    Retention is threshold-insensitive (0.2978 @0.5 MeV to 0.2942 @5.0 MeV):
+    the migration loss is geometric (A-arm counter at +71.5 deg, x_c median
+    -13.2 cm vs 10 cm bar half-width). The hardware sample is NOT a subset of
+    the proxy sample (195/360 = 54% of hardware triggers lie outside the
+    two-arm definition) -- a selection-definition statement, not an efficiency.
+    Supersedes the aggregate-join matrix (both=256, proxy_only=298,
+    hardware_only=0 forced by a false subset assumption). MC method closure;
+    NOT a beam-data trigger result.
+
+TRIG-SCAN:                   # #1045 P3 -- threshold/coincidence scan
+  result: reports/paper_1045_trigger_migration_20260817T013155Z/result.json
+  value_key: reference/hardware_total
+  source_figure: publication/figures/gated/fig_trigger_threshold_scan.png
+  claim_id: trigger/#1045-P3
+  evidence_class: simulation_result
+  status: SIMULATION_RESULT
+  kind: quantitative
+  caption: >-
+    Threshold / coincidence scan of the instrumented T1-and-T2 trigger on the
+    same 1M v3 run: hardware pass count nearly flat in threshold (361 @0.5 MeV
+    to 355 @5.0 MeV at the 15 ns window; reference 360 @1.0 MeV), while the
+    two-arm proxy count rises with the coincidence window (386 @5 ns, 554
+    @15 ns, 557 @30 ns). Establishes that no threshold choice in 0.5-5 MeV
+    recovers the geometric migration loss. MC scan; NOT beam-data.

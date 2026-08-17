@@ -23,9 +23,13 @@ ALLOWED_STATUSES: frozenset[str] = frozenset(
         "PARTIAL",
         "GATED",
         "BLOCKED",
+        "MC_MODEL_DEPENDENT",
+        "DONE_DATA_ONLY",
         "SUPERSEDED",
         "EXTERNAL_BLOCKER",
         "ILLUSTRATIVE",
+        "MC_MODEL_DEPENDENT",
+        "DONE_DATA_ONLY",
     }
 )
 
@@ -45,6 +49,11 @@ STATUS_DISPOSITIONS: dict[str, str] = {
     "SUPERSEDED": "QUARANTINED",
     "EXTERNAL_BLOCKER": "BLOCKED",
     "ILLUSTRATIVE": "ILLUSTRATIVE",
+    # data/MC-distinction statuses used by the 1303 and 956 registrations:
+    # completed on data or single-model MC but not cross-closed -> quarantined
+    # from auto paper-promotion until their named gates close.
+    "MC_MODEL_DEPENDENT": "QUARANTINED",
+    "DONE_DATA_ONLY": "QUARANTINED",
 }
 
 _PAPER_QUANTITATIVE_STATUSES: frozenset[str] = frozenset(

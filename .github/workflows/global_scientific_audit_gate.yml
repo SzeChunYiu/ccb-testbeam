@@ -13,11 +13,16 @@ on:
       - "docs/SCIENTIFIC_FIGURE_STANDARD.md"
       - "docs/contracts/SCIENTIFIC_FIGURE_SIDECAR.schema.json"
       - "chatgpt_todo/**"
+      - "geant4/macros/**"
+      - "geant4/src_patch/scattering_source_model_v1.json"
+      - "geant4/src_patch/sigma_pd_cm_190.source.json"
+      - "geant4/src_patch/sigma_pd_cm_190.txt"
       - "scripts/sipm_waveC_gates.py"
       - "scripts/check_global_scientific_audit_gate.py"
       - "scripts/check_scientific_promotion_rules.py"
       - "scripts/check_s00_data_product_scope.py"
       - "scripts/check_rmax_formula.py"
+      - "scripts/check_scattering_source_contract.py"
       - "tests/test_global_audit_polarity_gate.py"
       - "tests/test_check_rmax_formula_fail_closed.py"
       - ".github/workflows/global_scientific_audit_gate.yml"
@@ -33,11 +38,16 @@ on:
       - "docs/SCIENTIFIC_FIGURE_STANDARD.md"
       - "docs/contracts/SCIENTIFIC_FIGURE_SIDECAR.schema.json"
       - "chatgpt_todo/**"
+      - "geant4/macros/**"
+      - "geant4/src_patch/scattering_source_model_v1.json"
+      - "geant4/src_patch/sigma_pd_cm_190.source.json"
+      - "geant4/src_patch/sigma_pd_cm_190.txt"
       - "scripts/sipm_waveC_gates.py"
       - "scripts/check_global_scientific_audit_gate.py"
       - "scripts/check_scientific_promotion_rules.py"
       - "scripts/check_s00_data_product_scope.py"
       - "scripts/check_rmax_formula.py"
+      - "scripts/check_scattering_source_contract.py"
       - "tests/test_global_audit_polarity_gate.py"
       - "tests/test_check_rmax_formula_fail_closed.py"
       - ".github/workflows/global_scientific_audit_gate.yml"
@@ -59,6 +69,8 @@ jobs:
         run: pytest -q tests/test_global_audit_polarity_gate.py
       - name: Regress fail-closed Rmax governance
         run: pytest -q tests/test_check_rmax_formula_fail_closed.py
+      - name: Validate source-bound p+d production configuration
+        run: python scripts/check_scattering_source_contract.py
 
   strict-front-door-diagnostic:
     runs-on: ubuntu-latest

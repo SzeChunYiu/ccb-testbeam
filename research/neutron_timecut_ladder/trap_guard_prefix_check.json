@@ -1,0 +1,2113 @@
+{
+ "common_events": 1949,
+ "comparison": "d70_pin2000.log (ca65d63d, guard) vs d70_pin2000.log.trap1979 (e2baa589, frozen at 1979)",
+ "identical_events": 1693,
+ "interpretation": "RNG stream preserved except at guard firings; ADC readout invariant in all compared events",
+ "kill_event_rows": [
+  {
+   "event": 14,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5989,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5907,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 20,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5885,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5898,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 25,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5976,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 6012,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 26,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5743,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5731,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 28,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5846,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5858,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 41,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5813,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5812,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 53,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 6114,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 6118,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 67,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 6711,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 6706,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 68,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5859,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5867,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 71,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5837,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5853,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 72,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5798,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5711,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 77,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5950,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5941,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 81,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5872,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5862,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 96,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5968,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5986,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 102,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5779,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5696,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 116,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5934,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5743,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 128,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5713,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5783,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 130,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5959,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5958,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 134,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5735,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5732,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 138,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5990,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5998,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 142,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5417,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5395,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 144,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5852,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5913,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 146,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5898,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5817,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 153,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 6015,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5990,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 164,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5810,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5831,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 171,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5901,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5897,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 179,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5816,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 4261,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 180,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5842,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5839,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 183,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 6015,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5902,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 192,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5825,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5807,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 194,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5847,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5798,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 205,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5656,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5923,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 212,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5766,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5846,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 221,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5819,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5823,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 222,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5901,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5847,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 226,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5797,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 6013,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 230,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5578,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5584,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 234,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5725,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5726,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 241,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5876,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5852,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 244,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5779,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5827,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 246,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5860,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5877,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 251,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5954,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5718,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 263,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5688,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 6058,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 264,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5968,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5954,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 265,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5777,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5772,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 268,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 6010,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 6020,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 272,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5911,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5919,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 273,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5824,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 6016,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 286,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5864,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5917,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 290,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5883,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5844,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 298,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 3672,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5885,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 304,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5824,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5831,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 311,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5930,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5930,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 335,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5807,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5866,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 336,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5884,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5899,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 338,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5875,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5898,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 345,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5877,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5020,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 351,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5884,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5836,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 363,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5816,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5902,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 372,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5569,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5581,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 374,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5811,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5842,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 388,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5861,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5758,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 389,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5835,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5731,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 400,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5821,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5825,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 407,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5679,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5683,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 416,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5858,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5924,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 427,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5810,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5890,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 444,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5737,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5811,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 450,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5891,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5772,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 459,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5589,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5760,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 462,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5802,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5806,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 464,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5698,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5660,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 472,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 6721,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 6725,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 485,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5844,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5652,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 489,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 6096,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 6097,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 492,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5839,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5868,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 498,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 6063,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 6052,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 508,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5848,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5871,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 509,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5904,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 6016,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 529,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 4128,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 3913,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 532,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5721,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5900,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 534,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5888,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5846,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 539,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5985,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 6008,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 540,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5753,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5746,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 541,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5779,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5765,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 550,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5717,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5876,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 559,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5825,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5942,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 568,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5893,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5851,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 569,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5909,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5894,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 588,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 3582,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 3580,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 592,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5985,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5887,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 602,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5946,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5744,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 621,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5863,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5883,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 625,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5806,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5806,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 631,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5855,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5878,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 633,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5783,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5790,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 643,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5806,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5977,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 650,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5918,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5811,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 651,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 6034,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 6014,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 654,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5965,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 6015,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 659,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5804,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5805,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 660,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5884,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5834,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 682,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 6309,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 6370,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 703,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5913,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5917,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 742,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 6600,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5796,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 744,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5758,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5810,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 745,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5791,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5826,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 789,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5947,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5880,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 796,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5789,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5921,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 808,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 7132,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 7094,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 822,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5807,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5723,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 831,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5731,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5830,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 832,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5811,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5816,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 842,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 2432,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5959,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 852,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5829,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5750,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 862,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5525,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5507,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 871,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5852,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 4303,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 872,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5803,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5811,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 873,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 6163,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 6075,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 881,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 4587,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5899,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 883,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5824,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5649,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 885,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5789,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5715,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 889,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5878,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5790,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 900,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5639,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 6836,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 905,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5999,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5933,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 913,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5863,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5854,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 919,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 6076,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5959,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 921,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5867,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5888,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 940,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5801,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5784,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 944,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 6001,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5743,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 951,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5715,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5765,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 967,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5757,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5758,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 973,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5789,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5692,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 986,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5820,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5804,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 995,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5873,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5879,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1003,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5799,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5828,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1010,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5901,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5999,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1011,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5783,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5783,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1015,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5304,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5350,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1017,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5670,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5821,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1024,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5748,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5866,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1027,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5767,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5759,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1039,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 4357,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 4369,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1043,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 6998,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 7000,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1050,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5915,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5771,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1055,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 6008,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 6012,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1057,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5653,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5655,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1058,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5794,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5644,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1061,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5842,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5799,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1078,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5726,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5729,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1080,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5964,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5846,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1086,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5900,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5895,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1088,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5690,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5862,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1089,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 4404,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 4418,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1094,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5886,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5935,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1103,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5929,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5915,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1114,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5860,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5866,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1147,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5791,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5159,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1151,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5745,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5739,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1153,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5937,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5938,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1155,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5849,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5797,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1158,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5985,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5971,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1160,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5853,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5797,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1164,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5724,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5683,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1166,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5812,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5802,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1170,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5783,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5880,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1179,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5979,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5756,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1192,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5728,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5644,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1196,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5938,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 6682,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1202,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5873,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5902,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1207,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 6065,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5885,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1222,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5711,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5701,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1236,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5776,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5811,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1238,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5890,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5848,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1261,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5741,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5737,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1262,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5899,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5839,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1276,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5819,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5798,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1286,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5893,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5796,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1315,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5950,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5949,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1344,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5787,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5787,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1346,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5763,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5791,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1363,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5968,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 6012,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1364,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5834,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5857,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1375,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5632,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5726,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1378,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5840,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5892,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1381,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5808,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5815,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1396,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 6032,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5935,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1400,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5995,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 6076,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1413,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 2207,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 2184,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1415,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5852,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5896,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1431,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5676,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5711,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1438,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5983,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5973,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1441,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5722,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5645,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1445,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 4990,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5830,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1456,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5738,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5783,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1457,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5879,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5898,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1460,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5980,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 6008,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1463,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5876,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5900,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1464,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5839,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 6170,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1465,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5820,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5849,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1467,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 4302,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 4245,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1471,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5977,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5965,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1474,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5819,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5704,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1481,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5707,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5704,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1482,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 6624,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 6624,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1497,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5877,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5985,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1499,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5638,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5628,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1505,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5928,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5959,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1514,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5709,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5737,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1542,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5975,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5858,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1558,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5649,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5647,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1566,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5773,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5750,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1577,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5818,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5573,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1584,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5719,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5722,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1588,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5097,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5586,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1599,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5816,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5839,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1622,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5676,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5588,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1637,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5861,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5869,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1639,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5759,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5771,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1643,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5703,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5695,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1646,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5882,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 6003,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1652,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5761,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5851,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1658,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5708,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5733,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1660,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5887,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5862,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1661,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5990,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5885,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1665,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5981,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 6004,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1667,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5970,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5971,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1669,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 3606,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5879,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1689,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5944,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5948,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1690,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5768,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5787,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1697,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5802,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5805,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1701,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5853,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5804,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1704,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5868,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5866,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1715,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 3503,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5814,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1724,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5797,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5858,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1735,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5965,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5800,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1740,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5859,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5824,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1745,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 6211,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 6191,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1754,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5709,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5718,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1760,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5699,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5691,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1766,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5737,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 6059,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1781,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5941,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5924,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1786,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5699,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5782,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1787,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5846,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5834,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1828,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5708,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5813,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1832,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5803,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5837,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1833,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5761,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5764,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1849,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5772,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5678,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1852,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5752,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5970,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1853,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5857,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5839,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1855,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5799,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5808,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1857,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5852,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5831,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1858,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5766,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5770,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1863,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5912,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5915,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1864,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 2193,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 2165,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1872,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5757,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5748,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1878,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 6919,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 6847,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1879,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5012,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5018,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1881,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5818,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5776,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1942,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5826,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5722,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1945,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 6254,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 6209,
+   "steps_at_kill": 100001
+  },
+  {
+   "event": 1999,
+   "new_adc_readout": 3895,
+   "new_arrivals_total": 5741,
+   "old_adc_readout": 3895,
+   "old_arrivals_total": 5741,
+   "steps_at_kill": 100001
+  }
+ ],
+ "kill_events_differing": 256,
+ "kill_events_identical": 6,
+ "kill_events_in_common": 262,
+ "nokill_diff_examples": [],
+ "nokill_differing": 0,
+ "nokill_identical": 1687,
+ "schema": "ccb-1091-trap-guard-prefix-check/1",
+ "seed": 2,
+ "verdict": "PASS"
+}

@@ -1,0 +1,563 @@
+{
+  "schema": "ccb-paper-1319-mc-depth-profile/2",
+  "issue": 1319,
+  "input": {
+    "mc_parquet": "reports/paper_618_species_penetration_2m_20260814T1449Z/deltaE_E_events_mc.parquet",
+    "mc_parquet_sha256": "d67b0bf47e1485877af9b9732b0139bbf5a2fd88733e6a7c2d4e2266184c5c40",
+    "n_events": 14112
+  },
+  "event_measure": {
+    "weight_diagnostics": {
+      "n": 14112,
+      "sum_w": 14112.0,
+      "sum_w2": 14112.0,
+      "ess": 14112.0,
+      "n_negative": 0,
+      "n_nonfinite": 0
+    },
+    "authorisation": "#1053 closed: direct target sampling, unit weights verified on this artifact"
+  },
+  "trigger": {
+    "label": "MC_TRIGGER_PROXY (#1045 open; no hardware-trigger claim)",
+    "validated": false
+  },
+  "energy_semantics": "raw deposited energy, MeV (not Birks-visible; #1302)",
+  "parity": {
+    "unresolved": true,
+    "label": "B2/B4/B6/B8 offset unresolved (#869): BOM even map B2->0/4->2/6->4/8->6 (#1296) vs legacy odd map 1/3/5/7 (#618)",
+    "hypotheses": {
+      "even": {
+        "map": {
+          "B2": 0,
+          "B4": 2,
+          "B6": 4,
+          "B8": 6
+        },
+        "label": "BOM even map (SIM_CONFIG, #1296)",
+        "source": "publication/tables/hardware_bom.csv"
+      },
+      "odd": {
+        "map": {
+          "B2": 1,
+          "B4": 3,
+          "B6": 5,
+          "B8": 7
+        },
+        "label": "legacy odd map carried by #618 readout columns (#869)",
+        "source": "#618 readout columns (verified equal)"
+      }
+    },
+    "envelope_mev": {
+      "B2": [
+        14.416329119336178,
+        17.205487820169562
+      ],
+      "B4": [
+        11.48869609630478,
+        11.86995759447518
+      ],
+      "B6": [
+        11.100985856811333,
+        13.155860995368151
+      ],
+      "B8": [
+        7.131259474438511,
+        11.891475809708805
+      ]
+    }
+  },
+  "accounting": {
+    "conservation_ok": true,
+    "max_abs_residual_mev": 0.0,
+    "definition": "per-event stack sum == sum over the 8 retained physical B layers (exact once)"
+  },
+  "rendering": {
+    "species_conditional_means_stacked": false,
+    "audit_text_inside_axes": false
+  },
+  "panels": {
+    "full_species": {
+      "layers": [
+        {
+          "layer": 0,
+          "n_events": 14112,
+          "mean_edep_mev": 17.205487820169562,
+          "sem_edep_mev": 0.11702912500980252,
+          "boot_lo_mev": 17.08465899264689,
+          "boot_hi_mev": 17.318274764484613,
+          "frac_nonzero": 1.0
+        },
+        {
+          "layer": 1,
+          "n_events": 14112,
+          "mean_edep_mev": 14.416329119336178,
+          "sem_edep_mev": 0.09659020481957577,
+          "boot_lo_mev": 14.31482843326499,
+          "boot_hi_mev": 14.508420261267174,
+          "frac_nonzero": 0.9024234693877551
+        },
+        {
+          "layer": 2,
+          "n_events": 14112,
+          "mean_edep_mev": 11.86995759447518,
+          "sem_edep_mev": 0.09099101026085363,
+          "boot_lo_mev": 11.776887101347537,
+          "boot_hi_mev": 11.956001694055761,
+          "frac_nonzero": 0.7633928571428571
+        },
+        {
+          "layer": 3,
+          "n_events": 14112,
+          "mean_edep_mev": 11.48869609630478,
+          "sem_edep_mev": 0.08406777596014575,
+          "boot_lo_mev": 11.405726690494973,
+          "boot_hi_mev": 11.572763738629206,
+          "frac_nonzero": 0.7098922902494331
+        },
+        {
+          "layer": 4,
+          "n_events": 14112,
+          "mean_edep_mev": 11.100985856811333,
+          "sem_edep_mev": 0.08575028702996047,
+          "boot_lo_mev": 11.018635466463993,
+          "boot_hi_mev": 11.194457856369915,
+          "frac_nonzero": 0.6327239229024944
+        },
+        {
+          "layer": 5,
+          "n_events": 14112,
+          "mean_edep_mev": 13.155860995368151,
+          "sem_edep_mev": 0.11408747407467502,
+          "boot_lo_mev": 13.050670585040395,
+          "boot_hi_mev": 13.272405755032494,
+          "frac_nonzero": 0.5835459183673469
+        },
+        {
+          "layer": 6,
+          "n_events": 14112,
+          "mean_edep_mev": 11.891475809708805,
+          "sem_edep_mev": 0.1202126704646759,
+          "boot_lo_mev": 11.774374977888831,
+          "boot_hi_mev": 12.008881986881736,
+          "frac_nonzero": 0.486890589569161
+        },
+        {
+          "layer": 7,
+          "n_events": 14112,
+          "mean_edep_mev": 7.131259474438511,
+          "sem_edep_mev": 0.09600875744545803,
+          "boot_lo_mev": 7.043002958910285,
+          "boot_hi_mev": 7.227275605256969,
+          "frac_nonzero": 0.30959467120181405
+        }
+      ],
+      "weight_diagnostics": {
+        "n": 14112,
+        "sum_w": 14112.0,
+        "sum_w2": 14112.0,
+        "ess": 14112.0,
+        "n_negative": 0,
+        "n_nonfinite": 0
+      },
+      "species": {
+        "p": [
+          {
+            "layer": 0,
+            "n_events": 11415,
+            "mean_edep_mev": 12.011779064220685,
+            "sem_edep_mev": 0.05915837822837388,
+            "boot_lo_mev": 11.95601944574665,
+            "boot_hi_mev": 12.073534723681446,
+            "frac_nonzero": 1.0
+          },
+          {
+            "layer": 1,
+            "n_events": 11415,
+            "mean_edep_mev": 12.233617396453846,
+            "sem_edep_mev": 0.07013442837510477,
+            "boot_lo_mev": 12.169320340358047,
+            "boot_hi_mev": 12.302235003777813,
+            "frac_nonzero": 0.9435830048182217
+          },
+          {
+            "layer": 2,
+            "n_events": 11415,
+            "mean_edep_mev": 12.35829559039232,
+            "sem_edep_mev": 0.07080737135711286,
+            "boot_lo_mev": 12.286960110608131,
+            "boot_hi_mev": 12.424769172400033,
+            "frac_nonzero": 0.8879544459045116
+          },
+          {
+            "layer": 3,
+            "n_events": 11415,
+            "mean_edep_mev": 12.860504135766883,
+            "sem_edep_mev": 0.07858634282490787,
+            "boot_lo_mev": 12.781145915235662,
+            "boot_hi_mev": 12.931307969867024,
+            "frac_nonzero": 0.8353920280332895
+          },
+          {
+            "layer": 4,
+            "n_events": 11415,
+            "mean_edep_mev": 13.720977567248216,
+            "sem_edep_mev": 0.08994258439574063,
+            "boot_lo_mev": 13.637432672651114,
+            "boot_hi_mev": 13.812766307478242,
+            "frac_nonzero": 0.7808147174770039
+          },
+          {
+            "layer": 5,
+            "n_events": 11415,
+            "mean_edep_mev": 16.26155638691515,
+            "sem_edep_mev": 0.12437738949703536,
+            "boot_lo_mev": 16.15034988477639,
+            "boot_hi_mev": 16.38317142574453,
+            "frac_nonzero": 0.7205431449846693
+          },
+          {
+            "layer": 6,
+            "n_events": 11415,
+            "mean_edep_mev": 14.700670994402833,
+            "sem_edep_mev": 0.13590098188706018,
+            "boot_lo_mev": 14.55930016258074,
+            "boot_hi_mev": 14.837471170280262,
+            "frac_nonzero": 0.6013140604467806
+          },
+          {
+            "layer": 7,
+            "n_events": 11415,
+            "mean_edep_mev": 8.811262201057433,
+            "sem_edep_mev": 0.11306486892483998,
+            "boot_lo_mev": 8.698358181915065,
+            "boot_hi_mev": 8.918056966299652,
+            "frac_nonzero": 0.38212877792378447
+          }
+        ],
+        "d": [
+          {
+            "layer": 0,
+            "n_events": 2660,
+            "mean_edep_mev": 39.70383666997404,
+            "sem_edep_mev": 0.2927492379876546,
+            "boot_lo_mev": 39.42064038487231,
+            "boot_hi_mev": 40.00485108182851,
+            "frac_nonzero": 1.0
+          },
+          {
+            "layer": 1,
+            "n_events": 2660,
+            "mean_edep_mev": 23.983644342688525,
+            "sem_edep_mev": 0.3589721381853166,
+            "boot_lo_mev": 23.607827199643562,
+            "boot_hi_mev": 24.321540843051316,
+            "frac_nonzero": 0.7383458646616541
+          },
+          {
+            "layer": 2,
+            "n_events": 2660,
+            "mean_edep_mev": 9.939435116129848,
+            "sem_edep_mev": 0.37177927901348784,
+            "boot_lo_mev": 9.54020494795263,
+            "boot_hi_mev": 10.291495851795524,
+            "frac_nonzero": 0.2394736842105263
+          },
+          {
+            "layer": 3,
+            "n_events": 2660,
+            "mean_edep_mev": 5.758324758630049,
+            "sem_edep_mev": 0.26297129628703153,
+            "boot_lo_mev": 5.479419274269606,
+            "boot_hi_mev": 6.017995707326094,
+            "frac_nonzero": 0.18082706766917292
+          },
+          {
+            "layer": 4,
+            "n_events": 2660,
+            "mean_edep_mev": 0.012087774880873644,
+            "sem_edep_mev": 0.005930005155539457,
+            "boot_lo_mev": 0.005992002123798175,
+            "boot_hi_mev": 0.018348290773599025,
+            "frac_nonzero": 0.006015037593984963
+          },
+          {
+            "layer": 5,
+            "n_events": 2660,
+            "mean_edep_mev": 0.011219627819138848,
+            "sem_edep_mev": 0.006008718234263669,
+            "boot_lo_mev": 0.0053221642161756086,
+            "boot_hi_mev": 0.01709471432788587,
+            "frac_nonzero": 0.0037593984962406013
+          },
+          {
+            "layer": 6,
+            "n_events": 2660,
+            "mean_edep_mev": 0.0016342953016274815,
+            "sem_edep_mev": 0.0007191964252494605,
+            "boot_lo_mev": 0.0009602115970836828,
+            "boot_hi_mev": 0.0023187137469927294,
+            "frac_nonzero": 0.002631578947368421
+          },
+          {
+            "layer": 7,
+            "n_events": 2660,
+            "mean_edep_mev": 0.020968300077320264,
+            "sem_edep_mev": 0.013992074686975628,
+            "boot_lo_mev": 0.010090154970655832,
+            "boot_hi_mev": 0.03186218371486366,
+            "frac_nonzero": 0.002631578947368421
+          }
+        ],
+        "other": [
+          {
+            "layer": 0,
+            "n_events": 37,
+            "mean_edep_mev": 2.0859610276433176,
+            "sem_edep_mev": 1.331459877680359,
+            "boot_lo_mev": 0.7365442868294028,
+            "boot_hi_mev": 3.35359810686746,
+            "frac_nonzero": 1.0
+          },
+          {
+            "layer": 1,
+            "n_events": 37,
+            "mean_edep_mev": 0.0,
+            "sem_edep_mev": 0.0,
+            "boot_lo_mev": 0.0,
+            "boot_hi_mev": 0.0,
+            "frac_nonzero": 0.0
+          },
+          {
+            "layer": 2,
+            "n_events": 37,
+            "mean_edep_mev": 0.0,
+            "sem_edep_mev": 0.0,
+            "boot_lo_mev": 0.0,
+            "boot_hi_mev": 0.0,
+            "frac_nonzero": 0.0
+          },
+          {
+            "layer": 3,
+            "n_events": 37,
+            "mean_edep_mev": 0.23461468427496665,
+            "sem_edep_mev": 0.23461468427496668,
+            "boot_lo_mev": 0.0,
+            "boot_hi_mev": 0.4692293685499333,
+            "frac_nonzero": 0.02702702702702703
+          },
+          {
+            "layer": 4,
+            "n_events": 37,
+            "mean_edep_mev": 0.0,
+            "sem_edep_mev": 0.0,
+            "boot_lo_mev": 0.0,
+            "boot_hi_mev": 0.0,
+            "frac_nonzero": 0.0
+          },
+          {
+            "layer": 5,
+            "n_events": 37,
+            "mean_edep_mev": 0.0,
+            "sem_edep_mev": 0.0,
+            "boot_lo_mev": 0.0,
+            "boot_hi_mev": 0.0,
+            "frac_nonzero": 0.0
+          },
+          {
+            "layer": 6,
+            "n_events": 37,
+            "mean_edep_mev": 0.0,
+            "sem_edep_mev": 0.0,
+            "boot_lo_mev": 0.0,
+            "boot_hi_mev": 0.0,
+            "frac_nonzero": 0.0
+          },
+          {
+            "layer": 7,
+            "n_events": 37,
+            "mean_edep_mev": 0.0,
+            "sem_edep_mev": 0.0,
+            "boot_lo_mev": 0.0,
+            "boot_hi_mev": 0.0,
+            "frac_nonzero": 0.0
+          }
+        ]
+      }
+    },
+    "sample_split": {
+      "I": {
+        "layers": [
+          {
+            "layer": 0,
+            "n_events": 1106,
+            "mean_edep_mev": 34.84942507956094,
+            "sem_edep_mev": 0.5154907601135336,
+            "boot_lo_mev": 34.34730179186207,
+            "boot_hi_mev": 35.43851058636346,
+            "frac_nonzero": 1.0
+          },
+          {
+            "layer": 1,
+            "n_events": 1106,
+            "mean_edep_mev": 23.196306107798755,
+            "sem_edep_mev": 0.5785922371259479,
+            "boot_lo_mev": 22.644365761484227,
+            "boot_hi_mev": 23.801340179667854,
+            "frac_nonzero": 0.7748643761301989
+          },
+          {
+            "layer": 2,
+            "n_events": 1106,
+            "mean_edep_mev": 6.455363612648189,
+            "sem_edep_mev": 0.3793112774355667,
+            "boot_lo_mev": 6.054960225635556,
+            "boot_hi_mev": 6.821007296088905,
+            "frac_nonzero": 0.3128390596745027
+          },
+          {
+            "layer": 3,
+            "n_events": 1106,
+            "mean_edep_mev": 4.85839674827184,
+            "sem_edep_mev": 0.24868170614231475,
+            "boot_lo_mev": 4.620098818199549,
+            "boot_hi_mev": 5.104487699220094,
+            "frac_nonzero": 0.28028933092224234
+          },
+          {
+            "layer": 4,
+            "n_events": 1106,
+            "mean_edep_mev": 5.453531881322332,
+            "sem_edep_mev": 0.29473508913667124,
+            "boot_lo_mev": 5.171575877003583,
+            "boot_hi_mev": 5.7476992785498515,
+            "frac_nonzero": 0.2576853526220615
+          },
+          {
+            "layer": 5,
+            "n_events": 1106,
+            "mean_edep_mev": 7.829687275275821,
+            "sem_edep_mev": 0.42715766891487134,
+            "boot_lo_mev": 7.438864811290253,
+            "boot_hi_mev": 8.26947504105965,
+            "frac_nonzero": 0.244122965641953
+          },
+          {
+            "layer": 6,
+            "n_events": 1106,
+            "mean_edep_mev": 5.130628142862266,
+            "sem_edep_mev": 0.3124012006551869,
+            "boot_lo_mev": 4.7815803861051025,
+            "boot_hi_mev": 5.431253160329207,
+            "frac_nonzero": 0.21609403254972875
+          },
+          {
+            "layer": 7,
+            "n_events": 1106,
+            "mean_edep_mev": 2.0078318017334112e-05,
+            "sem_edep_mev": 2.0022074485285604e-05,
+            "boot_lo_mev": 5.627168281993837e-08,
+            "boot_hi_mev": 4.0100364351848285e-05,
+            "frac_nonzero": 0.0018083182640144665
+          }
+        ],
+        "weight_diagnostics": {
+          "n": 1106,
+          "sum_w": 1106.0,
+          "sum_w2": 1106.0,
+          "ess": 1106.0,
+          "n_negative": 0,
+          "n_nonfinite": 0
+        }
+      },
+      "II": {
+        "layers": [
+          {
+            "layer": 0,
+            "n_events": 13006,
+            "mean_edep_mev": 15.705088419209476,
+            "sem_edep_mev": 0.10952422754446822,
+            "boot_lo_mev": 15.590628822599566,
+            "boot_hi_mev": 15.8113454543032,
+            "frac_nonzero": 1.0
+          },
+          {
+            "layer": 1,
+            "n_events": 13006,
+            "mean_edep_mev": 13.669700290392642,
+            "sem_edep_mev": 0.08954422546897467,
+            "boot_lo_mev": 13.583078135759116,
+            "boot_hi_mev": 13.760091463903255,
+            "frac_nonzero": 0.9132707980931878
+          },
+          {
+            "layer": 2,
+            "n_events": 13006,
+            "mean_edep_mev": 12.330402077321608,
+            "sem_edep_mev": 0.0921945250137857,
+            "boot_lo_mev": 12.244960988673588,
+            "boot_hi_mev": 12.425566424891272,
+            "frac_nonzero": 0.8017069045056128
+          },
+          {
+            "layer": 3,
+            "n_events": 13006,
+            "mean_edep_mev": 12.05252133688024,
+            "sem_edep_mev": 0.0869586148844334,
+            "boot_lo_mev": 11.963270447564819,
+            "boot_hi_mev": 12.137552132424599,
+            "frac_nonzero": 0.7464247270490543
+          },
+          {
+            "layer": 4,
+            "n_events": 13006,
+            "mean_edep_mev": 11.581232212100494,
+            "sem_edep_mev": 0.08833444390816492,
+            "boot_lo_mev": 11.498402971030883,
+            "boot_hi_mev": 11.660610321342325,
+            "frac_nonzero": 0.6646163309241888
+          },
+          {
+            "layer": 5,
+            "n_events": 13006,
+            "mean_edep_mev": 13.608786424740911,
+            "sem_edep_mev": 0.1174913365181792,
+            "boot_lo_mev": 13.501275522784772,
+            "boot_hi_mev": 13.716274757849645,
+            "frac_nonzero": 0.6124096570813471
+          },
+          {
+            "layer": 6,
+            "n_events": 13006,
+            "mean_edep_mev": 12.466402575780792,
+            "sem_edep_mev": 0.12642785029415562,
+            "boot_lo_mev": 12.345512554332894,
+            "boot_hi_mev": 12.596001937157576,
+            "frac_nonzero": 0.5099184991542365
+          },
+          {
+            "layer": 7,
+            "n_events": 13006,
+            "mean_edep_mev": 7.737683491977283,
+            "sem_edep_mev": 0.10242702937359195,
+            "boot_lo_mev": 7.645847629025643,
+            "boot_hi_mev": 7.838591319129533,
+            "frac_nonzero": 0.33576810702752574
+          }
+        ],
+        "weight_diagnostics": {
+          "n": 13006,
+          "sum_w": 13006.0,
+          "sum_w2": 13006.0,
+          "ess": 13006.0,
+          "n_negative": 0,
+          "n_nonfinite": 0
+        }
+      }
+    }
+  },
+  "outputs": {
+    "mc_depth_profile.pdf": "2b4c289a87711f8adf0df5098456d8a134949eb166a7d31bdda9023f0e32718a",
+    "mc_depth_profile.svg": "77a114200f6743838194c4dab01c5325974dd25bb9a52fb229401a2e66c40324",
+    "mc_depth_profile.png": "161b0ce28ef920c8ceec49bbbc7bbcedc443f219d7c19f11398bde53964460e5"
+  }
+}

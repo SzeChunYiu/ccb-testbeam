@@ -1,0 +1,33 @@
+{
+  "ticket_id": "2567",
+  "study": "S70c",
+  "command": "MPLCONFIGDIR=/tmp/matplotlib-ticket2567 UV_PROJECT_ENVIRONMENT=/tmp/ticket2567-uv-venv uv run --frozen --index-strategy unsafe-best-match --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple --with uproot --with awkward --with numpy --with pandas --with pyyaml --with scikit-learn --with tabulate --with 'torch==2.5.1+cpu' python scripts/ticket_2567_s70c_optimal_transport_pulse_manifolds.py",
+  "artifacts": [
+    "REPORT.md",
+    "result.json",
+    "transfer_summary.csv",
+    "strata_summary.csv",
+    "calibration_curves.csv",
+    "negative_controls.csv",
+    "manifold_transport.csv",
+    "event_predictions.csv",
+    "run_counts.csv",
+    "input_sha256.csv",
+    "claimed_ticket.txt"
+  ],
+  "raw_reproduction_passed": true,
+  "winner": "mlp",
+  "outputs_sha256": {
+    "REPORT.md": "04660cc341b0b6b4272fb3c313ccd099f0571c648b292e8d056fc9a932c46660",
+    "calibration_curves.csv": "322eedfb8e8aaac7753dce6f36988ed22ea4280104b10da277dd9b710416f026",
+    "claimed_ticket.txt": "ea84c50c22314bff54707834faf637697768a24217ea0e56f4e3157c29c4e019",
+    "event_predictions.csv": "7bf9873702cf47500a5b3704f3ca8b47d62678089e3693c045dba1e5c3072129",
+    "input_sha256.csv": "a637520f923e4b88626ba6da9190d3b2f17bd43d49553bc9b2b63995626d188f",
+    "manifold_transport.csv": "95c6264619ab644bfa3f8986518661474bffdaa3e10500902ad196e54a23716e",
+    "negative_controls.csv": "8db32fa06d83afbd0f3c775227c6904d9f155e4ad10fe8d3347b2f697ce47438",
+    "result.json": "bb71ac0b08f669ea647382cbe69bc1d256326e1e632393bdc1acdfed430d5cab",
+    "run_counts.csv": "75ee5f7629b9eebc478ae1d1f4a8b5eab6caa3072f518dbda94ac90b474e69b3",
+    "strata_summary.csv": "6280e1586ca6df711b922e03990990c491fda8f588f92b6ff338b2125e71634b",
+    "transfer_summary.csv": "b28e010c3c417b5345715f537426e7c65ba9a5033d982fc0198a9166fcffdd6f"
+  }
+}

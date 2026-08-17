@@ -295,8 +295,8 @@ z
    </g>
    <g id="patch_4">
     <path d="M 58.007115 39.919339 
-L 87.135457 39.919339 
-L 87.135457 51.690931 
+L 106.554351 39.919339 
+L 106.554351 51.690931 
 L 58.007115 51.690931 
 z
 " clip-path="url(#paaef369339)" style="fill: #56b4e9"/>
@@ -363,7 +363,7 @@ L 249.283225 172.843394
     <text style="font-size: 5.8px; font-family: 'DejaVu Sans', 'Arial', 'Liberation Sans', sans-serif; text-anchor: start" x="108.302051" y="28.419135" transform="rotate(-0 108.302051 28.419135)">5</text>
    </g>
    <g id="text_21">
-    <text style="font-size: 5.8px; font-family: 'DejaVu Sans', 'Arial', 'Liberation Sans', sans-serif; text-anchor: start" x="88.883157" y="47.405573" transform="rotate(-0 88.883157 47.405573)">3</text>
+    <text style="font-size: 5.8px; font-family: 'DejaVu Sans', 'Arial', 'Liberation Sans', sans-serif; text-anchor: start" x="108.302051" y="47.405573" transform="rotate(-0 108.302051 47.405573)">5</text>
    </g>
    <g id="text_22">
     <text style="font-size: 5.8px; font-family: 'DejaVu Sans', 'Arial', 'Liberation Sans', sans-serif; text-anchor: start" x="234.524865" y="66.392011" transform="rotate(-0 234.524865 66.392011)">18</text>

@@ -1,0 +1,95 @@
+name: Global Scientific Audit Gate
+
+on:
+  push:
+    paths:
+      - "README.md"
+      - "WIKI.md"
+      - "DATA.md"
+      - "paper/hardware_bom.csv"
+      - "configs/s00_reproduction.yaml"
+      - "configs/channel_polarity_v1.json"
+      - "docs/SCIENTIFIC_AUDIT_STATUS.md"
+      - "docs/PHYSICS_REFERENCE_BASELINE.md"
+      - "docs/PHYSICS_DERIVATIONS_BASELINE.md"
+      - "docs/ML_VALIDATION_STANDARD.md"
+      - "docs/SCIENTIFIC_FIGURE_STANDARD.md"
+      - "docs/contracts/SCIENTIFIC_FIGURE_SIDECAR.schema.json"
+      - "chatgpt_todo/**"
+      - "geant4/macros/**"
+      - "geant4/src_patch/scattering_source_model_v1.json"
+      - "geant4/src_patch/sigma_pd_cm_190.source.json"
+      - "geant4/src_patch/sigma_pd_cm_190.txt"
+      - "scripts/sipm_waveC_gates.py"
+      - "scripts/check_global_scientific_audit_gate.py"
+      - "scripts/check_scientific_promotion_rules.py"
+      - "scripts/check_ml_validation_promotion.py"
+      - "scripts/check_hardware_bom_evidence_classes.py"
+      - "scripts/check_s00_data_product_scope.py"
+      - "scripts/check_rmax_formula.py"
+      - "scripts/check_scattering_source_contract.py"
+      - "tests/test_global_audit_polarity_gate.py"
+      - "tests/test_check_rmax_formula_fail_closed.py"
+      - ".github/workflows/global_scientific_audit_gate.yml"
+  pull_request:
+    paths:
+      - "README.md"
+      - "WIKI.md"
+      - "DATA.md"
+      - "paper/hardware_bom.csv"
+      - "configs/s00_reproduction.yaml"
+      - "configs/channel_polarity_v1.json"
+      - "docs/SCIENTIFIC_AUDIT_STATUS.md"
+      - "docs/PHYSICS_REFERENCE_BASELINE.md"
+      - "docs/PHYSICS_DERIVATIONS_BASELINE.md"
+      - "docs/ML_VALIDATION_STANDARD.md"
+      - "docs/SCIENTIFIC_FIGURE_STANDARD.md"
+      - "docs/contracts/SCIENTIFIC_FIGURE_SIDECAR.schema.json"
+      - "chatgpt_todo/**"
+      - "geant4/macros/**"
+      - "geant4/src_patch/scattering_source_model_v1.json"
+      - "geant4/src_patch/sigma_pd_cm_190.source.json"
+      - "geant4/src_patch/sigma_pd_cm_190.txt"
+      - "scripts/sipm_waveC_gates.py"
+      - "scripts/check_global_scientific_audit_gate.py"
+      - "scripts/check_scientific_promotion_rules.py"
+      - "scripts/check_ml_validation_promotion.py"
+      - "scripts/check_hardware_bom_evidence_classes.py"
+      - "scripts/check_s00_data_product_scope.py"
+      - "scripts/check_rmax_formula.py"
+      - "scripts/check_scattering_source_contract.py"
+      - "tests/test_global_audit_polarity_gate.py"
+      - "tests/test_check_rmax_formula_fail_closed.py"
+      - ".github/workflows/global_scientific_audit_gate.yml"
+
+jobs:
+  audit-governance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install audit dependencies
+        run: python -m pip install pyyaml pytest
+      - name: Validate global audit governance contract
+        run: python scripts/check_global_scientific_audit_gate.py
+      - name: Reject unsupported scientific promotion
+        run: python scripts/check_scientific_promotion_rules.py
+      - name: Reject unsupported ML/model-selection promotion
+        run: python scripts/check_ml_validation_promotion.py
+      - name: Enforce hardware/data evidence classes
+        run: python scripts/check_hardware_bom_evidence_classes.py
+      - name: Bind historical S00 count to its exact waveform product
+        run: python scripts/check_s00_data_product_scope.py
+      - name: Regress fail-closed polarity authorization
+        run: pytest -q tests/test_global_audit_polarity_gate.py
+      - name: Regress fail-closed Rmax governance
+        run: pytest -q tests/test_check_rmax_formula_fail_closed.py
+      - name: Validate source-bound p+d production configuration
+        run: python scripts/check_scattering_source_contract.py
+
+  strict-front-door-diagnostic:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - name: Report unresolved front-door overclaims
+        run: python scripts/check_global_scientific_audit_gate.py --strict-front-door

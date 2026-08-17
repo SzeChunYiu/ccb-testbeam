@@ -5,6 +5,8 @@ on:
     paths:
       - "README.md"
       - "WIKI.md"
+      - "DATA.md"
+      - "paper/hardware_bom.csv"
       - "configs/s00_reproduction.yaml"
       - "configs/channel_polarity_v1.json"
       - "docs/SCIENTIFIC_AUDIT_STATUS.md"
@@ -22,6 +24,7 @@ on:
       - "scripts/check_global_scientific_audit_gate.py"
       - "scripts/check_scientific_promotion_rules.py"
       - "scripts/check_ml_validation_promotion.py"
+      - "scripts/check_hardware_bom_evidence_classes.py"
       - "scripts/check_s00_data_product_scope.py"
       - "scripts/check_rmax_formula.py"
       - "scripts/check_scattering_source_contract.py"
@@ -32,6 +35,8 @@ on:
     paths:
       - "README.md"
       - "WIKI.md"
+      - "DATA.md"
+      - "paper/hardware_bom.csv"
       - "configs/s00_reproduction.yaml"
       - "configs/channel_polarity_v1.json"
       - "docs/SCIENTIFIC_AUDIT_STATUS.md"
@@ -49,6 +54,7 @@ on:
       - "scripts/check_global_scientific_audit_gate.py"
       - "scripts/check_scientific_promotion_rules.py"
       - "scripts/check_ml_validation_promotion.py"
+      - "scripts/check_hardware_bom_evidence_classes.py"
       - "scripts/check_s00_data_product_scope.py"
       - "scripts/check_rmax_formula.py"
       - "scripts/check_scattering_source_contract.py"
@@ -69,6 +75,8 @@ jobs:
         run: python scripts/check_scientific_promotion_rules.py
       - name: Reject unsupported ML/model-selection promotion
         run: python scripts/check_ml_validation_promotion.py
+      - name: Enforce hardware/data evidence classes
+        run: python scripts/check_hardware_bom_evidence_classes.py
       - name: Bind historical S00 count to its exact waveform product
         run: python scripts/check_s00_data_product_scope.py
       - name: Regress fail-closed polarity authorization

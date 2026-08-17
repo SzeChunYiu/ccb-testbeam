@@ -1,0 +1,48 @@
+{
+  "ticket_id": "2558",
+  "ticket_number": 2558,
+  "study_id": "S61a",
+  "worker": "testbeam-laptop-3",
+  "title": "pulse-shape timing pedestal phase benchmark",
+  "claimed_ticket_text": "2558\n# S61a pulse-shape timing pedestal phase benchmark\n\nAcademic-grade study. Question: which pulse-shape degrees of freedom explain timing residuals once pedestal, polarity, peak phase, and amplitude are fixed?\n\nTraditional method: polarity-bound CFD plus analytic/template time-walk correction with robust first-samples pedestal and peak-phase bins.\n\nML/NN comparison: ridge regression/logistic calibration, histogram gradient-boosted trees, MLP, 1D-CNN over ADC samples, and compact waveform transformer with run-held-out training.\n\nRequired outputs: pulse-shape atom coefficients, sigma68/full-RMS/tail timing metrics, pedestal and phase stratification, leakage/placebo controls, and source-run bootstrap 95% CIs for all deltas.\n",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-3 --project testbeam",
+  "claim_command_output": "null\n# null\n\nnull\n",
+  "manual_claim_workaround": {
+    "reason": "tn-ticket claim returned malformed null output and did not attach worker:testbeam-laptop-3 to an issue; the helper was not rerun.",
+    "issue": 2558,
+    "command": "gh issue edit 2558 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-3 --remove-label factory:open"
+  },
+  "output_dir": "reports/2558__s61a_pulse_shape_timing_pedestal_phase_benchmark",
+  "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+  "samples_per_channel": 18,
+  "baseline_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "duplicate_readout_channels": {"B2": 1, "B4": 3, "B6": 5, "B8": 7},
+  "expected_selected_pulses": 640737,
+  "expected_group_counts": {
+    "sample_i_calib": 248745,
+    "sample_i_analysis": 252266,
+    "sample_ii_calib": 14630,
+    "sample_ii_analysis": 125096
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "heldout_runs": [42, 50, 57, 58, 60, 62, 64, 65],
+  "max_per_run_stave": 180,
+  "bootstrap_replicates": 500,
+  "random_seed": 20610058,
+  "mlp_max_iter": 35,
+  "nn": {
+    "epochs": 6,
+    "transformer_epochs": 5,
+    "batch_size": 1024,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001
+  }
+}

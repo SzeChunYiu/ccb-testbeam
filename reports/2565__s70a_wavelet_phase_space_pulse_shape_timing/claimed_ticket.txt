@@ -1,0 +1,13 @@
+NEW S70a wavelet phase-space pulse-shape timing under pedestal and pile-up drift
+
+Academic-grade study: compare a traditional continuous-wavelet/constant-fraction timing pipeline and template residual atlas against ridge, gradient-boosted trees, MLP, 1D-CNN, and a waveform transformer. Use run-held-out and event-block splits with paired bootstrap 95% CIs. Quantify how pulse shape, sub-sample timing, pile-up spacing, saturation censoring, pedestal state, reconstructed energy, and PID labels jointly explain timing residuals and failure modes.
+
+claim_helper_command: tn-ticket claim testbeam-laptop-3 --project testbeam
+claim_helper_output:
+null
+# null
+
+null
+
+manual_claim_workaround:
+gh issue edit 2565 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-3 --remove-label factory:open

@@ -1,0 +1,10 @@
+2558
+# S61a pulse-shape timing pedestal phase benchmark
+
+Academic-grade study. Question: which pulse-shape degrees of freedom explain timing residuals once pedestal, polarity, peak phase, and amplitude are fixed?
+
+Traditional method: polarity-bound CFD plus analytic/template time-walk correction with robust first-samples pedestal and peak-phase bins.
+
+ML/NN comparison: ridge regression/logistic calibration, histogram gradient-boosted trees, MLP, 1D-CNN over ADC samples, and compact waveform transformer with run-held-out training.
+
+Required outputs: pulse-shape atom coefficients, sigma68/full-RMS/tail timing metrics, pedestal and phase stratification, leakage/placebo controls, and source-run bootstrap 95% CIs for all deltas.

@@ -4,7 +4,7 @@
 Default mode is suitable for CI while #1594 is active: it verifies that the
 required ledgers/protocols exist and that their schemas match the committed
 files. ``--strict-front-door`` additionally fails on known public-documentation
-overclaims that are still being repaired under #1598.
+overclaims/stale statements that are still being repaired under #1598.
 
 Passing this gate never certifies a physics result.
 """
@@ -64,8 +64,15 @@ REQUIRED_LEDGER_COLUMNS = {
     },
 }
 
+# These are known stale/over-authorizing statements, not generic keyword bans.
+# They stay warnings in the default gate while #1598 repairs the WIKI, and become
+# blocking under --strict-front-door.
 FORBIDDEN_FRONT_DOOR_PHRASES = {
-    "WIKI.md": ["Every claim is traceable to source."],
+    "WIKI.md": [
+        "Every claim is traceable to source.",
+        "The raw beam ROOT (`hrdb_run_*.root`, runs 12–65) is now staged on LUNARC at `/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/` and analysed directly.",
+        "Waveform | 8 channels; located raw product 8×16 samples at 10 ns nominal | `MEASURED` / lineage gated",
+    ],
 }
 
 README_REQUIRED = [
@@ -89,7 +96,7 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--strict-front-door",
         action="store_true",
-        help="also fail on known WIKI/front-door scientific overclaims",
+        help="also fail on known WIKI/front-door scientific overclaims/stale statements",
     )
     return parser.parse_args()
 
@@ -131,7 +138,7 @@ def main() -> int:
         for phrase in phrases:
             if phrase in text:
                 message = (
-                    f"{rel} contains unverified front-door overclaim {phrase!r}; "
+                    f"{rel} contains known stale/over-authorizing statement {phrase!r}; "
                     "repair under #1598"
                 )
                 if args.strict_front_door:
@@ -152,7 +159,7 @@ def main() -> int:
 
     print("GLOBAL_SCIENTIFIC_AUDIT_GATE: PASS")
     if not args.strict_front_door:
-        print("Front-door overclaims are warnings until #1598 repairs them; strict mode will fail them.")
+        print("Known front-door defects are warnings until #1598 repairs them; strict mode fails them.")
     print("This validates audit governance only; it does not certify any physics result.")
     return 0
 

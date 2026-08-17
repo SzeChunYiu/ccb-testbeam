@@ -1,0 +1,6 @@
+2569
+# NEW S71a slew-rate hysteresis pulse-shape timing under pedestal memory
+
+Academic-grade study: quantify whether pulse-shape slew-rate hysteresis explains residual timing bias under pedestal memory and mild pile-up.
+
+Compare traditional derivative-template fits and constant-fraction timing against ridge, gradient-boosted trees, MLP, 1D-CNN, and transformer waveform encoders where sequence length supports attention. Report paired bootstrap CIs for timing bias/resolution, shape-residual closure, pedestal strata, pile-up strata, and energy/PID transfer.

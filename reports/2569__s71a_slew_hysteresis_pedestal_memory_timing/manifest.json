@@ -1,0 +1,91 @@
+{
+  "ticket_id": "2569",
+  "study_id": "S71a",
+  "worker": "testbeam-laptop-4",
+  "generated_at_unix": 1786929302.0028377,
+  "claim_command": "tn-ticket claim testbeam-laptop-4 --project testbeam",
+  "done_command": "tn-ticket done 2569 --project testbeam",
+  "result_winner": "traditional_cfd_template_derivative",
+  "artifacts": [
+    {
+      "path": "REPORT.md",
+      "bytes": 55086,
+      "sha256": "cd4f791f083ada77498177c9cf3dedabb153cfdbb6aa22754d700260592304c3"
+    },
+    {
+      "path": "ablations.csv",
+      "bytes": 1166,
+      "sha256": "9b785ed9b205c14357d5a943d17ab5e7b55e13784804b119264d3c3ea5ea50a6"
+    },
+    {
+      "path": "by_run.csv",
+      "bytes": 6626,
+      "sha256": "01370feff56b1fb3d73331eb0ec48a761bf0bee22eef8330d6bf4c2f83ade684"
+    },
+    {
+      "path": "claimed_ticket.txt",
+      "bytes": 849,
+      "sha256": "654f19fb1afd45eb744d217ebe365b5847d3fd34ef228f7c03caf705421b567a"
+    },
+    {
+      "path": "claimed_ticket_body.txt",
+      "bytes": 562,
+      "sha256": "84d446e595d880d0982644e1b0fb2d02a15d362ffeeeb5ac1559928d48b1e699"
+    },
+    {
+      "path": "frontier_axis_summary.csv",
+      "bytes": 7205,
+      "sha256": "8dbb620c9bd2711b43c3a3349180414723ba797f52abca7184869f9b638d884b"
+    },
+    {
+      "path": "hysteresis_error_correlations.csv",
+      "bytes": 1347,
+      "sha256": "044f12a367a29ebc43899fab5e887802828e1460f48918dd143bf5dcfdc2a47c"
+    },
+    {
+      "path": "input_sha256.csv",
+      "bytes": 4993,
+      "sha256": "9d1630c332196186416292bc75bba0238b8007fd1975f90e78916995e3b486e1"
+    },
+    {
+      "path": "method_deltas.csv",
+      "bytes": 2458,
+      "sha256": "9dad7249a87d29c301455fb4b02e326ffdaee48358d735b01d5340a151870e85"
+    },
+    {
+      "path": "metrics.csv",
+      "bytes": 2399,
+      "sha256": "6c046b93ee100bfe9321e85370b1c8cbee80644c414370e45e6ed0af58d82169"
+    },
+    {
+      "path": "reproduction.csv",
+      "bytes": 299,
+      "sha256": "962a281223ae2d6280d815498dfe7f7042b684acc1de55aa6fee4e305eb9fb24"
+    },
+    {
+      "path": "result.json",
+      "bytes": 47107,
+      "sha256": "fa9dd35ab35980cc1ea3547b45d52545124bca6f1b20ee222ada7b38b6d7e733"
+    },
+    {
+      "path": "run_family_summary.csv",
+      "bytes": 3753,
+      "sha256": "fc788af28afb4bc77442ac8064df6fd455d07619260cb91bece737911bfda799"
+    },
+    {
+      "path": "slew_hysteresis_event_diagnostics.csv",
+      "bytes": 8268138,
+      "sha256": "e9dcd57ae86ae9515a0aded30d072b0cd456b9e26572430becae4d91a3ab40a4"
+    },
+    {
+      "path": "slew_hysteresis_strata.csv",
+      "bytes": 19770,
+      "sha256": "dcfb2d89d77e7067750beb562a25192094afab9b71e612268edfc5f677bd15b9"
+    },
+    {
+      "path": "strata.csv",
+      "bytes": 28948,
+      "sha256": "74d8a00ebdfb01b20f7851de1e4f42c087fc1ef807860e2e4958615d70790f80"
+    }
+  ]
+}

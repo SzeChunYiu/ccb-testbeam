@@ -1,0 +1,46 @@
+{
+  "ticket_id": "2569",
+  "ticket_number": 2569,
+  "study_id": "S71a",
+  "worker": "testbeam-laptop-4",
+  "title": "slew-rate hysteresis pulse-shape timing under pedestal memory",
+  "claimed_ticket_text": "2569\n# NEW S71a slew-rate hysteresis pulse-shape timing under pedestal memory\n\nAcademic-grade study: quantify whether pulse-shape slew-rate hysteresis explains residual timing bias under pedestal memory and mild pile-up.\n\nCompare traditional derivative-template fits and constant-fraction timing against ridge, gradient-boosted trees, MLP, 1D-CNN, and transformer waveform encoders where sequence length supports attention. Report paired bootstrap CIs for timing bias/resolution, shape-residual closure, pedestal strata, pile-up strata, and energy/PID transfer.\n",
+  "claim_command_output": "# null\n\nnull\nnull\n",
+  "manual_claim_workaround": {
+    "reason": "tn-ticket claim returned the null queue rendering without assigning worker:testbeam-laptop-4 even though read-only queue inspection showed open project:testbeam tickets. The helper was not run a second time.",
+    "issue": 2569,
+    "command": "gh issue edit 2569 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-4 --remove-label factory:open"
+  },
+  "output_dir": "reports/2569__s71a_slew_hysteresis_pedestal_memory_timing",
+  "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+  "samples_per_channel": 18,
+  "baseline_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "duplicate_readout_channels": {"B2": 1, "B4": 3, "B6": 5, "B8": 7},
+  "expected_selected_pulses": 640737,
+  "expected_group_counts": {
+    "sample_i_calib": 248745,
+    "sample_i_analysis": 252266,
+    "sample_ii_calib": 14630,
+    "sample_ii_analysis": 125096
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "heldout_runs": [42, 50, 57, 58, 60, 62, 64, 65],
+  "max_per_run_stave": 180,
+  "bootstrap_replicates": 500,
+  "random_seed": 20710071,
+  "mlp_max_iter": 35,
+  "nn": {
+    "epochs": 6,
+    "transformer_epochs": 5,
+    "batch_size": 1024,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001
+  }
+}

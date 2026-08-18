@@ -7,10 +7,10 @@ multi-pulse analytic method against ridge, gradient-boosted trees, MLP, 1D-CNN,
 transformer sequence models, and a sensible new architecture for energy
 reconstruction under pile-up and ADC saturation.  The worker is `testbeam-laptop-2`.  The
 winner is **`saturation_residual_fusion_new`**, selected by held-out run-block energy closure:
-fractional energy sigma68 `0.06839` with 95%
-CI [`0.06184`,
-`0.07519`].  Its composite score is
-`0.1517`.
+fractional energy sigma68 `0.06515` with 95%
+CI [`0.06059`,
+`0.0691`].  Its composite score is
+`0.1505`.
 
 ## Raw ROOT Reproduction
 
@@ -117,58 +117,58 @@ runs.
 
 | method                                         |   winner_score |   energy_fractional_bias |   energy_fractional_sigma68 |   energy_fractional_sigma68_ci_low |   energy_fractional_sigma68_ci_high |   time_bias_ns |   time_sigma68_ns |   time_sigma68_ns_ci_low |   time_sigma68_ns_ci_high |   pileup_miss_rate |   false_split_rate |
 |:-----------------------------------------------|---------------:|-------------------------:|----------------------------:|-----------------------------------:|------------------------------------:|---------------:|------------------:|-------------------------:|--------------------------:|-------------------:|-------------------:|
-| saturation_residual_fusion_new                 |         0.1517 |               -0.002907  |                     0.06839 |                            0.06184 |                             0.07519 |        -0.2714 |             8.024 |                    7.365 |                     8.669 |             0.3256 |            0.1385  |
-| gradient_boosted_trees                         |         0.16   |               -0.004337  |                     0.07328 |                            0.06523 |                             0.08059 |        -0.3938 |             8.231 |                    7.863 |                     8.439 |             0.3538 |            0.1462  |
-| ridge                                          |         0.1695 |               -0.01034   |                     0.06713 |                            0.05628 |                             0.07009 |        -1.051  |            10.34  |                    9.307 |                    11     |             0.3051 |            0.1333  |
-| 1d_cnn                                         |         0.2168 |                0.04774   |                     0.09965 |                            0.09021 |                             0.1066  |        -1.768  |            11.03  |                   10.33  |                    11.42  |             0.2667 |            0.2179  |
-| analytic_clipped_template_sideband_traditional |         0.2234 |                0.07918   |                     0.1006  |                            0.09114 |                             0.1148  |         0.5086 |             9.454 |                    8.518 |                    10.46  |             0.5846 |            0.1974  |
-| tiny_sequence_transformer                      |         0.2713 |                0.0006918 |                     0.1027  |                            0.08737 |                             0.1139  |       -15.75   |            17.75  |                   16.96  |                    19.41  |             0.5949 |            0.06923 |
-| mlp                                            |         0.2756 |               -0.02341   |                     0.1571  |                            0.1433  |                             0.1622  |         0.3222 |            11.84  |                   10.46  |                    13.39  |             0.3846 |            0.09231 |
+| saturation_residual_fusion_new                 |         0.1505 |                0.002716  |                     0.06515 |                            0.06059 |                             0.0691  |        -0.7846 |             8.212 |                    7.195 |                     9.015 |             0.2769 |             0.2    |
+| gradient_boosted_trees                         |         0.1584 |               -0.0008102 |                     0.07286 |                            0.06954 |                             0.07519 |        -0.3788 |             8.241 |                    7.829 |                     8.85  |             0.2769 |             0.2103 |
+| ridge                                          |         0.1711 |                0.006192  |                     0.07469 |                            0.05894 |                             0.08941 |        -0.4756 |             9.434 |                    8.617 |                    10.41  |             0.2821 |             0.2103 |
+| 1d_cnn                                         |         0.181  |               -0.0264    |                     0.0785  |                            0.06812 |                             0.08651 |         0.0283 |             9.51  |                    9.026 |                    10.16  |             0.3718 |             0.1564 |
+| analytic_clipped_template_sideband_traditional |         0.2109 |                0.06236   |                     0.09263 |                            0.08132 |                             0.1052  |         0.3861 |             9.467 |                    8.499 |                    10.13  |             0.5615 |             0.1897 |
+| tiny_sequence_transformer                      |         0.243  |               -0.01389   |                     0.1131  |                            0.1002  |                             0.1313  |        -7.99   |            13.03  |                   12.12  |                    14.23  |             0.3846 |             0.1872 |
+| mlp                                            |         0.2976 |               -0.05212   |                     0.1685  |                            0.1444  |                             0.1984  |        -2.736  |            12.3   |                   10.3   |                    13.38  |             0.2821 |             0.2256 |
 
-The traditional comparator has energy sigma68 `0.1006`
-and score `0.2234`.  The selected winner changes energy
-sigma68 by `-0.03224`
-and timing sigma68 by `-1.43` ns.
+The traditional comparator has energy sigma68 `0.09263`
+and score `0.2109`.  The selected winner changes energy
+sigma68 by `-0.02748`
+and timing sigma68 by `-1.255` ns.
 
 ## Run-Held-Out Stability
 
 | method                                         |   heldout_run |   energy_fractional_bias |   energy_fractional_sigma68 |   time_bias_ns |   time_sigma68_ns |   pileup_miss_rate |   false_split_rate |
 |:-----------------------------------------------|--------------:|-------------------------:|----------------------------:|---------------:|------------------:|-------------------:|-------------------:|
-| 1d_cnn                                         |            58 |                 0.05719  |                     0.1108  |      -1.239    |            11.04  |             0.2436 |            0.1795  |
-| 1d_cnn                                         |            60 |                 0.08472  |                     0.099   |      -0.002197 |            11.3   |             0.2179 |            0.1538  |
-| 1d_cnn                                         |            62 |                 0.07573  |                     0.09183 |      -4.058    |            10.75  |             0.359  |            0.3205  |
-| 1d_cnn                                         |            64 |                 0.01926  |                     0.08143 |      -1.149    |             9.674 |             0.2308 |            0.1923  |
-| 1d_cnn                                         |            65 |                 0.03106  |                     0.09207 |      -1.706    |            11.11  |             0.2821 |            0.2436  |
-| analytic_clipped_template_sideband_traditional |            58 |                 0.05961  |                     0.09176 |      -0.8261   |             9.586 |             0.5641 |            0.2179  |
-| analytic_clipped_template_sideband_traditional |            60 |                 0.1035   |                     0.1049  |       2.624    |             7.291 |             0.6026 |            0.1923  |
-| analytic_clipped_template_sideband_traditional |            62 |                 0.08827  |                     0.114   |       0.7759   |            11.39  |             0.5897 |            0.2051  |
-| analytic_clipped_template_sideband_traditional |            64 |                 0.06412  |                     0.06839 |       0.3945   |             7.361 |             0.5385 |            0.1282  |
-| analytic_clipped_template_sideband_traditional |            65 |                 0.08165  |                     0.0913  |      -1        |             9.997 |             0.6282 |            0.2436  |
-| gradient_boosted_trees                         |            58 |                 0.01035  |                     0.06828 |      -0.4859   |             7.496 |             0.2821 |            0.1538  |
-| gradient_boosted_trees                         |            60 |                 0.003428 |                     0.07901 |       0.6314   |             8.349 |             0.3077 |            0.1795  |
-| gradient_boosted_trees                         |            62 |                -0.001499 |                     0.06871 |      -1.548    |             8.259 |             0.3974 |            0.1282  |
-| gradient_boosted_trees                         |            64 |                -0.03631  |                     0.05706 |      -0.5679   |             8.253 |             0.3462 |            0.1538  |
-| gradient_boosted_trees                         |            65 |                -0.002961 |                     0.05651 |       0.421    |             8.169 |             0.4359 |            0.1154  |
-| mlp                                            |            58 |                -0.04822  |                     0.1362  |       0.1445   |            13.78  |             0.3462 |            0.08974 |
-| mlp                                            |            60 |                 0.02265  |                     0.1507  |       1.063    |             9.217 |             0.2564 |            0.1154  |
-| mlp                                            |            62 |                -0.02757  |                     0.1489  |       1.786    |            12.26  |             0.4744 |            0.1026  |
-| mlp                                            |            64 |                -0.06036  |                     0.1488  |      -0.6515   |            11.06  |             0.3333 |            0.1026  |
-| mlp                                            |            65 |                -0.03285  |                     0.1656  |      -1.225    |            14.2   |             0.5128 |            0.05128 |
-| ridge                                          |            58 |                -0.00873  |                     0.06969 |      -0.3508   |            10.08  |             0.2821 |            0.1538  |
-| ridge                                          |            60 |                 0.01055  |                     0.06889 |       0.6309   |             9.658 |             0.2436 |            0.141   |
-| ridge                                          |            62 |                 0.001731 |                     0.06261 |      -3.103    |            11.26  |             0.3718 |            0.141   |
-| ridge                                          |            64 |                -0.02938  |                     0.05241 |      -0.7281   |             9.295 |             0.2436 |            0.1026  |
-| ridge                                          |            65 |                -0.006805 |                     0.05437 |      -2.533    |             9.576 |             0.3846 |            0.1282  |
-| saturation_residual_fusion_new                 |            58 |                 0.001794 |                     0.06272 |       0.1602   |             7.283 |             0.2564 |            0.1667  |
-| saturation_residual_fusion_new                 |            60 |                 0.005086 |                     0.07569 |       0.5078   |             7.735 |             0.2949 |            0.1667  |
-| saturation_residual_fusion_new                 |            62 |                 0.0287   |                     0.06522 |      -1.508    |             8.79  |             0.3462 |            0.1154  |
-| saturation_residual_fusion_new                 |            64 |                -0.03486  |                     0.05366 |      -0.7482   |             7.792 |             0.3205 |            0.1538  |
-| saturation_residual_fusion_new                 |            65 |                -0.01018  |                     0.07301 |       0.1934   |             7.984 |             0.4103 |            0.08974 |
-| tiny_sequence_transformer                      |            58 |                -0.007738 |                     0.1248  |     -14.53     |            16.72  |             0.5128 |            0.03846 |
-| tiny_sequence_transformer                      |            60 |                 0.02831  |                     0.09785 |     -13.86     |            19.2   |             0.5513 |            0.1026  |
-| tiny_sequence_transformer                      |            62 |                -0.003341 |                     0.08162 |     -18.25     |            17.33  |             0.6538 |            0.0641  |
-| tiny_sequence_transformer                      |            64 |                -0.009077 |                     0.08412 |     -18        |            19.35  |             0.641  |            0.08974 |
-| tiny_sequence_transformer                      |            65 |                -0.008381 |                     0.08886 |     -15.26     |            18.86  |             0.6154 |            0.05128 |
+| 1d_cnn                                         |            58 |               -0.02174   |                     0.06943 |       -0.8907  |             9.063 |             0.3462 |             0.1154 |
+| 1d_cnn                                         |            60 |               -0.01787   |                     0.07703 |        1.766   |             9.363 |             0.3462 |             0.2308 |
+| 1d_cnn                                         |            62 |               -0.03026   |                     0.094   |       -1.181   |             8.946 |             0.359  |             0.1026 |
+| 1d_cnn                                         |            64 |               -0.0158    |                     0.07572 |        1.795   |            10.49  |             0.4615 |             0.1026 |
+| 1d_cnn                                         |            65 |               -0.03896   |                     0.06758 |        0.236   |             8.897 |             0.3462 |             0.2308 |
+| analytic_clipped_template_sideband_traditional |            58 |                0.07246   |                     0.08417 |       -0.4912  |             7.966 |             0.5385 |             0.141  |
+| analytic_clipped_template_sideband_traditional |            60 |                0.07841   |                     0.08558 |        0.3221  |             8.304 |             0.5385 |             0.2564 |
+| analytic_clipped_template_sideband_traditional |            62 |                0.07807   |                     0.0776  |        0.7315  |             8.71  |             0.5256 |             0.141  |
+| analytic_clipped_template_sideband_traditional |            64 |                0.01246   |                     0.09315 |        1.465   |             9.356 |             0.6538 |             0.1795 |
+| analytic_clipped_template_sideband_traditional |            65 |                0.04854   |                     0.08696 |        0.1163  |            10.54  |             0.5513 |             0.2308 |
+| gradient_boosted_trees                         |            58 |                0.0008789 |                     0.06574 |       -0.02839 |             7.6   |             0.2564 |             0.2436 |
+| gradient_boosted_trees                         |            60 |                0.002604  |                     0.06901 |       -0.7505  |             8.409 |             0.1923 |             0.2308 |
+| gradient_boosted_trees                         |            62 |                0.007624  |                     0.06685 |       -1.062   |             8.329 |             0.2821 |             0.1667 |
+| gradient_boosted_trees                         |            64 |               -0.01477   |                     0.07605 |       -0.3288  |             8.822 |             0.3974 |             0.1795 |
+| gradient_boosted_trees                         |            65 |                0.002819  |                     0.07636 |        0.07841 |             7.668 |             0.2564 |             0.2308 |
+| mlp                                            |            58 |               -0.05773   |                     0.1506  |       -1.944   |             9.45  |             0.2308 |             0.1923 |
+| mlp                                            |            60 |               -0.06108   |                     0.1269  |       -3.958   |            13.1   |             0.2564 |             0.2692 |
+| mlp                                            |            62 |               -0.07001   |                     0.1574  |       -2.832   |            10.44  |             0.2821 |             0.2692 |
+| mlp                                            |            64 |               -0.05285   |                     0.2123  |       -0.707   |            14.27  |             0.3718 |             0.1538 |
+| mlp                                            |            65 |                0.007678  |                     0.1905  |       -3.053   |            10.6   |             0.2692 |             0.2436 |
+| ridge                                          |            58 |               -0.01096   |                     0.06195 |       -0.5472  |             8.558 |             0.1538 |             0.2692 |
+| ridge                                          |            60 |                0.01384   |                     0.05311 |       -0.8218  |            10.67  |             0.2692 |             0.2436 |
+| ridge                                          |            62 |                0.006005  |                     0.1009  |       -0.5998  |             8.556 |             0.3077 |             0.1923 |
+| ridge                                          |            64 |                0.02332   |                     0.07642 |        0.7691  |            10.37  |             0.3718 |             0.1282 |
+| ridge                                          |            65 |                0.011     |                     0.07885 |       -0.4322  |             8.729 |             0.3077 |             0.2179 |
+| saturation_residual_fusion_new                 |            58 |                0.006156  |                     0.05867 |       -0.6409  |             6.608 |             0.2821 |             0.2051 |
+| saturation_residual_fusion_new                 |            60 |                0.009985  |                     0.06528 |       -1.333   |             8.437 |             0.2308 |             0.2821 |
+| saturation_residual_fusion_new                 |            62 |               -0.00612   |                     0.06179 |       -1.298   |             8.102 |             0.2949 |             0.141  |
+| saturation_residual_fusion_new                 |            64 |               -0.01388   |                     0.07301 |       -0.9212  |             9.543 |             0.3462 |             0.1282 |
+| saturation_residual_fusion_new                 |            65 |                0.00384   |                     0.06152 |       -0.3626  |             8.263 |             0.2308 |             0.2436 |
+| tiny_sequence_transformer                      |            58 |               -0.01051   |                     0.1109  |       -7.352   |            13.03  |             0.3333 |             0.1795 |
+| tiny_sequence_transformer                      |            60 |               -0.02009   |                     0.09143 |       -8.81    |            14.48  |             0.3205 |             0.2308 |
+| tiny_sequence_transformer                      |            62 |               -0.03102   |                     0.1074  |       -8.299   |            10.9   |             0.3846 |             0.1795 |
+| tiny_sequence_transformer                      |            64 |                0.006022  |                     0.139   |       -7.466   |            13.7   |             0.4872 |             0.1282 |
+| tiny_sequence_transformer                      |            65 |               -0.02657   |                     0.09894 |       -8.044   |            13.06  |             0.3974 |             0.2179 |
 
 ## Strata and Systematics
 
@@ -177,153 +177,155 @@ pulse morphology, amplitude ratio, stave, and a PID proxy class.
 
 | stratum          | value             | method                                         |   energy_fractional_bias |   energy_fractional_sigma68 |   time_bias_ns |   time_sigma68_ns |   pileup_miss_rate |
 |:-----------------|:------------------|:-----------------------------------------------|-------------------------:|----------------------------:|---------------:|------------------:|-------------------:|
-| spacing_bin      | (-0.001, 10.0]    | 1d_cnn                                         |                0.06824   |                    0.09101  |      -1.906    |            13.29  |            0.3561  |
-| spacing_bin      | (10.0, 25.0]      | 1d_cnn                                         |                0.05466   |                    0.1003   |      -0.9346   |            10.11  |            0.3068  |
-| spacing_bin      | (25.0, 45.0]      | 1d_cnn                                         |                0.04483   |                    0.09843  |      -4.805    |             9.98  |            0.1795  |
-| spacing_bin      | (45.0, 70.0]      | 1d_cnn                                         |                0.02517   |                    0.09192  |       0.6737   |            10.7   |            0.1739  |
-| spacing_bin      | (-0.001, 10.0]    | analytic_clipped_template_sideband_traditional |                0.08873   |                    0.08612  |       1.688    |            13.1   |            0.6742  |
-| spacing_bin      | (10.0, 25.0]      | analytic_clipped_template_sideband_traditional |                0.09063   |                    0.09539  |       1.393    |             7.791 |            0.6705  |
-| spacing_bin      | (25.0, 45.0]      | analytic_clipped_template_sideband_traditional |                0.07543   |                    0.08609  |      -1.144    |             9.408 |            0.5128  |
-| spacing_bin      | (45.0, 70.0]      | analytic_clipped_template_sideband_traditional |                0.04795   |                    0.09505  |      -0.4484   |             9.466 |            0.4348  |
-| spacing_bin      | (-0.001, 10.0]    | gradient_boosted_trees                         |                0.02235   |                    0.06195  |       0.4658   |             8.322 |            0.4394  |
-| spacing_bin      | (10.0, 25.0]      | gradient_boosted_trees                         |                0.01677   |                    0.06517  |       0.08112  |             6.731 |            0.4545  |
-| spacing_bin      | (25.0, 45.0]      | gradient_boosted_trees                         |               -0.02016   |                    0.07025  |      -1.548    |             9.213 |            0.2308  |
-| spacing_bin      | (45.0, 70.0]      | gradient_boosted_trees                         |               -0.04498   |                    0.06412  |      -0.5401   |             9.327 |            0.2391  |
-| spacing_bin      | (-0.001, 10.0]    | mlp                                            |                0.008273  |                    0.1722   |       0.983    |             9.652 |            0.4167  |
-| spacing_bin      | (10.0, 25.0]      | mlp                                            |               -0.006591  |                    0.1398   |       0.6722   |             7.138 |            0.4432  |
-| spacing_bin      | (25.0, 45.0]      | mlp                                            |               -0.02356   |                    0.1556   |       0.1706   |            12.28  |            0.3974  |
-| spacing_bin      | (45.0, 70.0]      | mlp                                            |               -0.07607   |                    0.1556   |      -0.4112   |            15.49  |            0.2717  |
-| spacing_bin      | (-0.001, 10.0]    | ridge                                          |                0.02461   |                    0.05814  |       0.8588   |             9.836 |            0.3636  |
-| spacing_bin      | (10.0, 25.0]      | ridge                                          |                0.001731  |                    0.0556   |       0.2933   |             7.308 |            0.3523  |
-| spacing_bin      | (25.0, 45.0]      | ridge                                          |               -0.01192   |                    0.05848  |      -3.865    |             9.06  |            0.2949  |
-| spacing_bin      | (45.0, 70.0]      | ridge                                          |               -0.0523    |                    0.06381  |      -2.512    |            13.3   |            0.1848  |
-| spacing_bin      | (-0.001, 10.0]    | saturation_residual_fusion_new                 |                0.01636   |                    0.06854  |       0.2542   |             7.469 |            0.4242  |
-| spacing_bin      | (10.0, 25.0]      | saturation_residual_fusion_new                 |                0.03361   |                    0.04364  |       0.6541   |             7.852 |            0.3977  |
-| spacing_bin      | (25.0, 45.0]      | saturation_residual_fusion_new                 |                0.001794  |                    0.06553  |      -1.451    |             9.025 |            0.2308  |
-| spacing_bin      | (45.0, 70.0]      | saturation_residual_fusion_new                 |               -0.04433   |                    0.06021  |      -0.6275   |             9.272 |            0.1957  |
-| spacing_bin      | (-0.001, 10.0]    | tiny_sequence_transformer                      |                0.05655   |                    0.06687  |     -12.61     |             9.402 |            0.75    |
-| spacing_bin      | (10.0, 25.0]      | tiny_sequence_transformer                      |                0.05505   |                    0.05662  |     -16.3      |             8.701 |            0.7386  |
-| spacing_bin      | (25.0, 45.0]      | tiny_sequence_transformer                      |               -0.01376   |                    0.06152  |     -19.58     |            16.85  |            0.5256  |
-| spacing_bin      | (45.0, 70.0]      | tiny_sequence_transformer                      |               -0.0567    |                    0.08732  |     -18.59     |            22.59  |            0.2935  |
-| ratio_bin        | (-0.001, 0.35]    | 1d_cnn                                         |                0.04227   |                    0.09343  |      -2.895    |            10.74  |            0.4304  |
-| ratio_bin        | (0.35, 0.625]     | 1d_cnn                                         |                0.04707   |                    0.1041   |      -3.128    |            10.8   |            0.2477  |
-| ratio_bin        | (0.625, 0.875]    | 1d_cnn                                         |                0.05466   |                    0.09765  |      -2.033    |            10.43  |            0.2247  |
-| ratio_bin        | (0.875, 1.05]     | 1d_cnn                                         |                0.05146   |                    0.08636  |       1.003    |            10.7   |            0.2035  |
-| ratio_bin        | (-0.001, 0.35]    | analytic_clipped_template_sideband_traditional |                0.08727   |                    0.1252   |      -0.785    |            12.48  |            0.5823  |
-| ratio_bin        | (0.35, 0.625]     | analytic_clipped_template_sideband_traditional |                0.06821   |                    0.08698  |       0.5489   |            11.25  |            0.6055  |
-| ratio_bin        | (0.625, 0.875]    | analytic_clipped_template_sideband_traditional |                0.08259   |                    0.0942   |      -0.5564   |             6.733 |            0.5618  |
-| ratio_bin        | (0.875, 1.05]     | analytic_clipped_template_sideband_traditional |                0.06818   |                    0.09752  |       1.575    |             7.71  |            0.5841  |
-| ratio_bin        | (-0.001, 0.35]    | gradient_boosted_trees                         |               -0.01674   |                    0.05909  |      -2.394    |             9.264 |            0.5949  |
-| ratio_bin        | (0.35, 0.625]     | gradient_boosted_trees                         |                0.0025    |                    0.07768  |      -0.9315   |             9.958 |            0.3945  |
-| ratio_bin        | (0.625, 0.875]    | gradient_boosted_trees                         |               -0.01061   |                    0.05783  |      -0.6427   |             7.091 |            0.2584  |
-| ratio_bin        | (0.875, 1.05]     | gradient_boosted_trees                         |               -0.004325  |                    0.08817  |       1.509    |             7.405 |            0.2212  |
-| ratio_bin        | (-0.001, 0.35]    | mlp                                            |               -0.02325   |                    0.1756   |      -2.253    |            11.4   |            0.5823  |
-| ratio_bin        | (0.35, 0.625]     | mlp                                            |                0.01772   |                    0.1542   |      -2.18     |            11.51  |            0.4312  |
-| ratio_bin        | (0.625, 0.875]    | mlp                                            |               -0.02736   |                    0.1439   |       0.7816   |             9.536 |            0.2809  |
-| ratio_bin        | (0.875, 1.05]     | mlp                                            |               -0.04716   |                    0.1478   |       3.479    |            13.46  |            0.2832  |
-| ratio_bin        | (-0.001, 0.35]    | ridge                                          |                0.003474  |                    0.07419  |      -4.344    |            11.57  |            0.481   |
-| ratio_bin        | (0.35, 0.625]     | ridge                                          |                0.006447  |                    0.06693  |      -2.412    |             9.546 |            0.3486  |
-| ratio_bin        | (0.625, 0.875]    | ridge                                          |               -0.01654   |                    0.06095  |       0.4883   |             8.309 |            0.2472  |
-| ratio_bin        | (0.875, 1.05]     | ridge                                          |               -0.0178    |                    0.06286  |       1.238    |            10.23  |            0.1858  |
-| ratio_bin        | (-0.001, 0.35]    | saturation_residual_fusion_new                 |               -0.02048   |                    0.06721  |      -3.37     |            10.58  |            0.5316  |
-| ratio_bin        | (0.35, 0.625]     | saturation_residual_fusion_new                 |                0.01452   |                    0.07227  |      -1.03     |             8.99  |            0.367   |
-| ratio_bin        | (0.625, 0.875]    | saturation_residual_fusion_new                 |               -0.004919  |                    0.06446  |      -0.5656   |             6.481 |            0.2809  |
-| ratio_bin        | (0.875, 1.05]     | saturation_residual_fusion_new                 |               -0.003736  |                    0.0653   |       1.604    |             7.339 |            0.177   |
-| ratio_bin        | (-0.001, 0.35]    | tiny_sequence_transformer                      |                0.01343   |                    0.0955   |     -14.89     |            13.68  |            0.6835  |
-| ratio_bin        | (0.35, 0.625]     | tiny_sequence_transformer                      |                0.02227   |                    0.1048   |     -18.45     |            17.65  |            0.6055  |
-| ratio_bin        | (0.625, 0.875]    | tiny_sequence_transformer                      |               -0.009782  |                    0.1125   |     -16.47     |            18.29  |            0.618   |
-| ratio_bin        | (0.875, 1.05]     | tiny_sequence_transformer                      |               -0.01844   |                    0.07959  |     -11.96     |            19.71  |            0.5044  |
-| saturation_bin   | 0                 | 1d_cnn                                         |                0.0504    |                    0.09846  |      -1.585    |            10.95  |            0.273   |
-| saturation_bin   | 1-2               | 1d_cnn                                         |               -0.01671   |                    0.0987   |     -10.15     |             4.392 |            0       |
-| saturation_bin   | 3-5               | 1d_cnn                                         |               -0.01702   |                    0.02001  |      -2.004    |            16.11  |            0       |
-| saturation_bin   | 0                 | analytic_clipped_template_sideband_traditional |                0.07373   |                    0.1015   |       0.5086   |             9.336 |            0.5879  |
-| saturation_bin   | 1-2               | analytic_clipped_template_sideband_traditional |                0.081     |                    0.006547 |      -2.4      |            11.42  |            0.5     |
-| saturation_bin   | 3-5               | analytic_clipped_template_sideband_traditional |                0.177     |                    0.05639  |       0.3997   |            11.86  |            0.4     |
-| saturation_bin   | 0                 | gradient_boosted_trees                         |               -0.004281  |                    0.07317  |      -0.4859   |             8.252 |            0.3622  |
-| saturation_bin   | 1-2               | gradient_boosted_trees                         |                0.03136   |                    0.07211  |      -0.3497   |             8.504 |            0       |
-| saturation_bin   | 3-5               | gradient_boosted_trees                         |               -0.04276   |                    0.03807  |       2.969    |             5.049 |            0       |
-| saturation_bin   | 0                 | mlp                                            |               -0.02189   |                    0.1589   |       0.3222   |            11.7   |            0.3937  |
-| saturation_bin   | 1-2               | mlp                                            |               -0.05088   |                    0.09073  |       0.8148   |            19.64  |            0       |
-| saturation_bin   | 3-5               | mlp                                            |               -0.1059    |                    0.04671  |       0.004916 |            11.6   |            0       |
-| saturation_bin   | 0                 | ridge                                          |               -0.009765  |                    0.06717  |      -1.051    |            10.29  |            0.3123  |
-| saturation_bin   | 1-2               | ridge                                          |               -0.002575  |                    0.07896  |      -4.294    |             9.566 |            0       |
-| saturation_bin   | 3-5               | ridge                                          |               -0.04979   |                    0.01396  |       4.854    |             7.93  |            0       |
-| saturation_bin   | 0                 | saturation_residual_fusion_new                 |               -0.002582  |                    0.06902  |      -0.2951   |             7.98  |            0.3333  |
-| saturation_bin   | 1-2               | saturation_residual_fusion_new                 |               -0.002311  |                    0.07841  |      -3.286    |            10.16  |            0       |
-| saturation_bin   | 3-5               | saturation_residual_fusion_new                 |               -0.01081   |                    0.01219  |       1.577    |             4.333 |            0       |
-| saturation_bin   | 0                 | tiny_sequence_transformer                      |                0.004608  |                    0.1016   |     -15.75     |            17.93  |            0.6063  |
-| saturation_bin   | 1-2               | tiny_sequence_transformer                      |               -0.03803   |                    0.09451  |     -20.55     |            11.93  |            0       |
-| saturation_bin   | 3-5               | tiny_sequence_transformer                      |               -0.1398    |                    0.02932  |      -8.485    |             8.047 |            0.2     |
-| pedestal_state   | nominal           | 1d_cnn                                         |                0.03555   |                    0.0808   |      -0.5437   |             9.604 |            0.2074  |
-| pedestal_state   | shifted           | 1d_cnn                                         |                0.05466   |                    0.1083   |      -2.657    |            11.28  |            0.298   |
-| pedestal_state   | nominal           | analytic_clipped_template_sideband_traditional |                0.06821   |                    0.1036   |       0.6337   |             6.868 |            0.4296  |
-| pedestal_state   | shifted           | analytic_clipped_template_sideband_traditional |                0.08124   |                    0.09584  |      -0.323    |            12.33  |            0.6667  |
-| pedestal_state   | nominal           | gradient_boosted_trees                         |               -0.01004   |                    0.06861  |       1.187    |             7.122 |            0.3333  |
-| pedestal_state   | shifted           | gradient_boosted_trees                         |               -0.003157  |                    0.07365  |      -1.116    |             8.407 |            0.3647  |
-| pedestal_state   | nominal           | mlp                                            |               -0.07348   |                    0.1306   |       2.354    |            10.37  |            0.3481  |
-| pedestal_state   | shifted           | mlp                                            |                0.008483  |                    0.1733   |      -0.9066   |            12.76  |            0.4039  |
-| pedestal_state   | nominal           | ridge                                          |               -0.01825   |                    0.04632  |       0.5808   |             9.145 |            0.2815  |
-| pedestal_state   | shifted           | ridge                                          |               -0.001909  |                    0.07223  |      -2.307    |            10.8   |            0.3176  |
-| pedestal_state   | nominal           | saturation_residual_fusion_new                 |               -0.004569  |                    0.05744  |       0.5801   |             6.93  |            0.3185  |
-| pedestal_state   | shifted           | saturation_residual_fusion_new                 |               -0.002258  |                    0.07072  |      -0.7335   |             8.42  |            0.3294  |
-| pedestal_state   | nominal           | tiny_sequence_transformer                      |               -0.02244   |                    0.08921  |     -15.61     |            19.22  |            0.5111  |
-| pedestal_state   | shifted           | tiny_sequence_transformer                      |                0.01552   |                    0.1034   |     -15.79     |            16.55  |            0.6392  |
-| morphology_state | late_tail_high    | 1d_cnn                                         |                0.06138   |                    0.08727  |      -3.408    |            10.82  |            0.3295  |
-| morphology_state | late_tail_low     | 1d_cnn                                         |                0.03837   |                    0.1055   |      -0.796    |            11.2   |            0.2166  |
-| morphology_state | late_tail_high    | analytic_clipped_template_sideband_traditional |                0.1233    |                    0.101    |       0.5945   |             7.427 |            0.6936  |
-| morphology_state | late_tail_low     | analytic_clipped_template_sideband_traditional |                0.06126   |                    0.08171  |       0.2364   |            10.51  |            0.4977  |
-| morphology_state | late_tail_high    | gradient_boosted_trees                         |                0.002568  |                    0.06696  |       0.1802   |             8.044 |            0.4162  |
-| morphology_state | late_tail_low     | gradient_boosted_trees                         |               -0.01204   |                    0.07666  |      -0.5469   |             8.455 |            0.3041  |
-| morphology_state | late_tail_high    | mlp                                            |               -0.03303   |                    0.1331   |       0.472    |             8.738 |            0.4277  |
-| morphology_state | late_tail_low     | mlp                                            |               -0.02084   |                    0.1771   |       0.05644  |            14.88  |            0.3502  |
-| morphology_state | late_tail_high    | ridge                                          |               -0.008094  |                    0.06133  |       0.3451   |             8.467 |            0.3584  |
-| morphology_state | late_tail_low     | ridge                                          |               -0.01095   |                    0.07013  |      -2.136    |            11.4   |            0.2627  |
-| morphology_state | late_tail_high    | saturation_residual_fusion_new                 |                0.01914   |                    0.05938  |      -0.05415  |             7.487 |            0.3757  |
-| morphology_state | late_tail_low     | saturation_residual_fusion_new                 |               -0.02076   |                    0.07207  |      -0.4335   |             8.696 |            0.2857  |
-| morphology_state | late_tail_high    | tiny_sequence_transformer                      |                0.02674   |                    0.07685  |     -19.02     |            14.75  |            0.711   |
-| morphology_state | late_tail_low     | tiny_sequence_transformer                      |               -0.01404   |                    0.1094   |     -13.35     |            18.36  |            0.5023  |
-| pid_proxy_class  | inner_high_charge | 1d_cnn                                         |               -0.02363   |                    0.06256  |      -7.135    |            11.66  |            0.2917  |
-| pid_proxy_class  | other             | 1d_cnn                                         |                0.05285   |                    0.09746  |      -1.451    |            10.97  |            0.265   |
-| pid_proxy_class  | inner_high_charge | analytic_clipped_template_sideband_traditional |                0.07949   |                    0.06167  |       3.535    |            12.8   |            0.5417  |
-| pid_proxy_class  | other             | analytic_clipped_template_sideband_traditional |                0.07887   |                    0.1034   |       0.2891   |             8.984 |            0.5874  |
-| pid_proxy_class  | inner_high_charge | gradient_boosted_trees                         |               -0.05084   |                    0.08205  |      -4.985    |             9.13  |            0.1667  |
-| pid_proxy_class  | other             | gradient_boosted_trees                         |               -0.003038  |                    0.06894  |      -0.1418   |             8.083 |            0.3661  |
-| pid_proxy_class  | inner_high_charge | mlp                                            |               -0.08423   |                    0.07343  |      -0.8013   |            15.14  |            0.08333 |
-| pid_proxy_class  | other             | mlp                                            |               -0.009771  |                    0.1605   |       0.4354   |            11.48  |            0.4044  |
-| pid_proxy_class  | inner_high_charge | ridge                                          |               -0.04979   |                    0.05878  |      -5.357    |            11.57  |            0.04167 |
-| pid_proxy_class  | other             | ridge                                          |               -0.007556  |                    0.06558  |      -0.6305   |             9.802 |            0.3224  |
-| pid_proxy_class  | inner_high_charge | saturation_residual_fusion_new                 |               -0.03909   |                    0.08857  |      -3.494    |             9.808 |            0.1667  |
-| pid_proxy_class  | other             | saturation_residual_fusion_new                 |                0.001582  |                    0.06814  |      -0.1505   |             7.704 |            0.3361  |
-| pid_proxy_class  | inner_high_charge | tiny_sequence_transformer                      |               -0.06351   |                    0.07445  |     -16.43     |            17.47  |            0.2917  |
-| pid_proxy_class  | other             | tiny_sequence_transformer                      |                0.01115   |                    0.1023   |     -15.59     |            17.81  |            0.6148  |
-| stave            | B2                | 1d_cnn                                         |               -0.04387   |                    0.09841  |      -7.131    |            12.1   |            0.4505  |
-| stave            | B4                | 1d_cnn                                         |                0.09781   |                    0.08442  |      -5.336    |            10.41  |            0.2804  |
-| stave            | B6                | 1d_cnn                                         |                0.04661   |                    0.08878  |      -0.7842   |             8.753 |            0.2471  |
-| stave            | B8                | 1d_cnn                                         |                0.04795   |                    0.07284  |       2.601    |             8.801 |            0.1121  |
-| stave            | B2                | analytic_clipped_template_sideband_traditional |                0.08789   |                    0.04241  |       1.674    |            14.88  |            0.6703  |
-| stave            | B4                | analytic_clipped_template_sideband_traditional |               -0.002864  |                    0.06753  |       5.192    |            13.46  |            0.8318  |
-| stave            | B6                | analytic_clipped_template_sideband_traditional |                0.0181    |                    0.09161  |      -0.4484   |            10.59  |            0.5765  |
-| stave            | B8                | analytic_clipped_template_sideband_traditional |                0.1051    |                    0.1055   |       0.5484   |             5.485 |            0.271   |
-| stave            | B2                | gradient_boosted_trees                         |               -0.05393   |                    0.07585  |      -7.186    |             8.94  |            0.4396  |
-| stave            | B4                | gradient_boosted_trees                         |                0.00843   |                    0.06861  |      -1.594    |             7.882 |            0.3178  |
-| stave            | B6                | gradient_boosted_trees                         |                0.01015   |                    0.06437  |       1.137    |             5.588 |            0.4118  |
-| stave            | B8                | gradient_boosted_trees                         |               -0.01578   |                    0.06821  |       2.666    |             6.213 |            0.271   |
-| stave            | B2                | mlp                                            |               -0.07639   |                    0.106    |      -2.74     |            16.69  |            0.4725  |
-| stave            | B4                | mlp                                            |                0.07005   |                    0.1623   |      -1.442    |            10.82  |            0.3832  |
-| stave            | B6                | mlp                                            |                0.001011  |                    0.1458   |      -0.9914   |            11.28  |            0.4     |
-| stave            | B8                | mlp                                            |               -0.0524    |                    0.134    |       3.774    |             9.253 |            0.2991  |
-| stave            | B2                | ridge                                          |               -0.02661   |                    0.07867  |      -7.614    |            11.93  |            0.3407  |
-| stave            | B4                | ridge                                          |                0.01905   |                    0.07085  |      -3.677    |             8.73  |            0.3271  |
-| stave            | B6                | ridge                                          |               -0.01034   |                    0.05717  |       0.2165   |             7.772 |            0.3529  |
-| stave            | B8                | ridge                                          |               -0.01622   |                    0.06035  |       3.231    |             7.464 |            0.215   |
-| stave            | B2                | saturation_residual_fusion_new                 |               -0.04592   |                    0.07768  |      -5.703    |             9.309 |            0.3956  |
-| stave            | B4                | saturation_residual_fusion_new                 |                0.01619   |                    0.06897  |      -1.421    |             7.93  |            0.2991  |
-| stave            | B6                | saturation_residual_fusion_new                 |               -0.0002057 |                    0.06089  |       0.5724   |             5.521 |            0.3647  |
-| stave            | B8                | saturation_residual_fusion_new                 |                0.004243  |                    0.05155  |       1.908    |             6.136 |            0.2617  |
-| stave            | B2                | tiny_sequence_transformer                      |               -0.04693   |                    0.07852  |     -18.16     |            19.89  |            0.7363  |
-| stave            | B4                | tiny_sequence_transformer                      |                0.02227   |                    0.1156   |     -16.26     |            19.69  |            0.6355  |
-| stave            | B6                | tiny_sequence_transformer                      |               -0.02059   |                    0.1035   |     -15.94     |            18.8   |            0.5529  |
-| stave            | B8                | tiny_sequence_transformer                      |                0.01309   |                    0.1031   |     -14.41     |            14.57  |            0.4673  |
+| spacing_bin      | (-0.001, 10.0]    | 1d_cnn                                         |               -0.006369  |                    0.06618  |        1.718   |             9.421 |            0.5547  |
+| spacing_bin      | (10.0, 25.0]      | 1d_cnn                                         |                0.002491  |                    0.08148  |        1.512   |             6.252 |            0.4426  |
+| spacing_bin      | (25.0, 45.0]      | 1d_cnn                                         |               -0.03542   |                    0.07589  |       -3.053   |             7.982 |            0.2621  |
+| spacing_bin      | (45.0, 70.0]      | 1d_cnn                                         |               -0.04068   |                    0.07682  |        0.8453  |            11.13  |            0.1685  |
+| spacing_bin      | (-0.001, 10.0]    | analytic_clipped_template_sideband_traditional |                0.07134   |                    0.07251  |        1.893   |            12.27  |            0.7007  |
+| spacing_bin      | (10.0, 25.0]      | analytic_clipped_template_sideband_traditional |                0.08294   |                    0.1185   |        0.8202  |            10.18  |            0.6393  |
+| spacing_bin      | (25.0, 45.0]      | analytic_clipped_template_sideband_traditional |                0.07085   |                    0.08657  |        0.2908  |             7.9   |            0.5146  |
+| spacing_bin      | (45.0, 70.0]      | analytic_clipped_template_sideband_traditional |                0.02445   |                    0.0996   |       -1.282   |             9.037 |            0.3483  |
+| spacing_bin      | (-0.001, 10.0]    | gradient_boosted_trees                         |                0.01173   |                    0.06096  |        0.7316  |             8.815 |            0.4307  |
+| spacing_bin      | (10.0, 25.0]      | gradient_boosted_trees                         |                0.01525   |                    0.05876  |        0.9647  |             6.424 |            0.2951  |
+| spacing_bin      | (25.0, 45.0]      | gradient_boosted_trees                         |               -0.01167   |                    0.07381  |       -2.384   |             8.397 |            0.1553  |
+| spacing_bin      | (45.0, 70.0]      | gradient_boosted_trees                         |               -0.02785   |                    0.08796  |       -0.1371  |             9.616 |            0.1685  |
+| spacing_bin      | (-0.001, 10.0]    | mlp                                            |               -0.0183    |                    0.1827   |       -2.843   |            14.2   |            0.4161  |
+| spacing_bin      | (10.0, 25.0]      | mlp                                            |               -0.01047   |                    0.1561   |       -0.1254  |            12.28  |            0.2787  |
+| spacing_bin      | (25.0, 45.0]      | mlp                                            |               -0.05656   |                    0.1414   |       -3.679   |             9.99  |            0.2427  |
+| spacing_bin      | (45.0, 70.0]      | mlp                                            |               -0.09587   |                    0.1847   |       -1.757   |            12.86  |            0.1236  |
+| spacing_bin      | (-0.001, 10.0]    | ridge                                          |                0.02373   |                    0.06566  |        0.8626  |             8.222 |            0.4015  |
+| spacing_bin      | (10.0, 25.0]      | ridge                                          |                0.0284    |                    0.06954  |        0.5232  |             6.814 |            0.2787  |
+| spacing_bin      | (25.0, 45.0]      | ridge                                          |               -0.01086   |                    0.07246  |       -1.277   |             8.639 |            0.2524  |
+| spacing_bin      | (45.0, 70.0]      | ridge                                          |               -0.02886   |                    0.06673  |       -1.645   |            12.88  |            0.1348  |
+| spacing_bin      | (-0.001, 10.0]    | saturation_residual_fusion_new                 |                0.0221    |                    0.04584  |       -0.07216 |             8.471 |            0.4088  |
+| spacing_bin      | (10.0, 25.0]      | saturation_residual_fusion_new                 |                0.03607   |                    0.05485  |        0.4707  |             6.196 |            0.3443  |
+| spacing_bin      | (25.0, 45.0]      | saturation_residual_fusion_new                 |               -0.003108  |                    0.06427  |       -2.552   |             7.834 |            0.165   |
+| spacing_bin      | (45.0, 70.0]      | saturation_residual_fusion_new                 |               -0.03106   |                    0.05853  |       -0.2762  |             9.942 |            0.1573  |
+| spacing_bin      | (-0.001, 10.0]    | tiny_sequence_transformer                      |                0.02206   |                    0.1013   |       -8.884   |            11.01  |            0.562   |
+| spacing_bin      | (10.0, 25.0]      | tiny_sequence_transformer                      |                0.02819   |                    0.09636  |       -7.378   |             8.627 |            0.3934  |
+| spacing_bin      | (25.0, 45.0]      | tiny_sequence_transformer                      |               -0.001445  |                    0.09089  |      -10.35    |            15.26  |            0.2913  |
+| spacing_bin      | (45.0, 70.0]      | tiny_sequence_transformer                      |               -0.09239   |                    0.09     |       -6.205   |            14.73  |            0.2135  |
+| ratio_bin        | (-0.001, 0.35]    | 1d_cnn                                         |               -0.02713   |                    0.07138  |       -3.522   |            10.31  |            0.5122  |
+| ratio_bin        | (0.35, 0.625]     | 1d_cnn                                         |               -0.02002   |                    0.07247  |       -1.101   |             8.58  |            0.3922  |
+| ratio_bin        | (0.625, 0.875]    | 1d_cnn                                         |               -0.03803   |                    0.0733   |        1.674   |             9.361 |            0.3679  |
+| ratio_bin        | (0.875, 1.05]     | 1d_cnn                                         |               -0.02091   |                    0.08357  |        1.608   |             9.326 |            0.24    |
+| ratio_bin        | (-0.001, 0.35]    | analytic_clipped_template_sideband_traditional |                0.04907   |                    0.08762  |       -3.027   |            11.25  |            0.6585  |
+| ratio_bin        | (0.35, 0.625]     | analytic_clipped_template_sideband_traditional |                0.06465   |                    0.1064   |       -1.209   |             9.865 |            0.4902  |
+| ratio_bin        | (0.625, 0.875]    | analytic_clipped_template_sideband_traditional |                0.02697   |                    0.08106  |        1.465   |             9.268 |            0.6038  |
+| ratio_bin        | (0.875, 1.05]     | analytic_clipped_template_sideband_traditional |                0.07447   |                    0.08517  |        2.469   |             8.404 |            0.51    |
+| ratio_bin        | (-0.001, 0.35]    | gradient_boosted_trees                         |               -0.0001736 |                    0.07285  |       -3.709   |             9.29  |            0.5122  |
+| ratio_bin        | (0.35, 0.625]     | gradient_boosted_trees                         |                0.007198  |                    0.07663  |       -0.3185  |             7.73  |            0.2451  |
+| ratio_bin        | (0.625, 0.875]    | gradient_boosted_trees                         |               -0.008516  |                    0.07235  |       -0.0783  |             8.357 |            0.2453  |
+| ratio_bin        | (0.875, 1.05]     | gradient_boosted_trees                         |               -0.004514  |                    0.0686   |        0.4892  |             7.864 |            0.15    |
+| ratio_bin        | (-0.001, 0.35]    | mlp                                            |               -0.02296   |                    0.1666   |       -3.373   |            11.53  |            0.4512  |
+| ratio_bin        | (0.35, 0.625]     | mlp                                            |               -0.04058   |                    0.1313   |       -2.751   |            11.3   |            0.2941  |
+| ratio_bin        | (0.625, 0.875]    | mlp                                            |               -0.05322   |                    0.1891   |       -3.384   |            13.26  |            0.283   |
+| ratio_bin        | (0.875, 1.05]     | mlp                                            |               -0.0703    |                    0.1583   |       -1.201   |            11.67  |            0.13    |
+| ratio_bin        | (-0.001, 0.35]    | ridge                                          |                0.01368   |                    0.0592   |       -4.498   |            10.06  |            0.5     |
+| ratio_bin        | (0.35, 0.625]     | ridge                                          |                0.01727   |                    0.07279  |       -0.3098  |             9.64  |            0.3235  |
+| ratio_bin        | (0.625, 0.875]    | ridge                                          |               -0.001881  |                    0.06882  |        1.293   |             9.021 |            0.2642  |
+| ratio_bin        | (0.875, 1.05]     | ridge                                          |               -0.01002   |                    0.07294  |        0.7716  |             8.455 |            0.08    |
+| ratio_bin        | (-0.001, 0.35]    | saturation_residual_fusion_new                 |                0.009046  |                    0.07603  |       -4.195   |             8.941 |            0.5244  |
+| ratio_bin        | (0.35, 0.625]     | saturation_residual_fusion_new                 |                0.006499  |                    0.06731  |       -1.141   |             8.226 |            0.2549  |
+| ratio_bin        | (0.625, 0.875]    | saturation_residual_fusion_new                 |               -0.005095  |                    0.06271  |       -0.4158  |             8.201 |            0.2075  |
+| ratio_bin        | (0.875, 1.05]     | saturation_residual_fusion_new                 |                0.001426  |                    0.05572  |       -0.04221 |             7.084 |            0.17    |
+| ratio_bin        | (-0.001, 0.35]    | tiny_sequence_transformer                      |               -0.01046   |                    0.09065  |      -11.32    |            16.81  |            0.5732  |
+| ratio_bin        | (0.35, 0.625]     | tiny_sequence_transformer                      |               -0.00224   |                    0.1196   |       -9.918   |            12.68  |            0.402   |
+| ratio_bin        | (0.625, 0.875]    | tiny_sequence_transformer                      |               -0.015     |                    0.09904  |       -7.417   |            12.86  |            0.3491  |
+| ratio_bin        | (0.875, 1.05]     | tiny_sequence_transformer                      |               -0.02919   |                    0.1142   |       -6.78    |            11.58  |            0.25    |
+| saturation_bin   | 0                 | 1d_cnn                                         |               -0.02153   |                    0.07621  |        0.0471  |             9.243 |            0.377   |
+| saturation_bin   | 1-2               | 1d_cnn                                         |               -0.1008    |                    0.0276   |      -12.4     |             2.549 |            0.2     |
+| saturation_bin   | 3-5               | 1d_cnn                                         |               -0.1065    |                    0.002497 |        8.299   |             5.577 |            0       |
+| saturation_bin   | 0                 | analytic_clipped_template_sideband_traditional |                0.05962   |                    0.09235  |        0.3861  |             9.216 |            0.5654  |
+| saturation_bin   | 1-2               | analytic_clipped_template_sideband_traditional |                0.06737   |                    0.008789 |        0.177   |            18.81  |            0.6     |
+| saturation_bin   | 3-5               | analytic_clipped_template_sideband_traditional |                0.11      |                    0.0257   |        3.962   |             9.178 |            0       |
+| saturation_bin   | 0                 | gradient_boosted_trees                         |                0.002234  |                    0.07129  |       -0.2771  |             8.418 |            0.2801  |
+| saturation_bin   | 1-2               | gradient_boosted_trees                         |               -0.04784   |                    0.03308  |       -6.146   |             2.373 |            0.2     |
+| saturation_bin   | 3-5               | gradient_boosted_trees                         |               -0.08234   |                    0.009567 |       -1.158   |             4.203 |            0       |
+| saturation_bin   | 0                 | mlp                                            |               -0.05371   |                    0.1691   |       -2.565   |            12.25  |            0.288   |
+| saturation_bin   | 1-2               | mlp                                            |               -0.04303   |                    0.08586  |      -12.43    |             6.958 |            0       |
+| saturation_bin   | 3-5               | mlp                                            |                0.01513   |                    0.05415  |       -1.059   |             6.228 |            0       |
+| saturation_bin   | 0                 | ridge                                          |                0.007883  |                    0.07184  |       -0.2747  |             9.362 |            0.288   |
+| saturation_bin   | 1-2               | ridge                                          |               -0.0825    |                    0.03447  |       -9.822   |             7.266 |            0       |
+| saturation_bin   | 3-5               | ridge                                          |               -0.1015    |                    0.02966  |       -3.636   |             8.631 |            0       |
+| saturation_bin   | 0                 | saturation_residual_fusion_new                 |                0.003813  |                    0.06512  |       -0.6245  |             8.234 |            0.2827  |
+| saturation_bin   | 1-2               | saturation_residual_fusion_new                 |               -0.01103   |                    0.1082   |       -8.211   |             5.468 |            0       |
+| saturation_bin   | 3-5               | saturation_residual_fusion_new                 |               -0.03732   |                    0.01076  |       -2.461   |             4.019 |            0       |
+| saturation_bin   | 0                 | tiny_sequence_transformer                      |               -0.01297   |                    0.1146   |       -7.92    |            12.92  |            0.3901  |
+| saturation_bin   | 1-2               | tiny_sequence_transformer                      |               -0.06494   |                    0.05337  |      -13.8     |             9.554 |            0.2     |
+| saturation_bin   | 3-5               | tiny_sequence_transformer                      |               -0.2259    |                    0.01944  |        0.6973  |             9.903 |            0       |
+| pedestal_state   | nominal           | 1d_cnn                                         |               -0.02991   |                    0.06445  |       -0.1282  |             8.5   |            0.3406  |
+| pedestal_state   | shifted           | 1d_cnn                                         |               -0.01809   |                    0.08335  |        0.0471  |            10.06  |            0.3889  |
+| pedestal_state   | nominal           | analytic_clipped_template_sideband_traditional |                0.04834   |                    0.08283  |        0.2551  |             7.623 |            0.3841  |
+| pedestal_state   | shifted           | analytic_clipped_template_sideband_traditional |                0.07185   |                    0.08901  |        0.4251  |            10.8   |            0.6587  |
+| pedestal_state   | nominal           | gradient_boosted_trees                         |               -0.008117  |                    0.06499  |       -0.3372  |             7.862 |            0.2609  |
+| pedestal_state   | shifted           | gradient_boosted_trees                         |                0.005168  |                    0.07511  |       -0.4288  |             8.723 |            0.2857  |
+| pedestal_state   | nominal           | mlp                                            |               -0.06592   |                    0.1185   |       -2.856   |             9.694 |            0.2754  |
+| pedestal_state   | shifted           | mlp                                            |               -0.04892   |                    0.1921   |       -2.584   |            13.51  |            0.2857  |
+| pedestal_state   | nominal           | ridge                                          |               -0.01078   |                    0.0486   |       -0.2596  |             9.462 |            0.2609  |
+| pedestal_state   | shifted           | ridge                                          |                0.0185    |                    0.0884   |       -0.589   |             9.254 |            0.2937  |
+| pedestal_state   | nominal           | saturation_residual_fusion_new                 |               -0.009173  |                    0.05194  |       -0.7846  |             7.835 |            0.2391  |
+| pedestal_state   | shifted           | saturation_residual_fusion_new                 |                0.006553  |                    0.07842  |       -0.7761  |             8.41  |            0.2976  |
+| pedestal_state   | nominal           | tiny_sequence_transformer                      |               -0.01712   |                    0.1001   |       -8.694   |            11.73  |            0.3478  |
+| pedestal_state   | shifted           | tiny_sequence_transformer                      |               -0.01382   |                    0.1265   |       -7.893   |            14.55  |            0.4048  |
+| morphology_state | late_tail_high    | 1d_cnn                                         |               -0.02919   |                    0.07023  |       -1.367   |             8.097 |            0.4469  |
+| morphology_state | late_tail_low     | 1d_cnn                                         |               -0.02321   |                    0.08707  |        1.187   |            10.22  |            0.3081  |
+| morphology_state | late_tail_high    | analytic_clipped_template_sideband_traditional |                0.09015   |                    0.1039   |        1.087   |             7.478 |            0.6872  |
+| morphology_state | late_tail_low     | analytic_clipped_template_sideband_traditional |                0.03875   |                    0.08726  |       -0.2417  |            10.51  |            0.455   |
+| morphology_state | late_tail_high    | gradient_boosted_trees                         |               -0.003192  |                    0.05975  |       -1.092   |             7.251 |            0.3073  |
+| morphology_state | late_tail_low     | gradient_boosted_trees                         |                0.001202  |                    0.08798  |        0.367   |             9.168 |            0.2512  |
+| morphology_state | late_tail_high    | mlp                                            |               -0.02772   |                    0.1346   |       -3.52    |            11.22  |            0.3296  |
+| morphology_state | late_tail_low     | mlp                                            |               -0.07026   |                    0.1839   |       -1.9     |            13.01  |            0.2417  |
+| morphology_state | late_tail_high    | ridge                                          |                0.007883  |                    0.06677  |       -0.3282  |             7.338 |            0.3184  |
+| morphology_state | late_tail_low     | ridge                                          |                0.00135   |                    0.07748  |       -0.538   |            10.79  |            0.2512  |
+| morphology_state | late_tail_high    | saturation_residual_fusion_new                 |                0.005738  |                    0.0524   |       -1.657   |             6.673 |            0.3296  |
+| morphology_state | late_tail_low     | saturation_residual_fusion_new                 |               -0.00301   |                    0.07575  |       -0.2026  |             9.231 |            0.2322  |
+| morphology_state | late_tail_high    | tiny_sequence_transformer                      |                0.003996  |                    0.099    |       -8.979   |            11.85  |            0.4246  |
+| morphology_state | late_tail_low     | tiny_sequence_transformer                      |               -0.03104   |                    0.1255   |       -7.512   |            14.25  |            0.3507  |
+| pid_proxy_class  | inner_high_charge | 1d_cnn                                         |               -0.0945    |                    0.05366  |       -8.583   |            10.89  |            0.1053  |
+| pid_proxy_class  | other             | 1d_cnn                                         |               -0.01931   |                    0.07527  |        0.4219  |             9.077 |            0.3854  |
+| pid_proxy_class  | inner_high_charge | analytic_clipped_template_sideband_traditional |                0.0803    |                    0.06516  |       -2.994   |            14.84  |            0.4211  |
+| pid_proxy_class  | other             | analytic_clipped_template_sideband_traditional |                0.0621    |                    0.0924   |        0.4298  |             8.183 |            0.5687  |
+| pid_proxy_class  | inner_high_charge | gradient_boosted_trees                         |               -0.03573   |                    0.05694  |       -6.569   |             5.797 |            0.05263 |
+| pid_proxy_class  | other             | gradient_boosted_trees                         |                0.002419  |                    0.071    |       -0.01934 |             8.253 |            0.2884  |
+| pid_proxy_class  | inner_high_charge | mlp                                            |               -0.05116   |                    0.162    |       -8.49    |            11.05  |            0       |
+| pid_proxy_class  | other             | mlp                                            |               -0.05285   |                    0.1685   |       -2.194   |            12.24  |            0.2965  |
+| pid_proxy_class  | inner_high_charge | ridge                                          |               -0.0733    |                    0.04307  |       -6.443   |             8.893 |            0       |
+| pid_proxy_class  | other             | ridge                                          |                0.009915  |                    0.07022  |       -0.13    |             8.925 |            0.2965  |
+| pid_proxy_class  | inner_high_charge | saturation_residual_fusion_new                 |               -0.01103   |                    0.06698  |       -6.986   |             6.181 |            0       |
+| pid_proxy_class  | other             | saturation_residual_fusion_new                 |                0.002822  |                    0.06634  |       -0.3846  |             7.907 |            0.2911  |
+| pid_proxy_class  | inner_high_charge | tiny_sequence_transformer                      |               -0.08047   |                    0.1012   |      -11.36    |            11.1   |            0.1579  |
+| pid_proxy_class  | other             | tiny_sequence_transformer                      |               -0.01035   |                    0.115    |       -7.607   |            12.94  |            0.3962  |
+| stave            | B2                | 1d_cnn                                         |               -0.08027   |                    0.07934  |       -8.125   |            13.29  |            0.4691  |
+| stave            | B4                | 1d_cnn                                         |                0.01049   |                    0.0859   |       -1.229   |             9.357 |            0.4865  |
+| stave            | B6                | 1d_cnn                                         |               -0.03542   |                    0.07137  |        1.514   |             7.866 |            0.4175  |
+| stave            | B8                | 1d_cnn                                         |               -0.02129   |                    0.06385  |        1.528   |             7.324 |            0.1053  |
+| stave            | B2                | analytic_clipped_template_sideband_traditional |                0.1019    |                    0.05725  |        8.499   |            15.49  |            0.6667  |
+| stave            | B4                | analytic_clipped_template_sideband_traditional |                0.009166  |                    0.08007  |       -2.127   |            14.72  |            0.8468  |
+| stave            | B6                | analytic_clipped_template_sideband_traditional |                0.001176  |                    0.05508  |       -1.058   |             8.167 |            0.534   |
+| stave            | B8                | analytic_clipped_template_sideband_traditional |                0.08946   |                    0.08845  |        0.4605  |             6.08  |            0.1684  |
+| stave            | B2                | gradient_boosted_trees                         |               -0.007904  |                    0.1551   |       -6.401   |            10.51  |            0.3827  |
+| stave            | B4                | gradient_boosted_trees                         |                0.01669   |                    0.06216  |       -2.849   |             8.977 |            0.3694  |
+| stave            | B6                | gradient_boosted_trees                         |               -0.006879  |                    0.06114  |        0.06936 |             6.786 |            0.2427  |
+| stave            | B8                | gradient_boosted_trees                         |               -0.006163  |                    0.0628   |        1.859   |             5.697 |            0.1158  |
+| stave            | B2                | mlp                                            |               -0.04709   |                    0.2001   |       -7.905   |            15.62  |            0.3827  |
+| stave            | B4                | mlp                                            |               -0.02234   |                    0.1803   |       -3.59    |            14.11  |            0.3423  |
+| stave            | B6                | mlp                                            |               -0.06032   |                    0.1687   |       -2.856   |             8.42  |            0.3204  |
+| stave            | B8                | mlp                                            |               -0.05695   |                    0.1445   |       -0.5814  |            10.11  |            0.08421 |
+| stave            | B2                | ridge                                          |               -0.04776   |                    0.09342  |       -5.064   |            12.25  |            0.4074  |
+| stave            | B4                | ridge                                          |                0.03087   |                    0.0714   |       -3.129   |             9.584 |            0.3243  |
+| stave            | B6                | ridge                                          |                0.008551  |                    0.06551  |       -0.1882  |             8.28  |            0.3204  |
+| stave            | B8                | ridge                                          |               -0.007443  |                    0.05566  |        2.59    |             6.438 |            0.08421 |
+| stave            | B2                | saturation_residual_fusion_new                 |               -0.0006628 |                    0.1193   |       -6.862   |             9.75  |            0.3086  |
+| stave            | B4                | saturation_residual_fusion_new                 |                0.03372   |                    0.06465  |       -2.361   |             8.2   |            0.3423  |
+| stave            | B6                | saturation_residual_fusion_new                 |               -0.0187    |                    0.05609  |       -0.1649  |             5.832 |            0.3204  |
+| stave            | B8                | saturation_residual_fusion_new                 |               -0.00235   |                    0.04579  |        1.586   |             5.629 |            0.1263  |
+| stave            | B2                | tiny_sequence_transformer                      |               -0.06025   |                    0.08507  |      -15.41    |            18.22  |            0.5556  |
+| stave            | B4                | tiny_sequence_transformer                      |                0.05133   |                    0.1611   |      -11.74    |            11.95  |            0.4955  |
+| stave            | B6                | tiny_sequence_transformer                      |               -0.006765  |                    0.08547  |       -7.188   |            11.83  |            0.3689  |
+| stave            | B8                | tiny_sequence_transformer                      |               -0.02313   |                    0.08933  |       -5.416   |            10.4   |            0.1263  |
+
+## Caveats
 
 Systematic caveats are material.  First, pile-up truth is from controlled
 overlays into raw-ROOT-derived residuals; it validates reconstruction under known
@@ -342,8 +344,7 @@ uncertainty propagation.  The analytic clipped-template method remains the
 auditable fallback when deterministic extrapolation is more important than the
 observed held-out score gain.
 
-Runtime was `49.0` s on `Linux-5.15.0-139-generic-x86_64-with-glibc2.35`.
-
+Runtime was `35.9` s on `Linux-5.15.0-139-generic-x86_64-with-glibc2.35`.
 
 ## Ticket-Specific Sideband Validation
 
@@ -354,46 +355,46 @@ and pedestal operations used in the benchmark.
 
 | sideband               | value          | method                                         |   n_clean_controls |   false_split_rate |   score_median |   score_p90 |
 |:-----------------------|:---------------|:-----------------------------------------------|-------------------:|-------------------:|---------------:|------------:|
-| morphology_state       | late_tail_high | 1d_cnn                                         |                238 |            0.1681  |      0.2599    |      0.5864 |
-| morphology_state       | late_tail_low  | 1d_cnn                                         |                152 |            0.2961  |      0.3435    |      0.7202 |
-| morphology_state       | late_tail_high | analytic_clipped_template_sideband_traditional |                238 |            0.1471  |      0         |      0.708  |
-| morphology_state       | late_tail_low  | analytic_clipped_template_sideband_traditional |                152 |            0.2763  |      1.265e-05 |      0.992  |
-| morphology_state       | late_tail_high | gradient_boosted_trees                         |                238 |            0.1134  |      0.1392    |      0.5273 |
-| morphology_state       | late_tail_low  | gradient_boosted_trees                         |                152 |            0.1974  |      0.2054    |      0.6487 |
-| morphology_state       | late_tail_high | mlp                                            |                238 |            0.06723 |      0.1443    |      0.3986 |
-| morphology_state       | late_tail_low  | mlp                                            |                152 |            0.1316  |      0.2372    |      0.5897 |
-| morphology_state       | late_tail_high | ridge                                          |                238 |            0.07563 |      0.3658    |      0.4926 |
-| morphology_state       | late_tail_low  | ridge                                          |                152 |            0.2237  |      0.4099    |      0.5557 |
-| morphology_state       | late_tail_high | saturation_residual_fusion_new                 |                238 |            0.1134  |      0.1311    |      0.5283 |
-| morphology_state       | late_tail_low  | saturation_residual_fusion_new                 |                152 |            0.1776  |      0.2282    |      0.6928 |
-| morphology_state       | late_tail_high | tiny_sequence_transformer                      |                238 |            0.04622 |      0.175     |      0.385  |
-| morphology_state       | late_tail_low  | tiny_sequence_transformer                      |                152 |            0.1053  |      0.2504    |      0.501  |
-| pedestal_state         | nominal        | 1d_cnn                                         |                148 |            0.2162  |      0.2865    |      0.6653 |
-| pedestal_state         | shifted        | 1d_cnn                                         |                242 |            0.219   |      0.3009    |      0.6643 |
-| pedestal_state         | nominal        | analytic_clipped_template_sideband_traditional |                148 |            0.2635  |      0         |      0.9855 |
-| pedestal_state         | shifted        | analytic_clipped_template_sideband_traditional |                242 |            0.157   |      0         |      0.8619 |
-| pedestal_state         | nominal        | gradient_boosted_trees                         |                148 |            0.1014  |      0.1093    |      0.4772 |
-| pedestal_state         | shifted        | gradient_boosted_trees                         |                242 |            0.1736  |      0.2005    |      0.6149 |
-| pedestal_state         | nominal        | mlp                                            |                148 |            0.08108 |      0.163     |      0.4012 |
-| pedestal_state         | shifted        | mlp                                            |                242 |            0.09917 |      0.202     |      0.499  |
-| pedestal_state         | nominal        | ridge                                          |                148 |            0.08108 |      0.3755    |      0.493  |
-| pedestal_state         | shifted        | ridge                                          |                242 |            0.1653  |      0.3809    |      0.5376 |
-| pedestal_state         | nominal        | saturation_residual_fusion_new                 |                148 |            0.08108 |      0.1165    |      0.479  |
-| pedestal_state         | shifted        | saturation_residual_fusion_new                 |                242 |            0.1736  |      0.1905    |      0.6455 |
-| pedestal_state         | nominal        | tiny_sequence_transformer                      |                148 |            0.07432 |      0.2029    |      0.4524 |
-| pedestal_state         | shifted        | tiny_sequence_transformer                      |                242 |            0.06612 |      0.199     |      0.4418 |
-| saturated_sample_count | 0              | 1d_cnn                                         |                390 |            0.2179  |      0.3001    |      0.6656 |
-| saturated_sample_count | 0              | analytic_clipped_template_sideband_traditional |                390 |            0.1974  |      0         |      0.9643 |
-| saturated_sample_count | 0              | gradient_boosted_trees                         |                390 |            0.1462  |      0.1591    |      0.5739 |
-| saturated_sample_count | 0              | mlp                                            |                390 |            0.09231 |      0.187     |      0.4681 |
-| saturated_sample_count | 0              | ridge                                          |                390 |            0.1333  |      0.3796    |      0.5262 |
-| saturated_sample_count | 0              | saturation_residual_fusion_new                 |                390 |            0.1385  |      0.1563    |      0.5815 |
-| saturated_sample_count | 0              | tiny_sequence_transformer                      |                390 |            0.06923 |      0.1998    |      0.4503 |
-| source_run             | 58             | 1d_cnn                                         |                 78 |            0.1795  |      0.3002    |      0.6177 |
-| source_run             | 60             | 1d_cnn                                         |                 78 |            0.1538  |      0.2756    |      0.6074 |
-| source_run             | 62             | 1d_cnn                                         |                 78 |            0.3205  |      0.3379    |      0.6877 |
-| source_run             | 64             | 1d_cnn                                         |                 78 |            0.1923  |      0.2515    |      0.6404 |
-| source_run             | 65             | 1d_cnn                                         |                 78 |            0.2436  |      0.2986    |      0.7261 |
+| morphology_state       | late_tail_high | 1d_cnn                                         |                239 |             0.1088 |       0.0906   |      0.5225 |
+| morphology_state       | late_tail_low  | 1d_cnn                                         |                151 |             0.2318 |       0.2769   |      0.6951 |
+| morphology_state       | late_tail_high | analytic_clipped_template_sideband_traditional |                239 |             0.1255 |       0        |      0.7429 |
+| morphology_state       | late_tail_low  | analytic_clipped_template_sideband_traditional |                151 |             0.2914 |       0.001346 |      0.9939 |
+| morphology_state       | late_tail_high | gradient_boosted_trees                         |                239 |             0.159  |       0.1018   |      0.6371 |
+| morphology_state       | late_tail_low  | gradient_boosted_trees                         |                151 |             0.2914 |       0.3077   |      0.7754 |
+| morphology_state       | late_tail_high | mlp                                            |                239 |             0.1464 |       0.195    |      0.5587 |
+| morphology_state       | late_tail_low  | mlp                                            |                151 |             0.351  |       0.3572   |      0.7072 |
+| morphology_state       | late_tail_high | ridge                                          |                239 |             0.1674 |       0.3765   |      0.544  |
+| morphology_state       | late_tail_low  | ridge                                          |                151 |             0.2781 |       0.4163   |      0.58   |
+| morphology_state       | late_tail_high | saturation_residual_fusion_new                 |                239 |             0.1548 |       0.09786  |      0.6411 |
+| morphology_state       | late_tail_low  | saturation_residual_fusion_new                 |                151 |             0.2715 |       0.2941   |      0.7253 |
+| morphology_state       | late_tail_high | tiny_sequence_transformer                      |                239 |             0.1381 |       0.1207   |      0.6439 |
+| morphology_state       | late_tail_low  | tiny_sequence_transformer                      |                151 |             0.2649 |       0.2903   |      0.7661 |
+| pedestal_state         | nominal        | 1d_cnn                                         |                144 |             0.1597 |       0.09921  |      0.7182 |
+| pedestal_state         | shifted        | 1d_cnn                                         |                246 |             0.1545 |       0.1787   |      0.6386 |
+| pedestal_state         | nominal        | analytic_clipped_template_sideband_traditional |                144 |             0.2431 |       0        |      0.9919 |
+| pedestal_state         | shifted        | analytic_clipped_template_sideband_traditional |                246 |             0.1585 |       0        |      0.9616 |
+| pedestal_state         | nominal        | gradient_boosted_trees                         |                144 |             0.1667 |       0.1182   |      0.813  |
+| pedestal_state         | shifted        | gradient_boosted_trees                         |                246 |             0.2358 |       0.211    |      0.6794 |
+| pedestal_state         | nominal        | mlp                                            |                144 |             0.1875 |       0.212    |      0.6887 |
+| pedestal_state         | shifted        | mlp                                            |                246 |             0.248  |       0.2638   |      0.6351 |
+| pedestal_state         | nominal        | ridge                                          |                144 |             0.1944 |       0.38     |      0.5509 |
+| pedestal_state         | shifted        | ridge                                          |                246 |             0.2195 |       0.4063   |      0.5633 |
+| pedestal_state         | nominal        | saturation_residual_fusion_new                 |                144 |             0.1944 |       0.1038   |      0.7008 |
+| pedestal_state         | shifted        | saturation_residual_fusion_new                 |                246 |             0.2033 |       0.1849   |      0.6974 |
+| pedestal_state         | nominal        | tiny_sequence_transformer                      |                144 |             0.2014 |       0.1289   |      0.8006 |
+| pedestal_state         | shifted        | tiny_sequence_transformer                      |                246 |             0.1789 |       0.2027   |      0.6451 |
+| saturated_sample_count | 0              | 1d_cnn                                         |                390 |             0.1564 |       0.1528   |      0.6691 |
+| saturated_sample_count | 0              | analytic_clipped_template_sideband_traditional |                390 |             0.1897 |       0        |      0.9803 |
+| saturated_sample_count | 0              | gradient_boosted_trees                         |                390 |             0.2103 |       0.1718   |      0.709  |
+| saturated_sample_count | 0              | mlp                                            |                390 |             0.2256 |       0.243    |      0.6457 |
+| saturated_sample_count | 0              | ridge                                          |                390 |             0.2103 |       0.3943   |      0.5606 |
+| saturated_sample_count | 0              | saturation_residual_fusion_new                 |                390 |             0.2    |       0.1589   |      0.6992 |
+| saturated_sample_count | 0              | tiny_sequence_transformer                      |                390 |             0.1872 |       0.1748   |      0.7074 |
+| source_run             | 58             | 1d_cnn                                         |                 78 |             0.1154 |       0.1108   |      0.5858 |
+| source_run             | 60             | 1d_cnn                                         |                 78 |             0.2308 |       0.1544   |      0.6896 |
+| source_run             | 62             | 1d_cnn                                         |                 78 |             0.1026 |       0.17     |      0.5122 |
+| source_run             | 64             | 1d_cnn                                         |                 78 |             0.1026 |       0.1536   |      0.5164 |
+| source_run             | 65             | 1d_cnn                                         |                 78 |             0.2308 |       0.1673   |      0.6903 |
 
 ## Saturation-Mask Ablation
 
@@ -404,53 +405,55 @@ tail-recovery region named in the ticket.
 
 | ablation                 | method                                         |   energy_fractional_bias |   energy_fractional_sigma68 |   time_sigma68_ns |   pileup_miss_rate |   false_split_rate |   n_events |
 |:-------------------------|:-----------------------------------------------|-------------------------:|----------------------------:|------------------:|-------------------:|-------------------:|-----------:|
-| all_heldout              | 1d_cnn                                         |                0.04774   |                     0.09965 |            11.03  |             0.2667 |            0.2179  |        780 |
-| all_heldout              | analytic_clipped_template_sideband_traditional |                0.07918   |                     0.1006  |             9.454 |             0.5846 |            0.1974  |        780 |
-| all_heldout              | gradient_boosted_trees                         |               -0.004337  |                     0.07328 |             8.231 |             0.3538 |            0.1462  |        780 |
-| all_heldout              | mlp                                            |               -0.02341   |                     0.1571  |            11.84  |             0.3846 |            0.09231 |        780 |
-| all_heldout              | ridge                                          |               -0.01034   |                     0.06713 |            10.34  |             0.3051 |            0.1333  |        780 |
-| all_heldout              | saturation_residual_fusion_new                 |               -0.002907  |                     0.06839 |             8.024 |             0.3256 |            0.1385  |        780 |
-| all_heldout              | tiny_sequence_transformer                      |                0.0006918 |                     0.1027  |            17.75  |             0.5949 |            0.06923 |        780 |
-| deep_saturation_mask_ge3 | 1d_cnn                                         |               -0.01702   |                     0.02001 |            16.11  |             0      |          nan       |          5 |
-| deep_saturation_mask_ge3 | analytic_clipped_template_sideband_traditional |                0.177     |                     0.05639 |            11.86  |             0.4    |          nan       |          5 |
-| deep_saturation_mask_ge3 | gradient_boosted_trees                         |               -0.04276   |                     0.03807 |             5.049 |             0      |          nan       |          5 |
-| deep_saturation_mask_ge3 | mlp                                            |               -0.1059    |                     0.04671 |            11.6   |             0      |          nan       |          5 |
-| deep_saturation_mask_ge3 | ridge                                          |               -0.04979   |                     0.01396 |             7.93  |             0      |          nan       |          5 |
-| deep_saturation_mask_ge3 | saturation_residual_fusion_new                 |               -0.01081   |                     0.01219 |             4.333 |             0      |          nan       |          5 |
-| deep_saturation_mask_ge3 | tiny_sequence_transformer                      |               -0.1398    |                     0.02932 |             8.047 |             0.2    |          nan       |          5 |
-| saturated_mask_gt0       | 1d_cnn                                         |               -0.01702   |                     0.04264 |            14.5   |             0      |          nan       |          9 |
-| saturated_mask_gt0       | analytic_clipped_template_sideband_traditional |                0.1357    |                     0.06908 |            14.49  |             0.4444 |          nan       |          9 |
-| saturated_mask_gt0       | gradient_boosted_trees                         |               -0.01597   |                     0.0692  |             8.071 |             0      |          nan       |          9 |
-| saturated_mask_gt0       | mlp                                            |               -0.09335   |                     0.09011 |            17.1   |             0      |          nan       |          9 |
-| saturated_mask_gt0       | ridge                                          |               -0.03814   |                     0.03413 |             8.771 |             0      |          nan       |          9 |
-| saturated_mask_gt0       | saturation_residual_fusion_new                 |               -0.01081   |                     0.04324 |             5.722 |             0      |          nan       |          9 |
-| saturated_mask_gt0       | tiny_sequence_transformer                      |               -0.09449   |                     0.06853 |            14.32  |             0.1111 |          nan       |          9 |
-| unsaturated_mask_0       | 1d_cnn                                         |                0.0504    |                     0.09846 |            10.95  |             0.273  |            0.2179  |        771 |
-| unsaturated_mask_0       | analytic_clipped_template_sideband_traditional |                0.07373   |                     0.1015  |             9.336 |             0.5879 |            0.1974  |        771 |
-| unsaturated_mask_0       | gradient_boosted_trees                         |               -0.004281  |                     0.07317 |             8.252 |             0.3622 |            0.1462  |        771 |
-| unsaturated_mask_0       | mlp                                            |               -0.02189   |                     0.1589  |            11.7   |             0.3937 |            0.09231 |        771 |
-| unsaturated_mask_0       | ridge                                          |               -0.009765  |                     0.06717 |            10.29  |             0.3123 |            0.1333  |        771 |
-| unsaturated_mask_0       | saturation_residual_fusion_new                 |               -0.002582  |                     0.06902 |             7.98  |             0.3333 |            0.1385  |        771 |
-| unsaturated_mask_0       | tiny_sequence_transformer                      |                0.004608  |                     0.1016  |            17.93  |             0.6063 |            0.06923 |        771 |
+| all_heldout              | 1d_cnn                                         |               -0.0264    |                    0.0785   |             9.51  |             0.3718 |             0.1564 |        780 |
+| all_heldout              | analytic_clipped_template_sideband_traditional |                0.06236   |                    0.09263  |             9.467 |             0.5615 |             0.1897 |        780 |
+| all_heldout              | gradient_boosted_trees                         |               -0.0008102 |                    0.07286  |             8.241 |             0.2769 |             0.2103 |        780 |
+| all_heldout              | mlp                                            |               -0.05212   |                    0.1685   |            12.3   |             0.2821 |             0.2256 |        780 |
+| all_heldout              | ridge                                          |                0.006192  |                    0.07469  |             9.434 |             0.2821 |             0.2103 |        780 |
+| all_heldout              | saturation_residual_fusion_new                 |                0.002716  |                    0.06515  |             8.212 |             0.2769 |             0.2    |        780 |
+| all_heldout              | tiny_sequence_transformer                      |               -0.01389   |                    0.1131   |            13.03  |             0.3846 |             0.1872 |        780 |
+| deep_saturation_mask_ge3 | 1d_cnn                                         |               -0.1065    |                    0.002497 |             5.577 |             0      |           nan      |          3 |
+| deep_saturation_mask_ge3 | analytic_clipped_template_sideband_traditional |                0.11      |                    0.0257   |             9.178 |             0      |           nan      |          3 |
+| deep_saturation_mask_ge3 | gradient_boosted_trees                         |               -0.08234   |                    0.009567 |             4.203 |             0      |           nan      |          3 |
+| deep_saturation_mask_ge3 | mlp                                            |                0.01513   |                    0.05415  |             6.228 |             0      |           nan      |          3 |
+| deep_saturation_mask_ge3 | ridge                                          |               -0.1015    |                    0.02966  |             8.631 |             0      |           nan      |          3 |
+| deep_saturation_mask_ge3 | saturation_residual_fusion_new                 |               -0.03732   |                    0.01076  |             4.019 |             0      |           nan      |          3 |
+| deep_saturation_mask_ge3 | tiny_sequence_transformer                      |               -0.2259    |                    0.01944  |             9.903 |             0      |           nan      |          3 |
+| saturated_mask_gt0       | 1d_cnn                                         |               -0.1065    |                    0.01348  |            11.33  |             0.125  |           nan      |          8 |
+| saturated_mask_gt0       | analytic_clipped_template_sideband_traditional |                0.09974   |                    0.03128  |            16.05  |             0.375  |           nan      |          8 |
+| saturated_mask_gt0       | gradient_boosted_trees                         |               -0.07081   |                    0.035    |             3.643 |             0.125  |           nan      |          8 |
+| saturated_mask_gt0       | mlp                                            |               -0.01395   |                    0.07509  |            10.34  |             0      |           nan      |          8 |
+| saturated_mask_gt0       | ridge                                          |               -0.09198   |                    0.03577  |             8.078 |             0      |           nan      |          8 |
+| saturated_mask_gt0       | saturation_residual_fusion_new                 |               -0.02627   |                    0.07935  |             6.117 |             0      |           nan      |          8 |
+| saturated_mask_gt0       | tiny_sequence_transformer                      |               -0.1822    |                    0.08728  |            15.87  |             0.125  |           nan      |          8 |
+| unsaturated_mask_0       | 1d_cnn                                         |               -0.02153   |                    0.07621  |             9.243 |             0.377  |             0.1564 |        772 |
+| unsaturated_mask_0       | analytic_clipped_template_sideband_traditional |                0.05962   |                    0.09235  |             9.216 |             0.5654 |             0.1897 |        772 |
+| unsaturated_mask_0       | gradient_boosted_trees                         |                0.002234  |                    0.07129  |             8.418 |             0.2801 |             0.2103 |        772 |
+| unsaturated_mask_0       | mlp                                            |               -0.05371   |                    0.1691   |            12.25  |             0.288  |             0.2256 |        772 |
+| unsaturated_mask_0       | ridge                                          |                0.007883  |                    0.07184  |             9.362 |             0.288  |             0.2103 |        772 |
+| unsaturated_mask_0       | saturation_residual_fusion_new                 |                0.003813  |                    0.06512  |             8.234 |             0.2827 |             0.2    |        772 |
+| unsaturated_mask_0       | tiny_sequence_transformer                      |               -0.01297   |                    0.1146   |            12.92  |             0.3901 |             0.1872 |        772 |
 
 ## Uncertainty Calibration
 
 The per-event uncertainty proxy is a transparent function of clipped samples,
-plateau width, and close-pulse spacing:
+plateau width, and reconstructed close-pulse spacing.  It uses
+`hat Delta_i = |hat t_2 - hat t_1|`; injected truth separation is excluded
+from the proxy and used only for residual scoring:
 
-`u_i = 0.030 + 0.006 n_clip + 0.004 max(W_plateau-2,0) + 0.002 max(4-Delta,0)`.
+`u_i = 0.030 + 0.006 n_clip + 0.004 max(W_plateau-2,0) + 0.002 max(4-hat Delta_i,0)`.
 
 Coverage is reported against the absolute fractional energy residual.
 
 | method                                         |   n_valid_doublets |   p68_abs_energy_residual |   nominal_68_proxy_width |   coverage_abs_resid_le_proxy |   coverage_abs_resid_le_2proxy |   calibration_ratio_p68_over_proxy |
 |:-----------------------------------------------|-------------------:|--------------------------:|-------------------------:|------------------------------:|-------------------------------:|-----------------------------------:|
-| ridge                                          |                271 |                   0.0665  |                    0.036 |                        0.4539 |                         0.6937 |                              1.847 |
-| saturation_residual_fusion_new                 |                263 |                   0.06943 |                    0.035 |                        0.3688 |                         0.7034 |                              1.984 |
-| gradient_boosted_trees                         |                252 |                   0.07359 |                    0.035 |                        0.4127 |                         0.6667 |                              2.103 |
-| tiny_sequence_transformer                      |                158 |                   0.104   |                    0.034 |                        0.2532 |                         0.5253 |                              3.058 |
-| 1d_cnn                                         |                286 |                   0.1136  |                    0.036 |                        0.2797 |                         0.486  |                              3.157 |
-| analytic_clipped_template_sideband_traditional |                162 |                   0.1238  |                    0.034 |                        0.1914 |                         0.4198 |                              3.641 |
-| mlp                                            |                240 |                   0.1526  |                    0.036 |                        0.1667 |                         0.3458 |                              4.239 |
+| saturation_residual_fusion_new                 |                282 |                   0.06615 |                  0.03471 |                        0.4291 |                         0.7128 |                              1.905 |
+| ridge                                          |                280 |                   0.07048 |                  0.03502 |                        0.375  |                         0.675  |                              2.013 |
+| gradient_boosted_trees                         |                282 |                   0.07253 |                  0.03482 |                        0.3936 |                         0.6844 |                              2.083 |
+| 1d_cnn                                         |                245 |                   0.08274 |                  0.03432 |                        0.3184 |                         0.6245 |                              2.411 |
+| analytic_clipped_template_sideband_traditional |                171 |                   0.1031  |                  0.034   |                        0.2865 |                         0.5029 |                              3.033 |
+| tiny_sequence_transformer                      |                240 |                   0.1153  |                  0.03611 |                        0.275  |                         0.4667 |                              3.194 |
+| mlp                                            |                280 |                   0.1754  |                  0.03453 |                        0.1429 |                         0.2893 |                              5.081 |
 
 ## Queue Provenance
 

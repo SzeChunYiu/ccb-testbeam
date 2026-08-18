@@ -1,0 +1,14 @@
+claim_helper_command: tn-ticket claim testbeam-laptop-1 --project testbeam
+claim_helper_output:
+stderr: null
+stdout:
+# null
+
+null
+manual_claim_issue: 2577
+manual_claim_command: gh issue edit 2577 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-1 --remove-label factory:open
+manual_claim_evidence: issue #2577 labels include factory:claimed, project:testbeam, worker:testbeam-laptop-1
+done_command: tn-ticket done 2577
+# NEW S73a spectral-template pile-up timing and pedestal phase atlas
+
+Academic study: build a frequency-domain pulse-shape/timing atlas for pedestal-phase drift, pile-up onset, saturation shoulders, energy response, and PID boundary shifts. Compare a traditional FFT matched-filter plus parametric template fit against ridge regression, gradient-boosted trees, MLP, 1D-CNN waveform encoders, and a compact transformer over waveform patches. Use held-out run/current strata, injected two-pulse controls, and 1,000 bootstrap resamples for timing bias/resolution, pile-up separation, saturation recovery, energy residual, and PID AUC confidence intervals.

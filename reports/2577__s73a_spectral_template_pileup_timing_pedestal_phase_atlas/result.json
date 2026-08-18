@@ -69,19 +69,17 @@
   },
   "artifacts": {
     "report": "REPORT.md",
-    "manifest": "reports/2577__s73a_spectral_template_pileup_timing_pedestal_phase_atlas/manifest.json",
-    "claimed_ticket": "reports/2577__s73a_spectral_template_pileup_timing_pedestal_phase_atlas/claimed_ticket.txt",
-    "raw_reproduction": "reports/2577__s73a_spectral_template_pileup_timing_pedestal_phase_atlas/reproduction_match_table.csv",
-    "method_metrics": "reports/2577__s73a_spectral_template_pileup_timing_pedestal_phase_atlas/method_metrics.csv",
-    "winner_ranked_metrics": "reports/2577__s73a_spectral_template_pileup_timing_pedestal_phase_atlas/winner_ranked_metrics.csv",
-    "run_heldout_metrics": "reports/2577__s73a_spectral_template_pileup_timing_pedestal_phase_atlas/run_heldout_metrics.csv",
-    "strata_metrics": "reports/2577__s73a_spectral_template_pileup_timing_pedestal_phase_atlas/strata_metrics.csv",
-    "event_predictions": "reports/2577__s73a_spectral_template_pileup_timing_pedestal_phase_atlas/event_predictions.csv",
-    "input_sha256": "reports/2577__s73a_spectral_template_pileup_timing_pedestal_phase_atlas/input_sha256.csv",
-    "spectral_pedestal_phase_atlas": "reports/2577__s73a_spectral_template_pileup_timing_pedestal_phase_atlas/spectral_pedestal_phase_atlas.csv",
-    "pid_proxy_calibration": "reports/2577__s73a_spectral_template_pileup_timing_pedestal_phase_atlas/pid_proxy_calibration.csv",
-    "report_copy": "reports/2577__s73a_spectral_template_pileup_timing_pedestal_phase_atlas/REPORT.md",
-    "result_copy": "reports/2577__s73a_spectral_template_pileup_timing_pedestal_phase_atlas/result.json"
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv",
+    "spectral_pedestal_phase_atlas": "spectral_pedestal_phase_atlas.csv",
+    "pid_proxy_calibration": "pid_proxy_calibration.csv"
   },
   "novel_tickets_appended": [],
   "caveats": [
@@ -103,14 +101,5 @@
   },
   "ticket_scope": "frequency-domain pulse-shape/timing atlas for pedestal-phase drift, pile-up onset, saturation shoulders, energy response, and PID boundary proxies",
   "done_command": "tn-ticket done 2577",
-  "next_tickets": [],
-  "done_evidence": {
-    "command": "tn-ticket done 2577",
-    "github_state": "CLOSED",
-    "labels": [
-      "factory:done",
-      "project:testbeam",
-      "worker:testbeam-laptop-1"
-    ]
-  }
+  "next_tickets": []
 }

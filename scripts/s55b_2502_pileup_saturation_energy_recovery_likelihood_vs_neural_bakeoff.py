@@ -141,6 +141,11 @@ def patch_report(sideband: pd.DataFrame, ablation: pd.DataFrame, calibration: pd
     )
     text = text.replace("Ticket `2502` asks", "Ticket `#2502` asks", 1)
     text = text.replace("preferred S32b", "preferred S55b", 1)
+    text = text.replace(
+        "\nSystematic caveats are material.",
+        "\n## Caveats\n\nSystematic caveats are material.",
+        1,
+    )
     text += f"""
 
 ## Ticket-Specific Sideband Validation

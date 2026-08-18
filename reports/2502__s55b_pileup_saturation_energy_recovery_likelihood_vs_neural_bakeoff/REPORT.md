@@ -325,6 +325,8 @@ pulse morphology, amplitude ratio, stave, and a PID proxy class.
 | stave            | B6                | tiny_sequence_transformer                      |               -0.006765  |                    0.08547  |       -7.188   |            11.83  |            0.3689  |
 | stave            | B8                | tiny_sequence_transformer                      |               -0.02313   |                    0.08933  |       -5.416   |            10.4   |            0.1263  |
 
+## Caveats
+
 Systematic caveats are material.  First, pile-up truth is from controlled
 overlays into raw-ROOT-derived residuals; it validates reconstruction under known
 truth but not the true beam pile-up rate.  Second, the ADC clipping level is a

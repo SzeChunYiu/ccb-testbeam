@@ -1,0 +1,31 @@
+{
+  "ticket_id": "2573",
+  "study": "S72a",
+  "worker": "testbeam-laptop-3",
+  "command": "scripts/ticket_2573_s72a_template_phase_residual_atlas.py --config configs/ticket_2573_s72a_template_phase_residual_atlas.json",
+  "script": "scripts/ticket_2573_s72a_template_phase_residual_atlas.py",
+  "config": "configs/ticket_2573_s72a_template_phase_residual_atlas.json",
+  "git_commit": "cec9edc28257e0699c70c17fa9b2e8d806a3d42a",
+  "python": "3.7.6",
+  "packages": {
+    "uproot": "5.0.9",
+    "numpy": "1.21.6",
+    "pandas": "1.3.4",
+    "torch": "1.13.1+cu117"
+  },
+  "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+  "input_file_count": 33,
+  "reproduction_passed": true,
+  "outputs": {
+    "REPORT.md": "1edb01f1eaec2235cd79dc8ae3a31f878e8b06e37ffdab08be61799748d133b5",
+    "heldout_pair_residuals.csv": "db88e9dcdaa903713d9b1155726a94417ad2fd92ebdfa348d4e79a2c1bacc655",
+    "input_sha256.csv": "6e2e4a924403c2dc070c509f98323147b6f2d5cc6220076489925ae6270e93b3",
+    "leakage_checks.csv": "97e34c3494e396fb8981652360e25a32f3109f2a3d70659c789bbb630d2913bd",
+    "method_summary.csv": "423876834a311a591c24e6ccb4510c92519f6c2fa497e16669eb1502b7ff6bd2",
+    "reproduction_counts_by_run.csv": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+    "reproduction_match_table.csv": "e70f583e1fd72a6ff544cbf9253ee1f265c694da1d93ee26ada9f644caef0755",
+    "result.json": "0d0510de3860cb406e73bf207aff23df956fe6c1a3096d202d45757a339c9e3e",
+    "stratified_errors.csv": "97ecd24c7d75eefcbbddb88c6d954222a5b3f73247d8aff92180b40065b6ed9e",
+    "training_summary.csv": "9009d00b81ab3cb3bd5258efcd75e7229981b1b62db6a7df6c021cc62af3299d"
+  }
+}

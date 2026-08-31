@@ -1,10 +1,17 @@
 #!/usr/bin/env python3
 """Fail-closed diagnostics for the CCB inter-stave timing claim.
 
-This script audits the already-produced Issue #1320 result and generates plots
-that make the origin and limitations of the reported sub-nanosecond numbers
-visible. It intentionally does not reprocess raw ROOT waveforms; the required
-raw-data plot sequence is frozen in ``diagnostic_plot_manifest.csv``.
+This script has two jobs:
+
+1. Audit the already-produced Issue #1320 timing result without silently
+   promoting a pair residual to an intrinsic stave resolution.
+2. Generate a compact set of plots that make the origin and limitations of
+   the reported sub-nanosecond numbers visible.
+
+It intentionally does *not* reprocess raw ROOT waveforms.  The raw-waveform
+plot sequence and its acceptance criteria are frozen in
+``diagnostic_plot_manifest.csv``.  A future raw-data producer must satisfy that
+contract and must refuse retracted channel maps or inconsistent frame shapes.
 
 Example
 -------
@@ -14,7 +21,7 @@ python chatgpt_todo/timing_supervisor_pack/timing_result_diagnostics.py \
     --out chatgpt_todo/timing_supervisor_pack/generated
 
 The command exits with status 2 when the evidence does not authorize a physical
-single-stave resolution. That is the expected outcome for the current result.
+single-stave resolution.  That is the expected outcome for the current result.
 Use ``--allow-gated-exit-zero`` only for report-generation workflows.
 """
 
@@ -250,7 +257,10 @@ def audit_result(
             AuditFinding(
                 "HIGH",
                 "CORE_TAIL_TRADEOFF",
-                "Increasing CFD fraction narrows the central core while widening the full distribution.",
+                (
+                    "Increasing CFD fraction narrows the central core while widening "
+                    "the full distribution."
+                ),
                 {
                     "sigma68_first_last_ns": [
                         float(sigma68_values[0]),
@@ -263,11 +273,19 @@ def audit_result(
 
     complete_pairs = _find_numeric(
         result,
-        ("n_complete_pair_events", "complete_pair_events", "n_pairs"),
+        (
+            "n_complete_pair_events",
+            "complete_pair_events",
+            "n_pairs",
+        ),
     )
     selected_rows = _find_numeric(
         result,
-        ("n_selected_events_total", "n_selected_rows_total", "selected_rows"),
+        (
+            "n_selected_events_total",
+            "n_selected_rows_total",
+            "selected_rows",
+        ),
     )
     if complete_pairs and selected_rows:
         ratio = selected_rows / complete_pairs
@@ -313,10 +331,11 @@ def audit_result(
     }
     blocked = any(item.code in physical_blockers for item in findings)
     status = "GATED_NOT_PHYSICAL_RESOLUTION" if blocked else "PAIR_RESULT_REVIEW_REQUIRED"
-    pair_authorized = map_status is not None and "RETRACT" not in map_status.upper()
     return AuditOutcome(
         status=status,
-        pair_residual_authorized=pair_authorized,
+        pair_residual_authorized=not (
+            map_status is None or "RETRACT" in map_status.upper()
+        ),
         single_stave_resolution_authorized=False,
         recommended_headline=(
             "The published sub-nanosecond number is an analysis-level B4-B6 pair-core "
@@ -377,7 +396,12 @@ def plot_non_gaussianity(rows: list[dict[str, float]], out: Path) -> None:
     ratios = np.asarray([row["rms_ns"] / row["sigma68_ns"] for row in rows])
     figure, axis = plt.subplots(figsize=(7.2, 4.8))
     axis.plot(fractions, ratios, marker="o")
-    axis.axhline(1.0, linestyle="--", linewidth=1.0, label="Gaussian-like scale agreement")
+    axis.axhline(
+        1.0,
+        linestyle="--",
+        linewidth=1.0,
+        label="Gaussian-like scale agreement",
+    )
     axis.set_xlabel("CFD fraction")
     axis.set_ylabel("RMS / central-68% width")
     axis.set_title("Large RMS/core mismatch: the residual is strongly non-Gaussian")
@@ -390,7 +414,12 @@ def plot_fit_quality(rows: list[dict[str, float]], out: Path) -> None:
     fractions = np.asarray([row["fraction"] for row in rows])
     figure, axis = plt.subplots(figsize=(7.2, 4.8))
     axis.plot(fractions, [row["chi2_ndf"] for row in rows], marker="o")
-    axis.axhline(1.0, linestyle="--", linewidth=1.0, label="ideal order of magnitude")
+    axis.axhline(
+        1.0,
+        linestyle="--",
+        linewidth=1.0,
+        label="ideal order of magnitude",
+    )
     axis.set_xlabel("CFD fraction")
     axis.set_ylabel("Gaussian-core fit chi2 / ndf")
     axis.set_yscale("log")
@@ -451,8 +480,12 @@ def plot_deconvolution_counterexamples(
     axis.bar(positions, errors)
     axis.axhline(0.0, linewidth=1.0)
     axis.set_xticks(positions, labels, rotation=18, ha="right")
-    axis.set_ylabel("error of pair sigma68 / sqrt(2) vs stave-A sigma68 (%)")
-    axis.set_title("The sqrt(2) conversion is a special-case assumption, not a general estimator")
+    axis.set_ylabel(
+        "error of pair sigma68 / sqrt(2) vs stave-A sigma68 (%)"
+    )
+    axis.set_title(
+        "The sqrt(2) conversion is a special-case assumption, not a general estimator"
+    )
     axis.grid(True, axis="y", alpha=0.25)
     save_figure(figure, out, "04_sqrt2_counterexamples")
     return records
@@ -462,10 +495,26 @@ def plot_inference_gate(out: Path) -> None:
     figure, axis = plt.subplots(figsize=(9.2, 5.8))
     axis.set_axis_off()
     boxes = [
-        (0.05, 0.76, "1. Validate raw frame shape, map status, and real pulse identity"),
-        (0.05, 0.57, "2. Produce pair residuals with held-out cuts and full tail diagnostics"),
-        (0.05, 0.38, "3. Measure at least 3 connected pairs or use a calibrated reference"),
-        (0.05, 0.19, "4. Model covariance and close the estimator on simulation/injection"),
+        (
+            0.05,
+            0.76,
+            "1. Validate raw frame shape, map status, and real pulse identity",
+        ),
+        (
+            0.05,
+            0.57,
+            "2. Produce pair residuals with held-out cuts and full tail diagnostics",
+        ),
+        (
+            0.05,
+            0.38,
+            "3. Measure at least 3 connected pairs or use a calibrated reference",
+        ),
+        (
+            0.05,
+            0.19,
+            "4. Model covariance and close the estimator on simulation/injection",
+        ),
     ]
     for x, y, text in boxes:
         axis.text(
@@ -475,7 +524,11 @@ def plot_inference_gate(out: Path) -> None:
             transform=axis.transAxes,
             fontsize=11,
             va="center",
-            bbox={"boxstyle": "round,pad=0.5", "facecolor": "none", "edgecolor": "black"},
+            bbox={
+                "boxstyle": "round,pad=0.5",
+                "facecolor": "none",
+                "edgecolor": "black",
+            },
         )
     for y_top, y_bottom in [(0.72, 0.63), (0.53, 0.44), (0.34, 0.25)]:
         axis.annotate(
@@ -492,7 +545,11 @@ def plot_inference_gate(out: Path) -> None:
         transform=axis.transAxes,
         fontsize=11,
         va="center",
-        bbox={"boxstyle": "round,pad=0.5", "facecolor": "none", "edgecolor": "black"},
+        bbox={
+            "boxstyle": "round,pad=0.5",
+            "facecolor": "none",
+            "edgecolor": "black",
+        },
     )
     axis.text(
         0.63,
@@ -501,7 +558,11 @@ def plot_inference_gate(out: Path) -> None:
         transform=axis.transAxes,
         fontsize=11,
         va="center",
-        bbox={"boxstyle": "round,pad=0.5", "facecolor": "none", "edgecolor": "black"},
+        bbox={
+            "boxstyle": "round,pad=0.5",
+            "facecolor": "none",
+            "edgecolor": "black",
+        },
     )
     axis.set_title(
         "Fail-closed path from waveform samples to an intrinsic stave resolution",

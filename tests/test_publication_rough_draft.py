@@ -31,11 +31,38 @@ def test_rough_inventory_covers_nonchapter_candidate_families():
         "figures/model_diagnostics/adc_mc_calibration.png",
         "figures/model_diagnostics/birks_mc_comparison.png",
         "figures/model_diagnostics/pileup_digitizer_mc.png",
+        "../docs/figures/paper/anomaly_truth_mc.png",
+        "../docs/figures/paper/pca_truth_mc.png",
+        "../docs/figures/paper/stopping_b8_tension.png",
+        "../docs/figures/paper/systematic_sensitivity_inputs.png",
         "figures/illustrative/03_waveform_annotated.png",
         "figures/illustrative/06_timewalk_explained.png",
     }
     for path in expected:
         assert path in inventory
+
+
+def test_rough_numbers_table_exposes_key_diagnostic_values_with_boundaries():
+    inventory = (PUB / "chapters" / "C_rough_figure_inventory.tex").read_text()
+
+    # Values are deliberately source-table-bound diagnostics, not promoted claims.
+    for token in (
+        "0.0893",
+        "0.8976",
+        "119.168",
+        "0.01562",
+        "0.605",
+        "0.323\\%",
+        "72.5\\%",
+        "22.29\\%",
+        "reflectivity 3.484",
+    ):
+        assert token in inventory
+
+    assert "not canonical detector $R_{\\max}$" in inventory
+    assert "Truth-level MC only" in inventory
+    assert "Legacy gated data/MC diagnostic" in inventory
+    assert "not propagated systematic uncertainties" in inventory
 
 
 def test_canonical_build_does_not_define_rough_mode():

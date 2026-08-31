@@ -1,0 +1,42 @@
+name: Publication Rough PDF
+
+on:
+  pull_request:
+    paths:
+      - 'publication/**'
+      - 'scripts/single_stave/paper_a09_heldout_edep_reconstruction.py'
+      - 'tests/test_publication_rough_draft.py'
+      - 'tests/test_paper_a09_figure_uncertainty_contract.py'
+      - '.github/workflows/publication_rough_pdf.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-rough-publication:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install TeX and PDF tools
+        run: |
+          sudo apt-get update
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
+            latexmk texlive-latex-base texlive-latex-recommended \
+            texlive-latex-extra lmodern poppler-utils
+      - name: Run rough-build contract tests
+        run: |
+          python -m pytest \
+            tests/test_publication_rough_draft.py \
+            tests/test_paper_a09_figure_uncertainty_contract.py -q
+      - name: Build rough publication PDF
+        run: |
+          cd publication
+          make rough
+          pdfinfo rough-paper.pdf | grep -E 'Pages|Page size|Encrypted'
+      - name: Upload rough PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ccb-rough-paper
+          path: publication/rough-paper.pdf
+          if-no-files-found: error

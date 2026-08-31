@@ -4,26 +4,39 @@ This appendix is compiled only in the internal rough-build variant. Its purpose 
 
 \subsection{Current numbers at a glance}
 
-The table below is a meeting aid assembled from the current manuscript state. It is intentionally mixed-status: each row states whether it is beam-data, simulation or a control, and none of the gated rows is promoted by appearing here.
+The table below is a meeting aid assembled from the current manuscript and the machine-readable source tables behind the paper-grade diagnostics. It is intentionally mixed-status: each row states whether it is beam data, simulation, truth-only MC, a control or a review diagnostic. Appearance here never promotes a gated result.
 
-\begin{table}[H]
-\centering
 \small
-\begin{tabular}{p{0.25\linewidth}p{0.49\linewidth}p{0.18\linewidth}}
+\begin{longtable}{p{0.23\linewidth}p{0.52\linewidth}p{0.17\linewidth}}
+\caption{Internal rough-paper summary of the principal and diagnostic numbers currently shaping the manuscript. Status and interpretation remain those of the main chapters and source tables.}\\
 \toprule
 Topic & Current rough-paper number & Evidence boundary \\
 \midrule
+\endfirsthead
+\toprule
+Topic & Current rough-paper number & Evidence boundary \\
+\midrule
+\endhead
 Beam event product & 1{,}096{,}728 events over 33 runs; Sample~I 798{,}694 and Sample~II 298{,}034 & Beam data; product-level result \\
 Longitudinal profile & Sample~I: B2 35.3\%, B8 25.2\%, B8/B2 = 0.71. Sample~II: B2 15.3\%, B8 29.6\%, B8/B2 = 1.94 & Beam data; quantitative profile gated \\
+Historical selected-pulse anchor & 640{,}737 selected B-stack pulse records for the fixed historical producer/input contract & Beam-data analysis count; gated, not an efficiency \\
 Timing pair residual & 228{,}697 B4--B6 pairs; $\sigma_{68}=0.146$~ns, bootstrap 0.144--0.148~ns; median $-9.67$~ns & Beam data; pair residual, not single-stave resolution \\
+MC timing-method closure & Four-sensor combined $\sigma_{68}=0.0893$~ns; single-sensor CFD 0.1506~ns, template 0.4508~ns, leading edge 0.7651~ns & MC method closure only \\
 MC proxy population & 14{,}112 events; Sample~I first-layer deuteron track-flux fraction 59.3\% [57.7, 60.7]; Sample~II proton fraction 73.4\% [73.0, 73.7] & Simulation with trigger proxy \\
+MC PID diagnostic & Full p--d AUC 0.8976; five fold AUCs span 0.8839--0.9103 & Simulation result only \\
+ADC response diagnostics & MC slopes 119.168~ADC/MeV for proton and deuteron; separate data/MC median-matching proxy 92~ADC/MeV with a 28~ADC/MeV heuristic envelope & MC result plus gated calibration proxy \\
+Birks-response diagnostics & Preferred per-track MC fit $k_B=0.01562$~cm/MeV; total-deposit proxy 0.01268; digitizer default 0.008 & Simulation result \\
+Digitizer pile-up scan & At 1.0~MHz: observed overlap 15.9\% versus Poisson 16.47\%; scan points nearest 5\% and 10\% Poisson overlap are 0.289 and 0.605~MHz & Simulation/digitizer diagnostic; not canonical detector $R_{\max}$ \\
 Optical-grid response & $11.78~\mathrm{PE/MeV_{vis}}$, offset 0.65~PE, $r^2=0.976$, $n=10{,}000$; per-point visible yields 11.78--11.84 & Model-dependent optical MC \\
 Held-out $E_{\rm vis}$ reconstruction & Median bias $+0.48\%$ [$+0.29,+0.62$], $\sigma_{68}=6.26\%$ [6.16, 6.35], tail 0.2\% & Model-dependent, gated \\
 $E_{\rm raw}$ negative control & Median bias $+10.4\%$, $\sigma_{68}=9.0\%$, tail 16.9\% & Deliberately mis-specified control \\
+Early-peak truth diagnostic & 283/87{,}555 = 0.323\% of charged B-arm MC satisfy the early-peak morphology criterion; C12 truth subset 156/7{,}302 = 2.14\% & Truth-level MC only; does not identify beam-data anomaly species \\
+Waveform PCA diagnostic & Three components explain 72.5\% and eight components 82.2\% of variance in the synthetic-waveform MC population ($n=87{,}555$) & Truth/synthetic-waveform MC only \\
+Legacy stopping-depth tension & Deepest-readout fraction: selected data 2.30\% versus thresholded MC 22.29\% & Legacy gated data/MC diagnostic \\
+Optical/SiPM sensitivity inputs & Largest absolute ADC elasticities in the current sensitivity table: reflectivity 3.484, coupling 0.939, PDE scale 0.891, Birks $k_B$ 0.398 & Review/sensitivity inputs, not propagated systematic uncertainties \\
 \bottomrule
-\end{tabular}
-\caption{Internal rough-paper summary of the principal numbers currently shaping the manuscript. Status and interpretation remain those of the main chapters.}
-\end{table}
+\end{longtable}
+\normalsize
 
 \subsection{Additional gated analysis views}
 
@@ -46,6 +59,14 @@ $E_{\rm raw}$ negative control & Median bias $+10.4\%$, $\sigma_{68}=9.0\%$, tai
 \PaperFigure{figures/model_diagnostics/birks_mc_comparison.png}{0.88}{Birks-quenching simulation comparison.}{Simulation diagnostic illustrating response-model dependence.}
 
 \PaperFigure{figures/model_diagnostics/pileup_digitizer_mc.png}{0.88}{Pile-up and digitizer simulation diagnostic.}{Simulation-only sensitivity view; retained to show the possible supplementary-paper footprint.}
+
+\PaperFigure{../docs/figures/paper/anomaly_truth_mc.png}{0.88}{Early-peak morphology rate in truth-level MC, including the C12 truth subset.}{Truth-level MC only. The figure does not identify the corresponding beam-data anomaly as C12.}
+
+\PaperFigure{../docs/figures/paper/pca_truth_mc.png}{0.88}{Synthetic-waveform MC principal-component representation diagnostic.}{Truth/synthetic-waveform MC only; retained as a representation study rather than a beam-data performance claim.}
+
+\GatedFigure{../docs/figures/paper/stopping_b8_tension.png}{0.88}{Legacy deepest-readout data/MC tension diagnostic.}{Gated legacy comparison; retained to expose a known modeling discrepancy, not as accepted closure.}
+
+\PaperFigure{../docs/figures/paper/systematic_sensitivity_inputs.png}{0.88}{Current optical/SiPM sensitivity-input ranking.}{Review-level sensitivity inputs only. Elasticities are not a propagated detector systematic-uncertainty budget.}
 
 \subsection{Illustrative readout aids}
 

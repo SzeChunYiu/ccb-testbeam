@@ -21,6 +21,16 @@
 \usepackage{url}
 \usepackage{ifthen}
 
+% Normal builds stay fail-closed.  A wrapper may define \RoughPaperFigures
+% before loading this file to render existing gated artifacts for internal
+% collaboration review without changing their scientific authorization.
+\newif\ifroughpaperfigures
+\ifdefined\RoughPaperFigures
+  \roughpaperfigurestrue
+\else
+  \roughpaperfiguresfalse
+\fi
+
 \hypersetup{
   colorlinks=true,
   linkcolor=blue!45!black,
@@ -33,7 +43,7 @@
 
 \pagestyle{fancy}
 \fancyhf{}
-\lhead{CCB test-beam publication draft}
+\lhead{\ifroughpaperfigures CCB test-beam rough figure draft\else CCB test-beam publication draft\fi}
 \rhead{\thepage/\pageref{LastPage}}
 \cfoot{}
 \setlength{\headheight}{14pt}
@@ -56,33 +66,63 @@
 {\end{quote}}
 
 \newcommand{\PaperFigure}[4]{%
-  \begin{figure}[H]
-  \centering
   \IfFileExists{#1}{%
+    \begin{figure}[H]
+    \centering
     \includegraphics[width=#2\linewidth]{#1}%
+    \caption{#3}
+    \end{figure}
   }{%
-    \fbox{\parbox[c][4.2cm][c]{0.90\linewidth}{\centering\textbf{Figure not promoted into the publication build}\\[0.5em]#4}}%
-  }
-  \caption{#3}
-  \end{figure}
+    \ifroughpaperfigures
+      \par\noindent\textit{Rough-build note: candidate figure omitted because the artifact is unavailable: #4}\par
+    \else
+      \begin{figure}[H]
+      \centering
+      \fbox{\parbox[c][4.2cm][c]{0.90\linewidth}{\centering\textbf{Figure not promoted into the publication build}\\[0.5em]#4}}%
+      \caption{#3}
+      \end{figure}
+    \fi
+  }%
 }
 
 \newcommand{\GatedFigure}[4]{%
-  \begin{figure}[H]
-  \centering
-  \fbox{\parbox[c][4.4cm][c]{0.90\linewidth}{\centering
-    \textbf{Gated figure -- not rendered in the publication PDF}\\[0.55em]
-    #4}}
-  \caption{#3}
-  \end{figure}
+  \ifroughpaperfigures
+    \IfFileExists{#1}{%
+      \begin{figure}[H]
+      \centering
+      \includegraphics[width=#2\linewidth]{#1}%
+      \par\vspace{0.35em}{\small\color{red!55!black}\textbf{PRELIMINARY / GATED -- internal rough-draft view only.} #4\color{black}}
+      \caption{#3}
+      \end{figure}
+    }{%
+      \par\noindent\textit{Rough-build note: gated candidate omitted because the artifact is unavailable: #4}\par
+    }%
+  \else
+    \begin{figure}[H]
+    \centering
+    \fbox{\parbox[c][4.4cm][c]{0.90\linewidth}{\centering
+      \textbf{Gated figure -- not rendered in the publication PDF}\\[0.55em]
+      #4}}
+    \caption{#3}
+    \end{figure}
+  \fi
 }
 
 \title{\textbf{Test-beam topology and response-model studies of scintillator range staves for HIBEAM/NNBAR}}
 \author{HIBEAM/NNBAR CCB test-beam working group\\\small Working publication package}
-\date{12 August 2026}
+\date{\ifroughpaperfigures 31 August 2026 -- rough figure-inventory build\else 12 August 2026\fi}
 
 \begin{document}
 \maketitle
+
+\ifroughpaperfigures
+\begin{center}
+\fbox{\parbox{0.92\linewidth}{\small
+\textbf{Internal rough figure-inventory build -- not for citation or submission.}
+This variant intentionally renders existing preliminary, gated and model-diagnostic plots so the collaboration can see the expected paper shape with no blank figure boxes. Showing a plot here does not promote its claim status. Captions and red figure notes retain the evidence boundary, and missing artifacts are omitted rather than replaced by blank placeholders.
+}}
+\end{center}
+\fi
 
 \begin{center}
 \fbox{\parbox{0.92\linewidth}{\small
@@ -110,6 +150,9 @@ This PDF is the canonical chapterised build surface for the paper, but the Cycle
 \appendix
 \input{chapters/A_publication_status}
 \input{chapters/B_evidence_paths}
+\ifroughpaperfigures
+\input{chapters/C_rough_figure_inventory}
+\fi
 \input{references/references}
 
 \end{document}

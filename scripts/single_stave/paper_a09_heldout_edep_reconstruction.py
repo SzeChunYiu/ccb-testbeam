@@ -24,8 +24,8 @@ Both are reported separately with explicit justification for each.
    - `occupancy_fraction := pe_sat / (pe_sat + pe_unsat)`
    - Flags when saturated < unsaturated (detection of SiPM recovery effect)
 
-3. **Bootstrap uncertainty**: Grid/run-aware bootstrap for median bias,
-   sigma68, RMS, and tail fraction with proper 16-84% confidence intervals.
+3. **Bootstrap uncertainty**: Held-out summary and per-operating-point median
+   bias/sigma68 carry deterministic 16-84% bootstrap confidence intervals.
 
 4. **Frozen train/validation partitions**: Predefined train (p100/p140/d70) and
    heldout (p60/d110) sets - never randomized after definition.
@@ -60,7 +60,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
-SCHEMA = "ccb-paper-a09-heldout-edep/2"
+SCHEMA = "ccb-paper-a09-heldout-edep/3"
 DEFAULT_GRID = "/projects/hep/fs10/shared/nnbar/billy/ccb_calib_grid"
 
 # FROZEN train/validation partitions - NEVER change these without issue discussion
@@ -236,7 +236,11 @@ def load_grid(grid_dir: Path) -> tuple[pd.DataFrame, list[dict[str, Any]]]:
             # where pe_unsat = n_detected_pe - pe_sat (when sat < det)
             frame["occupancy_fraction"] = np.where(
                 frame["pe_sat"] > 0,
-                frame["pe_sat"] / (frame["pe_sat"] + np.maximum(0, frame["n_detected_pe"] - frame["pe_sat"])),
+                frame["pe_sat"]
+                / (
+                    frame["pe_sat"]
+                    + np.maximum(0, frame["n_detected_pe"] - frame["pe_sat"])
+                ),
                 0.0,
             )
         else:
@@ -382,15 +386,21 @@ def evaluate_split(
 
 
 def per_point_table(
-    test: pd.DataFrame, model_col: str = "relative_residual", energy_target: str = "E_vis"
+    test: pd.DataFrame,
+    model_col: str = "relative_residual",
+    energy_target: str = "E_vis",
+    seed: int = RNG_SEED,
 ) -> pd.DataFrame:
-    """Generate per-point (run/energy) resolution table."""
+    """Generate per-point resolution table with real bootstrap intervals."""
     rows: list[dict[str, Any]] = []
     energy_col = f"{energy_target}_MeV"
+    rng = np.random.default_rng(seed)
     for (species, ke, run_id), group in test.groupby(
         ["species", "kinetic_energy_MeV", "run_id"], dropna=False
     ):
         rel = group[model_col].to_numpy(float)
+        bias_boot = bootstrap_stat(rel, np.median, rng)
+        sigma_boot = bootstrap_stat(rel, sigma68, rng)
         rows.append(
             {
                 "energy_target": energy_target,
@@ -400,14 +410,26 @@ def per_point_table(
                 "n_heldout": int(len(group)),
                 f"{energy_target}_mean_MeV": float(group[energy_col].mean()),
                 f"{energy_target}_median_MeV": float(group[energy_col].median()),
-                "median_bias_fraction": float(np.median(rel)),
-                "sigma68_fraction": sigma68(rel),
+                "median_bias_fraction": float(bias_boot["estimate"]),
+                "median_bias_ci16_low_fraction": float(bias_boot["ci16_low"]),
+                "median_bias_ci84_high_fraction": float(bias_boot["ci84_high"]),
+                "sigma68_fraction": float(sigma_boot["estimate"]),
+                "sigma68_ci16_low_fraction": float(sigma_boot["ci16_low"]),
+                "sigma68_ci84_high_fraction": float(sigma_boot["ci84_high"]),
                 "rms_fraction": float(np.sqrt(np.mean(rel**2))),
                 "tail_fraction": float(np.mean(np.abs(rel) > TAIL_THRESHOLD)),
                 "occupancy_fraction_mean": float(group["occupancy_fraction"].mean()),
+                "bootstrap_reps": BOOTSTRAP_REPS,
             }
         )
-    return pd.DataFrame(rows).sort_values(["energy_target", "species", "kinetic_energy_MeV"])
+    return pd.DataFrame(rows).sort_values(
+        ["energy_target", "species", "kinetic_energy_MeV"]
+    )
+
+
+def _asymmetric_yerr(estimate: float, low: float, high: float) -> list[list[float]]:
+    """Matplotlib-compatible non-negative asymmetric interval."""
+    return [[max(0.0, estimate - low)], [max(0.0, high - estimate)]]
 
 
 def make_figure(
@@ -416,7 +438,7 @@ def make_figure(
     out: Path,
     energy_target: str = "E_vis",
 ) -> None:
-    """Create reconstruction figure with proper labeling."""
+    """Create reconstruction figure with genuine per-point uncertainty."""
     fig, (ax_bias, ax_res) = plt.subplots(1, 2, figsize=(10.5, 4.2))
     markers = {"proton": "o", "deuteron": "s"}
     colours = {"proton": "#0072B2", "deuteron": "#D55E00"}
@@ -429,21 +451,30 @@ def make_figure(
     for _, row in tbl.iterrows():
         marker = markers.get(row["species"], "o")
         colour = colours.get(row["species"], "black")
+        bias = 100 * row["median_bias_fraction"]
+        bias_low = 100 * row["median_bias_ci16_low_fraction"]
+        bias_high = 100 * row["median_bias_ci84_high_fraction"]
+        resolution = 100 * row["sigma68_fraction"]
+        resolution_low = 100 * row["sigma68_ci16_low_fraction"]
+        resolution_high = 100 * row["sigma68_ci84_high_fraction"]
+        x = row[f"{energy_target}_median_MeV"]
         ax_bias.errorbar(
-            row[f"{energy_target}_median_MeV"],
-            100 * row["median_bias_fraction"],
-            yerr=[[0], [0]],
+            x,
+            bias,
+            yerr=_asymmetric_yerr(bias, bias_low, bias_high),
             fmt=marker,
             color=colour,
             markersize=7,
             capsize=3,
         )
-        ax_res.plot(
-            row[f"{energy_target}_median_MeV"],
-            100 * row["sigma68_fraction"],
-            marker=marker,
+        ax_res.errorbar(
+            x,
+            resolution,
+            yerr=_asymmetric_yerr(resolution, resolution_low, resolution_high),
+            fmt=marker,
             color=colour,
             markersize=7,
+            capsize=3,
         )
 
     ax_bias.axhline(0, color="black", lw=0.8)
@@ -459,7 +490,7 @@ def make_figure(
     ]
     ax_bias.legend(handles=handles, loc="best", fontsize=8)
     fig.suptitle(
-        f"Held-out {energy_label} energy reconstruction (MODEL-DEPENDENT OPTICAL MC)",
+        f"Held-out {energy_label} energy reconstruction",
         fontsize=10,
         y=1.02,
     )
@@ -492,7 +523,12 @@ def write_outputs(
             negctl_summaries.append(summary)
             continue
 
-        table = per_point_table(test, energy_target=energy_target.replace("_negctl", ""))
+        per_point_seed = args.seed + (1000 if energy_target == "E_vis" else 2000)
+        table = per_point_table(
+            test,
+            energy_target=energy_target.replace("_negctl", ""),
+            seed=per_point_seed,
+        )
         all_tables.append(table)
         all_summaries.append(summary)
 
@@ -564,6 +600,7 @@ def write_outputs(
             "Optical/SiPM nuisance envelope from PAPER-A07/A08 is not yet propagated.",
             "Do not interpret as beam-data energy calibration; no ADC/MeV heuristic is used.",
             "Bootstrap uncertainties are 16-84% confidence intervals from 500 resamples.",
+            "Per-heldout-point bias and sigma68 intervals are written to the figure source tables and rendered as asymmetric error bars.",
             "Grid regeneration with both E_raw and E_vis fields is pending lane #1303.",
         ],
         "git_commit": git_commit(),
@@ -607,9 +644,6 @@ def main() -> int:
     events, bindings = load_grid(args.grid_dir)
 
     results: dict[str, tuple[pd.DataFrame, dict]] = {}
-
-    # Process requested estimands
-    estimands = []
     if args.estimand == "both":
         estimands = ["E_vis", "E_raw"]
     else:
@@ -627,7 +661,7 @@ def main() -> int:
         )
         results[energy_target] = (test, summary)
 
-        # Add negative control for E_vis (shuffled target)
+        # Add negative control for each estimand (shuffled target)
         test_neg, summary_neg = evaluate_split(
             events,
             train_runs=TRAIN_RUNS,

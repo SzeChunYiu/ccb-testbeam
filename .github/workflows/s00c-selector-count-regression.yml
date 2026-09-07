@@ -36,3 +36,18 @@ jobs:
       - name: Run S00c raw selector-count guard
         run: |
           /home/billy/anaconda3/bin/python scripts/s00d_1781028640_1234_005956da_ci_premerge.py --guard-only
+      - name: Bootstrap raw PID Hugging Face discovery
+        shell: bash
+        run: |
+          set -euo pipefail
+          /home/billy/anaconda3/bin/python -m venv "$RUNNER_TEMP/ccb-pid-env"
+          "$RUNNER_TEMP/ccb-pid-env/bin/python" -m pip install --upgrade pip
+          "$RUNNER_TEMP/ccb-pid-env/bin/python" -m pip install huggingface_hub pyarrow pandas
+          "$RUNNER_TEMP/ccb-pid-env/bin/python" chatgpt_todo/raw_pid_20260907/discover_hf_raw.py
+      - name: Report local raw B-stack ROOT inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "===CCB_LOCAL_RAW_INVENTORY_BEGIN==="
+          find "$TESTBEAM_RAW_ROOT_DIR" -maxdepth 1 -type f -name 'hrdb_run_*.root' -printf '%f %s\n' | sort
+          echo "===CCB_LOCAL_RAW_INVENTORY_END==="

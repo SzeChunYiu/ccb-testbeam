@@ -1,0 +1,129 @@
+    _save_json(summary, ctx.out_dir / "mc_pid_summary.json")
+    return metrics, oof, summary
+
+
+def _rank_u(x: np.ndarray) -> np.ndarray:
+    s = pd.Series(x)
+    return s.rank(method="average", pct=True).to_numpy(dtype=float)
+
+
+def shape_only_transfer_diagnostic(data: pd.DataFrame, ctx: AnalysisContext) -> dict[str, Any]:
+    """Scale-free copula diagnostic only; not a beam-data PID measurement.
+
+    Separate monotonic rank transforms remove absolute ADC-vs-MeV scale.  This
+    tests whether the JOINT ordering of ΔE and E resembles MC p/d topology.  The
+    resulting score is explicitly non-authorising because species mixture,
+    trigger acceptance, quenching and domain response can all change the ranks.
+    """
+    path = _download_mc(ctx)
+    mc0 = pd.read_parquet(path)
+    mc = _mc_observables(mc0, "1/3/5/7")
+    mc = mc[mc["truth_species"].isin(["p", "d"]) & (mc["dE"] > 0) & (mc["E4"] >= 0)].copy()
+    y = (mc["truth_species"] == "d").astype(int).to_numpy()
+    Xmc = np.column_stack([_rank_u(mc["E4"].to_numpy()), _rank_u(mc["dE"].to_numpy())])
+    clf = HistGradientBoostingClassifier(max_iter=250, learning_rate=0.06, max_leaf_nodes=15, l2_regularization=1.0, random_state=RNG_SEED)
+    clf.fit(Xmc, y, sample_weight=mc["PrimaryWeight"].to_numpy(dtype=float))
+
+    selected = data[data["amp_B2"] > PRIMARY_B2_THRESHOLD].copy()
+    Xd = np.column_stack([_rank_u(selected["E_adc"].to_numpy()), _rank_u(selected["deltaE_adc"].to_numpy())])
+    selected["mc_shape_d_score"] = clf.predict_proba(Xd)[:, 1]
+    selected[["run_id", "event_idx", "run", "sample", "amp_B2", "E_adc", "mc_shape_d_score"]].to_parquet(
+        ctx.table_dir / "beam_shape_only_mc_score.parquet", index=False
+    )
+
+    # Probability surface in rank space, with MC species and DATA density.
+    grid = np.linspace(0.01, 0.99, 80)
+    gx, gy = np.meshgrid(grid, grid)
+    gz = clf.predict_proba(np.column_stack([gx.ravel(), gy.ravel()]))[:, 1].reshape(gx.shape)
+    fig, axes = plt.subplots(1, 2, figsize=(13, 5.5), sharex=True, sharey=True)
+    for ax, sample in zip(axes, ["I", "II"]):
+        q = selected[selected["sample"] == sample]
+        ux = _rank_u(q["E_adc"].to_numpy())
+        uy = _rank_u(q["deltaE_adc"].to_numpy())
+        h, xe, ye = np.histogram2d(ux, uy, bins=70, range=[[0,1],[0,1]])
+        ax.pcolormesh(xe, ye, np.log10(h.T+1), shading="auto")
+        cs = ax.contour(gx, gy, gz, levels=[0.25,0.5,0.75], linewidths=1.3)
+        ax.clabel(cs, fmt="P(d) %.2f", fontsize=7)
+        ax.set_title(f"Sample {sample}")
+        ax.set_xlabel("rank(E_ADC) within selected sample")
+        ax.set_ylabel("rank(ΔE_ADC) within selected sample")
+    fig.suptitle("Shape-only MC→data topology diagnostic (rank/coplanar transfer; NOT beam-data truth PID)")
+    fig.tight_layout()
+    p = ctx.fig_dir / "14_shape_only_mc_data_transfer.png"
+    fig.savefig(p, dpi=180)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(8, 5))
+    bins = np.linspace(0,1,51)
+    for sample in ["I", "II"]:
+        q = selected[selected["sample"] == sample]
+        ax.hist(q["mc_shape_d_score"], bins=bins, density=True, histtype="step", lw=2, label=f"Sample {sample}")
+    ax.set_xlabel("MC shape-only deuteron score")
+    ax.set_ylabel("density")
+    ax.set_title("Data score distributions under a scale-free MC topology hypothesis")
+    ax.legend(); fig.tight_layout()
+    p2 = ctx.fig_dir / "15_shape_only_score_distributions.png"
+    fig.savefig(p2, dpi=180)
+    plt.close(fig)
+
+    rows = []
+    for sample in ["I", "II"]:
+        q = selected[selected["sample"] == sample]
+        rows.append({
+            "sample": sample, "n": int(len(q)),
+            "median_score": float(np.median(q["mc_shape_d_score"])),
+            "fraction_score_gt_0p5": float((q["mc_shape_d_score"] > 0.5).mean()),
+        })
+    tab = pd.DataFrame(rows)
+    tab.to_csv(ctx.table_dir / "shape_only_transfer_summary.csv", index=False)
+    summary = {
+        "status": "GATED_DIAGNOSTIC_NOT_PID_MEASUREMENT",
+        "method": "separate empirical-rank transforms of E and dE; HGB trained on MC p/d ranks",
+        "limitations": [
+            "absolute ADC-to-MeV response is removed rather than calibrated",
+            "rank transform depends on species mixture and trigger acceptance",
+            "MC truth_species is a producer proxy label",
+            "no beam-data event has an independent proton/deuteron truth label",
+        ],
+        "by_sample": rows,
+        "figures": {"rank_topology": str(p), "score_hist": str(p2)},
+    }
+    _save_json(summary, ctx.out_dir / "shape_only_transfer_summary.json")
+    return summary
+
+
+def final_summary(
+    ctx: AnalysisContext,
+    inventory: dict[str, Any],
+    reconstruction: dict[str, Any],
+    beam: dict[str, Any],
+    mc: dict[str, Any],
+    transfer: dict[str, Any],
+    qa_figures: dict[str, str],
+) -> dict[str, Any]:
+    summary = {
+        "status": "SCIENTIFIC_RERUN_COMPLETE_WITH_GATED_BEAM_PID_INTERPRETATION",
+        "date": "2026-09-07",
+        "source_repo_sha": REPO_SHA,
+        "raw_data_source": HF_REPO,
+        "inventory": inventory,
+        "reconstruction": reconstruction,
+        "beam_topology": beam,
+        "mc_detector_only_pid": mc,
+        "beam_shape_only_transfer": transfer,
+        "qa_figures": qa_figures,
+        "core_conclusions": [
+            "Raw HF data are 8 channels x 16 samples; the legacy 18-sample selector configuration is not applicable to these bytes.",
+            "All four B readouts are reconstructed before any event-level threshold is applied, avoiding upstream downstream-channel censoring.",
+            "Beam data provide amplitude-domain topology but no independent proton/deuteron truth label, so direct beam-data PID performance is not measurable from these files alone.",
+            "MC p/d discrimination is re-benchmarked with detector-only deposited-energy/readout features and excludes truth entrance kinetic energy.",
+            "MC full-downstream energy is recomputed from physical edep_layer_* columns instead of the previously broken alias-only sum.",
+            "A rank-based MC-to-data score is reported only as a gated topology diagnostic, not as a proton/deuteron fraction or purity measurement.",
+        ],
+    }
+    _save_json(summary, ctx.out_dir / "analysis_summary.json")
+    return summary
+
+
+def list_figures(ctx: AnalysisContext) -> list[Path]:
+    return sorted(ctx.fig_dir.glob("*.png"))

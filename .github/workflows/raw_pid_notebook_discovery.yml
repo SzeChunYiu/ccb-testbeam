@@ -11,34 +11,20 @@ permissions:
 
 jobs:
   discover-hf-and-raw-contract:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
-      - name: Create isolated Python environment
-        shell: bash
-        run: |
-          set -euo pipefail
-          /home/billy/anaconda3/bin/python -m venv "$RUNNER_TEMP/ccb-pid-env"
-          "$RUNNER_TEMP/ccb-pid-env/bin/python" -m pip install --upgrade pip
-          "$RUNNER_TEMP/ccb-pid-env/bin/python" -m pip install huggingface_hub pyarrow pandas
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install isolated analysis dependencies
+        run: python -m pip install --upgrade pip huggingface_hub pyarrow pandas
       - name: Discover Hugging Face dataset bytes and schema
         shell: bash
         run: |
           set -euo pipefail
-          "$RUNNER_TEMP/ccb-pid-env/bin/python" chatgpt_todo/raw_pid_20260907/discover_hf_raw.py | tee "$RUNNER_TEMP/ccb_hf_discovery.log"
-      - name: Report local raw ROOT inventory without reading event contents
-        shell: bash
-        run: |
-          set -euo pipefail
-          RAW=/home/billy/ccb-data/extracted/root/root
-          echo "===CCB_LOCAL_RAW_INVENTORY_BEGIN==="
-          if [ -d "$RAW" ]; then
-            find "$RAW" -maxdepth 1 -type f -name 'hrdb_run_*.root' -printf '%f %s\n' | sort
-          else
-            echo "MISSING $RAW"
-          fi
-          echo "===CCB_LOCAL_RAW_INVENTORY_END==="
+          python chatgpt_todo/raw_pid_20260907/discover_hf_raw.py | tee "$RUNNER_TEMP/ccb_hf_discovery.log"
       - name: Upload discovery log
         uses: actions/upload-artifact@v4
         with:

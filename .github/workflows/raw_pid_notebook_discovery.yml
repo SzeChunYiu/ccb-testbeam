@@ -1,4 +1,4 @@
-name: Raw PID notebook discovery
+name: Raw PID notebook rerun
 
 on:
   pull_request:
@@ -10,29 +10,56 @@ permissions:
   contents: read
 
 jobs:
-  discover-hf-and-raw-contract:
+  raw-pid-notebook:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
           filter: blob:none
           sparse-checkout: |
-            chatgpt_todo/raw_pid_20260907/discover_hf_raw.py
-          sparse-checkout-cone-mode: false
+            chatgpt_todo/raw_pid_20260907
+          sparse-checkout-cone-mode: true
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Install isolated analysis dependencies
-        run: python -m pip install --upgrade pip huggingface_hub pyarrow pandas
-      - name: Discover Hugging Face dataset bytes and schema
+      - name: Install isolated scientific environment
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install numpy pandas pyarrow matplotlib scikit-learn requests huggingface_hub nbformat nbconvert ipykernel
+      - name: Assemble and syntax-check analysis sources
         shell: bash
         run: |
           set -euo pipefail
-          python chatgpt_todo/raw_pid_20260907/discover_hf_raw.py | tee "$RUNNER_TEMP/ccb_hf_discovery.log"
-      - name: Upload discovery log
+          cat chatgpt_todo/raw_pid_20260907/parts/raw_pid_part_*.pyfrag > chatgpt_todo/raw_pid_20260907/raw_pid_analysis.py
+          cat chatgpt_todo/raw_pid_20260907/parts/notebook_part_*.pyfrag > chatgpt_todo/raw_pid_20260907/build_raw_pid_notebook.py
+          python -m py_compile chatgpt_todo/raw_pid_20260907/raw_pid_analysis.py chatgpt_todo/raw_pid_20260907/build_raw_pid_notebook.py
+      - name: Build step-by-step Jupyter notebook
+        run: |
+          python chatgpt_todo/raw_pid_20260907/build_raw_pid_notebook.py
+      - name: Execute raw-data and MC PID analysis notebook
+        shell: bash
+        run: |
+          set -euo pipefail
+          jupyter nbconvert --to notebook --execute \
+            --ExecutePreprocessor.timeout=3600 \
+            --output ccb_raw_pid_notebook_executed.ipynb \
+            ccb_raw_pid_notebook.ipynb
+      - name: Package reproducible scientific artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp ccb_raw_pid_notebook.ipynb artifact/ccb_raw_pid_notebook_source.ipynb
+          cp ccb_raw_pid_notebook_executed.ipynb artifact/ccb_raw_pid_notebook_executed.ipynb
+          cp chatgpt_todo/raw_pid_20260907/raw_pid_analysis.py artifact/raw_pid_analysis.py
+          python -m pip freeze > artifact/pip_freeze.txt
+          rm -rf artifact/hf_cache
+          find artifact -maxdepth 2 -type f -printf '%P %s bytes\n' | sort > artifact/ARTIFACT_CONTENTS.txt
+      - name: Upload executed notebook and all source tables/figures
         uses: actions/upload-artifact@v4
         with:
-          name: raw-pid-discovery
-          path: ${{ runner.temp }}/ccb_hf_discovery.log
+          name: ccb-raw-pid-notebook
+          path: artifact
+          if-no-files-found: error
+          retention-days: 30

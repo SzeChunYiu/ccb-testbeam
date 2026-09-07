@@ -18,7 +18,6 @@ jobs:
           filter: blob:none
           sparse-checkout: |
             reports/paper_618_species_penetration_2m_20260814T1449Z/figures
-            publication/figures/gated
           sparse-checkout-cone-mode: true
       - name: Collect PID DeltaE-E figures
         shell: bash
@@ -30,7 +29,7 @@ jobs:
           cp reports/paper_618_species_penetration_2m_20260814T1449Z/figures/618_mc_truth_full_II.png export/
           cp reports/paper_618_species_penetration_2m_20260814T1449Z/figures/618_mc_truth_4layer_I.png export/
           cp reports/paper_618_species_penetration_2m_20260814T1449Z/figures/618_mc_truth_4layer_II.png export/
-          cp publication/figures/gated/fig07_data_deltaE_E_per_sample.png export/
+          cp reports/paper_618_species_penetration_2m_20260814T1449Z/figures/fig07_data_deltaE_E_per_sample.png export/
           sha256sum export/* | sort > export/SHA256SUMS.txt
       - uses: actions/upload-artifact@v4
         with:

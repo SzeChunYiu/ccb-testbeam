@@ -1,0 +1,160 @@
+def _candidate_waveforms(
+    wave: np.ndarray,
+    amp: np.ndarray,
+    run: int,
+    ids: pd.DataFrame,
+    rng: np.random.Generator,
+    max_keep: int = 24,
+) -> list[dict[str, Any]]:
+    b2 = amp[:, B_CHANNELS["B2"]]
+    idx = np.flatnonzero(b2 > PRIMARY_B2_THRESHOLD)
+    if idx.size == 0:
+        return []
+    if idx.size > max_keep:
+        idx = rng.choice(idx, size=max_keep, replace=False)
+    out = []
+    for i in idx:
+        out.append({
+            "run": int(run),
+            "event_idx": int(ids.iloc[i]["event_idx"]),
+            "EVENTNO": int(ids.iloc[i]["EVENTNO"]),
+            "EVT": int(ids.iloc[i]["EVT"]),
+            "B2_amp": float(b2[i]),
+            "wave": wave[i, [B_CHANNELS[n] for n in B_NAMES], :].astype(float),
+        })
+    return out
+
+
+def reconstruct_beam_data(ctx: AnalysisContext) -> tuple[pd.DataFrame, dict[str, Any], list[dict[str, Any]]]:
+    """Reconstruct B2/B4/B6/B8 amplitudes directly from HF raw ADC parquet.
+
+    Important: no per-channel amplitude threshold is applied here.  Event-level
+    selections are applied only after all four B readouts have been reconstructed.
+    """
+    rng = np.random.default_rng(RNG_SEED)
+    frames: list[pd.DataFrame] = []
+    file_manifest: list[dict[str, Any]] = []
+    examples: list[dict[str, Any]] = []
+    sorter_checks: list[dict[str, Any]] = []
+
+    for run in SAMPLE_I_RUNS + SAMPLE_II_RUNS:
+        sample = RUN_TO_SAMPLE[run]
+        raw_rel = f"parquet/events/hrdb_run_{run:04d}.parquet"
+        sort_rel = f"sorted/events/hrdb_run_{run:04d}.parquet"
+        raw_local = _download_hf(raw_rel, ctx)
+        sort_local = _download_hf(sort_rel, ctx)
+        raw = pd.read_parquet(raw_local, columns=ID_COLS + ADC_COLS)
+        if raw.empty:
+            raise RuntimeError(f"empty raw run: {raw_rel}")
+        if not np.all(raw["HRD"].to_numpy() == 128):
+            raise RuntimeError(f"run {run} contains non-128 HRD rows")
+        wave = raw[ADC_COLS].to_numpy(dtype=np.float64).reshape(-1, 8, 16)
+        base4, amp4, peak4, area4 = _raw_amplitudes(wave, slice(0, 4))
+        baselast, amplast, _, _ = _raw_amplitudes(wave, slice(12, 16))
+        bidx = [B_CHANNELS[n] for n in B_NAMES]
+
+        out = raw[["run_id", "event_idx", "TRIGGER", "EVENTNO", "EVT", "NO"]].copy()
+        out["run"] = int(run)
+        out["sample"] = sample
+        for j, name in enumerate(B_NAMES):
+            ch = bidx[j]
+            out[f"baseline_{name}"] = base4[:, ch]
+            out[f"amp_{name}"] = amp4[:, ch]
+            out[f"amp_last4_{name}"] = amplast[:, ch]
+            out[f"peak_sample_{name}"] = peak4[:, ch]
+            out[f"area_{name}"] = area4[:, ch]
+        out["deltaE_adc"] = out["amp_B2"]
+        out["E_adc"] = out[["amp_B4", "amp_B6", "amp_B8"]].sum(axis=1)
+        out["total_adc"] = out["deltaE_adc"] + out["E_adc"]
+        out["deltaE_fraction"] = out["deltaE_adc"] / np.maximum(out["total_adc"], 1e-12)
+        out["baseline_B2_last4_minus_first4"] = baselast[:, B_CHANNELS["B2"]] - base4[:, B_CHANNELS["B2"]]
+        frames.append(out)
+        examples.extend(_candidate_waveforms(wave, amp4, run, raw, rng))
+
+        # Independent sorter diagnostic.  We do not require numerical identity
+        # because hrdSorter uses its own feature conventions; we only verify row
+        # identity and record the relationship rather than silently mixing them.
+        sort_cols = ["event_idx", "EVENTNO", "EVT", "n_samples"]
+        for ch in bidx:
+            sort_cols += [f"baseline_ch{ch}", f"hrdMax_ch{ch}"]
+        srt = pd.read_parquet(sort_local, columns=sort_cols)
+        identity_ok = len(srt) == len(raw) and np.array_equal(srt["event_idx"].to_numpy(), raw["event_idx"].to_numpy())
+        check: dict[str, Any] = {
+            "run": run,
+            "rows_raw": int(len(raw)),
+            "rows_sorted": int(len(srt)),
+            "event_idx_aligned": bool(identity_ok),
+            "sorter_n_samples": sorted(pd.unique(srt["n_samples"]).tolist()),
+        }
+        if identity_ok:
+            for name, ch in B_CHANNELS.items():
+                bd = srt[f"baseline_ch{ch}"].to_numpy(dtype=float) - base4[:, ch]
+                md = srt[f"hrdMax_ch{ch}"].to_numpy(dtype=float) - amp4[:, ch]
+                check[f"{name}_baseline_sorted_minus_first4_median"] = float(np.nanmedian(bd))
+                check[f"{name}_baseline_sorted_minus_first4_p84_abs"] = float(np.nanpercentile(np.abs(bd), 84))
+                check[f"{name}_hrdMax_sorted_minus_rawamp_median"] = float(np.nanmedian(md))
+                if np.std(srt[f"hrdMax_ch{ch}"].to_numpy(dtype=float)) > 0 and np.std(amp4[:, ch]) > 0:
+                    check[f"{name}_hrdMax_rawamp_corr"] = float(np.corrcoef(srt[f"hrdMax_ch{ch}"], amp4[:, ch])[0, 1])
+        sorter_checks.append(check)
+
+        file_manifest.append({
+            "run": run,
+            "sample": sample,
+            "raw_path": raw_rel,
+            "raw_bytes": int(raw_local.stat().st_size),
+            "raw_sha256": sha256_file(raw_local),
+            "sorted_path": sort_rel,
+            "sorted_bytes": int(sort_local.stat().st_size),
+            "sorted_sha256": sha256_file(sort_local),
+            "rows": int(len(raw)),
+        })
+
+    data = pd.concat(frames, ignore_index=True)
+    if data.duplicated(["run_id", "event_idx"]).any():
+        raise RuntimeError("duplicate (run_id,event_idx) rows in reconstructed event table")
+    data.to_parquet(ctx.table_dir / "beam_event_features.parquet", index=False)
+    pd.DataFrame(file_manifest).to_csv(ctx.table_dir / "input_file_manifest.csv", index=False)
+    pd.DataFrame(sorter_checks).to_csv(ctx.table_dir / "raw_sorter_crosscheck.csv", index=False)
+
+    key_diag = {
+        "n_events": int(len(data)),
+        "n_unique_run_event_idx": int(data[["run_id", "event_idx"]].drop_duplicates().shape[0]),
+        "n_unique_run_EVENTNO": int(data[["run_id", "EVENTNO"]].drop_duplicates().shape[0]),
+        "n_unique_run_EVT": int(data[["run_id", "EVT"]].drop_duplicates().shape[0]),
+        "eventno_collisions_within_run": int(data.groupby(["run_id", "EVENTNO"]).size().gt(1).sum()),
+        "evt_collisions_within_run": int(data.groupby(["run_id", "EVT"]).size().gt(1).sum()),
+        "primary_event_identity": ["run_id", "event_idx"],
+        "eventno_evt_status": "DIAGNOSTIC_ONLY",
+        "amplitude_definition": "max(polarity*(raw - median(samples[0:4])))",
+        "polarity": POLARITY.astype(int).tolist(),
+        "B_channel_map": B_CHANNELS,
+        "prethreshold_censoring": False,
+    }
+    _save_json(key_diag, ctx.out_dir / "beam_reconstruction_summary.json")
+    _save_json({"files": file_manifest, "sorter_crosscheck": sorter_checks}, ctx.out_dir / "beam_provenance.json")
+    return data, key_diag, examples
+
+
+def _select_examples(examples: list[dict[str, Any]], sample: str, qs=(0.25, 0.5, 0.75, 0.95)) -> list[dict[str, Any]]:
+    pool = [e for e in examples if RUN_TO_SAMPLE.get(e["run"]) == sample]
+    if not pool:
+        return []
+    amps = np.array([e["B2_amp"] for e in pool])
+    selected = []
+    for q in qs:
+        target = np.quantile(amps, q)
+        j = int(np.argmin(np.abs(amps - target)))
+        selected.append(pool[j])
+    return selected
+
+
+def plot_beam_qa(data: pd.DataFrame, examples: list[dict[str, Any]], ctx: AnalysisContext) -> dict[str, str]:
+    paths: dict[str, str] = {}
+
+    # Waveform examples, explicitly raw ADC codes.
+    fig, axes = plt.subplots(2, 4, figsize=(15, 6), sharex=True)
+    for row, sample in enumerate(["I", "II"]):
+        exs = _select_examples(examples, sample)
+        for col, ex in enumerate(exs[:4]):
+            ax = axes[row, col]
+            for j, name in enumerate(B_NAMES):

@@ -1,0 +1,160 @@
+            f"Sample {sample}", "log(1+E_ADC)", "log(1+ΔE_ADC)"
+        )
+    fig.colorbar(pcm2, ax=axes.ravel().tolist(), label="events/bin (+1, log scale)")
+    fig.suptitle("Same raw-data ΔE–E topology in log coordinates")
+    fig.subplots_adjust(top=0.88, wspace=0.08)
+    p_log = ctx.fig_dir / "07_beam_deltaE_E_log_density.png"
+    fig.savefig(p_log, dpi=180, bbox_inches="tight")
+    plt.close(fig)
+
+    # Threshold / reach scan.  E itself remains uncensored.
+    rows = []
+    for sample in ["I", "II"]:
+        sdata = data[data["sample"] == sample]
+        for thr in THRESHOLDS_ADC:
+            sub = sdata[sdata["amp_B2"] > thr]
+            vals = sub[[f"amp_{n}" for n in B_NAMES]].to_numpy(dtype=float)
+            active = vals > thr
+            deepest = np.where(active, np.arange(4)[None, :], -1).max(axis=1) if len(sub) else np.array([], dtype=int)
+            row = {"sample": sample, "threshold_adc": thr, "n_B2_selected": int(len(sub))}
+            for j, name in enumerate(B_NAMES):
+                row[f"local_active_{name}"] = float(active[:, j].mean()) if len(sub) else np.nan
+                row[f"deepest_at_or_beyond_{name}"] = float((deepest >= j).mean()) if len(sub) else np.nan
+            rows.append(row)
+    reach = pd.DataFrame(rows)
+    reach.to_csv(ctx.table_dir / "beam_threshold_reach_scan.csv", index=False)
+
+    fig, axes = plt.subplots(1, 2, figsize=(13, 5))
+    for ax, sample in zip(axes, ["I", "II"]):
+        q = reach[reach["sample"] == sample]
+        for name in ["B4", "B6", "B8"]:
+            ax.plot(q["threshold_adc"], q[f"deepest_at_or_beyond_{name}"]*100, marker="o", label=f"≥{name}")
+        ax.set_title(f"Sample {sample}")
+        ax.set_xlabel("common activity threshold [ADC]")
+        ax.set_ylabel("fraction of B2-selected events [%]")
+        ax.set_ylim(0, 100)
+        ax.legend()
+    fig.suptitle("Cumulative downstream activity vs threshold (no channel zero-filling before selection)")
+    fig.tight_layout()
+    p_reach = ctx.fig_dir / "08_beam_reach_threshold_scan.png"
+    fig.savefig(p_reach, dpi=180)
+    plt.close(fig)
+
+    # Run stability of topology.
+    rows = []
+    for (sample, run), sub0 in data.groupby(["sample", "run"]):
+        sub = sub0[sub0["amp_B2"] > PRIMARY_B2_THRESHOLD]
+        if len(sub) < 20:
+            continue
+        rows.append({
+            "sample": sample, "run": int(run), "n": int(len(sub)),
+            "median_deltaE": float(np.median(sub["deltaE_adc"])),
+            "median_E": float(np.median(sub["E_adc"])),
+            "median_deltaE_fraction": float(np.median(sub["deltaE_fraction"])),
+            "corr_deltaE_E": float(np.corrcoef(sub["deltaE_adc"], sub["E_adc"])[0, 1]) if np.std(sub["E_adc"])>0 else np.nan,
+        })
+    runstats = pd.DataFrame(rows)
+    runstats.to_csv(ctx.table_dir / "beam_run_topology_stability.csv", index=False)
+    fig, axes = plt.subplots(2, 1, figsize=(12, 8), sharex=True)
+    for sample in ["I", "II"]:
+        q = runstats[runstats["sample"] == sample]
+        axes[0].plot(q["run"], q["median_deltaE_fraction"], marker="o", label=f"Sample {sample}")
+        axes[1].plot(q["run"], q["corr_deltaE_E"], marker="o", label=f"Sample {sample}")
+    axes[0].set_ylabel("median ΔE/(ΔE+E)")
+    axes[1].set_ylabel("Pearson r(ΔE,E)")
+    axes[1].set_xlabel("run")
+    axes[0].legend(); axes[1].legend()
+    fig.suptitle("Run-to-run stability of the raw-data ΔE–E topology")
+    fig.tight_layout()
+    p_run = ctx.fig_dir / "09_beam_topology_run_stability.png"
+    fig.savefig(p_run, dpi=180)
+    plt.close(fig)
+
+    summary: dict[str, Any] = {
+        "primary_B2_threshold_adc": PRIMARY_B2_THRESHOLD,
+        "n_selected": {s: int((selected["sample"] == s).sum()) for s in ["I", "II"]},
+        "median": {},
+        "figures": {
+            "linear_density": str(p), "log_density": str(p_log),
+            "reach_scan": str(p_reach), "run_stability": str(p_run),
+        },
+    }
+    for s in ["I", "II"]:
+        q = selected[selected["sample"] == s]
+        summary["median"][s] = {
+            "deltaE_adc": float(np.median(q["deltaE_adc"])),
+            "E_adc": float(np.median(q["E_adc"])),
+            "deltaE_fraction": float(np.median(q["deltaE_fraction"])),
+            "corr_deltaE_E": float(np.corrcoef(q["deltaE_adc"], q["E_adc"])[0, 1]) if np.std(q["E_adc"])>0 else None,
+        }
+    _save_json(summary, ctx.out_dir / "beam_topology_summary.json")
+    return summary
+
+
+def _download_mc(ctx: AnalysisContext) -> Path:
+    dst = ctx.cache_dir / "deltaE_E_events_mc.parquet"
+    if not dst.exists():
+        with requests.get(MC_URL, stream=True, timeout=120) as r:
+            r.raise_for_status()
+            with dst.open("wb") as f:
+                for chunk in r.iter_content(1 << 20):
+                    if chunk:
+                        f.write(chunk)
+    return dst
+
+
+def _mc_observables(mc: pd.DataFrame, parity: str) -> pd.DataFrame:
+    out = mc.copy()
+    if parity == "1/3/5/7":
+        ids = [1, 3, 5, 7]
+        downstream = list(range(2, 8))
+    elif parity == "0/2/4/6":
+        ids = [0, 2, 4, 6]
+        downstream = list(range(1, 8))
+    else:
+        raise ValueError(parity)
+    out["dE"] = out[f"edep_layer_{ids[0]}"].astype(float)
+    out["E4"] = out[[f"edep_layer_{i}" for i in ids[1:]]].sum(axis=1).astype(float)
+    out["Efull_corrected"] = out[[f"edep_layer_{i}" for i in downstream]].sum(axis=1).astype(float)
+    read = out[[f"edep_layer_{i}" for i in ids]].to_numpy(dtype=float)
+    active = read > MC_REACH_THRESHOLD_MEV
+    deepest = np.where(active, np.arange(4)[None, :], -1).max(axis=1)
+    out["readout_depth"] = deepest
+    out["parity"] = parity
+    return out
+
+
+def _feature_matrix(df: pd.DataFrame, feature_set: str, energy_mode: str = "E4") -> tuple[np.ndarray, list[str]]:
+    de = df["dE"].to_numpy(dtype=float)
+    ee = df[energy_mode].to_numpy(dtype=float)
+    if feature_set == "dee":
+        return np.column_stack([np.log1p(de), np.log1p(ee)]), ["log1p_dE", f"log1p_{energy_mode}"]
+    if feature_set == "dee_ratio":
+        ratio = de / np.maximum(de + ee, 1e-12)
+        return np.column_stack([np.log1p(de), np.log1p(ee), ratio]), ["log1p_dE", f"log1p_{energy_mode}", "dE_fraction"]
+    if feature_set == "dee_ratio_depth":
+        ratio = de / np.maximum(de + ee, 1e-12)
+        return np.column_stack([np.log1p(de), np.log1p(ee), ratio, df["readout_depth"].to_numpy(dtype=float)]), ["log1p_dE", f"log1p_{energy_mode}", "dE_fraction", "readout_depth"]
+    if feature_set == "four_readouts":
+        # Layer columns selected by parity are recovered from dE/E4 plus the raw parity map.
+        if df["parity"].iloc[0] == "1/3/5/7":
+            ids = [1, 3, 5, 7]
+        else:
+            ids = [0, 2, 4, 6]
+        X = np.column_stack([np.log1p(df[f"edep_layer_{i}"].to_numpy(dtype=float)) for i in ids])
+        return X, [f"log1p_layer_{i}" for i in ids]
+    raise ValueError(feature_set)
+
+
+def _group_bootstrap_auc(y, score, weight, groups, n_boot=300, seed=RNG_SEED) -> tuple[float, float]:
+    rng = np.random.default_rng(seed)
+    unique = np.unique(groups)
+    vals = []
+    by_group = {g: np.flatnonzero(groups == g) for g in unique}
+    for _ in range(n_boot):
+        chosen = rng.choice(unique, size=len(unique), replace=True)
+        idx = np.concatenate([by_group[g] for g in chosen])
+        if np.unique(y[idx]).size < 2:
+            continue
+        vals.append(roc_auc_score(y[idx], score[idx], sample_weight=weight[idx]))
+    if not vals:

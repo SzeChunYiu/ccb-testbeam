@@ -1,0 +1,7 @@
+# Keep the role summary consistent with the corrected raw layout.
+cells[0].source = cells[0].source.replace(
+    "8×16 waveform reconstruction",
+    "18-sample-stride B-waveform reconstruction",
+)
+nb["cells"] = cells
+nbf.write(nb, OUT)

@@ -1,0 +1,100 @@
+display(pd.read_csv(ctx.table_dir/'raw_sorter_crosscheck.csv').head())
+"""))
+
+cells.append(nbf.v4.new_markdown_cell(r"""## 4. Construct the beam-data ΔE–E observable correctly
+
+The beam-data observable is an **amplitude proxy**, not calibrated deposited energy:
+
+\[
+\Delta E_{\rm data}=A(B2),\qquad
+E_{\rm data}=A(B4)+A(B6)+A(B8).
+\]
+
+For the main display we require `B2 > 1000 ADC` **after** all four amplitudes have been reconstructed. This acts as an entrance-signal selection while preserving sub-threshold downstream measurements. We also scan the activity threshold from 200 to 1500 ADC.
+
+Two penetration concepts are kept separate:
+
+- `local_active_B6`: B6 itself is above threshold;
+- `deepest_at_or_beyond_B6`: at least one of B6/B8 makes the deepest active readout B6 or deeper.
+
+This avoids conflating a local hit fraction with a cumulative reach probability.
+"""))
+cells.append(nbf.v4.new_code_cell("""beam_topology = R.analyze_beam_topology(beam_events, ctx)
+print(json.dumps(beam_topology['median'], indent=2))
+for key in ['linear_density','log_density','reach_scan','run_stability']:
+    display(Markdown(f'### Beam topology: {key.replace("_"," ")}'))
+    show_image(beam_topology['figures'][key])
+
+display(pd.read_csv(ctx.table_dir/'beam_threshold_reach_scan.csv'))
+"""))
+
+cells.append(nbf.v4.new_markdown_cell(r"""## 5. What should distinguish proton and deuteron?
+
+For charged particles traversing the same material, stopping power depends strongly on velocity. Proton and deuteron both have charge \(z=1\), but their different mass and reaction kinematics produce different velocity/range distributions. A slower deuteron can lose more energy early and stop shallower than a proton with a different velocity/energy, so a range telescope can separate populations through the **joint pattern** of early energy loss and downstream penetration.
+
+For this detector the segmentation matters strongly because only alternating readouts are observed. Therefore the relevant information is not just one number: it includes the ΔE–E position and the B2/B4/B6/B8 deposition pattern. We evaluate that statement on truth-labelled MC next.
+
+The beam data alone cannot tell us which individual band is a proton or deuteron without an independent label or a validated detector-response transfer from MC.
+"""))
+
+cells.append(nbf.v4.new_markdown_cell(r"""## 6. Re-benchmark p/d on MC with detector-only features
+
+The historical headline AUC ≈0.898 used MC truth entrance kinetic energy as one classifier feature. That feature is unavailable in beam data and is excluded here.
+
+We also repair the previously identified “full energy” bug. Instead of trusting the stored alias-based `E_mc_full_mev`, the corrected full downstream sum is rebuilt from unique physical `edep_layer_*` columns.
+
+We benchmark:
+
+- `dee`: log ΔE + log E only;
+- `dee_ratio`: + ΔE/(ΔE+E);
+- `dee_ratio_depth`: + deepest active readout;
+- `four_readouts`: the four individual readout deposits.
+
+Both logistic regression and a nonlinear histogram gradient-boosted classifier are tested with **stratified group-disjoint 5-fold CV**, where groups are contiguous source-event blocks. Standard scikit-learn ROC AUC/AP implementations replace the earlier custom tie-sensitive metric routine. We retain both readout-parity hypotheses because the physical hardware→G4 map is not yet source-bound.
+"""))
+cells.append(nbf.v4.new_code_cell("""mc_metrics, mc_oof, mc_summary = R.benchmark_mc_pid(ctx)
+display(mc_metrics.head(20))
+print('Best current-bundle-parity sparse detector-only result:')
+display(pd.DataFrame([mc_summary['best_current_parity_sparse']]))
+for key in ['topology','ablation','roc_pr','calibration']:
+    display(Markdown(f'### MC PID: {key.replace("_"," ")}'))
+    show_image(mc_summary['figures'][key])
+"""))
+
+cells.append(nbf.v4.new_markdown_cell(r"""## 7. MC→beam comparison without pretending ADC is MeV
+
+There is no source-bound absolute ADC↔MeV transfer here, so applying an MeV-trained boundary directly to ADC values would be invalid.
+
+As a deliberately conservative diagnostic, we replace ΔE and E in each domain by their empirical ranks. This removes the absolute scale and tests only the **copula/joint ordering** of the two observables. An MC classifier trained in this rank space is then evaluated on beam-data ranks.
+
+This can show whether the *shape* of the beam topology resembles the p/d topology in MC. It **cannot** measure a beam p/d fraction, purity, efficiency, or event truth because the transform itself depends on trigger/species mixture and detector response.
+"""))
+cells.append(nbf.v4.new_code_cell("""transfer = R.shape_only_transfer_diagnostic(beam_events, ctx)
+print(json.dumps(transfer, indent=2))
+show_image(transfer['figures']['rank_topology'])
+show_image(transfer['figures']['score_hist'])
+display(pd.read_csv(ctx.table_dir/'shape_only_transfer_summary.csv'))
+"""))
+
+cells.append(nbf.v4.new_markdown_cell(r"""## 8. Final evidence status
+
+The notebook deliberately distinguishes four levels of evidence:
+
+1. **Measured/raw-data facts:** waveform schema, reconstructed amplitudes, run stability, ΔE–E topology and threshold dependence.
+2. **MC truth diagnostics:** p/d separation under a specified geometry/readout/trigger proxy and label contract.
+3. **Transfer diagnostics:** rank-space MC→data resemblance, explicitly non-authorising.
+4. **Unresolved physics/calibration:** exact hardware→G4 layer map, trigger-response equivalence, absolute ADC↔energy response, saturation/linearity and an independent beam-data p/d truth label.
+
+A visually separated beam band is not automatically a proton or a deuteron. The strongest defensible beam-data PID claim requires an external truth/label handle or a detector-response MC that closes on independent calibration and trigger/geometry controls.
+"""))
+cells.append(nbf.v4.new_code_cell("""final = R.final_summary(ctx, inventory, reconstruction, beam_topology, mc_summary, transfer, qa_figures)
+print(json.dumps(final['core_conclusions'], indent=2))
+print('\nMachine-readable summary:', (ctx.out_dir/'analysis_summary.json').resolve())
+print('Tables:', ctx.table_dir.resolve())
+print('Figures:', ctx.fig_dir.resolve())
+"""))
+
+nb["cells"] = cells
+OUT.parent.mkdir(parents=True, exist_ok=True)
+nbf.write(nb, OUT)
+print(OUT)

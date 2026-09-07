@@ -38,41 +38,66 @@ jobs:
           from pathlib import Path
           p = Path("chatgpt_todo/raw_pid_20260907/raw_pid_analysis.py")
           s = p.read_text(encoding="utf-8")
-          old = 'if parity == "1/3/5/7" and energy_mode == "E4" and fs in ["dee", "four_readouts"]:'
-          new = 'if parity == "1/3/5/7" and energy_mode == "E4":'
-          if old not in s:
-              raise SystemExit("expected OOF bookkeeping target not found")
-          s = s.replace(old, new, 1)
-
-          old = '    selected["mc_shape_d_score"] = clf.predict_proba(Xd)[:, 1]\n'
-          new = ('    selected["rank_E_pooled"] = Xd[:, 0]\n'
-                 '    selected["rank_dE_pooled"] = Xd[:, 1]\n'
-                 '    selected["mc_shape_d_score"] = clf.predict_proba(Xd)[:, 1]\n')
-          if old not in s:
-              raise SystemExit("expected pooled-rank storage target not found")
-          s = s.replace(old, new, 1)
-
-          old = ('        ux = _rank_u(q["E_adc"].to_numpy())\n'
-                 '        uy = _rank_u(q["deltaE_adc"].to_numpy())\n')
-          new = ('        ux = q["rank_E_pooled"].to_numpy(dtype=float)\n'
-                 '        uy = q["rank_dE_pooled"].to_numpy(dtype=float)\n')
-          if old not in s:
-              raise SystemExit("expected rank-plot target not found")
-          s = s.replace(old, new, 1)
-
-          old = ('        ax.set_xlabel("rank(E_ADC) within selected sample")\n'
-                 '        ax.set_ylabel("rank(ΔE_ADC) within selected sample")\n')
-          new = ('        ax.set_xlabel("pooled-data rank(E_ADC)")\n'
-                 '        ax.set_ylabel("pooled-data rank(ΔE_ADC)")\n')
-          if old not in s:
-              raise SystemExit("expected rank-axis target not found")
-          s = s.replace(old, new, 1)
+          replacements = [
+              (
+                  'if parity == "1/3/5/7" and energy_mode == "E4" and fs in ["dee", "four_readouts"]:',
+                  'if parity == "1/3/5/7" and energy_mode == "E4":',
+              ),
+              (
+                  '    selected["mc_shape_d_score"] = clf.predict_proba(Xd)[:, 1]\n',
+                  '    selected["rank_E_pooled"] = Xd[:, 0]\n'
+                  '    selected["rank_dE_pooled"] = Xd[:, 1]\n'
+                  '    selected["mc_shape_d_score"] = clf.predict_proba(Xd)[:, 1]\n',
+              ),
+              (
+                  '        ux = _rank_u(q["E_adc"].to_numpy())\n'
+                  '        uy = _rank_u(q["deltaE_adc"].to_numpy())\n',
+                  '        ux = q["rank_E_pooled"].to_numpy(dtype=float)\n'
+                  '        uy = q["rank_dE_pooled"].to_numpy(dtype=float)\n',
+              ),
+              (
+                  '        ax.set_xlabel("rank(E_ADC) within selected sample")\n'
+                  '        ax.set_ylabel("rank(ΔE_ADC) within selected sample")\n',
+                  '        ax.set_xlabel("pooled-data rank(E_ADC)")\n'
+                  '        ax.set_ylabel("pooled-data rank(ΔE_ADC)")\n',
+              ),
+          ]
+          for old, new in replacements:
+              if old not in s:
+                  raise SystemExit(f"expected audited replacement target not found: {old[:80]!r}")
+              s = s.replace(old, new, 1)
           p.write_text(s, encoding="utf-8")
           PY
           python -m py_compile chatgpt_todo/raw_pid_20260907/raw_pid_analysis.py chatgpt_todo/raw_pid_20260907/build_raw_pid_notebook.py
-      - name: Build step-by-step Jupyter notebook
+      - name: Build and statically validate step-by-step Jupyter notebook
+        shell: bash
         run: |
+          set -euo pipefail
           python chatgpt_todo/raw_pid_20260907/build_raw_pid_notebook.py
+          python - <<'PY'
+          import ast
+          from pathlib import Path
+          import nbformat
+
+          p = Path("ccb_raw_pid_notebook.ipynb")
+          nb = nbformat.read(p, as_version=4)
+          # Repair the final generated cell without changing its scientific content;
+          # the builder's escaped newline became a literal newline inside a quoted string.
+          nb.cells[-1].source = '''final = R.final_summary(ctx, inventory, reconstruction, beam_topology, mc_summary, transfer, qa_figures)
+          print(json.dumps(final["core_conclusions"], indent=2))
+          print()
+          print("Machine-readable summary:", (ctx.out_dir/"analysis_summary.json").resolve())
+          print("Tables:", ctx.table_dir.resolve())
+          print("Figures:", ctx.fig_dir.resolve())'''
+          for i, cell in enumerate(nb.cells):
+              if cell.cell_type == "code":
+                  try:
+                      ast.parse(cell.source)
+                  except SyntaxError as exc:
+                      raise SystemExit(f"generated notebook code cell {i} failed AST parse: {exc}") from exc
+          nbformat.write(nb, p)
+          print(f"AST-validated {sum(c.cell_type == 'code' for c in nb.cells)} code cells")
+          PY
       - name: Execute raw-data and MC PID analysis notebook
         shell: bash
         run: |

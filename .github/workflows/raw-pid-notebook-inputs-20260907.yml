@@ -1,0 +1,92 @@
+name: Raw PID notebook input retrieval 20260907
+on:
+  push:
+    branches: [chatgpt/raw-pid-notebook-reproducible-20260907]
+    paths: [.github/workflows/raw-pid-notebook-inputs-20260907.yml]
+permissions:
+  contents: read
+jobs:
+  retrieve:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      HF_HUB_DISABLE_XET: '1'
+      HF_HUB_DISABLE_PROGRESS_BARS: '1'
+    steps:
+      - name: Retrieve immutable public ADC inputs without event selection
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m pip -q install 'huggingface_hub>=0.34,<2' 'pyarrow>=18,<24' 'numpy>=2,<3' 'pandas>=2.2,<3'
+          mkdir -p inputs
+          cat > /tmp/retrieve.py <<'PY'
+          import concurrent.futures, hashlib, json, pathlib, urllib.request
+          import numpy as np
+          import pandas as pd
+          from huggingface_hub import HfApi, hf_hub_download
+          out=pathlib.Path('inputs')
+          rid='billyyiu747/ccb-testbeam'
+          rev=HfApi().dataset_info(rid).sha
+          runs=list(range(44,64))+[65]
+          cols=[f'HRDv_ch{i:03d}' for i in range(1,129)]
+          manifest={'dataset':rid,'revision':rev,'runs':runs,'selection':'none; every row in the requested HRDB files','files':[],'failures':[]}
+          def one(r):
+              path=f'parquet/events/hrdb_run_{r:04d}.parquet'
+              local=pathlib.Path(hf_hub_download(rid,path,repo_type='dataset',revision=rev))
+              with local.open('rb') as f:
+                  if f.read(4)!=b'PAR1': raise ValueError('not a Parquet payload')
+                  f.seek(-4,2)
+                  if f.read(4)!=b'PAR1': raise ValueError('Parquet footer is invalid')
+              df=pd.read_parquet(local)
+              if any(c not in df for c in cols): raise ValueError('ADC word columns missing')
+              if set(df['detector'].astype(str))!={'hrdb'}: raise ValueError('detector mismatch')
+              if set(df['run_no'].astype(int))!={r}: raise ValueError('run mismatch')
+              if not df['event_idx'].is_unique: raise ValueError('duplicate source row')
+              if 'HRD' in df and not (df['HRD']==128).all(): raise ValueError('non-128-word event')
+              a=df[cols].to_numpy(dtype=np.float64)
+              record={'path':path,'sha256':hashlib.sha256(local.read_bytes()).hexdigest(),'bytes':local.stat().st_size,'run_no':r,'n_events':len(df),'nonfinite_words':int((~np.isfinite(a)).sum())}
+              fields={c:df[c].to_numpy() for c in ['event_idx','EVENTNO','EVT','TRIGGER'] if c in df}
+              return r,a,fields,record
+          results=[]
+          with concurrent.futures.ThreadPoolExecutor(max_workers=3) as ex:
+              fs={ex.submit(one,r):r for r in runs}
+              for f in concurrent.futures.as_completed(fs):
+                  try:
+                      item=f.result(); results.append(item); print(json.dumps(item[3]),flush=True)
+                  except Exception as e:
+                      manifest['failures'].append({'run':fs[f],'error':str(e)}); print('INPUT_ERROR',fs[f],repr(e),flush=True)
+          if manifest['failures']:
+              manifest['status']='BLOCKED_INCOMPLETE_INPUTS'
+              (out/'manifest.json').write_text(json.dumps(manifest,indent=2))
+              raise SystemExit('No partial population will be presented as the complete analysis')
+          results.sort(key=lambda x:x[0])
+          manifest['files']=[x[3] for x in results]
+          arrays={'adc_words':np.concatenate([x[1] for x in results]),'run_no':np.concatenate([np.full(len(x[1]),x[0],dtype=np.int16) for x in results])}
+          for c in ['event_idx','EVENTNO','EVT','TRIGGER']:
+              if all(c in x[2] for x in results): arrays[c]=np.concatenate([x[2][c] for x in results])
+          np.savez_compressed(out/'raw_adc.npz',**arrays)
+          manifest['n_events']=len(arrays['run_no'])
+          manifest['raw_npz_sha256']=hashlib.sha256((out/'raw_adc.npz').read_bytes()).hexdigest()
+          manifest['status']='RAW_ADC_RETRIEVED_NO_PHYSICS_CLAIM'
+          base='https://raw.githubusercontent.com/SzeChunYiu/ccb-testbeam/cec9edc28257e0699c70c17fa9b2e8d806a3d42a/'
+          path='reports/paper_618_species_penetration_2m_20260814T1449Z/deltaE_E_events_mc.parquet'
+          try:
+              b=urllib.request.urlopen(base+path,timeout=90).read()
+              if hashlib.sha256(b).hexdigest()!='d67b0bf47e1485877af9b9732b0139bbf5a2fd88733e6a7c2d4e2266184c5c40': raise ValueError('MC source hash mismatch')
+              import io
+              pd.read_parquet(io.BytesIO(b)).to_csv(out/'mc_deposits.csv.gz',index=False)
+              manifest['mc']={'source':base+path,'sha256':hashlib.sha256(b).hexdigest(),'csv_sha256':hashlib.sha256((out/'mc_deposits.csv.gz').read_bytes()).hexdigest(),'status':'DEPOSIT_TABLE_ONLY; first-stored-entrance labels are not independently validated primary-track truth'}
+          except Exception as e:
+              manifest['mc']={'status':'UNAVAILABLE','error':str(e)}
+          (out/'manifest.json').write_text(json.dumps(manifest,indent=2))
+          print('FINAL_INPUT_MANIFEST',json.dumps(manifest),flush=True)
+          PY
+          python3 /tmp/retrieve.py
+      - name: Preserve inputs and access receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: raw-pid-notebook-inputs
+          path: inputs/
+          retention-days: 7
+          if-no-files-found: error

@@ -1,0 +1,57 @@
+# Beginner-facing raw timing configuration.
+# Start with all authorization switches false. Turn one on only after the
+# corresponding plots and provenance evidence are reviewed and recorded.
+
+inputs:
+  - data/extracted/root/root/hrdb_run_0058.root
+  - data/extracted/root/root/hrdb_run_0059.root
+  - data/extracted/root/root/hrdb_run_0060.root
+  - data/extracted/root/root/hrdb_run_0061.root
+  - data/extracted/root/root/hrdb_run_0062.root
+  - data/extracted/root/root/hrdb_run_0063.root
+  - data/extracted/root/root/hrdb_run_0065.root
+
+tree: h101
+event_branch: EVENTNO
+waveform_branch: HRDv
+n_channels: 8
+samples_per_channel: 18
+sample_period_ns: 10.0
+step_size: 20000
+max_events: 250000
+
+staves:
+  B2: 0
+  B4: 2
+  B6: 4
+  B8: 6
+
+polarity_map: configs/channel_polarity_v1.json
+baseline_samples: [0, 1, 2, 3]
+amplitude_cut_adc: 1000.0
+fractions: [0.10, 0.20, 0.30, 0.40, 0.50, 0.60]
+analysis_fraction: 0.50
+
+# Example split only. Freeze it before looking at the final test residual.
+calibration_runs: [58, 59]
+test_runs: [60, 61, 62, 63, 65]
+
+tof_ns:
+  B2: 0.000
+  B4: 0.312
+  B6: 0.624
+  B8: 0.936
+
+# Claim gates. These are deliberately fail-closed.
+authorising: true
+source_frame_authorized: false
+component_identity_authorized: false
+allow_independent_zero_covariance_resolution_model: false
+
+# Optional historical failure reproduction. Never use its output as detector
+# performance; every plot is watermarked and its resolution gate is false.
+legacy_artifact_reproduction:
+  enabled: false
+  truncate_words: 128
+  samples_per_channel: 16
+  polarity_map: configs/channel_polarity_v2.json

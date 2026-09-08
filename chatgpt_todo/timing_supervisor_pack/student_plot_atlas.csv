@@ -1,0 +1,30 @@
+order,plot_id,plot_title,student_question,pass_evidence,stop_condition,blocks_pair_timing,blocks_stave_resolution
+0,RUN-MAP,Run split and provenance,Which runs train the method and which runs test it?,Disjoint frozen run sets with hashes and complete counts,Overlap missing run or unexplained exclusion,yes,yes
+1,FRAME-WIDTH,Per-event waveform word count,Does every event have the independently authorized frame width?,One source-bound width and zero malformed events,Any malformed event or shape chosen only because reshape succeeds,yes,yes
+2,FRAME-BOUNDARY,Correct versus legacy channel boundaries,Do block boundaries coincide with physical channels?,Pedestals and duplicate relationships align only in the authorized frame,Pulse-like steps appear at misframed boundaries,yes,yes
+3,WAVEFORM-ATLAS,Raw waveform atlas,Are there localized physical pulses on the claimed channels?,Stable rise/fall morphology on main and duplicate readout,Quiet channel or fixed structural step,yes,yes
+4,DUPLICATE-CORR,Main/duplicate channel correlation,Do duplicate readouts observe the same pulse?,Stable signed gain and timing correlation,No correlation or pedestal-only correlation,yes,yes
+5,BASELINE-DIST,Baseline level RMS and slope,Is the baseline uncontaminated and stable?,Single stable population with small slope,Multiple modes drift or pulse in baseline window,yes,yes
+6,BASELINE-TIME,Baseline versus run/event,Does the baseline change with acquisition time?,Small calibrated drift with documented systematics,Abrupt jumps or unmodeled drift,yes,yes
+7,COMP-AMP,Selected versus global amplitude,Is the timed component the component that passes the cut?,Diagonal or independently validated component class,Tiny early feature authorized by a later global peak,yes,yes
+8,COMP-TIME,Selected versus global peak sample,Does component selection follow one physical pulse family?,Consistent sample relationship and duplicate match,Fixed early selector or component switching,yes,yes
+9,CFD-EXAMPLE,Event-level CFD construction,Is the crossing on the intended rising edge?,Positive bracket adequate slope and valid status,Window censoring recrossing wrong component or flat bracket,yes,yes
+10,CUTFLOW,Unique-event cut flow,Where are physical events lost?,All stages reconcile with named rejection reasons,Waveform rows called events or hidden population change,yes,yes
+11,TIMESTAMP,Per-stave timestamp distributions,Are timestamps physically plausible?,Interior continuous distributions without boundary piles,Boundary spikes or integer-sample lattice,yes,yes
+12,TIME-CORR,Timestamp correlation,Does a common particle time create the correlation?,Stable diagonal relation across run and amplitude,Correlation only in one fixed sample cell,yes,yes
+13,SAMPLE-MAP,Peak and crossing sample-pair map,Is the narrow pair tied to a structural index?,Broad physical occupancy with stable residual,One boundary/sample combination dominates,yes,yes
+14,CORRECTION-STAGES,Residual after each correction,Which step moves the median and which changes width?,Constant shifts move median only and event count stays fixed,Width changes after a constant correction,yes,yes
+15,RESIDUAL-LINEAR,Full residual linear scale,What population dominates?,Central shape and population visible,Plot range hides events,yes,yes
+16,RESIDUAL-LOG,Full residual log scale,Are there rare tails or satellite modes?,Tail fractions quantified and modeled,Large hidden tails,yes,yes
+17,RESIDUAL-CORE,Zoomed central residual,Where does the approximately 0.1 ns central number come from?,Q16 Q84 median and binning shown,Core shown without full distribution,yes,yes
+18,FIT-DIAGNOSTIC,CDF QQ and fit pulls,Does the proposed model describe the data?,Acceptable residuals and goodness metric,Huge chi2/ndf or systematic QQ departure,yes,yes
+19,FRACTION-SCAN,CFD fraction scan,Was the fraction chosen without test-sample optimization?,Frozen choice from calibration/validation and stable test result,Minimum selected and quoted on same events,yes,yes
+20,TIMEWALK,Residual versus amplitudes,Is amplitude-dependent timing removed?,Held-out slope compatible with zero,Trend remains or same-sample correction,yes,yes
+21,SNR-SLOPE,Residual versus noise and crossing slope,Does precision follow noise-over-slope expectations?,Physically plausible improvement with slope/SNR,Ultra-narrow result independent of waveform quality,yes,yes
+22,PHASE,Residual versus fractional sample phase,Is interpolation calibrated across sampling phase?,No sawtooth bias or phase-localized width,Phase-dependent bias or one-bin narrow result,yes,yes
+23,RUN-STABILITY,Per-run/block timing metrics,Is the result portable across independent data blocks?,Compatible metrics with block/run intervals,One run dominates or strong drift,yes,yes
+24,PAIR-MATRIX,All-pair variance/width matrix,Is there enough connected information for stave inference?,At least three connected physical pairs with common selection,One pair disconnected graph or pair-population mismatch,no,yes
+25,COVARIANCE,Covariance/common-mode diagnostics,Can common trigger jitter be separated from stave jitter?,External reference or validated hierarchical covariance model,Assumed zero covariance without evidence,no,yes
+26,DECONVOLUTION,Non-negative stave variance fit,Does the model reproduce all observed pairs?,Non-negative solution and held-out pair closure,Negative/unphysical terms or poor closure,no,yes
+27,INJECTION,Injected versus recovered timing,Does the complete analysis recover known truth?,Bias and interval coverage close across a grid,Only one nominal point or failed coverage,no,yes
+28,SYSTEMATICS,Signed systematic shifts,How robust is the result to justified analysis choices?,Complete propagated uncertainty budget,Only statistical uncertainty or undocumented tuning,no,yes

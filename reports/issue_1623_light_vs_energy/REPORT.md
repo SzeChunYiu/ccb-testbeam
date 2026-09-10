@@ -66,6 +66,22 @@ all collapse onto one `E_vis/E_dep` curve when plotted against the path-averaged
 Note the two proton rows at nearly the same deposit (12.00 vs 11.08 MeV) giving
 68 vs 124 photoelectrons — a factor 1.8 purely from track topology.
 
+### The non-linearity has opposite sign in the two regimes
+
+`sample_A/03_lightyield_per_MeV_vs_edep.png` is split by fate, and the two
+panels move in opposite directions:
+
+* **punch-through** tracks show the familiar quenching non-linearity — yield per
+  MeV falls from ≈ 11.5 pe/MeV at minimum ionizing to ≈ 8 pe/MeV at a 45 MeV
+  deposit, because a larger deposit at fixed path length means a higher dE/dx;
+* **stopping** tracks show the opposite — yield per MeV *rises* from ≈ 2 pe/MeV
+  at a 5 MeV deposit to ≈ 7 pe/MeV at 60 MeV, because a higher-energy stopping
+  primary spends most of its longer path at low dE/dx and only the Bragg tail is
+  strongly quenched.
+
+Pooled over fate the two branches cancel into a jagged, uninterpretable curve.
+This is the same mixing that makes the pooled d/p ratio point the wrong way.
+
 ## Position dependence
 
 At fixed deposit, geometry alone moves the light yield substantially
@@ -100,9 +116,9 @@ reference. All profiles show the median with a 16–84 % band.
 |---|---|
 | `01_nscint_vs_edep.png` | N_scint vs E_dep (raw and Birks-visible), per species |
 | `02_npe_vs_edep.png` | photons at the readout and detected PE vs E_dep |
-| `03_lightyield_per_MeV_vs_edep.png` | N_pe / E_dep vs E_dep — the non-linearity |
+| `03_lightyield_per_MeV_vs_edep.png` | N_pe / E_dep vs E_dep — the non-linearity, split by primary fate |
 | `04_yield_and_birks_vs_dedx.png` | yield and Birks factor vs dE/dx |
-| `05_birks_ratio_vs_edep.png` | E_vis / E_dep vs deposit |
+| `05_birks_ratio_vs_edep.png` | E_vis / E_dep vs deposit, split by primary fate |
 | `06_position_long.png`, `06_position_trans.png` | yield vs distance to SiPM / to the WLS fibre, in fixed deposit bands |
 | `07_proton_vs_deuteron.png` | B2 windows and the stopping/punch-through split |
 | `08_adc_vs_edep.png` | ADC-equivalent (saturated — see caveat) |

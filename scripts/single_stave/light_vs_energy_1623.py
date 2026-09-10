@@ -257,14 +257,23 @@ def make_plots(d: pd.DataFrame, out: pathlib.Path, sample_label: str) -> list[st
     fig.suptitle(f"Light reaching the readout vs deposited energy -- {sample_label}", fontsize=11)
     written.append(savefig(fig, out, "02_npe_vs_edep.png"))
 
-    # 3. light yield per MeV vs Edep -- the non-linearity, directly
-    fig, ax = plt.subplots(figsize=(6.4, 4.6))
-    profile_plot(ax, d, "edep_raw_MeV", "pe_per_MeV", e_edges, sp_present)
-    ax.set_xlabel(r"$E_{\rm dep}$ (raw) [MeV]")
-    ax.set_ylabel(r"$N_{\rm pe}/E_{\rm dep}$ [pe / MeV]")
-    ax.grid(alpha=0.3)
-    ax.legend(fontsize=8)
-    ax.set_title(f"Light yield per deposited MeV -- {sample_label}", fontsize=11)
+    # 3. light yield per MeV vs Edep -- the non-linearity, directly.
+    #    Split by primary fate: at one deposit a stopping primary and a
+    #    punch-through one have very different dE/dx and so very different
+    #    quenching, and pooling them makes the curve a function of the energy
+    #    grid rather than of the detector.
+    fig, axes = plt.subplots(1, 2, figsize=(11, 4.4), sharey=True)
+    for ax, fate in zip(axes, ("stopped", "punch-through")):
+        sub = d[d["fate"] == fate]
+        if len(sub) == 0:
+            continue
+        profile_plot(ax, sub, "edep_raw_MeV", "pe_per_MeV", e_edges, sp_present)
+        ax.set_xlabel(r"$E_{\rm dep}$ (raw) [MeV]")
+        ax.grid(alpha=0.3)
+        ax.legend(fontsize=8)
+        ax.set_title(f"primary {fate} in the bar  (n={len(sub)})", fontsize=10)
+    axes[0].set_ylabel(r"$N_{\rm pe}/E_{\rm dep}$ [pe / MeV]")
+    fig.suptitle(f"Light yield per deposited MeV -- {sample_label}", fontsize=11)
     written.append(savefig(fig, out, "03_lightyield_per_MeV_vs_edep.png"))
 
     # 4. vs dE/dx
@@ -283,14 +292,19 @@ def make_plots(d: pd.DataFrame, out: pathlib.Path, sample_label: str) -> list[st
     fig.suptitle(f"Quenching vs stopping power -- {sample_label}", fontsize=11)
     written.append(savefig(fig, out, "04_yield_and_birks_vs_dedx.png"))
 
-    # 5. Birks factor vs Edep
-    fig, ax = plt.subplots(figsize=(6.4, 4.6))
-    profile_plot(ax, d, "edep_raw_MeV", "birks_ratio", e_edges, sp_present)
-    ax.set_xlabel(r"$E_{\rm dep}$ (raw) [MeV]")
-    ax.set_ylabel(r"$E_{\rm vis}/E_{\rm dep}$")
-    ax.grid(alpha=0.3)
-    ax.legend(fontsize=8)
-    ax.set_title(f"Birks-quenched fraction vs deposit -- {sample_label}", fontsize=11)
+    # 5. Birks factor vs Edep, split by fate for the same reason as plot 3.
+    fig, axes = plt.subplots(1, 2, figsize=(11, 4.4), sharey=True)
+    for ax, fate in zip(axes, ("stopped", "punch-through")):
+        sub = d[d["fate"] == fate]
+        if len(sub) == 0:
+            continue
+        profile_plot(ax, sub, "edep_raw_MeV", "birks_ratio", e_edges, sp_present)
+        ax.set_xlabel(r"$E_{\rm dep}$ (raw) [MeV]")
+        ax.grid(alpha=0.3)
+        ax.legend(fontsize=8)
+        ax.set_title(f"primary {fate} in the bar  (n={len(sub)})", fontsize=10)
+    axes[0].set_ylabel(r"$E_{\rm vis}/E_{\rm dep}$")
+    fig.suptitle(f"Birks-quenched fraction vs deposit -- {sample_label}", fontsize=11)
     written.append(savefig(fig, out, "05_birks_ratio_vs_edep.png"))
 
     # 6. position dependence in fixed deposit bands

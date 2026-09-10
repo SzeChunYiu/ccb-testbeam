@@ -23,6 +23,8 @@ def run_mode(exe: str, mode: str, macro: str, optical_dir: str,
     out_root = os.path.join(work_dir, f"far_end_{mode}.root")
     cmd = [
         exe,
+        "--physics-list", "QGSP_BIC",
+        "--neutron-timecut-policy-id", "pin_qgsp_bic_default_10us",
         "--far-end", mode,
         "--macro", macro,
         "--optical-dir", optical_dir,

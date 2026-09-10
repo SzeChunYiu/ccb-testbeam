@@ -1,0 +1,61 @@
+11.2.2
+-- CCB Opticks GPU bridge: build out-of-tree via opticks/build_bridge.sh
+-- Configuring done (0.8s)
+-- Generating done (0.3s)
+-- Build files have been written to: /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1623/geant4/single_stave/build
+[  2%] Building CXX object sipm/CMakeFiles/ccb_sipm_core.dir/src/Config.cc.o
+[  4%] Building CXX object sipm/CMakeFiles/ccb_sipm_core.dir/src/ResponseSimulator.cc.o
+[  6%] Building CXX object sipm/CMakeFiles/ccb_sipm_core.dir/src/Seed.cc.o
+[  9%] Building CXX object sipm/CMakeFiles/ccb_sipm_core.dir/src/Digest.cc.o
+[ 11%] Linking CXX static library libccb_sipm_core.a
+[ 11%] Built target ccb_sipm_core
+[ 16%] Building CXX object sipm/CMakeFiles/ccb_sipm_toy.dir/examples/toy_sim.cc.o
+[ 16%] Building CXX object sipm/CMakeFiles/ccb_sipm_geant4.dir/adapters/geant4/src/Geant4BoundaryCollector.cc.o
+[ 18%] Building CXX object sipm/CMakeFiles/ccb_sipm_measured_impulse_tests.dir/tests/test_measured_impulse_failclosed.cc.o
+[ 23%] Building CXX object sipm/CMakeFiles/ccb_sipm_kernel_history_tests.dir/tests/test_kernel_history.cc.o
+[ 23%] Building CXX object sipm/CMakeFiles/ccb_sipm_dark_history_tests.dir/tests/test_dark_history.cc.o
+[ 32%] Building CXX object sipm/CMakeFiles/ccb_sipm_tests.dir/tests/test_core.cc.o
+[ 32%] Building CXX object sipm/CMakeFiles/ccb_sipm_impulse_digest_tests.dir/tests/test_impulse_digest.cc.o
+[ 32%] Building CXX object sipm/CMakeFiles/ccb_sipm_impulse_provenance_state_tests.dir/tests/test_impulse_provenance_state.cc.o
+[ 32%] Building CXX object sipm/CMakeFiles/ccb_sipm_impulse_runtime_binding_tests.dir/tests/test_impulse_runtime_binding.cc.o
+[ 34%] Linking CXX executable ccb_sipm_impulse_digest_tests
+[ 37%] Linking CXX executable ccb_sipm_dark_history_tests
+[ 37%] Built target ccb_sipm_impulse_digest_tests
+[ 39%] Linking CXX executable ccb_sipm_impulse_provenance_state_tests
+[ 41%] Linking CXX executable ccb_sipm_measured_impulse_tests
+[ 44%] Linking CXX executable ccb_sipm_kernel_history_tests
+[ 44%] Built target ccb_sipm_dark_history_tests
+[ 46%] Linking CXX executable ccb_sipm_impulse_runtime_binding_tests
+[ 46%] Built target ccb_sipm_impulse_provenance_state_tests
+[ 46%] Built target ccb_sipm_measured_impulse_tests
+[ 46%] Built target ccb_sipm_impulse_runtime_binding_tests
+[ 46%] Built target ccb_sipm_kernel_history_tests
+[ 48%] Linking CXX executable ccb_sipm_tests
+[ 48%] Built target ccb_sipm_tests
+[ 51%] Linking CXX static library libccb_sipm_geant4.a
+[ 53%] Linking CXX executable ccb_sipm_toy
+[ 53%] Built target ccb_sipm_geant4
+[ 53%] Built target ccb_sipm_toy
+[ 55%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/ActionInitialization.cc.o
+[ 58%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/BuildIdentity.cc.o
+[ 60%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/AppConfig.cc.o
+[ 67%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/DetectorConstruction.cc.o
+[ 69%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/EventAction.cc.o
+[ 74%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/OpticalConstantsLedger.cc.o
+[ 74%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/NeutronTimecutPolicy.cc.o
+[ 74%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/DetectorMessenger.cc.o
+[ 74%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/OpticalTables.cc.o
+[ 76%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/PhysicsList.cc.o
+[ 79%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/PrimaryGeneratorAction.cc.o
+[ 81%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/RunAction.cc.o
+[ 83%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/Sha256.cc.o
+[ 86%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/SipmBuildProvenance.cc.o
+[ 90%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/SipmDigitizerConfig.cc.o
+[ 90%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/StackingAction.cc.o
+[ 93%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/SteppingAction.cc.o
+[ 95%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/TrackingAction.cc.o
+[ 97%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/main.cc.o
+[100%] Linking CXX executable ccb_stave_sim
+[100%] Built target ccb_stave_sim
+BUILD_OK /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1623/geant4/single_stave/build/ccb_stave_sim
+-rwxr-xr-x 1 scyiu hep 551296 Sep 10 09:42 /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1623/geant4/single_stave/build/ccb_stave_sim

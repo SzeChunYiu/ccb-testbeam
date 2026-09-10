@@ -105,6 +105,8 @@ def run_sim(args: argparse.Namespace, production_cut_mm: float, out_root: Path) 
     """Run ccb_stave_sim for a handful of events at the requested production cut."""
     cmd = [
         str(args.exe),
+        "--physics-list", "QGSP_BIC",
+        "--neutron-timecut-policy-id", "pin_qgsp_bic_default_10us",
         "--particle", args.particle,
         "--energy", str(args.energy),
         "--nevents", str(args.nevents),

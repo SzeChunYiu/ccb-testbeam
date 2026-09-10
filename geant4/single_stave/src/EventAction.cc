@@ -92,9 +92,17 @@ void EventAction::EndOfEventAction(const G4Event* event) {
     if (!result.waveform.adc.empty()) {
       int peak_raw = *std::max_element(result.waveform.adc.begin(),
                                         result.waveform.adc.end());
+      // ResponseSimulator already clamped every sample to the ADC ceiling, so a
+      // peak sitting on it means the waveform was clipped and this channel's
+      // value is a lower bound, not a measurement (#1623).
+      const int max_adc = (1 << cfg.adc_bits) - 1;
+      const bool saturated = (peak_raw >= max_adc);
+      data_.adc_saturated[sid] = saturated ? 1 : 0;
       data_.adc[sid] = static_cast<double>(peak_raw) - cfg.baseline_adc;
+      if (run_action_) run_action_->NoteAdcSaturation(sid, saturated);
     } else {
       data_.adc[sid] = 0.0;
+      data_.adc_saturated[sid] = 0;
     }
     if (data_.adc[sid] > 0.5) has_adc = true;
   }

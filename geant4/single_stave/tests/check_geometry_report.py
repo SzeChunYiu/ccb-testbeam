@@ -85,7 +85,10 @@ def check_report(report: dict) -> list[str]:
 
 
 def run_live(exe: str, macro: str, optical_dir: str, output: str) -> str:
-    cmd = [exe, "--macro", macro, "--optical-dir", optical_dir, "--output", output]
+    cmd = [exe,
+           "--physics-list", "QGSP_BIC",
+           "--neutron-timecut-policy-id", "pin_qgsp_bic_default_10us",
+           "--macro", macro, "--optical-dir", optical_dir, "--output", output]
     proc = subprocess.run(cmd, capture_output=True, text=True, timeout=600)
     return proc.stdout + "\n" + proc.stderr
 

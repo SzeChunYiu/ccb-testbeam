@@ -1,0 +1,27 @@
+11.2.2
+-- CCB Opticks GPU bridge: build out-of-tree via opticks/build_bridge.sh
+-- Configuring done (0.8s)
+-- Generating done (0.2s)
+-- Build files have been written to: /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1623/geant4/single_stave/build
+[ 11%] Built target ccb_sipm_core
+[ 23%] Built target ccb_sipm_toy
+[ 23%] Built target ccb_sipm_kernel_history_tests
+[ 34%] Built target ccb_sipm_measured_impulse_tests
+[ 41%] Built target ccb_sipm_geant4
+[ 41%] Built target ccb_sipm_impulse_runtime_binding_tests
+[ 41%] Built target ccb_sipm_impulse_provenance_state_tests
+[ 44%] Built target ccb_sipm_impulse_digest_tests
+[ 53%] Built target ccb_sipm_tests
+[ 53%] Built target ccb_sipm_dark_history_tests
+[ 58%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/ActionInitialization.cc.o
+[ 58%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/AppConfig.cc.o
+[ 62%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/DetectorMessenger.cc.o
+[ 65%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/DetectorConstruction.cc.o
+[ 65%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/EventAction.cc.o
+[ 67%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/PrimaryGeneratorAction.cc.o
+[ 74%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/RunAction.cc.o
+[ 74%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/SipmDigitizerConfig.cc.o
+[ 76%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/StackingAction.cc.o
+[ 79%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/TrackingAction.cc.o
+[ 79%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/SteppingAction.cc.o
+[ 81%] Building CXX object CMakeFiles/ccb_stave_sim.dir/src/main.cc.o

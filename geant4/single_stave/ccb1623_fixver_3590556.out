@@ -1,0 +1,56 @@
+===== 1. ctest attribution: pristine baseline vs fixed tree =====
+  BASELINE_BUILD_OK
+  baseline exit=8
+  fixed    exit=8
+  baseline failures: 12
+    ccb_stave_birks_visible_regression
+    ccb_stave_far_end_modes
+    ccb_stave_gdml_export
+    ccb_stave_geometry_report_python
+    ccb_stave_geometry_smoke
+    ccb_stave_gpu_optical_capture
+    ccb_stave_production_cut_regression
+    ccb_stave_proton_smoke
+    ccb_stave_sipm_adc
+    ccb_stave_sipm_arrivals
+    ccb_stave_sipm_env_fail_closed
+    ccb_stave_wls_profile
+  fixed    failures: 1
+    ccb_stave_gdml_export
+  FIXED by this change:   ccb_stave_birks_visible_regression ccb_stave_far_end_modes ccb_stave_geometry_report_python ccb_stave_geometry_smoke ccb_stave_gpu_optical_capture ccb_stave_production_cut_regression ccb_stave_proton_smoke ccb_stave_sipm_adc ccb_stave_sipm_arrivals ccb_stave_sipm_env_fail_closed ccb_stave_wls_profile 
+  NEWLY broken:           
+96% tests passed, 1 tests failed out of 26
+
+===== 2. strict-optical tests must still fail for the RIGHT reason =====
+  ccb_stave_strict_optical_missing_table ctest_rc=0 (0 = the test passes, i.e. the sim correctly refused)
+    Start 18: ccb_stave_strict_optical_missing_table
+1/1 Test #18: ccb_stave_strict_optical_missing_table ...   Passed    0.22 sec
+  ccb_stave_strict_optical_bad_units ctest_rc=0 (0 = the test passes, i.e. the sim correctly refused)
+    Start 19: ccb_stave_strict_optical_bad_units
+1/1 Test #19: ccb_stave_strict_optical_bad_units ...   Passed    0.21 sec
+
+===== 3. ADC saturation is now reported, not silent =====
+  proton 12 MeV threads=1: CCB_ADC_SATURATION channel_evaluations=160 saturated_readout=8 saturated_f1far=7 saturated_f2near=6 saturated_f2far=8 saturated_fraction=0.18125 adc_bits=12 adc_lsb_pe=0.01 headroom_pe=38.95
+  proton 18 MeV threads=1: CCB_ADC_SATURATION channel_evaluations=160 saturated_readout=39 saturated_f1far=39 saturated_f2near=39 saturated_f2far=39 saturated_fraction=0.975 adc_bits=12 adc_lsb_pe=0.01 headroom_pe=38.95
+  proton 46 MeV threads=1: CCB_ADC_SATURATION channel_evaluations=160 saturated_readout=40 saturated_f1far=40 saturated_f2near=40 saturated_f2far=40 saturated_fraction=1 adc_bits=12 adc_lsb_pe=0.01 headroom_pe=38.95
+  proton 12 MeV threads=32: CCB_ADC_SATURATION channel_evaluations=160 saturated_readout=8 saturated_f1far=7 saturated_f2near=6 saturated_f2far=8 saturated_fraction=0.18125 adc_bits=12 adc_lsb_pe=0.01 headroom_pe=38.95
+  proton 18 MeV threads=32: CCB_ADC_SATURATION channel_evaluations=160 saturated_readout=39 saturated_f1far=39 saturated_f2near=39 saturated_f2far=39 saturated_fraction=0.975 adc_bits=12 adc_lsb_pe=0.01 headroom_pe=38.95
+  proton 46 MeV threads=32: CCB_ADC_SATURATION channel_evaluations=160 saturated_readout=40 saturated_f1far=40 saturated_f2near=40 saturated_f2far=40 saturated_fraction=1 adc_bits=12 adc_lsb_pe=0.01 headroom_pe=38.95
+
+===== 4. --adc-lsb-pe widens the range and clears the clipping =====
+  lsb=0.01  d44:  saturated_fraction=0.9875  headroom=headroom_pe=38.95
+  lsb=0.01  p160: saturated_fraction=1
+  lsb=0.20  d44:  saturated_fraction=0  headroom=headroom_pe=779
+  lsb=0.20  p160: saturated_fraction=0
+
+===== 4b. --sipm-n-cells must fail CLEANLY, not on SIGABRT =====
+  exit=2 (expect 2; 134 = the old SIGABRT)
+error: --sipm-n-cells=1800 is not a perfect square; ccb-sipm-core requires an explicit cells_x x cells_y grid (issue #974). Use 1600, 2500, 3600, 4900 or 6400.
+
+===== 5. default-path equivalence vs the pristine parent build =====
+  base exit=0
+  new exit=0
+  columns baseline=37 new=53  added=['adc_sat_f1far', 'adc_sat_f2far', 'adc_sat_f2near', 'adc_sat_readout', 'dir_ux', 'dir_uy', 'dir_uz', 'gen_x_cm', 'gen_y_cm', 'n_optical_killed_steps', 'n_optical_killed_time', 'primary_exit_x_cm', 'primary_exit_y_cm', 'primary_exit_z_cm', 'primary_ke_end_MeV', 'primary_stopped']  removed=[]
+  rows 60 vs 60   shared compared=37   differing=0 []
+  EQUIVALENCE_OK
+FIXVER_DONE

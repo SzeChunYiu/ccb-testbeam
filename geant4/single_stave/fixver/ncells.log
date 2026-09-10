@@ -1,0 +1,1 @@
+error: --sipm-n-cells=1800 is not a perfect square; ccb-sipm-core requires an explicit cells_x x cells_y grid (issue #974). Use 1600, 2500, 3600, 4900 or 6400.

@@ -1,0 +1,4 @@
+CCB_BEAM_PREFLIGHT intersects=1 enters_neg_z=1 path_cm=2 reason=ok
+CCB_BEAM_ENVELOPE_PREFLIGHT profile=AREA_UNIFORM_NORMAL corners_checked=4 corners_missing=4 min_path_cm=0 reason=hit_x/hit_y outside stave face
+fatal: sampled phase-space envelope leaves the stave (#1623/#999): 4/4 corner probes miss (hit_x/hit_y outside stave face)
+       tighten --hit-x-range/--hit-y-range/--theta-spread, or pass --allow-miss for an intentional miss study

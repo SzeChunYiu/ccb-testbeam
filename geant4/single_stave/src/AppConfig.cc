@@ -93,7 +93,8 @@ void AppConfig::PrintUsage(const char* prog) {
     "                           of half-angle DEG about (theta,phi) (default 0)\n"
     "  --no-photon-ntuple       omit the per-photon ntuple (volume control)\n"    "  --optical-max-time-ns T  kill optical photons past global time T ns\n"
     "                           (0 = off; kills are counted, #1623/#1083)\n"
-    "  --optical-max-steps N    kill optical photons past N steps (0 = off)\n"
+    "  --optical-max-steps N    kill optical photons past N steps (0 = off)\n"    "  --adc-lsb-pe V           SiPM digitizer pe per ADC LSB (0 = leave the\n"
+    "                           placeholder default; larger V = wider range)\n"
     "  --allow-miss             permit primaries that miss the stave (#999)\n"
     "  --birks-kB VAL           Birks kB [mm/MeV]           (default 0.126)\n"
     "  --production-cut MM      secondary-production range threshold [mm]\n"
@@ -159,6 +160,7 @@ std::string AppConfig::Describe() const {
      << " write_photon_ntuple=" << (write_photon_ntuple ? 1 : 0)
      << " optical_max_time_ns=" << optical_max_time_ns
      << " optical_max_steps=" << optical_max_steps
+     << " adc_lsb_pe=" << adc_lsb_pe
      << " birks_kB=" << birks_kB_mm_per_MeV
     << " quenching_model_id=" << quenching_model_id
     << " quenching_model_status=" << quenching_model_status
@@ -235,6 +237,11 @@ bool AppConfig::ParseArgs(int argc, char** argv) {
       if(!(v=need(i)))return false; double t;
       if(!parse_double(v,t)){std::cerr<<"error: --optical-max-time-ns requires a finite number, got '"<<v<<"'\n";return false;}
       optical_max_time_ns = t;
+    }
+    else if (eq(a, "--adc-lsb-pe")) {
+      if(!(v=need(i)))return false; double t;
+      if(!parse_double(v,t)){std::cerr<<"error: --adc-lsb-pe requires a finite number, got '"<<v<<"'\n";return false;}
+      adc_lsb_pe = t;
     }
     else if (eq(a, "--optical-max-steps")) {
       if(!(v=need(i)))return false; int t;
@@ -329,6 +336,9 @@ bool AppConfig::ParseArgs(int argc, char** argv) {
   if (optical_max_time_ns < 0.0) {
     std::cerr << "error: --optical-max-time-ns must be >= 0 (0 disables)\n"; return false;
   }
+  if (adc_lsb_pe < 0.0) {
+    std::cerr << "error: --adc-lsb-pe must be >= 0 (0 leaves the default)\n"; return false;
+  }
   if (optical_max_steps < 0) {
     std::cerr << "error: --optical-max-steps must be >= 0 (0 disables)\n"; return false;
   }
@@ -342,6 +352,23 @@ bool AppConfig::ParseArgs(int argc, char** argv) {
   if (n_events <= 0)           { std::cerr << "error: --nevents must be > 0\n"; return false; }
   if (n_threads <= 0)          { std::cerr << "error: --threads must be > 0\n"; return false; }
   if (sipm_n_cells <= 0)      { std::cerr << "error: --sipm-n-cells must be > 0\n"; return false; }
+  {
+    // ccb-sipm-core needs an explicit cells_x x cells_y grid (#974), so a
+    // non-square count is rejected. That check used to live only in
+    // ApplySipmCellCount, which runs inside the worker-thread EventAction
+    // constructor: the std::invalid_argument it throws escaped uncaught and the
+    // process died on SIGABRT (exit 134) instead of failing cleanly like every
+    // other fail-closed option here. Validate it at parse time and exit 2.
+    const int side = static_cast<int>(std::lround(std::sqrt(
+        static_cast<double>(sipm_n_cells))));
+    if (side <= 0 || side * side != sipm_n_cells) {
+      std::cerr << "error: --sipm-n-cells=" << sipm_n_cells
+                << " is not a perfect square; ccb-sipm-core requires an explicit"
+                   " cells_x x cells_y grid (issue #974)."
+                   " Use 1600, 2500, 3600, 4900 or 6400.\n";
+      return false;
+    }
+  }
   if (collection_efficiency < 0 || collection_efficiency > 1) {
     std::cerr << "error: --collection-efficiency must be in [0,1]\n"; return false;
   }

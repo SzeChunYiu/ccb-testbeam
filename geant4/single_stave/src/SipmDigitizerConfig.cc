@@ -158,6 +158,11 @@ ccb::sipm::ModelConfig BuildSipmDigitizerConfig(const AppConfig& cfg,
                          c.shaper_extra_stage_tau_ns, 0.0, false);
   ApplyOptionalEnvInt("CCB_SIPM_ADC_BITS", c.adc_bits, 1, 30);
   ApplyOptionalEnvDouble("CCB_SIPM_ADC_LSB_PE", c.adc_lsb_pe, 0.0, false);
+  // #1623: an explicit --adc-lsb-pe wins over the environment, which in turn
+  // wins over the ccb-sipm-core placeholder. Recorded in the run sidecar either
+  // way, and still labelled PLACEHOLDER_NOT_DAQ_MEASURED -- widening the range
+  // makes the ADC usable as a relative observable, it does not calibrate it.
+  if (cfg.adc_lsb_pe > 0.0) c.adc_lsb_pe = cfg.adc_lsb_pe;
   ApplyOptionalEnvDouble("CCB_SIPM_BASELINE_ADC", c.baseline_adc);
   ApplyOptionalEnvDouble("CCB_SIPM_PDE_SCALE", c.pde_scale, 0.0, true);
 

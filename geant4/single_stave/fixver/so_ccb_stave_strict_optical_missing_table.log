@@ -1,0 +1,8 @@
+Internal ctest changing into directory: /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1623/geant4/single_stave/build
+Test project /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1623/geant4/single_stave/build
+    Start 18: ccb_stave_strict_optical_missing_table
+1/1 Test #18: ccb_stave_strict_optical_missing_table ...   Passed    0.20 sec
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =   0.21 sec

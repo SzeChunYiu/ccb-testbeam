@@ -1,0 +1,3 @@
+===== 1. pristine baseline build =====
+BASELINE_BUILD_OK
+===== 2. default-path equivalence (no #1623 flags, same seed) =====

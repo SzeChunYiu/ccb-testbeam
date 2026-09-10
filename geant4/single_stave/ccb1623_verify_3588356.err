@@ -1,0 +1,14 @@
+CMake Deprecation Warning at /sw/easybuild_milan/software/Geant4/11.2.2-GCC-12.3.0/lib64/cmake/Geant4/PTL/PTLConfig.cmake:30 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake:76 (find_package)
+  /sw/easybuild_milan/software/Geant4/11.2.2-GCC-12.3.0/lib64/cmake/Geant4/Geant4Config.cmake:286 (find_dependency)
+  CMakeLists.txt:19 (find_package)
+
+
+slurmstepd: error: *** JOB 3588356 ON cx13 CANCELLED AT 2026-09-10T10:27:17 ***

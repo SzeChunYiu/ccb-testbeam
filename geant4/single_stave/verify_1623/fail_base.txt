@@ -1,0 +1,12 @@
+ccb_stave_birks_visible_regression
+ccb_stave_far_end_modes
+ccb_stave_gdml_export
+ccb_stave_geometry_report_python
+ccb_stave_geometry_smoke
+ccb_stave_gpu_optical_capture
+ccb_stave_production_cut_regression
+ccb_stave_proton_smoke
+ccb_stave_sipm_adc
+ccb_stave_sipm_arrivals
+ccb_stave_sipm_env_fail_closed
+ccb_stave_wls_profile

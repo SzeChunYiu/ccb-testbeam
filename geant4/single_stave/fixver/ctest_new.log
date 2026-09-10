@@ -1,0 +1,58 @@
+Internal ctest changing into directory: /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1623/geant4/single_stave/build
+Test project /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1623/geant4/single_stave/build
+      Start  1: ccb_stave_geometry_smoke
+ 1/26 Test  #1: ccb_stave_geometry_smoke ..................   Passed    0.52 sec
+      Start  2: ccb_stave_proton_smoke
+ 2/26 Test  #2: ccb_stave_proton_smoke ....................   Passed   87.30 sec
+      Start  3: ccb_stave_wls_profile
+ 3/26 Test  #3: ccb_stave_wls_profile .....................   Passed   87.73 sec
+      Start  4: ccb_stave_gdml_export
+ 4/26 Test  #4: ccb_stave_gdml_export .....................   Passed    0.53 sec
+      Start  5: ccb_stave_gpu_optical_capture
+ 5/26 Test  #5: ccb_stave_gpu_optical_capture .............   Passed    0.69 sec
+      Start  6: ccb_stave_geometry_report_python
+ 6/26 Test  #6: ccb_stave_geometry_report_python ..........   Passed    0.56 sec
+      Start  7: ccb_stave_birks_visible_regression
+ 7/26 Test  #7: ccb_stave_birks_visible_regression ........   Passed  110.07 sec
+      Start  8: ccb_stave_cladding_distinction
+ 8/26 Test  #8: ccb_stave_cladding_distinction ............   Passed    0.58 sec
+      Start  9: ccb_stave_wls_multiplicity
+ 9/26 Test  #9: ccb_stave_wls_multiplicity ................   Passed  791.76 sec
+      Start 10: ccb_stave_production_cut_regression
+10/26 Test #10: ccb_stave_production_cut_regression .......   Passed  177.44 sec
+      Start 11: ccb_stave_far_end_modes
+11/26 Test #11: ccb_stave_far_end_modes ...................   Passed    2.12 sec
+      Start 12: ccb_stave_sipm_arrivals
+12/26 Test #12: ccb_stave_sipm_arrivals ...................   Passed   87.05 sec
+      Start 13: ccb_stave_sipm_adc
+13/26 Test #13: ccb_stave_sipm_adc ........................   Passed   88.03 sec
+      Start 14: ccb_stave_adc_saturation_reported
+14/26 Test #14: ccb_stave_adc_saturation_reported .........   Passed  487.09 sec
+      Start 15: ccb_stave_sipm_env_fail_closed
+15/26 Test #15: ccb_stave_sipm_env_fail_closed ............   Passed   20.74 sec
+      Start 16: ccb_stave_sipm_n_cells_nonsquare_fail
+16/26 Test #16: ccb_stave_sipm_n_cells_nonsquare_fail .....   Passed    0.07 sec
+      Start 17: ccb_stave_optical_schema
+17/26 Test #17: ccb_stave_optical_schema ..................   Passed    0.05 sec
+      Start 18: ccb_stave_strict_optical_missing_table
+18/26 Test #18: ccb_stave_strict_optical_missing_table ....   Passed    0.21 sec
+      Start 19: ccb_stave_strict_optical_bad_units
+19/26 Test #19: ccb_stave_strict_optical_bad_units ........   Passed    0.19 sec
+      Start 20: ccb_sipm_core_tests
+20/26 Test #20: ccb_sipm_core_tests .......................   Passed    0.01 sec
+      Start 21: ccb_sipm_dark_history_tests
+21/26 Test #21: ccb_sipm_dark_history_tests ...............   Passed    0.04 sec
+      Start 22: ccb_sipm_kernel_history_tests
+22/26 Test #22: ccb_sipm_kernel_history_tests .............   Passed    0.01 sec
+      Start 23: ccb_sipm_measured_impulse_tests
+23/26 Test #23: ccb_sipm_measured_impulse_tests ...........   Passed    0.01 sec
+      Start 24: ccb_sipm_impulse_provenance_state_tests
+24/26 Test #24: ccb_sipm_impulse_provenance_state_tests ...   Passed    0.01 sec
+      Start 25: ccb_sipm_impulse_digest_tests
+25/26 Test #25: ccb_sipm_impulse_digest_tests .............   Passed    0.01 sec
+      Start 26: ccb_sipm_impulse_runtime_binding_tests
+26/26 Test #26: ccb_sipm_impulse_runtime_binding_tests ....   Passed    0.01 sec
+
+100% tests passed, 0 tests failed out of 26
+
+Total Test time (real) = 1942.90 sec

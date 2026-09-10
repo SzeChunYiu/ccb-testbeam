@@ -103,6 +103,8 @@ def run_sim(args: argparse.Namespace, birks_kB: float, out_root: Path) -> None:
     """Run ccb_stave_sim for a handful of events at the requested Birks kB."""
     cmd = [
         str(args.exe),
+        "--physics-list", "QGSP_BIC",
+        "--neutron-timecut-policy-id", "pin_qgsp_bic_default_10us",
         "--particle", args.particle,
         "--energy", str(args.energy),
         "--nevents", str(args.nevents),

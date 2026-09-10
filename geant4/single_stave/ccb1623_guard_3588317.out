@@ -1,0 +1,16 @@
+=== A. arrival-time census WITH the photon ntuple (guard OFF) ===
+census p20 rc=2 wall=0s
+census p60 rc=2 wall=0s
+
+=== B. timing with the production guard ON ===
+TIMING g_p20 part=proton E=20 nev=300 rc=2 wall=0s per_event=0.000s size=0
+TIMING g_p60 part=proton E=60 nev=300 rc=2 wall=0s per_event=0.000s size=0
+TIMING g_p150 part=proton E=150 nev=300 rc=2 wall=0s per_event=0.000s size=0
+TIMING g_d45 part=deuteron E=45 nev=300 rc=2 wall=0s per_event=0.000s size=0
+TIMING g_d200 part=deuteron E=200 nev=300 rc=2 wall=0s per_event=0.000s size=0
+TIMING g_mu300 part=mu- E=300 nev=300 rc=2 wall=0s per_event=0.000s size=0
+TIMING g_mu20 part=mu- E=20 nev=300 rc=2 wall=1s per_event=0.003s size=0
+TIMING g_pi200 part=pi+ E=200 nev=300 rc=2 wall=0s per_event=0.000s size=0
+TIMING g_pim30 part=pi- E=30 nev=300 rc=2 wall=0s per_event=0.000s size=0
+
+=== C. guard impact on the recorded observables (60 MeV proton, same seed) ===

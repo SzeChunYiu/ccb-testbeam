@@ -1,0 +1,53 @@
+CMake Deprecation Warning at /sw/easybuild_milan/software/Geant4/11.2.2-GCC-12.3.0/lib64/cmake/Geant4/PTL/PTLConfig.cmake:30 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake:76 (find_package)
+  /sw/easybuild_milan/software/Geant4/11.2.2-GCC-12.3.0/lib64/cmake/Geant4/Geant4Config.cmake:286 (find_dependency)
+  CMakeLists.txt:19 (find_package)
+
+
+/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1623/geant4/single_stave/src/BuildIdentity.cc:4:10: fatal error: ccb/sipm/Digest.hh: No such file or directory
+    4 | #include "ccb/sipm/Digest.hh"
+      |          ^~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+gmake[2]: *** [CMakeFiles/ccb_stave_sim.dir/build.make:107: CMakeFiles/ccb_stave_sim.dir/src/BuildIdentity.cc.o] Error 1
+gmake[2]: *** Waiting for unfinished jobs....
+In file included from /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1623/geant4/single_stave/src/SipmDigitizerConfig.cc:1:
+/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1623/geant4/single_stave/include/SipmDigitizerConfig.hh:6:10: fatal error: ccb/sipm/Config.hh: No such file or directory
+    6 | #include "ccb/sipm/Config.hh"
+      |          ^~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+gmake[2]: *** [CMakeFiles/ccb_stave_sim.dir/build.make:275: CMakeFiles/ccb_stave_sim.dir/src/SipmDigitizerConfig.cc.o] Error 1
+In file included from /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1623/geant4/single_stave/src/ActionInitialization.cc:3:
+/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1623/geant4/single_stave/include/RunAction.hh:13:10: fatal error: ccb/sipm/Config.hh: No such file or directory
+   13 | #include "ccb/sipm/Config.hh"
+      |          ^~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+gmake[2]: *** [CMakeFiles/ccb_stave_sim.dir/build.make:79: CMakeFiles/ccb_stave_sim.dir/src/ActionInitialization.cc.o] Error 1
+In file included from /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1623/geant4/single_stave/src/RunAction.cc:1:
+/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1623/geant4/single_stave/include/RunAction.hh:13:10: fatal error: ccb/sipm/Config.hh: No such file or directory
+   13 | #include "ccb/sipm/Config.hh"
+      |          ^~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+gmake[2]: *** [CMakeFiles/ccb_stave_sim.dir/build.make:233: CMakeFiles/ccb_stave_sim.dir/src/RunAction.cc.o] Error 1
+In file included from /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1623/geant4/single_stave/include/EventAction.hh:10,
+                 from /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1623/geant4/single_stave/src/SteppingAction.cc:2:
+/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1623/geant4/single_stave/include/SimData.hh:7:10: fatal error: ccb/sipm/Types.hh: No such file or directory
+    7 | #include "ccb/sipm/Types.hh"  // PhotonArrival (SIPM-P1-001)
+      |          ^~~~~~~~~~~~~~~~~~~
+compilation terminated.
+In file included from /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1623/geant4/single_stave/include/EventAction.hh:10,
+                 from /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1623/geant4/single_stave/src/EventAction.cc:1:
+/projects/hep/fs10/shared/nnbar/billy/ccb-wt-1623/geant4/single_stave/include/SimData.hh:7:10: fatal error: ccb/sipm/Types.hh: No such file or directory
+    7 | #include "ccb/sipm/Types.hh"  // PhotonArrival (SIPM-P1-001)
+      |          ^~~~~~~~~~~~~~~~~~~
+compilation terminated.
+gmake[2]: *** [CMakeFiles/ccb_stave_sim.dir/build.make:303: CMakeFiles/ccb_stave_sim.dir/src/SteppingAction.cc.o] Error 1
+gmake[2]: *** [CMakeFiles/ccb_stave_sim.dir/build.make:149: CMakeFiles/ccb_stave_sim.dir/src/EventAction.cc.o] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:109: CMakeFiles/ccb_stave_sim.dir/all] Error 2
+gmake: *** [Makefile:101: all] Error 2

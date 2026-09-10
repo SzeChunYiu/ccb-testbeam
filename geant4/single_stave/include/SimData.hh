@@ -84,6 +84,11 @@ struct EventData {
   // Legacy analytic occupancy saturation of n_detected (diagnostic only, #1084).
   std::array<double, kNSensors> pe_saturated{{0, 0, 0, 0}};
 
+  // 1 when this channel's waveform hit the ADC ceiling, so adc[] below is a
+  // clipped lower bound rather than a measurement (#1623). Silent clipping made
+  // the entire 11-45 MeV deposit band of interest read back as a constant.
+  std::array<int, kNSensors> adc_saturated{{0, 0, 0, 0}};
+
   // Peak ADC above baseline from the ccb-sipm-core ResponseSimulator
   // (SIPM-P1-002). Canonical production detector-response path.
   std::array<double, kNSensors> adc{{0, 0, 0, 0}};
@@ -122,6 +127,7 @@ struct EventData {
     n_detected.fill(0);
     pe_saturated.fill(0.0);
     adc.fill(0.0);
+    adc_saturated.fill(0);
     for (int i = 0; i < kNSensors; ++i) sipm_arrivals[i].clear();
     photons.clear();
     gpu_photons.clear();

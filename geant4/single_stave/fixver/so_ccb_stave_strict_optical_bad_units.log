@@ -1,0 +1,8 @@
+Internal ctest changing into directory: /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1623/geant4/single_stave/build
+Test project /projects/hep/fs10/shared/nnbar/billy/ccb-wt-1623/geant4/single_stave/build
+    Start 19: ccb_stave_strict_optical_bad_units
+1/1 Test #19: ccb_stave_strict_optical_bad_units ...   Passed    0.19 sec
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =   0.19 sec

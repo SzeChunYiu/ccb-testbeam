@@ -30,7 +30,9 @@
 #include <cstdlib>
 #include <exception>
 #include <iostream>
+#include <filesystem>
 #include <string>
+#include <system_error>
 #include <sstream>
 #include <vector>
 
@@ -231,6 +233,25 @@ int main(int argc, char** argv) {
     G4VPhysicalVolume* world =
         G4TransportationManager::GetTransportationManager()
             ->GetNavigatorForTracking()->GetWorldVolume();
+    // G4GDMLParser::Write raises a FATAL G4Exception ("File ... already
+    // exists!") rather than overwriting, which aborts the process on SIGABRT.
+    // That made --dump-gdml succeed exactly once per output path: the CTest
+    // export case passed on a fresh build tree and died on every rerun. Remove
+    // a stale file first so the export is idempotent, and fail cleanly (not on
+    // a signal) if the path exists and cannot be cleared.
+    {
+      std::error_code ec;
+      if (std::filesystem::exists(cfg.dump_gdml, ec)) {
+        std::filesystem::remove(cfg.dump_gdml, ec);
+        if (ec || std::filesystem::exists(cfg.dump_gdml)) {
+          std::cerr << "fatal: --dump-gdml target '" << cfg.dump_gdml
+                    << "' already exists and could not be replaced: "
+                    << ec.message() << '\n';
+          delete runManager;
+          return 5;
+        }
+      }
+    }
     parser.Write(cfg.dump_gdml, world);
     std::cout << "CCB_GDML_WROTE " << cfg.dump_gdml
               << " world=" << world->GetName() << std::endl;

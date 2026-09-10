@@ -1,0 +1,6 @@
+### A: minimal args (expect fail-closed) ###
+error: --physics-list is required (issue #1006 fail-closed; no silent QGSP_BIC default)
+EXIT=2
+### B: + physics-list + neutron policy ###
+error: unknown neutron_timecut_policy_id: NTC-DEFAULT
+EXIT=2

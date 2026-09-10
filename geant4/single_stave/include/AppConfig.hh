@@ -195,6 +195,14 @@ struct AppConfig {
   // counted per event and totalled in the run sidecar, so a guarded run states
   // exactly how much transport it truncated instead of silently changing the
   // optical result.
+  // SiPM digitizer range (#1623). The shipped placeholder (12 bits, baseline
+  // 200, 0.01 pe/LSB) leaves only ~39 pe of PEAK amplitude, which a CCB stave
+  // deposit above roughly 18 MeV exceeds -- so the whole band of interest
+  // clipped. The value is NOT a DAQ measurement, so the default is left alone
+  // and the range is exposed as a run-time systematic like --pde-scale.
+  // <= 0 means "leave the ccb-sipm-core default / CCB_SIPM_ADC_LSB_PE alone".
+  double adc_lsb_pe = 0.0;
+
   double optical_max_time_ns = 0.0;  // kill optical photons past this global time
   int    optical_max_steps   = 0;    // kill optical photons past this step count
 

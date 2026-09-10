@@ -1,0 +1,12 @@
+# issue #1623 unsaturated-ADC scan. Same sampling window and cone as the main
+# campaign, run with CCB_1623_ADC_LSB_PE so the digitizer range covers the CCB
+# deposit band instead of clipping. Only the two fate-matched B2 populations are
+# needed: a STOPPING deuteron near 43 MeV deposit and a PUNCH-THROUGH proton
+# near 11 MeV deposit. N_pe is recorded on the same events, so the ADC ratio and
+# the photoelectron ratio come from one sample rather than two.
+deuteron,44,A,-22.0,22.0,-2.2,2.2,10.0,1623,2000
+deuteron,44,A,-22.0,22.0,-2.2,2.2,10.0,1624,2000
+deuteron,44,B,0.0,0.0,0.0,0.0,0.0,1625,1000
+proton,160,A,-22.0,22.0,-2.2,2.2,10.0,1623,2000
+proton,160,A,-22.0,22.0,-2.2,2.2,10.0,1624,2000
+proton,160,B,0.0,0.0,0.0,0.0,0.0,1625,1000

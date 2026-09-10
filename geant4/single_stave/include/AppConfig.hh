@@ -48,6 +48,8 @@ struct AppConfig {
   // branch-equality evidence). Sampling uses a counter-based RNG keyed on
   // (seed, eventID) so the sampled phase space is independent of --threads.
   bool   sample_position   = false;   // set by --hit-x-range / --hit-y-range
+  bool   hit_x_range_set   = false;   // --hit-x-range was given explicitly
+  bool   hit_y_range_set   = false;   // --hit-y-range was given explicitly
   double hit_x_min_cm      = 0.0;     // uniform in [min,max] along stave length
   double hit_x_max_cm      = 0.0;
   double hit_y_min_cm      = 0.0;     // uniform in [min,max] across stave width

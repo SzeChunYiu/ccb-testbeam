@@ -219,12 +219,14 @@ bool AppConfig::ParseArgs(int argc, char** argv) {
       if(!(v=need(i)))return false;
       if(!parse_range(v, hit_x_min_cm, hit_x_max_cm)){
         std::cerr<<"error: --hit-x-range requires MIN:MAX (finite, MIN<=MAX), got '"<<v<<"'\n";return false;}
+      hit_x_range_set = true;
       sample_position = true;
     }
     else if (eq(a, "--hit-y-range")) {
       if(!(v=need(i)))return false;
       if(!parse_range(v, hit_y_min_cm, hit_y_max_cm)){
         std::cerr<<"error: --hit-y-range requires MIN:MAX (finite, MIN<=MAX), got '"<<v<<"'\n";return false;}
+      hit_y_range_set = true;
       sample_position = true;
     }
     else if (eq(a, "--theta-spread")) {
@@ -322,13 +324,11 @@ bool AppConfig::ParseArgs(int argc, char** argv) {
     if (hit_x_min_cm > hit_x_max_cm || hit_y_min_cm > hit_y_max_cm) {
       std::cerr << "error: --hit-x-range/--hit-y-range require MIN <= MAX\n"; return false;
     }
-    // An unset partner range collapses to the corresponding fixed point.
-    if (hit_x_min_cm == 0.0 && hit_x_max_cm == 0.0) {
-      hit_x_min_cm = hit_x_max_cm = hit_x_cm;
-    }
-    if (hit_y_min_cm == 0.0 && hit_y_max_cm == 0.0) {
-      hit_y_min_cm = hit_y_max_cm = hit_y_cm;
-    }
+    // A range the user did NOT give collapses to that axis's fixed point.
+    // Keyed on whether the option was parsed, not on its value: "0:0" is a
+    // legitimate explicit pin at zero and must not be mistaken for "unset".
+    if (!hit_x_range_set) hit_x_min_cm = hit_x_max_cm = hit_x_cm;
+    if (!hit_y_range_set) hit_y_min_cm = hit_y_max_cm = hit_y_cm;
   }
   if (theta_spread_deg < 0.0 || theta_spread_deg > 90.0) {
     std::cerr << "error: --theta-spread must be in [0,90] deg\n"; return false;

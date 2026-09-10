@@ -53,10 +53,21 @@ OUT="${OUTDIR}/stave_${SAFE_PART}_${ENE}MeV_${SAMPLE}_s${SEED}.root"
 # and totalled in the sidecar, so a run states what it truncated.
 GUARD=(--optical-max-time-ns 1000 --optical-max-steps 200000)
 
+# Optional ADC-range override (#1623). The shipped placeholder gain leaves only
+# ~39 pe of PEAK headroom, so the whole CCB deposit band clips and adc_* is a
+# constant. Setting CCB_1623_ADC_LSB_PE widens the range so the ADC becomes a
+# usable RELATIVE observable. It is NOT a calibration: the sidecar still records
+# adc_gain_provenance=PLACEHOLDER_NOT_DAQ_MEASURED.
+ADC_ARGS=()
+if [[ -n "${CCB_1623_ADC_LSB_PE:-}" ]]; then
+  ADC_ARGS=(--adc-lsb-pe "${CCB_1623_ADC_LSB_PE}")
+fi
+
 COMMON=(--physics-list QGSP_BIC
         --neutron-timecut-policy-id pin_qgsp_bic_default_10us
         --mode optical --strict-optical --no-photon-ntuple
         "${GUARD[@]}"
+        "${ADC_ARGS[@]}"
         --optical-dir "${OPTICAL}")
 
 echo "point idx=${IDX} part=${PART} E=${ENE} sample=${SAMPLE} seed=${SEED} nev=${NEV} threads=${THREADS}"

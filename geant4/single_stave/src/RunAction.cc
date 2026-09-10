@@ -102,10 +102,26 @@ void RunAction::DefineNtuples() {
   am->CreateNtupleDColumn("adc_f1far");
   am->CreateNtupleDColumn("adc_f2near");
   am->CreateNtupleDColumn("adc_f2far");
+  // Issue #1623 phase-space columns, appended so existing column indices and
+  // downstream readers are unaffected.
+  am->CreateNtupleDColumn("gen_x_cm");
+  am->CreateNtupleDColumn("gen_y_cm");
+  am->CreateNtupleDColumn("dir_ux");
+  am->CreateNtupleDColumn("dir_uy");
+  am->CreateNtupleDColumn("dir_uz");
+  am->CreateNtupleDColumn("primary_exit_x_cm");
+  am->CreateNtupleDColumn("primary_exit_y_cm");
+  am->CreateNtupleDColumn("primary_exit_z_cm");
+  am->CreateNtupleDColumn("primary_ke_end_MeV");
+  am->CreateNtupleIColumn("primary_stopped");
+  am->CreateNtupleIColumn("n_optical_killed_time");
+  am->CreateNtupleIColumn("n_optical_killed_steps");
   am->FinishNtuple(nt_event_);
 
   // Per-photon ntuple (calibration mode: arrival wavelength/time preserved).
-  if (cfg_.mode == SimMode::kOpticalCalibration) {
+  // --no-photon-ntuple (#1623) drops the per-photon table; the per-event
+  // counters, PE and ADC columns are unaffected.
+  if (cfg_.mode == SimMode::kOpticalCalibration && cfg_.write_photon_ntuple) {
     nt_photon_ = am->CreateNtuple("photons", "per-photon arrivals");
     am->CreateNtupleIColumn("event");
     am->CreateNtupleIColumn("sensor");       // SensorId
@@ -231,6 +247,18 @@ void RunAction::FillEvent(const EventData& e, int event_id) {
     am->FillNtupleDColumn(nt_event_, c++, e.pe_saturated[i]);
   for (int i = 0; i < kNSensors; ++i)
     am->FillNtupleDColumn(nt_event_, c++, e.adc[i]);
+  am->FillNtupleDColumn(nt_event_, c++, e.gen_x_cm);
+  am->FillNtupleDColumn(nt_event_, c++, e.gen_y_cm);
+  am->FillNtupleDColumn(nt_event_, c++, e.dir_ux);
+  am->FillNtupleDColumn(nt_event_, c++, e.dir_uy);
+  am->FillNtupleDColumn(nt_event_, c++, e.dir_uz);
+  am->FillNtupleDColumn(nt_event_, c++, e.primary_exit_x_cm);
+  am->FillNtupleDColumn(nt_event_, c++, e.primary_exit_y_cm);
+  am->FillNtupleDColumn(nt_event_, c++, e.primary_exit_z_cm);
+  am->FillNtupleDColumn(nt_event_, c++, e.primary_ke_end_MeV);
+  am->FillNtupleIColumn(nt_event_, c++, e.primary_stopped);
+  am->FillNtupleIColumn(nt_event_, c++, (int)e.n_optical_killed_time);
+  am->FillNtupleIColumn(nt_event_, c++, (int)e.n_optical_killed_steps);
   am->AddNtupleRow(nt_event_);
 
   if (cfg_.neutron_diagnostics && nt_neutron_ >= 0) {
@@ -332,6 +360,18 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
      << "  \"hit_y_cm\": " << cfg_.hit_y_cm << ",\n"
      << "  \"theta_deg\": " << cfg_.theta_deg << ",\n"
      << "  \"phi_deg\": " << cfg_.phi_deg << ",\n"
+     << "  \"beam_profile_id\": " << j(cfg_.beam_profile_id) << ",\n"
+     << "  \"sample_position\": " << (cfg_.sample_position ? "true" : "false") << ",\n"
+     << "  \"hit_x_min_cm\": " << cfg_.hit_x_min_cm << ",\n"
+     << "  \"hit_x_max_cm\": " << cfg_.hit_x_max_cm << ",\n"
+     << "  \"hit_y_min_cm\": " << cfg_.hit_y_min_cm << ",\n"
+     << "  \"hit_y_max_cm\": " << cfg_.hit_y_max_cm << ",\n"
+     << "  \"sample_angle\": " << (cfg_.sample_angle ? "true" : "false") << ",\n"
+     << "  \"theta_spread_deg\": " << cfg_.theta_spread_deg << ",\n"
+     << "  \"phase_space_rng\": \"splitmix64_keyed_on_seed_and_event_id\",\n"
+     << "  \"write_photon_ntuple\": " << (cfg_.write_photon_ntuple ? "true" : "false") << ",\n"
+     << "  \"optical_max_time_ns\": " << cfg_.optical_max_time_ns << ",\n"
+     << "  \"optical_max_steps\": " << cfg_.optical_max_steps << ",\n"
      << "  \"mode\": " << j(cfg_.mode == SimMode::kOpticalCalibration ? "optical" : "fast") << ",\n"
      << "  \"birks_kB_mm_per_MeV\": " << cfg_.birks_kB_mm_per_MeV << ",\n"
      << "  \"production_cut_mm\": " << cfg_.production_cut_mm << ",\n"

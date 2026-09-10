@@ -97,3 +97,50 @@ Issue #999 beam/primary intersection preflight is enforced in `main.cc` via
   run sidecar. Rebuild required. Residual mass-material table scope: ADR-0011.
 - #1079 / #1095 / #1064: Python fail-closed contracts + ADRs (no invented
   physics parameters).
+
+## Optical boundary thrashing — cost pathology (#1623, scope of #1083)
+
+A small number of optical photons per event get trapped repeatedly crossing a
+thin-layer boundary and burn tens of millions of post-step `DoIt` calls each. A
+single such photon makes its event cost minutes of CPU; observed as one worker
+thread stuck in `G4SteppingManager::Stepping` while every other event in the run
+had finished. The thin layers involved are the 10 um fibre-end-face world-air gap
+and the cladding shells, both still `UNKNOWN_EXTERNAL` under #1083.
+
+Measured rate and impact (300 events of 20 and 60 MeV protons, per-photon ntuple
+on, `slurm/guard_1623.sbatch` section A):
+
+| quantity | 20 MeV p | 60 MeV p |
+|---|---|---|
+| optical photons generated | 20 285 997 | 42 222 823 |
+| photons exceeding 200 000 steps | 1 | 2 |
+| events containing one | 1/150 | 2/150 |
+| latest arrival at the readout | 202 ns | 222 ns |
+| arrivals beyond 250 ns | 0 | 0 |
+
+This is a **cost** pathology, not a physics one: the trapped photons never reach
+a sensor inside the acquisition window, and the SiPM response model discards
+arrivals past its `[-20, 250] ns` window regardless. `--optical-max-time-ns` and
+`--optical-max-steps` bound it; both are OFF by default and every kill is counted
+per event (`n_optical_killed_time`, `n_optical_killed_steps`) and totalled in the
+run sidecar. At the campaign settings (1000 ns / 200 000 steps) the time cut
+removes zero recorded arrivals and the step cut truncates 5e-8 of generated
+photons.
+
+The underlying geometry question — what the fibre end face actually looks like —
+stays open under #1083. The guards make production runs finite; they do not
+resolve it.
+
+## Phase-space sampling (#1623)
+
+`--hit-x-range`, `--hit-y-range` and `--theta-spread` sample the impact point and
+the incidence direction per event. The draw uses a counter-based stream keyed on
+`(seed, eventID)` rather than the Geant4 engine, so the sampled phase space is
+independent of `--threads`, and with none of the flags set no random number is
+drawn at all — the default path is unchanged and is regression-checked against a
+pristine build of the parent commit (`slurm/verify_1623.sbatch` section 2).
+
+The ADR-0003 beam preflight is extended to the sampled **envelope**: all corners
+of the `(x, y)` window at the extreme incidence angle must intersect the stave,
+otherwise the run aborts. A single-point preflight would be vacuous for a
+distributed beam.

@@ -47,6 +47,29 @@ struct EventData {
   double entry[3] = {0, 0, 0};
   double exit[3]  = {0, 0, 0};
 
+  // Primary launch phase space (issue #1623). Recorded from the primary track
+  // vertex so it is correct whether the impact point/direction were fixed by
+  // configuration or sampled per event by PrimaryGeneratorAction.
+  double gen_x_cm = 0.0;   // primary vertex x (gun launch plane)
+  double gen_y_cm = 0.0;   // primary vertex y
+  double dir_ux = 0.0;     // primary vertex momentum direction
+  double dir_uy = 0.0;
+  double dir_uz = 1.0;
+
+  // Primary fate inside the scintillator (issue #1623). Needed to separate a
+  // stopping (Bragg-terminated) primary from a punch-through one: that split,
+  // not the deposit alone, drives the Birks-quenched light yield.
+  double primary_exit_x_cm = 0.0;   // post-point of the last primary scint step
+  double primary_exit_y_cm = 0.0;
+  double primary_exit_z_cm = 0.0;
+  double primary_ke_end_MeV = -1.0; // primary KE after its last scint step
+  int    primary_stopped = 0;       // 1 if that KE fell below 10 keV
+
+  // Optical transport truncated by the #1623 cost guards. Non-zero means the
+  // recorded arrival/PE counters of this event are a lower bound.
+  long n_optical_killed_time = 0;
+  long n_optical_killed_steps = 0;
+
   // Photon generation counters (by creator process).
   long n_scint_generated = 0;         // scintillation photons created
   long n_wls_generated   = 0;         // OpWLS re-emitted photons created
@@ -87,6 +110,13 @@ struct EventData {
     primary_pdg = 0;
     has_entry = false;
     for (int i = 0; i < 3; ++i) entry[i] = exit[i] = 0.0;
+    gen_x_cm = gen_y_cm = 0.0;
+    dir_ux = dir_uy = 0.0;
+    dir_uz = 1.0;
+    primary_exit_x_cm = primary_exit_y_cm = primary_exit_z_cm = 0.0;
+    primary_ke_end_MeV = -1.0;
+    primary_stopped = 0;
+    n_optical_killed_time = n_optical_killed_steps = 0;
     n_scint_generated = n_wls_generated = n_wls_absorbed = n_cerenkov_generated = 0;
     n_end_arrival.fill(0);
     n_detected.fill(0);

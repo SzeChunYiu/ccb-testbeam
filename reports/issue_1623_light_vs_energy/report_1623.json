@@ -1,0 +1,293 @@
+{
+  "n_events": 250000,
+  "n_files": 150,
+  "species": [
+    "deuteron",
+    "mu-",
+    "pi+",
+    "pi-",
+    "proton"
+  ],
+  "samples": [
+    "A",
+    "B"
+  ],
+  "geometry": {
+    "readout_end_x_cm": 25.0,
+    "readout_fibre_y_cm": 1.0,
+    "stave_half_z_cm": 1.0
+  },
+  "compression_sample_A": {
+    "proton_window_MeV": [
+      11.0,
+      12.0
+    ],
+    "deuteron_window_MeV": [
+      42.0,
+      45.0
+    ],
+    "proton": {
+      "n": 6006,
+      "edep_raw_median_MeV": 11.99539702939904,
+      "edep_vis_median_MeV": 5.818387762378462,
+      "birks_ratio_median": 0.48502425700034846,
+      "n_scint_median": 58261.0,
+      "n_arrival_median": 260.0,
+      "n_pe_median": 80.0,
+      "n_pe_p16": 57.0,
+      "n_pe_p84": 129.0,
+      "adc_median": 3895.0,
+      "stopped_fraction": 0.666000666000666,
+      "ke_setting_median_MeV": 12.0
+    },
+    "proton_stopped": {
+      "n": 4000,
+      "edep_raw_median_MeV": 11.996676973270027,
+      "edep_vis_median_MeV": 5.801043263728079,
+      "birks_ratio_median": 0.4835641509391474,
+      "n_scint_median": 58012.0,
+      "n_arrival_median": 224.0,
+      "n_pe_median": 68.0,
+      "n_pe_p16": 53.0,
+      "n_pe_p84": 88.0,
+      "adc_median": 3408.5,
+      "stopped_fraction": 1.0,
+      "ke_setting_median_MeV": 12.0
+    },
+    "proton_punch_through": {
+      "n": 2006,
+      "edep_raw_median_MeV": 11.338155458241744,
+      "edep_vis_median_MeV": 10.637920339345674,
+      "birks_ratio_median": 0.9383870346278276,
+      "n_scint_median": 106396.0,
+      "n_arrival_median": 417.0,
+      "n_pe_median": 127.0,
+      "n_pe_p16": 100.0,
+      "n_pe_p84": 162.20000000000005,
+      "adc_median": 3895.0,
+      "stopped_fraction": 0.0,
+      "ke_setting_median_MeV": 160.0
+    },
+    "deuteron": {
+      "n": 10509,
+      "edep_raw_median_MeV": 43.50397036413123,
+      "edep_vis_median_MeV": 25.895400782999474,
+      "birks_ratio_median": 0.5886102922330372,
+      "n_scint_median": 258912.0,
+      "n_arrival_median": 1085.0,
+      "n_pe_median": 330.0,
+      "n_pe_p16": 253.0,
+      "n_pe_p84": 437.0,
+      "adc_median": 3895.0,
+      "stopped_fraction": 0.7058711580550004,
+      "ke_setting_median_MeV": 44.0
+    },
+    "deuteron_stopped": {
+      "n": 7418,
+      "edep_raw_median_MeV": 42.99942473052751,
+      "edep_vis_median_MeV": 25.26425448079378,
+      "birks_ratio_median": 0.5867992421597424,
+      "n_scint_median": 253054.0,
+      "n_arrival_median": 1004.0,
+      "n_pe_median": 304.0,
+      "n_pe_p16": 239.0,
+      "n_pe_p84": 389.0,
+      "adc_median": 3895.0,
+      "stopped_fraction": 1.0,
+      "ke_setting_median_MeV": 44.0
+    },
+    "deuteron_punch_through": {
+      "n": 3091,
+      "edep_raw_median_MeV": 43.542924928347375,
+      "edep_vis_median_MeV": 33.99925900361983,
+      "birks_ratio_median": 0.7808408902170386,
+      "n_scint_median": 339986.0,
+      "n_arrival_median": 1333.0,
+      "n_pe_median": 401.0,
+      "n_pe_p16": 320.0,
+      "n_pe_p84": 514.0,
+      "adc_median": 3895.0,
+      "stopped_fraction": 0.0,
+      "ke_setting_median_MeV": 75.0
+    },
+    "ratios_deuteron_over_proton": {
+      "edep_raw": 3.6267220049081397,
+      "edep_visible": 4.4506144726961026,
+      "n_scint": 4.444001991040318,
+      "n_arrival": 4.173076923076923,
+      "n_pe": 4.125,
+      "adc": 1.0
+    },
+    "ratios_matched_b2_stoppingD_over_punchthroughP": {
+      "edep_raw": 3.7924532688666814,
+      "edep_visible": 2.374924202745793,
+      "n_scint": 2.378416481822625,
+      "n_arrival": 2.407673860911271,
+      "n_pe": 2.393700787401575,
+      "adc": 1.0
+    },
+    "ratios_both_stopped": {
+      "edep_raw": 3.584277948496501,
+      "edep_visible": 4.355122575755027,
+      "n_scint": 4.362097497069572,
+      "n_arrival": 4.482142857142857,
+      "n_pe": 4.470588235294118,
+      "adc": 1.1427314067771748
+    }
+  },
+  "compression_sample_B": {
+    "proton_window_MeV": [
+      11.0,
+      12.0
+    ],
+    "deuteron_window_MeV": [
+      42.0,
+      45.0
+    ],
+    "proton": {
+      "n": 1486,
+      "edep_raw_median_MeV": 11.99553105310354,
+      "edep_vis_median_MeV": 5.817299838970422,
+      "birks_ratio_median": 0.4849216176030226,
+      "n_scint_median": 58250.5,
+      "n_arrival_median": 234.0,
+      "n_pe_median": 73.0,
+      "n_pe_p16": 62.0,
+      "n_pe_p84": 127.0,
+      "adc_median": 3712.5,
+      "stopped_fraction": 0.6729475100942126,
+      "ke_setting_median_MeV": 12.0
+    },
+    "proton_stopped": {
+      "n": 1000,
+      "edep_raw_median_MeV": 11.996700383550111,
+      "edep_vis_median_MeV": 5.801316031097734,
+      "birks_ratio_median": 0.48358043635947423,
+      "n_scint_median": 58018.5,
+      "n_arrival_median": 225.0,
+      "n_pe_median": 67.0,
+      "n_pe_p16": 60.0,
+      "n_pe_p84": 76.0,
+      "adc_median": 3382.0,
+      "stopped_fraction": 1.0,
+      "ke_setting_median_MeV": 12.0
+    },
+    "proton_punch_through": {
+      "n": 486,
+      "edep_raw_median_MeV": 11.293445701592795,
+      "edep_vis_median_MeV": 10.596602363906035,
+      "birks_ratio_median": 0.9384108279358958,
+      "n_scint_median": 106033.0,
+      "n_arrival_median": 418.0,
+      "n_pe_median": 126.0,
+      "n_pe_p16": 116.0,
+      "n_pe_p84": 137.0,
+      "adc_median": 3895.0,
+      "stopped_fraction": 0.0,
+      "ke_setting_median_MeV": 160.0
+    },
+    "deuteron": {
+      "n": 2803,
+      "edep_raw_median_MeV": 43.05719257825273,
+      "edep_vis_median_MeV": 25.897389349666838,
+      "birks_ratio_median": 0.5886327265308471,
+      "n_scint_median": 258894.0,
+      "n_arrival_median": 1020.0,
+      "n_pe_median": 311.0,
+      "n_pe_p16": 288.0,
+      "n_pe_p84": 395.0,
+      "adc_median": 3895.0,
+      "stopped_fraction": 0.699607563325009,
+      "ke_setting_median_MeV": 44.0
+    },
+    "deuteron_stopped": {
+      "n": 1961,
+      "edep_raw_median_MeV": 43.54397183239656,
+      "edep_vis_median_MeV": 25.270055271871566,
+      "birks_ratio_median": 0.5867568432810722,
+      "n_scint_median": 253160.0,
+      "n_arrival_median": 999.0,
+      "n_pe_median": 301.0,
+      "n_pe_p16": 283.0,
+      "n_pe_p84": 319.0,
+      "adc_median": 3895.0,
+      "stopped_fraction": 1.0,
+      "ke_setting_median_MeV": 44.0
+    },
+    "deuteron_punch_through": {
+      "n": 842,
+      "edep_raw_median_MeV": 43.05179027311007,
+      "edep_vis_median_MeV": 33.651645756211934,
+      "birks_ratio_median": 0.7816493415946042,
+      "n_scint_median": 336513.5,
+      "n_arrival_median": 1316.0,
+      "n_pe_median": 397.0,
+      "n_pe_p16": 378.0,
+      "n_pe_p84": 417.0,
+      "adc_median": 3895.0,
+      "stopped_fraction": 0.0,
+      "ke_setting_median_MeV": 75.0
+    },
+    "ratios_deuteron_over_proton": {
+      "edep_raw": 3.5894361314760443,
+      "edep_visible": 4.451788641901996,
+      "n_scint": 4.44449403867778,
+      "n_arrival": 4.358974358974359,
+      "n_pe": 4.260273972602739,
+      "adc": 1.0491582491582492
+    },
+    "ratios_matched_b2_stoppingD_over_punchthroughP": {
+      "edep_raw": 3.8556852339809136,
+      "edep_visible": 2.384731860652429,
+      "n_scint": 2.387558590250205,
+      "n_arrival": 2.389952153110048,
+      "n_pe": 2.388888888888889,
+      "adc": 1.0
+    },
+    "ratios_both_stopped": {
+      "edep_raw": 3.629662360502401,
+      "edep_visible": 4.355917715292943,
+      "n_scint": 4.363435800649793,
+      "n_arrival": 4.44,
+      "n_pe": 4.492537313432836,
+      "adc": 1.151685393258427
+    }
+  },
+  "optical_transport_guard": {
+    "optical_max_time_ns": [
+      1000.0
+    ],
+    "optical_max_steps": [
+      200000
+    ],
+    "photons_killed_by_time": 597657,
+    "photons_killed_by_steps": 3875,
+    "optical_photons_generated": 44324598336,
+    "killed_fraction": 1.357106488456189e-05,
+    "events_with_any_kill": 2675
+  },
+  "figures": {
+    "A": [
+      "01_nscint_vs_edep.png",
+      "02_npe_vs_edep.png",
+      "03_lightyield_per_MeV_vs_edep.png",
+      "04_yield_and_birks_vs_dedx.png",
+      "05_birks_ratio_vs_edep.png",
+      "06_position_long.png",
+      "06_position_trans.png",
+      "07_proton_vs_deuteron.png",
+      "08_adc_vs_edep.png"
+    ],
+    "B": [
+      "01_nscint_vs_edep.png",
+      "02_npe_vs_edep.png",
+      "03_lightyield_per_MeV_vs_edep.png",
+      "04_yield_and_birks_vs_dedx.png",
+      "05_birks_ratio_vs_edep.png",
+      "06_position_long.png",
+      "06_position_trans.png",
+      "07_proton_vs_deuteron.png",
+      "08_adc_vs_edep.png"
+    ]
+  }
+}

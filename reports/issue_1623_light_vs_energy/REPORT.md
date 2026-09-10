@@ -97,15 +97,48 @@ At fixed deposit, geometry alone moves the light yield substantially
 Any ΔE-E analysis that maps ADC to deposit with a single scale factor inherits
 that spread as an irreducible width unless the hit position is used.
 
+## ADC-equivalent, on a sample whose range is not clipped
+
+The shipped digitizer placeholder leaves only 38.95 pe of PEAK headroom, so the
+main campaign clipped (see the caveat below). Re-running the two fate-matched B2
+populations with `--adc-lsb-pe 0.20` (779 pe of headroom, **an explicitly
+labelled scan setting, not a DAQ calibration**) gives zero saturated events and
+an ADC ratio that can actually be read:
+
+| | E_dep raw | E_vis | N_arrival | N_pe | ADC |
+|---|---|---|---|---|---|
+| deuteron stopping / proton punch-through, distributed | 3.88 | 2.44 | 2.44 | 2.42 | **2.22** |
+| same, central reference | 3.90 | 2.45 | 2.43 | 2.42 | **2.22** |
+
+The ADC ratio is stable to three decimals between the two samples, and it
+compresses slightly *further* than the photoelectron ratio (2.22 vs 2.42). That
+last step is a pulse-shape effect rather than a light-yield one: `adc_readout` is
+the PEAK amplitude of the shaped waveform, and the stopping deuteron's larger
+photon burst spreads over a marginally wider arrival-time distribution and drives
+more SiPM cell occupancy, so its peak grows a little less than its integral.
+
+The chain therefore reads, for the B2-matched case:
+
+    E_dep 3.88  ->  E_vis 2.44  ->  N_pe 2.42  ->  ADC 2.22
+
+Nearly all the compression happens at the quenching step; light collection is
+almost neutral, and the digitizer takes a further ~8%.
+
 ## Caveat: the simulated ADC chain is saturated over this whole range
 
 `adc_readout` hard-clips at 3895 counts (12-bit, with a baseline offset). 79 % of
 proton events and 82 % of deuteron events in the distributed sample sit at the
 ceiling; the ADC ratio between the two B2 populations is therefore 1.00 by
 construction and carries no information. Everything above uses `detected_readout`
-(N_pe). Pinning the digitizer gain and dynamic range to the real DAQ is filed
-separately; until then the simulated ADC must not be compared with measured
-amplitudes.
+(N_pe). Clipping is no longer silent: `adc_sat_readout` and its three companions flag it
+per event, a `CCB_ADC_SATURATION` line and a stderr warning report the fraction
+per run, and `adc_headroom_pe` plus
+`adc_gain_provenance: PLACEHOLDER_NOT_DAQ_MEASURED` go into the sidecar. The
+range is a first-class systematic knob (`--adc-lsb-pe`, or `CCB_SIPM_ADC_LSB_PE`).
+
+Widening it makes the ADC usable as a RELATIVE observable, as in the table above.
+It does not calibrate it: absolute ADC counts from this simulation still must not
+be compared with measured amplitudes until the gain is pinned to the real DAQ.
 
 ## Figures
 

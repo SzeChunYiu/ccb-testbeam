@@ -55,13 +55,28 @@ bool parse_ull(const char* s, unsigned long long& out) {
   out = val;
   return true;
 }
+
+// Parse "MIN:MAX" into two finite doubles (issue #1623 phase-space ranges).
+bool parse_range(const char* s, double& lo, double& hi) {
+  if (!s) return false;
+  const char* colon = std::strchr(s, ':');
+  if (!colon || colon == s || *(colon + 1) == '\0') return false;
+  const std::string a(s, colon);
+  const std::string b(colon + 1);
+  double x = 0.0, y = 0.0;
+  if (!parse_double(a.c_str(), x)) return false;
+  if (!parse_double(b.c_str(), y)) return false;
+  lo = x; hi = y;
+  return true;
+}
 }  // namespace
 
 void AppConfig::PrintUsage(const char* prog) {
   std::cout <<
     "Usage: " << prog << " [options]\n"
     "  CCB single-stave optical simulation (issue #796).\n\n"
-    "  --particle NAME          proton|deuteron            (default proton)\n"
+    "  --particle NAME          proton|deuteron|mu-|mu+|pi+|pi-\n"
+    "                                                       (default proton)\n"
     "  --energy MEV             primary kinetic energy MeV  (default 100)\n"
     "  --nevents N              events this invocation      (default 1000)\n"
     "  --threads N              worker threads              (default 1)\n"
@@ -70,7 +85,16 @@ void AppConfig::PrintUsage(const char* prog) {
     "  --hit-x CM               impact x (stave length)     (default 0)\n"
     "  --hit-y CM               impact y (width)            (default 0)\n"
     "  --theta DEG              polar tilt from +z          (default 0)\n"
-    "  --phi DEG                azimuth of tilt             (default 0)\n"
+    "  --phi DEG                azimuth of tilt             (default 0)\n"    "  --hit-x-range MIN:MAX    sample impact x uniformly in [MIN,MAX] cm\n"
+    "                           (issue #1623; overrides --hit-x)\n"
+    "  --hit-y-range MIN:MAX    sample impact y uniformly in [MIN,MAX] cm\n"
+    "                           (issue #1623; overrides --hit-y)\n"
+    "  --theta-spread DEG       sample incidence isotropically inside a cone\n"
+    "                           of half-angle DEG about (theta,phi) (default 0)\n"
+    "  --no-photon-ntuple       omit the per-photon ntuple (volume control)\n"    "  --optical-max-time-ns T  kill optical photons past global time T ns\n"
+    "                           (0 = off; kills are counted, #1623/#1083)\n"
+    "  --optical-max-steps N    kill optical photons past N steps (0 = off)\n"    "  --adc-lsb-pe V           SiPM digitizer pe per ADC LSB (0 = leave the\n"
+    "                           placeholder default; larger V = wider range)\n"
     "  --allow-miss             permit primaries that miss the stave (#999)\n"
     "  --birks-kB VAL           Birks kB [mm/MeV]           (default 0.126)\n"
     "  --production-cut MM      secondary-production range threshold [mm]\n"
@@ -125,6 +149,18 @@ std::string AppConfig::Describe() const {
      << " theta_deg=" << theta_deg
      << " phi_deg=" << phi_deg
      << " allow_miss=" << (allow_miss ? 1 : 0)
+     << " beam_profile_id=" << beam_profile_id
+     << " sample_position=" << (sample_position ? 1 : 0)
+     << " hit_x_min_cm=" << hit_x_min_cm
+     << " hit_x_max_cm=" << hit_x_max_cm
+     << " hit_y_min_cm=" << hit_y_min_cm
+     << " hit_y_max_cm=" << hit_y_max_cm
+     << " sample_angle=" << (sample_angle ? 1 : 0)
+     << " theta_spread_deg=" << theta_spread_deg
+     << " write_photon_ntuple=" << (write_photon_ntuple ? 1 : 0)
+     << " optical_max_time_ns=" << optical_max_time_ns
+     << " optical_max_steps=" << optical_max_steps
+     << " adc_lsb_pe=" << adc_lsb_pe
      << " birks_kB=" << birks_kB_mm_per_MeV
     << " quenching_model_id=" << quenching_model_id
     << " quenching_model_status=" << quenching_model_status
@@ -179,6 +215,41 @@ bool AppConfig::ParseArgs(int argc, char** argv) {
     else if (eq(a, "--theta"))             { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --theta requires a finite number, got '"<<v<<"'\n";return false;} theta_deg = t; }
     else if (eq(a, "--phi"))               { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --phi requires a finite number, got '"<<v<<"'\n";return false;} phi_deg = t; }
     else if (eq(a, "--allow-miss"))        { allow_miss = true; }
+    else if (eq(a, "--hit-x-range")) {
+      if(!(v=need(i)))return false;
+      if(!parse_range(v, hit_x_min_cm, hit_x_max_cm)){
+        std::cerr<<"error: --hit-x-range requires MIN:MAX (finite, MIN<=MAX), got '"<<v<<"'\n";return false;}
+      hit_x_range_set = true;
+      sample_position = true;
+    }
+    else if (eq(a, "--hit-y-range")) {
+      if(!(v=need(i)))return false;
+      if(!parse_range(v, hit_y_min_cm, hit_y_max_cm)){
+        std::cerr<<"error: --hit-y-range requires MIN:MAX (finite, MIN<=MAX), got '"<<v<<"'\n";return false;}
+      hit_y_range_set = true;
+      sample_position = true;
+    }
+    else if (eq(a, "--theta-spread")) {
+      if(!(v=need(i)))return false; double t;
+      if(!parse_double(v,t)){std::cerr<<"error: --theta-spread requires a finite number, got '"<<v<<"'\n";return false;}
+      theta_spread_deg = t;
+    }
+    else if (eq(a, "--no-photon-ntuple")) { write_photon_ntuple = false; }
+    else if (eq(a, "--optical-max-time-ns")) {
+      if(!(v=need(i)))return false; double t;
+      if(!parse_double(v,t)){std::cerr<<"error: --optical-max-time-ns requires a finite number, got '"<<v<<"'\n";return false;}
+      optical_max_time_ns = t;
+    }
+    else if (eq(a, "--adc-lsb-pe")) {
+      if(!(v=need(i)))return false; double t;
+      if(!parse_double(v,t)){std::cerr<<"error: --adc-lsb-pe requires a finite number, got '"<<v<<"'\n";return false;}
+      adc_lsb_pe = t;
+    }
+    else if (eq(a, "--optical-max-steps")) {
+      if(!(v=need(i)))return false; int t;
+      if(!parse_int(v,t)){std::cerr<<"error: --optical-max-steps requires an integer, got '"<<v<<"'\n";return false;}
+      optical_max_steps = t;
+    }
     else if (eq(a, "--birks-kB"))          { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --birks-kB requires a finite number, got '"<<v<<"'\n";return false;} birks_kB_mm_per_MeV = t; }
     else if (eq(a, "--production-cut"))    { if(!(v=need(i)))return false; double t; if(!parse_double(v,t)){std::cerr<<"error: --production-cut requires a finite number, got '"<<v<<"'\n";return false;} production_cut_mm = t; }
     else if (eq(a, "--physics-list"))     { if(!(v=need(i)))return false; physics_list = v; }
@@ -241,13 +312,63 @@ bool AppConfig::ParseArgs(int argc, char** argv) {
     gpu_optical = true;
 
   // --- validation ---
-  if (particle != "proton" && particle != "deuteron") {
-    std::cerr << "error: --particle must be proton|deuteron\n"; return false;
+  if (particle != "proton" && particle != "deuteron" &&
+      particle != "mu-" && particle != "mu+" &&
+      particle != "pi+" && particle != "pi-") {
+    std::cerr << "error: --particle must be proton|deuteron|mu-|mu+|pi+|pi-\n"; return false;
+  }
+  // Phase-space sampling (issue #1623). A degenerate range (MIN==MAX) is
+  // accepted and collapses to the fixed point, but it still marks the run as
+  // "sampled" for provenance; a zero spread disables the angular draw entirely.
+  if (sample_position) {
+    if (hit_x_min_cm > hit_x_max_cm || hit_y_min_cm > hit_y_max_cm) {
+      std::cerr << "error: --hit-x-range/--hit-y-range require MIN <= MAX\n"; return false;
+    }
+    // A range the user did NOT give collapses to that axis's fixed point.
+    // Keyed on whether the option was parsed, not on its value: "0:0" is a
+    // legitimate explicit pin at zero and must not be mistaken for "unset".
+    if (!hit_x_range_set) hit_x_min_cm = hit_x_max_cm = hit_x_cm;
+    if (!hit_y_range_set) hit_y_min_cm = hit_y_max_cm = hit_y_cm;
+  }
+  if (theta_spread_deg < 0.0 || theta_spread_deg > 90.0) {
+    std::cerr << "error: --theta-spread must be in [0,90] deg\n"; return false;
+  }
+  if (optical_max_time_ns < 0.0) {
+    std::cerr << "error: --optical-max-time-ns must be >= 0 (0 disables)\n"; return false;
+  }
+  if (adc_lsb_pe < 0.0) {
+    std::cerr << "error: --adc-lsb-pe must be >= 0 (0 leaves the default)\n"; return false;
+  }
+  if (optical_max_steps < 0) {
+    std::cerr << "error: --optical-max-steps must be >= 0 (0 disables)\n"; return false;
+  }
+  sample_angle = (theta_spread_deg > 0.0);
+  if (sample_position || sample_angle) {
+    beam_profile_id = sample_position
+        ? (sample_angle ? "AREA_UNIFORM_CONE_SPREAD" : "AREA_UNIFORM_NORMAL")
+        : "FIXED_POINT_CONE_SPREAD";
   }
   if (kinetic_energy_MeV <= 0) { std::cerr << "error: --energy must be > 0\n"; return false; }
   if (n_events <= 0)           { std::cerr << "error: --nevents must be > 0\n"; return false; }
   if (n_threads <= 0)          { std::cerr << "error: --threads must be > 0\n"; return false; }
   if (sipm_n_cells <= 0)      { std::cerr << "error: --sipm-n-cells must be > 0\n"; return false; }
+  {
+    // ccb-sipm-core needs an explicit cells_x x cells_y grid (#974), so a
+    // non-square count is rejected. That check used to live only in
+    // ApplySipmCellCount, which runs inside the worker-thread EventAction
+    // constructor: the std::invalid_argument it throws escaped uncaught and the
+    // process died on SIGABRT (exit 134) instead of failing cleanly like every
+    // other fail-closed option here. Validate it at parse time and exit 2.
+    const int side = static_cast<int>(std::lround(std::sqrt(
+        static_cast<double>(sipm_n_cells))));
+    if (side <= 0 || side * side != sipm_n_cells) {
+      std::cerr << "error: --sipm-n-cells=" << sipm_n_cells
+                << " is not a perfect square; ccb-sipm-core requires an explicit"
+                   " cells_x x cells_y grid (issue #974)."
+                   " Use 1600, 2500, 3600, 4900 or 6400.\n";
+      return false;
+    }
+  }
   if (collection_efficiency < 0 || collection_efficiency > 1) {
     std::cerr << "error: --collection-efficiency must be in [0,1]\n"; return false;
   }

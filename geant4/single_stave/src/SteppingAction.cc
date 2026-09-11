@@ -90,6 +90,19 @@ void SteppingAction::UserSteppingAction(const G4Step* step) {
         d.primary_edep_scint_raw_MeV += edep_raw / MeV;
         d.primary_edep_scint_MeV += edep_visible / MeV;
         d.primary_track_len_scint_mm += step->GetStepLength() / mm;
+        // #1623 primary fate: overwritten each primary step, so after the last
+        // one it holds the exit point and the residual kinetic energy. A
+        // residual at or below 10 keV means the primary terminated in the bar
+        // (range-out or destructive interaction) rather than punching through.
+        {
+          const G4StepPoint* post_pt = step->GetPostStepPoint();
+          const G4ThreeVector& pq = post_pt->GetPosition();
+          d.primary_exit_x_cm = pq.x() / cm;
+          d.primary_exit_y_cm = pq.y() / cm;
+          d.primary_exit_z_cm = pq.z() / cm;
+          d.primary_ke_end_MeV = post_pt->GetKineticEnergy() / MeV;
+          d.primary_stopped = (d.primary_ke_end_MeV <= 0.010) ? 1 : 0;
+        }
       }
       if (!d.has_entry) {
         d.has_entry = true;
@@ -161,6 +174,24 @@ void SteppingAction::UserSteppingAction(const G4Step* step) {
         }
       }
     }
+    return;
+  }
+
+  // Optical transport cost guards (#1623). A photon still bouncing long after
+  // the SiPM acquisition window ([-20, 250] ns in the response model, which
+  // discards later arrivals anyway) cannot contribute to the ADC, but it does
+  // still increment the raw arrival counters -- so every kill is COUNTED and
+  // reported rather than silently applied. Both limits are off by default.
+  if (cfg_.optical_max_time_ns > 0.0 &&
+      track->GetGlobalTime() / ns > cfg_.optical_max_time_ns) {
+    ++d.n_optical_killed_time;
+    track->SetTrackStatus(fStopAndKill);
+    return;
+  }
+  if (cfg_.optical_max_steps > 0 &&
+      track->GetCurrentStepNumber() > cfg_.optical_max_steps) {
+    ++d.n_optical_killed_steps;
+    track->SetTrackStatus(fStopAndKill);
     return;
   }
 

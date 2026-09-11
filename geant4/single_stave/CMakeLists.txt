@@ -128,10 +128,20 @@ enable_testing()
 # the CPU physics target or ctest.
 add_subdirectory(opticks)
 
+# Issues #1006 and #1091 made --physics-list and --neutron-timecut-policy-id
+# fail-closed REQUIRED arguments. Every direct ccb_stave_sim invocation below
+# must pass them, or the binary aborts before event 0 and the test measures
+# nothing at all. Kept in one variable so the next mandatory flag is a one-line
+# change rather than another silent suite-wide outage.
+set(CCB_REQUIRED_RUN_ARGS
+    --physics-list QGSP_BIC
+    --neutron-timecut-policy-id pin_qgsp_bic_default_10us)
+
 # 1) Geometry / overlap smoke: the app prints OVERLAP_CHECK_PASS at Initialize().
 add_test(
   NAME ccb_stave_geometry_smoke
   COMMAND ccb_stave_sim
+          ${CCB_REQUIRED_RUN_ARGS}
           --macro "${CMAKE_BINARY_DIR}/macros/geometry_check.mac"
           --optical-dir "${CMAKE_BINARY_DIR}/optical"
           --output "${CMAKE_BINARY_DIR}/geometry_smoke.root")
@@ -144,6 +154,7 @@ set_tests_properties(ccb_stave_geometry_smoke PROPERTIES
 add_test(
   NAME ccb_stave_proton_smoke
   COMMAND ccb_stave_sim
+          ${CCB_REQUIRED_RUN_ARGS}
           --particle proton --energy 100 --nevents 5 --seed 1
           --optical-dir "${CMAKE_BINARY_DIR}/optical"
           --output "${CMAKE_BINARY_DIR}/proton_smoke.root")
@@ -156,6 +167,7 @@ set_tests_properties(ccb_stave_proton_smoke PROPERTIES
 add_test(
   NAME ccb_stave_wls_profile
   COMMAND ccb_stave_sim
+          ${CCB_REQUIRED_RUN_ARGS}
           --particle proton --energy 100 --nevents 5 --seed 1
           --wls-time-profile exponential
           --optical-dir "${CMAKE_BINARY_DIR}/optical"
@@ -169,6 +181,7 @@ set_tests_properties(ccb_stave_wls_profile PROPERTIES
 add_test(
   NAME ccb_stave_gdml_export
   COMMAND ccb_stave_sim
+          ${CCB_REQUIRED_RUN_ARGS}
           --dump-gdml "${CMAKE_BINARY_DIR}/exported.gdml"
           --optical-dir "${CMAKE_BINARY_DIR}/optical"
           --output "${CMAKE_BINARY_DIR}/gdml_export.root"
@@ -182,6 +195,7 @@ set_tests_properties(ccb_stave_gdml_export PROPERTIES
 add_test(
   NAME ccb_stave_gpu_optical_capture
   COMMAND ${CMAKE_COMMAND} -E env CCB_GPU_OPTICAL=1 ccb_stave_sim
+          ${CCB_REQUIRED_RUN_ARGS}
           --particle proton --energy 100 --nevents 1 --seed 1
           --optical-dir "${CMAKE_BINARY_DIR}/optical"
           --output "${CMAKE_BINARY_DIR}/gpu_optical.root"
@@ -291,6 +305,7 @@ endif()
 add_test(
   NAME ccb_stave_sipm_arrivals
   COMMAND ccb_stave_sim
+          ${CCB_REQUIRED_RUN_ARGS}
           --particle proton --energy 100 --nevents 5 --seed 1
           --optical-dir "${CMAKE_BINARY_DIR}/optical"
           --output "${CMAKE_BINARY_DIR}/sipm_arrivals.root")
@@ -302,6 +317,7 @@ set_tests_properties(ccb_stave_sipm_arrivals PROPERTIES
 add_test(
   NAME ccb_stave_sipm_adc
   COMMAND ccb_stave_sim
+          ${CCB_REQUIRED_RUN_ARGS}
           --particle proton --energy 100 --nevents 5 --seed 1
           --optical-dir "${CMAKE_BINARY_DIR}/optical"
           --output "${CMAKE_BINARY_DIR}/sipm_adc.root")
@@ -313,6 +329,21 @@ set_tests_properties(ccb_stave_sipm_adc PROPERTIES
 
 # 9) SiPM env fail-closed + zero-control effectiveness (#975/#976).
 if(CCB_PYTHON3)
+  # #1623: ADC clipping must be reported, never silent. This does not assert
+  # that the placeholder digitizer gain is right -- there is no DAQ number to
+  # assert against -- it asserts the invariant that makes shipping a placeholder
+  # safe: a run that clips says so, and widening --adc-lsb-pe clears it.
+  add_test(
+    NAME ccb_stave_adc_saturation_reported
+    COMMAND ${CCB_PYTHON3}
+            "${PROJECT_SOURCE_DIR}/tests/test_adc_saturation_reported.py"
+            --exe "$<TARGET_FILE:ccb_stave_sim>"
+            --optical-dir "${CMAKE_BINARY_DIR}/optical")
+  set_tests_properties(ccb_stave_adc_saturation_reported PROPERTIES
+    PASS_REGULAR_EXPRESSION "ADC_SATURATION_REPORTING_PASS"
+    FAIL_REGULAR_EXPRESSION "ADC_SATURATION_REPORTING_FAIL"
+    TIMEOUT 3600)
+
   add_test(
     NAME ccb_stave_sipm_env_fail_closed
     COMMAND ${CCB_PYTHON3}
@@ -328,6 +359,7 @@ endif()
 add_test(
   NAME ccb_stave_sipm_n_cells_nonsquare_fail
   COMMAND ccb_stave_sim
+          ${CCB_REQUIRED_RUN_ARGS}
           --particle proton --energy 100 --nevents 1 --seed 1
           --sipm-n-cells 1800
           --optical-dir "${CMAKE_BINARY_DIR}/optical"
@@ -351,7 +383,7 @@ endif()
 add_test(
   NAME ccb_stave_strict_optical_missing_table
   COMMAND ${CMAKE_COMMAND} -E env
-          bash -c "set -e; tmp=$(mktemp -d); cp -R ${CMAKE_BINARY_DIR}/optical/* $tmp/; rm -f $tmp/sipm_pde.csv; $<TARGET_FILE:ccb_stave_sim> --particle proton --energy 100 --nevents 1 --seed 1 --optical-dir $tmp --strict-optical --output $tmp/out.root; ec=$?; rm -rf $tmp; exit $ec")
+          bash -c "set -e; tmp=$(mktemp -d); cp -R ${CMAKE_BINARY_DIR}/optical/* $tmp/; rm -f $tmp/sipm_pde.csv; $<TARGET_FILE:ccb_stave_sim> --physics-list QGSP_BIC --neutron-timecut-policy-id pin_qgsp_bic_default_10us --particle proton --energy 100 --nevents 1 --seed 1 --optical-dir $tmp --strict-optical --output $tmp/out.root; ec=$?; rm -rf $tmp; exit $ec")
 set_tests_properties(ccb_stave_strict_optical_missing_table PROPERTIES
   WILL_FAIL TRUE)
 
@@ -359,6 +391,6 @@ set_tests_properties(ccb_stave_strict_optical_missing_table PROPERTIES
 add_test(
   NAME ccb_stave_strict_optical_bad_units
   COMMAND ${CMAKE_COMMAND} -E env
-          bash -c "set -e; tmp=$(mktemp -d); cp -R ${CMAKE_BINARY_DIR}/optical/* $tmp/; printf '%s\n' '# units_x: angstrom' '# units_y: frac' '# status: BAD' '450, 0.4' > $tmp/sipm_pde.csv; $<TARGET_FILE:ccb_stave_sim> --particle proton --energy 100 --nevents 1 --seed 1 --optical-dir $tmp --strict-optical --output $tmp/out.root; ec=$?; rm -rf $tmp; exit $ec")
+          bash -c "set -e; tmp=$(mktemp -d); cp -R ${CMAKE_BINARY_DIR}/optical/* $tmp/; printf '%s\n' '# units_x: angstrom' '# units_y: frac' '# status: BAD' '450, 0.4' > $tmp/sipm_pde.csv; $<TARGET_FILE:ccb_stave_sim> --physics-list QGSP_BIC --neutron-timecut-policy-id pin_qgsp_bic_default_10us --particle proton --energy 100 --nevents 1 --seed 1 --optical-dir $tmp --strict-optical --output $tmp/out.root; ec=$?; rm -rf $tmp; exit $ec")
 set_tests_properties(ccb_stave_strict_optical_bad_units PROPERTIES
   WILL_FAIL TRUE)

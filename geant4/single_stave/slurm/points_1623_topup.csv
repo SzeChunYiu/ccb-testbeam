@@ -1,0 +1,22 @@
+# issue #1623 top-up: populate the STOPPING window at 42-45 MeV deposit for both
+# species. The main grid straddles it (deuteron 40 and 48 MeV, proton 40 and 46),
+# so the fate-matched B2 comparison rested on distribution tails. Same columns,
+# same sampling window and cone as the main campaign.
+deuteron,42,A,-22.0,22.0,-2.2,2.2,10.0,1623,2000
+deuteron,42,A,-22.0,22.0,-2.2,2.2,10.0,1624,2000
+deuteron,42,B,0.0,0.0,0.0,0.0,0.0,1625,1000
+deuteron,43,A,-22.0,22.0,-2.2,2.2,10.0,1623,2000
+deuteron,43,A,-22.0,22.0,-2.2,2.2,10.0,1624,2000
+deuteron,43,B,0.0,0.0,0.0,0.0,0.0,1625,1000
+deuteron,44,A,-22.0,22.0,-2.2,2.2,10.0,1623,2000
+deuteron,44,A,-22.0,22.0,-2.2,2.2,10.0,1624,2000
+deuteron,44,B,0.0,0.0,0.0,0.0,0.0,1625,1000
+proton,42,A,-22.0,22.0,-2.2,2.2,10.0,1623,2000
+proton,42,A,-22.0,22.0,-2.2,2.2,10.0,1624,2000
+proton,42,B,0.0,0.0,0.0,0.0,0.0,1625,1000
+proton,43,A,-22.0,22.0,-2.2,2.2,10.0,1623,2000
+proton,43,A,-22.0,22.0,-2.2,2.2,10.0,1624,2000
+proton,43,B,0.0,0.0,0.0,0.0,0.0,1625,1000
+proton,44,A,-22.0,22.0,-2.2,2.2,10.0,1623,2000
+proton,44,A,-22.0,22.0,-2.2,2.2,10.0,1624,2000
+proton,44,B,0.0,0.0,0.0,0.0,0.0,1625,1000

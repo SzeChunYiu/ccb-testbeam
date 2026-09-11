@@ -3,6 +3,8 @@
 #include "SimData.hh"
 
 #include "G4Track.hh"
+#include "G4SystemOfUnits.hh"
+#include "G4ThreeVector.hh"
 #include "G4OpticalPhoton.hh"
 #include "G4VProcess.hh"
 #include "G4Step.hh"
@@ -11,6 +13,18 @@ TrackingAction::TrackingAction(EventAction* event_action)
     : event_action_(event_action) {}
 
 void TrackingAction::PreUserTrackingAction(const G4Track* track) {
+  // Issue #1623: record the primary launch phase space from the primary track
+  // itself, so per-event sampled positions/directions land in the ntuple.
+  if (track->GetParentID() == 0) {
+    EventData& pd = event_action_->Data();
+    const G4ThreeVector& v = track->GetVertexPosition();
+    pd.gen_x_cm = v.x() / CLHEP::cm;
+    pd.gen_y_cm = v.y() / CLHEP::cm;
+    const G4ThreeVector& u = track->GetVertexMomentumDirection();
+    pd.dir_ux = u.x();
+    pd.dir_uy = u.y();
+    pd.dir_uz = u.z();
+  }
   if (track->GetDefinition() != G4OpticalPhoton::OpticalPhoton()) return;
   // Count generated optical photons by creator process, once per track.
   const G4VProcess* creator = track->GetCreatorProcess();

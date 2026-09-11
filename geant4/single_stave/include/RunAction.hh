@@ -9,8 +9,11 @@
 #include "G4UserRunAction.hh"
 #include "globals.hh"
 #include "AppConfig.hh"
+#include "DetectorConstruction.hh"  // kNSensors
 #include "OpticalTables.hh"
 #include "ccb/sipm/Config.hh"
+
+#include <array>
 
 class G4Run;
 struct EventData;
@@ -45,6 +48,10 @@ class RunAction : public G4UserRunAction {
   void NoteSipmEventDiagnostics(bool candidate_limit_reached,
                                 std::size_t n_candidates_processed);
 
+  // #1623: count clipped ADC waveforms per channel so a run REPORTS, rather
+  // than hides, that its digitizer range was exceeded.
+  void NoteAdcSaturation(int sensor, bool saturated);
+
   const AppConfig& Config() const { return cfg_; }
 
  private:
@@ -60,8 +67,9 @@ class RunAction : public G4UserRunAction {
 
   bool have_sipm_config_ = false;
   ccb::sipm::ModelConfig sipm_config_;
-  std::size_t candidate_limit_hits_ = 0;
-  std::size_t max_candidates_processed_ = 0;
+  // #1069 / #1623 run-level diagnostics live in process-wide atomics in
+  // RunAction.cc: Geant4 MT gives each worker its own RunAction, so a member
+  // counter incremented on a worker is invisible to the master that reports it.
 
   int nt_event_ = -1;   // per-event ntuple id
   int nt_photon_ = -1;  // per-photon ntuple id (calibration mode)

@@ -1,4 +1,6 @@
 #include "RunAction.hh"
+
+#include <atomic>
 #include "SimData.hh"
 #include "NpyWriter.hh"
 #include "SipmDigitizerConfig.hh"
@@ -41,13 +43,49 @@ void RunAction::SetSipmDigitizerConfig(const ccb::sipm::ModelConfig& cfg) {
   have_sipm_config_ = true;
 }
 
+namespace {
+
+// Geant4 MT: EventAction runs on a worker thread and increments the WORKER's
+// RunAction, while EndOfRunAction reports from the MASTER instance. Per-instance
+// members therefore always read back zero on any multithreaded run. These
+// process-wide atomics are written by whichever thread observed the event and
+// read by the master once the workers have joined. Reset by the master in
+// BeginOfRunAction so one process running several runs cannot accumulate.
+std::atomic<long> g_adc_channel_evaluations{0};
+std::atomic<long> g_adc_saturated[kNSensors];
+std::atomic<long> g_candidate_limit_hits{0};
+std::atomic<unsigned long long> g_max_candidates_processed{0};
+
+void ResetRunCounters() {
+  g_adc_channel_evaluations.store(0, std::memory_order_relaxed);
+  for (int i = 0; i < kNSensors; ++i)
+    g_adc_saturated[i].store(0, std::memory_order_relaxed);
+  g_candidate_limit_hits.store(0, std::memory_order_relaxed);
+  g_max_candidates_processed.store(0, std::memory_order_relaxed);
+}
+
+}  // namespace
+
+void RunAction::NoteAdcSaturation(int sensor, bool saturated) {
+  if (sensor < 0 || sensor >= kNSensors) return;
+  g_adc_channel_evaluations.fetch_add(1, std::memory_order_relaxed);
+  if (saturated) g_adc_saturated[sensor].fetch_add(1, std::memory_order_relaxed);
+}
+
 void RunAction::NoteSipmEventDiagnostics(bool candidate_limit_reached,
                                          std::size_t n_candidates_processed) {
   if (candidate_limit_reached) {
-    ++candidate_limit_hits_;
+    g_candidate_limit_hits.fetch_add(1, std::memory_order_relaxed);
   }
-  if (n_candidates_processed > max_candidates_processed_) {
-    max_candidates_processed_ = n_candidates_processed;
+  // Atomic maximum: retry until our value is stored or another thread has
+  // already recorded a larger one (no fetch_max before C++26).
+  const unsigned long long want =
+      static_cast<unsigned long long>(n_candidates_processed);
+  unsigned long long seen =
+      g_max_candidates_processed.load(std::memory_order_relaxed);
+  while (want > seen &&
+         !g_max_candidates_processed.compare_exchange_weak(
+             seen, want, std::memory_order_relaxed)) {
   }
 }
 
@@ -102,10 +140,30 @@ void RunAction::DefineNtuples() {
   am->CreateNtupleDColumn("adc_f1far");
   am->CreateNtupleDColumn("adc_f2near");
   am->CreateNtupleDColumn("adc_f2far");
+  am->CreateNtupleIColumn("adc_sat_readout");
+  am->CreateNtupleIColumn("adc_sat_f1far");
+  am->CreateNtupleIColumn("adc_sat_f2near");
+  am->CreateNtupleIColumn("adc_sat_f2far");
+  // Issue #1623 phase-space columns, appended so existing column indices and
+  // downstream readers are unaffected.
+  am->CreateNtupleDColumn("gen_x_cm");
+  am->CreateNtupleDColumn("gen_y_cm");
+  am->CreateNtupleDColumn("dir_ux");
+  am->CreateNtupleDColumn("dir_uy");
+  am->CreateNtupleDColumn("dir_uz");
+  am->CreateNtupleDColumn("primary_exit_x_cm");
+  am->CreateNtupleDColumn("primary_exit_y_cm");
+  am->CreateNtupleDColumn("primary_exit_z_cm");
+  am->CreateNtupleDColumn("primary_ke_end_MeV");
+  am->CreateNtupleIColumn("primary_stopped");
+  am->CreateNtupleIColumn("n_optical_killed_time");
+  am->CreateNtupleIColumn("n_optical_killed_steps");
   am->FinishNtuple(nt_event_);
 
   // Per-photon ntuple (calibration mode: arrival wavelength/time preserved).
-  if (cfg_.mode == SimMode::kOpticalCalibration) {
+  // --no-photon-ntuple (#1623) drops the per-photon table; the per-event
+  // counters, PE and ADC columns are unaffected.
+  if (cfg_.mode == SimMode::kOpticalCalibration && cfg_.write_photon_ntuple) {
     nt_photon_ = am->CreateNtuple("photons", "per-photon arrivals");
     am->CreateNtupleIColumn("event");
     am->CreateNtupleIColumn("sensor");       // SensorId
@@ -136,6 +194,7 @@ void RunAction::BeginOfRunAction(const G4Run*) {
   // seeds to workers. The master seed is configured once in main.cc before the
   // run manager is constructed.
   if (IsMaster() || G4Threading::G4GetThreadId() < 0) {
+    ResetRunCounters();
     std::cout << "RUN_CONFIG " << cfg_.Describe() << " geometry_hash="
               << geometry_hash_ << std::endl;
   }
@@ -231,6 +290,20 @@ void RunAction::FillEvent(const EventData& e, int event_id) {
     am->FillNtupleDColumn(nt_event_, c++, e.pe_saturated[i]);
   for (int i = 0; i < kNSensors; ++i)
     am->FillNtupleDColumn(nt_event_, c++, e.adc[i]);
+  for (int i = 0; i < kNSensors; ++i)
+    am->FillNtupleIColumn(nt_event_, c++, e.adc_saturated[i]);
+  am->FillNtupleDColumn(nt_event_, c++, e.gen_x_cm);
+  am->FillNtupleDColumn(nt_event_, c++, e.gen_y_cm);
+  am->FillNtupleDColumn(nt_event_, c++, e.dir_ux);
+  am->FillNtupleDColumn(nt_event_, c++, e.dir_uy);
+  am->FillNtupleDColumn(nt_event_, c++, e.dir_uz);
+  am->FillNtupleDColumn(nt_event_, c++, e.primary_exit_x_cm);
+  am->FillNtupleDColumn(nt_event_, c++, e.primary_exit_y_cm);
+  am->FillNtupleDColumn(nt_event_, c++, e.primary_exit_z_cm);
+  am->FillNtupleDColumn(nt_event_, c++, e.primary_ke_end_MeV);
+  am->FillNtupleIColumn(nt_event_, c++, e.primary_stopped);
+  am->FillNtupleIColumn(nt_event_, c++, (int)e.n_optical_killed_time);
+  am->FillNtupleIColumn(nt_event_, c++, (int)e.n_optical_killed_steps);
   am->AddNtupleRow(nt_event_);
 
   if (cfg_.neutron_diagnostics && nt_neutron_ >= 0) {
@@ -267,6 +340,41 @@ void RunAction::EndOfRunAction(const G4Run* run) {
   am->CloseFile();
   if (IsMaster() || G4Threading::G4GetThreadId() < 0) {
     WriteMetadataSidecar(run);
+    {
+      // #1623: state the digitizer-range outcome explicitly. A run whose ADC is
+      // pinned at the ceiling must not be mistaken for one that measured a
+      // constant amplitude.
+      const double frac = (g_adc_channel_evaluations.load() > 0)
+          ? static_cast<double>(g_adc_saturated[kReadout].load() +
+                                g_adc_saturated[kF1Far].load() +
+                                g_adc_saturated[kF2Near].load() +
+                                g_adc_saturated[kF2Far].load()) /
+            static_cast<double>(g_adc_channel_evaluations.load())
+          : 0.0;
+      std::cout << "CCB_ADC_SATURATION channel_evaluations="
+                << g_adc_channel_evaluations.load()
+                << " saturated_readout=" << g_adc_saturated[kReadout].load()
+                << " saturated_f1far=" << g_adc_saturated[kF1Far].load()
+                << " saturated_f2near=" << g_adc_saturated[kF2Near].load()
+                << " saturated_f2far=" << g_adc_saturated[kF2Far].load()
+                << " saturated_fraction=" << frac
+                << " adc_bits=" << (have_sipm_config_ ? sipm_config_.adc_bits : 0)
+                << " adc_lsb_pe=" << (have_sipm_config_ ? sipm_config_.adc_lsb_pe : 0.0)
+                << " headroom_pe="
+                << (have_sipm_config_
+                        ? ((1 << sipm_config_.adc_bits) - 1 - sipm_config_.baseline_adc)
+                              * sipm_config_.adc_lsb_pe
+                        : 0.0)
+                << std::endl;
+      if (frac > 0.0) {
+        std::cerr << "warning: " << (frac * 100.0)
+                  << "% of ADC channel evaluations hit the digitizer ceiling;"
+                  << " adc_* values in this run are clipped lower bounds."
+                  << " Raise the range with CCB_SIPM_ADC_LSB_PE / "
+                  << "CCB_SIPM_ADC_BITS, and use detected_readout for physics."
+                  << std::endl;
+      }
+    }
     std::cout << "RUN_DONE events=" << run->GetNumberOfEvent()
               << " output=" << cfg_.output << std::endl;
   }
@@ -332,6 +440,18 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
      << "  \"hit_y_cm\": " << cfg_.hit_y_cm << ",\n"
      << "  \"theta_deg\": " << cfg_.theta_deg << ",\n"
      << "  \"phi_deg\": " << cfg_.phi_deg << ",\n"
+     << "  \"beam_profile_id\": " << j(cfg_.beam_profile_id) << ",\n"
+     << "  \"sample_position\": " << (cfg_.sample_position ? "true" : "false") << ",\n"
+     << "  \"hit_x_min_cm\": " << cfg_.hit_x_min_cm << ",\n"
+     << "  \"hit_x_max_cm\": " << cfg_.hit_x_max_cm << ",\n"
+     << "  \"hit_y_min_cm\": " << cfg_.hit_y_min_cm << ",\n"
+     << "  \"hit_y_max_cm\": " << cfg_.hit_y_max_cm << ",\n"
+     << "  \"sample_angle\": " << (cfg_.sample_angle ? "true" : "false") << ",\n"
+     << "  \"theta_spread_deg\": " << cfg_.theta_spread_deg << ",\n"
+     << "  \"phase_space_rng\": \"splitmix64_keyed_on_seed_and_event_id\",\n"
+     << "  \"write_photon_ntuple\": " << (cfg_.write_photon_ntuple ? "true" : "false") << ",\n"
+     << "  \"optical_max_time_ns\": " << cfg_.optical_max_time_ns << ",\n"
+     << "  \"optical_max_steps\": " << cfg_.optical_max_steps << ",\n"
      << "  \"mode\": " << j(cfg_.mode == SimMode::kOpticalCalibration ? "optical" : "fast") << ",\n"
      << "  \"birks_kB_mm_per_MeV\": " << cfg_.birks_kB_mm_per_MeV << ",\n"
      << "  \"production_cut_mm\": " << cfg_.production_cut_mm << ",\n"
@@ -464,13 +584,22 @@ void RunAction::WriteMetadataSidecar(const G4Run* run) const {
        << "    \"adc_bits\": " << sipm_config_.adc_bits << ",\n"
        << "    \"adc_lsb_pe\": " << sipm_config_.adc_lsb_pe << ",\n"
        << "    \"baseline_adc\": " << sipm_config_.baseline_adc << ",\n"
+       << "    \"adc_headroom_pe\": "
+       << (((1 << sipm_config_.adc_bits) - 1 - sipm_config_.baseline_adc)
+           * sipm_config_.adc_lsb_pe) << ",\n"
+       << "    \"adc_gain_provenance\": \"PLACEHOLDER_NOT_DAQ_MEASURED\",\n"
+       << "    \"adc_channel_evaluations\": " << g_adc_channel_evaluations.load() << ",\n"
+       << "    \"adc_saturated_readout\": " << g_adc_saturated[kReadout].load() << ",\n"
+       << "    \"adc_saturated_f1far\": " << g_adc_saturated[kF1Far].load() << ",\n"
+       << "    \"adc_saturated_f2near\": " << g_adc_saturated[kF2Near].load() << ",\n"
+       << "    \"adc_saturated_f2far\": " << g_adc_saturated[kF2Far].load() << ",\n"
        << "    \"sample_dt_ns\": " << sipm_config_.sample_dt_ns << ",\n"
        << "    \"window_start_ns\": " << sipm_config_.window_start_ns << ",\n"
        << "    \"window_end_ns\": " << sipm_config_.window_end_ns << ",\n"
        << "    \"history_start_ns\": " << sipm_config_.history_start_ns << ",\n"
        << "    \"max_candidates\": " << sipm_config_.max_candidates << ",\n"
-       << "    \"candidate_limit_hits\": " << candidate_limit_hits_ << ",\n"
-       << "    \"max_candidates_processed\": " << max_candidates_processed_ << ",\n"
+       << "    \"candidate_limit_hits\": " << g_candidate_limit_hits.load() << ",\n"
+       << "    \"max_candidates_processed\": " << g_max_candidates_processed.load() << ",\n"
        << "    \"overvoltage_V\": " << sipm_config_.device_provenance.overvoltage_V << ",\n"
        << "    \"temperature_C\": " << sipm_config_.device_provenance.temperature_C << ",\n"
        << "    \"device_name\": " << j(sipm_config_.device_provenance.device_name) << ",\n"

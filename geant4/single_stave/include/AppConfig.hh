@@ -18,7 +18,8 @@ enum class SimMode { kOpticalCalibration, kFastKernel };
 
 struct AppConfig {
   // --- Primary beam ---
-  std::string particle = "proton";   // "proton" | "deuteron"
+  // proton | deuteron | mu- | mu+ | pi+ | pi- (Geant4 particle names).
+  std::string particle = "proton";
   double kinetic_energy_MeV = 100.0; // primary kinetic energy
   int    n_events = 1000;            // events for this invocation
 
@@ -37,7 +38,26 @@ struct AppConfig {
   double theta_deg = 0.0;  // polar tilt from +z
   double phi_deg   = 0.0;  // azimuth of the tilt
   // Issue #999 / ADR-0003: intentional miss studies only.
-  bool allow_miss = false;  // --allow-miss; default rejects non-intersecting primaries
+  bool allow_miss = false;
+
+  // --- Phase-space sampling (issue #1623) -------------------------------
+  // OPT-IN per-event sampling of the impact point and of the incidence
+  // direction. Defaults are degenerate: with none of the sampling flags set
+  // the generator draws no random numbers at all and the run reproduces the
+  // historic fixed-point path exactly (protects the recorded 1T/48T same-seed
+  // branch-equality evidence). Sampling uses a counter-based RNG keyed on
+  // (seed, eventID) so the sampled phase space is independent of --threads.
+  bool   sample_position   = false;   // set by --hit-x-range / --hit-y-range
+  bool   hit_x_range_set   = false;   // --hit-x-range was given explicitly
+  bool   hit_y_range_set   = false;   // --hit-y-range was given explicitly
+  double hit_x_min_cm      = 0.0;     // uniform in [min,max] along stave length
+  double hit_x_max_cm      = 0.0;
+  double hit_y_min_cm      = 0.0;     // uniform in [min,max] across stave width
+  double hit_y_max_cm      = 0.0;
+  bool   sample_angle      = false;   // set by --theta-spread > 0
+  double theta_spread_deg  = 0.0;     // half-angle of the incidence cone [deg]
+  // Provenance label written into the run sidecar.
+  std::string beam_profile_id = "FIXED_POINT_NORMAL";  // --allow-miss; default rejects non-intersecting primaries
 
   // --- Detector / optical systematics knobs (multiplicative unless noted) ---
   double birks_kB_mm_per_MeV = 0.126; // Birks constant kB [mm/MeV] (Edep scan var)
@@ -164,6 +184,29 @@ struct AppConfig {
   // --- I/O ---
   std::string output = "ccb_stave.root"; // ntuple output (ROOT via g4tools)
   std::string macro  = "";                // optional macro to /control/execute
+  // Per-photon ntuple (optical mode). ON by default (historic behaviour);
+  // --no-photon-ntuple drops it for high-statistics response campaigns where
+  // the per-photon table, not the physics, is the output-volume driver.
+  bool write_photon_ntuple = true;
+
+  // --- Optical transport cost guards (issue #1623) -----------------------
+  // Guided optical photons can thrash a thin-layer boundary (the 10 um
+  // end-face air gap and the cladding shells, both UNKNOWN_EXTERNAL per #1083)
+  // for tens of millions of post-step DoIt calls, making a single event cost
+  // minutes. Both guards are OFF by default (0 = disabled) and every kill is
+  // counted per event and totalled in the run sidecar, so a guarded run states
+  // exactly how much transport it truncated instead of silently changing the
+  // optical result.
+  // SiPM digitizer range (#1623). The shipped placeholder (12 bits, baseline
+  // 200, 0.01 pe/LSB) leaves only ~39 pe of PEAK amplitude, which a CCB stave
+  // deposit above roughly 18 MeV exceeds -- so the whole band of interest
+  // clipped. The value is NOT a DAQ measurement, so the default is left alone
+  // and the range is exposed as a run-time systematic like --pde-scale.
+  // <= 0 means "leave the ccb-sipm-core default / CCB_SIPM_ADC_LSB_PE alone".
+  double adc_lsb_pe = 0.0;
+
+  double optical_max_time_ns = 0.0;  // kill optical photons past this global time
+  int    optical_max_steps   = 0;    // kill optical photons past this step count
 
   // --- Optional GPU optical path (Opticks) ---
   // When enabled, optical-photon secondaries from the Geant4 Scintillation

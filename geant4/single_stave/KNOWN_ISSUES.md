@@ -97,3 +97,126 @@ Issue #999 beam/primary intersection preflight is enforced in `main.cc` via
   run sidecar. Rebuild required. Residual mass-material table scope: ADR-0011.
 - #1079 / #1095 / #1064: Python fail-closed contracts + ADRs (no invented
   physics parameters).
+
+## Optical boundary thrashing — cost pathology (#1623, scope of #1083)
+
+A small number of optical photons per event get trapped repeatedly crossing a
+thin-layer boundary and burn tens of millions of post-step `DoIt` calls each. A
+single such photon makes its event cost minutes of CPU; observed as one worker
+thread stuck in `G4SteppingManager::Stepping` while every other event in the run
+had finished. The thin layers involved are the 10 um fibre-end-face world-air gap
+and the cladding shells, both still `UNKNOWN_EXTERNAL` under #1083.
+
+Measured rate and impact (300 events of 20 and 60 MeV protons, per-photon ntuple
+on, `slurm/guard_1623.sbatch` section A):
+
+| quantity | 20 MeV p | 60 MeV p |
+|---|---|---|
+| optical photons generated | 20 285 997 | 42 222 823 |
+| photons exceeding 200 000 steps | 1 | 2 |
+| events containing one | 1/150 | 2/150 |
+| latest arrival at the readout | 202 ns | 222 ns |
+| arrivals beyond 250 ns | 0 | 0 |
+
+This is a **cost** pathology, not a physics one: the trapped photons never reach
+a sensor inside the acquisition window, and the SiPM response model discards
+arrivals past its `[-20, 250] ns` window regardless. `--optical-max-time-ns` and
+`--optical-max-steps` bound it; both are OFF by default and every kill is counted
+per event (`n_optical_killed_time`, `n_optical_killed_steps`) and totalled in the
+run sidecar. At the campaign settings (1000 ns / 200 000 steps) the time cut
+removes zero recorded arrivals and the step cut truncates 5e-8 of generated
+photons.
+
+The underlying geometry question — what the fibre end face actually looks like —
+stays open under #1083. The guards make production runs finite; they do not
+resolve it.
+
+## Phase-space sampling (#1623)
+
+`--hit-x-range`, `--hit-y-range` and `--theta-spread` sample the impact point and
+the incidence direction per event. The draw uses a counter-based stream keyed on
+`(seed, eventID)` rather than the Geant4 engine, so the sampled phase space is
+independent of `--threads`, and with none of the flags set no random number is
+drawn at all — the default path is unchanged and is regression-checked against a
+pristine build of the parent commit (`slurm/verify_1623.sbatch` section 2).
+
+The ADR-0003 beam preflight is extended to the sampled **envelope**: all corners
+of the `(x, y)` window at the extreme incidence angle must intersect the stave,
+otherwise the run aborts. A single-point preflight would be vacuous for a
+distributed beam.
+
+## Repaired: the ccb_stave_* CTest suite was inert (#1623 follow-up)
+
+Twelve of the twenty-five tests failed on `main`, independently of any feature
+branch. Issues #1006 and #1091 made `--physics-list` and
+`--neutron-timecut-policy-id` fail-closed REQUIRED arguments, but the CTest
+definitions and the python helpers that spawn `ccb_stave_sim` were never
+updated, so each affected test aborted before event 0 with
+
+    error: --physics-list is required (issue #1006 fail-closed; ...)
+
+The required arguments now live in one `CCB_REQUIRED_RUN_ARGS` CMake variable
+and are passed by every helper. Attribution was measured by running CTest on a
+pristine build of the parent commit and on the fixed tree and diffing the
+failure sets, not by assuming.
+
+Two of those tests deserve a specific note. `ccb_stave_strict_optical_missing_table`
+and `ccb_stave_strict_optical_bad_units` assert a NON-ZERO exit, and they were
+getting it from the missing `--physics-list` rather than from the optical-table
+validation they are named for: both would have kept passing if strict-optical
+checking had been deleted outright. They now exercise the check they claim to.
+
+Three further defects surfaced once the suite actually ran the binary again:
+
+1. **`--sipm-n-cells` aborted instead of failing closed.** A non-square cell
+   count threw `std::invalid_argument` from `ApplySipmCellCount`, which runs
+   inside the worker-thread EventAction constructor; the exception escaped
+   uncaught and the process died on SIGABRT (exit 134). The count is now
+   validated in `AppConfig::ParseArgs` and refused with exit 2 and a message,
+   like every other fail-closed option.
+2. **`--dump-gdml` succeeded exactly once per output path.** `G4GDMLParser::Write`
+   raises a fatal G4Exception rather than overwriting, so the export aborted on
+   every rerun against an existing file. A stale target is now removed first and
+   an unclearable path fails cleanly with exit 5.
+3. **Run-level diagnostic counters always read zero** -- see below.
+
+## Repaired: run-level counters were per-instance under MT (#1069, #1623)
+
+Geant4 MT gives every worker thread its own `RunAction`. `EventAction`
+incremented counters on the WORKER instance while `EndOfRunAction` and the
+sidecar report from the MASTER instance, which never sees an event. Both the new
+ADC-saturation counters and the pre-existing #1069 `candidate_limit_hits` /
+`max_candidates_processed` therefore reported 0 on every multithreaded run --
+that is, on every production run. They are now process-wide atomics, reset by
+the master at BeginOfRun and read back after the workers join. Verified by
+running the same point at 1 and at 32 threads and requiring identical counts.
+
+## ADC clipping is reported, not silent (#1623)
+
+`ResponseSimulator` clamps each waveform sample to the ADC ceiling and
+`EventAction` reports `peak - baseline_adc`. At the shipped placeholder gain
+(`adc_bits=12`, `baseline_adc=200`, `adc_lsb_pe=0.01`) that is only 38.95 pe of
+PEAK headroom, so a stave deposit above roughly 18 MeV pinned `adc_readout` at
+exactly 3895 with nothing marking the value as a ceiling. In the #1623 campaign
+79% of proton and 82% of deuteron events sat there, which made the simulated
+ADC ratio 1.00 by construction.
+
+The gain is NOT changed -- there is no DAQ measurement to change it to, and
+moving it would silently rewrite every ADC value recorded on main. Instead:
+
+* per-event `adc_sat_readout` / `_f1far` / `_f2near` / `_f2far` columns;
+* a `CCB_ADC_SATURATION` end-of-run line with per-channel counts, the saturated
+  fraction, and the configured headroom in pe, plus a warning on stderr when the
+  fraction is non-zero;
+* `adc_headroom_pe`, per-channel saturation counts and
+  `adc_gain_provenance: PLACEHOLDER_NOT_DAQ_MEASURED` in the run sidecar;
+* `--adc-lsb-pe` as a first-class systematic knob next to `--pde-scale`
+  (CLI beats `CCB_SIPM_ADC_LSB_PE`, which beats the ccb-sipm-core default).
+
+`tests/test_adc_saturation_reported.py` locks in the invariant that makes
+shipping a placeholder safe: a run that clips says so, widening the range clears
+it, and a deposit that fits reports nothing. It deliberately does not assert
+that the placeholder gain is right.
+
+Widening the range makes the ADC usable as a RELATIVE observable; it does not
+calibrate it. Absolute ADC still must not be compared with measured amplitudes.

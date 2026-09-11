@@ -30,7 +30,9 @@
 #include <cstdlib>
 #include <exception>
 #include <iostream>
+#include <filesystem>
 #include <string>
+#include <system_error>
 #include <sstream>
 #include <vector>
 
@@ -63,6 +65,54 @@ int main(int argc, char** argv) {
                 << beam.reason
                 << "\n       pass --allow-miss only for intentional miss studies\n";
       return 4;
+    }
+
+    // Issue #1623: with per-event phase-space sampling the single nominal point
+    // checked above is not the run. Validate the ENVELOPE -- every corner of the
+    // sampled (x,y) rectangle at the extreme incidence angle -- so the ADR-0003
+    // preflight cannot go vacuous once the beam is distributed.
+    if (cfg.sample_position || cfg.sample_angle) {
+      const double xs[2] = {cfg.sample_position ? cfg.hit_x_min_cm : cfg.hit_x_cm,
+                            cfg.sample_position ? cfg.hit_x_max_cm : cfg.hit_x_cm};
+      const double ys[2] = {cfg.sample_position ? cfg.hit_y_min_cm : cfg.hit_y_cm,
+                            cfg.sample_position ? cfg.hit_y_max_cm : cfg.hit_y_cm};
+      const double phis[4] = {0.0, 90.0, 180.0, 270.0};
+      int checked = 0, missed = 0;
+      double worst_path_cm = 1.0e300;
+      std::string worst_reason = "ok";
+      for (int ix = 0; ix < 2; ++ix) {
+        for (int iy = 0; iy < 2; ++iy) {
+          for (int ip = 0; ip < 4; ++ip) {
+            AppConfig probe = cfg;
+            probe.hit_x_cm = xs[ix];
+            probe.hit_y_cm = ys[iy];
+            if (cfg.sample_angle) {
+              probe.theta_deg = cfg.theta_deg + cfg.theta_spread_deg;
+              probe.phi_deg = phis[ip];
+            } else if (ip > 0) {
+              continue;  // no angular spread: one probe per corner is enough
+            }
+            const auto pb = ccb::ValidatePrimaryAgainstStave(probe);
+            ++checked;
+            if (pb.reason != "ok") { ++missed; worst_reason = pb.reason; }
+            else if (pb.path_length_cm < worst_path_cm) worst_path_cm = pb.path_length_cm;
+          }
+        }
+      }
+      std::cout << "CCB_BEAM_ENVELOPE_PREFLIGHT profile=" << cfg.beam_profile_id
+                << " corners_checked=" << checked
+                << " corners_missing=" << missed
+                << " min_path_cm=" << (missed == checked ? 0.0 : worst_path_cm)
+                << " reason=" << (missed ? worst_reason : std::string("ok"))
+                << std::endl;
+      if (missed > 0 && !cfg.allow_miss) {
+        std::cerr << "fatal: sampled phase-space envelope leaves the stave (#1623/#999): "
+                  << missed << "/" << checked << " corner probes miss ("
+                  << worst_reason << ")\n"
+                  << "       tighten --hit-x-range/--hit-y-range/--theta-spread,"
+                  << " or pass --allow-miss for an intentional miss study\n";
+        return 4;
+      }
     }
   }
 
@@ -183,6 +233,25 @@ int main(int argc, char** argv) {
     G4VPhysicalVolume* world =
         G4TransportationManager::GetTransportationManager()
             ->GetNavigatorForTracking()->GetWorldVolume();
+    // G4GDMLParser::Write raises a FATAL G4Exception ("File ... already
+    // exists!") rather than overwriting, which aborts the process on SIGABRT.
+    // That made --dump-gdml succeed exactly once per output path: the CTest
+    // export case passed on a fresh build tree and died on every rerun. Remove
+    // a stale file first so the export is idempotent, and fail cleanly (not on
+    // a signal) if the path exists and cannot be cleared.
+    {
+      std::error_code ec;
+      if (std::filesystem::exists(cfg.dump_gdml, ec)) {
+        std::filesystem::remove(cfg.dump_gdml, ec);
+        if (ec || std::filesystem::exists(cfg.dump_gdml)) {
+          std::cerr << "fatal: --dump-gdml target '" << cfg.dump_gdml
+                    << "' already exists and could not be replaced: "
+                    << ec.message() << '\n';
+          delete runManager;
+          return 5;
+        }
+      }
+    }
     parser.Write(cfg.dump_gdml, world);
     std::cout << "CCB_GDML_WROTE " << cfg.dump_gdml
               << " world=" << world->GetName() << std::endl;

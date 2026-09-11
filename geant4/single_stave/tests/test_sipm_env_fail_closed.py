@@ -23,6 +23,8 @@ def run(exe: Path, optical_dir: Path, env_overrides: dict[str, str]) -> subproce
         out = Path(tmp) / "test.root"
         cmd = [
             str(exe),
+            "--physics-list", "QGSP_BIC",
+            "--neutron-timecut-policy-id", "pin_qgsp_bic_default_10us",
             "--particle",
             "proton",
             "--energy",

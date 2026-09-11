@@ -1,0 +1,28 @@
+{
+  "ticket_id": "2564",
+  "worker": "testbeam-laptop-2",
+  "script": "scripts/s69c_2564_pedestal_conditioned_pid_boundary_stability.py",
+  "created_unix": 1786926321.4553778,
+  "source": "reports/1783809265.5764.0f2a2dda__s29a_digitized_g4_multitask_truth_benchmark",
+  "outputs_sha256": {
+    "REPORT.md": "a627da10428f61ee33a164b1e83e7e2a21adcee2685899a20eaddd40352ef6f5",
+    "boundary_displacement.csv": "168b6d58e0570d05a2b805f6b3fa735cccaa41f43f5014c7b5fbabec6311e7f5",
+    "calibration_curves.csv": "8f4a493af95cfc25eeb3cae05c09724f819a04aadd6d07bfbb1451d5aeaaa397",
+    "calibration_summary.csv": "4fc7895c8f50cb1076504687b6fdbd94a0f08c63bb389e64f9737187f6d36b14",
+    "claimed_ticket.txt": "f66e4a86eb268a5a1d140d384d9927bc9ff2ca9493aabaae10702df3170ea6da",
+    "claimed_ticket_body.txt": "8292c4c2979da2730c9b3a515c76a31a97b30f5060310d6557a9aa3037bff01b",
+    "fixed_purity_efficiency.csv": "760f52acb57ea33c5e76349cdcf92f27682ed832c355081e5bc18055f9230ceb",
+    "input_sha256.csv": "94e6ac0e516e6fbd91787a2e994321d3c59494e253516e3ebc13155cd009433c",
+    "method_deltas_vs_traditional.csv": "4cf17bb431ff9f37ec8aa98efd7bef85bcfcda3871da1a1e43514176fe3a7906",
+    "method_metrics.csv": "6cc3b3f88fdb9f50269cb6800873f29e0b525aa4ea037a34a6292744c35fbacb",
+    "pid_confusion_by_stratum.csv": "6386dc028a6ff5fbb588c8c62b7a9c676596c36a04ba717c7aa2e92040104f92",
+    "pid_energy_coupling.csv": "c50219755a6de2d867ac81d19bbceeb5a1809d6eceddf0f5d5cfe6045774753d",
+    "reproduction_counts_by_run.csv": "6f5a2c5fbd8805fdd462204535903eae8479abf31059c5d933ab988b4343ac5b",
+    "reproduction_match_table.csv": "c8bfba74c8d39f9d9adb02559bcd6b2a433d75285e641530f69757974674a53c",
+    "result.json": "e467e38c39783b55bc068ad6611b0597b25969d7757d13c280ba9068fc6f5daa",
+    "run_heldout_metrics.csv": "b3561043b54b9ea9bf79866eb9b90d1aa24494a62edb3fb5b5e9963095dda060",
+    "sentinel_diagnostics.csv": "9939c485494f6f9867fac89ce026076fbf14960952235e636547da8c24a5d545",
+    "shortcut_diagnostics.csv": "66776f4f8062208bc55ec5ca39bc2ac94cdbf6a766816b6271a5f9f894d00e56",
+    "source_strata_metrics.csv": "df037764aa06a26bd05a3b29a68ac8234ce81a947142463c6a927bd9ac93b37c"
+  }
+}

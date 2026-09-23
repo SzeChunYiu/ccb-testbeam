@@ -1,0 +1,1160 @@
+{
+ "adr": "docs/adr/ADR-0013-neutron-tracking-time-cut.md",
+ "binary_commit": "e2baa589",
+ "harness": "/projects/hep/fs10/shared/nnbar/billy/ccb_1091_ladder.slurm",
+ "issue": 1091,
+ "pairs": [
+  {
+   "delta": {
+    "all_observables_bit_identical": true,
+    "n_paired_events": 2000,
+    "neutron_step_count_identical": true,
+    "observables": {
+     "adc_f1far": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 7783074.0,
+      "sum_pin": 7783074.0
+     },
+     "adc_f2far": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 7784002.0,
+      "sum_pin": 7784002.0
+     },
+     "adc_f2near": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 7783777.0,
+      "sum_pin": 7783777.0
+     },
+     "adc_readout": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 7784247.0,
+      "sum_pin": 7784247.0
+     },
+     "detected_f1far": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 556858.0,
+      "sum_pin": 556858.0
+     },
+     "detected_f2far": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 556812.0,
+      "sum_pin": 556812.0
+     },
+     "detected_f2near": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 556456.0,
+      "sum_pin": 556456.0
+     },
+     "detected_readout": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 555825.0,
+      "sum_pin": 555825.0
+     },
+     "edep_scint_MeV": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 47068.33713138062,
+      "sum_pin": 47068.33713138062
+     },
+     "edep_scint_raw_MeV": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 56558.54891940745,
+      "sum_pin": 56558.54891940745
+     },
+     "n_scint_generated": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 470705434.0,
+      "sum_pin": 470705434.0
+     },
+     "n_wls_generated": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 87840617.0,
+      "sum_pin": 87840617.0
+     }
+    },
+    "photon_count_identical": true,
+    "present": true
+   },
+   "ext_tag": "p60_ext2000",
+   "ke_MeV": 60,
+   "particle": "proton",
+   "pin_tag": "p60_pin2000",
+   "point": "p60"
+  },
+  {
+   "delta": {
+    "all_observables_bit_identical": true,
+    "n_paired_events": 2000,
+    "neutron_step_count_identical": true,
+    "observables": {
+     "adc_f1far": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 7790000.0,
+      "sum_pin": 7790000.0
+     },
+     "adc_f2far": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 7790000.0,
+      "sum_pin": 7790000.0
+     },
+     "adc_f2near": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 7790000.0,
+      "sum_pin": 7790000.0
+     },
+     "adc_readout": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 7790000.0,
+      "sum_pin": 7790000.0
+     },
+     "detected_f1far": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 354555.0,
+      "sum_pin": 354555.0
+     },
+     "detected_f2far": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 354562.0,
+      "sum_pin": 354562.0
+     },
+     "detected_f2near": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 355157.0,
+      "sum_pin": 355157.0
+     },
+     "detected_readout": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 353741.0,
+      "sum_pin": 353741.0
+     },
+     "edep_scint_MeV": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 29993.09630987523,
+      "sum_pin": 29993.09630987523
+     },
+     "edep_scint_raw_MeV": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 33810.48702084983,
+      "sum_pin": 33810.48702084983
+     },
+     "n_scint_generated": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 299920836.0,
+      "sum_pin": 299920836.0
+     },
+     "n_wls_generated": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 56001329.0,
+      "sum_pin": 56001329.0
+     }
+    },
+    "photon_count_identical": true,
+    "present": true
+   },
+   "ext_tag": "p100_ext2000",
+   "ke_MeV": 100,
+   "particle": "proton",
+   "pin_tag": "p100_pin2000",
+   "point": "p100"
+  },
+  {
+   "delta": {
+    "all_observables_bit_identical": true,
+    "n_paired_events": 2000,
+    "neutron_step_count_identical": true,
+    "observables": {
+     "adc_f1far": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 7784865.0,
+      "sum_pin": 7784865.0
+     },
+     "adc_f2far": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 7785729.0,
+      "sum_pin": 7785729.0
+     },
+     "adc_f2near": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 7784747.0,
+      "sum_pin": 7784747.0
+     },
+     "adc_readout": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 7785367.0,
+      "sum_pin": 7785367.0
+     },
+     "detected_f1far": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 276429.0,
+      "sum_pin": 276429.0
+     },
+     "detected_f2far": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 275532.0,
+      "sum_pin": 275532.0
+     },
+     "detected_f2near": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 277193.0,
+      "sum_pin": 277193.0
+     },
+     "detected_readout": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 275719.0,
+      "sum_pin": 275719.0
+     },
+     "edep_scint_MeV": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 23389.032592635274,
+      "sum_pin": 23389.032592635274
+     },
+     "edep_scint_raw_MeV": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 25985.61547626253,
+      "sum_pin": 25985.61547626253
+     },
+     "n_scint_generated": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 233901468.0,
+      "sum_pin": 233901468.0
+     },
+     "n_wls_generated": {
+      "bit_identical": true,
+      "max_abs_delta": 0.0,
+      "n_events_differing": 0,
+      "sum_ext": 43677653.0,
+      "sum_pin": 43677653.0
+     }
+    },
+    "photon_count_identical": true,
+    "present": true
+   },
+   "ext_tag": "p140_ext2000",
+   "ke_MeV": 140,
+   "particle": "proton",
+   "pin_tag": "p140_pin2000",
+   "point": "p140"
+  },
+  {
+   "delta": {
+    "present": false
+   },
+   "ext_tag": "d70_ext2000",
+   "ke_MeV": 70,
+   "particle": "deuteron",
+   "pin_tag": "d70_pin2000",
+   "point": "d70"
+  },
+  {
+   "delta": {
+    "present": false
+   },
+   "ext_tag": "d110_ext2000",
+   "ke_MeV": 110,
+   "particle": "deuteron",
+   "pin_tag": "d110_pin2000",
+   "point": "d110"
+  }
+ ],
+ "physics_list": "QGSP_BIC",
+ "production_grid": [
+  {
+   "geometry_hash": "e323b92195f9a6288944f0738dbadccf9386422f076362ca172fd0b6d119d1e1",
+   "git_commit": "e2baa589",
+   "ke_MeV": 60,
+   "n_events": 2000,
+   "n_photons": 7379328,
+   "neutron_census": {
+    "cumulative_edep_MeV_at_T_ns": {
+     "1": 0.0,
+     "10": 0.0033799670568441798,
+     "100": 0.006025285655141488,
+     "1000": 0.006025285655141488,
+     "10000": 0.006025285655141488,
+     "1e+09": 0.006025285655141488
+    },
+    "n_late_scint_deposits": 0,
+    "n_steps": 73,
+    "n_steps_in_scint": 38,
+    "n_steps_t_gt_10us": 0,
+    "n_steps_t_gt_1us": 0,
+    "n_steps_with_edep": 10,
+    "sum_edep_steps_MeV": 0.006025285655141488,
+    "sum_late_scint_edep_MeV": 0.0,
+    "t_ns_max": 116.03958770516705,
+    "t_ns_p50": 0.4519172304682687,
+    "t_spectrum": {
+     "bins_ns": [
+      0,
+      1,
+      10,
+      100,
+      1000,
+      10000,
+      1000000000.0
+     ],
+     "step_counts": [
+      44,
+      17,
+      9,
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "neutron_time_cut_us": 10,
+   "obs_sums": {
+    "adc_f1far": 7783074.0,
+    "adc_f2far": 7784002.0,
+    "adc_f2near": 7783777.0,
+    "adc_readout": 7784247.0,
+    "detected_f1far": 556858.0,
+    "detected_f2far": 556812.0,
+    "detected_f2near": 556456.0,
+    "detected_readout": 555825.0,
+    "edep_scint_MeV": 47068.33713138062,
+    "edep_scint_raw_MeV": 56558.54891940745,
+    "n_scint_generated": 470705434.0,
+    "n_wls_generated": 87840617.0
+   },
+   "particle": "proton",
+   "physics_hash": "695755f15879c60b7dbc23f5ad7f972d0ec3d9710fa2ec357d17a3b37c48faee",
+   "physics_list": "QGSP_BIC",
+   "policy_id": "pin_qgsp_bic_default_10us",
+   "present": true,
+   "root_sha256": "90c5e29d5b4c18a1e937e6ae4a909d58e7ef24c43e5e0d98a327f25a481d12ac",
+   "tag": "p60_pin2000"
+  },
+  {
+   "geometry_hash": "e323b92195f9a6288944f0738dbadccf9386422f076362ca172fd0b6d119d1e1",
+   "git_commit": "e2baa589",
+   "ke_MeV": 60,
+   "n_events": 2000,
+   "n_photons": 7379328,
+   "neutron_census": {
+    "cumulative_edep_MeV_at_T_ns": {
+     "1": 0.0,
+     "10": 0.0033799670568441798,
+     "100": 0.006025285655141488,
+     "1000": 0.006025285655141488,
+     "10000": 0.006025285655141488,
+     "1e+09": 0.006025285655141488
+    },
+    "n_late_scint_deposits": 0,
+    "n_steps": 73,
+    "n_steps_in_scint": 38,
+    "n_steps_t_gt_10us": 0,
+    "n_steps_t_gt_1us": 0,
+    "n_steps_with_edep": 10,
+    "sum_edep_steps_MeV": 0.006025285655141488,
+    "sum_late_scint_edep_MeV": 0.0,
+    "t_ns_max": 116.03958770516705,
+    "t_ns_p50": 0.4519172304682687,
+    "t_spectrum": {
+     "bins_ns": [
+      0,
+      1,
+      10,
+      100,
+      1000,
+      10000,
+      1000000000.0
+     ],
+     "step_counts": [
+      44,
+      17,
+      9,
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "neutron_time_cut_us": 1000000000.0,
+   "obs_sums": {
+    "adc_f1far": 7783074.0,
+    "adc_f2far": 7784002.0,
+    "adc_f2near": 7783777.0,
+    "adc_readout": 7784247.0,
+    "detected_f1far": 556858.0,
+    "detected_f2far": 556812.0,
+    "detected_f2near": 556456.0,
+    "detected_readout": 555825.0,
+    "edep_scint_MeV": 47068.33713138062,
+    "edep_scint_raw_MeV": 56558.54891940745,
+    "n_scint_generated": 470705434.0,
+    "n_wls_generated": 87840617.0
+   },
+   "particle": "proton",
+   "physics_hash": "695755f15879c60b7dbc23f5ad7f972d0ec3d9710fa2ec357d17a3b37c48faee",
+   "physics_list": "QGSP_BIC",
+   "policy_id": "diagnostic_extended_or_disabled",
+   "present": true,
+   "root_sha256": "5cf2f5ebfba3243c5fd0594c954caf0a121bfef42a1f429ab0bad88e4ef9b1b0",
+   "tag": "p60_ext2000"
+  },
+  {
+   "geometry_hash": "e323b92195f9a6288944f0738dbadccf9386422f076362ca172fd0b6d119d1e1",
+   "git_commit": "e2baa589",
+   "ke_MeV": 100,
+   "n_events": 2000,
+   "n_photons": 4703201,
+   "neutron_census": {
+    "cumulative_edep_MeV_at_T_ns": {
+     "1": 0.0,
+     "10": 0.0,
+     "100": 0.0,
+     "1000": 0.0,
+     "10000": 0.0,
+     "1e+09": 0.0
+    },
+    "n_late_scint_deposits": 0,
+    "n_steps": 128,
+    "n_steps_in_scint": 48,
+    "n_steps_t_gt_10us": 0,
+    "n_steps_t_gt_1us": 0,
+    "n_steps_with_edep": 0,
+    "sum_edep_steps_MeV": 0.0,
+    "sum_late_scint_edep_MeV": 0.0,
+    "t_ns_max": 6.774437178796425,
+    "t_ns_p50": 0.3434611965569123,
+    "t_spectrum": {
+     "bins_ns": [
+      0,
+      1,
+      10,
+      100,
+      1000,
+      10000,
+      1000000000.0
+     ],
+     "step_counts": [
+      106,
+      22,
+      0,
+      0,
+      0,
+      0
+     ]
+    }
+   },
+   "neutron_time_cut_us": 10,
+   "obs_sums": {
+    "adc_f1far": 7790000.0,
+    "adc_f2far": 7790000.0,
+    "adc_f2near": 7790000.0,
+    "adc_readout": 7790000.0,
+    "detected_f1far": 354555.0,
+    "detected_f2far": 354562.0,
+    "detected_f2near": 355157.0,
+    "detected_readout": 353741.0,
+    "edep_scint_MeV": 29993.09630987523,
+    "edep_scint_raw_MeV": 33810.48702084983,
+    "n_scint_generated": 299920836.0,
+    "n_wls_generated": 56001329.0
+   },
+   "particle": "proton",
+   "physics_hash": "695755f15879c60b7dbc23f5ad7f972d0ec3d9710fa2ec357d17a3b37c48faee",
+   "physics_list": "QGSP_BIC",
+   "policy_id": "pin_qgsp_bic_default_10us",
+   "present": true,
+   "root_sha256": "1dc639a36f870daaf57da3e85f09fdbc45d827f051f1cbc4f93408272b8cb85f",
+   "tag": "p100_pin2000"
+  },
+  {
+   "geometry_hash": "e323b92195f9a6288944f0738dbadccf9386422f076362ca172fd0b6d119d1e1",
+   "git_commit": "e2baa589",
+   "ke_MeV": 100,
+   "n_events": 2000,
+   "n_photons": 4703201,
+   "neutron_census": {
+    "cumulative_edep_MeV_at_T_ns": {
+     "1": 0.0,
+     "10": 0.0,
+     "100": 0.0,
+     "1000": 0.0,
+     "10000": 0.0,
+     "1e+09": 0.0
+    },
+    "n_late_scint_deposits": 0,
+    "n_steps": 128,
+    "n_steps_in_scint": 48,
+    "n_steps_t_gt_10us": 0,
+    "n_steps_t_gt_1us": 0,
+    "n_steps_with_edep": 0,
+    "sum_edep_steps_MeV": 0.0,
+    "sum_late_scint_edep_MeV": 0.0,
+    "t_ns_max": 6.774437178796425,
+    "t_ns_p50": 0.3434611965569123,
+    "t_spectrum": {
+     "bins_ns": [
+      0,
+      1,
+      10,
+      100,
+      1000,
+      10000,
+      1000000000.0
+     ],
+     "step_counts": [
+      106,
+      22,
+      0,
+      0,
+      0,
+      0
+     ]
+    }
+   },
+   "neutron_time_cut_us": 1000000000.0,
+   "obs_sums": {
+    "adc_f1far": 7790000.0,
+    "adc_f2far": 7790000.0,
+    "adc_f2near": 7790000.0,
+    "adc_readout": 7790000.0,
+    "detected_f1far": 354555.0,
+    "detected_f2far": 354562.0,
+    "detected_f2near": 355157.0,
+    "detected_readout": 353741.0,
+    "edep_scint_MeV": 29993.09630987523,
+    "edep_scint_raw_MeV": 33810.48702084983,
+    "n_scint_generated": 299920836.0,
+    "n_wls_generated": 56001329.0
+   },
+   "particle": "proton",
+   "physics_hash": "695755f15879c60b7dbc23f5ad7f972d0ec3d9710fa2ec357d17a3b37c48faee",
+   "physics_list": "QGSP_BIC",
+   "policy_id": "diagnostic_extended_or_disabled",
+   "present": true,
+   "root_sha256": "dcdef86dc7bdb6bc3af6cddddf833f0ca24ee95a5f086e5861d9d33d086ca784",
+   "tag": "p100_ext2000"
+  },
+  {
+   "geometry_hash": "e323b92195f9a6288944f0738dbadccf9386422f076362ca172fd0b6d119d1e1",
+   "git_commit": "e2baa589",
+   "ke_MeV": 140,
+   "n_events": 2000,
+   "n_photons": 3665003,
+   "neutron_census": {
+    "cumulative_edep_MeV_at_T_ns": {
+     "1": 0.0,
+     "10": 0.0,
+     "100": 0.0,
+     "1000": 0.0,
+     "10000": 0.0,
+     "1e+09": 0.0
+    },
+    "n_late_scint_deposits": 0,
+    "n_steps": 155,
+    "n_steps_in_scint": 59,
+    "n_steps_t_gt_10us": 0,
+    "n_steps_t_gt_1us": 0,
+    "n_steps_with_edep": 0,
+    "sum_edep_steps_MeV": 0.0,
+    "sum_late_scint_edep_MeV": 0.0,
+    "t_ns_max": 3.820178393533008,
+    "t_ns_p50": 0.23155528270022802,
+    "t_spectrum": {
+     "bins_ns": [
+      0,
+      1,
+      10,
+      100,
+      1000,
+      10000,
+      1000000000.0
+     ],
+     "step_counts": [
+      125,
+      30,
+      0,
+      0,
+      0,
+      0
+     ]
+    }
+   },
+   "neutron_time_cut_us": 10,
+   "obs_sums": {
+    "adc_f1far": 7784865.0,
+    "adc_f2far": 7785729.0,
+    "adc_f2near": 7784747.0,
+    "adc_readout": 7785367.0,
+    "detected_f1far": 276429.0,
+    "detected_f2far": 275532.0,
+    "detected_f2near": 277193.0,
+    "detected_readout": 275719.0,
+    "edep_scint_MeV": 23389.032592635274,
+    "edep_scint_raw_MeV": 25985.61547626253,
+    "n_scint_generated": 233901468.0,
+    "n_wls_generated": 43677653.0
+   },
+   "particle": "proton",
+   "physics_hash": "695755f15879c60b7dbc23f5ad7f972d0ec3d9710fa2ec357d17a3b37c48faee",
+   "physics_list": "QGSP_BIC",
+   "policy_id": "pin_qgsp_bic_default_10us",
+   "present": true,
+   "root_sha256": "7b1b773d86c5900a3167449ef3e449ef644730847f2fec2978f86fa907461069",
+   "tag": "p140_pin2000"
+  },
+  {
+   "geometry_hash": "e323b92195f9a6288944f0738dbadccf9386422f076362ca172fd0b6d119d1e1",
+   "git_commit": "e2baa589",
+   "ke_MeV": 140,
+   "n_events": 2000,
+   "n_photons": 3665003,
+   "neutron_census": {
+    "cumulative_edep_MeV_at_T_ns": {
+     "1": 0.0,
+     "10": 0.0,
+     "100": 0.0,
+     "1000": 0.0,
+     "10000": 0.0,
+     "1e+09": 0.0
+    },
+    "n_late_scint_deposits": 0,
+    "n_steps": 155,
+    "n_steps_in_scint": 59,
+    "n_steps_t_gt_10us": 0,
+    "n_steps_t_gt_1us": 0,
+    "n_steps_with_edep": 0,
+    "sum_edep_steps_MeV": 0.0,
+    "sum_late_scint_edep_MeV": 0.0,
+    "t_ns_max": 3.820178393533008,
+    "t_ns_p50": 0.23155528270022802,
+    "t_spectrum": {
+     "bins_ns": [
+      0,
+      1,
+      10,
+      100,
+      1000,
+      10000,
+      1000000000.0
+     ],
+     "step_counts": [
+      125,
+      30,
+      0,
+      0,
+      0,
+      0
+     ]
+    }
+   },
+   "neutron_time_cut_us": 1000000000.0,
+   "obs_sums": {
+    "adc_f1far": 7784865.0,
+    "adc_f2far": 7785729.0,
+    "adc_f2near": 7784747.0,
+    "adc_readout": 7785367.0,
+    "detected_f1far": 276429.0,
+    "detected_f2far": 275532.0,
+    "detected_f2near": 277193.0,
+    "detected_readout": 275719.0,
+    "edep_scint_MeV": 23389.032592635274,
+    "edep_scint_raw_MeV": 25985.61547626253,
+    "n_scint_generated": 233901468.0,
+    "n_wls_generated": 43677653.0
+   },
+   "particle": "proton",
+   "physics_hash": "695755f15879c60b7dbc23f5ad7f972d0ec3d9710fa2ec357d17a3b37c48faee",
+   "physics_list": "QGSP_BIC",
+   "policy_id": "diagnostic_extended_or_disabled",
+   "present": true,
+   "root_sha256": "968e3a71f9bc0d6939ce18b9bd01e61637827332043b3cb6a121625b62263169",
+   "tag": "p140_ext2000"
+  },
+  {
+   "ke_MeV": 70,
+   "particle": "deuteron",
+   "present": false,
+   "tag": "d70_pin2000"
+  },
+  {
+   "ke_MeV": 70,
+   "particle": "deuteron",
+   "present": false,
+   "tag": "d70_ext2000"
+  },
+  {
+   "ke_MeV": 110,
+   "particle": "deuteron",
+   "present": false,
+   "tag": "d110_pin2000"
+  },
+  {
+   "ke_MeV": 110,
+   "particle": "deuteron",
+   "present": false,
+   "tag": "d110_ext2000"
+  }
+ ],
+ "schema": "ccb-1091-ladder-result/1",
+ "seed": 2,
+ "threads": 8,
+ "wiring_deltas": {
+  "cut1ns_vs_ext": {
+   "all_observables_bit_identical": false,
+   "n_paired_events": 1000,
+   "neutron_step_count_identical": false,
+   "observables": {
+    "adc_f1far": {
+     "bit_identical": true,
+     "max_abs_delta": 0.0,
+     "n_events_differing": 0,
+     "sum_ext": 2640855.0,
+     "sum_pin": 2640855.0
+    },
+    "adc_f2far": {
+     "bit_identical": true,
+     "max_abs_delta": 0.0,
+     "n_events_differing": 0,
+     "sum_ext": 2679958.0,
+     "sum_pin": 2679958.0
+    },
+    "adc_f2near": {
+     "bit_identical": true,
+     "max_abs_delta": 0.0,
+     "n_events_differing": 0,
+     "sum_ext": 2693754.0,
+     "sum_pin": 2693754.0
+    },
+    "adc_readout": {
+     "bit_identical": true,
+     "max_abs_delta": 0.0,
+     "n_events_differing": 0,
+     "sum_ext": 2676970.0,
+     "sum_pin": 2676970.0
+    },
+    "detected_f1far": {
+     "bit_identical": false,
+     "max_abs_delta": 194.0,
+     "n_events_differing": 6,
+     "sum_ext": 62455.0,
+     "sum_pin": 62094.0
+    },
+    "detected_f2far": {
+     "bit_identical": false,
+     "max_abs_delta": 87.0,
+     "n_events_differing": 6,
+     "sum_ext": 62229.0,
+     "sum_pin": 62046.0
+    },
+    "detected_f2near": {
+     "bit_identical": false,
+     "max_abs_delta": 59.0,
+     "n_events_differing": 6,
+     "sum_ext": 61830.0,
+     "sum_pin": 61818.0
+    },
+    "detected_readout": {
+     "bit_identical": false,
+     "max_abs_delta": 198.0,
+     "n_events_differing": 6,
+     "sum_ext": 62575.0,
+     "sum_pin": 62336.0
+    },
+    "edep_scint_MeV": {
+     "bit_identical": false,
+     "max_abs_delta": 9.52334323220704,
+     "n_events_differing": 6,
+     "sum_ext": 5225.3392575646485,
+     "sum_pin": 5211.784775959244
+    },
+    "edep_scint_raw_MeV": {
+     "bit_identical": false,
+     "max_abs_delta": 7.35646816551705,
+     "n_events_differing": 6,
+     "sum_ext": 5976.239058289402,
+     "sum_pin": 5973.240177254072
+    },
+    "n_scint_generated": {
+     "bit_identical": false,
+     "max_abs_delta": 95190.0,
+     "n_events_differing": 6,
+     "sum_ext": 52257754.0,
+     "sum_pin": 52120680.0
+    },
+    "n_wls_generated": {
+     "bit_identical": false,
+     "max_abs_delta": 22896.0,
+     "n_events_differing": 6,
+     "sum_ext": 9821063.0,
+     "sum_pin": 9788778.0
+    }
+   },
+   "photon_count_identical": false,
+   "present": true
+  },
+  "pin_vs_ext": {
+   "all_observables_bit_identical": true,
+   "n_paired_events": 1000,
+   "neutron_step_count_identical": true,
+   "observables": {
+    "adc_f1far": {
+     "bit_identical": true,
+     "max_abs_delta": 0.0,
+     "n_events_differing": 0,
+     "sum_ext": 2640855.0,
+     "sum_pin": 2640855.0
+    },
+    "adc_f2far": {
+     "bit_identical": true,
+     "max_abs_delta": 0.0,
+     "n_events_differing": 0,
+     "sum_ext": 2679958.0,
+     "sum_pin": 2679958.0
+    },
+    "adc_f2near": {
+     "bit_identical": true,
+     "max_abs_delta": 0.0,
+     "n_events_differing": 0,
+     "sum_ext": 2693754.0,
+     "sum_pin": 2693754.0
+    },
+    "adc_readout": {
+     "bit_identical": true,
+     "max_abs_delta": 0.0,
+     "n_events_differing": 0,
+     "sum_ext": 2676970.0,
+     "sum_pin": 2676970.0
+    },
+    "detected_f1far": {
+     "bit_identical": true,
+     "max_abs_delta": 0.0,
+     "n_events_differing": 0,
+     "sum_ext": 62455.0,
+     "sum_pin": 62455.0
+    },
+    "detected_f2far": {
+     "bit_identical": true,
+     "max_abs_delta": 0.0,
+     "n_events_differing": 0,
+     "sum_ext": 62229.0,
+     "sum_pin": 62229.0
+    },
+    "detected_f2near": {
+     "bit_identical": true,
+     "max_abs_delta": 0.0,
+     "n_events_differing": 0,
+     "sum_ext": 61830.0,
+     "sum_pin": 61830.0
+    },
+    "detected_readout": {
+     "bit_identical": true,
+     "max_abs_delta": 0.0,
+     "n_events_differing": 0,
+     "sum_ext": 62575.0,
+     "sum_pin": 62575.0
+    },
+    "edep_scint_MeV": {
+     "bit_identical": true,
+     "max_abs_delta": 0.0,
+     "n_events_differing": 0,
+     "sum_ext": 5225.3392575646485,
+     "sum_pin": 5225.3392575646485
+    },
+    "edep_scint_raw_MeV": {
+     "bit_identical": true,
+     "max_abs_delta": 0.0,
+     "n_events_differing": 0,
+     "sum_ext": 5976.239058289402,
+     "sum_pin": 5976.239058289402
+    },
+    "n_scint_generated": {
+     "bit_identical": true,
+     "max_abs_delta": 0.0,
+     "n_events_differing": 0,
+     "sum_ext": 52257754.0,
+     "sum_pin": 52257754.0
+    },
+    "n_wls_generated": {
+     "bit_identical": true,
+     "max_abs_delta": 0.0,
+     "n_events_differing": 0,
+     "sum_ext": 9821063.0,
+     "sum_pin": 9821063.0
+    }
+   },
+   "photon_count_identical": true,
+   "present": true
+  }
+ },
+ "wiring_triple": [
+  {
+   "geometry_hash": "e323b92195f9a6288944f0738dbadccf9386422f076362ca172fd0b6d119d1e1",
+   "git_commit": "e2baa589",
+   "ke_MeV": 1000,
+   "n_events": 1000,
+   "n_photons": 822064,
+   "neutron_census": {
+    "cumulative_edep_MeV_at_T_ns": {
+     "1": 0.007606226188727305,
+     "10": 0.007606226188727305,
+     "100": 0.007606226188727305,
+     "1000": 0.007606226188727305,
+     "10000": 0.007606226188727305,
+     "1e+09": 0.007606226188727305
+    },
+    "n_late_scint_deposits": 0,
+    "n_steps": 132,
+    "n_steps_in_scint": 48,
+    "n_steps_t_gt_10us": 0,
+    "n_steps_t_gt_1us": 0,
+    "n_steps_with_edep": 1,
+    "sum_edep_steps_MeV": 0.007606226188727305,
+    "sum_late_scint_edep_MeV": 0.0,
+    "t_ns_max": 2.3105759365057383,
+    "t_ns_p50": 0.10963103584725054,
+    "t_spectrum": {
+     "bins_ns": [
+      0,
+      1,
+      10,
+      100,
+      1000,
+      10000,
+      1000000000.0
+     ],
+     "step_counts": [
+      126,
+      6,
+      0,
+      0,
+      0,
+      0
+     ]
+    }
+   },
+   "neutron_time_cut_us": 0.001,
+   "obs_sums": {
+    "adc_f1far": 2640855.0,
+    "adc_f2far": 2679958.0,
+    "adc_f2near": 2693754.0,
+    "adc_readout": 2676970.0,
+    "detected_f1far": 62094.0,
+    "detected_f2far": 62046.0,
+    "detected_f2near": 61818.0,
+    "detected_readout": 62336.0,
+    "edep_scint_MeV": 5211.784775959244,
+    "edep_scint_raw_MeV": 5973.240177254072,
+    "n_scint_generated": 52120680.0,
+    "n_wls_generated": 9788778.0
+   },
+   "particle": "proton",
+   "physics_hash": "695755f15879c60b7dbc23f5ad7f972d0ec3d9710fa2ec357d17a3b37c48faee",
+   "physics_list": "QGSP_BIC",
+   "policy_id": "wiring_test_1ns",
+   "present": true,
+   "root_sha256": "d6d7b0288ae85ebe5526a29c855a64e5a9b38f090162b106e50986bb0c4ee8e7",
+   "tag": "w1gev_cut1ns1000"
+  },
+  {
+   "geometry_hash": "e323b92195f9a6288944f0738dbadccf9386422f076362ca172fd0b6d119d1e1",
+   "git_commit": "e2baa589",
+   "ke_MeV": 1000,
+   "n_events": 1000,
+   "n_photons": 824628,
+   "neutron_census": {
+    "cumulative_edep_MeV_at_T_ns": {
+     "1": 0.007606226188727305,
+     "10": 0.01571040422720671,
+     "100": 0.01590288487318503,
+     "1000": 0.01590288487318503,
+     "10000": 0.01590288487318503,
+     "1e+09": 0.01590288487318503
+    },
+    "n_late_scint_deposits": 0,
+    "n_steps": 143,
+    "n_steps_in_scint": 52,
+    "n_steps_t_gt_10us": 0,
+    "n_steps_t_gt_1us": 0,
+    "n_steps_with_edep": 4,
+    "sum_edep_steps_MeV": 0.01590288487318503,
+    "sum_late_scint_edep_MeV": 0.0,
+    "t_ns_max": 169.4098678286879,
+    "t_ns_p50": 0.1529657286140016,
+    "t_spectrum": {
+     "bins_ns": [
+      0,
+      1,
+      10,
+      100,
+      1000,
+      10000,
+      1000000000.0
+     ],
+     "step_counts": [
+      126,
+      13,
+      2,
+      2,
+      0,
+      0
+     ]
+    }
+   },
+   "neutron_time_cut_us": 10,
+   "obs_sums": {
+    "adc_f1far": 2640855.0,
+    "adc_f2far": 2679958.0,
+    "adc_f2near": 2693754.0,
+    "adc_readout": 2676970.0,
+    "detected_f1far": 62455.0,
+    "detected_f2far": 62229.0,
+    "detected_f2near": 61830.0,
+    "detected_readout": 62575.0,
+    "edep_scint_MeV": 5225.3392575646485,
+    "edep_scint_raw_MeV": 5976.239058289402,
+    "n_scint_generated": 52257754.0,
+    "n_wls_generated": 9821063.0
+   },
+   "particle": "proton",
+   "physics_hash": "695755f15879c60b7dbc23f5ad7f972d0ec3d9710fa2ec357d17a3b37c48faee",
+   "physics_list": "QGSP_BIC",
+   "policy_id": "pin_qgsp_bic_default_10us",
+   "present": true,
+   "root_sha256": "8c694a5b3c2c521b2cfa77c69aef08990213b19d7ca09c3ca5e4497ee5a6813e",
+   "tag": "w1gev_pin1000"
+  },
+  {
+   "geometry_hash": "e323b92195f9a6288944f0738dbadccf9386422f076362ca172fd0b6d119d1e1",
+   "git_commit": "e2baa589",
+   "ke_MeV": 1000,
+   "n_events": 1000,
+   "n_photons": 824628,
+   "neutron_census": {
+    "cumulative_edep_MeV_at_T_ns": {
+     "1": 0.007606226188727305,
+     "10": 0.01571040422720671,
+     "100": 0.01590288487318503,
+     "1000": 0.01590288487318503,
+     "10000": 0.01590288487318503,
+     "1e+09": 0.01590288487318503
+    },
+    "n_late_scint_deposits": 0,
+    "n_steps": 143,
+    "n_steps_in_scint": 52,
+    "n_steps_t_gt_10us": 0,
+    "n_steps_t_gt_1us": 0,
+    "n_steps_with_edep": 4,
+    "sum_edep_steps_MeV": 0.01590288487318503,
+    "sum_late_scint_edep_MeV": 0.0,
+    "t_ns_max": 169.4098678286879,
+    "t_ns_p50": 0.1529657286140016,
+    "t_spectrum": {
+     "bins_ns": [
+      0,
+      1,
+      10,
+      100,
+      1000,
+      10000,
+      1000000000.0
+     ],
+     "step_counts": [
+      126,
+      13,
+      2,
+      2,
+      0,
+      0
+     ]
+    }
+   },
+   "neutron_time_cut_us": 1000000000.0,
+   "obs_sums": {
+    "adc_f1far": 2640855.0,
+    "adc_f2far": 2679958.0,
+    "adc_f2near": 2693754.0,
+    "adc_readout": 2676970.0,
+    "detected_f1far": 62455.0,
+    "detected_f2far": 62229.0,
+    "detected_f2near": 61830.0,
+    "detected_readout": 62575.0,
+    "edep_scint_MeV": 5225.3392575646485,
+    "edep_scint_raw_MeV": 5976.239058289402,
+    "n_scint_generated": 52257754.0,
+    "n_wls_generated": 9821063.0
+   },
+   "particle": "proton",
+   "physics_hash": "695755f15879c60b7dbc23f5ad7f972d0ec3d9710fa2ec357d17a3b37c48faee",
+   "physics_list": "QGSP_BIC",
+   "policy_id": "diagnostic_extended_or_disabled",
+   "present": true,
+   "root_sha256": "7ce929d8d9e644c0dbb15623130e0ed8a129c0b56425924ed600787b0f994864",
+   "tag": "w1gev_ext1000"
+  }
+ ]
+}

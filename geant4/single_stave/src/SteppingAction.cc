@@ -15,9 +15,12 @@
 #include "G4EmSaturation.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
+#include "G4RunManager.hh"
 #include "Randomize.hh"
 
 #include <cmath>
+#include <cstdlib>
+#include <iostream>
 #include <stdexcept>
 
 namespace {
@@ -63,6 +66,33 @@ void SteppingAction::UserSteppingAction(const G4Step* step) {
 
   const bool is_optical =
       track->GetDefinition() == G4OpticalPhoton::OpticalPhoton();
+
+  if (is_optical) {
+    // Trap guard: an optical photon caught in an unterminated
+    // dielectric loop (total internal reflection between parallel
+    // polished interfaces) never reaches a sensor and can livelock
+    // its whole event — one worker spins inside G4OpBoundaryProcess
+    // while the rest of the thread pool idles and the run never
+    // advances. Kill trapped photons once their step count exceeds a
+    // bound no physical transport path in the stave approaches;
+    // env-tunable (CCB_OPTICAL_PHOTON_MAX_STEPS, 0 disables).
+    // Recorded observables are unaffected: optical photons deposit
+    // no energy en route and a trapped photon contributes no SiPM
+    // detection.
+    static const long long kOpticalPhotonMaxSteps = [] {
+      const char* raw = std::getenv("CCB_OPTICAL_PHOTON_MAX_STEPS");
+      return raw ? std::atoll(raw) : 100000LL;
+    }();
+    if (kOpticalPhotonMaxSteps > 0 &&
+        track->GetCurrentStepNumber() > kOpticalPhotonMaxSteps) {
+      const G4Event* ev = G4RunManager::GetRunManager()->GetCurrentEvent();
+      std::cout << "OPTICAL_TRAP_KILL event="
+                << (ev ? ev->GetEventID() : -1)
+                << " steps=" << track->GetCurrentStepNumber() << std::endl;
+      track->SetTrackStatus(fStopAndKill);
+      return;
+    }
+  }
 
   if (!is_optical) {
     // Charged / non-optical: event-total + primary-only accumulators (#1007).

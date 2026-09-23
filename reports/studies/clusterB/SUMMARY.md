@@ -1,5 +1,14 @@
 # Cluster B — CCB test-beam timing-chain study (MC closure)
 
+> **⚠️ NON-AUTHORISING MC NOTICE (2026-08-16)** — This study was derived from
+> `geant4/data/output_krakow_1M.root`, which was produced from the unpatched upstream
+> `ScatteringGenerator` (unit-weight sampling bug). The corrected generator shows
+> Enter B reduced by −97.0% ± 0.2%, materially changing the sample. The TIMING-MC figure
+> (paper/figures.yaml row) is **GATED** pending re-derivation on
+> `geant4/data/output_krakow_1M_authorising.root`. See
+> `research/trigger_migration_study/PHASE1B_NONAUTHORISING_MC_NOTICE.md` for full
+> analysis.
+
 **Goal.** Prove the CCB timing analysis works end-to-end before it is pointed at data. The full
 chain is reconstructed on Monte Carlo where the truth is known, so every stage can be validated
 against ground truth.

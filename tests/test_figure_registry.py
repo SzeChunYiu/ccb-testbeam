@@ -299,6 +299,8 @@ def test_allowed_statuses_frozen():
             "SUPERSEDED",
             "EXTERNAL_BLOCKER",
             "ILLUSTRATIVE",
+            "MC_MODEL_DEPENDENT",
+            "DONE_DATA_ONLY",
         }
     )
     assert ALLOWED_KINDS == frozenset(
@@ -308,6 +310,12 @@ def test_allowed_statuses_frozen():
     assert STATUS_DISPOSITIONS["SIMULATION_RESULT"] == "QUARANTINED"
     assert STATUS_DISPOSITIONS["BLOCKED"] == "QUARANTINED"
     assert STATUS_DISPOSITIONS["EXTERNAL_BLOCKER"] == "BLOCKED"
+    # 2026-08-17: vocabulary extended for the 1303/956 registrations, which had
+    # been using these two statuses in paper/figures.yaml while validation
+    # rejected them (documented builder command failed on main's own registry).
+    # Both stay QUARANTINED: not paper-authorizing until their named gates close.
+    assert STATUS_DISPOSITIONS["MC_MODEL_DEPENDENT"] == "QUARANTINED"
+    assert STATUS_DISPOSITIONS["DONE_DATA_ONLY"] == "QUARANTINED"
 
 
 import pytest as _pytest

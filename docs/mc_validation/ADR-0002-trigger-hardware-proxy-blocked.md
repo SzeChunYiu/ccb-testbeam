@@ -1,6 +1,6 @@
 # ADR-0002: Hardware-trigger response remains BLOCKED (no invented trigger)
 
-**Status:** accepted (fail-closed)  
+**Status:** accepted (fail-closed); decision item 2 superseded IN PART on 2026-08-17 by [ADR-1045](adr/ADR-1045-migration-validated.md) — `evidence_state` → `MIGRATION_VALIDATED` (MC-side migration study only), `hardware_definition_status` → `GEOMETRY_SOURCE_BOUND_ELECTRONICS_UNVALIDATED`. Items 1, 3, 4 remain fully in force: no invented hardware parameters, `MC_TRIGGER_PROXY` labelling for production Sample I/II membership, and no overwrite of a future `sample_membership_hardware_model` channel. Real-data hardware-trigger claims remain forbidden.  
 **Date:** 2026-08-11  
 **Issue:** #1045 (`ARU-TRIGGER-MIMIC-001`)  
 **Contract:** `docs/contracts/TRIGGER_HARDWARE_RESPONSE.json`

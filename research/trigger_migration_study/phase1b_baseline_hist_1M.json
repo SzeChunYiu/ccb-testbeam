@@ -1,0 +1,35 @@
+{
+  "n_events_processed": 1000000,
+  "n_enter_B": 237098,
+  "n_enter_A": 69770,
+  "n_sample_I": 64762,
+  "n_sample_II": 237098,
+  "species_counts": {
+    "proton": {
+      "enter_B": 96073,
+      "sample_I": 373,
+      "sample_II": 96073
+    },
+    "deuteron": {
+      "enter_B": 140853,
+      "sample_I": 64291,
+      "sample_II": 140853
+    },
+    "alpha": {
+      "enter_B": 33,
+      "sample_I": 20,
+      "sample_II": 33
+    },
+    "C12": {
+      "enter_B": 64,
+      "sample_I": 34,
+      "sample_II": 64
+    }
+  },
+  "coinc_ns_used": 15.0,
+  "source_root_sha256": "2b62403f0aa7ecc8c6fc8ffb5006b59d833ff1a31a95a8f389f88f45a18542cc",
+  "generated_by": "scripts/trigger_baseline_characterization.py process_mc_file (ORIGINAL methodology) on the sha256-verified ROOT file",
+  "slurm_job_id": "3506920",
+  "generated_date": "2026-08-16",
+  "note": "Ground-truth receipt for the Phase 1B delta table. Consumed by scripts/phase1b_delta_table.py when the ROOT file is absent."
+}

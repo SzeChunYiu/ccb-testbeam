@@ -48,7 +48,7 @@ re-runs are `BLOCKED_COMPUTE`/`BLOCKED_EXTERNAL` on LUNARC.
 
 | Contract | Issue | Policy |
 |---|---|---|
-| [TRIGGER_HARDWARE_RESPONSE.json](TRIGGER_HARDWARE_RESPONSE.json) | #1045 | Hardware trigger `UNKNOWN_EXTERNAL` / `BLOCKED`; MC uses `MC_TRIGGER_PROXY` only ([mc_validation ADR-0002](../mc_validation/ADR-0002-trigger-hardware-proxy-blocked.md)). No invented hardware parameters. |
+| [TRIGGER_HARDWARE_RESPONSE.json](TRIGGER_HARDWARE_RESPONSE.json) | #1045 | Real T1/T2 geometry source-bound in MC (v3 receipt, [ADR-1045](../mc_validation/adr/ADR-1045-migration-validated.md)); `MIGRATION_VALIDATED` authorizes MC-side migration statements only; electronics still unvalidated; Sample I/II membership uses `MC_TRIGGER_PROXY` ([ADR-0002](../mc_validation/ADR-0002-trigger-hardware-proxy-blocked.md)); real-data hardware-trigger claims forbidden. No invented hardware parameters. |
 | [I885_ANGULAR_PHASE_SPACE.json](I885_ANGULAR_PHASE_SPACE.json) | #1093 | I885 campaign is `NORMAL_INCIDENCE_ONLY`; angular/azimuth closure claims blocked. |
 
 Scientific PRs must not auto-close research-universe issues without ledgered

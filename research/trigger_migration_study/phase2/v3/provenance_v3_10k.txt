@@ -1,0 +1,11 @@
+generated_utc: 2026-08-17T00:33:59Z
+binary_sha256: 03c8ccf1a0c640ddd5273d645f1b4d9441f0e924c19e6918ef2369c5ad5b9611
+macro_sha256: f5be154d514db40bb9388ddd0a0ae19df18d20b47a805b5b186131b1fe23c22a
+config_sha256: 5540c4c6f87e95f1447fb24f66174c16574b5f7b4c0ba13ed6156119a4633105
+geometry_v3_root_sha256: 657661c8bbae28e35bc9398e6752ed97f371e0939921770699df7d3dfb9c5eba
+sigma_table_sha256: 0ca33e76a745dde08a12cc451d295c0d213a897c9993914cb3d2a1550d89edfc
+dedx_table_sha256: 9c2dd0d42473a6ffb96ec317a26d97815699d6b9ced6d3c46e65093d0114cb7b
+events: 10000
+geometry: v3 instrumented baseline Trig stacks (T1=stack_1 B-arm -38deg, T2=stack_2 A-arm +71.5deg, r=99)
+supersedes: v2 1M (job 3506988) - RETRACTED, antipodal placement, 0/554
+68211f6cd6ca6a667fcd7dada39a5da69501d0f909086a4de845c9f630583aea  /projects/hep/fs10/shared/nnbar/billy/ccb_1045_v3/output_krakow_v3_10k.root

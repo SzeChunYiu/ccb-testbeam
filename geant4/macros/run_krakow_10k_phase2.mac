@@ -1,0 +1,11 @@
+# Macro for Phase 2 10k validation - #1045 trigger study
+# Validates T1/T2 trigger volume integration with SD
+# Same physics as authorising 1M run (190 MeV, 2.3 mm target, measured sigma table)
+/run/initialize
+
+/ElGen/E 190. MeV
+/ElGen/TargetThickness 2.3 mm
+/ElGen/Beamspot 10 mm
+/ElGen/CSFile ./sigma_pd_cm_190.txt
+
+/run/beamOn 10000

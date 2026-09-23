@@ -1,12 +1,13 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "contract_id": "TRIGGER_HARDWARE_RESPONSE",
   "issue": "#1045",
   "audit_id": "ARU-TRIGGER-MIMIC-001",
-  "evidence_state": "BLOCKED",
-  "hardware_definition_status": "UNKNOWN_EXTERNAL",
+  "evidence_state": "MIGRATION_VALIDATED",
+  "hardware_definition_status": "GEOMETRY_SOURCE_BOUND_ELECTRONICS_UNVALIDATED",
   "admissible_labels": [
     "MC_TRIGGER_PROXY",
+    "MC_TRIGGER_MIGRATION",
     "DIAGNOSTIC_ONLY",
     "BLOCKED"
   ],
@@ -26,13 +27,45 @@
     ],
     "status": "diagnostic_hypothesis_only"
   },
-  "missing_physical_object": "Real CCB trigger scintillators/electronics are not represented in the MC geometry; no source-bound threshold/discriminator/coincidence model exists.",
+  "hardware_response_study": {
+    "summary": "Proxy -> instrumented hardware-response migration quantified on the authorising corrected-source MC (CL-021 chain); two-arm sample 554/1M reproduced exactly, proving a geometry-only delta.",
+    "geometry": {
+      "v3_method": "instrument the REAL baseline trigger counters (Trig_stack_1 B arm -38.0 deg / Trig_stack_2 A arm +71.5 deg, r=99 cm) by splitting shared Trig_bar into T1_trigger_log/T2_trigger_log with dedicated SD branches; zero invented geometry; 8/8 builder gates",
+      "v3_sha256": "657661c8bbae28e35bc9398e6752ed97f371e0939921770699df7d3dfb9c5eba",
+      "baseline_geometry": "geant4/configs/krakow_109_8-38deg_4-71deg.root",
+      "baseline_sha256": "a71c5cd7ce4cd7085f7f0236d5852f81aba0b52ff56bc2e9593f677e1e410d4e",
+      "receipt": "research/trigger_migration_study/phase2_geometry_receipt.json",
+      "v1_v2_retracted": "v1 unrotated slabs (grazing incidence) and v2 rotated r=30 slabs (sign-flipped antipodal placement, 0/554) both RETRACTED with root causes in the receipt"
+    },
+    "joint_matrix": "research/trigger_migration_study/phase4/joint_matrix_1m_v3.json",
+    "correction_record": "research/trigger_migration_study/phase4/JOINT_MATRIX_CORRECTION.md",
+    "superseded_artifact": "research/trigger_migration_study/phase4/migration_matrix_1m_v3_aggregate_SUPERSEDED.json",
+    "n_events": 1000000,
+    "reference_point": {
+      "threshold_mev": 1.0,
+      "coinc_ns": 15.0,
+      "both": 165,
+      "proxy_only": 389,
+      "hardware_only": 195,
+      "proxy_total": 554
+    },
+    "retention": 0.2978,
+    "retention_se": 0.0194,
+    "independent_crosscheck": "ray-projection prediction 0.289 (A-arm counter at +71.5 deg, x_c median -13.2 cm vs 10 cm bar half-width); retention threshold-insensitive 0.5-5 MeV -> loss is geometric",
+    "report": "reports/paper_1045_trigger_migration_20260817T013155Z/result.json",
+    "figures": [
+      "publication/figures/gated/fig_trigger_migration_quadrants.png",
+      "publication/figures/gated/fig_trigger_threshold_scan.png"
+    ],
+    "adr": "docs/mc_validation/adr/ADR-1045-migration-validated.md"
+  },
+  "missing_physical_object": "Electronics response remains external and unbound: discriminator threshold provenance, pulse shapes, dead time and multiplicity logic are unknown. The 0.5-5 MeV per-hit thresholds and earliest-hit coincidence used in the migration study are scan parameters, NOT source-bound hardware settings. The real T1/T2 counter GEOMETRY is now represented in MC (v3 instrumented baseline stacks, source-bound receipt above).",
   "closure_requires": [
-    "source-bound versioned trigger_hardware_schema with geometry/material/threshold/time response",
-    "OR held-out quantitative proxy closure versus real-trigger acceptance with preregistered tolerance",
-    "migration matrices vs species/energy/angle/multiplicity under validated event weights"
+    "source-bound versioned trigger ELECTRONICS schema with threshold/discriminator/time response provenance",
+    "held-out quantitative proxy closure versus real-trigger acceptance with preregistered tolerance",
+    "migration matrices vs energy/angle/multiplicity under validated event weights (species dimension delivered; energy/angle/multiplicity outstanding)"
   ],
-  "fail_closed_policy": "Do not invent hardware trigger parameters. Until validated, all Sample I/II MC membership derived from the HRD first-layer proxy MUST be labelled MC_TRIGGER_PROXY / BLOCKED for quantitative hardware-trigger claims.",
+  "fail_closed_policy": "Real-data hardware-trigger claims remain FORBIDDEN. MIGRATION_VALIDATED authorizes only MC-side migration statements (label MC_TRIGGER_MIGRATION, evidence class MC_METHOD_CLOSURE per paper/figures.yaml TRIG-MIGRATION): they quantify the proxy -> instrumented-hardware-response migration on the authorising corrected-source MC and validate no real trigger. Production MC Sample I/II membership continues to use the HRD first-layer proxy (label MC_TRIGGER_PROXY). Do not invent hardware trigger parameters.",
   "related_issues": [
     "#618",
     "#844",

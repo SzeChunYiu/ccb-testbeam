@@ -1,0 +1,41 @@
+{
+  "script": "scripts/trigger_publication_figures.py",
+  "command": "scripts/trigger_publication_figures.py --out reports/paper_1045_trigger_migration_20260817T013155Z",
+  "generated_utc": "2026-08-17T01:31:57.513693+00:00",
+  "git_commit": "17fad46eca446878836c12a5d0023aa288fd3ecf",
+  "environment": {
+    "python": "3.11.14",
+    "matplotlib": "3.10.8",
+    "platform": "Linux-5.14.0-687.24.1.el9_8.x86_64-x86_64-with-glibc2.34"
+  },
+  "inputs": [
+    {
+      "path": "research/trigger_migration_study/phase4/joint_matrix_1m_v3.json",
+      "role": "joint_matrix",
+      "sha256": "862c908aad2d9e679ae7735ed85b463a64f43e70db77ca3cc5b3388c12ec020d",
+      "bytes": 18164
+    },
+    {
+      "path": "research/trigger_migration_study/phase4/migration_matrix_1m_v3_aggregate_SUPERSEDED.json",
+      "role": "aggregate_matrix_superseded",
+      "sha256": "980e8bd38de65aa383237653b7f4480cab5c1cb83bfe10476bf63951fdb913a1",
+      "bytes": 4256
+    },
+    {
+      "path": "research/trigger_migration_study/phase3/hardware_scan_1m_v3.json",
+      "role": "hardware_scan",
+      "sha256": "a449bb5bbe85705c0af73bc133cd812dde41dea4bc9a133d8fb5e261bfed95a1",
+      "bytes": 11930
+    },
+    {
+      "path": "research/trigger_migration_study/phase3/baseline_proxy_scan_1m_v3.json",
+      "role": "proxy_scan",
+      "sha256": "1bf24ed276bea23af1d217404b8c58a96d8f5e9ed8febc2a404700597e9b6814",
+      "bytes": 13452
+    }
+  ],
+  "figures": [
+    "fig_trigger_migration_quadrants.png",
+    "fig_trigger_threshold_scan.png"
+  ]
+}

@@ -32,3 +32,5 @@ final/1303_pe_per_mev.pdf,SIMULATION_RESULT,reports/paper_1303_optical_campaign_
 final/1303_edep_vs_pe.pdf,SIMULATION_RESULT,reports/paper_1303_optical_campaign_20260815T2209Z/figures/1303_edep_vs_pe.pdf,#1303 detected PE vs E_vis/E_raw (regenerated grid)
 gated/edep_reconstruction_heldout_E_vis.pdf,GATED,reports/paper_1303_optical_campaign_20260815T2209Z/edep_reconstruction_heldout_E_vis.pdf,#1297/#1303 held-out E_vis reconstruction (CL-029 GATED)
 gated/edep_reconstruction_heldout_E_raw.pdf,GATED,reports/paper_1303_optical_campaign_20260815T2209Z/edep_reconstruction_heldout_E_raw.pdf,#1297/#1303 held-out E_raw negative control (CL-029 GATED)
+final/fig_trigger_migration_quadrants.png,SIMULATION_RESULT,reports/paper_1045_trigger_migration_20260817T013155Z/figures/fig_trigger_migration_quadrants.png,"#1045 joint migration quadrants + two-arm retention (CL-1045-001; TRUTH_LEVEL_MC_ONLY)"
+final/fig_trigger_threshold_scan.png,SIMULATION_RESULT,reports/paper_1045_trigger_migration_20260817T013155Z/figures/fig_trigger_threshold_scan.png,"#1045 threshold/coincidence scan of the instrumented selection (CL-1045-002; TRUTH_LEVEL_MC_ONLY)"

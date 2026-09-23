@@ -1,0 +1,13 @@
+  100000/1000000 events
+  200000/1000000 events
+  300000/1000000 events
+  400000/1000000 events
+  500000/1000000 events
+  600000/1000000 events
+  700000/1000000 events
+  800000/1000000 events
+  900000/1000000 events
+  1000000/1000000 events
+WROTE /projects/hep/fs10/shared/nnbar/billy/ccb_1045_v3/joint_matrix_1m_v3.json
+REF 1.0MeV/15ns: both=165 proxy_only=389 hardware_only=195 (proxy_total=554)
+=== DONE Mon Aug 17 03:00:06 AM CEST 2026 ===

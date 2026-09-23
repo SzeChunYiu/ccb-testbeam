@@ -1,0 +1,160 @@
+                ax.plot(np.arange(16), ex["wave"][j], marker="o", ms=2, lw=1, label=name)
+            ax.set_title(f"Sample {sample}, run {ex['run']}\nB2 amp={ex['B2_amp']:.0f} ADC")
+            ax.set_xlabel("sample index (10 ns nominal)")
+            if col == 0:
+                ax.set_ylabel("raw ADC code")
+            if row == 0 and col == 3:
+                ax.legend(fontsize=8)
+    fig.suptitle("Raw 8×16 HRD waveforms — representative B2-amplitude quantiles")
+    fig.tight_layout()
+    p = ctx.fig_dir / "01_raw_waveform_examples.png"
+    fig.savefig(p, dpi=170)
+    plt.close(fig)
+    paths["raw_waveforms"] = str(p)
+
+    # Baseline by run and B channel.
+    fig, axes = plt.subplots(2, 1, figsize=(12, 8), sharex=True)
+    for ax, sample in zip(axes, ["I", "II"]):
+        sub = data[data["sample"] == sample]
+        for name in B_NAMES:
+            g = sub.groupby("run")[f"baseline_{name}"].median()
+            ax.plot(g.index, g.values, marker="o", label=name)
+        ax.set_ylabel("median first-4 baseline [ADC]")
+        ax.set_title(f"Sample {sample}")
+        ax.legend(ncol=4, fontsize=8)
+    axes[-1].set_xlabel("run")
+    fig.suptitle("Pedestal/baseline run stability")
+    fig.tight_layout()
+    p = ctx.fig_dir / "02_baseline_run_stability.png"
+    fig.savefig(p, dpi=170)
+    plt.close(fig)
+    paths["baseline_stability"] = str(p)
+
+    # Peak sample distribution for selected B2 events.
+    sel = data[data["amp_B2"] > PRIMARY_B2_THRESHOLD]
+    fig, axes = plt.subplots(2, 2, figsize=(11, 7), sharex=True)
+    for ax, name in zip(axes.flat, B_NAMES):
+        for sample in ["I", "II"]:
+            vals = sel.loc[sel["sample"] == sample, f"peak_sample_{name}"].to_numpy(dtype=int)
+            counts = np.bincount(vals, minlength=16)
+            ax.step(np.arange(16), counts, where="mid", label=f"Sample {sample}")
+        ax.axvspan(-0.5, 3.5, alpha=0.08)
+        ax.set_title(name)
+        ax.set_ylabel("events")
+        ax.legend(fontsize=8)
+    for ax in axes[-1]:
+        ax.set_xlabel("peak sample index")
+    fig.suptitle("Peak-position diagnostic; shaded region is used by first-4 baseline estimator")
+    fig.tight_layout()
+    p = ctx.fig_dir / "03_peak_sample_distributions.png"
+    fig.savefig(p, dpi=170)
+    plt.close(fig)
+    paths["peak_samples"] = str(p)
+
+    # Baseline-window sensitivity.
+    fig, axes = plt.subplots(2, 2, figsize=(11, 7))
+    for ax, name in zip(axes.flat, B_NAMES):
+        d = data[f"amp_last4_{name}"] - data[f"amp_{name}"]
+        lo, hi = np.percentile(d, [1, 99])
+        ax.hist(d, bins=80, range=(lo, hi), histtype="step", density=True)
+        ax.axvline(np.median(d), ls="--", lw=1)
+        ax.set_title(f"{name}: last4 amp − first4 amp\nmedian={np.median(d):.1f} ADC")
+        ax.set_xlabel("amplitude shift [ADC]")
+        ax.set_ylabel("density")
+    fig.suptitle("Baseline-window sensitivity (systematic diagnostic, not a correction)")
+    fig.tight_layout()
+    p = ctx.fig_dir / "04_baseline_window_sensitivity.png"
+    fig.savefig(p, dpi=170)
+    plt.close(fig)
+    paths["baseline_sensitivity"] = str(p)
+
+    # Per-run B2-selected event counts.
+    fig, ax = plt.subplots(figsize=(12, 4.5))
+    counts = sel.groupby(["sample", "run"]).size().reset_index(name="events")
+    for sample in ["I", "II"]:
+        q = counts[counts["sample"] == sample]
+        ax.plot(q["run"], q["events"], marker="o", label=f"Sample {sample}")
+    ax.set_xlabel("run")
+    ax.set_ylabel(f"events with B2 > {PRIMARY_B2_THRESHOLD:.0f} ADC")
+    ax.set_title("Run-level event support after event-level B2 entrance selection")
+    ax.legend()
+    fig.tight_layout()
+    p = ctx.fig_dir / "05_selected_events_by_run.png"
+    fig.savefig(p, dpi=170)
+    plt.close(fig)
+    paths["run_counts"] = str(p)
+
+    return paths
+
+
+def _density2d(ax, x, y, xedges, yedges, title, xlabel, ylabel):
+    h, _, _ = np.histogram2d(x, y, bins=[xedges, yedges])
+    pcm = ax.pcolormesh(xedges, yedges, h.T + 1.0, norm=LogNorm(vmin=1, vmax=max(2, h.max()+1)), shading="auto")
+    ax.set_title(title)
+    ax.set_xlabel(xlabel)
+    ax.set_ylabel(ylabel)
+    return pcm, h
+
+
+def _conditional_profile(df: pd.DataFrame, xcol: str, ycol: str, bins: np.ndarray) -> pd.DataFrame:
+    x = df[xcol].to_numpy(dtype=float)
+    y = df[ycol].to_numpy(dtype=float)
+    idx = np.digitize(x, bins) - 1
+    rows = []
+    for i in range(len(bins)-1):
+        m = idx == i
+        if m.sum() < 30:
+            continue
+        rows.append({
+            "x_lo": bins[i], "x_hi": bins[i+1], "n": int(m.sum()),
+            "x_median": float(np.median(x[m])),
+            "y_p16": float(np.percentile(y[m], 16)),
+            "y_median": float(np.median(y[m])),
+            "y_p84": float(np.percentile(y[m], 84)),
+        })
+    return pd.DataFrame(rows)
+
+
+def analyze_beam_topology(data: pd.DataFrame, ctx: AnalysisContext) -> dict[str, Any]:
+    selected = data[data["amp_B2"] > PRIMARY_B2_THRESHOLD].copy()
+    if selected.empty:
+        raise RuntimeError("no B2-selected events")
+    emax = float(np.percentile(selected["E_adc"], 99.5))
+    demax = float(np.percentile(selected["deltaE_adc"], 99.5))
+    xedges = np.linspace(0, max(emax, 1), 100)
+    yedges = np.linspace(0, max(demax, 1), 100)
+
+    fig, axes = plt.subplots(1, 2, figsize=(13, 5.6), sharex=True, sharey=True)
+    hist_summary = {}
+    for ax, sample in zip(axes, ["I", "II"]):
+        sub = selected[selected["sample"] == sample]
+        pcm, h = _density2d(
+            ax, sub["E_adc"], sub["deltaE_adc"], xedges, yedges,
+            f"Sample {sample} (n={len(sub):,})",
+            "E proxy = A(B4)+A(B6)+A(B8) [ADC]",
+            "ΔE proxy = A(B2) [ADC]",
+        )
+        prof = _conditional_profile(sub, "E_adc", "deltaE_adc", np.linspace(0, emax, 25))
+        if not prof.empty:
+            ax.plot(prof["x_median"], prof["y_median"], lw=2, label="conditional median")
+            ax.fill_between(prof["x_median"], prof["y_p16"], prof["y_p84"], alpha=0.18)
+            prof.to_csv(ctx.table_dir / f"beam_deltaE_E_profile_sample_{sample}.csv", index=False)
+        ax.legend(fontsize=8)
+        hist_summary[sample] = {"hist": h.astype(int), "n": len(sub)}
+    fig.colorbar(pcm, ax=axes.ravel().tolist(), label="events/bin (+1, log scale)")
+    fig.suptitle(f"Raw-data amplitude ΔE–E, B2>{PRIMARY_B2_THRESHOLD:.0f} ADC; downstream channels are NOT pre-censored")
+    fig.subplots_adjust(top=0.86, wspace=0.08)
+    p = ctx.fig_dir / "06_beam_deltaE_E_density.png"
+    fig.savefig(p, dpi=180, bbox_inches="tight")
+    plt.close(fig)
+
+    # Log-coordinate view to expose low-E structure.
+    fig, axes = plt.subplots(1, 2, figsize=(13, 5.6), sharex=True, sharey=True)
+    lx = np.log1p(selected["E_adc"].to_numpy())
+    ly = np.log1p(selected["deltaE_adc"].to_numpy())
+    lxedges = np.linspace(np.percentile(lx, 0.2), np.percentile(lx, 99.8), 100)
+    lyedges = np.linspace(np.percentile(ly, 0.2), np.percentile(ly, 99.8), 100)
+    for ax, sample in zip(axes, ["I", "II"]):
+        sub = selected[selected["sample"] == sample]
+        pcm2, _ = _density2d(
+            ax, np.log1p(sub["E_adc"]), np.log1p(sub["deltaE_adc"]), lxedges, lyedges,

@@ -1,0 +1,160 @@
+        return np.nan, np.nan
+    return float(np.percentile(vals, 2.5)), float(np.percentile(vals, 97.5))
+
+
+def benchmark_mc_pid(ctx: AnalysisContext) -> tuple[pd.DataFrame, pd.DataFrame, dict[str, Any]]:
+    path = _download_mc(ctx)
+    mc0 = pd.read_parquet(path)
+    required = [f"edep_layer_{i}" for i in range(8)] + ["truth_species", "sample", "event_id", "PrimaryWeight"]
+    miss = [c for c in required if c not in mc0.columns]
+    if miss:
+        raise RuntimeError(f"MC event table missing {miss}")
+    models = {
+        "logistic": lambda: make_pipeline(StandardScaler(), LogisticRegression(max_iter=3000, class_weight=None)),
+        "hgb": lambda: HistGradientBoostingClassifier(max_iter=250, learning_rate=0.06, max_leaf_nodes=15, l2_regularization=1.0, random_state=RNG_SEED),
+    }
+    feature_sets = ["dee", "dee_ratio", "dee_ratio_depth", "four_readouts"]
+    rows = []
+    oof_records = []
+
+    for parity in ["1/3/5/7", "0/2/4/6"]:
+        mc = _mc_observables(mc0, parity)
+        mc = mc[mc["truth_species"].isin(["p", "d"])].copy()
+        mc = mc[(mc["dE"] > 0) & ((mc["E4"] > 0) | (mc["Efull_corrected"] > 0))].copy()
+        y = (mc["truth_species"] == "d").astype(int).to_numpy()
+        w = mc["PrimaryWeight"].to_numpy(dtype=float)
+        groups = (mc["event_id"].to_numpy(dtype=np.int64) // 20000).astype(np.int64)
+        cv = StratifiedGroupKFold(n_splits=5, shuffle=True, random_state=RNG_SEED)
+        for energy_mode in ["E4", "Efull_corrected"]:
+            # Four-readout feature set is meaningful only for sparse E4 representation.
+            fs_iter = feature_sets if energy_mode == "E4" else ["dee", "dee_ratio", "dee_ratio_depth"]
+            for fs in fs_iter:
+                X, feature_names = _feature_matrix(mc, fs, energy_mode=energy_mode)
+                for model_name, factory in models.items():
+                    score = np.full(len(mc), np.nan)
+                    fold_aucs = []
+                    for fold, (tr, te) in enumerate(cv.split(X, y, groups)):
+                        model = factory()
+                        model.fit(X[tr], y[tr], **({"sample_weight": w[tr]} if model_name == "hgb" else {"logisticregression__sample_weight": w[tr]}))
+                        score[te] = model.predict_proba(X[te])[:, 1]
+                        fold_aucs.append(roc_auc_score(y[te], score[te], sample_weight=w[te]))
+                    auc = roc_auc_score(y, score, sample_weight=w)
+                    ap = average_precision_score(y, score, sample_weight=w)
+                    brier = brier_score_loss(y, score, sample_weight=w)
+                    lo, hi = _group_bootstrap_auc(y, score, w, groups)
+                    rows.append({
+                        "parity": parity, "energy_mode": energy_mode, "feature_set": fs, "model": model_name,
+                        "n_events": int(len(mc)), "n_p": int((y==0).sum()), "n_d": int((y==1).sum()),
+                        "auc_oof": float(auc), "auc_bootstrap95_lo": lo, "auc_bootstrap95_hi": hi,
+                        "auc_fold_mean": float(np.mean(fold_aucs)), "auc_fold_sd": float(np.std(fold_aucs, ddof=1)),
+                        "average_precision": float(ap), "brier": float(brier), "feature_names": ";".join(feature_names),
+                    })
+                    if parity == "1/3/5/7" and energy_mode == "E4" and fs in ["dee", "four_readouts"]:
+                        oof_records.append(pd.DataFrame({
+                            "event_id": mc["event_id"].to_numpy(), "sample": mc["sample"].astype(str).to_numpy(),
+                            "truth_species": mc["truth_species"].astype(str).to_numpy(), "y": y, "weight": w,
+                            "model": model_name, "feature_set": fs, "score": score,
+                        }))
+
+    metrics = pd.DataFrame(rows).sort_values("auc_oof", ascending=False).reset_index(drop=True)
+    metrics.to_csv(ctx.table_dir / "mc_pid_detector_only_metrics.csv", index=False)
+    oof = pd.concat(oof_records, ignore_index=True)
+    oof.to_parquet(ctx.table_dir / "mc_pid_oof_scores.parquet", index=False)
+
+    # Plot p/d topology for the current bundle parity with corrected full sum shown separately.
+    mc = _mc_observables(mc0, "1/3/5/7")
+    mc_pd = mc[mc["truth_species"].isin(["p", "d"]) & (mc["dE"] > 0)].copy()
+    fig, axes = plt.subplots(2, 2, figsize=(12, 9))
+    for row, sample in enumerate(["I", "II"]):
+        sub = mc_pd[mc_pd["sample"] == sample]
+        for col, emode in enumerate(["E4", "Efull_corrected"]):
+            ax = axes[row, col]
+            for species, marker in [("p", "o"), ("d", "^")]:
+                q = sub[sub["truth_species"] == species]
+                if len(q) > 4000:
+                    q = q.sample(4000, random_state=RNG_SEED)
+                ax.scatter(q[emode], q["dE"], s=6, alpha=0.22, marker=marker, label=species)
+            ax.set_xlabel(("sparse E4" if emode=="E4" else "corrected full downstream E") + " [MeV]")
+            ax.set_ylabel("ΔE [MeV]")
+            ax.set_title(f"Sample {sample}: {'data-matched sparse' if emode=='E4' else 'all physical downstream layers'}")
+            ax.legend()
+    fig.suptitle("MC p/d truth-labelled topology — no truth kinetic-energy feature used")
+    fig.tight_layout()
+    p_top = ctx.fig_dir / "10_mc_pd_deltaE_E_topology.png"
+    fig.savefig(p_top, dpi=180)
+    plt.close(fig)
+
+    # Feature/model ablation, current parity.
+    q = metrics[(metrics["parity"] == "1/3/5/7") & (metrics["energy_mode"] == "E4")].copy()
+    q["label"] = q["model"] + " | " + q["feature_set"]
+    q = q.sort_values("auc_oof")
+    fig, ax = plt.subplots(figsize=(10, 5.5))
+    ax.barh(np.arange(len(q)), q["auc_oof"])
+    ax.set_yticks(np.arange(len(q)), q["label"])
+    ax.set_xlim(max(0.4, q["auc_oof"].min()-0.05), 1.0)
+    ax.set_xlabel("out-of-fold ROC AUC")
+    ax.set_title("Detector-only MC PID ablation — excludes truth entrance energy")
+    for i, v in enumerate(q["auc_oof"]):
+        ax.text(v+0.004, i, f"{v:.3f}", va="center")
+    fig.tight_layout()
+    p_abl = ctx.fig_dir / "11_mc_pid_feature_ablation.png"
+    fig.savefig(p_abl, dpi=180)
+    plt.close(fig)
+
+    # ROC/PR for best detector-only current-parity sparse model.
+    best = metrics[(metrics["parity"] == "1/3/5/7") & (metrics["energy_mode"] == "E4")].iloc[0]
+    rec = oof[(oof["model"] == best["model"]) & (oof["feature_set"] == best["feature_set"])]
+    fpr, tpr, _ = roc_curve(rec["y"], rec["score"], sample_weight=rec["weight"])
+    prec, recall, _ = precision_recall_curve(rec["y"], rec["score"], sample_weight=rec["weight"])
+    fig, axes = plt.subplots(1, 2, figsize=(11.5, 5))
+    axes[0].plot(fpr, tpr, lw=2, label=f"AUC={best['auc_oof']:.3f}")
+    axes[0].plot([0,1],[0,1], ls="--", lw=1)
+    axes[0].set_xlabel("false positive rate"); axes[0].set_ylabel("deuteron recall")
+    axes[0].set_title("ROC"); axes[0].legend()
+    axes[1].plot(recall, prec, lw=2, label=f"AP={best['average_precision']:.3f}")
+    prev = np.average(rec["y"], weights=rec["weight"])
+    axes[1].axhline(prev, ls="--", lw=1, label=f"d prevalence={prev:.3f}")
+    axes[1].set_xlabel("deuteron recall"); axes[1].set_ylabel("precision")
+    axes[1].set_title("Precision–recall"); axes[1].legend()
+    fig.suptitle(f"Best detector-only MC benchmark: {best['model']} / {best['feature_set']}")
+    fig.tight_layout()
+    p_roc = ctx.fig_dir / "12_mc_pid_roc_pr.png"
+    fig.savefig(p_roc, dpi=180)
+    plt.close(fig)
+
+    # Calibration curve for same model.
+    # Weighted quantile-bin calibration (sklearn.calibration_curve has no sample_weight parameter).
+    order = np.argsort(rec["score"].to_numpy(dtype=float))
+    y_cal = rec["y"].to_numpy(dtype=float)[order]
+    s_cal = rec["score"].to_numpy(dtype=float)[order]
+    w_cal = rec["weight"].to_numpy(dtype=float)[order]
+    chunks = np.array_split(np.arange(len(order)), 10)
+    prob_pred, prob_true = [], []
+    for idx in chunks:
+        if len(idx) == 0 or w_cal[idx].sum() <= 0:
+            continue
+        prob_pred.append(float(np.average(s_cal[idx], weights=w_cal[idx])))
+        prob_true.append(float(np.average(y_cal[idx], weights=w_cal[idx])))
+    prob_pred = np.asarray(prob_pred)
+    prob_true = np.asarray(prob_true)
+    fig, ax = plt.subplots(figsize=(6, 5.5))
+    ax.plot(prob_pred, prob_true, marker="o", label="OOF")
+    ax.plot([0,1],[0,1], ls="--", lw=1, label="ideal")
+    ax.set_xlabel("predicted P(d)"); ax.set_ylabel("empirical d fraction")
+    ax.set_title("MC detector-only score calibration")
+    ax.legend(); fig.tight_layout()
+    p_cal = ctx.fig_dir / "13_mc_pid_calibration.png"
+    fig.savefig(p_cal, dpi=180)
+    plt.close(fig)
+
+    summary = {
+        "mc_source_url": MC_URL,
+        "mc_sha256": sha256_file(path),
+        "n_rows_source": int(len(mc0)),
+        "truth_label_contract": "truth_species column from saved producer; entrance-hit species proxy, not a beam-data truth label",
+        "truth_kinetic_energy_used_as_feature": False,
+        "best_current_parity_sparse": best.to_dict(),
+        "figures": {"topology": str(p_top), "ablation": str(p_abl), "roc_pr": str(p_roc), "calibration": str(p_cal)},
+        "known_fixed_bug": "Efull_corrected recomputed from physical edep_layer_* columns; stored E_mc_full_mev is not trusted",
+        "readout_parity_status": "1/3/5/7 is current bundle contract; 0/2/4/6 is retained as nuisance because hardware source-binding remains unresolved",
+    }

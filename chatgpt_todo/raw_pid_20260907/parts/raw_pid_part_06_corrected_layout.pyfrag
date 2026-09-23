@@ -1,0 +1,321 @@
+# ---------------------------------------------------------------------------
+# Raw-layout correction discovered by adversarial inspection of the executed
+# waveform figures.  The 128-word HF record is a prefix of an 18-sample/channel
+# stream, NOT eight independent 16-word channel blocks.  Channel starts are at
+# 18*c; channels 0..6 are complete and channel 7 contributes only two words.
+# The B physics readouts use even channels 0/2/4/6, so all four are complete.
+# These late definitions intentionally override the provisional 8x16 functions
+# above while preserving the rest of the analysis API.
+# ---------------------------------------------------------------------------
+
+SAMPLES_PER_CHANNEL_SOURCE = 18
+RAW_WORDS_PER_EVENT = 128
+COMPLETE_CHANNELS = RAW_WORDS_PER_EVENT // SAMPLES_PER_CHANNEL_SOURCE  # 7
+TRAILING_WORDS = RAW_WORDS_PER_EVENT % SAMPLES_PER_CHANNEL_SOURCE      # 2
+B_POLARITY = np.array([POLARITY[B_CHANNELS[n]] for n in B_NAMES], dtype=float)
+
+
+def extract_b_waveforms_18(words: np.ndarray) -> np.ndarray:
+    """Extract complete B2/B4/B6/B8 18-sample waveforms from the 128-word prefix."""
+    words = np.asarray(words, dtype=float)
+    if words.ndim != 2 or words.shape[1] != RAW_WORDS_PER_EVENT:
+        raise RuntimeError(f"expected (n,{RAW_WORDS_PER_EVENT}) raw words, got {words.shape}")
+    waves = []
+    for name in B_NAMES:
+        ch = B_CHANNELS[name]
+        start = SAMPLES_PER_CHANNEL_SOURCE * ch
+        stop = start + SAMPLES_PER_CHANNEL_SOURCE
+        if stop > RAW_WORDS_PER_EVENT:
+            raise RuntimeError(f"B readout {name}/channel {ch} is incomplete in 128-word record")
+        waves.append(words[:, start:stop])
+    out = np.stack(waves, axis=1)
+    if out.shape[1:] != (4, SAMPLES_PER_CHANNEL_SOURCE):
+        raise RuntimeError(f"B waveform extraction shape mismatch: {out.shape}")
+    return out
+
+
+def _b_amplitudes_18(wave: np.ndarray, baseline_slice: slice) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    baseline = np.median(wave[:, :, baseline_slice], axis=2)
+    corrected = (wave - baseline[:, :, None]) * B_POLARITY[None, :, None]
+    amp = np.max(corrected, axis=2)
+    peak = np.argmax(corrected, axis=2)
+    area = np.sum(corrected, axis=2)
+    return baseline, amp, peak, area
+
+
+def _layout_boundary_audit(words: np.ndarray) -> dict[str, Any]:
+    """Quantify why 16-word blocks are rejected in favour of the source 18 stride."""
+    words = np.asarray(words, dtype=float)
+    # Correct B slices are contiguous 18-word windows at 18*c.
+    correct = extract_b_waveforms_18(words)
+    # Provisional/wrong view used in the first audit pass.
+    legacy16 = words.reshape(-1, 8, 16)[:, [B_CHANNELS[n] for n in B_NAMES], :]
+    rows = {}
+    for j, name in enumerate(B_NAMES):
+        dc = np.abs(np.diff(correct[:, j, :], axis=1))
+        dl = np.abs(np.diff(legacy16[:, j, :], axis=1))
+        rows[name] = {
+            "correct18_median_abs_adjacent_step_adc": float(np.median(dc)),
+            "correct18_p99_abs_adjacent_step_adc": float(np.percentile(dc, 99)),
+            "legacy16_median_abs_adjacent_step_adc": float(np.median(dl)),
+            "legacy16_p99_abs_adjacent_step_adc": float(np.percentile(dl, 99)),
+            "channel_start_flat_index": int(SAMPLES_PER_CHANNEL_SOURCE * B_CHANNELS[name]),
+            "channel_stop_exclusive_flat_index": int(SAMPLES_PER_CHANNEL_SOURCE * B_CHANNELS[name] + SAMPLES_PER_CHANNEL_SOURCE),
+        }
+    return rows
+
+
+def discover_inputs(ctx: AnalysisContext) -> dict[str, Any]:
+    api = HfApi()
+    entries = list(api.list_repo_tree(HF_REPO, repo_type="dataset", recursive=True, expand=True))
+    paths = {getattr(e, "path", ""): e for e in entries if getattr(e, "path", None)}
+    required = []
+    for run in SAMPLE_I_RUNS + SAMPLE_II_RUNS:
+        required += [
+            f"parquet/events/hrdb_run_{run:04d}.parquet",
+            f"sorted/events/hrdb_run_{run:04d}.parquet",
+        ]
+    missing = [p for p in required if p not in paths]
+    if missing:
+        raise RuntimeError(f"Hugging Face mirror missing required analysis files: {missing}")
+
+    raw_path = "parquet/sample/events_sample.parquet"
+    raw_local = hf_hub_download(HF_REPO, raw_path, repo_type="dataset", cache_dir=ctx.cache_dir)
+    raw = pd.read_parquet(raw_local, columns=ID_COLS + ADC_COLS)
+    raw_cols = [c for c in raw.columns if c.startswith("HRDv_ch")]
+    if raw_cols != ADC_COLS:
+        raise RuntimeError(f"raw ADC columns are not exactly HRDv_ch001..128; found {len(raw_cols)}")
+    if not np.all(raw["HRD"].to_numpy() == RAW_WORDS_PER_EVENT):
+        raise RuntimeError("raw HRD word-count field is not uniformly 128")
+    words = raw[ADC_COLS].to_numpy(dtype=np.float64)
+    b = extract_b_waveforms_18(words)
+
+    sorted_path = "sorted/sample/events_sample.parquet"
+    sorted_local = hf_hub_download(HF_REPO, sorted_path, repo_type="dataset", cache_dir=ctx.cache_dir)
+    srt = pd.read_parquet(sorted_local, columns=["n_samples", "event_idx", "EVENTNO"])
+    sorter_n_samples = sorted(pd.unique(srt["n_samples"]).tolist())
+
+    layout_audit = _layout_boundary_audit(words[: min(len(words), 20000)])
+    result = {
+        "hf_repo": HF_REPO,
+        "hf_file_count": sum(type(e).__name__.lower().endswith("file") for e in entries),
+        "archive_bytes": getattr(paths.get("ccb_data_hrd.zip"), "size", None),
+        "raw_sample_path": raw_path,
+        "raw_sample_rows": int(len(raw)),
+        "raw_words_per_event": RAW_WORDS_PER_EVENT,
+        "source_samples_per_channel": SAMPLES_PER_CHANNEL_SOURCE,
+        "complete_channels_in_prefix": COMPLETE_CHANNELS,
+        "trailing_words_after_complete_channels": TRAILING_WORDS,
+        "complete_B_readouts": B_NAMES,
+        "B_channel_map": B_CHANNELS,
+        "B_flat_windows": {
+            n: [SAMPLES_PER_CHANNEL_SOURCE * B_CHANNELS[n],
+                SAMPLES_PER_CHANNEL_SOURCE * B_CHANNELS[n] + SAMPLES_PER_CHANNEL_SOURCE]
+            for n in B_NAMES
+        },
+        "sorter_n_samples_values": sorter_n_samples,
+        "sorter_n_samples_status": "CONFLICTS_WITH_SOURCE_18_STRIDE_AND_IS_NOT_USED_FOR_WAVEFORM_LAYOUT",
+        "layout_boundary_audit": layout_audit,
+        "required_analysis_files": required,
+        "missing_required_files": missing,
+        "analysis_runs": {"I": SAMPLE_I_RUNS, "II": SAMPLE_II_RUNS},
+        "legacy_18_sample_config_status": "SUPPORTED_BY_RAW_FLAT_BOUNDARIES_FOR_COMPLETE_CHANNELS_0_TO_6",
+    }
+    _save_json(result, ctx.out_dir / "input_inventory.json")
+    return result
+
+
+def reconstruct_beam_data(ctx: AnalysisContext) -> tuple[pd.DataFrame, dict[str, Any], list[dict[str, Any]]]:
+    """Reconstruct B2/B4/B6/B8 from the source 18-sample stride, without censoring."""
+    rng = np.random.default_rng(RNG_SEED)
+    frames: list[pd.DataFrame] = []
+    file_manifest: list[dict[str, Any]] = []
+    examples: list[dict[str, Any]] = []
+    sorter_checks: list[dict[str, Any]] = []
+
+    for run in SAMPLE_I_RUNS + SAMPLE_II_RUNS:
+        sample = RUN_TO_SAMPLE[run]
+        raw_rel = f"parquet/events/hrdb_run_{run:04d}.parquet"
+        sort_rel = f"sorted/events/hrdb_run_{run:04d}.parquet"
+        raw_local = _download_hf(raw_rel, ctx)
+        sort_local = _download_hf(sort_rel, ctx)
+        raw = pd.read_parquet(raw_local, columns=ID_COLS + ADC_COLS)
+        if raw.empty or not np.all(raw["HRD"].to_numpy() == RAW_WORDS_PER_EVENT):
+            raise RuntimeError(f"invalid raw 128-word contract in run {run}")
+        words = raw[ADC_COLS].to_numpy(dtype=np.float64)
+        wave = extract_b_waveforms_18(words)
+        base4, amp4, peak4, area4 = _b_amplitudes_18(wave, slice(0, 4))
+        baselast, amplast, _, _ = _b_amplitudes_18(wave, slice(14, 18))
+
+        out = raw[["run_id", "event_idx", "TRIGGER", "EVENTNO", "EVT", "NO"]].copy()
+        out["run"] = int(run)
+        out["sample"] = sample
+        for j, name in enumerate(B_NAMES):
+            out[f"baseline_{name}"] = base4[:, j]
+            out[f"amp_{name}"] = amp4[:, j]
+            out[f"amp_last4_{name}"] = amplast[:, j]
+            out[f"peak_sample_{name}"] = peak4[:, j]
+            out[f"area_{name}"] = area4[:, j]
+        out["deltaE_adc"] = out["amp_B2"]
+        out["E_adc"] = out[["amp_B4", "amp_B6", "amp_B8"]].sum(axis=1)
+        out["total_adc"] = out["deltaE_adc"] + out["E_adc"]
+        out["deltaE_fraction"] = out["deltaE_adc"] / np.maximum(out["total_adc"], 1e-12)
+        out["baseline_B2_last4_minus_first4"] = baselast[:, 0] - base4[:, 0]
+        frames.append(out)
+
+        b2 = amp4[:, 0]
+        idx = np.flatnonzero(b2 > PRIMARY_B2_THRESHOLD)
+        if idx.size:
+            keep = idx if idx.size <= 24 else rng.choice(idx, size=24, replace=False)
+            for i in keep:
+                examples.append({
+                    "run": int(run), "event_idx": int(raw.iloc[i]["event_idx"]),
+                    "EVENTNO": int(raw.iloc[i]["EVENTNO"]), "EVT": int(raw.iloc[i]["EVT"]),
+                    "B2_amp": float(b2[i]), "wave": wave[i].astype(float),
+                })
+
+        # The sorter table is retained only for row-domain and metadata audit.
+        # Its n_samples=16 field conflicts with the source 18-stride raw layout.
+        srt = pd.read_parquet(sort_local, columns=["event_idx", "EVENTNO", "EVT", "n_samples"])
+        identity_ok = (
+            len(srt) == len(raw)
+            and np.array_equal(srt["event_idx"].to_numpy(), raw["event_idx"].to_numpy())
+            and np.array_equal(srt["EVENTNO"].to_numpy(), raw["EVENTNO"].to_numpy())
+        )
+        sorter_checks.append({
+            "run": run, "rows_raw": int(len(raw)), "rows_sorted": int(len(srt)),
+            "event_idx_EVENTNO_aligned": bool(identity_ok),
+            "sorter_n_samples": sorted(pd.unique(srt["n_samples"]).tolist()),
+            "waveform_layout_authority": "REJECTED_FOR_LAYOUT_n_samples16_CONFLICTS_WITH_RAW_18_STRIDE",
+        })
+        file_manifest.append({
+            "run": run, "sample": sample,
+            "raw_path": raw_rel, "raw_bytes": int(raw_local.stat().st_size), "raw_sha256": sha256_file(raw_local),
+            "sorted_path": sort_rel, "sorted_bytes": int(sort_local.stat().st_size), "sorted_sha256": sha256_file(sort_local),
+            "rows": int(len(raw)),
+        })
+
+    data = pd.concat(frames, ignore_index=True)
+    canonical_dup = data.duplicated(["run", "EVENTNO"])
+    if canonical_dup.any():
+        raise RuntimeError(f"duplicate canonical (run,EVENTNO) rows: {int(canonical_dup.sum())}")
+    data.to_parquet(ctx.table_dir / "beam_event_features.parquet", index=False)
+    pd.DataFrame(file_manifest).to_csv(ctx.table_dir / "input_file_manifest.csv", index=False)
+    pd.DataFrame(sorter_checks).to_csv(ctx.table_dir / "raw_sorter_crosscheck.csv", index=False)
+
+    key_diag = {
+        "n_events": int(len(data)),
+        "n_unique_run_EVENTNO": int(data[["run", "EVENTNO"]].drop_duplicates().shape[0]),
+        "n_unique_run_event_idx": int(data[["run", "event_idx"]].drop_duplicates().shape[0]),
+        "n_unique_run_EVT": int(data[["run", "EVT"]].drop_duplicates().shape[0]),
+        "eventno_collisions_within_run": int(data.groupby(["run", "EVENTNO"]).size().gt(1).sum()),
+        "evt_collisions_within_run": int(data.groupby(["run", "EVT"]).size().gt(1).sum()),
+        "primary_event_identity": ["run", "EVENTNO"],
+        "event_key_schema": "daq-event-key/1_PROVISIONAL_PENDING_PIPELINE_DOMAIN_CLOSURE",
+        "event_idx_status": "ROW_ALIGNMENT_DIAGNOSTIC_ONLY",
+        "EVT_status": "BANNED_AS_SOLE_EVENT_KEY_WRAP_DUPLICATION_OBSERVED",
+        "amplitude_definition": "max(polarity*(raw18 - median(samples[0:4])))",
+        "B_polarity": {n: int(B_POLARITY[j]) for j, n in enumerate(B_NAMES)},
+        "B_channel_map": B_CHANNELS,
+        "raw_layout": "128-word prefix; 18-sample stride; complete channels 0..6 + 2 words of channel7",
+        "prethreshold_censoring": False,
+    }
+    _save_json(key_diag, ctx.out_dir / "beam_reconstruction_summary.json")
+    _save_json({"files": file_manifest, "sorter_crosscheck": sorter_checks}, ctx.out_dir / "beam_provenance.json")
+    return data, key_diag, examples
+
+
+def plot_beam_qa(data: pd.DataFrame, examples: list[dict[str, Any]], ctx: AnalysisContext) -> dict[str, str]:
+    paths: dict[str, str] = {}
+    fig, axes = plt.subplots(2, 4, figsize=(15, 6), sharex=True)
+    for row, sample in enumerate(["I", "II"]):
+        exs = _select_examples(examples, sample)
+        for col, ex in enumerate(exs[:4]):
+            ax = axes[row, col]
+            for j, name in enumerate(B_NAMES):
+                ax.plot(np.arange(SAMPLES_PER_CHANNEL_SOURCE), ex["wave"][j], marker="o", ms=2, lw=1, label=name)
+            ax.set_title(f"Sample {sample}, run {ex['run']}\nB2 amp={ex['B2_amp']:.0f} ADC")
+            ax.set_xlabel("sample index (10 ns nominal)")
+            if col == 0:
+                ax.set_ylabel("raw ADC code")
+            if row == 0 and col == 3:
+                ax.legend(fontsize=8)
+    fig.suptitle("Raw B2/B4/B6/B8 waveforms — source 18-sample stride")
+    fig.tight_layout(); p = ctx.fig_dir / "01_raw_waveform_examples.png"; fig.savefig(p, dpi=170); plt.close(fig)
+    paths["raw_waveforms"] = str(p)
+
+    fig, axes = plt.subplots(2, 1, figsize=(12, 8), sharex=True)
+    for ax, sample in zip(axes, ["I", "II"]):
+        sub = data[data["sample"] == sample]
+        for name in B_NAMES:
+            g = sub.groupby("run")[f"baseline_{name}"].median()
+            ax.plot(g.index, g.values, marker="o", label=name)
+        ax.set_ylabel("median first-4 baseline [ADC]"); ax.set_title(f"Sample {sample}"); ax.legend(ncol=4, fontsize=8)
+    axes[-1].set_xlabel("run"); fig.suptitle("Pedestal/baseline run stability — correct 18-sample B waveforms")
+    fig.tight_layout(); p = ctx.fig_dir / "02_baseline_run_stability.png"; fig.savefig(p, dpi=170); plt.close(fig)
+    paths["baseline_stability"] = str(p)
+
+    sel = data[data["amp_B2"] > PRIMARY_B2_THRESHOLD]
+    fig, axes = plt.subplots(2, 2, figsize=(11, 7), sharex=True)
+    for ax, name in zip(axes.flat, B_NAMES):
+        for sample in ["I", "II"]:
+            vals = sel.loc[sel["sample"] == sample, f"peak_sample_{name}"].to_numpy(dtype=int)
+            counts = np.bincount(vals, minlength=SAMPLES_PER_CHANNEL_SOURCE)
+            ax.step(np.arange(SAMPLES_PER_CHANNEL_SOURCE), counts, where="mid", label=f"Sample {sample}")
+        ax.axvspan(-0.5, 3.5, alpha=0.08); ax.set_title(name); ax.set_ylabel("events"); ax.legend(fontsize=8)
+    for ax in axes[-1]: ax.set_xlabel("peak sample index")
+    fig.suptitle("Peak-position diagnostic; shaded region is the first-4 baseline window")
+    fig.tight_layout(); p = ctx.fig_dir / "03_peak_sample_distributions.png"; fig.savefig(p, dpi=170); plt.close(fig)
+    paths["peak_samples"] = str(p)
+
+    fig, axes = plt.subplots(2, 2, figsize=(11, 7))
+    for ax, name in zip(axes.flat, B_NAMES):
+        d = data[f"amp_last4_{name}"] - data[f"amp_{name}"]
+        lo, hi = np.percentile(d, [1, 99])
+        if hi <= lo: hi = lo + 1
+        ax.hist(d, bins=80, range=(lo, hi), histtype="step", density=True)
+        ax.axvline(np.median(d), ls="--", lw=1)
+        ax.set_title(f"{name}: last4 amp − first4 amp\nmedian={np.median(d):.1f} ADC")
+        ax.set_xlabel("amplitude shift [ADC]"); ax.set_ylabel("density")
+    fig.suptitle("Baseline-window sensitivity (systematic diagnostic, not a correction)")
+    fig.tight_layout(); p = ctx.fig_dir / "04_baseline_window_sensitivity.png"; fig.savefig(p, dpi=170); plt.close(fig)
+    paths["baseline_sensitivity"] = str(p)
+
+    fig, ax = plt.subplots(figsize=(12, 4.5))
+    counts = sel.groupby(["sample", "run"]).size().reset_index(name="events")
+    for sample in ["I", "II"]:
+        q = counts[counts["sample"] == sample]
+        ax.plot(q["run"], q["events"], marker="o", label=f"Sample {sample}")
+    ax.set_xlabel("run"); ax.set_ylabel(f"events with B2 > {PRIMARY_B2_THRESHOLD:.0f} ADC")
+    ax.set_title("Run-level event support after event-level B2 entrance selection"); ax.legend()
+    fig.tight_layout(); p = ctx.fig_dir / "05_selected_events_by_run.png"; fig.savefig(p, dpi=170); plt.close(fig)
+    paths["run_counts"] = str(p)
+    return paths
+
+
+def final_summary(
+    ctx: AnalysisContext,
+    inventory: dict[str, Any],
+    reconstruction: dict[str, Any],
+    beam: dict[str, Any],
+    mc: dict[str, Any],
+    transfer: dict[str, Any],
+    qa_figures: dict[str, str],
+) -> dict[str, Any]:
+    summary = {
+        "status": "SCIENTIFIC_RERUN_COMPLETE_WITH_GATED_BEAM_PID_INTERPRETATION",
+        "date": "2026-09-07", "source_repo_sha": REPO_SHA, "raw_data_source": HF_REPO,
+        "inventory": inventory, "reconstruction": reconstruction, "beam_topology": beam,
+        "mc_detector_only_pid": mc, "beam_shape_only_transfer": transfer, "qa_figures": qa_figures,
+        "core_conclusions": [
+            "HF HRD records are 128-word prefixes of an 18-sample/channel stream: complete channels 0..6 plus two words of channel7; all B readouts 0/2/4/6 are complete.",
+            "The sorter n_samples=16 metadata conflicts with the raw 18-stride boundary evidence and is not used as waveform-layout authority.",
+            "All four B readouts are reconstructed from their complete 18-sample windows before any event-level threshold is applied.",
+            "Beam data provide amplitude-domain topology but no independent proton/deuteron truth label, so direct beam-data PID performance is not measurable from these files alone.",
+            "MC p/d discrimination is re-benchmarked with detector-only deposited-energy/readout features and excludes truth entrance kinetic energy.",
+            "MC full-downstream energy is recomputed from physical edep_layer_* columns instead of the previously broken alias-only sum.",
+            "A rank-based MC-to-data score is reported only as a gated topology diagnostic, not as a proton/deuteron fraction or purity measurement.",
+        ],
+    }
+    _save_json(summary, ctx.out_dir / "analysis_summary.json")
+    return summary

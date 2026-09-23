@@ -1,0 +1,46 @@
+# Add the post-review controls immediately before the final evidence-status section.
+insert_at = len(cells) - 2
+extra = [
+    nbf.v4.new_markdown_cell(r"""## 7b. Observed ADC-code ceiling: a PID-critical response diagnostic
+
+High-ΔE events are exactly where an ADC ceiling can compress species separation.
+For the positive-going B channels, `baseline + reconstructed amplitude` is the
+observed maximum raw ADC word in the 18-sample trace. We therefore inventory the
+upper-code occupancy directly from raw data.
+
+This is deliberately called an **observed code-ceiling diagnostic**, not a
+hardware saturation calibration: the ADC bit depth, analogue clipping point and
+transfer linearity still require source-bound electronics evidence.
+"""),
+    nbf.v4.new_code_cell("""adc_ceiling = R.diagnose_adc_code_ceiling(beam_events, ctx)
+display(pd.DataFrame(adc_ceiling['rows']))
+show_image(adc_ceiling['figure'])
+"""),
+    nbf.v4.new_markdown_cell(r"""## 7c. PID event-domain sensitivity: do not throw away B2-stopping particles
+
+A range-telescope PID analysis must not silently require a downstream deposit.
+An event with a clear B2 signal and no later energy can be physically informative,
+especially for short-range deuterons. Such a requirement can change the species
+mixture before classification.
+
+We therefore repeat the current-parity detector-only HGB benchmark for two
+domains:
+
+- **all B2-positive truth events:** ΔE>0, downstream E is allowed to be zero;
+- **downstream-positive:** ΔE>0 and at least one downstream physical/readout
+  deposit is positive.
+
+The table reports the retained proton/deuteron census and OOF AUC separately for
+Sample I and Sample II, so a high combined AUC cannot hide a trigger/sample
+composition effect.
+"""),
+    nbf.v4.new_code_cell("""domain_sensitivity = R.benchmark_mc_pid_event_domains(ctx)
+display(pd.DataFrame(domain_sensitivity['metrics']))
+display(pd.DataFrame(domain_sensitivity['census']))
+show_image(domain_sensitivity['figure'])
+"""),
+]
+cells[insert_at:insert_at] = extra
+nb["cells"] = cells
+nbf.write(nb, OUT)
+print("Added ADC-ceiling and PID-domain sensitivity controls:", OUT)

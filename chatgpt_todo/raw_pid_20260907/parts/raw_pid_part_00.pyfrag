@@ -1,0 +1,159 @@
+from __future__ import annotations
+
+import hashlib
+import json
+import math
+import os
+import tempfile
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Any, Iterable
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from matplotlib.colors import LogNorm
+from huggingface_hub import HfApi, hf_hub_download
+import requests
+from sklearn.ensemble import HistGradientBoostingClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import (
+    average_precision_score,
+    brier_score_loss,
+    precision_recall_curve,
+    roc_auc_score,
+    roc_curve,
+)
+from sklearn.model_selection import StratifiedGroupKFold
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+
+HF_REPO = "billyyiu747/ccb-testbeam"
+REPO_SHA = "cec9edc28257e0699c70c17fa9b2e8d806a3d42a"
+MC_REL = "reports/paper_618_species_penetration_2m_20260814T1449Z/deltaE_E_events_mc.parquet"
+MC_URL = f"https://raw.githubusercontent.com/SzeChunYiu/ccb-testbeam/{REPO_SHA}/{MC_REL}"
+SAMPLE_I_RUNS = list(range(44, 58))
+SAMPLE_II_RUNS = [58, 59, 60, 61, 62, 63, 65]
+RUN_TO_SAMPLE = {**{r: "I" for r in SAMPLE_I_RUNS}, **{r: "II" for r in SAMPLE_II_RUNS}}
+ADC_COLS = [f"HRDv_ch{i:03d}" for i in range(1, 129)]
+ID_COLS = ["detector", "run_no", "run_id", "event_idx", "TRIGGER", "EVENTNO", "EVT", "NO", "HRD"]
+POLARITY = np.array([1, -1, 1, -1, 1, -1, 1, -1], dtype=float)
+B_CHANNELS = {"B2": 0, "B4": 2, "B6": 4, "B8": 6}
+B_NAMES = ["B2", "B4", "B6", "B8"]
+THRESHOLDS_ADC = [200.0, 500.0, 750.0, 1000.0, 1500.0]
+PRIMARY_B2_THRESHOLD = 1000.0
+MC_REACH_THRESHOLD_MEV = 0.05
+RNG_SEED = 20260907
+
+
+@dataclass
+class AnalysisContext:
+    out_dir: Path
+    cache_dir: Path
+    fig_dir: Path
+    table_dir: Path
+
+
+def make_context(out_dir: str | Path) -> AnalysisContext:
+    out = Path(out_dir)
+    out.mkdir(parents=True, exist_ok=True)
+    fig = out / "figures"
+    tab = out / "tables"
+    cache = out / "hf_cache"
+    fig.mkdir(exist_ok=True)
+    tab.mkdir(exist_ok=True)
+    cache.mkdir(exist_ok=True)
+    return AnalysisContext(out, cache, fig, tab)
+
+
+def sha256_file(path: str | Path, block: int = 1 << 20) -> str:
+    h = hashlib.sha256()
+    with Path(path).open("rb") as f:
+        for chunk in iter(lambda: f.read(block), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def _save_json(obj: Any, path: Path) -> None:
+    path.write_text(json.dumps(obj, indent=2, sort_keys=True, default=_json_default) + "\n", encoding="utf-8")
+
+
+def _json_default(x: Any):
+    if isinstance(x, (np.integer,)):
+        return int(x)
+    if isinstance(x, (np.floating,)):
+        return float(x)
+    if isinstance(x, np.ndarray):
+        return x.tolist()
+    if isinstance(x, Path):
+        return str(x)
+    raise TypeError(type(x).__name__)
+
+
+def discover_inputs(ctx: AnalysisContext) -> dict[str, Any]:
+    """Inventory the exact HF files needed and assert the 8x16 raw ADC contract."""
+    api = HfApi()
+    entries = list(api.list_repo_tree(HF_REPO, repo_type="dataset", recursive=True, expand=True))
+    paths = {getattr(e, "path", ""): e for e in entries if getattr(e, "path", None)}
+    required = []
+    for run in SAMPLE_I_RUNS + SAMPLE_II_RUNS:
+        required += [
+            f"parquet/events/hrdb_run_{run:04d}.parquet",
+            f"sorted/events/hrdb_run_{run:04d}.parquet",
+        ]
+    missing = [p for p in required if p not in paths]
+    if missing:
+        raise RuntimeError(f"Hugging Face mirror missing required analysis files: {missing}")
+
+    sample_path = "parquet/sample/events_sample.parquet"
+    sample_local = hf_hub_download(HF_REPO, sample_path, repo_type="dataset", cache_dir=ctx.cache_dir)
+    sample = pd.read_parquet(sample_local, columns=ID_COLS + ADC_COLS)
+    raw_cols = [c for c in sample.columns if c.startswith("HRDv_ch")]
+    if raw_cols != ADC_COLS:
+        raise RuntimeError(f"raw ADC columns are not exactly HRDv_ch001..128; found {len(raw_cols)}")
+    if not np.all(sample["HRD"].to_numpy() == 128):
+        bad = int(np.sum(sample["HRD"].to_numpy() != 128))
+        raise RuntimeError(f"sample raw HRD width marker is not 128 for {bad} rows")
+    wave = sample[ADC_COLS].to_numpy(dtype=np.float64).reshape(-1, 8, 16)
+    if wave.shape[1:] != (8, 16):
+        raise RuntimeError(f"raw waveform reshape failed: {wave.shape}")
+
+    sorted_path = "sorted/sample/events_sample.parquet"
+    sorted_local = hf_hub_download(HF_REPO, sorted_path, repo_type="dataset", cache_dir=ctx.cache_dir)
+    sorted_sample = pd.read_parquet(sorted_local, columns=["n_samples", "detector", "run_no", "run_id"])
+    n_samples_values = sorted(pd.unique(sorted_sample["n_samples"]).tolist())
+    if n_samples_values != [16]:
+        raise RuntimeError(f"sorter sample does not independently confirm 16 samples: {n_samples_values}")
+
+    zip_entry = paths.get("ccb_data_hrd.zip")
+    result = {
+        "hf_repo": HF_REPO,
+        "hf_file_count": sum(type(e).__name__.lower().endswith("file") for e in entries),
+        "archive_bytes": getattr(zip_entry, "size", None) if zip_entry is not None else None,
+        "raw_sample_path": sample_path,
+        "raw_sample_rows": int(len(sample)),
+        "raw_words_per_event": 128,
+        "channels": 8,
+        "samples_per_channel": 16,
+        "sorter_n_samples_values": n_samples_values,
+        "required_analysis_files": required,
+        "missing_required_files": missing,
+        "analysis_runs": {"I": SAMPLE_I_RUNS, "II": SAMPLE_II_RUNS},
+        "legacy_18_sample_config_status": "INCOMPATIBLE_WITH_HF_8x16_RAW_PRODUCT",
+    }
+    _save_json(result, ctx.out_dir / "input_inventory.json")
+    return result
+
+
+def _download_hf(path: str, ctx: AnalysisContext) -> Path:
+    return Path(hf_hub_download(HF_REPO, path, repo_type="dataset", cache_dir=ctx.cache_dir))
+
+
+def _raw_amplitudes(wave: np.ndarray, baseline_slice: slice) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    baseline = np.median(wave[:, :, baseline_slice], axis=2)
+    corrected = (wave - baseline[:, :, None]) * POLARITY[None, :, None]
+    amp = np.max(corrected, axis=2)
+    peak = np.argmax(corrected, axis=2)
+    area = np.sum(corrected, axis=2)
+    return baseline, amp, peak, area
+

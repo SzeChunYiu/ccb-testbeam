@@ -1,0 +1,110 @@
+from __future__ import annotations
+
+import os
+from pathlib import Path
+import nbformat as nbf
+
+OUT = Path(os.environ.get("CCB_PID_NOTEBOOK", "ccb_raw_pid_notebook.ipynb"))
+nb = nbf.v4.new_notebook()
+nb["metadata"] = {
+    "kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"},
+    "language_info": {"name": "python", "version": "3.11"},
+}
+
+cells = []
+cells.append(nbf.v4.new_markdown_cell(r"""# CCB test-beam: raw-data ΔE–E and proton/deuteron PID re-analysis
+
+**Executed scientific rerun — 7 September 2026**
+
+This notebook rebuilds the B-stack observables from the Hugging Face **raw ADC parquet** mirror (`billyyiu747/ccb-testbeam`) rather than from the previously threshold-selected pulse table. It then asks two separate questions:
+
+1. **What structure is actually present in beam data?** We reconstruct all four B readouts first and only then apply an event-level B2 entrance selection.
+2. **How well could proton and deuteron be separated with detector-available observables?** We re-benchmark p/d on MC truth using only ΔE–E/range/readout features — **no truth entrance kinetic energy** — and only then compare MC topology to beam data as a gated transfer diagnostic.
+
+### Role-separated scientific review
+
+- **DAQ/data-integrity lead:** raw schema, event identity, 8×16 waveform reconstruction, polarity, baseline and run stability.
+- **Detector/nuclear-physics lead:** ΔE–E definitions, stopping-power/range interpretation, segmentation and threshold effects.
+- **MC-truth lead:** physical-layer sums, p/d label contract, readout-parity nuisance, removal of truth-only features.
+- **Statistics/validation lead:** block-disjoint cross-validation, tie-safe standard metrics, calibration, bootstrap uncertainty and transfer caveats.
+
+No beam-data event in these files has an independent proton/deuteron truth label. Therefore **beam-data AUC, efficiency, purity and p/d fraction are not measured here**. Any MC→data p/d-like score is explicitly marked as a hypothesis/diagnostic.
+"""))
+
+cells.append(nbf.v4.new_code_cell("""from pathlib import Path
+import json, sys
+import pandas as pd
+from IPython.display import display, Image, Markdown
+
+sys.path.insert(0, str(Path('chatgpt_todo/raw_pid_20260907').resolve()))
+import raw_pid_analysis as R
+
+ctx = R.make_context(Path('artifact'))
+
+def show_image(path):
+    display(Image(filename=str(path)))
+
+print('Output directory:', ctx.out_dir.resolve())
+print('Repository source SHA:', R.REPO_SHA)
+print('HF dataset:', R.HF_REPO)
+"""))
+
+cells.append(nbf.v4.new_markdown_cell(r"""## 1. Bind the analysis to the actual raw-data schema
+
+The older S00 configuration in the repository declares 18 samples/channel. We do **not** assume that layout. The first step reads the public mirror itself and fails unless the raw table contains exactly `HRDv_ch001 ... HRDv_ch128`, i.e. 128 words/event, and the independent sorter table reports 16 samples/channel.
+
+For these bytes the structural contract is therefore
+
+\[
+128 = 8\;\text{channels}\times16\;\text{samples/channel}.
+\]
+"""))
+cells.append(nbf.v4.new_code_cell("""inventory = R.discover_inputs(ctx)
+display(pd.DataFrame({
+    'field': ['raw sample rows','raw words/event','channels','samples/channel','archive bytes','legacy 18-sample config'],
+    'value': [inventory['raw_sample_rows'], inventory['raw_words_per_event'], inventory['channels'],
+              inventory['samples_per_channel'], inventory['archive_bytes'], inventory['legacy_18_sample_config_status']]
+}))
+"""))
+
+cells.append(nbf.v4.new_markdown_cell(r"""## 2. Reconstruct each event from the raw ADC words — before thresholding
+
+The source-bound even-channel map used for the B stack is
+
+| stave | waveform channel |
+|---|---:|
+| B2 | 0 |
+| B4 | 2 |
+| B6 | 4 |
+| B8 | 6 |
+
+The versioned polarity map has even channels positive-going and odd duplicate readouts negative-going. For each channel we calculate
+
+\[
+b=\mathrm{median}(x_0,x_1,x_2,x_3),\qquad
+A=\max_k\left[p\,(x_k-b)\right],
+\]
+
+where \(p\in\{+1,-1\}\) is channel polarity.
+
+**Critical change from the old ΔE–E path:** there is no `A>1000 ADC` per-channel cut at this stage. B4/B6/B8 values remain available even when they are below the later analysis threshold.
+
+Event identity uses `(run_id, event_idx)` from the HF event table. `EVENTNO` and `EVT` are retained only as collision diagnostics.
+"""))
+cells.append(nbf.v4.new_code_cell("""beam_events, reconstruction, waveform_examples = R.reconstruct_beam_data(ctx)
+print(json.dumps(reconstruction, indent=2))
+display(beam_events[['run','sample','event_idx','EVENTNO','EVT','amp_B2','amp_B4','amp_B6','amp_B8','deltaE_adc','E_adc']].head())
+print('Total reconstructed analysis events:', len(beam_events))
+"""))
+
+cells.append(nbf.v4.new_markdown_cell(r"""## 3. Raw-waveform and reconstruction quality checks
+
+Before PID interpretation we inspect the raw traces, baseline drift, peak position, baseline-window sensitivity, and run support. The first-four baseline window is shaded in the peak-position plot because a pulse peaking in samples 0–3 can contaminate that estimator. The last-four comparison is a **sensitivity diagnostic**, not an automatic correction.
+
+The notebook also records a row-identity comparison to the hrdSorter tables. We do not force numerical agreement because the sorter uses its own feature definitions; discrepancies are documented rather than silently mixed.
+"""))
+cells.append(nbf.v4.new_code_cell("""qa_figures = R.plot_beam_qa(beam_events, waveform_examples, ctx)
+for key in ['raw_waveforms','baseline_stability','peak_samples','baseline_sensitivity','run_counts']:
+    display(Markdown(f'### {key.replace("_"," ").title()}'))
+    show_image(qa_figures[key])
+

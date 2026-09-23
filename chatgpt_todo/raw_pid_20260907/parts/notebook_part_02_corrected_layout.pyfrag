@@ -1,0 +1,87 @@
+# Late notebook corrections after the adversarial raw-layout review.
+# The first executed pass treated 128 words as 8x16; figure inspection falsified
+# that assumption.  Replace the affected narrative/cells and rewrite the notebook.
+
+cells[2].source = r"""## 1. Bind the analysis to the actual raw-data layout
+
+The HF event table contains exactly 128 flat ADC words per HRD event. A naive
+`128 = 8 × 16` reshape is **wrong** for this source. Direct inspection against
+the repository's 18-sample acquisition contract shows channel starts at flat
+indices
+
+\[
+0,18,36,54,72,90,108,126.
+\]
+
+Therefore the stored vector is a **128-word prefix of an 18-sample/channel
+stream**: channels 0–6 are complete (7×18=126 words) and channel 7 contributes
+only its first two words. The B physics readouts use channels 0,2,4,6, so B2,
+B4, B6 and B8 each have a complete 18-sample waveform.
+
+This is independently visible in the raw bytes: slicing at 16-word boundaries
+creates deterministic channel-boundary steps, while 18-word boundaries restore
+continuous per-channel traces. The hrdSorter field `n_samples=16` therefore
+cannot be used as waveform-layout authority for these parquet bytes and is
+retained only as a conflicting provenance diagnostic.
+"""
+
+cells[3].source = """inventory = R.discover_inputs(ctx)
+display(pd.DataFrame({
+    'field': ['raw sample rows','raw words/event','source samples/channel','complete channels in prefix',
+              'trailing words','complete B readouts','sorter n_samples','18-sample contract'],
+    'value': [inventory['raw_sample_rows'], inventory['raw_words_per_event'],
+              inventory['source_samples_per_channel'], inventory['complete_channels_in_prefix'],
+              inventory['trailing_words_after_complete_channels'], ','.join(inventory['complete_B_readouts']),
+              str(inventory['sorter_n_samples_values']), inventory['legacy_18_sample_config_status']]
+}))
+display(pd.DataFrame(inventory['layout_boundary_audit']).T)
+"""
+
+cells[4].source = r"""## 2. Reconstruct B2/B4/B6/B8 from the raw 18-sample windows — before thresholding
+
+The source-bound B map is
+
+| stave | raw channel | flat ADC window |
+|---|---:|---:|
+| B2 | 0 | [0,18) |
+| B4 | 2 | [36,54) |
+| B6 | 4 | [72,90) |
+| B8 | 6 | [108,126) |
+
+Each B waveform is reconstructed from its full 18-sample window. For the
+configured positive-going even B channels,
+
+\[
+b=\mathrm{median}(x_0,x_1,x_2,x_3),\qquad
+A=\max_k(x_k-b).
+\]
+
+There is **no per-channel amplitude cut before the event is assembled**. Only
+after B2/B4/B6/B8 have all been reconstructed do we form
+
+\[
+\Delta E_{\rm ADC}=A(B2),\qquad
+E_{\rm ADC}=A(B4)+A(B6)+A(B8).
+\]
+
+The provisional DAQ event identity is `(run, EVENTNO)` (`daq-event-key/1`).
+`event_idx` is used only to verify row alignment with the parquet/sorter product,
+and `EVT` is retained as a wrap/collision diagnostic.
+"""
+
+cells[6].source = r"""## 3. Raw-waveform and reconstruction quality checks
+
+Before PID interpretation we inspect the **correct 18-sample B traces**, baseline
+drift, peak position, first-four versus last-four baseline sensitivity, and run
+support. The first-four region is explicitly marked because overlap between a
+pulse and the baseline window is a possible systematic.
+
+The hrdSorter event rows are cross-checked for `(event_idx, EVENTNO)` alignment,
+but its `n_samples=16` metadata is **not** used to define the waveform layout;
+the raw flat-boundary audit above falsifies that interpretation for this HF
+product.
+"""
+
+nb["cells"] = cells
+nbf.write(nb, OUT)
+print("Rewrote notebook with corrected 18-sample raw-layout contract:", OUT)

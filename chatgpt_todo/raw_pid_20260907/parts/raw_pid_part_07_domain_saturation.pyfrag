@@ -1,0 +1,142 @@
+# ---------------------------------------------------------------------------
+# Additional high-value controls discovered after inspecting the corrected run:
+# (1) observed ADC-code ceiling occupancy, important for high-dE PID;
+# (2) PID event-domain sensitivity, because requiring downstream energy removes
+#     B2-stopping events and can change the p/d population non-randomly.
+# ---------------------------------------------------------------------------
+
+
+def diagnose_adc_code_ceiling(data: pd.DataFrame, ctx: AnalysisContext) -> dict[str, Any]:
+    rows = []
+    selected = data[data["amp_B2"] > PRIMARY_B2_THRESHOLD]
+    fig, axes = plt.subplots(2, 1, figsize=(10, 8))
+
+    # B2 peak-code distribution near the observed upper edge.
+    for sample in ["I", "II"]:
+        q = selected[selected["sample"] == sample]
+        peak_code = (q["baseline_B2"] + q["amp_B2"]).to_numpy(dtype=float)
+        lo = float(np.percentile(peak_code, 90))
+        hi = float(np.max(peak_code))
+        axes[0].hist(peak_code, bins=100, range=(lo, hi + 1), histtype="step", density=True, label=f"Sample {sample}")
+    axes[0].set_xlabel("B2 observed peak ADC code")
+    axes[0].set_ylabel("density")
+    axes[0].set_title("Upper-edge occupancy (observed code ceiling; not hardware-calibrated saturation)")
+    axes[0].legend()
+
+    labels, vals = [], []
+    for sample in ["I", "II"]:
+        q = selected[selected["sample"] == sample]
+        for name in B_NAMES:
+            peak_code = (q[f"baseline_{name}"] + q[f"amp_{name}"]).to_numpy(dtype=float)
+            observed_max = float(np.max(peak_code)) if len(peak_code) else np.nan
+            at_max = np.isclose(peak_code, observed_max, atol=0.0, rtol=0.0) if len(peak_code) else np.array([], dtype=bool)
+            row = {
+                "sample": sample, "readout": name, "n_selected": int(len(q)),
+                "observed_max_peak_code": observed_max,
+                "n_at_observed_max": int(at_max.sum()),
+                "fraction_at_observed_max": float(at_max.mean()) if len(at_max) else np.nan,
+                "peak_code_p99": float(np.percentile(peak_code, 99)) if len(peak_code) else np.nan,
+                "peak_code_p999": float(np.percentile(peak_code, 99.9)) if len(peak_code) else np.nan,
+            }
+            rows.append(row)
+            labels.append(f"{sample}-{name}")
+            vals.append(100 * row["fraction_at_observed_max"])
+    axes[1].bar(np.arange(len(labels)), vals)
+    axes[1].set_xticks(np.arange(len(labels)), labels, rotation=45, ha="right")
+    axes[1].set_ylabel("events exactly at observed max [%]")
+    axes[1].set_title("Exact upper-code occupancy by sample/readout")
+    fig.tight_layout()
+    path = ctx.fig_dir / "16_adc_code_ceiling_diagnostic.png"
+    fig.savefig(path, dpi=180)
+    plt.close(fig)
+
+    table = pd.DataFrame(rows)
+    table.to_csv(ctx.table_dir / "beam_adc_code_ceiling.csv", index=False)
+    summary = {
+        "status": "OBSERVED_CODE_DIAGNOSTIC_NOT_HARDWARE_SATURATION_CALIBRATION",
+        "rows": rows,
+        "figure": str(path),
+        "note": "For positive-going B channels, baseline+amplitude equals the observed maximum raw ADC word in the 18-sample waveform.",
+    }
+    _save_json(summary, ctx.out_dir / "adc_code_ceiling_summary.json")
+    return summary
+
+
+def benchmark_mc_pid_event_domains(ctx: AnalysisContext) -> dict[str, Any]:
+    path = _download_mc(ctx)
+    mc0 = pd.read_parquet(path)
+    mc = _mc_observables(mc0, "1/3/5/7")
+    mc = mc[mc["truth_species"].isin(["p", "d"])].copy()
+    domains = {
+        "dE_positive_all_ranges": mc["dE"] > 0,
+        "dE_and_any_downstream_positive": (mc["dE"] > 0) & ((mc["E4"] > 0) | (mc["Efull_corrected"] > 0)),
+    }
+    rows = []
+    census = []
+    for domain, mask in domains.items():
+        sub = mc.loc[mask].copy()
+        y = (sub["truth_species"] == "d").astype(int).to_numpy()
+        w = sub["PrimaryWeight"].to_numpy(dtype=float)
+        groups = (sub["event_id"].to_numpy(dtype=np.int64) // 20000).astype(np.int64)
+        X, _ = _feature_matrix(sub, "dee_ratio_depth", energy_mode="E4")
+        cv = StratifiedGroupKFold(n_splits=5, shuffle=True, random_state=RNG_SEED)
+        score = np.full(len(sub), np.nan)
+        for tr, te in cv.split(X, y, groups):
+            model = HistGradientBoostingClassifier(
+                max_iter=250, learning_rate=0.06, max_leaf_nodes=15,
+                l2_regularization=1.0, random_state=RNG_SEED,
+            )
+            model.fit(X[tr], y[tr], sample_weight=w[tr])
+            score[te] = model.predict_proba(X[te])[:, 1]
+        for sample in ["all", "I", "II"]:
+            sm = np.ones(len(sub), dtype=bool) if sample == "all" else sub["sample"].astype(str).to_numpy() == sample
+            if sm.sum() == 0 or np.unique(y[sm]).size < 2:
+                continue
+            rows.append({
+                "domain": domain, "sample": sample, "n": int(sm.sum()),
+                "n_p": int((y[sm] == 0).sum()), "n_d": int((y[sm] == 1).sum()),
+                "auc_oof": float(roc_auc_score(y[sm], score[sm], sample_weight=w[sm])),
+                "average_precision": float(average_precision_score(y[sm], score[sm], sample_weight=w[sm])),
+            })
+        for sample in ["all", "I", "II"]:
+            sm = np.ones(len(sub), dtype=bool) if sample == "all" else sub["sample"].astype(str).to_numpy() == sample
+            for species in ["p", "d"]:
+                census.append({
+                    "domain": domain, "sample": sample, "species": species,
+                    "n": int(((sub["truth_species"].astype(str).to_numpy() == species) & sm).sum()),
+                })
+
+    metrics = pd.DataFrame(rows)
+    counts = pd.DataFrame(census)
+    metrics.to_csv(ctx.table_dir / "mc_pid_event_domain_sensitivity.csv", index=False)
+    counts.to_csv(ctx.table_dir / "mc_pid_event_domain_census.csv", index=False)
+
+    fig, ax = plt.subplots(figsize=(10, 5.5))
+    plot = metrics.copy()
+    plot["label"] = plot["domain"].replace({
+        "dE_positive_all_ranges": "all B2-positive",
+        "dE_and_any_downstream_positive": "requires downstream deposit",
+    }) + " | " + plot["sample"]
+    x = np.arange(len(plot))
+    ax.bar(x, plot["auc_oof"])
+    ax.set_xticks(x, plot["label"], rotation=35, ha="right")
+    ax.set_ylabel("OOF ROC AUC")
+    ax.set_ylim(max(0.5, float(plot["auc_oof"].min()) - 0.08), 1.005)
+    ax.set_title("MC p/d PID sensitivity to event domain and Sample I/II")
+    for i, v in enumerate(plot["auc_oof"]):
+        ax.text(i, v + 0.004, f"{v:.3f}", ha="center", fontsize=8)
+    fig.tight_layout()
+    figpath = ctx.fig_dir / "17_mc_pid_event_domain_sensitivity.png"
+    fig.savefig(figpath, dpi=180)
+    plt.close(fig)
+
+    summary = {
+        "status": "MC_DIAGNOSTIC",
+        "model": "HistGradientBoostingClassifier / dee_ratio_depth / current 1/3/5/7 parity / OOF",
+        "metrics": rows,
+        "census": census,
+        "figure": str(figpath),
+        "interpretation": "The downstream-positive requirement is not a neutral quality cut; report p/d metrics with its species/sample retention explicitly.",
+    }
+    _save_json(summary, ctx.out_dir / "mc_pid_event_domain_summary.json")
+    return summary

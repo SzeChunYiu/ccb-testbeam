@@ -36,3 +36,7 @@ A separate interactive AI coding session may implement scoped work, but it must 
 ## Current priority
 
 Maintain fail-closed scientific evidence gates while advancing item-level review. Current-main amplitude-audit CI was restored in merge commit `4f857f508160bbbe059d936866b426a45788c9bd`. Real A-002 amplitude convention, pulse polarity, and output regeneration remain blocked under `BLK-AMP-001`.
+
+## Scoped interactive review handoffs
+
+[E–ΔE PID calculation review, 2026-09-07](PID_CALCULATION_REVIEW_20260907.md) traces saved results to source and records eight scoped repair tasks, including the full/sparse MC sum defect and truth-energy-assisted PID feature. [Regression reproducer](reviews/20260907_pid/reproduce_defects.py) supports explicit source-excerpt or actual-checkout-function modes. This review does not change scheduled task ownership or authorize production claims; raw-data/production reruns remain outstanding.

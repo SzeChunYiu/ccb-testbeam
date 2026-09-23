@@ -1,0 +1,9 @@
+claim_helper_command: tn-ticket claim testbeam-laptop-4 --project testbeam
+claim_helper_output:
+# null
+
+null
+null
+manual_claim_issue: 2567
+manual_claim_command: gh issue edit 2567 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-4 --remove-label factory:open
+#2567 NEW S70c optimal-transport pulse manifolds for energy PID and pedestal stability

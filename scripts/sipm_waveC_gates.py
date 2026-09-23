@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Lane 01 Wave C fail-closed gates for polarity / fibre / attenuation / WLS yield.
 
-Refs: #954 #987 #1033 #1088 #1218. No auto-close keywords.
+Refs: #954 #987 #1033 #1088 #1218 #1594 #1603. No auto-close keywords.
 """
 from __future__ import annotations
 
@@ -11,14 +11,12 @@ from typing import Any, Mapping
 
 ROOT = Path(__file__).resolve().parents[1]
 
+# Global revalidation #1594: an analysis-derived duplicate-readout convention is
+# useful as a diagnostic sign hypothesis, but it is not independent evidence for
+# the foundational raw-waveform polarity contract. Only a source-bound measured
+# status may authorize amplitude/timing claims.
 AUTHORISING_POLARITY_STATUSES = {
-    "LOCKED_FROM_DUPLICATE_READOUT_CONVENTION",
     "LOCKED_FROM_MEASUREMENT",
-    # MEASURED_202608_RUNS31_65_UNANIMOUS_BOTH_ESTIMATORS (channel_polarity_v2)
-    # was REMOVED 2026-08-16: that map is RETRACTED_20260816_TRUNCATED_STAGING_DESYNC
-    # — it was measured on the 128-word-truncated LUNARC staging read as 8x16
-    # (see the retraction block in configs/channel_polarity_v2.json). v1
-    # (LOCKED_FROM_DUPLICATE_READOUT_CONVENTION) is the operative map.
 }
 
 
@@ -30,10 +28,12 @@ def polarity_authorisation_report(
     polarity_status: str,
     channel_diagnostics: Mapping[str, Mapping[str, Any]] | None = None,
 ) -> dict[str, Any]:
-    """Fail closed unless polarity map is locked and no channel is ambiguous."""
+    """Fail closed unless polarity is independently measured and unambiguous."""
     blocked_reasons: list[str] = []
     if polarity_status not in AUTHORISING_POLARITY_STATUSES:
-        blocked_reasons.append(f"polarity_status={polarity_status!r} is not a locked authorising status")
+        blocked_reasons.append(
+            f"polarity_status={polarity_status!r} is not an independently measured authorising status"
+        )
     if channel_diagnostics:
         for ch, diag in channel_diagnostics.items():
             st = str(diag.get("status", ""))
@@ -42,9 +42,15 @@ def polarity_authorisation_report(
     authorising = not blocked_reasons
     return {
         "audit_issue": 954,
+        "global_audit_issue": 1594,
         "authorising_waveform_amplitude_claims": authorising,
         "polarity_status": polarity_status,
+        "authorising_statuses": sorted(AUTHORISING_POLARITY_STATUSES),
         "blocked_reasons": blocked_reasons,
+        "evidence_rule": (
+            "duplicate-readout conventions and prior downstream analyses are diagnostic only; "
+            "authorization requires independent hardware/DAQ evidence or source-bound raw measurement"
+        ),
     }
 
 

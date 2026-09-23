@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
-"""Fail-closed check for the canonical Rmax claim and arithmetic sensitivities."""
+"""Fail-closed governance check for canonical Rmax claims.
+
+This checker validates that the canonical detector-rate claim remains withheld
+while its measurand/quality criterion is unresolved. It may emit clearly
+labelled arithmetic sensitivities, but it never infers an accepted detector
+rate from selected-pulse occupancy or a legacy duty factor.
+"""
 from __future__ import annotations
 
 import argparse
@@ -14,12 +20,11 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
-VERSION = "2.0.0"
-POLICY = "RMAX_CHECK_MUST_VALIDATE_CLAIM_STATE_AND_NEVER_INFER_RATE_FROM_OCCUPANCY"
+VERSION = "3.0.0"
+POLICY = "RMAX_FAIL_CLOSED_NO_RATE_PROMOTION_FROM_OCCUPANCY_OR_DUTY_FACTOR"
 TAU_CL011_NS = 124.79018394263471
-LEGACY_MU = 0.38
-REFERENCE_RATE_MHZ = 3.05
-FIVE_PERCENT_PILEUP = 0.05
+LEGACY_DUTY_FACTOR = 0.38
+FIVE_PERCENT_OVERLAP = 0.05
 FIELDS = (
     "claim_id,chapter,section,claim_text,current_value,unit,stat_unc,syst_unc,"
     "total_unc,ci_low,ci_high,ci_level,ci_method,bootstrap_unit,n_events,n_runs,"
@@ -154,31 +159,33 @@ def evaluate(root: Path) -> dict[str, Any]:
         reject_phrase(issues, wiki_text, phrase, "WIKI_OVERAUTHORIZES_RMAX")
 
     tau_s = TAU_CL011_NS * 1.0e-9
-    five_percent_rate_mhz = -math.log1p(-FIVE_PERCENT_PILEUP) / tau_s / 1.0e6
-    legacy_mu_sensitivity_mhz = LEGACY_MU / tau_s / 1.0e6
-    reference_mu = REFERENCE_RATE_MHZ * 1.0e6 * tau_s
-    reference_probability = -math.expm1(-reference_mu)
+    five_percent_rate_mhz = -math.log1p(-FIVE_PERCENT_OVERLAP) / tau_s / 1.0e6
+    legacy_duty_arithmetic_mhz = LEGACY_DUTY_FACTOR / tau_s / 1.0e6
 
     return {
         "checker": Path(__file__).name,
         "version": VERSION,
         "policy": POLICY,
-        "status": "VALIDATED" if not issues else "FLAWED",
+        "governance_status": "PASS" if not issues else "FAIL",
         "scientific_acceptance": "BLOCKED",
         "accepted_rmax_mhz": None,
+        "definitions": {
+            "canonical_detector_rmax": (
+                "WITHHELD: requires a preregistered detector/reconstruction quality criterion, "
+                "an independently identified event-arrival exposure/rate model, and uncertainty"
+            ),
+            "poisson_overlap_sensitivity": "r = -ln(1-p)/tau under stationary independent arrivals",
+            "legacy_duty_factor_arithmetic": "duty_factor/tau; historical arithmetic only, not a quality threshold",
+        },
         "calculations": {
             "tau_cl011_ns": TAU_CL011_NS,
-            "five_percent_probability": FIVE_PERCENT_PILEUP,
+            "five_percent_overlap_probability": FIVE_PERCENT_OVERLAP,
             "five_percent_poisson_rate_mhz": five_percent_rate_mhz,
-            "legacy_mu_convention": LEGACY_MU,
-            "legacy_mu_model_sensitivity_mhz": legacy_mu_sensitivity_mhz,
-            "reference_rate_mhz": REFERENCE_RATE_MHZ,
-            "reference_rate_implied_mu": reference_mu,
-            "reference_rate_implied_probability_ge_one": reference_probability,
+            "legacy_duty_factor": LEGACY_DUTY_FACTOR,
+            "legacy_duty_factor_arithmetic_mhz": legacy_duty_arithmetic_mhz,
             "interpretation": (
-                "All rates in this block are arithmetic or model sensitivities. "
-                "Selected-pulse occupancy does not identify live exposure, an event-arrival "
-                "rate, mu_max, or an accepted absolute Rmax."
+                "These values are arithmetic/model sensitivities only. Neither selected-pulse occupancy "
+                "nor the beam duty factor identifies an accepted detector Rmax."
             ),
         },
         "inputs": {"wiki": wiki_prov, "claim_ledger": ledger_prov},
@@ -226,10 +233,10 @@ def main(argv: list[str] | None = None) -> int:
         print(f"INPUT_ERROR: {exc}", file=sys.stderr)
         return 2
     print(json.dumps(payload, indent=2, sort_keys=True))
-    if payload["status"] in ("VALIDATED", "FLAWED", "BLOCKED"):
-        print("PASS: canonical Rmax status is honest (VALIDATED/FLAWED/BLOCKED); public wording is consistent.")
+    if payload["governance_status"] == "PASS":
+        print("PASS: Rmax public/ledger governance is internally consistent and remains scientifically BLOCKED.")
         return 0
-    print("FAIL: canonical Rmax gate found inconsistent or over-authorizing evidence.")
+    print("FAIL: Rmax governance is inconsistent or over-authorizing; scientific acceptance remains BLOCKED.")
     return 1
 
 

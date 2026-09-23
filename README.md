@@ -4,10 +4,13 @@
 >
 > Physics goals: **same-particle timing resolution** and **pile-up characterization**.
 
+> [!WARNING]
+> **Repository-wide scientific revalidation is in progress under #1594.** Historical `PASS`/`VALIDATED` labels, attractive plots, successful reproduction, and Monte-Carlo closure are not sufficient by themselves to authorize detector-performance claims. Read [`docs/SCIENTIFIC_AUDIT_STATUS.md`](docs/SCIENTIFIC_AUDIT_STATUS.md) before using any result. Every consequential number, equation, method, figure, and public claim is being re-audited from physics and provenance first principles.
+
 [![Studies](https://img.shields.io/badge/studies-~230-blue)](studies/STUDIES.md)
 [![MC Validations](https://img.shields.io/badge/MC%20validations-6-green)](studies/MC_VALIDATION_PROGRAM.md)
 [![Python](https://img.shields.io/badge/python->=3.11-3776AB)](pyproject.toml)
-[![Status](https://img.shields.io/badge/status-research%20in%20progress-yellow)](WIKI.md)
+[![Status](https://img.shields.io/badge/status-global%20revalidation-orange)](docs/SCIENTIFIC_AUDIT_STATUS.md)
 
 ---
 
@@ -15,103 +18,84 @@
 
 | You want to... | Read this |
 |---|---|
-| **Understand the whole project** | → **[`WIKI.md`](WIKI.md)** — illustrated, comprehensive, self-contained |
-| **Canonical one-screen dashboard** | → **[`reports/PROJECT_DASHBOARD.md`](reports/PROJECT_DASHBOARD.md)** — proven vs BLOCKED at a glance |
-| **See the key results** | → [WIKI.md §1 Executive Summary](WIKI.md#1-executive-summary) |
-| **See what's missing / what to do next** | → **[`STUDY_GAPS.md`](STUDY_GAPS.md)** — gap analysis & open questions |
-| **Get the one-page status** | → [`PROJECT_REPORT.md`](PROJECT_REPORT.md) |
-| **Read the publication narrative** | → [`FINDINGS_SYNTHESIS.md`](FINDINGS_SYNTHESIS.md) |
+| **Know what can currently be trusted** | → **[`docs/SCIENTIFIC_AUDIT_STATUS.md`](docs/SCIENTIFIC_AUDIT_STATUS.md)** — global revalidation rules and blockers |
+| **Follow the master scientific audit** | → **GitHub issue #1594** + `chatgpt_todo/REDO_QUEUE.csv` |
+| **Understand the whole project** | → [`WIKI.md`](WIKI.md) — comprehensive but currently under line-by-line reconciliation (#1598) |
+| **Canonical one-screen dashboard** | → [`reports/PROJECT_DASHBOARD.md`](reports/PROJECT_DASHBOARD.md) — claim states; still subject to global revalidation |
+| **See what's missing / what to do next** | → [`STUDY_GAPS.md`](STUDY_GAPS.md) and `chatgpt_todo/REDO_QUEUE.csv` |
 | **Browse all ~230 studies** | → [`studies/STUDIES.md`](studies/STUDIES.md) |
-| **Understand the methodology** | → [`docs/REPORT_STANDARD.md`](docs/REPORT_STANDARD.md) |
-| **Look up terms** | → [`docs/glossary.md`](docs/glossary.md) |
+| **Understand methodology rules** | → [`docs/REPORT_STANDARD.md`](docs/REPORT_STANDARD.md) and `chatgpt_todo/SCIENTIFIC_REVIEW_PROTOCOL.md` |
 
-## Headline Results
+## Scientific status
 
-> **All results are preliminary and study-scoped, not peer-reviewed.**
-> Canonical entry point: [`reports/PROJECT_DASHBOARD.md`](reports/PROJECT_DASHBOARD.md).
-> Machine-readable public authority: [`docs/contracts/PUBLIC_CLAIM_AUTHORITY.json`](docs/contracts/PUBLIC_CLAIM_AUTHORITY.json).
-> The row-by-row claim ledger is [`docs/claim_ledger.csv`](docs/claim_ledger.csv); this
-> section mirrors [`reports/studies/clusterE/claims_table.csv`](reports/studies/clusterE/claims_table.csv)
-> and must not advertise a stronger status than the ledger.
+**Do not interpret the table below as a list of measured detector properties.** Evidence classes are part of the result. `MC_METHOD_CLOSURE` and `SIMULATION_RESULT` describe simulation-domain performance; `GATED`/`BLOCKED`/`FLAWED`/`SUPERSEDED` do not authorize current detector claims.
 
-**MC method closure proven; detector-performance transfer to beam data remains gated.**
-The full analysis chain — timing, ΔE-E PID, ADC/Birks energy calibration, and pile-up —
-is demonstrated end-to-end on the Krakow 1M-event Geant4 Monte Carlo (clusters A–D +
-Opticks, all merged on `origin/main`). Raw beam ROOT files are **located on LUNARC at `/projects/hep/fs10/shared/nnbar/ccb_data/hrd/root/`** (2026-07-25; see `reports/studies/data_side/REPORT.md`), but the **canonical archive not yet populated** at `/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam-data/` (`DATA.md`). Located
-waveforms are 16-sample; detector-resolution claims remain gated by format/lineage
-(#952/#962) and bench calibration. Public headlines are governed by
-`docs/contracts/PUBLIC_CLAIM_AUTHORITY.json` + `docs/claim_ledger.csv`.
+| Claim | Value | Evidence class | Current interpretation |
+|---|---|---|---|
+| Selected B-stack pulses (S00 gate) | **640,737** | DATA_MEASUREMENT | **GATED** — independent raw-data contract reconstruction is a P0 task (#1603) |
+| Combined timing σ₆₈ (4-sensor) | **0.089 ns** | MC_METHOD_CLOSURE | simulation-method closure only; **not beam detector timing** |
+| PID p-vs-d AUC | **0.898** | SIMULATION_RESULT | realistic MC-chain result; data transfer under #1606/#1608 |
+| ADC digitizer gain | **119.17 ADC/MeV** | SIMULATION_RESULT | simulation calibration, not a measured detector calibration |
+| Birks kB | **0.0156 cm/MeV** | SIMULATION_RESULT | simulation/model fit pending reference and nuisance audit |
+| Digitizer-domain rate criterion | **0.605 MHz** | SIMULATION_RESULT | simulation-domain criterion; canonical detector `Rmax` remains unresolved |
+| Detector timing resolution (data) | withheld | BLOCKED/GATED | rebuild from validated waveform primitives under #1603/#1605 |
+| Canonical detector pile-up rate limit | withheld | BLOCKED | quantity definition and quality criterion under #1607 |
+| Legacy Rmax = 3.044 MHz | — | SUPERSEDED | historical only; do not use |
+| MV0 gain proxy | **92 ADC/MeV with 28 ADC/MeV heuristic envelope** | DATA_MC_PROXY | GATED; envelope is not a confidence interval |
+| Truth-level PID ceiling | **0.986** | TRUTH_LEVEL_MC_ONLY | not beam-data PID performance |
+| C12 anomaly identity | — | TRUTH_LEVEL_MC_ONLY | MC species composition cannot identify the beam-data anomaly |
+| Legacy stopping-depth χ²/ndf | ≈ **6.8×10⁴** | FLAWED/TENSION diagnostic | invalid as closure until geometry/selection/generator/systematics are rebuilt |
 
-| Claim | Value | Evidence class | Status | Source |
-|---|---|---|---|---|
-| Selected B-stack pulses (S00 gate) | **640,737** | DATA_MEASUREMENT | 🔒 GATED | CL-001 |
-| Combined timing σ₆₈ (4-sensor, MC) | **0.089 ns** | MC_METHOD_CLOSURE | ✅ PASS | clusterB #918 |
-| PID p-vs-d AUC (realistic chain, MC) | **0.898** | SIMULATION_RESULT | ✅ PASS | clusterA #921 |
-| ADC calibration (digitizer gain, MC) | **119.17 ADC/MeV** | SIMULATION_RESULT | ✅ PASS | clusterC #917 |
-| Birks kB (per-track dE/dx, MC) | **0.0156 cm/MeV** | SIMULATION_RESULT | ✅ PASS | clusterC #917 |
-| Digitizer-domain Rmax (0% gate, MC) | **0.605 MHz** | SIMULATION_RESULT | ✅ PASS | clusterC #917 |
-| Opticks GPU/CPU parity | 0 GPU hits / 4592 CPU; CPU ctest 9/9 | SIMULATION_RESULT | 🟡 PARTIAL | opticks #920 |
-| Detector timing resolution (data) | withheld | BLOCKED_DATA | ⛔ BLOCKED | CL-002..006 |
-| Canonical pile-up Rmax | withheld | BLOCKED | ⛔ BLOCKED | CL-010 (S-STAT-003) |
-| Legacy Rmax = 3.044 MHz | SUPERSEDED | SUPERSEDED | 🚫 SUPERSEDED | CL-012 (do not use) |
-| ADC gain (data/MC proxy, MV0) | **92 ADC/MeV** (heuristic ±30% envelope) | DATA_MC_PROXY | 🟡 GATED | CL-013 |
-| PID on beam data | deferred | BLOCKED_DATA | ⛔ BLOCKED | format/lineage gates #952/#962 |
-| Stopping-depth data/MC | χ²/ndf ≈ 6.8e4 — FAIL | MC_DIAGNOSTIC | 🟠 TENSION | CL-021 |
+The exhaustive numerical/equation/figure census is being built under #1610. Where historical prose conflicts with the audit ledgers or canonical evidence state, **the audited evidence state wins**.
 
-**Read the statuses literally.** The ±30% MV0 envelope is a heuristic, **not a
-confidence interval**. The data anomaly near 4% is **not** identified as C12
-(CL-022). The systematic budget is incomplete (CL-026). For the publication narrative
-see [`docs/PUBLICATION_NARRATIVE.md`](docs/PUBLICATION_NARRATIVE.md); for the
-synthesis figures see [`reports/PROJECT_DASHBOARD.md`](reports/PROJECT_DASHBOARD.md).
+## Current repair order
 
+1. **#1603:** raw ROOT identity, waveform polarity/pedestal/amplitude semantics, channel map, event keys, trigger and selection anchors.
+2. **#1604:** detector/electronics/SiPM/WLS calibration and nuisance covariance.
+3. **#1608:** geometry, generator, Geant4/digitizer assumptions and data/MC transfer.
+4. **#1609:** statistical inference, covariance, leakage, multiplicity and untouched validation.
+5. **#1605–#1607:** rerun timing; energy/stopping/ΔE–E/PID/anomaly; pile-up/rate/saturation from validated primitives.
+6. **#1597/#1601/#1613:** regenerate scientific figures from audited machine-readable evidence.
+7. **#1598/#1611:** reconcile WIKI/README/dashboard/publication material and enforce the publication evidence gate.
+
+An upstream failure automatically reopens every dependent study, figure, and public statement.
 
 ## Repository Layout
 
 ```
 ccb-testbeam/
-├── WIKI.md              ← 🌟 START HERE: complete illustrated wiki
-├── STUDY_GAPS.md         ← what's missing, what to do next
-├── PROJECT_REPORT.md     ← one-page status report
-├── FINDINGS_SYNTHESIS.md ← publication narrative across all studies
+├── docs/SCIENTIFIC_AUDIT_STATUS.md ← read first during global revalidation
+├── WIKI.md              ← illustrated wiki; currently under #1598 reconciliation
+├── STUDY_GAPS.md         ← gap analysis
+├── PROJECT_REPORT.md     ← historical/project status; audit before publication use
+├── FINDINGS_SYNTHESIS.md ← historical synthesis; supersession warnings apply
 ├── README.md             ← you are here
 ├── DATA.md               ← data locations and integrity
-├── docs/                 ← modular documentation (setup, methods, etc.)
-│   ├── figures/          ← all generated figures
-│   ├── mc_validation/    ← MC validation details
-│   └── glossary.md       ← terminology reference
-├── studies/              ← the research programme
-│   ├── STUDIES.md         ← master prioritized study list
-│   └── STUDY_TEMPLATE.md  ← required report format
-├── reports/              ← per-study reports (one directory per study)
-├── scripts/              ← analysis & ML code
-├── configs/              ← run configs, cut definitions
-├── notebooks/            ← Jupyter notebooks
-├── geant4/               ← GEANT4 simulation code & jobs
-├── fleet/                ← agent fleet orchestration
-└── src/                  ← Python package source
+├── chatgpt_todo/         ← machine-readable audit ledgers and redo queue
+├── docs/                 ← methodology, references, figures, contracts
+├── studies/              ← research programme
+├── reports/              ← per-study reports and generated evidence
+├── scripts/              ← analysis code
+├── configs/              ← run configs and analysis choices
+├── geant4/               ← Geant4 simulation code and jobs
+└── tests/                ← regression and audit tests
 ```
 
 ## Getting Started (Development)
 
 ```bash
-# Clone
 git clone https://github.com/SzeChunYiu/ccb-testbeam.git
 cd ccb-testbeam
-
-# Install dependencies
 pip install -e ".[dev]"
-
-# Run tests
 pytest tests/ -q
-
-# Reproduce the data anchor
-python scripts/01_build_pulse_table_from_root.py
 ```
+
+Do **not** use an old expected headline value as a rerun acceptance target. Reruns must validate inputs/definitions first and report the result they actually obtain.
 
 ## Data
 
-Raw data (~6.4 GB, 110 ROOT files) lives outside git. See [`DATA.md`](DATA.md) for locations (LUNARC `/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam/`).
+Raw data lives outside git and multiple repository paths/lineages have historically been referenced. Exact raw-file inventory, hashes, schema, archive identity, event counts and lineage are therefore part of P0 audit #1603; do not infer authorization merely from a path appearing in prose.
 
 ## Status
 
-**Research in progress.** All results preliminary, not yet peer-reviewed. The project follows strict reproducibility and methodology rules — see [`docs/REPORT_STANDARD.md`](docs/REPORT_STANDARD.md).
+**Global scientific revalidation in progress; not peer-reviewed.** Scientific closure requires the evidence and adversarial-review gates in [`docs/SCIENTIFIC_AUDIT_STATUS.md`](docs/SCIENTIFIC_AUDIT_STATUS.md) and `chatgpt_todo/SCIENTIFIC_REVIEW_PROTOCOL.md`.

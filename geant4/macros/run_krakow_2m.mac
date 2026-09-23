@@ -1,7 +1,8 @@
-# Macro file for hibeam_g4 - 100k event regenerated campaign
+# Macro file for hibeam_g4 - 2M event regenerated campaign
 # Provenance: #1311 regenerated paper MC
 # Sampler: linear_node_pdf_exact_inverse_v1 + measured_table_support_truncate_v1
 # Weight: unit event weight (direct sampling)
+# Cross section: source-bound 190 MeV p+d Table-VI projection; see geant4/src_patch/sigma_pd_cm_190.source.json
 #
 /run/initialize
 

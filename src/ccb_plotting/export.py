@@ -3,8 +3,11 @@
 from __future__ import annotations
 
 import hashlib
+import importlib
 import json
 import os
+import platform
+import sys
 import tempfile
 from pathlib import Path
 from typing import Any
@@ -14,6 +17,16 @@ import matplotlib.figure
 
 from .quality import audit_figure, check_pdf, check_png, check_svg, checks_to_dict
 from .style import DOUBLE_COLUMN_MM, SINGLE_COLUMN_MM
+
+
+def _module_version(module_name: str) -> str:
+    """Version of a plotting dependency; "unknown" if it cannot be imported."""
+    try:
+        module = importlib.import_module(module_name)
+    except ImportError:
+        return "unknown"
+    version = getattr(module, "__version__", None)
+    return str(version) if version else "unknown"
 
 
 def sha256_file(path: Path) -> str:
@@ -105,12 +118,21 @@ def export_figure(
             for key, path in outputs.items()
         },
         "environment": {
-            # Byte-stability contract: docs/figures/paper/manifest.json is
-            # compared byte-for-byte by CI (git diff --exit-code after
-            # regeneration), so the stamp records the project requires-python
+            # Byte-stability contract: the audit gate
+            # (tools/figure_registry/audit_regenerated.py) compares committed
+            # vs regenerated artifacts. Byte identity is only required when
+            # the full toolchain stamp matches; any differing component
+            # (matplotlib, numpy, pandas, pillow, platform) downgrades binary
+            # diffs to a warning. Platform is stamped because darwin and
+            # manylinux Pillow/zlib wheels produce different PNG bytes from
+            # identical pixels. Python records the project requires-python
             # floor (pyproject.toml), never the running patch version.
             "python": ">=3.11 (requires-python floor; patch version not stamped)",
             "matplotlib": matplotlib.__version__,
+            "numpy": _module_version("numpy"),
+            "pandas": _module_version("pandas"),
+            "pillow": _module_version("PIL"),
+            "platform": f"{sys.platform}-{platform.machine()}",
         },
     }
 

@@ -7,6 +7,10 @@
       "column": "single",
       "environment": {
         "matplotlib": "3.10.8",
+        "numpy": "2.3.5",
+        "pandas": "2.2.3",
+        "pillow": "12.2.0",
+        "platform": "linux-x86_64",
         "python": ">=3.11 (requires-python floor; patch version not stamped)"
       },
       "evidence_class": "DATA_MEASUREMENT",
@@ -102,6 +106,10 @@
       "column": "single",
       "environment": {
         "matplotlib": "3.10.8",
+        "numpy": "2.3.5",
+        "pandas": "2.2.3",
+        "pillow": "12.2.0",
+        "platform": "linux-x86_64",
         "python": ">=3.11 (requires-python floor; patch version not stamped)"
       },
       "evidence_class": "GOVERNANCE_LEDGER",
@@ -197,6 +205,10 @@
       "column": "single",
       "environment": {
         "matplotlib": "3.10.8",
+        "numpy": "2.3.5",
+        "pandas": "2.2.3",
+        "pillow": "12.2.0",
+        "platform": "linux-x86_64",
         "python": ">=3.11 (requires-python floor; patch version not stamped)"
       },
       "evidence_class": "MC_METHOD_CLOSURE",
@@ -292,6 +304,10 @@
       "column": "single",
       "environment": {
         "matplotlib": "3.10.8",
+        "numpy": "2.3.5",
+        "pandas": "2.2.3",
+        "pillow": "12.2.0",
+        "platform": "linux-x86_64",
         "python": ">=3.11 (requires-python floor; patch version not stamped)"
       },
       "evidence_class": "SIMULATION_RESULT",
@@ -387,6 +403,10 @@
       "column": "single",
       "environment": {
         "matplotlib": "3.10.8",
+        "numpy": "2.3.5",
+        "pandas": "2.2.3",
+        "pillow": "12.2.0",
+        "platform": "linux-x86_64",
         "python": ">=3.11 (requires-python floor; patch version not stamped)"
       },
       "evidence_class": "MC_CLOSURE_PLUS_GATED_DATA_MC_PROXY",
@@ -483,6 +503,10 @@
       "column": "single",
       "environment": {
         "matplotlib": "3.10.8",
+        "numpy": "2.3.5",
+        "pandas": "2.2.3",
+        "pillow": "12.2.0",
+        "platform": "linux-x86_64",
         "python": ">=3.11 (requires-python floor; patch version not stamped)"
       },
       "evidence_class": "SIMULATION_RESULT",
@@ -578,6 +602,10 @@
       "column": "single",
       "environment": {
         "matplotlib": "3.10.8",
+        "numpy": "2.3.5",
+        "pandas": "2.2.3",
+        "pillow": "12.2.0",
+        "platform": "linux-x86_64",
         "python": ">=3.11 (requires-python floor; patch version not stamped)"
       },
       "evidence_class": "SIMULATION_RESULT",
@@ -673,6 +701,10 @@
       "column": "single",
       "environment": {
         "matplotlib": "3.10.8",
+        "numpy": "2.3.5",
+        "pandas": "2.2.3",
+        "pillow": "12.2.0",
+        "platform": "linux-x86_64",
         "python": ">=3.11 (requires-python floor; patch version not stamped)"
       },
       "evidence_class": "LEGACY_DATA_MC_DIAGNOSTIC",
@@ -768,6 +800,10 @@
       "column": "single",
       "environment": {
         "matplotlib": "3.10.8",
+        "numpy": "2.3.5",
+        "pandas": "2.2.3",
+        "pillow": "12.2.0",
+        "platform": "linux-x86_64",
         "python": ">=3.11 (requires-python floor; patch version not stamped)"
       },
       "evidence_class": "TRUTH_LEVEL_MC_ONLY",
@@ -863,6 +899,10 @@
       "column": "single",
       "environment": {
         "matplotlib": "3.10.8",
+        "numpy": "2.3.5",
+        "pandas": "2.2.3",
+        "pillow": "12.2.0",
+        "platform": "linux-x86_64",
         "python": ">=3.11 (requires-python floor; patch version not stamped)"
       },
       "evidence_class": "SYNTHETIC_WAVEFORM_MC",
@@ -958,6 +998,10 @@
       "column": "single",
       "environment": {
         "matplotlib": "3.10.8",
+        "numpy": "2.3.5",
+        "pandas": "2.2.3",
+        "pillow": "12.2.0",
+        "platform": "linux-x86_64",
         "python": ">=3.11 (requires-python floor; patch version not stamped)"
       },
       "evidence_class": "SENSITIVITY_INPUTS",
@@ -1050,5 +1094,5 @@
     }
   ],
   "repository_head": null,
-  "schema": "ccb-paper-grade-wiki-figures/1"
+  "schema": "ccb-paper-grade-wiki-figures/2"
 }

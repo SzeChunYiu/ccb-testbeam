@@ -75,5 +75,5 @@ jobs:
         run: make plots-check
       - name: Run plotting regression tests
         run: pytest -q tests/test_paper_grade_plots.py
-      - name: Require committed generated outputs to be current
-        run: git diff --exit-code -- WIKI.md docs/FIGURE_GALLERY.md docs/wiki_plot_manifest.csv docs/figures/paper wiki
+      - name: Audit committed artifacts (data-digest gate, encoding-skew tolerant)
+        run: python tools/figure_registry/audit_regenerated.py

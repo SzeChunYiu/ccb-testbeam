@@ -1,0 +1,5 @@
+Compare a traditional pedestal-subtracted dE-E/PID cut and calibrated visible-energy sum against ridge, gradient-boosted trees, MLP, 1D-CNN and transformer/attention embeddings.
+
+Report grouped bootstrap 95% CIs for energy bias/resolution, PID purity/efficiency/calibration and pedestal-transfer robustness by run, sample, stave, saturation flag and pile-up score.
+
+Acceptance: separate pedestal drift from true energy/PID structure, include abstention curves, and state the non-authorising regions explicitly.

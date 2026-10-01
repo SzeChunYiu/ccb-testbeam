@@ -1,0 +1,425 @@
+{
+  "study": "S44c",
+  "ticket_id": "2419",
+  "ticket_number": 2419,
+  "worker": "testbeam-laptop-1",
+  "raw_reproduction": {
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "pass": true
+  },
+  "n_event_rows_after_valid_charge_cut": 584406,
+  "n_pulse_rows_after_valid_charge_cut": 640540,
+  "train_runs": [
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    39,
+    40,
+    41,
+    42,
+    64
+  ],
+  "heldout_runs": [
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "winner": {
+    "method": "traditional_dedx_birks_likelihood",
+    "family": "traditional_geant4_birks_plus_dedx_likelihood",
+    "selection_metric": "energy_res68_frac + (1 - weak_label_pid_roc_auc)",
+    "composite_loss": 0.04338734253700019,
+    "res68_frac": 0.04025337031633583,
+    "res68_ci95": [
+      0.03909063074416809,
+      0.04166270646397291
+    ],
+    "weak_label_pid_roc_auc": 0.9968660277793356,
+    "weak_label_pid_roc_auc_ci95": [
+      0.9962177920574048,
+      0.9975178262358323
+    ],
+    "bias_frac": -0.023113700812691026,
+    "mae_mev": 0.29118947394958444,
+    "mae_mev_ci95": [
+      0.2568443095349381,
+      0.3391867736235445
+    ]
+  },
+  "all_metrics": [
+    {
+      "method": "geant4_birks_lookup",
+      "family": "traditional_geant4_birks",
+      "n": 332852,
+      "bias_frac": -0.0231137008,
+      "res68_frac": 0.0402533703,
+      "mae_mev": 0.2911894739,
+      "res68_ci95": [
+        0.0390906307,
+        0.0416627065
+      ],
+      "bias_ci95": [
+        -0.0268765332,
+        -0.0180149708
+      ],
+      "mae_mev_ci95": [
+        0.2568443095,
+        0.3391867736
+      ]
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "family": "ml_tree",
+      "n": 332852,
+      "bias_frac": -0.0157871869,
+      "res68_frac": 0.0546440612,
+      "mae_mev": 0.2659598587,
+      "res68_ci95": [
+        0.0463012469,
+        0.071580433
+      ],
+      "bias_ci95": [
+        -0.0195619433,
+        -0.0070366058
+      ],
+      "mae_mev_ci95": [
+        0.2321712477,
+        0.3180690499
+      ]
+    },
+    {
+      "method": "range_gated_residual_mlp_new",
+      "family": "neural_physics_residual",
+      "n": 332852,
+      "bias_frac": 0.0025508136,
+      "res68_frac": 0.0596421593,
+      "mae_mev": 0.2646267977,
+      "res68_ci95": [
+        0.0519108659,
+        0.0726599932
+      ],
+      "bias_ci95": [
+        -0.003809931,
+        0.0116392996
+      ],
+      "mae_mev_ci95": [
+        0.2316653848,
+        0.3055935203
+      ]
+    },
+    {
+      "method": "ridge",
+      "family": "ml_linear",
+      "n": 332852,
+      "bias_frac": -0.0205054196,
+      "res68_frac": 0.097391608,
+      "mae_mev": 0.384174108,
+      "res68_ci95": [
+        0.0858206235,
+        0.1244965435
+      ],
+      "bias_ci95": [
+        -0.0311249542,
+        0.0014110399
+      ],
+      "mae_mev_ci95": [
+        0.3486056029,
+        0.4361831928
+      ]
+    },
+    {
+      "method": "1d_cnn",
+      "family": "neural_waveform",
+      "n": 332852,
+      "bias_frac": 0.0203407687,
+      "res68_frac": 0.0984476718,
+      "mae_mev": 0.4270681109,
+      "res68_ci95": [
+        0.0810540766,
+        0.1388712075
+      ],
+      "bias_ci95": [
+        0.0156948828,
+        0.024462657
+      ],
+      "mae_mev_ci95": [
+        0.3744185409,
+        0.5113595734
+      ]
+    },
+    {
+      "method": "attention_transformer_new",
+      "family": "neural_attention",
+      "n": 332852,
+      "bias_frac": 0.0299223975,
+      "res68_frac": 0.1195588698,
+      "mae_mev": 0.4661936867,
+      "res68_ci95": [
+        0.1095895575,
+        0.1395968627
+      ],
+      "bias_ci95": [
+        0.021797656,
+        0.0425978293
+      ],
+      "mae_mev_ci95": [
+        0.4349879798,
+        0.5138841565
+      ]
+    },
+    {
+      "method": "mlp",
+      "family": "neural_tabular",
+      "n": 332852,
+      "bias_frac": 0.0298913819,
+      "res68_frac": 0.1642689807,
+      "mae_mev": 0.636834002,
+      "res68_ci95": [
+        0.1159410606,
+        0.2517202713
+      ],
+      "bias_ci95": [
+        0.0246147489,
+        0.0388983333
+      ],
+      "mae_mev_ci95": [
+        0.553243646,
+        0.7636924327
+      ]
+    },
+    {
+      "method": "old_power_law",
+      "family": "traditional_empirical",
+      "n": 332852,
+      "bias_frac": -0.2976703867,
+      "res68_frac": 0.4623615639,
+      "mae_mev": 2.1116407593,
+      "res68_ci95": [
+        0.4466390323,
+        0.5734375126
+      ],
+      "bias_ci95": [
+        -0.3516335854,
+        -0.1134968676
+      ],
+      "mae_mev_ci95": [
+        1.9710852898,
+        2.2050631494
+      ]
+    }
+  ],
+  "pid_metrics": [
+    {
+      "method": "gradient_boosted_trees",
+      "n": 248783,
+      "roc_auc": 0.9998552967,
+      "roc_auc_ci95": [
+        0.9998046776,
+        0.9999000167
+      ],
+      "average_precision": 0.9996931992,
+      "balanced_accuracy": 0.998207854,
+      "balanced_accuracy_ci95": [
+        0.9975523198,
+        0.9985093433
+      ],
+      "tn": 130736,
+      "fp": 315,
+      "fn": 139,
+      "tp": 117593
+    },
+    {
+      "method": "range_gated_residual_mlp_new",
+      "n": 248783,
+      "roc_auc": 0.9998512949,
+      "roc_auc_ci95": [
+        0.9997770868,
+        0.9999085572
+      ],
+      "average_precision": 0.9996191664,
+      "balanced_accuracy": 0.9982508936,
+      "balanced_accuracy_ci95": [
+        0.9977414004,
+        0.9985621078
+      ],
+      "tn": 130715,
+      "fp": 336,
+      "fn": 110,
+      "tp": 117622
+    },
+    {
+      "method": "mlp",
+      "n": 248783,
+      "roc_auc": 0.999298769,
+      "roc_auc_ci95": [
+        0.9991447333,
+        0.9994302954
+      ],
+      "average_precision": 0.9990683369,
+      "balanced_accuracy": 0.9973433983,
+      "balanced_accuracy_ci95": [
+        0.9969118072,
+        0.997637339
+      ],
+      "tn": 130643,
+      "fp": 408,
+      "fn": 259,
+      "tp": 117473
+    },
+    {
+      "method": "ridge",
+      "n": 248783,
+      "roc_auc": 0.9992461955,
+      "roc_auc_ci95": [
+        0.9990918342,
+        0.99940006
+      ],
+      "average_precision": 0.9978502189,
+      "balanced_accuracy": 0.9967174862,
+      "balanced_accuracy_ci95": [
+        0.9962181952,
+        0.9971886515
+      ],
+      "tn": 130263,
+      "fp": 788,
+      "fn": 65,
+      "tp": 117667
+    },
+    {
+      "method": "attention_transformer_new",
+      "n": 248783,
+      "roc_auc": 0.9982999686,
+      "roc_auc_ci95": [
+        0.9978960643,
+        0.9985013925
+      ],
+      "average_precision": 0.9979782881,
+      "balanced_accuracy": 0.9877832869,
+      "balanced_accuracy_ci95": [
+        0.9856517336,
+        0.988811829
+      ],
+      "tn": 128843,
+      "fp": 2208,
+      "fn": 893,
+      "tp": 116839
+    },
+    {
+      "method": "traditional_dedx_likelihood",
+      "n": 248783,
+      "roc_auc": 0.9968660278,
+      "roc_auc_ci95": [
+        0.9962177921,
+        0.9975178262
+      ],
+      "average_precision": 0.9934400236,
+      "balanced_accuracy": 0.9924338994,
+      "balanced_accuracy_ci95": [
+        0.9911441059,
+        0.9935384474
+      ],
+      "tn": 129669,
+      "fp": 1382,
+      "fn": 540,
+      "tp": 117192
+    },
+    {
+      "method": "1d_cnn",
+      "n": 248783,
+      "roc_auc": 0.9944464944,
+      "roc_auc_ci95": [
+        0.9922053481,
+        0.9953470811
+      ],
+      "average_precision": 0.9927393978,
+      "balanced_accuracy": 0.9851487988,
+      "balanced_accuracy_ci95": [
+        0.9818334573,
+        0.9872584311
+      ],
+      "tn": 128492,
+      "fp": 2559,
+      "fn": 1198,
+      "tp": 116534
+    }
+  ],
+  "pid_proxy": {
+    "source": "duplicate odd-readout charge-depth weak label",
+    "positive_name": "deuteron_like_high_ionization_shallow_range",
+    "negative_name": "proton_like_low_ionization_penetrating",
+    "low_quantile": 0.35,
+    "high_quantile": 0.65,
+    "low_threshold": 10.513969935597421,
+    "high_threshold": 10.869866631512323,
+    "caveat": "No particle-truth branch exists in real HRD ROOT; PID metrics are weak-label robustness diagnostics."
+  },
+  "model_status": {
+    "cnn": "trained",
+    "pid_cnn": "trained",
+    "attention_transformer": "trained"
+  },
+  "artifacts": {
+    "report": "/home/billy/.tb-workers/testbeam-laptop-1/reports/2419__s44c_joint_pedestal_energy_pid_calibration/REPORT.md",
+    "energy_metrics": "/home/billy/.tb-workers/testbeam-laptop-1/reports/2419__s44c_joint_pedestal_energy_pid_calibration/energy_metrics.csv",
+    "stratified_energy_metrics": "/home/billy/.tb-workers/testbeam-laptop-1/reports/2419__s44c_joint_pedestal_energy_pid_calibration/stratified_energy_metrics.csv",
+    "pid_metrics": "/home/billy/.tb-workers/testbeam-laptop-1/reports/2419__s44c_joint_pedestal_energy_pid_calibration/pid_metrics.csv",
+    "abstention_curves": "/home/billy/.tb-workers/testbeam-laptop-1/reports/2419__s44c_joint_pedestal_energy_pid_calibration/abstention_curves.csv"
+  },
+  "provenance": {
+    "git_commit": "784cb9e2817df87e7b94e60d71a395c582794228",
+    "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+    "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+    "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid",
+    "elapsed_s": 299.179,
+    "feature_names": [
+      "multiplicity",
+      "depth_idx",
+      "even_total_charge",
+      "even_max_amp",
+      "saturated_count",
+      "log_charge_stave_0",
+      "log_charge_stave_1",
+      "log_charge_stave_2",
+      "log_charge_stave_3",
+      "log_amp_stave_0",
+      "log_amp_stave_1",
+      "log_amp_stave_2",
+      "log_amp_stave_3",
+      "hit_stave_0",
+      "hit_stave_1",
+      "hit_stave_2",
+      "hit_stave_3",
+      "peak_stave_0",
+      "peak_stave_1",
+      "peak_stave_2",
+      "peak_stave_3",
+      "early_charge_fraction",
+      "late_charge_fraction"
+    ]
+  },
+  "finding": "Raw ROOT reproduction passed exactly at 640,737 selected B-stave pulses. The composite winner is traditional_dedx_birks_likelihood with held-out energy res68=0.04025 and weak-label PID ROC AUC=0.99687. The result authorises duplicate-readout energy/PID closure only, not absolute particle-truth PID."
+}

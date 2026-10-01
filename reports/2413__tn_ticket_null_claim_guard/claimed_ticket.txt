@@ -1,0 +1,9 @@
+2413
+# Fix tn-ticket claim null pseudo-ticket handling
+
+Observed claim output on testbeam-laptop-2:
+
+null
+# null
+
+null

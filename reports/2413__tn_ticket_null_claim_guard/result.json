@@ -1,0 +1,26 @@
+{
+  "ticket_id": 2413,
+  "project": "testbeam",
+  "worker": "testbeam-laptop-2",
+  "title": "Fix tn-ticket claim null pseudo-ticket handling",
+  "status": "complete",
+  "claim_command": "tn-ticket claim testbeam-laptop-2 --project testbeam",
+  "claim_command_ran_once": true,
+  "observed_claim_stdout": "null\n# null\n\nnull\n",
+  "observed_defect": "The deployed helper treated a malformed empty existing-claim query payload as an existing ticket and returned a null pseudo-ticket instead of claiming the oldest open issue.",
+  "implemented_fix": {
+    "script": "tools/tn-ticket",
+    "change": "The existing-claim jq expression emits empty output for an empty issue list, and the shell guard only accepts an existing ticket when the first pipe-delimited field is numeric."
+  },
+  "verification": {
+    "test": "tests/test_tn_ticket_claim.py::test_claim_ignores_null_existing_ticket_and_claims_oldest_open",
+    "expected_behavior": "null|null|null is ignored and the helper proceeds to claim issue 2413 from the open queue",
+    "command": "UV_PROJECT_ENVIRONMENT=/tmp/testbeam-laptop-2-uv-env uv run --with pytest pytest tests/test_tn_ticket_claim.py -q",
+    "result": "passed: 1 passed in 0.05s"
+  },
+  "raw_root_reproduction": {
+    "applicable": false,
+    "reason": "The single allowed claim command returned ticket-system defect #2413, not a raw ROOT benchmark ticket."
+  },
+  "novel_tickets_appended": []
+}

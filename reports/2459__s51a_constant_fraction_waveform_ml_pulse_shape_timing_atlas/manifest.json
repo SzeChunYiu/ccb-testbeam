@@ -1,0 +1,24 @@
+{
+  "ticket_id": "2459",
+  "git_commit": "847ec659e8145e498d977a85278082934fe2d262",
+  "command": "/home/billy/.cache/uv/builds-v0/.tmpL3xZOj/bin/python scripts/s51a_2459_pulse_shape_timing_atlas.py",
+  "runtime_seconds": 546.0730979442596,
+  "python": "3.11.14 (main, Feb  3 2026, 22:51:56) [Clang 21.1.4 ]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+  "outputs_sha256": {
+    "REPORT.md": "b0026a488b1622b90cf0f6a2664ae435a9893a202720fc9c748a6c181f753874",
+    "claimed_ticket.txt": "33dc52a15416e9972496cd53cf83396229472f4a945639aa7ac9c6f30713f805",
+    "endpoint_metrics_ci.csv": "1ea4bfc6a43cd5ba805bc74e62032e5ce2690319d31da79ae940217b9ded4fcb",
+    "event_predictions.csv": "f33968605216dae0ac4cd24095355e509e6ab09df40fd81c444a83f9ae247c33",
+    "injection_source_bootstrap_ci.csv": "417049aad0e7209026b6a1b7f675e4da5ecc7baae896727a8a14126fa20efb9f",
+    "input_sha256.csv": "cc17da0dcd3e7e732b81a17f3c35833f026fdec912538d28d7d71b9af71a46f6",
+    "method_metrics.csv": "de0f741635e24e3645de50c8b8ea00902e40da3b446a885e64d5a8ef82ed0ca5",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "7848b7e2369b01f8f522151fba437465cc36c9b607cbc3f35fa5320110438fe2",
+    "run_heldout_metrics.csv": "b90f4c7f5d9ed1b698992d99fc5a82aea97db72a28f6f5392cf738874610b6aa",
+    "strata_metrics.csv": "8867605475f22a355c1872713343fba94cfc0b9eb5d311875b21330f049f58c3",
+    "template_summary.csv": "70811c144799226d495253dcf99ec44c6cea6b9a7de91249cd5ea72526581b13",
+    "uncertainty_calibration.csv": "7ba85019d3853b8ad4a2e1ab93f1ca16f875a266d010b47ebc2fe426fe0dd68c",
+    "winner_ranked_metrics.csv": "299172df4b75fbd51d93ee56a7f0429ddadf260e60d00914cb0ff644ee9e9010"
+  }
+}

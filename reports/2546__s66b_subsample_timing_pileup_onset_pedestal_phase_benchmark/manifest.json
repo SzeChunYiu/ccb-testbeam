@@ -1,0 +1,31 @@
+{
+  "ticket_id": "2546",
+  "git_commit": "cec9edc28257e0699c70c17fa9b2e8d806a3d42a",
+  "command": "/home/billy/.tb-workers/testbeam-laptop-3/.venv-s04g-sys/bin/python scripts/ticket_2546_s66b_subsample_timing_pileup_onset_benchmark.py",
+  "runtime_seconds": 88.95864510536194,
+  "python": "3.8.10 (default, Mar 18 2025, 20:04:55) \n[GCC 9.4.0]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.29",
+  "outputs_sha256": {
+    "REPORT.md": "6dd4e5a2760037808927428ebce93d17ce752d6625e25b5fefa0cdf995037d9d",
+    "ablation_stress_slices.csv": "3199c86119154ecf2a97ee6e4ff2d63cafadb9e19f82f9ca4476071b25374eaa",
+    "ablation_window_metrics.csv": "c32e64b1cc4551d5735afa1eb0797371242fb1db9cd59defd7d2712895a05ee1",
+    "claimed_ticket.txt": "5d0fcb45e3ef40c093a00103f9a81b285bb979c631d7af9cb3f1ef1b18cd74a2",
+    "detector_heldout_event_predictions.csv": "e99aa30baf50f3d9920d11b5a03ba2ac4ef046460adc7ee6e43b9bca2c2fc16c",
+    "detector_heldout_ranked_metrics.csv": "1349cd1631fe8a730aa9ad7a7bd5ddad879c853532feb53bb75a04bd3524a970",
+    "endpoint_metrics_ci.csv": "b2a998a2a837769e7f11d1a5fd38fb931d6f4949bbaca8aafe8be66f4284b8d8",
+    "event_predictions.csv": "62b80eae40fe5cc02d1196298b996afcf3db3a9a7620f0660b2a6c1de493b77e",
+    "input_sha256.csv": "cc17da0dcd3e7e732b81a17f3c35833f026fdec912538d28d7d71b9af71a46f6",
+    "method_metrics.csv": "c5b7a6f143091c47ebb4bf658e540c6693b3bcb6889f76b7d670b786d71f46ca",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "85c29eb00d0cb1f5d2e128523f2673eb9e09113949fc370c0eb9be8c07b864b3",
+    "run_heldout_metrics.csv": "285c649691a8d44bdc95f96e5bec4a927f0548ecda40a03d6324466db1f0519e",
+    "s66b_nuisance_slice_metrics.csv": "3fde2dd0031299dc8cd94c62a7dfd7e6b56710554d6a29a7df1396b45b290a4a",
+    "s66b_winner_nuisance_stability.csv": "169d8cb8d5be000a984a9fa37a09c38cc25bd1a6b4fcfee7773a48b327c047fe",
+    "strata_metrics.csv": "3b7990cbdf26fe8a3ff6b01dcd60278be127b67dce708fc81acbfce43aeb1bb9",
+    "template_summary.csv": "70811c144799226d495253dcf99ec44c6cea6b9a7de91249cd5ea72526581b13",
+    "winner_ranked_metrics.csv": "6b551922d523fdd1a7d03e5d7d3125fded7c7cb09f17d9a5b122eb5436bf9369"
+  },
+  "issue_number": 2546,
+  "wrapper_command": "/home/billy/.tb-workers/testbeam-laptop-3/.venv-s04g-sys/bin/python scripts/ticket_2546_s66b_subsample_timing_pileup_onset_benchmark.py",
+  "wrapper_runtime_seconds": 89.01159691810608
+}

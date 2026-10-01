@@ -1,0 +1,5 @@
+winner,nuisance,max_abs_bias_ns,sigma68_range_ns,false_split_rate_range,pileup_miss_rate_range
+template_residual_boosted_stack_new,amplitude_bin,1.1554528104187423,2.4708182798953264,0.5604166666666667,0.5285714285714286
+template_residual_boosted_stack_new,pedestal_phase_bin,1.0957291176073092,2.2276947650782857,0.05866916588566071,0.1567901234567901
+template_residual_boosted_stack_new,saturation_bin,0.7949433713196097,1.4205745235434204,0.0,0.2865013774104683
+template_residual_boosted_stack_new,spacing_bin,2.2409529618198754,1.9212939883216658,0.0,0.2842410417260717

@@ -1,38 +1,12 @@
 {
-  "ticket_id": "2502",
-  "issue_number": 2502,
+  "ticket_id": "2536",
   "project": "testbeam",
-  "worker": "testbeam-laptop-2",
+  "worker": "testbeam-laptop-3",
+  "title": "S63c joint PID-energy-timing pulse representation benchmark with pedestal memory controls",
   "status": "complete",
-  "winner": "saturation_residual_fusion_new",
-  "winner_metrics": {
-    "name": "saturation_residual_fusion_new",
-    "criterion": "minimum held-out composite saturation-energy closure score with run-block bootstrap CIs reported",
-    "winner_score": 0.15172443008737868,
-    "energy_fractional_bias": -0.002906610021787798,
-    "energy_fractional_sigma68": 0.068387783415775,
-    "energy_fractional_sigma68_ci95": [
-      0.06183707932660469,
-      0.0751855124441164
-    ],
-    "time_sigma68_ns": 8.023902762892945,
-    "time_sigma68_ci95": [
-      7.365407249564567,
-      8.669358478772935
-    ],
-    "pileup_miss_rate": 0.32564102564102565,
-    "false_split_rate": 0.13846153846153847,
-    "uncertainty_calibration": {
-      "method": "saturation_residual_fusion_new",
-      "n_valid_doublets": 263.0,
-      "median_abs_energy_residual": 0.04730265759532487,
-      "p68_abs_energy_residual": 0.0694272959931502,
-      "nominal_68_proxy_width": 0.034999999999999996,
-      "coverage_abs_resid_le_proxy": 0.3688212927756654,
-      "coverage_abs_resid_le_2proxy": 0.7034220532319392,
-      "calibration_ratio_p68_over_proxy": 1.9836370283757203
-    }
-  },
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-3 --project testbeam",
+  "claimed_ticket_text": "#2536 S63c joint PID-energy-timing pulse representation benchmark with pedestal memory controls",
   "raw_root_reproduction": {
     "passed": true,
     "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
@@ -41,7 +15,7 @@
     "delta": 0,
     "evidence_table": "reproduction_match_table.csv"
   },
-  "split": {
+  "evaluation_design": {
     "split": "train and held-out sets are disjoint by source run",
     "train_runs": [
       50,
@@ -67,38 +41,81 @@
     "winner_score": "energy_fractional_sigma68 + 0.20*abs(energy_fractional_bias) + 0.008*time_sigma68_ns + 0.04*pileup_miss_rate + 0.04*false_split_rate"
   },
   "required_method_coverage": {
-    "traditional": "analytic_clipped_template_sideband_traditional",
+    "traditional": "analytic_clipped_template_sideband_traditional: charge-ratio/deltaE-E template and likelihood PID proxy",
     "ridge": "ridge",
     "gradient_boosted_trees": "gradient_boosted_trees",
     "mlp": "mlp",
     "one_dimensional_cnn": "1d_cnn",
     "transformer_sequence_model": "tiny_sequence_transformer",
-    "new_architecture": "saturation_residual_fusion_new"
+    "new_architecture": "saturation_residual_fusion_new",
+    "compact_sequence_model": "tiny_sequence_transformer"
   },
-  "required_outputs": {
-    "injected_overlap_closure": "method_metrics.csv, run_heldout_metrics.csv, event_predictions.csv",
-    "real_data_sideband_validation": "real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "saturation_mask_ablation.csv",
-    "uncertainty_calibration": "uncertainty_calibration.csv",
-    "traditional_vs_neural_failure_interpretation": "REPORT.md"
+  "winner": {
+    "name": "saturation_residual_fusion_new",
+    "criterion": "minimum held-out composite saturation-energy closure score with run-block bootstrap CIs reported",
+    "winner_score": 0.15172443008737868,
+    "energy_fractional_bias": -0.002906610021787798,
+    "energy_fractional_sigma68": 0.068387783415775,
+    "energy_fractional_sigma68_ci95": [
+      0.06183707932660469,
+      0.0751855124441164
+    ],
+    "time_sigma68_ns": 8.023902762892945,
+    "time_sigma68_ci95": [
+      7.365407249564567,
+      8.669358478772935
+    ],
+    "pileup_miss_rate": 0.32564102564102565,
+    "false_split_rate": 0.13846153846153847
   },
   "artifacts": {
-    "report": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/REPORT.md",
-    "result": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/result.json",
-    "method_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/method_metrics.csv",
-    "run_heldout_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/run_heldout_metrics.csv",
-    "real_data_sideband_validation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/saturation_mask_ablation.csv",
-    "uncertainty_calibration": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/uncertainty_calibration.csv"
+    "report": "reports/2536__s63c_joint_pid_energy_timing_pulse_representation_benchmark/REPORT.md",
+    "manifest": "reports/2536__s63c_joint_pid_energy_timing_pulse_representation_benchmark/manifest.json",
+    "claimed_ticket": "reports/2536__s63c_joint_pid_energy_timing_pulse_representation_benchmark/claimed_ticket.txt",
+    "raw_reproduction": "reports/2536__s63c_joint_pid_energy_timing_pulse_representation_benchmark/reproduction_match_table.csv",
+    "method_metrics": "reports/2536__s63c_joint_pid_energy_timing_pulse_representation_benchmark/method_metrics.csv",
+    "winner_ranked_metrics": "reports/2536__s63c_joint_pid_energy_timing_pulse_representation_benchmark/winner_ranked_metrics.csv",
+    "run_heldout_metrics": "reports/2536__s63c_joint_pid_energy_timing_pulse_representation_benchmark/run_heldout_metrics.csv",
+    "strata_metrics": "reports/2536__s63c_joint_pid_energy_timing_pulse_representation_benchmark/strata_metrics.csv",
+    "event_predictions": "reports/2536__s63c_joint_pid_energy_timing_pulse_representation_benchmark/event_predictions.csv",
+    "input_sha256": "reports/2536__s63c_joint_pid_energy_timing_pulse_representation_benchmark/input_sha256.csv",
+    "causal_window_ablation": "reports/2536__s63c_joint_pid_energy_timing_pulse_representation_benchmark/causal_window_ablation.csv",
+    "pedestal_window_ablation": "reports/2536__s63c_joint_pid_energy_timing_pulse_representation_benchmark/pedestal_window_ablation.csv",
+    "saturation_mask_ablation": "reports/2536__s63c_joint_pid_energy_timing_pulse_representation_benchmark/saturation_mask_ablation.csv",
+    "top_level_report": "REPORT.md",
+    "top_level_result": "result.json"
   },
-  "queue_provenance": {
-    "claimed_once": true,
-    "claim_command_run_once": "tn-ticket claim testbeam-laptop-2 --project testbeam",
-    "claim_command_output": "null / # null / null",
-    "manual_claim_recovery": "gh issue edit 2502 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-2 --remove-label factory:open",
-    "done_command": "tn-ticket done 2502",
-    "novel_tickets_appended": []
+  "novel_tickets_appended": [],
+  "caveats": [
+    "Truth comes from controlled injections into raw-ROOT-derived clean pulses.",
+    "ADC clipping is an explicit benchmark stressor rather than decoded electronics metadata.",
+    "Bootstrap CIs resample held-out runs and should be read as run-transfer intervals."
+  ],
+  "issue_number": 2536,
+  "issue_url": "https://github.com/SzeChunYiu/factory-tickets/issues/2536",
+  "done_command": "tn-ticket done 2536",
+  "claim_helper_output": {
+    "command": "tn-ticket claim testbeam-laptop-3 --project testbeam",
+    "run_count": 1,
+    "stderr": "null",
+    "stdout": "# null\n\nnull",
+    "note": "The helper returned a null pseudo-ticket and did not label an issue; #2536 was manually recovered without rerunning claim."
   },
-  "done_command": "tn-ticket done 2502",
-  "novel_tickets_appended": []
+  "manual_claim_recovery": {
+    "performed": true,
+    "command": "gh issue edit 2536 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-3 --remove-label factory:open",
+    "evidence": "issue #2536 labels include factory:claimed, project:testbeam, worker:testbeam-laptop-3"
+  },
+  "execution_command": "MPLCONFIGDIR=/tmp/matplotlib-ticket2536 UV_PROJECT_ENVIRONMENT=/tmp/ticket2536-uv-venv uv run --frozen --index-strategy unsafe-best-match --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple --with uproot --with awkward --with numpy --with pandas --with scikit-learn --with tabulate --with 'torch==2.5.1+cpu' python scripts/ticket_2536_s63c_joint_pid_energy_timing_representation_benchmark.py",
+  "pid_energy_timing_endpoint_mapping": {
+    "external_pid_labels_available": false,
+    "pid_proxy": "inner_high_charge versus other from raw-supported stave and charge strata",
+    "pid_evidence": "strata_metrics.csv",
+    "energy_proxy": "controlled-overlay injected amplitude sum, scored by fractional residual bias and sigma68",
+    "timing": "controlled-overlay first-pulse time residual bias and sigma68",
+    "pedestal_memory": "pedestal_state strata in strata_metrics.csv",
+    "pileup_saturation": "spacing, amplitude-ratio, and saturated-sample-count strata",
+    "shape_atlas_stability": "morphology_state, stave, causal-window, pedestal-window, and saturation-mask ablation tables",
+    "caveat": "PID statements are proxy-boundary robustness statements, not externally labeled species classification."
+  }
 }

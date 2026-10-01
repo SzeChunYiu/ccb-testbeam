@@ -1,0 +1,7 @@
+ticket: 2560
+worker: testbeam-laptop-4
+claim_helper_command: tn-ticket claim testbeam-laptop-4 --project testbeam
+claim_helper_stdout: # null\n\nnull
+claim_helper_stderr: null
+manual_repair: gh issue edit 2560 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-4 --remove-label factory:open
+done_command: tn-ticket done 2560

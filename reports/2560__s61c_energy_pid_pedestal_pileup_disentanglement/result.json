@@ -1,0 +1,114 @@
+{
+  "ticket_id": "2560",
+  "study_id": "S61c",
+  "worker": "testbeam-laptop-4",
+  "title": "S61c energy PID pedestal pile-up disentanglement",
+  "raw_root_dir": "data/root/root",
+  "git_commit": "cec9edc28257e0699c70c17fa9b2e8d806a3d42a",
+  "runtime_sec": 99.57977342605591,
+  "python": "3.7.6",
+  "claim_command": "tn-ticket claim testbeam-laptop-4 --project testbeam",
+  "reproduction": {
+    "selected_pulses": 640737,
+    "expected_selected_pulses": 640737,
+    "delta": 0,
+    "passed": true,
+    "samples_per_channel": 18
+  },
+  "split": {
+    "heldout_runs": [
+      42,
+      50,
+      57,
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "particle_holdout_family": "high_amplitude_tail_family",
+    "sampled_rows": 3864,
+    "bootstrap_replicates": 120,
+    "split_by_run": true,
+    "pedestal_holdout_state": "pedestal_memory",
+    "pedestal_state_heldout_rows": 16236,
+    "topology_matched_control_rows": 40
+  },
+  "primary_methods": [
+    "traditional_dE_E_tail_pedestal_likelihood",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "1d_cnn",
+    "spectral_transformer_new"
+  ],
+  "joint_score_weights": {
+    "pid_auc_loss": 0.32,
+    "energy_sigma68": 0.24,
+    "pileup_auc_loss": 0.12,
+    "saturation_auc_loss": 0.1,
+    "pedestal_auc_loss": 0.12,
+    "tail_harmonic_auc_loss": 0.1
+  },
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "mean_joint_loss": 0.06952142300981579,
+    "selection_rule": "minimum mean registered joint loss across run-heldout and proxy particle-heldout splits with run-block bootstrap CIs",
+    "named_winner": "gradient_boosted_trees"
+  },
+  "winner_details": {
+    "split_name": "particle_heldout",
+    "method": "gradient_boosted_trees",
+    "joint_loss": 0.09673056587645015,
+    "pid_separation": 0.9331190694827058,
+    "energy_scale": 0.11845362248442608,
+    "pileup_sideband": 0.9958960328317373,
+    "saturation_clipping": 1.0,
+    "pedestal_noise_color": 0.6132723112128147,
+    "pulse_shape_harmonics": 1.0,
+    "mean_joint_loss": 0.06952142300981579
+  },
+  "artifacts": {
+    "REPORT.md": "academic report",
+    "joint_scoreboard.csv": "winner table",
+    "endpoint_method_summary.csv": "bootstrap endpoint CIs",
+    "paired_bootstrap_deltas.csv": "paired bootstrap vs traditional",
+    "calibration_ece.csv": "PID/proxy calibration",
+    "strata_metrics.csv": "tail/pedestal/pulse/timing/pileup/saturation/energy strata",
+    "leakage_audit.csv": "cross-task leakage audit",
+    "shape_timing_pedestal_pileup_saturation_ablation.csv": "nuisance-axis ablation spans",
+    "topology_matched_negative_controls.csv": "pileup/saturation/energy matched controls",
+    "pedestal_state_heldout_bootstrap.csv": "pedestal-memory held-out stress CIs",
+    "negative_control_pedestal_shuffles.csv": "run-preserving pedestal shuffle null",
+    "calibration_curves.csv": "ten-bin reliability curves",
+    "heldout_predictions_with_strata.csv.gz": "prediction rows joined to nuisance strata"
+  },
+  "next_tickets": [],
+  "status": "complete",
+  "ticket_number": 2560,
+  "issue_number": 2560,
+  "claim_command_output": {
+    "stdout": "# null\\n\\nnull",
+    "stderr": "null",
+    "exit_code": 0,
+    "manual_claim_recovery": "gh issue edit 2560 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-4 --remove-label factory:open"
+  },
+  "required_method_coverage": {
+    "traditional": "traditional_dE_E_tail_pedestal_likelihood",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "new_architecture": "spectral_transformer_new"
+  },
+  "s61c_outputs": {
+    "shape_timing_pedestal_pileup_saturation_ablation": "shape_timing_pedestal_pileup_saturation_ablation.csv",
+    "topology_matched_negative_controls": "topology_matched_negative_controls.csv",
+    "pedestal_state_heldout_bootstrap": "pedestal_state_heldout_bootstrap.csv",
+    "negative_control_pedestal_shuffles": "negative_control_pedestal_shuffles.csv",
+    "calibration_curves": "calibration_curves.csv"
+  },
+  "novel_tickets_appended": [],
+  "done_command": "tn-ticket done 2560",
+  "wrapper_runtime_sec": 23.310636281967163
+}

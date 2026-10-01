@@ -1,0 +1,147 @@
+{
+  "study": "S13",
+  "ticket": "2383",
+  "worker": "testbeam-laptop-1",
+  "git_commit": "6eed4ba561b1c083e40b21032293e921e535dd96",
+  "python": "3.11.14",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+  "random_seed": 131304,
+  "config": "configs/ticket_2383_s13_current_scaling_cwola_bakeoff.json",
+  "commands": [
+    "/home/billy/.tb-workers/testbeam-laptop-1/.venv/bin/python3 scripts/ticket_2383_s13_current_scaling_cwola_bakeoff.py --config configs/ticket_2383_s13_current_scaling_cwola_bakeoff.json"
+  ],
+  "inputs": [
+    {
+      "file": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0044.root",
+      "sha256": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50",
+      "bytes": 1227977
+    },
+    {
+      "file": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0045.root",
+      "sha256": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b",
+      "bytes": 13786671
+    },
+    {
+      "file": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0046.root",
+      "sha256": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3",
+      "bytes": 412227
+    },
+    {
+      "file": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0047.root",
+      "sha256": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3",
+      "bytes": 3098718
+    },
+    {
+      "file": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0048.root",
+      "sha256": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8",
+      "bytes": 8995827
+    },
+    {
+      "file": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0049.root",
+      "sha256": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744",
+      "bytes": 9203548
+    },
+    {
+      "file": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0050.root",
+      "sha256": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799",
+      "bytes": 13217424
+    },
+    {
+      "file": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0051.root",
+      "sha256": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e",
+      "bytes": 6036876
+    },
+    {
+      "file": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0052.root",
+      "sha256": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af",
+      "bytes": 2941826
+    },
+    {
+      "file": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0053.root",
+      "sha256": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c",
+      "bytes": 11713879
+    },
+    {
+      "file": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0054.root",
+      "sha256": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c",
+      "bytes": 11056922
+    },
+    {
+      "file": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0055.root",
+      "sha256": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c",
+      "bytes": 7153324
+    },
+    {
+      "file": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0056.root",
+      "sha256": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb",
+      "bytes": 15273160
+    },
+    {
+      "file": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0057.root",
+      "sha256": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16",
+      "bytes": 8881910
+    }
+  ],
+  "outputs": [
+    {
+      "file": "REPORT.md",
+      "sha256": "a56035f5457add9b8f4d280ebdcbc2f8b168de2348da10d988132c4dba0ec797",
+      "bytes": 14132
+    },
+    {
+      "file": "b2_event_predictions.csv",
+      "sha256": "042b9a801313fd09f0391e660558378a02ad0f43f2fdf1cf9975cd77916036ea",
+      "bytes": 3462456
+    },
+    {
+      "file": "bootstrap_metric_samples.csv",
+      "sha256": "41a40193b3e3ae051605dd70f12d97af0ced85bcbfac850ae4d48529a4dcad38",
+      "bytes": 207198
+    },
+    {
+      "file": "current_scaling_fit.csv",
+      "sha256": "458f58ca42593646594cbc098d902d0a8377068cd947d0a9871c535424c5dfb7",
+      "bytes": 457
+    },
+    {
+      "file": "fig_method_brier_ci.png",
+      "sha256": "b5999ac4a3072ab3357e473da9dd8218bafc97268d77d1ad3d815b2f9d96bb62",
+      "bytes": 73702
+    },
+    {
+      "file": "fig_reliability.png",
+      "sha256": "286a77d5d7eece513c30c5badee3ffe537a2e57120d5f5093fd88368f7d138c8",
+      "bytes": 70551
+    },
+    {
+      "file": "input_sha256.csv",
+      "sha256": "b38e66517a0343bf77a5fae789883a9b51afce5592a191b1b4a7d3bd8c66c902",
+      "bytes": 1954
+    },
+    {
+      "file": "leakage_checks.csv",
+      "sha256": "a135b808e0cb8bcc5bfd192bdb0da1d4c2d16e6eae41d3f5e7604565b5c3ddb5",
+      "bytes": 703
+    },
+    {
+      "file": "method_metrics.csv",
+      "sha256": "45b2e7fbc91841d4546ee2b03ae2d257a32563dfbec87e221aeadcab1421731b",
+      "bytes": 5636
+    },
+    {
+      "file": "reproduction_match_table.csv",
+      "sha256": "a7e96240bf0ff3c8b65f12fe50140639b04856c6ed54fda76bd9b8f6bbd820e2",
+      "bytes": 596
+    },
+    {
+      "file": "result.json",
+      "sha256": "235b8f9e5f0d1133e4a954c3cc6a570129e92012220824a06240b0d96d020092",
+      "bytes": 20310
+    },
+    {
+      "file": "topology_by_run.csv",
+      "sha256": "9d2c18d4d52f893f2f97eff7af551d7da772af855ad328c139ffa6409ecbc078",
+      "bytes": 1378
+    }
+  ]
+}

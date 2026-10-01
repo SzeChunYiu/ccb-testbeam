@@ -1,0 +1,9 @@
+Info in <TGeoManager::Import>: Reading geometry from file: krakow_109_8-38deg_4-71deg.root
+Info in <TGeoManager::CloseGeometry>: Geometry loaded from file...
+Info in <TGeoManager::SetTopVolume>: Top volume is MOTHER. Master volume is MOTHER
+Info in <TGeoNavigator::BuildCache>: --- Maximum geometry depth set to 100
+Info in <TGeoManager::CloseGeometry>: Voxelization retrieved from file
+Info in <TGeoManager::CountLevels>: max level = 4, max placements = 10
+Info in <TGeoManager::CloseGeometry>: 37 nodes/ 13 volume UID's in geometry.C
+Info in <TGeoManager::CloseGeometry>: ----------------modeler ready----------------
+rm: cannot remove '/local/slurmtmp.3506900': Permission denied

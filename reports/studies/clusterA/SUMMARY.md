@@ -1,5 +1,14 @@
 # Cluster A — ΔE-E / PID / stopping-depth diagnostic study
 
+> **⚠️ NON-AUTHORISING MC NOTICE (2026-08-16)** — This study was derived from
+> `geant4/data/output_krakow_1M.root`, which was produced from the unpatched upstream
+> `ScatteringGenerator` (unit-weight sampling bug). The corrected generator shows
+> Enter B reduced by −97.0% ± 0.2%, materially changing the sample. The PID-MC figure
+> (paper/figures.yaml row) is **GATED** pending re-derivation on
+> `geant4/data/output_krakow_1M_authorising.root`. See
+> `research/trigger_migration_study/PHASE1B_NONAUTHORISING_MC_NOTICE.md` for full
+> analysis.
+
 This study contains two distinct evidence domains:
 
 - a Krakow Monte Carlo event-level analysis in MeV;

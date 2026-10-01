@@ -1,0 +1,6 @@
+2420
+# P11c: learned pedestal residual as a timing-tail nuisance
+
+Use the P11 learned-pedestal residual proxy in S02/S04 timing fits, split by run with paired bootstrap CIs, to test whether pedestal recoverability explains timing tails beyond amplitude and peak-time controls. Expected information gain: connects pedestal estimation quality to the physics timing endpoint rather than only to a reconstruction diagnostic.
+
+Claim note: `tn-ticket claim testbeam-laptop-3 --project testbeam` was run exactly once. A known empty-existing-claim formatting bug in the local `tn-ticket` script returned `null|null|null` and exited before applying labels; issue #2420 was then manually label-repaired to `factory:claimed` with `worker:testbeam-laptop-3` and `factory:open` removed.

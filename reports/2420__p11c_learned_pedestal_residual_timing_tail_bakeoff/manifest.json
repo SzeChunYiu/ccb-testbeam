@@ -1,0 +1,213 @@
+{
+  "config": {
+    "amplitude_cut_adc": 1000.0,
+    "baseline_samples": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "bootstrap_replicates": 500,
+    "calibration_runs": [
+      56,
+      64
+    ],
+    "downstream_staves": [
+      "B4",
+      "B6",
+      "B8"
+    ],
+    "expected_sample_ii_by_stave": {
+      "B2": 88213,
+      "B4": 21229,
+      "B6": 11148,
+      "B8": 4506
+    },
+    "expected_sample_ii_selected_pulses": 125096,
+    "expected_selected_pulses": 640737,
+    "heldout_runs": [
+      57,
+      65
+    ],
+    "max_train_records": 90000,
+    "ml": {
+      "hgb_learning_rate": 0.06,
+      "hgb_max_iter": 180,
+      "hgb_max_leaf_nodes": 31,
+      "mlp_hidden_layer_sizes": [
+        64,
+        32
+      ],
+      "mlp_max_iter": 160,
+      "ridge_alpha": 10.0
+    },
+    "output_dir": "reports/2420__p11c_learned_pedestal_residual_timing_tail_bakeoff",
+    "random_seed": 242011,
+    "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+    "run_groups": {
+      "sample_i_analysis": [
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57
+      ],
+      "sample_i_calib": [
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        42
+      ],
+      "sample_ii_analysis": [
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        65
+      ],
+      "sample_ii_calib": [
+        64
+      ]
+    },
+    "sample_period_ns": 10.0,
+    "samples_per_channel": 18,
+    "sorted_root_dir": "/home/billy/ccb-data/data/extracted/sorted-b",
+    "spacing_cm": 2.0,
+    "staves": {
+      "B2": 0,
+      "B4": 2,
+      "B6": 4,
+      "B8": 6
+    },
+    "study": "P11c",
+    "ticket": "2420",
+    "timing_train_runs": [
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63
+    ],
+    "title": "learned-pedestal residual as a timing-tail nuisance",
+    "tof_per_cm_ns": 0.078,
+    "torch_batch_size": 1024,
+    "torch_epochs": 12,
+    "traditional": {
+      "amp_bins": 6,
+      "base_pickoff": "cfd20",
+      "cfd_fraction": 0.2,
+      "peak_bins": [
+        0,
+        3,
+        6,
+        9,
+        12,
+        18
+      ]
+    },
+    "worker": "testbeam-laptop-3"
+  },
+  "config_path": "reports/2420__p11c_learned_pedestal_residual_timing_tail_bakeoff/config.json",
+  "elapsed_seconds": 87.09700059890747,
+  "git_commit": "68374937a0026eba71394446c496390ef51afa18",
+  "input_sha256": {
+    "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0044.root": "0ac6d667ebf7c1b47d037dde649e5977cdc6012d80abb6a311516bc67d03ad50",
+    "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0045.root": "b7bf2921edc3f776390cf50efe6901cb99f9807d7ae04ab5d8925348b74eb96b",
+    "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0046.root": "7a1f8b5c0e478739401425f3e80bb5469433064137ccbd30266f8e42da135bf3",
+    "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0047.root": "f73d9328de01147826d0c142caa38baa7d6577ce88b6c6566b57039919015bc3",
+    "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0048.root": "73de7b2c54394585869fce573aeeae1075af130741524484dd79a6823183eaf8",
+    "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0049.root": "78de20d813d501dfc9881ec9ee7e8297a9c26929d6ed71400238ca4f29664744",
+    "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0050.root": "5fa46e1f0ab4eb605501ccf952bfca46eb46be2dffd66672beadd01305dfe799",
+    "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0051.root": "6ffc099d12f495df759033caef8c53c05aa24acada928392afe796f3a72c011e",
+    "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0052.root": "3305bb0a1604afe6c83783d0e5d576d729c217c203eedf3bc44f304dab5fe0af",
+    "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0053.root": "62307716ee4b31dc7ab0b114401e684508d6f18beb59721a50a9aeddf4feb43c",
+    "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0054.root": "445650d124d7758e8d3a69d2c3e215e9b95f3acccc213fd9c14bbabacc763e5c",
+    "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0055.root": "134da5c9a3acb056d5bbed66f057110c506c43d3e0524936906002e56d74007c",
+    "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0056.root": "4f99f5168a4c02c6d6c2984a53ce979dbfce7ce2790fed220d6957194135d3cb",
+    "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0057.root": "ed7c738068ecb1f6b71ce76da170fc280262a84571fe2ba6129e5015b0b4de16",
+    "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0058.root": "d2324f6ffa4c05b387c18ff8b48b8589592a1bb9e30d9b3c67d7f5f3f1fe39a1",
+    "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0059.root": "64fced477c9c45f9726cde0d466c15a6d776b8bb1b22a0043510dc73c884ae0e",
+    "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0060.root": "f466b5af260d9fadba426280f6313bac1381c1441c569c7094a8a9d61373030d",
+    "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0061.root": "c57d1f18f79f11fb0d3a0bbbf42f978cff1ec704dc08337c600c17354099d61d",
+    "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0062.root": "2530c56acb462473c6b5c316c0689491ec044f01a8c623624eebafbd271fdfbe",
+    "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0063.root": "3fd42501e2c53a914b535616bc7bb7b8fb5554cd4f46d890023db6877a720a53",
+    "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0064.root": "e6661362dc89d934f42d1fa177bcb99e9c89e294b2f157a09ec1df4e50c89252",
+    "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_0065.root": "fd443fd416e8e64b25f4358754c1cc7042a8c3b61c5a13fd82276873807e07bb",
+    "/home/billy/ccb-data/data/extracted/sorted-b/hrdb_run_0044-sorted.root": "ee136d5037e074c20a1711aa093f3c217f2f5271a9e3ae5a564ab726cfae5488",
+    "/home/billy/ccb-data/data/extracted/sorted-b/hrdb_run_0045-sorted.root": "2700169249129f21fb48164d51bee0cb5adb9ba5670c791d5246a78f3c5f1a05",
+    "/home/billy/ccb-data/data/extracted/sorted-b/hrdb_run_0046-sorted.root": "67714b8c75073cfe1746a6cc7223c65fc692fa5b93918aaa4efe717b8d623c1f",
+    "/home/billy/ccb-data/data/extracted/sorted-b/hrdb_run_0047-sorted.root": "21c01ab603eeddcf14bf156c106c0c26d60a433b779fbde4df825b49120de9d5",
+    "/home/billy/ccb-data/data/extracted/sorted-b/hrdb_run_0048-sorted.root": "181e3e77d2ca32eb5d0731e03a71d35eed366cfd15ac1e4f76869ed22adc3d93",
+    "/home/billy/ccb-data/data/extracted/sorted-b/hrdb_run_0049-sorted.root": "d09432ed35abe5fe090ee5af438572895a19d24f4dc812fe32dafd8927bdeb4f",
+    "/home/billy/ccb-data/data/extracted/sorted-b/hrdb_run_0050-sorted.root": "f787bb0cca1937a39df8ba530023aa0fc68eeb83e150f420576eddd45aef65f8",
+    "/home/billy/ccb-data/data/extracted/sorted-b/hrdb_run_0051-sorted.root": "e3c3bc2e9e9ff7aaa6742270c446734d21892469281ecf9ff197878845bfb2eb",
+    "/home/billy/ccb-data/data/extracted/sorted-b/hrdb_run_0052-sorted.root": "f5126e6a92dd7e49316b058a5df0685615b92b1b7f7aba702d812e4a2b552b94",
+    "/home/billy/ccb-data/data/extracted/sorted-b/hrdb_run_0053-sorted.root": "b4683acf9a0054d7f5449c6c5f1a106cb4aeaea005eac00977ec6cbcf59cc341",
+    "/home/billy/ccb-data/data/extracted/sorted-b/hrdb_run_0054-sorted.root": "ff256cdf850531b641120108ad2fae3d64c54db67d2a5cfe63cfd6a97f025185",
+    "/home/billy/ccb-data/data/extracted/sorted-b/hrdb_run_0055-sorted.root": "da1c2306be84c1288b32af2425a6c9d81a1c15405961f498f78a045b2766ff20",
+    "/home/billy/ccb-data/data/extracted/sorted-b/hrdb_run_0056-sorted.root": "081984462a6566ae0f57ffcffbe2ecad4b8b1e901437059320968ada7debc23d",
+    "/home/billy/ccb-data/data/extracted/sorted-b/hrdb_run_0057-sorted.root": "feb3299913b2e6fda170ff9b9d5bb936d9ceca3f229f3d9002c84011f0e86ef0",
+    "/home/billy/ccb-data/data/extracted/sorted-b/hrdb_run_0058-sorted.root": "f4f2eb974552b91dd560a2ff77121977ba7d923ee61ee38074ae78bd11e61b52",
+    "/home/billy/ccb-data/data/extracted/sorted-b/hrdb_run_0059-sorted.root": "6a2b1b539c9c52facb2dc0b1b8937129b0b27f0c46f798b2322fe64c4850a36e",
+    "/home/billy/ccb-data/data/extracted/sorted-b/hrdb_run_0060-sorted.root": "d9e62c536e7c4c81f0e0882c18fb5d683bf2c1d4ff453d0739d621987c99f4c8",
+    "/home/billy/ccb-data/data/extracted/sorted-b/hrdb_run_0061-sorted.root": "c68cbb4998546f4d76c8cf65013b0c21e0a0ed7fd425c0ff126e274cfd54f16f",
+    "/home/billy/ccb-data/data/extracted/sorted-b/hrdb_run_0062-sorted.root": "086f08ac0db1c01220ccdd81c22fd487d5fc6d9176caf68458751ead04910acb",
+    "/home/billy/ccb-data/data/extracted/sorted-b/hrdb_run_0063-sorted.root": "b4d29c549c305e912d63bfb0fde8a2a9540f67800c03039eb76c3f14ffff4abe",
+    "/home/billy/ccb-data/data/extracted/sorted-b/hrdb_run_0064-sorted.root": "1d4405ad8340ebcf29d1ae58eb9b55f1187be3c3518bdb80ce394a8fb1d521f0",
+    "/home/billy/ccb-data/data/extracted/sorted-b/hrdb_run_0065-sorted.root": "6fcd467740c34e5a5af965cc9aa73f582ada8c1601284db0740ef5eb6325ab9f"
+  },
+  "output_sha256": {
+    "REPORT.md": "d1411a73b817b949d2bca0b53bc4d73dc10b86c66433a59c2986f80379db8e9b",
+    "benchmark_by_run.csv": "0db8e0e25ba06f94ca5b02ae039079ac74c5e367b20c5a73ff23969481e8e30e",
+    "benchmark_deltas_vs_traditional.csv": "cb4814efa3e0d8057466f24ac03f727b37c5bd90c096ca245a4eeaae58ddfc8c",
+    "benchmark_summary.csv": "4dc90f959621a6b9a4d02bb2f0ae45bac67aacd2784cf6ca5276aeb19adb7f9b",
+    "claimed_ticket.txt": "0c30f63e6b6821eebbddaa35ed076ae9d7b02df1b11022a39ee152d5fb6a65f7",
+    "config.json": "2cb7526851d17d5f6e9d9147f1f5c3478c70f902f26ce2693c620886edb2ab76",
+    "figures/fig_s16i_delta_bootstrap.png": "1efa02c5d297d9dbe1feb52fa718fafdbffa903525cd9f2ab9a4b368a24678ab",
+    "figures/fig_s16i_head_to_head.png": "e07ef0cc010e1ed32b84b6464e391e9a23688561576abc302eae83339c440142",
+    "figures/fig_s16i_mc_pending.png": "8a9d5e90770f61fb0af0bd63ebb7ed20fd6f2926369e08adacf2900ce70321fe",
+    "figures/fig_s16i_reproduction_sanity.png": "4d74e031133ade303c40dbc5e8626b7068cbf447c430b291fe9490d94438b628",
+    "figures/fig_s16i_residual_distributions.png": "e3c29511e91194d217011972d8301cbc35a058a446349e5ba3615c61493eb8aa",
+    "figures/fig_s16i_run_split.png": "fae0fc6a156c84f19a9df4916ab2b07840351e22f708144232afab9109eba06c",
+    "leakage_controls.csv": "66c668193666a7748842dc8ef0e905234a2417b473640cf70e264ef6ede053d1",
+    "model_train_diagnostics.csv": "697fb915adf8adef793a8941fe205d81e5de25d1ff47a50502f9b00db88e4745",
+    "reproduction_gate.csv": "63d644f2af7807094c8a35bfeb87c685c88387dda9f0f41fdcbd86c316305c0e",
+    "result.json": "b32ec9fc8b811421e45d7d3ae8b16efe85348b8f0b025ae48b21cdd058afac26",
+    "run_p11c_bakeoff.py": "225781dc5c10db79fcd0b1225a8dadc42f076c08eea8617c808033c0bc8bfe1c",
+    "timing_pulses.parquet": "ed5dd1b160778e161da5068781f17f0b509fb1f4b0ffa7959d6236f66d3c2564"
+  },
+  "runner": "reports/2420__p11c_learned_pedestal_residual_timing_tail_bakeoff/run_p11c_bakeoff.py",
+  "ticket": "2420",
+  "worker": "testbeam-laptop-3"
+}

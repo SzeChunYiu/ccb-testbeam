@@ -1,0 +1,138 @@
+{
+  "bootstrap": {
+    "paired": true,
+    "replicates": 300,
+    "unit": "held-out run"
+  },
+  "claim_helper_output": {
+    "reran_claim": false,
+    "stderr": "null",
+    "stdout": "# null\n\nnull"
+  },
+  "claimed_ticket_text": "claim_helper_command: tn-ticket claim testbeam-laptop-3 --project testbeam\nclaim_helper_stderr:\nnull\nclaim_helper_stdout:\n# null\n\nnull\nmanual_claim_issue: 2513\nmanual_claim_command: gh issue edit 2513 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-3 --remove-label factory:open\n#2513 NEW S58a causal pedestal-phase pulse-shape timing atlas\nQuestion: Can a causal pedestal-state plus phase model separate pulse-shape drift from timing bias under mild pile-up?\n\nCompare traditional generalized least-squares matched-template/CFD fits against ridge, gradient-boosted trees, MLP, 1D-CNN, and a small waveform transformer. Use run-heldout splits, pedestal strata, pile-up strata, and bootstrap CIs for timing bias, sigma68, shape residuals, and failure rates.\n\nDeliverable: a compact scoreboard plus calibration plots identifying where pedestal memory changes pulse shape versus timing pickoff.\n",
+  "done_command": "tn-ticket done 2513",
+  "git_commit": "d3b6702f2a91f6814d2523fe683cdb35d9391c6b",
+  "input_root_files": 33,
+  "issue_number": 2513,
+  "issue_url": "https://github.com/SzeChunYiu/factory-tickets/issues/2513",
+  "methods": [
+    "uncorrected_cfd20",
+    "traditional_matched_filter_template",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "one_dimensional_cnn",
+    "compact_pair_transformer",
+    "causal_pedestal_phase_cnn_new"
+  ],
+  "n_pairs": 18098,
+  "next_tickets": [
+    {
+      "body": "Repeat the S58a pedestal-phase timing panel against an external clock/trigger reference rather than same-event downstream-pair residuals, preserving the same run-held-out split and pedestal/pile-up strata. Expected information gain: separates absolute timing improvement from pair-symmetry corrections that may cancel common-mode errors.",
+      "title": "S58c: external trigger validation of causal pedestal-phase timing corrections"
+    }
+  ],
+  "outputs": [
+    "REPORT.md",
+    "result.json",
+    "reproduction_counts.csv",
+    "input_sha256.csv",
+    "pair_rows.csv.gz",
+    "method_predictions.csv.gz",
+    "method_metrics.csv",
+    "per_run_metrics.csv",
+    "bootstrap_metrics.csv",
+    "stratified_metrics.csv",
+    "method_sigma68.png",
+    "residual_distributions.png",
+    "claimed_ticket.txt",
+    "config.json",
+    "manifest.json"
+  ],
+  "primary_metric": "sigma68_ns",
+  "raw_reproduction": {
+    "all_pass": true,
+    "rows": [
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "total selected B-stave pulses",
+        "report_value": 640737,
+        "reproduced": 640737,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_ii_analysis selected_pulses",
+        "report_value": 125096,
+        "reproduced": 125096,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_ii_analysis B2",
+        "report_value": 88213,
+        "reproduced": 88213,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_ii_analysis B4",
+        "report_value": 21229,
+        "reproduced": 21229,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_ii_analysis B6",
+        "report_value": 11148,
+        "reproduced": 11148,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_ii_analysis B8",
+        "report_value": 4506,
+        "reproduced": 4506,
+        "tolerance": 0
+      }
+    ]
+  },
+  "runtime_seconds": 105.713,
+  "split": "leave-one-run-out over Sample-II analysis runs",
+  "status": "complete",
+  "study": "S58a",
+  "ticket": "2513",
+  "title": "causal pedestal-phase pulse-shape timing atlas",
+  "traditional_method": "traditional_matched_filter_template",
+  "winner": "mlp",
+  "winner_metrics": {
+    "bias_ns": -0.017275046790413202,
+    "bias_ns_ci_high": 0.07619164883550594,
+    "bias_ns_ci_low": -0.07054486600395833,
+    "delta_sigma68_vs_traditional_ns_ci_high": -0.6442714915871989,
+    "delta_sigma68_vs_traditional_ns_ci_low": -0.7505612145790446,
+    "failure_rate": 0.0,
+    "failure_rate_ci_high": 0.0,
+    "failure_rate_ci_low": 0.0,
+    "method": "mlp",
+    "n_pairs": 18098,
+    "phase_shape_residual_gap_ns": 0.09890903292438746,
+    "phase_shape_residual_gap_ns_ci_high": 0.22273895970150326,
+    "phase_shape_residual_gap_ns_ci_low": 0.007355666212294875,
+    "rms_ns": 2.2626176873345587,
+    "sigma68_ns": 0.6022867809631766,
+    "sigma68_ns_ci_high": 0.6775483895329524,
+    "sigma68_ns_ci_low": 0.5234141626197234,
+    "tail_abs_gt_0p5_ns": 0.395679080561388,
+    "tail_abs_gt_0p5_ns_ci_high": 0.44583231130209106,
+    "tail_abs_gt_0p5_ns_ci_low": 0.3451639405557216,
+    "tail_abs_gt_1p0_ns": 0.14741960437617416
+  },
+  "worker": "testbeam-laptop-3"
+}

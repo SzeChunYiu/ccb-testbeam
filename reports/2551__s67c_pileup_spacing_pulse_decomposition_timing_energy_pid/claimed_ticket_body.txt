@@ -1,0 +1,3 @@
+Academic study: map pile-up onset, pulse spacing, and decomposition ambiguity into timing, energy, and PID observables, including saturation and pedestal interactions.
+
+Compare a traditional sparse two/three-pulse template deconvolution and optimal-filter baseline against ridge regression, gradient-boosted trees, MLP, 1D-CNN, and transformer sequence models. Use run-blocked validation and bootstrap CIs for pulse-count accuracy, spacing error, timing resolution, energy bias, PID stability, saturation-tagged residuals, and pedestal-conditioned robustness.

@@ -1,0 +1,6 @@
+method,model_family,n_train_pulses,n_features,feature_policy,feature_set_sha256,alpha,max_iter,hidden,channels
+ridge_waveform_amp_shape_stave,ridge,11444,32,"same as waveform_amp_shape, except explicit downstream stave one-hot is intentionally included",1b446ae3182d6c963be58fa589ff72a164684e305eb741ee51fc5c1dec129573,100.0,,,
+hgb_waveform_amp_shape_stave,gradient_boosted_trees,11444,32,"same as waveform_amp_shape, except explicit downstream stave one-hot is intentionally included",1b446ae3182d6c963be58fa589ff72a164684e305eb741ee51fc5c1dec129573,,80.0,,
+mlp_waveform_amp_shape_stave,mlp,11444,32,"same as waveform_amp_shape, except explicit downstream stave one-hot is intentionally included",1b446ae3182d6c963be58fa589ff72a164684e305eb741ee51fc5c1dec129573,,,32.0,
+cnn1d_waveform_amp_shape_stave,1d_cnn,11444,32,"same as waveform_amp_shape, except explicit downstream stave one-hot is intentionally included",1b446ae3182d6c963be58fa589ff72a164684e305eb741ee51fc5c1dec129573,,,,8.0
+feature_gated_waveform_amp_shape_stave,new_feature_gated_architecture,11444,32,"same as waveform_amp_shape, except explicit downstream stave one-hot is intentionally included",1b446ae3182d6c963be58fa589ff72a164684e305eb741ee51fc5c1dec129573,,,24.0,

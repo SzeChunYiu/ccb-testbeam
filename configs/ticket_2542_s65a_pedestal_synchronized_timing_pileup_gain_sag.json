@@ -1,0 +1,46 @@
+{
+  "ticket_id": "2542",
+  "ticket_number": 2542,
+  "study_id": "S65a",
+  "worker": "testbeam-laptop-3",
+  "title": "pedestal-synchronized pulse-shape timing under pile-up and gain sag",
+  "claimed_ticket_text": "2542\n# NEW S65a pedestal-synchronized pulse-shape timing under pile-up and gain sag\n\nAcademic-grade study: compare a constant-fraction discriminator with template cross-correlation and analytic time-walk correction against ridge regression, gradient-boosted trees, MLP waveform regressors, 1D-CNN encoders, and a compact transformer where sequence length supports attention.\n\nQuantify pulse-shape, leading-edge timing, pedestal-memory, pile-up spacing, and saturation/gain-sag effects using run-blocked splits, leakage checks, and bootstrap confidence intervals on timing bias, sigma68, tail risk, and energy/PID-conditioned residuals.\n",
+  "claim_command_output": "null\n# null\n\nnull\n",
+  "manual_claim_workaround": {
+    "reason": "tn-ticket claim returned malformed null output even though direct GitHub inspection showed open project:testbeam tickets and no issue labeled worker:testbeam-laptop-3; the helper was not run a second time.",
+    "issue": 2542,
+    "command": "gh issue edit 2542 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-3 --remove-label factory:open"
+  },
+  "output_dir": "reports/2542__s65a_pedestal_synchronized_pulse_shape_timing_pileup_gain_sag",
+  "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+  "samples_per_channel": 18,
+  "baseline_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "duplicate_readout_channels": {"B2": 1, "B4": 3, "B6": 5, "B8": 7},
+  "expected_selected_pulses": 640737,
+  "expected_group_counts": {
+    "sample_i_calib": 248745,
+    "sample_i_analysis": 252266,
+    "sample_ii_calib": 14630,
+    "sample_ii_analysis": 125096
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "heldout_runs": [42, 50, 57, 58, 60, 62, 64, 65],
+  "max_per_run_stave": 180,
+  "bootstrap_replicates": 500,
+  "random_seed": 20650042,
+  "mlp_max_iter": 35,
+  "nn": {
+    "epochs": 6,
+    "transformer_epochs": 5,
+    "batch_size": 1024,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001
+  }
+}

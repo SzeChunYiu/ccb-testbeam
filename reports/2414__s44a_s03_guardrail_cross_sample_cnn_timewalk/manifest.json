@@ -1,0 +1,82 @@
+{
+  "ticket_id": "2414",
+  "issue_number": 2414,
+  "study_id": "S44a",
+  "worker": "testbeam-laptop-2",
+  "claim_command_invoked_once": "tn-ticket claim testbeam-laptop-2 --project testbeam",
+  "manual_claim_recovery_note": "The command returned the documented null pseudo-ticket; issue #2414 was then label-swapped manually to factory:claimed + worker:testbeam-laptop-2.",
+  "done_command": "tn-ticket done 2414",
+  "winner": "analytic_s03_timewalk",
+  "artifacts": [
+    {
+      "path": "REPORT.md",
+      "bytes": 31669,
+      "sha256": "0d7977896e39da9250332c4d9010df3ecc86c8d7548814f491fd6d83a4434837"
+    },
+    {
+      "path": "amplitude_tail_exclusion.csv",
+      "bytes": 2461,
+      "sha256": "186acdac355180c0fd04feae68921b5417e34fbae326e7c5470d345ce16b6a0d"
+    },
+    {
+      "path": "benchmark_rows.csv.gz",
+      "bytes": 5996749,
+      "sha256": "8de388ad9e48d56695c44a4631631951e3006ab9e18411003f413a545d8880a3"
+    },
+    {
+      "path": "by_run.csv",
+      "bytes": 23628,
+      "sha256": "876c245feaa272e8aa201565eabdabd521c4d2617f4625993eae400f789d9fe3"
+    },
+    {
+      "path": "claimed_ticket.txt",
+      "bytes": 726,
+      "sha256": "fe13c6052c835aded64d3dd265592eb5c9e89924e4ee7a63bf13514eb26c4819"
+    },
+    {
+      "path": "input_sha256.csv",
+      "bytes": 3668,
+      "sha256": "54976b00159f9c496bb8f47f3db19e9b1593ba296346c8f6a5bc76aa2d5ea868"
+    },
+    {
+      "path": "method_deltas_full_transfer.csv",
+      "bytes": 2112,
+      "sha256": "37acc8007d0abca56c98b8ab944b8b6fcd89f9d9fe06ec622b5c3a2f871943c4"
+    },
+    {
+      "path": "method_deltas_support_matched.csv",
+      "bytes": 2116,
+      "sha256": "dd97eff0a40db4418ecda7f8f70a8e8487adf14dfc3968fd3d8cd366dada1714"
+    },
+    {
+      "path": "metrics_full_transfer.csv",
+      "bytes": 2167,
+      "sha256": "d89d722fe9da08ad0c5697fa1724a5744a1d207938a6f70fa66a5c6528312237"
+    },
+    {
+      "path": "metrics_support_matched.csv",
+      "bytes": 2173,
+      "sha256": "6596588f580b9daacf0c8d3ec53471a60dc5994d415f10a25b8612741e286cf3"
+    },
+    {
+      "path": "predictions.csv.gz",
+      "bytes": 2277766,
+      "sha256": "87457283741201a952d64d15e71936d11803fbb9c28329700b1f3e292925e7ed"
+    },
+    {
+      "path": "reproduction.csv",
+      "bytes": 299,
+      "sha256": "962a281223ae2d6280d815498dfe7f7042b684acc1de55aa6fee4e305eb9fb24"
+    },
+    {
+      "path": "result.json",
+      "bytes": 28434,
+      "sha256": "831d8c3cdd8de7c4d2d78d61911bd9e6e1a26e19704b73b51e0a7223961112e5"
+    },
+    {
+      "path": "strata.csv",
+      "bytes": 13352,
+      "sha256": "0a34987e00d6c136f2d30f75ed44701d009af516ac3308a7724f99cceb7fe128"
+    }
+  ]
+}

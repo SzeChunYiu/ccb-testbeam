@@ -1,104 +1,61 @@
 {
-  "ticket_id": "2502",
-  "issue_number": 2502,
-  "project": "testbeam",
+  "ticket_id": "2414",
+  "issue_number": 2414,
+  "study_id": "S44a",
   "worker": "testbeam-laptop-2",
-  "status": "complete",
-  "winner": "saturation_residual_fusion_new",
-  "winner_metrics": {
-    "name": "saturation_residual_fusion_new",
-    "criterion": "minimum held-out composite saturation-energy closure score with run-block bootstrap CIs reported",
-    "winner_score": 0.15172443008737868,
-    "energy_fractional_bias": -0.002906610021787798,
-    "energy_fractional_sigma68": 0.068387783415775,
-    "energy_fractional_sigma68_ci95": [
-      0.06183707932660469,
-      0.0751855124441164
-    ],
-    "time_sigma68_ns": 8.023902762892945,
-    "time_sigma68_ci95": [
-      7.365407249564567,
-      8.669358478772935
-    ],
-    "pileup_miss_rate": 0.32564102564102565,
-    "false_split_rate": 0.13846153846153847,
-    "uncertainty_calibration": {
-      "method": "saturation_residual_fusion_new",
-      "n_valid_doublets": 263.0,
-      "median_abs_energy_residual": 0.04730265759532487,
-      "p68_abs_energy_residual": 0.0694272959931502,
-      "nominal_68_proxy_width": 0.034999999999999996,
-      "coverage_abs_resid_le_proxy": 0.3688212927756654,
-      "coverage_abs_resid_le_2proxy": 0.7034220532319392,
-      "calibration_ratio_p68_over_proxy": 1.9836370283757203
-    }
+  "title": "S03 guardrail-orthogonal cross-sample CNN timewalk adoption audit",
+  "artifacts": {
+    "report": "reports/2414__s44a_s03_guardrail_cross_sample_cnn_timewalk/REPORT.md",
+    "result": "reports/2414__s44a_s03_guardrail_cross_sample_cnn_timewalk/result.json",
+    "manifest": "reports/2414__s44a_s03_guardrail_cross_sample_cnn_timewalk/manifest.json",
+    "metrics_support_matched": "reports/2414__s44a_s03_guardrail_cross_sample_cnn_timewalk/metrics_support_matched.csv",
+    "metrics_full_transfer": "reports/2414__s44a_s03_guardrail_cross_sample_cnn_timewalk/metrics_full_transfer.csv",
+    "method_deltas_support_matched": "reports/2414__s44a_s03_guardrail_cross_sample_cnn_timewalk/method_deltas_support_matched.csv",
+    "amplitude_tail_exclusion": "reports/2414__s44a_s03_guardrail_cross_sample_cnn_timewalk/amplitude_tail_exclusion.csv",
+    "raw_reproduction": "reports/2414__s44a_s03_guardrail_cross_sample_cnn_timewalk/reproduction.csv"
   },
-  "raw_root_reproduction": {
-    "passed": true,
-    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
-    "expected_selected_pulses": 640737,
-    "reproduced_selected_pulses": 640737,
+  "raw_root_reproduction_gate": {
+    "quantity": "registered B-stack selected-pulse count from raw h101/HRDv",
+    "reproduced": 640737,
+    "expected": 640737,
     "delta": 0,
-    "evidence_table": "reproduction_match_table.csv"
+    "pass": true
   },
   "split": {
-    "split": "train and held-out sets are disjoint by source run",
-    "train_runs": [
-      50,
-      51,
-      52,
-      53,
-      54,
-      55,
-      56,
-      57
-    ],
-    "heldout_runs": [
-      58,
-      60,
-      62,
-      64,
-      65
-    ],
-    "adc_clip": 11800.0,
-    "bootstrap": "held-out run-block percentile 95% CI",
-    "bootstrap_replicates": 400,
-    "negative_control": "clipped clean single-pulse controls with matched source-run distribution",
-    "winner_score": "energy_fractional_sigma68 + 0.20*abs(energy_fractional_bias) + 0.008*time_sigma68_ns + 0.04*pileup_miss_rate + 0.04*false_split_rate"
+    "split_unit": "run",
+    "train_runs": [58, 59, 60, 61, 62, 63, 65],
+    "heldout_runs": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 64],
+    "train_rows": 3599,
+    "heldout_rows": 6628,
+    "heldout_support_matched_rows": 4148,
+    "bootstrap_replicates": 400
   },
-  "required_method_coverage": {
-    "traditional": "analytic_clipped_template_sideband_traditional",
-    "ridge": "ridge",
-    "gradient_boosted_trees": "gradient_boosted_trees",
-    "mlp": "mlp",
-    "one_dimensional_cnn": "1d_cnn",
-    "transformer_sequence_model": "tiny_sequence_transformer",
-    "new_architecture": "saturation_residual_fusion_new"
+  "guardrails": {
+    "waveform_only_cnn": true,
+    "stave_offset_residualized_target": true,
+    "no_stave_one_hot": true,
+    "no_run_or_event_id_features": true,
+    "support_matched_primary_domain": true,
+    "amplitude_tail_exclusion_test": true
   },
-  "required_outputs": {
-    "injected_overlap_closure": "method_metrics.csv, run_heldout_metrics.csv, event_predictions.csv",
-    "real_data_sideband_validation": "real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "saturation_mask_ablation.csv",
-    "uncertainty_calibration": "uncertainty_calibration.csv",
-    "traditional_vs_neural_failure_interpretation": "REPORT.md"
+  "primary_metric": "support-matched held-out run-block bootstrap sigma68_ns; lower is better",
+  "methods": [
+    "analytic_s03_timewalk",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "1d_cnn_waveform_only",
+    "guardrail_orthogonal_edge_transformer_new"
+  ],
+  "winner": {
+    "method": "analytic_s03_timewalk",
+    "sigma68_ns": 1.03713066553142,
+    "sigma68_ns_ci95": [0.7259982563898952, 1.2869684388614495],
+    "bias_ns": 0.17779480599451314,
+    "bias_ns_ci95": [-0.06778225488045674, 0.3354822058979832]
   },
-  "artifacts": {
-    "report": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/REPORT.md",
-    "result": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/result.json",
-    "method_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/method_metrics.csv",
-    "run_heldout_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/run_heldout_metrics.csv",
-    "real_data_sideband_validation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/saturation_mask_ablation.csv",
-    "uncertainty_calibration": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/uncertainty_calibration.csv"
-  },
-  "queue_provenance": {
-    "claimed_once": true,
-    "claim_command_run_once": "tn-ticket claim testbeam-laptop-2 --project testbeam",
-    "claim_command_output": "null / # null / null",
-    "manual_claim_recovery": "gh issue edit 2502 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-2 --remove-label factory:open",
-    "done_command": "tn-ticket done 2502",
-    "novel_tickets_appended": []
-  },
-  "done_command": "tn-ticket done 2502",
+  "conclusion": "The guardrailed cross-sample audit does not support adopting the prior CNN lift: analytic S03 wins on the support-matched primary domain, while waveform-only CNN and guardrail-orthogonal edge transformer are substantially worse.",
+  "claim_command_invoked_once": "tn-ticket claim testbeam-laptop-2 --project testbeam",
+  "manual_claim_recovery_note": "The required claim command returned the documented null pseudo-ticket due to issue #2413; issue #2414 was manually label-swapped to factory:claimed + worker:testbeam-laptop-2 without invoking claim again.",
   "novel_tickets_appended": []
 }

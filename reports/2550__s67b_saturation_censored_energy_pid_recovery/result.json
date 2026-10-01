@@ -1,0 +1,93 @@
+{
+  "ticket_id": "2550",
+  "issue_number": 2550,
+  "issue_url": "https://github.com/SzeChunYiu/factory-tickets/issues/2550",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-3",
+  "status": "complete",
+  "title": "S67b saturation-censored energy and PID recovery with pedestal-state calibration",
+  "claim_provenance": {
+    "single_required_claim_command": "tn-ticket claim testbeam-laptop-3 --project testbeam",
+    "single_required_claim_output": "null / # null / null",
+    "manual_recovery": "After the single tn-ticket claim invocation returned the known null pseudo-ticket and #2549 was lost by documented worker-label tie-break, issue #2550 was label-swapped manually without rerunning claim.",
+    "claimed_issue": 2550
+  },
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "split": {
+    "scheme": "held-out by source run with run-block bootstrap confidence intervals",
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "bootstrap_replicates": 500
+  },
+  "required_method_coverage": {
+    "traditional": "deltaE_over_E_likelihood_template",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "transformer_sequence_model": "joint_sequence_transformer",
+    "new_architecture": "template_residual_boosted_stack_new"
+  },
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "family": "gradient_boosted_trees",
+    "criterion": "minimum S67b saturation-censored energy/PID composite loss",
+    "winner_score": 0.2981587197793549,
+    "pid_auc": 0.9105568615927123,
+    "pid_auc_ci95": [
+      0.8780723340447454,
+      0.9373920393987284
+    ],
+    "energy_sigma68_frac": 0.18022649497804566,
+    "energy_sigma68_frac_ci95": [
+      0.16449320246615334,
+      0.2012403768919843
+    ],
+    "saturated_energy_sigma68_frac": 0.09262675997114728,
+    "saturated_energy_sigma68_frac_ci95": [
+      0.07804699715999458,
+      0.10418627016137699
+    ],
+    "pid_boundary_drift": 0.1924090773684396,
+    "pid_boundary_drift_ci95": [
+      0.1371472723409034,
+      0.5859980927551962
+    ],
+    "pedestal_calibration_transfer": 0.013592867723701212,
+    "pedestal_calibration_transfer_ci95": [
+      0.0026688894436989186,
+      0.09385969213254683
+    ],
+    "pileup_miss_rate": 0.30606060606060603,
+    "false_split_rate": 0.24545454545454545
+  },
+  "artifacts": {
+    "report": "reports/2550__s67b_saturation_censored_energy_pid_recovery/REPORT.md",
+    "root_report": "REPORT.md",
+    "result": "reports/2550__s67b_saturation_censored_energy_pid_recovery/result.json",
+    "root_result": "result.json",
+    "method_metrics": "reports/2550__s67b_saturation_censored_energy_pid_recovery/method_metrics.csv",
+    "run_heldout_metrics": "reports/2550__s67b_saturation_censored_energy_pid_recovery/run_heldout_metrics.csv",
+    "pid_boundary_drift": "reports/2550__s67b_saturation_censored_energy_pid_recovery/pid_boundary_drift.csv",
+    "pedestal_transfer_metrics": "reports/2550__s67b_saturation_censored_energy_pid_recovery/pedestal_transfer_metrics.csv",
+    "pileup_failure_modes": "reports/2550__s67b_saturation_censored_energy_pid_recovery/pileup_failure_modes.csv",
+    "input_sha256": "reports/2550__s67b_saturation_censored_energy_pid_recovery/input_sha256.csv"
+  },
+  "novel_tickets_appended": [],
+  "done_command": "tn-ticket done 2550",
+  "git_commit": "cec9edc28257e0699c70c17fa9b2e8d806a3d42a",
+  "python": "3.11.14",
+  "elapsed_seconds": 83.92002391815186
+}

@@ -1,0 +1,130 @@
+{
+  "ticket_id": "2540",
+  "study_id": "S55c",
+  "generated_at_unix": 1786882978.5493295,
+  "command": "/home/billy/anaconda3/bin/python scripts/ticket_2540_s64c_pid_boundary_stability_representations.py --skip-base",
+  "artifacts": [
+    {
+      "path": "reports/2540__s64c_pid_boundary_stability_representations/REPORT.md",
+      "sha256": "ec5db1118911d2f22c28ffab7b28ad8a8a791f94adb7c290805d862a6bf6594a",
+      "bytes": 41831
+    },
+    {
+      "path": "reports/2540__s64c_pid_boundary_stability_representations/attribution_ablation_table.csv",
+      "sha256": "8aeacd8e8498d6b5857df1aa1c0af9c3fe0b25699b2bc90c33a0cc7f93415b8e",
+      "bytes": 85288
+    },
+    {
+      "path": "reports/2540__s64c_pid_boundary_stability_representations/calibration_curves.csv",
+      "sha256": "f28a23771f5e76580cdf2ed968cf3889a2d0e328d6d1001f2ff3a7817906c2c0",
+      "bytes": 49937
+    },
+    {
+      "path": "reports/2540__s64c_pid_boundary_stability_representations/calibration_ece.csv",
+      "sha256": "6dbcae1d8f8bd2aea96f6563ebb780ed8f5a7899796b371500a3c56e2ef8d029",
+      "bytes": 5972
+    },
+    {
+      "path": "reports/2540__s64c_pid_boundary_stability_representations/claimed_ticket.txt",
+      "sha256": "c24e059c2d3d3f02b94aea73d2c9c8fbde532c5becf20cd8f05c6ace5a5048e1",
+      "bytes": 317
+    },
+    {
+      "path": "reports/2540__s64c_pid_boundary_stability_representations/endpoint_method_summary.csv",
+      "sha256": "0238d46fedf83be9fba9141881bbe0b795135889ab6683de4469cec79ea0e614",
+      "bytes": 10581
+    },
+    {
+      "path": "reports/2540__s64c_pid_boundary_stability_representations/feature_ablation_systematics.csv",
+      "sha256": "0d03bd327a16236cdccc658a7ffc4939ec3ab751884ba77fc7c39b755018d101",
+      "bytes": 97138
+    },
+    {
+      "path": "reports/2540__s64c_pid_boundary_stability_representations/feature_family_audit.csv",
+      "sha256": "c635a2d72a26444f81cf00e9d9beab6ec2de60cbf2dc8e79874ff9ef08fcefa7",
+      "bytes": 1425
+    },
+    {
+      "path": "reports/2540__s64c_pid_boundary_stability_representations/heldout_predictions.csv.gz",
+      "sha256": "72fa5e558d29ddce2bf19db7ee15e12d223206896bb3ae8537baad1be45a4964",
+      "bytes": 1965381
+    },
+    {
+      "path": "reports/2540__s64c_pid_boundary_stability_representations/heldout_predictions_with_strata.csv.gz",
+      "sha256": "c6e02ed34344bf99632a1b37c4f24df18cd8844a0a499e11bc512aeeec76e8b8",
+      "bytes": 2513639
+    },
+    {
+      "path": "reports/2540__s64c_pid_boundary_stability_representations/heldout_strata_assignments.csv",
+      "sha256": "aa2895c7eae29455ed5e09b78c48d2ab347fc42eda1b9112fe5e08b41e7e96a1",
+      "bytes": 956138
+    },
+    {
+      "path": "reports/2540__s64c_pid_boundary_stability_representations/joint_scoreboard.csv",
+      "sha256": "5488a5fbc30ca4797eb0030838b5345cede6e57bc0b99979a69336dad07e8f1e",
+      "bytes": 2367
+    },
+    {
+      "path": "reports/2540__s64c_pid_boundary_stability_representations/leakage_audit.csv",
+      "sha256": "3c9aa924920b3ff2a513b7339c15d8f225ba60d1265ead8d58b4108538dfc893",
+      "bytes": 2920
+    },
+    {
+      "path": "reports/2540__s64c_pid_boundary_stability_representations/negative_control_pedestal_shuffles.csv",
+      "sha256": "bb986acd85b1ec4b951a2255b9645beb52d74ea2a74842b8e461e5c1b39affb2",
+      "bytes": 1975
+    },
+    {
+      "path": "reports/2540__s64c_pid_boundary_stability_representations/paired_bootstrap_deltas.csv",
+      "sha256": "535d5660f5e605a16e9ba3d2ff947bb54edcfdfa63ef384beb3f2479d6adfc9b",
+      "bytes": 10256
+    },
+    {
+      "path": "reports/2540__s64c_pid_boundary_stability_representations/pedestal_state_heldout_bootstrap.csv",
+      "sha256": "5babff8a06f16fa8ca3179998e58c13e5ef945029b1ffbcd94e8b449d3dfcdbe",
+      "bytes": 23353
+    },
+    {
+      "path": "reports/2540__s64c_pid_boundary_stability_representations/pid_boundary_stability.csv",
+      "sha256": "6885b1818a1a1807bb704810a8e7f300160d5cdebe31490e1b3f4256b349760b",
+      "bytes": 35427
+    },
+    {
+      "path": "reports/2540__s64c_pid_boundary_stability_representations/pileup_multiplicity_proxy_table.csv",
+      "sha256": "a522c4075174f0b95e75dbb270fe901b49aa18341a9937cec16caa372de8c07b",
+      "bytes": 17615
+    },
+    {
+      "path": "reports/2540__s64c_pid_boundary_stability_representations/reproduction_counts_by_run.csv",
+      "sha256": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+      "bytes": 1896
+    },
+    {
+      "path": "reports/2540__s64c_pid_boundary_stability_representations/reproduction_match_table.csv",
+      "sha256": "30c27e630bc2f37a7e26cf4f3fac0ad2db556913c9a3725097ba16731535f2cf",
+      "bytes": 135
+    },
+    {
+      "path": "reports/2540__s64c_pid_boundary_stability_representations/result.json",
+      "sha256": "59c5d7f5988088a150002447428945767a178ee8773db1fb75f87b39b244ef73",
+      "bytes": 7786
+    },
+    {
+      "path": "reports/2540__s64c_pid_boundary_stability_representations/strata_metrics.csv",
+      "sha256": "11fe96013c551d3fd6ae907167284006fd03c3a4826a437b8f2d0dfea45b1708",
+      "bytes": 136953
+    },
+    {
+      "path": "reports/2540__s64c_pid_boundary_stability_representations/timing_bias_shift_table.csv",
+      "sha256": "8c910627e4430707d3b8eb8ddcd8b06d5586185410c9cad6dc32179906d756f7",
+      "bytes": 15724
+    },
+    {
+      "path": "reports/2540__s64c_pid_boundary_stability_representations/uncertainty_calibration_curves.csv",
+      "sha256": "f28a23771f5e76580cdf2ed968cf3889a2d0e328d6d1001f2ff3a7817906c2c0",
+      "bytes": 49937
+    }
+  ],
+  "s55c_wrapper_runtime_sec": 370.5821030139923,
+  "s64c_wrapper_runtime_sec": 193.63796257972717
+}

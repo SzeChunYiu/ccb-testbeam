@@ -1,104 +1,134 @@
 {
-  "ticket_id": "2502",
-  "issue_number": 2502,
+  "ticket_id": "2540",
+  "issue_number": 2540,
   "project": "testbeam",
-  "worker": "testbeam-laptop-2",
+  "worker": "testbeam-laptop-4",
   "status": "complete",
-  "winner": "saturation_residual_fusion_new",
+  "winner": "gradient_boosted_trees",
   "winner_metrics": {
-    "name": "saturation_residual_fusion_new",
-    "criterion": "minimum held-out composite saturation-energy closure score with run-block bootstrap CIs reported",
-    "winner_score": 0.15172443008737868,
-    "energy_fractional_bias": -0.002906610021787798,
-    "energy_fractional_sigma68": 0.068387783415775,
-    "energy_fractional_sigma68_ci95": [
-      0.06183707932660469,
-      0.0751855124441164
-    ],
-    "time_sigma68_ns": 8.023902762892945,
-    "time_sigma68_ci95": [
-      7.365407249564567,
-      8.669358478772935
-    ],
-    "pileup_miss_rate": 0.32564102564102565,
-    "false_split_rate": 0.13846153846153847,
-    "uncertainty_calibration": {
-      "method": "saturation_residual_fusion_new",
-      "n_valid_doublets": 263.0,
-      "median_abs_energy_residual": 0.04730265759532487,
-      "p68_abs_energy_residual": 0.0694272959931502,
-      "nominal_68_proxy_width": 0.034999999999999996,
-      "coverage_abs_resid_le_proxy": 0.3688212927756654,
-      "coverage_abs_resid_le_2proxy": 0.7034220532319392,
-      "calibration_ratio_p68_over_proxy": 1.9836370283757203
-    }
+    "method": "gradient_boosted_trees",
+    "mean_joint_loss": 0.035919232450476665,
+    "winner_details": {
+      "split_name": "particle_heldout",
+      "method": "gradient_boosted_trees",
+      "joint_loss": 0.05202958440109132,
+      "pid_separation": 0.9588006230529594,
+      "energy_scale": 0.1031598437847917,
+      "pileup_sideband": 0.9987963377094898,
+      "saturation_clipping": 0.9999267721148212,
+      "pedestal_noise_color": 0.8315686034492138,
+      "pulse_shape_harmonics": 0.9999147244302912,
+      "mean_joint_loss": 0.035919232450476665
+    },
+    "selection_rule": "minimum mean S64c PID-weighted joint loss across run-heldout and proxy particle-heldout splits",
+    "pid_boundary_operating_points": [
+      {
+        "split_name": "particle_heldout",
+        "method": "gradient_boosted_trees",
+        "n": 1759,
+        "runs": 33,
+        "auc": 0.9588006230529594,
+        "purity": 0.6428571428571429,
+        "efficiency": 0.9925233644859813,
+        "false_positive_rate": 0.24101307189542484,
+        "boundary_width_q90_q10": 13.202635444905209,
+        "auc_ci_low": 0.9519080831397397,
+        "auc_ci_high": 0.9649355821892478,
+        "purity_ci_low": 0.6058112694142106,
+        "purity_ci_high": 0.6789891877499754,
+        "efficiency_ci_low": 0.9821728605726304,
+        "efficiency_ci_high": 0.9983585617038915,
+        "false_positive_rate_ci_low": 0.19329007909478862,
+        "false_positive_rate_ci_high": 0.2850224055464296,
+        "boundary_width_q90_q10_ci_low": 13.029863131920695,
+        "boundary_width_q90_q10_ci_high": 13.2793532623138,
+        "run": null
+      },
+      {
+        "split_name": "run_heldout",
+        "method": "gradient_boosted_trees",
+        "n": 3816,
+        "runs": 8,
+        "auc": 0.9996184271176024,
+        "purity": 0.9932371505861136,
+        "efficiency": 0.9905575539568345,
+        "false_positive_rate": 0.009422110552763818,
+        "boundary_width_q90_q10": 14.700297084611893,
+        "auc_ci_low": 0.9993946209945539,
+        "auc_ci_high": 0.9998168938398361,
+        "purity_ci_low": 0.9900046535343824,
+        "purity_ci_high": 0.9953058060758823,
+        "efficiency_ci_low": 0.9835841152858019,
+        "efficiency_ci_high": 0.9951424058028501,
+        "false_positive_rate_ci_low": 0.0073634524786245405,
+        "false_positive_rate_ci_high": 0.01220604108201458,
+        "boundary_width_q90_q10_ci_low": 14.620845930353163,
+        "boundary_width_q90_q10_ci_high": 14.76123868065946,
+        "run": null
+      }
+    ]
   },
   "raw_root_reproduction": {
-    "passed": true,
-    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
+    "selected_pulses": 640737,
     "expected_selected_pulses": 640737,
-    "reproduced_selected_pulses": 640737,
     "delta": 0,
-    "evidence_table": "reproduction_match_table.csv"
+    "passed": true,
+    "samples_per_channel": 18
   },
   "split": {
-    "split": "train and held-out sets are disjoint by source run",
-    "train_runs": [
-      50,
-      51,
-      52,
-      53,
-      54,
-      55,
-      56,
-      57
-    ],
     "heldout_runs": [
+      42,
+      50,
+      57,
       58,
       60,
       62,
       64,
       65
     ],
-    "adc_clip": 11800.0,
-    "bootstrap": "held-out run-block percentile 95% CI",
-    "bootstrap_replicates": 400,
-    "negative_control": "clipped clean single-pulse controls with matched source-run distribution",
-    "winner_score": "energy_fractional_sigma68 + 0.20*abs(energy_fractional_bias) + 0.008*time_sigma68_ns + 0.04*pileup_miss_rate + 0.04*false_split_rate"
+    "particle_holdout_family": "high_amplitude_tail_family",
+    "sampled_rows": 14609,
+    "bootstrap_replicates": 320,
+    "pedestal_holdout_state": "pedestal_memory",
+    "pedestal_state_heldout_rows": 64116,
+    "pedestal_state_heldout_definition": "post-fit stress split over held-out rows with run-block bootstrap CIs"
   },
   "required_method_coverage": {
-    "traditional": "analytic_clipped_template_sideband_traditional",
+    "traditional": "traditional_dE_E_tail_pedestal_likelihood",
     "ridge": "ridge",
     "gradient_boosted_trees": "gradient_boosted_trees",
     "mlp": "mlp",
     "one_dimensional_cnn": "1d_cnn",
-    "transformer_sequence_model": "tiny_sequence_transformer",
-    "new_architecture": "saturation_residual_fusion_new"
+    "transformer_sequence_model": "spectral_transformer_new",
+    "new_architecture": "spectral_transformer_new"
   },
   "required_outputs": {
-    "injected_overlap_closure": "method_metrics.csv, run_heldout_metrics.csv, event_predictions.csv",
-    "real_data_sideband_validation": "real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "saturation_mask_ablation.csv",
-    "uncertainty_calibration": "uncertainty_calibration.csv",
-    "traditional_vs_neural_failure_interpretation": "REPORT.md"
+    "pid_boundary_stability": "pid_boundary_stability.csv",
+    "timing_bias_shift_table": "timing_bias_shift_table.csv",
+    "pileup_multiplicity_proxy_table": "pileup_multiplicity_proxy_table.csv",
+    "uncertainty_calibration_curves": "uncertainty_calibration_curves.csv",
+    "feature_ablation_systematics": "feature_ablation_systematics.csv",
+    "heldout_predictions_with_strata": "heldout_predictions_with_strata.csv.gz"
   },
   "artifacts": {
-    "report": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/REPORT.md",
-    "result": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/result.json",
-    "method_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/method_metrics.csv",
-    "run_heldout_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/run_heldout_metrics.csv",
-    "real_data_sideband_validation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/saturation_mask_ablation.csv",
-    "uncertainty_calibration": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/uncertainty_calibration.csv"
+    "report": "reports/2540__s64c_pid_boundary_stability_representations/REPORT.md",
+    "result": "reports/2540__s64c_pid_boundary_stability_representations/result.json",
+    "method_metrics": "reports/2540__s64c_pid_boundary_stability_representations/endpoint_method_summary.csv",
+    "joint_scoreboard": "reports/2540__s64c_pid_boundary_stability_representations/joint_scoreboard.csv",
+    "pid_boundary_stability": "reports/2540__s64c_pid_boundary_stability_representations/pid_boundary_stability.csv",
+    "timing_bias_shift_table": "reports/2540__s64c_pid_boundary_stability_representations/timing_bias_shift_table.csv",
+    "pileup_multiplicity_proxy_table": "reports/2540__s64c_pid_boundary_stability_representations/pileup_multiplicity_proxy_table.csv",
+    "uncertainty_calibration_curves": "reports/2540__s64c_pid_boundary_stability_representations/uncertainty_calibration_curves.csv",
+    "feature_ablation_systematics": "reports/2540__s64c_pid_boundary_stability_representations/feature_ablation_systematics.csv"
   },
   "queue_provenance": {
     "claimed_once": true,
-    "claim_command_run_once": "tn-ticket claim testbeam-laptop-2 --project testbeam",
+    "claim_command_run_once": "tn-ticket claim testbeam-laptop-4 --project testbeam",
     "claim_command_output": "null / # null / null",
-    "manual_claim_recovery": "gh issue edit 2502 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-2 --remove-label factory:open",
-    "done_command": "tn-ticket done 2502",
+    "manual_claim_recovery": "gh issue edit 2540 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-4 --remove-label factory:open",
+    "done_command": "tn-ticket done 2540",
     "novel_tickets_appended": []
   },
-  "done_command": "tn-ticket done 2502",
+  "done_command": "tn-ticket done 2540",
   "novel_tickets_appended": []
 }

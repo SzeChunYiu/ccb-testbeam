@@ -1,0 +1,3 @@
+# P11: Learned baseline/pedestal estimation
+
+ML pedestal from pre-trigger samples vs adaptive pedestal (S16); bias on low-amplitude pulses. See studies/STUDIES.md for full spec. RULES: reproduce-first where a number exists; BOTH traditional AND ML with fair benchmark; atomic; pre-register metric; provenance manifest; data READ-ONLY at ./data; write only your own reports/<id> dir; use STUDY_TEMPLATE.md. Needs S00 (done).

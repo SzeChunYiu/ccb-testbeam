@@ -1,0 +1,15 @@
+{
+  "command": "CPython scripts/s15_2385_pid_bakeoff.py --config configs/2385_s15_pid_bakeoff.json",
+  "config": "configs/2385_s15_pid_bakeoff.json",
+  "git_commit": "784cb9e2817df87e7b94e60d71a395c582794228",
+  "packages": {
+    "numpy": "2.4.6",
+    "pandas": "3.0.5",
+    "torch": "2.13.0+cpu",
+    "uproot": "5.7.5"
+  },
+  "python": "3.11.14",
+  "runtime_sec": 43.64472961425781,
+  "script": "scripts/s15_2385_pid_bakeoff.py",
+  "ticket": "#2385"
+}

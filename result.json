@@ -1,104 +1,163 @@
 {
-  "ticket_id": "2502",
-  "issue_number": 2502,
-  "project": "testbeam",
-  "worker": "testbeam-laptop-2",
-  "status": "complete",
-  "winner": "saturation_residual_fusion_new",
-  "winner_metrics": {
-    "name": "saturation_residual_fusion_new",
-    "criterion": "minimum held-out composite saturation-energy closure score with run-block bootstrap CIs reported",
-    "winner_score": 0.15172443008737868,
-    "energy_fractional_bias": -0.002906610021787798,
-    "energy_fractional_sigma68": 0.068387783415775,
-    "energy_fractional_sigma68_ci95": [
-      0.06183707932660469,
-      0.0751855124441164
-    ],
-    "time_sigma68_ns": 8.023902762892945,
-    "time_sigma68_ci95": [
-      7.365407249564567,
-      8.669358478772935
-    ],
-    "pileup_miss_rate": 0.32564102564102565,
-    "false_split_rate": 0.13846153846153847,
-    "uncertainty_calibration": {
-      "method": "saturation_residual_fusion_new",
-      "n_valid_doublets": 263.0,
-      "median_abs_energy_residual": 0.04730265759532487,
-      "p68_abs_energy_residual": 0.0694272959931502,
-      "nominal_68_proxy_width": 0.034999999999999996,
-      "coverage_abs_resid_le_proxy": 0.3688212927756654,
-      "coverage_abs_resid_le_2proxy": 0.7034220532319392,
-      "calibration_ratio_p68_over_proxy": 1.9836370283757203
+  "artifacts": [
+    "REPORT.md",
+    "result.json",
+    "manifest.json",
+    "input_sha256.csv",
+    "raw_reproduction_by_run.csv",
+    "class_counts.csv",
+    "data_support_summary.csv",
+    "method_metrics.csv",
+    "per_species_metrics.csv",
+    "fold_metrics.csv",
+    "confusion_matrix_winner.csv",
+    "leakage_checks.csv"
+  ],
+  "classes": [
+    "p",
+    "d"
+  ],
+  "leakage_checks_passed": true,
+  "methods": [
+    {
+      "balanced_accuracy": 0.9373736842105264,
+      "balanced_accuracy_ci_high": 0.940119215124498,
+      "balanced_accuracy_ci_low": 0.9348055717488186,
+      "macro_f1": 0.9198726975492646,
+      "macro_f1_ci_high": 0.9241492668299732,
+      "macro_f1_ci_low": 0.9156939765753942,
+      "macro_precision": 0.9104657993384785,
+      "macro_precision_ci_high": 0.9153941831156551,
+      "macro_precision_ci_low": 0.9060457700714657,
+      "macro_recall": 0.9373736842105264,
+      "macro_recall_ci_high": 0.940119215124498,
+      "macro_recall_ci_low": 0.9348055717488186,
+      "method": "gradient_boosted_trees",
+      "n": 7660
+    },
+    {
+      "balanced_accuracy": 0.9284112781954887,
+      "balanced_accuracy_ci_high": 0.9302453760226677,
+      "balanced_accuracy_ci_low": 0.9263971098641831,
+      "macro_f1": 0.913524743263608,
+      "macro_f1_ci_high": 0.918060022062409,
+      "macro_f1_ci_low": 0.9096958117814343,
+      "macro_precision": 0.9047048257996476,
+      "macro_precision_ci_high": 0.9106810915588042,
+      "macro_precision_ci_low": 0.8998670782851735,
+      "macro_recall": 0.9284112781954887,
+      "macro_recall_ci_high": 0.9302453760226677,
+      "macro_recall_ci_low": 0.9263971098641831,
+      "method": "hybrid_cnn_tabular",
+      "n": 7660
+    },
+    {
+      "balanced_accuracy": 0.9260330827067669,
+      "balanced_accuracy_ci_high": 0.9294191084623988,
+      "balanced_accuracy_ci_low": 0.9228558242150835,
+      "macro_f1": 0.9166594731877087,
+      "macro_f1_ci_high": 0.9207914743915273,
+      "macro_f1_ci_low": 0.9123849980851723,
+      "macro_precision": 0.9097653668340299,
+      "macro_precision_ci_high": 0.9142922859141848,
+      "macro_precision_ci_low": 0.9048817170439305,
+      "macro_recall": 0.9260330827067669,
+      "macro_recall_ci_high": 0.9294191084623988,
+      "macro_recall_ci_low": 0.9228558242150835,
+      "method": "mlp",
+      "n": 7660
+    },
+    {
+      "balanced_accuracy": 0.9102458646616541,
+      "balanced_accuracy_ci_high": 0.9148755250223515,
+      "balanced_accuracy_ci_low": 0.9051219376877356,
+      "macro_f1": 0.8847883113816866,
+      "macro_f1_ci_high": 0.8902589705549157,
+      "macro_f1_ci_low": 0.8790298891406174,
+      "macro_precision": 0.8771919655174011,
+      "macro_precision_ci_high": 0.8825697128782849,
+      "macro_precision_ci_low": 0.8718464163784841,
+      "macro_recall": 0.9102458646616541,
+      "macro_recall_ci_high": 0.9148755250223515,
+      "macro_recall_ci_low": 0.9051219376877356,
+      "method": "ridge",
+      "n": 7660
+    },
+    {
+      "balanced_accuracy": 0.8977270676691729,
+      "balanced_accuracy_ci_high": 0.9039000991352182,
+      "balanced_accuracy_ci_low": 0.8914608584639554,
+      "macro_f1": 0.8725616183186249,
+      "macro_f1_ci_high": 0.8794968343214122,
+      "macro_f1_ci_low": 0.8648113001001203,
+      "macro_precision": 0.8654564649537919,
+      "macro_precision_ci_high": 0.8715477914112171,
+      "macro_precision_ci_low": 0.8590086388809937,
+      "macro_recall": 0.8977270676691729,
+      "macro_recall_ci_high": 0.9039000991352182,
+      "macro_recall_ci_low": 0.8914608584639554,
+      "method": "cnn1d",
+      "n": 7660
+    },
+    {
+      "balanced_accuracy": 0.8028082706766917,
+      "balanced_accuracy_ci_high": 0.8308345577937776,
+      "balanced_accuracy_ci_low": 0.7536442489177315,
+      "macro_f1": 0.8019811705953941,
+      "macro_f1_ci_high": 0.8217156237285359,
+      "macro_f1_ci_low": 0.7655249191829209,
+      "macro_precision": 0.8011873167708914,
+      "macro_precision_ci_high": 0.8159600326771803,
+      "macro_precision_ci_low": 0.7901557316743664,
+      "macro_recall": 0.8028082706766917,
+      "macro_recall_ci_high": 0.8308345577937776,
+      "macro_recall_ci_low": 0.7536442489177315,
+      "method": "traditional_bands",
+      "n": 7660
+    }
+  ],
+  "n_used_events": 7660,
+  "next_tickets": [],
+  "raw_reproduction": {
+    "delta": 0,
+    "events": 1096728,
+    "expected_selected_pulses": 640737,
+    "passed": true,
+    "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+    "runs": 33,
+    "selected_pulses": 640737,
+    "stave_counts": {
+      "B2": 579424,
+      "B4": 36116,
+      "B6": 17945,
+      "B8": 7252
     }
   },
-  "raw_root_reproduction": {
-    "passed": true,
-    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
-    "expected_selected_pulses": 640737,
-    "reproduced_selected_pulses": 640737,
-    "delta": 0,
-    "evidence_table": "reproduction_match_table.csv"
-  },
+  "report_dir": "reports/2385.s15_pid_bakeoff",
+  "runtime_sec": 43.64472961425781,
   "split": {
-    "split": "train and held-out sets are disjoint by source run",
-    "train_runs": [
-      50,
-      51,
-      52,
-      53,
-      54,
-      55,
-      56,
-      57
+    "bootstrap_reps": 500,
+    "eval_run_blocks": [
+      0,
+      1,
+      2,
+      3,
+      4
     ],
-    "heldout_runs": [
-      58,
-      60,
-      62,
-      64,
-      65
-    ],
-    "adc_clip": 11800.0,
-    "bootstrap": "held-out run-block percentile 95% CI",
-    "bootstrap_replicates": 400,
-    "negative_control": "clipped clean single-pulse controls with matched source-run distribution",
-    "winner_score": "energy_fractional_sigma68 + 0.20*abs(energy_fractional_bias) + 0.008*time_sigma68_ns + 0.04*pileup_miss_rate + 0.04*false_split_rate"
+    "scheme": "leave_one_eval_run_block_out",
+    "source_run_ids": [
+      0
+    ]
   },
-  "required_method_coverage": {
-    "traditional": "analytic_clipped_template_sideband_traditional",
-    "ridge": "ridge",
-    "gradient_boosted_trees": "gradient_boosted_trees",
-    "mlp": "mlp",
-    "one_dimensional_cnn": "1d_cnn",
-    "transformer_sequence_model": "tiny_sequence_transformer",
-    "new_architecture": "saturation_residual_fusion_new"
-  },
-  "required_outputs": {
-    "injected_overlap_closure": "method_metrics.csv, run_heldout_metrics.csv, event_predictions.csv",
-    "real_data_sideband_validation": "real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "saturation_mask_ablation.csv",
-    "uncertainty_calibration": "uncertainty_calibration.csv",
-    "traditional_vs_neural_failure_interpretation": "REPORT.md"
-  },
-  "artifacts": {
-    "report": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/REPORT.md",
-    "result": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/result.json",
-    "method_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/method_metrics.csv",
-    "run_heldout_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/run_heldout_metrics.csv",
-    "real_data_sideband_validation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/saturation_mask_ablation.csv",
-    "uncertainty_calibration": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/uncertainty_calibration.csv"
-  },
-  "queue_provenance": {
-    "claimed_once": true,
-    "claim_command_run_once": "tn-ticket claim testbeam-laptop-2 --project testbeam",
-    "claim_command_output": "null / # null / null",
-    "manual_claim_recovery": "gh issue edit 2502 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-2 --remove-label factory:open",
-    "done_command": "tn-ticket done 2502",
-    "novel_tickets_appended": []
-  },
-  "done_command": "tn-ticket done 2502",
-  "novel_tickets_appended": []
+  "ticket": "#2385",
+  "title": "S15 event-by-event deltaE-E particle ID p vs d",
+  "winner": "gradient_boosted_trees",
+  "winner_balanced_accuracy": 0.9373736842105264,
+  "winner_balanced_accuracy_ci95": [
+    0.9348055717488186,
+    0.940119215124498
+  ],
+  "winner_macro_f1": 0.9198726975492646,
+  "winner_metric": "run_heldout_balanced_accuracy",
+  "worker": "testbeam-laptop-1"
 }

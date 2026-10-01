@@ -1,0 +1,32 @@
+{
+  "ticket": "2385",
+  "title": "S15 event-by-event deltaE-E particle ID p vs d",
+  "worker": "testbeam-laptop-1",
+  "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+  "raw_expected_selected_pulses": 640737,
+  "raw_samples_per_channel": 18,
+  "raw_baseline_samples": [0, 1, 2, 3],
+  "raw_amplitude_cut_adc": 1000.0,
+  "raw_b_channels": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "raw_run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "mc_event_table": "reports/paper_618_species_penetration_2m_20260814T1449Z/deltaE_E_events_mc.parquet",
+  "data_event_table": "reports/paper_618_species_penetration_20260814T1615Z/deltaE_E_events_data.parquet",
+  "output_dir": "reports/2385.s15_pid_bakeoff",
+  "classes": ["p", "d"],
+  "mc_eval_blocks": 5,
+  "max_per_class": 5000,
+  "random_seed": 20260816,
+  "bootstrap_reps": 500,
+  "torch_epochs": 12,
+  "torch_batch_size": 256
+}

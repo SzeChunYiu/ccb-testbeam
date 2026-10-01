@@ -1,0 +1,91 @@
+{
+  "ticket_id": "2558",
+  "study_id": "S61a",
+  "worker": "testbeam-laptop-3",
+  "generated_at_unix": 1786925649.0280244,
+  "claim_command": "tn-ticket claim testbeam-laptop-3 --project testbeam",
+  "done_command": "tn-ticket done 2558",
+  "result_winner": "traditional_cfd_template_derivative",
+  "artifacts": [
+    {
+      "path": "REPORT.md",
+      "bytes": 41281,
+      "sha256": "d15e9898ef43844a47e0055421fea3e89799f3f1d11a1c027dbc9eeb0dfc4c2d"
+    },
+    {
+      "path": "benchmark_rows.csv.gz",
+      "bytes": 12027807,
+      "sha256": "d0f1f900a290b8130cbfc3be69154ff195e0deb62322e3a3e349cbaa5770513e"
+    },
+    {
+      "path": "by_run.csv",
+      "bytes": 6639,
+      "sha256": "fc2b8717f4288612c710dcfbb70268e85499e88381cbc0012328d2a5c2233b25"
+    },
+    {
+      "path": "claimed_ticket.txt",
+      "bytes": 1021,
+      "sha256": "af51efc1cb28b64c2bfa9f3362515df23b5495e0120384870608470781616a2e"
+    },
+    {
+      "path": "claimed_ticket_body.txt",
+      "bytes": 734,
+      "sha256": "99939246a3c81288c5d4caedc726363deecbb2bdac2a37df8a01a1f7fca080b9"
+    },
+    {
+      "path": "frontier_axis_summary.csv",
+      "bytes": 7154,
+      "sha256": "463e372c8743b08961dbbf84ab93f05e3c67ad6b067156eefd4cc31cc8a39a49"
+    },
+    {
+      "path": "input_sha256.csv",
+      "bytes": 4993,
+      "sha256": "9d1630c332196186416292bc75bba0238b8007fd1975f90e78916995e3b486e1"
+    },
+    {
+      "path": "method_deltas.csv",
+      "bytes": 1291,
+      "sha256": "dd387922f4f0e91223933db76d2a06e0bcf6e6903e20f59bc28a59f0b06134d0"
+    },
+    {
+      "path": "metrics.csv",
+      "bytes": 2404,
+      "sha256": "07fe53dd97de534146302a9a5e76e99288fe19e59c39db3e51b6a19e3735d0b5"
+    },
+    {
+      "path": "placebo_controls.csv",
+      "bytes": 342,
+      "sha256": "bdc284797513e3429bff995ab21ebc6dc54702b8e0b5b32aafddb0233418ffa2"
+    },
+    {
+      "path": "predictions.csv.gz",
+      "bytes": 5619023,
+      "sha256": "d564c1e704a571c1a1e6f943366bb008c52ecc425a32166297c5dcd498ec38c8"
+    },
+    {
+      "path": "pulse_shape_atom_coefficients.csv",
+      "bytes": 5701,
+      "sha256": "9ea1b86efcfc85f208b0e20f58535042ce8c529e30aa023654d3eb137548decb"
+    },
+    {
+      "path": "reproduction.csv",
+      "bytes": 299,
+      "sha256": "962a281223ae2d6280d815498dfe7f7042b684acc1de55aa6fee4e305eb9fb24"
+    },
+    {
+      "path": "result.json",
+      "bytes": 42890,
+      "sha256": "9dc7152313383c5d1447c7d5dd3d5da46d5e03a971552fa89bd4ec8f77660fe3"
+    },
+    {
+      "path": "run_family_summary.csv",
+      "bytes": 3773,
+      "sha256": "88d462c2a80fef222c170b37d1f45232ac63add7e31ffab0297f751596912945"
+    },
+    {
+      "path": "strata.csv",
+      "bytes": 28637,
+      "sha256": "2b8887c06bd7e9fdf18e52d4eeb05f21f86dd8d3e6500e3955c31a8e9270cf3e"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+2527
+# NEW S62b clipped-tail saturation energy and PID recovery with pedestal-informed censoring
+
+Academic-grade study: compare censored Landau-Gaussian/template likelihood
+energy fits with ridge, gradient-boosted trees, MLP, 1D-CNN, and transformer
+models for clipped or saturated pulses. Use bootstrap CIs across run, pile-up
+spacing, saturation depth, pedestal drift, pulse-shape class, energy bias, and
+PID confusion strata.

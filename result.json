@@ -1,37 +1,27 @@
 {
-  "ticket_id": "2502",
-  "issue_number": 2502,
+  "ticket_id": "2527",
+  "factory_issue": 2527,
   "project": "testbeam",
-  "worker": "testbeam-laptop-2",
+  "worker": "testbeam-laptop-1",
   "status": "complete",
-  "winner": "saturation_residual_fusion_new",
+  "winner": "ridge",
   "winner_metrics": {
-    "name": "saturation_residual_fusion_new",
-    "criterion": "minimum held-out composite saturation-energy closure score with run-block bootstrap CIs reported",
-    "winner_score": 0.15172443008737868,
-    "energy_fractional_bias": -0.002906610021787798,
-    "energy_fractional_sigma68": 0.068387783415775,
-    "energy_fractional_sigma68_ci95": [
-      0.06183707932660469,
-      0.0751855124441164
-    ],
-    "time_sigma68_ns": 8.023902762892945,
-    "time_sigma68_ci95": [
-      7.365407249564567,
-      8.669358478772935
-    ],
-    "pileup_miss_rate": 0.32564102564102565,
-    "false_split_rate": 0.13846153846153847,
-    "uncertainty_calibration": {
-      "method": "saturation_residual_fusion_new",
-      "n_valid_doublets": 263.0,
-      "median_abs_energy_residual": 0.04730265759532487,
-      "p68_abs_energy_residual": 0.0694272959931502,
-      "nominal_68_proxy_width": 0.034999999999999996,
-      "coverage_abs_resid_le_proxy": 0.3688212927756654,
-      "coverage_abs_resid_le_2proxy": 0.7034220532319392,
-      "calibration_ratio_p68_over_proxy": 1.9836370283757203
-    }
+    "name": "ridge",
+    "criterion": "minimum registered S62b clipped-tail energy/PID score with run-block bootstrap CIs",
+    "method": "ridge",
+    "n_heldout_overlap": 390.0,
+    "energy_fractional_sigma68": 0.07248602068887902,
+    "energy_fractional_sigma68_ci_low": 0.06455252398111125,
+    "energy_fractional_sigma68_ci_high": 0.08291437924873886,
+    "median_weighted_abs_energy_residual": 0.04257442320263426,
+    "median_weighted_abs_energy_residual_ci_low": 0.03958686813297953,
+    "median_weighted_abs_energy_residual_ci_high": 0.04897938515955494,
+    "pid_proxy_auc": 0.9935109289617486,
+    "pid_proxy_auc_ci_low": 0.9912302371541503,
+    "pid_proxy_auc_ci_high": 0.9975322642249791,
+    "pid_proxy_f1": 0.8333333333333334,
+    "tail_censored_fraction": 0.41025641025641024,
+    "registered_s62b_score": 0.10321752722081967
   },
   "raw_root_reproduction": {
     "passed": true,
@@ -75,30 +65,11 @@
     "transformer_sequence_model": "tiny_sequence_transformer",
     "new_architecture": "saturation_residual_fusion_new"
   },
-  "required_outputs": {
-    "injected_overlap_closure": "method_metrics.csv, run_heldout_metrics.csv, event_predictions.csv",
-    "real_data_sideband_validation": "real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "saturation_mask_ablation.csv",
-    "uncertainty_calibration": "uncertainty_calibration.csv",
-    "traditional_vs_neural_failure_interpretation": "REPORT.md"
-  },
   "artifacts": {
-    "report": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/REPORT.md",
-    "result": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/result.json",
-    "method_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/method_metrics.csv",
-    "run_heldout_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/run_heldout_metrics.csv",
-    "real_data_sideband_validation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/saturation_mask_ablation.csv",
-    "uncertainty_calibration": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/uncertainty_calibration.csv"
+    "report": "reports/2527__s62b_clipped_tail_saturation_energy_pid_recovery/REPORT.md",
+    "result": "reports/2527__s62b_clipped_tail_saturation_energy_pid_recovery/result.json",
+    "method_summary": "reports/2527__s62b_clipped_tail_saturation_energy_pid_recovery/clipped_tail_method_summary.csv",
+    "strata_ci": "reports/2527__s62b_clipped_tail_saturation_energy_pid_recovery/bootstrap_strata_ci.csv"
   },
-  "queue_provenance": {
-    "claimed_once": true,
-    "claim_command_run_once": "tn-ticket claim testbeam-laptop-2 --project testbeam",
-    "claim_command_output": "null / # null / null",
-    "manual_claim_recovery": "gh issue edit 2502 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-2 --remove-label factory:open",
-    "done_command": "tn-ticket done 2502",
-    "novel_tickets_appended": []
-  },
-  "done_command": "tn-ticket done 2502",
   "novel_tickets_appended": []
 }

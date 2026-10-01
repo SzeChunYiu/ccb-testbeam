@@ -1,47 +1,35 @@
 {
-  "ticket_id": "2502",
-  "issue_number": 2502,
+  "ticket_id": "TICKET-0130",
   "project": "testbeam",
-  "worker": "testbeam-laptop-2",
+  "worker": "testbeam-laptop-4",
+  "title": "TICKET-0130 raw-ROOT count reconstruction bakeoff",
   "status": "complete",
-  "winner": "saturation_residual_fusion_new",
-  "winner_metrics": {
-    "name": "saturation_residual_fusion_new",
-    "criterion": "minimum held-out composite saturation-energy closure score with run-block bootstrap CIs reported",
-    "winner_score": 0.15172443008737868,
-    "energy_fractional_bias": -0.002906610021787798,
-    "energy_fractional_sigma68": 0.068387783415775,
-    "energy_fractional_sigma68_ci95": [
-      0.06183707932660469,
-      0.0751855124441164
-    ],
-    "time_sigma68_ns": 8.023902762892945,
-    "time_sigma68_ci95": [
-      7.365407249564567,
-      8.669358478772935
-    ],
-    "pileup_miss_rate": 0.32564102564102565,
-    "false_split_rate": 0.13846153846153847,
-    "uncertainty_calibration": {
-      "method": "saturation_residual_fusion_new",
-      "n_valid_doublets": 263.0,
-      "median_abs_energy_residual": 0.04730265759532487,
-      "p68_abs_energy_residual": 0.0694272959931502,
-      "nominal_68_proxy_width": 0.034999999999999996,
-      "coverage_abs_resid_le_proxy": 0.3688212927756654,
-      "coverage_abs_resid_le_2proxy": 0.7034220532319392,
-      "calibration_ratio_p68_over_proxy": 1.9836370283757203
-    }
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-4 --project testbeam",
+  "claim_attempt": {
+    "exit_code": 0,
+    "stderr": "null",
+    "stdout": "# null\n\nnull",
+    "numeric_ticket_assigned": false,
+    "post_claim_queue_state": "project=testbeam open=27 claimed=1 done=10; the claimed issue was #2414 held by worker:testbeam-laptop-2",
+    "done_command_run": true,
+    "done_command": "tn-ticket done null",
+    "done_exit_code": 1,
+    "done_stderr": "invalid issue format: \"null\"\ninvalid issue format: \"null\"\ninvalid issue format: \"null\"",
+    "done_effect": "No ticket was closed because no numeric ticket id was assigned to worker:testbeam-laptop-4, and the objective forbids a second claim.",
+    "existing_bug_ticket": "https://github.com/SzeChunYiu/factory-tickets/issues/2413",
+    "evidence_comment": "https://github.com/SzeChunYiu/factory-tickets/issues/2413#issuecomment-5306354730"
   },
+  "claimed_ticket_text": "TICKET-0130 raw-ROOT count reconstruction bakeoff",
   "raw_root_reproduction": {
     "passed": true,
-    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
+    "raw_root_glob": "/home/billy/ccb-data/extracted/root/root/hrdb_run_*.root",
     "expected_selected_pulses": 640737,
     "reproduced_selected_pulses": 640737,
     "delta": 0,
-    "evidence_table": "reproduction_match_table.csv"
+    "evidence_table": "reports/TICKET-0130__raw_root_count_reconstruction_bakeoff/reproduction_match_table.csv"
   },
-  "split": {
+  "evaluation_design": {
     "split": "train and held-out sets are disjoint by source run",
     "train_runs": [
       50,
@@ -75,30 +63,41 @@
     "transformer_sequence_model": "tiny_sequence_transformer",
     "new_architecture": "saturation_residual_fusion_new"
   },
-  "required_outputs": {
-    "injected_overlap_closure": "method_metrics.csv, run_heldout_metrics.csv, event_predictions.csv",
-    "real_data_sideband_validation": "real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "saturation_mask_ablation.csv",
-    "uncertainty_calibration": "uncertainty_calibration.csv",
-    "traditional_vs_neural_failure_interpretation": "REPORT.md"
+  "winner": {
+    "name": "saturation_residual_fusion_new",
+    "criterion": "minimum held-out composite saturation-energy closure score with run-block bootstrap CIs reported",
+    "winner_score": 0.15399692015643066,
+    "energy_fractional_bias": -0.005489553200678442,
+    "energy_fractional_sigma68": 0.06687760559944919,
+    "energy_fractional_sigma68_ci95": [
+      0.06049694508622296,
+      0.07066574077417023
+    ],
+    "time_sigma68_ns": 8.368060104990338,
+    "time_sigma68_ci95": [
+      7.756472546236974,
+      8.74739059160854
+    ],
+    "pileup_miss_rate": 0.34102564102564104,
+    "false_split_rate": 0.1358974358974359
   },
   "artifacts": {
-    "report": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/REPORT.md",
-    "result": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/result.json",
-    "method_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/method_metrics.csv",
-    "run_heldout_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/run_heldout_metrics.csv",
-    "real_data_sideband_validation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/saturation_mask_ablation.csv",
-    "uncertainty_calibration": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/uncertainty_calibration.csv"
+    "report": "reports/TICKET-0130__raw_root_count_reconstruction_bakeoff/REPORT.md",
+    "manifest": "reports/TICKET-0130__raw_root_count_reconstruction_bakeoff/manifest.json",
+    "claimed_ticket": "reports/TICKET-0130__raw_root_count_reconstruction_bakeoff/claimed_ticket.txt",
+    "raw_reproduction": "reports/TICKET-0130__raw_root_count_reconstruction_bakeoff/reproduction_match_table.csv",
+    "method_metrics": "reports/TICKET-0130__raw_root_count_reconstruction_bakeoff/method_metrics.csv",
+    "winner_ranked_metrics": "reports/TICKET-0130__raw_root_count_reconstruction_bakeoff/winner_ranked_metrics.csv",
+    "run_heldout_metrics": "reports/TICKET-0130__raw_root_count_reconstruction_bakeoff/run_heldout_metrics.csv",
+    "strata_metrics": "reports/TICKET-0130__raw_root_count_reconstruction_bakeoff/strata_metrics.csv",
+    "event_predictions": "reports/TICKET-0130__raw_root_count_reconstruction_bakeoff/event_predictions.csv",
+    "input_sha256": "reports/TICKET-0130__raw_root_count_reconstruction_bakeoff/input_sha256.csv"
   },
-  "queue_provenance": {
-    "claimed_once": true,
-    "claim_command_run_once": "tn-ticket claim testbeam-laptop-2 --project testbeam",
-    "claim_command_output": "null / # null / null",
-    "manual_claim_recovery": "gh issue edit 2502 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-2 --remove-label factory:open",
-    "done_command": "tn-ticket done 2502",
-    "novel_tickets_appended": []
-  },
-  "done_command": "tn-ticket done 2502",
-  "novel_tickets_appended": []
+  "novel_tickets_appended": [],
+  "caveats": [
+    "Truth comes from controlled injections into raw-ROOT-derived clean pulses.",
+    "ADC clipping is an explicit benchmark stressor rather than decoded electronics metadata.",
+    "Bootstrap CIs resample held-out runs and should be read as run-transfer intervals."
+  ],
+  "execution_command": "MPLCONFIGDIR=/tmp/matplotlib-ticket0130 uv run --index-strategy unsafe-best-match --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple --with uproot --with awkward --with numpy --with pandas --with scikit-learn --with tabulate --with 'torch==2.5.1+cpu' python scripts/ticket_0130_testbeam_count_reconstruction_bakeoff.py"
 }

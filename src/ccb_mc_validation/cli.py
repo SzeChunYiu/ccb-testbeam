@@ -26,6 +26,7 @@ from ccb_mc_validation.exceptions import (
 from ccb_mc_validation.io.root_truth import DEFAULT_TRUTH_BRANCHES, audit_truth_tree, load_truth_records
 from ccb_mc_validation.logging_config import setup_logging
 from ccb_mc_validation.manifest import build_manifest_record, write_manifest
+from ccb_mc_validation.raw_root_paths import resolve_raw_root_dir
 from ccb_mc_validation.studies.common import write_study_result
 from ccb_mc_validation.studies.mv1_pid import run_mv1
 from ccb_mc_validation.studies.mv2_energy_range import run_mv2
@@ -297,6 +298,18 @@ def cmd_synthesize(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_raw_root_probe(args: argparse.Namespace) -> int:
+    repo = Path(args.repo_root).resolve()
+    resolution = resolve_raw_root_dir(repo_root=repo)
+    text = resolution.to_json()
+    if args.output:
+        output = Path(args.output)
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(text, encoding="utf-8")
+    print(text, end="")
+    return 0
+
+
 
 def _add_common_args(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--config", default=str(DEFAULT_CONFIG), help="Path MC validation YAML config")
@@ -310,6 +323,10 @@ def build_parser() -> argparse.ArgumentParser:
     audit = sub.add_parser("audit", help="Generate docs/mc_validation/REPOSITORY_AUDIT.md")
     audit.add_argument("--repo-root", default=".", help="Repository root")
     audit.set_defaults(handler=cmd_audit)
+    raw_probe = sub.add_parser("raw-root-probe", help="Resolve and probe the raw ROOT input directory")
+    raw_probe.add_argument("--repo-root", default=".", help="Repository root")
+    raw_probe.add_argument("--output", default=None, help="Optional JSON path for probe evidence")
+    raw_probe.set_defaults(handler=cmd_raw_root_probe)
     truth = sub.add_parser("truth-build", help="Inspect MC truth schema manifest")
     _add_common_args(truth); truth.set_defaults(handler=cmd_truth_build)
     for name, handler, help_text in (

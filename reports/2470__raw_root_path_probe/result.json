@@ -1,0 +1,37 @@
+{
+  "ticket_id": 2470,
+  "ticket_title": "S47 follow-up: document raw ROOT mount path for byte-level reproduction audits",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-1",
+  "status": "complete",
+  "claim_command_invoked_once": "tn-ticket claim testbeam-laptop-1 --project testbeam",
+  "claim_command_stdout": "# null\n\nnull\n",
+  "claim_command_stderr": "null\n",
+  "claim_repair": "Manual GitHub label swap applied to issue 2470 because the helper returned null without assigning a worker label.",
+  "raw_root_resolution": {
+    "canonical_worker_visible_path": "/home/billy/ccb-data/data/extracted/root/root",
+    "legacy_absolute_path": "/home/billy/ccb-data/extracted/root/root",
+    "repo_relative_alias": "data/extracted/root/root",
+    "probe_artifact": "raw_root_probe.json",
+    "resolved_source": "canonical-worker-mount",
+    "n_hrda": 57,
+    "n_hrdb": 53,
+    "n_total": 110
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "probe": "raw_root_probe.json",
+    "claimed_ticket": "claimed_ticket.txt"
+  },
+  "verification": [
+    {
+      "command": "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONPATH=src pytest -q tests/test_raw_root_paths.py",
+      "result": "4 passed"
+    },
+    {
+      "command": "uv run python -m ccb_mc_validation raw-root-probe --repo-root . --output reports/2470__raw_root_path_probe/raw_root_probe.json",
+      "result": "resolved canonical-worker-mount with 57 hrda and 53 hrdb files"
+    }
+  ],
+  "novel_tickets_appended": []
+}

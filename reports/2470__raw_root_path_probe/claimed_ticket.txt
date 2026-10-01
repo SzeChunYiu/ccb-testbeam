@@ -1,0 +1,4 @@
+2470
+# S47 follow-up: document raw ROOT mount path for byte-level reproduction audits
+
+The S47b #2436 bakeoff found the raw ROOT files at /home/billy/ccb-data/data/extracted/root/root, while older scripts and reports often refer to /home/billy/ccb-data/extracted/root/root. Follow-up: document the canonical worker-visible raw ROOT data folder, add a stable path probe or config alias, and keep byte-level h101/HRDv reproduction audits portable across workers. The #2436 PR now performs a direct raw ROOT scan and records per-run counts plus raw file hashes.

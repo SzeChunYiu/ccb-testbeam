@@ -7,7 +7,10 @@ truth for where it lives and what it contains.
 
 | Copy | Path | Status |
 |---|---|---|
-| Local (laptop `billy`) | `/home/billy/Desktop/test_beam/data/` | working copy; gitignored |
+| Local raw ROOT mount (worker-visible canonical) | `/home/billy/ccb-data/data/extracted/root/root/` | current canonical path for direct `h101/HRDv` audits |
+| Local data root alias | `data/extracted/` | gitignored symlink or directory alias to `/home/billy/ccb-data/data/extracted/` |
+| Legacy local raw ROOT path | `/home/billy/ccb-data/extracted/root/root/` | legacy reference; do not hard-code in new studies |
+| Local (laptop `billy`) | `/home/billy/Desktop/test_beam/data/` | older working copy; gitignored |
 | LUNARC (canonical archive) | `/projects/hep/fs10/shared/nnbar/billy/ccb-testbeam-data/` | **NOT YET POPULATED** — intended primary archive for the fleet |
 
 > **Status (DATA-008, 2026-07-23):** the canonical LUNARC archive is not yet
@@ -27,6 +30,27 @@ truth for where it lives and what it contains.
     ├── sorted-a/
     └── sorted-b/
 ```
+
+### Raw ROOT path resolution
+
+New raw-ROOT consumers should call
+`ccb_mc_validation.raw_root_paths.resolve_raw_root_dir(repo_root=...)` or run:
+
+```bash
+python -m ccb_mc_validation raw-root-probe --repo-root .
+```
+
+Resolution order is:
+
+1. `CCB_RAW_ROOT_DIR`, if set.
+2. `/home/billy/ccb-data/data/extracted/root/root` (worker-visible canonical mount).
+3. `data/extracted/root/root` relative to the repository.
+4. `/home/billy/ccb-data/extracted/root/root` (legacy absolute alias).
+
+The probe records the first usable directory with B-stack `hrdb_run_*.root`
+files, plus existence and file-count evidence for each candidate it inspected.
+Historical reports may mention the legacy path; new reports should record the
+resolved path from the probe output.
 
 ### Hash-verification procedure
 

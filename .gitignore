@@ -5,3 +5,8 @@ __pycache__/
 .mplconfig/
 .claude/worktrees/
 reports/mc_validation/runs/
+data/extracted
+.analysis_deps/
+.analysis_runtime/
+.python-deps/
+.python38-packages/

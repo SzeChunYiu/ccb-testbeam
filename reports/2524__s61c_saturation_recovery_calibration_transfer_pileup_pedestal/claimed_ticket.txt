@@ -1,0 +1,5 @@
+ticket: 2524
+worker: testbeam-laptop-1
+claim_helper_command: tn-ticket claim testbeam-laptop-1 --project testbeam
+claim_helper_output: # null / null / null
+manual_repair: gh issue edit 2524 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-1 --remove-label factory:open

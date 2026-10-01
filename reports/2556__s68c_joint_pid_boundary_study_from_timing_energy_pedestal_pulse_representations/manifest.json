@@ -1,0 +1,124 @@
+{
+  "ticket_id": "2556",
+  "ticket_number": 2556,
+  "worker": "testbeam-laptop-3",
+  "generated_at_unix": 1786923998.6911125,
+  "command": "-",
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "mean_joint_loss": 0.04223675886696029,
+    "selection_rule": "minimum mean registered joint loss across run-heldout and proxy particle-heldout splits"
+  },
+  "artifacts": [
+    {
+      "path": "reports/2556__s68c_joint_pid_boundary_study_from_timing_energy_pedestal_pulse_representations/REPORT.md",
+      "sha256": "52c293b7805adc53a9a83257ff7ced4330b8d140a2c7dbd6ae28905373fb73e5",
+      "bytes": 57722
+    },
+    {
+      "path": "reports/2556__s68c_joint_pid_boundary_study_from_timing_energy_pedestal_pulse_representations/boundary_metrics.csv",
+      "sha256": "065a9356624b713d76a2be73971053703e3d718e0ed9b4773b04d3eeef86e312",
+      "bytes": 28257
+    },
+    {
+      "path": "reports/2556__s68c_joint_pid_boundary_study_from_timing_energy_pedestal_pulse_representations/calibration_ece.csv",
+      "sha256": "340b569853b8b8e485bf74b904421014525af6837c24413bb8427147088a8302",
+      "bytes": 5975
+    },
+    {
+      "path": "reports/2556__s68c_joint_pid_boundary_study_from_timing_energy_pedestal_pulse_representations/claimed_ticket.txt",
+      "sha256": "4d561ada55311dff9d1aba84a04d823ad57c3ce762fafcc9bbb2211d6f162ba5",
+      "bytes": 1195
+    },
+    {
+      "path": "reports/2556__s68c_joint_pid_boundary_study_from_timing_energy_pedestal_pulse_representations/claimed_ticket_body.txt",
+      "sha256": "7ffb29b7752b280be58fc156a3e5813981769a06697d3948ae696236ab050cdd",
+      "bytes": 862
+    },
+    {
+      "path": "reports/2556__s68c_joint_pid_boundary_study_from_timing_energy_pedestal_pulse_representations/endpoint_method_summary.csv",
+      "sha256": "cc0408dcbb92b3b2aa3b197fedca4cacd4ef61bc52a99a4dab0f547992c8a558",
+      "bytes": 10608
+    },
+    {
+      "path": "reports/2556__s68c_joint_pid_boundary_study_from_timing_energy_pedestal_pulse_representations/event_predictions.csv.gz",
+      "sha256": "b44fdc5caa107a8980ecef5fc212cdb132f435c7b25917cf2951025b0a751547",
+      "bytes": 2085510
+    },
+    {
+      "path": "reports/2556__s68c_joint_pid_boundary_study_from_timing_energy_pedestal_pulse_representations/feature_family_audit.csv",
+      "sha256": "c635a2d72a26444f81cf00e9d9beab6ec2de60cbf2dc8e79874ff9ef08fcefa7",
+      "bytes": 1425
+    },
+    {
+      "path": "reports/2556__s68c_joint_pid_boundary_study_from_timing_energy_pedestal_pulse_representations/heldout_predictions.csv.gz",
+      "sha256": "b44fdc5caa107a8980ecef5fc212cdb132f435c7b25917cf2951025b0a751547",
+      "bytes": 2085510
+    },
+    {
+      "path": "reports/2556__s68c_joint_pid_boundary_study_from_timing_energy_pedestal_pulse_representations/heldout_strata_assignments.csv",
+      "sha256": "0778a693d69b2cd8aa6656d995bc46425c31aca885614d6167f4827eed5dc346",
+      "bytes": 1015050
+    },
+    {
+      "path": "reports/2556__s68c_joint_pid_boundary_study_from_timing_energy_pedestal_pulse_representations/joint_scoreboard.csv",
+      "sha256": "f7022f9e8d887c98fcb1737d87de2cd11ea4057a266a03301a50ec5a88d780ca",
+      "bytes": 2384
+    },
+    {
+      "path": "reports/2556__s68c_joint_pid_boundary_study_from_timing_energy_pedestal_pulse_representations/leakage_audit.csv",
+      "sha256": "b0acdf199b008f83ab473eb8ed435cfe5aeadb1fd819a0d63bbfbc4fc99ce77c",
+      "bytes": 2943
+    },
+    {
+      "path": "reports/2556__s68c_joint_pid_boundary_study_from_timing_energy_pedestal_pulse_representations/leakage_checks.csv",
+      "sha256": "b0acdf199b008f83ab473eb8ed435cfe5aeadb1fd819a0d63bbfbc4fc99ce77c",
+      "bytes": 2943
+    },
+    {
+      "path": "reports/2556__s68c_joint_pid_boundary_study_from_timing_energy_pedestal_pulse_representations/method_metrics.csv",
+      "sha256": "79ee5af0aa1fcbaa6569d6b0b66215be3169cb3cfcc19a248be88c61c8cb8817",
+      "bytes": 13421
+    },
+    {
+      "path": "reports/2556__s68c_joint_pid_boundary_study_from_timing_energy_pedestal_pulse_representations/paired_bootstrap_deltas.csv",
+      "sha256": "80445754ccd3d791dc1db92423ab85f3ad14c734eb7c3003849eb88c7a24aa72",
+      "bytes": 10251
+    },
+    {
+      "path": "reports/2556__s68c_joint_pid_boundary_study_from_timing_energy_pedestal_pulse_representations/reproduction_counts_by_run.csv",
+      "sha256": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+      "bytes": 1896
+    },
+    {
+      "path": "reports/2556__s68c_joint_pid_boundary_study_from_timing_energy_pedestal_pulse_representations/reproduction_match_table.csv",
+      "sha256": "30c27e630bc2f37a7e26cf4f3fac0ad2db556913c9a3725097ba16731535f2cf",
+      "bytes": 135
+    },
+    {
+      "path": "reports/2556__s68c_joint_pid_boundary_study_from_timing_energy_pedestal_pulse_representations/result.json",
+      "sha256": "7b644f0433643ace4efc7de142db267ab75301cbee6f68db6d03942dac8445a0",
+      "bytes": 4085
+    },
+    {
+      "path": "reports/2556__s68c_joint_pid_boundary_study_from_timing_energy_pedestal_pulse_representations/strata_metrics.csv",
+      "sha256": "acdc1d91d49f11987c7cb3e8b64250216fb959b290c8364d872ddc7d2e5176cf",
+      "bytes": 133696
+    },
+    {
+      "path": "reports/2556__s68c_joint_pid_boundary_study_from_timing_energy_pedestal_pulse_representations/strata_metrics_requested.csv",
+      "sha256": "acdc1d91d49f11987c7cb3e8b64250216fb959b290c8364d872ddc7d2e5176cf",
+      "bytes": 133696
+    },
+    {
+      "path": "REPORT.md",
+      "sha256": "52c293b7805adc53a9a83257ff7ced4330b8d140a2c7dbd6ae28905373fb73e5",
+      "bytes": 57722
+    },
+    {
+      "path": "result.json",
+      "sha256": "7b644f0433643ace4efc7de142db267ab75301cbee6f68db6d03942dac8445a0",
+      "bytes": 4085
+    }
+  ]
+}

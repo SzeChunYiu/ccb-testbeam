@@ -1,104 +1,113 @@
 {
-  "ticket_id": "2502",
-  "issue_number": 2502,
-  "project": "testbeam",
-  "worker": "testbeam-laptop-2",
-  "status": "complete",
-  "winner": "saturation_residual_fusion_new",
-  "winner_metrics": {
-    "name": "saturation_residual_fusion_new",
-    "criterion": "minimum held-out composite saturation-energy closure score with run-block bootstrap CIs reported",
-    "winner_score": 0.15172443008737868,
-    "energy_fractional_bias": -0.002906610021787798,
-    "energy_fractional_sigma68": 0.068387783415775,
-    "energy_fractional_sigma68_ci95": [
-      0.06183707932660469,
-      0.0751855124441164
-    ],
-    "time_sigma68_ns": 8.023902762892945,
-    "time_sigma68_ci95": [
-      7.365407249564567,
-      8.669358478772935
-    ],
-    "pileup_miss_rate": 0.32564102564102565,
-    "false_split_rate": 0.13846153846153847,
-    "uncertainty_calibration": {
-      "method": "saturation_residual_fusion_new",
-      "n_valid_doublets": 263.0,
-      "median_abs_energy_residual": 0.04730265759532487,
-      "p68_abs_energy_residual": 0.0694272959931502,
-      "nominal_68_proxy_width": 0.034999999999999996,
-      "coverage_abs_resid_le_proxy": 0.3688212927756654,
-      "coverage_abs_resid_le_2proxy": 0.7034220532319392,
-      "calibration_ratio_p68_over_proxy": 1.9836370283757203
-    }
-  },
-  "raw_root_reproduction": {
-    "passed": true,
-    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
+  "ticket_id": "2556",
+  "study_id": "S68c",
+  "worker": "testbeam-laptop-3",
+  "title": "NEW S68c joint PID boundary study from timing-energy-pedestal pulse representations",
+  "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+  "git_commit": "cec9edc28257e0699c70c17fa9b2e8d806a3d42a",
+  "runtime_sec": 527.67564702034,
+  "python": "3.7.6",
+  "claim_command": "tn-ticket claim testbeam-laptop-3 --project testbeam",
+  "reproduction": {
+    "selected_pulses": 640737,
     "expected_selected_pulses": 640737,
-    "reproduced_selected_pulses": 640737,
     "delta": 0,
-    "evidence_table": "reproduction_match_table.csv"
+    "passed": true,
+    "samples_per_channel": 18
   },
   "split": {
-    "split": "train and held-out sets are disjoint by source run",
-    "train_runs": [
-      50,
-      51,
-      52,
-      53,
-      54,
-      55,
-      56,
-      57
-    ],
     "heldout_runs": [
+      42,
+      50,
+      57,
       58,
       60,
       62,
       64,
       65
     ],
-    "adc_clip": 11800.0,
-    "bootstrap": "held-out run-block percentile 95% CI",
-    "bootstrap_replicates": 400,
-    "negative_control": "clipped clean single-pulse controls with matched source-run distribution",
-    "winner_score": "energy_fractional_sigma68 + 0.20*abs(energy_fractional_bias) + 0.008*time_sigma68_ns + 0.04*pileup_miss_rate + 0.04*false_split_rate"
+    "particle_holdout_family": "high_amplitude_tail_family",
+    "sampled_rows": 15656,
+    "bootstrap_replicates": 320
+  },
+  "primary_methods": [
+    "traditional_dE_E_tail_pedestal_likelihood",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "1d_cnn",
+    "spectral_transformer_new"
+  ],
+  "joint_score_weights": {
+    "pid_auc_loss": 0.34,
+    "energy_sigma68": 0.18,
+    "pileup_auc_loss": 0.1,
+    "saturation_auc_loss": 0.1,
+    "pedestal_auc_loss": 0.14,
+    "tail_harmonic_auc_loss": 0.14
+  },
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "mean_joint_loss": 0.04223675886696029,
+    "selection_rule": "minimum mean registered joint loss across run-heldout and proxy particle-heldout splits"
+  },
+  "winner_details": {
+    "split_name": "particle_heldout",
+    "method": "gradient_boosted_trees",
+    "joint_loss": 0.05654106418039671,
+    "pid_separation": 0.9796016794481331,
+    "energy_scale": 0.0989603612925596,
+    "pileup_sideband": 0.9993252008182407,
+    "saturation_clipping": 0.9999896576688385,
+    "pedestal_noise_color": 0.7734245118387493,
+    "pulse_shape_harmonics": 0.9999736595268994,
+    "mean_joint_loss": 0.04223675886696029
+  },
+  "artifacts": {
+    "REPORT.md": "academic report",
+    "joint_scoreboard.csv": "winner table",
+    "endpoint_method_summary.csv": "bootstrap endpoint CIs",
+    "paired_bootstrap_deltas.csv": "paired bootstrap vs traditional",
+    "calibration_ece.csv": "PID/proxy calibration",
+    "strata_metrics.csv": "endpoint metrics by pedestal, pile-up, saturation, pulse-shape, timing, and energy strata",
+    "leakage_audit.csv": "cross-task leakage audit",
+    "method_metrics.csv": "combined endpoint, CI, and joint-loss table",
+    "boundary_metrics.csv": "PID boundary migration, calibration, and timing-conditioned confusion",
+    "event_predictions.csv.gz": "held-out event-level predictions",
+    "leakage_checks.csv": "proxy leakage checks"
+  },
+  "next_tickets": [],
+  "status": "complete",
+  "ticket_number": 2556,
+  "claim_command_run_once": true,
+  "claim_command_output": {
+    "exit_code": 0,
+    "stdout": "# null\n\nnull\n",
+    "stderr": "null\n"
+  },
+  "manual_claim_recovery": {
+    "reason": "The required claim helper was run exactly once and returned the malformed null payload without mutating labels; the already-visible lowest open ticket was manually label-swapped without invoking claim again.",
+    "command": "gh issue edit 2556 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-3 --remove-label factory:open"
   },
   "required_method_coverage": {
-    "traditional": "analytic_clipped_template_sideband_traditional",
+    "traditional": "traditional_dE_E_tail_pedestal_likelihood",
     "ridge": "ridge",
     "gradient_boosted_trees": "gradient_boosted_trees",
     "mlp": "mlp",
     "one_dimensional_cnn": "1d_cnn",
-    "transformer_sequence_model": "tiny_sequence_transformer",
-    "new_architecture": "saturation_residual_fusion_new"
+    "new_architecture": "spectral_transformer_new"
   },
   "required_outputs": {
-    "injected_overlap_closure": "method_metrics.csv, run_heldout_metrics.csv, event_predictions.csv",
-    "real_data_sideband_validation": "real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "saturation_mask_ablation.csv",
-    "uncertainty_calibration": "uncertainty_calibration.csv",
-    "traditional_vs_neural_failure_interpretation": "REPORT.md"
+    "method_metrics": "method_metrics.csv",
+    "boundary_metrics": "boundary_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv.gz",
+    "leakage_checks": "leakage_checks.csv",
+    "reproduction_match_table": "reproduction_match_table.csv",
+    "report": "REPORT.md"
   },
-  "artifacts": {
-    "report": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/REPORT.md",
-    "result": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/result.json",
-    "method_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/method_metrics.csv",
-    "run_heldout_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/run_heldout_metrics.csv",
-    "real_data_sideband_validation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/saturation_mask_ablation.csv",
-    "uncertainty_calibration": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/uncertainty_calibration.csv"
-  },
-  "queue_provenance": {
-    "claimed_once": true,
-    "claim_command_run_once": "tn-ticket claim testbeam-laptop-2 --project testbeam",
-    "claim_command_output": "null / # null / null",
-    "manual_claim_recovery": "gh issue edit 2502 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-2 --remove-label factory:open",
-    "done_command": "tn-ticket done 2502",
-    "novel_tickets_appended": []
-  },
-  "done_command": "tn-ticket done 2502",
-  "novel_tickets_appended": []
+  "wrapper_runtime_sec": 547.6448078155518,
+  "done_command": "tn-ticket done 2556",
+  "novel_tickets_appended": [],
+  "winner_name": "gradient_boosted_trees"
 }

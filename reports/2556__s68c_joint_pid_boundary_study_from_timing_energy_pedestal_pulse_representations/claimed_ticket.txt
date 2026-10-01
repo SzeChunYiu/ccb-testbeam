@@ -1,0 +1,20 @@
+#2556 NEW S68c joint PID boundary study from timing-energy-pedestal pulse representations
+
+Academic-grade study: compare traditional likelihood PID from calibrated charge, time-over-threshold, and template-shape summaries against ridge, gradient-boosted trees, MLP, 1D-CNN, and a multitask transformer for PID plus energy/timing heads where appropriate.
+
+Require bootstrap 95% CIs for PID AUC, boundary migration, calibration error, energy-transfer bias, and timing-conditioned confusion. Stratify by pedestal regime, pile-up class, saturation, pulse shape family, and energy band.
+
+Deliverables: concise REPORT.md, method_metrics.csv, boundary_metrics.csv, strata_metrics.csv, event_predictions.csv.gz, leakage_checks.csv, and reproduction_match_table.csv. Identify which pulse timing and shape cues stabilize PID when pedestal, pile-up, and saturation covary.
+
+claim_helper_command: tn-ticket claim testbeam-laptop-3 --project testbeam
+claim_helper_exit_code: 0
+claim_helper_stdout:
+# null
+
+null
+
+claim_helper_stderr:
+null
+
+manual_claim_recovery:
+gh issue edit 2556 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-3 --remove-label factory:open

@@ -1,0 +1,113 @@
+{
+  "ticket_id": "2556",
+  "study_id": "S68c",
+  "worker": "testbeam-laptop-3",
+  "title": "NEW S68c joint PID boundary study from timing-energy-pedestal pulse representations",
+  "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+  "git_commit": "cec9edc28257e0699c70c17fa9b2e8d806a3d42a",
+  "runtime_sec": 527.67564702034,
+  "python": "3.7.6",
+  "claim_command": "tn-ticket claim testbeam-laptop-3 --project testbeam",
+  "reproduction": {
+    "selected_pulses": 640737,
+    "expected_selected_pulses": 640737,
+    "delta": 0,
+    "passed": true,
+    "samples_per_channel": 18
+  },
+  "split": {
+    "heldout_runs": [
+      42,
+      50,
+      57,
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "particle_holdout_family": "high_amplitude_tail_family",
+    "sampled_rows": 15656,
+    "bootstrap_replicates": 320
+  },
+  "primary_methods": [
+    "traditional_dE_E_tail_pedestal_likelihood",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "1d_cnn",
+    "spectral_transformer_new"
+  ],
+  "joint_score_weights": {
+    "pid_auc_loss": 0.34,
+    "energy_sigma68": 0.18,
+    "pileup_auc_loss": 0.1,
+    "saturation_auc_loss": 0.1,
+    "pedestal_auc_loss": 0.14,
+    "tail_harmonic_auc_loss": 0.14
+  },
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "mean_joint_loss": 0.04223675886696029,
+    "selection_rule": "minimum mean registered joint loss across run-heldout and proxy particle-heldout splits"
+  },
+  "winner_details": {
+    "split_name": "particle_heldout",
+    "method": "gradient_boosted_trees",
+    "joint_loss": 0.05654106418039671,
+    "pid_separation": 0.9796016794481331,
+    "energy_scale": 0.0989603612925596,
+    "pileup_sideband": 0.9993252008182407,
+    "saturation_clipping": 0.9999896576688385,
+    "pedestal_noise_color": 0.7734245118387493,
+    "pulse_shape_harmonics": 0.9999736595268994,
+    "mean_joint_loss": 0.04223675886696029
+  },
+  "artifacts": {
+    "REPORT.md": "academic report",
+    "joint_scoreboard.csv": "winner table",
+    "endpoint_method_summary.csv": "bootstrap endpoint CIs",
+    "paired_bootstrap_deltas.csv": "paired bootstrap vs traditional",
+    "calibration_ece.csv": "PID/proxy calibration",
+    "strata_metrics.csv": "endpoint metrics by pedestal, pile-up, saturation, pulse-shape, timing, and energy strata",
+    "leakage_audit.csv": "cross-task leakage audit",
+    "method_metrics.csv": "combined endpoint, CI, and joint-loss table",
+    "boundary_metrics.csv": "PID boundary migration, calibration, and timing-conditioned confusion",
+    "event_predictions.csv.gz": "held-out event-level predictions",
+    "leakage_checks.csv": "proxy leakage checks"
+  },
+  "next_tickets": [],
+  "status": "complete",
+  "ticket_number": 2556,
+  "claim_command_run_once": true,
+  "claim_command_output": {
+    "exit_code": 0,
+    "stdout": "# null\n\nnull\n",
+    "stderr": "null\n"
+  },
+  "manual_claim_recovery": {
+    "reason": "The required claim helper was run exactly once and returned the malformed null payload without mutating labels; the already-visible lowest open ticket was manually label-swapped without invoking claim again.",
+    "command": "gh issue edit 2556 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-3 --remove-label factory:open"
+  },
+  "required_method_coverage": {
+    "traditional": "traditional_dE_E_tail_pedestal_likelihood",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "new_architecture": "spectral_transformer_new"
+  },
+  "required_outputs": {
+    "method_metrics": "method_metrics.csv",
+    "boundary_metrics": "boundary_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv.gz",
+    "leakage_checks": "leakage_checks.csv",
+    "reproduction_match_table": "reproduction_match_table.csv",
+    "report": "REPORT.md"
+  },
+  "wrapper_runtime_sec": 547.6448078155518,
+  "done_command": "tn-ticket done 2556",
+  "novel_tickets_appended": [],
+  "winner_name": "gradient_boosted_trees"
+}

@@ -1,0 +1,5 @@
+check,value,passed
+split_unit,run,True
+train_heldout_run_overlap,,True
+event_identifier_features_excluded,"eventno,evt absent from model matrices",True
+run_label_features_excluded,run absent from model matrices,True

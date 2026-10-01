@@ -1,0 +1,8 @@
+claim_helper_command: tn-ticket claim testbeam-laptop-1 --project testbeam
+claim_helper_stdout:
+# null
+
+null
+null
+manual_claim_recovery: gh issue edit 2549 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-1 --remove-label factory:open
+#2549 NEW S67a pulse-shape timing invariants under pedestal drift and pile-up

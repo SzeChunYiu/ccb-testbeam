@@ -1,8 +1,8 @@
 {
-  "ticket_id": "2502",
-  "issue_number": 2502,
+  "ticket_id": "2555",
+  "issue_number": 2555,
   "project": "testbeam",
-  "worker": "testbeam-laptop-2",
+  "worker": "testbeam-laptop-4",
   "status": "complete",
   "winner": "saturation_residual_fusion_new",
   "winner_metrics": {
@@ -21,17 +21,7 @@
       8.669358478772935
     ],
     "pileup_miss_rate": 0.32564102564102565,
-    "false_split_rate": 0.13846153846153847,
-    "uncertainty_calibration": {
-      "method": "saturation_residual_fusion_new",
-      "n_valid_doublets": 263.0,
-      "median_abs_energy_residual": 0.04730265759532487,
-      "p68_abs_energy_residual": 0.0694272959931502,
-      "nominal_68_proxy_width": 0.034999999999999996,
-      "coverage_abs_resid_le_proxy": 0.3688212927756654,
-      "coverage_abs_resid_le_2proxy": 0.7034220532319392,
-      "calibration_ratio_p68_over_proxy": 1.9836370283757203
-    }
+    "false_split_rate": 0.13846153846153847
   },
   "raw_root_reproduction": {
     "passed": true,
@@ -76,29 +66,32 @@
     "new_architecture": "saturation_residual_fusion_new"
   },
   "required_outputs": {
-    "injected_overlap_closure": "method_metrics.csv, run_heldout_metrics.csv, event_predictions.csv",
-    "real_data_sideband_validation": "real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "saturation_mask_ablation.csv",
-    "uncertainty_calibration": "uncertainty_calibration.csv",
-    "traditional_vs_neural_failure_interpretation": "REPORT.md"
+    "REPORT.md": "reports/2555__s68b_censored_saturation_energy_closure_waveform_learners/REPORT.md",
+    "method_metrics.csv": "reports/2555__s68b_censored_saturation_energy_closure_waveform_learners/method_metrics.csv",
+    "run_heldout_metrics.csv": "reports/2555__s68b_censored_saturation_energy_closure_waveform_learners/run_heldout_metrics.csv",
+    "strata_metrics.csv": "reports/2555__s68b_censored_saturation_energy_closure_waveform_learners/strata_metrics.csv",
+    "event_predictions.csv.gz": "reports/2555__s68b_censored_saturation_energy_closure_waveform_learners/event_predictions.csv.gz",
+    "leakage_checks.csv": "reports/2555__s68b_censored_saturation_energy_closure_waveform_learners/leakage_checks.csv",
+    "reproduction_match_table.csv": "reports/2555__s68b_censored_saturation_energy_closure_waveform_learners/reproduction_match_table.csv"
   },
   "artifacts": {
-    "report": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/REPORT.md",
-    "result": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/result.json",
-    "method_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/method_metrics.csv",
-    "run_heldout_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/run_heldout_metrics.csv",
-    "real_data_sideband_validation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/saturation_mask_ablation.csv",
-    "uncertainty_calibration": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/uncertainty_calibration.csv"
+    "report": "reports/2555__s68b_censored_saturation_energy_closure_waveform_learners/REPORT.md",
+    "result": "reports/2555__s68b_censored_saturation_energy_closure_waveform_learners/result.json",
+    "method_metrics": "reports/2555__s68b_censored_saturation_energy_closure_waveform_learners/method_metrics.csv",
+    "run_heldout_metrics": "reports/2555__s68b_censored_saturation_energy_closure_waveform_learners/run_heldout_metrics.csv",
+    "strata_metrics": "reports/2555__s68b_censored_saturation_energy_closure_waveform_learners/strata_metrics.csv",
+    "event_predictions": "reports/2555__s68b_censored_saturation_energy_closure_waveform_learners/event_predictions.csv.gz",
+    "leakage_checks": "reports/2555__s68b_censored_saturation_energy_closure_waveform_learners/leakage_checks.csv",
+    "raw_reproduction": "reports/2555__s68b_censored_saturation_energy_closure_waveform_learners/reproduction_match_table.csv"
   },
   "queue_provenance": {
     "claimed_once": true,
-    "claim_command_run_once": "tn-ticket claim testbeam-laptop-2 --project testbeam",
-    "claim_command_output": "null / # null / null",
-    "manual_claim_recovery": "gh issue edit 2502 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-2 --remove-label factory:open",
-    "done_command": "tn-ticket done 2502",
+    "claim_command_run_once": "tn-ticket claim testbeam-laptop-4 --project testbeam",
+    "claim_command_output": "stderr: null; stdout: # null / null",
+    "manual_claim_recovery": "gh issue edit 2555 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-4 --remove-label factory:open",
+    "done_command": "tn-ticket done 2555",
     "novel_tickets_appended": []
   },
-  "done_command": "tn-ticket done 2502",
+  "done_command": "tn-ticket done 2555",
   "novel_tickets_appended": []
 }

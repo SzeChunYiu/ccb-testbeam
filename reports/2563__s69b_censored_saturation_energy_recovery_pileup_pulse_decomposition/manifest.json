@@ -1,0 +1,31 @@
+{
+  "ticket_id": "2563",
+  "git_commit": "cec9edc28257e0699c70c17fa9b2e8d806a3d42a",
+  "command": "/home/billy/.cache/uv/builds-v0/.tmpMZMfMj/bin/python scripts/s32b_1783884181_2140_09a136f2_analytic_pileup_saturation_energy_closure_bakeoff.py",
+  "runtime_seconds": 51.955281019210815,
+  "python": "3.13.12 (main, Feb  3 2026, 22:52:12) [Clang 21.1.4 ]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+  "outputs_sha256": {
+    "REPORT.md": "64a99d5b538e2f16d3bf2b55ae0a50b4701bd484c409f89039e9b9d275b87d33",
+    "claimed_ticket.txt": "2eac4eca3fa4a388c48b0ee69ce96135e03e8171dd463fe4cff89d3a974664dc",
+    "event_predictions.csv": "0b1034457d2f71b36f904ad63c06cb5c40170e1bc6e986a14d7d53f86a0a0bd4",
+    "input_sha256.csv": "cc17da0dcd3e7e732b81a17f3c35833f026fdec912538d28d7d71b9af71a46f6",
+    "method_metrics.csv": "5240747a10e859f82b3c09a4465057d3466f78cd292576b7bdb2d8913a252137",
+    "real_data_sideband_validation.csv": "84115c3553306616c2c786f1b2f4e224a432b21971917b8b151d69e188a9223d",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "d6940ba1f6d8c54bf522e10b5c2aa67dd95bb341df4b8eb1fe876c4d716d2d80",
+    "run_heldout_metrics.csv": "711e32f2b1e53606f27fb452b537ec1ba860bb5d37e3ee656852f4e2b05933f7",
+    "saturation_knee_linearity.csv": "7966c569054a6d803f165c9e8c79cbd1a31c70e56c081ec9c8e5d4a76383ed13",
+    "saturation_mask_ablation.csv": "503861bc2de9b4b321528157e8dae84cc91937ac3c1d89891755f98d0f419d63",
+    "strata_metrics.csv": "ebc325dc4117b765a356046462b74f8f57ec678e9919e880e7fa984c9f64d7ed",
+    "template_summary.csv": "70811c144799226d495253dcf99ec44c6cea6b9a7de91249cd5ea72526581b13",
+    "uncertainty_calibration.csv": "816c89af0bc7516c7cf93cc1be879da98a4ffde3842643ba467f8e61ab1be16f",
+    "winner_ranked_metrics.csv": "b738fdf2df81fe46bd3240fb46fbaa97a8b35adaf2a68993970d03c4e3596b84"
+  },
+  "issue_number": 2563,
+  "worker": "testbeam-laptop-3",
+  "claim_command_run_once": "tn-ticket claim testbeam-laptop-3 --project testbeam",
+  "claim_command_output": "null / # null / null",
+  "manual_claim_recovery": "gh issue edit 2563 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-3 --remove-label factory:open",
+  "done_command": "tn-ticket done 2563"
+}

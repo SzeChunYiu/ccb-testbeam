@@ -1,0 +1,6 @@
+2534
+# NEW S63a matched-filter pulse-shape timing atlas under pedestal drift and pile-up
+
+Academic-grade study: build a run-heldout pulse-shape and timing atlas under controlled pedestal drift and pile-up occupancy. Compare traditional matched-filter/template chi2 fits, CFD timing, and analytic timewalk correction against ridge, gradient-boosted trees, MLP, 1D-CNN, and transformer sequence encoders where sample length supports attention.
+
+Require bootstrap CIs for timing resolution, shape residuals, pile-up false-positive rate, saturation-tag leakage, energy bias, and PID boundary movement across run/current strata. Include ablations for pedestal windows, pulse-shape derivatives, phase bins, and injected pile-up spacing so the result deepens pulse shape, timing, pile-up, saturation, pedestal, energy, and PID understanding.

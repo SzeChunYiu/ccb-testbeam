@@ -1,0 +1,88 @@
+{
+  "study": "P10-2404",
+  "ticket": "2404",
+  "ticket_title": "P10: Conditional generative pulse templates",
+  "worker": "testbeam-laptop-3",
+  "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+  "config": "configs/p10_2404_conditional_template_bakeoff.yaml",
+  "script": "scripts/p10m_1781191148_2507_386921a0_phase_gated_consumers.py",
+  "git_commit": "d3b2beb217c7157693da45e3e8824489c7a8f036",
+  "reproduction": {
+    "quantity": "S00/S01 selected B-stave pulses from raw ROOT",
+    "report_value": 640737,
+    "reproduced": 640737,
+    "delta": 0,
+    "tolerance": 0,
+    "pass": true
+  },
+  "split": {
+    "unit": "run",
+    "folds": [
+      {
+        "name": "holdout_sample_i",
+        "train_runs": [64],
+        "eval_runs": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+        "train_pulses": 828,
+        "eval_pulses": 2524,
+        "eval_events": 631
+      },
+      {
+        "name": "holdout_sample_ii",
+        "train_runs": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+        "eval_runs": [58, 59, 60, 61, 62, 63, 65],
+        "train_pulses": 2300,
+        "eval_pulses": 15096,
+        "eval_events": 3774
+      }
+    ],
+    "bootstrap_iterations": 700,
+    "bootstrap_unit": "held-out run within fold"
+  },
+  "primary_metric": "primary_loss = timing_sigma68_ns + 10 * charge_sigma68_log",
+  "winner": "mlp",
+  "winner_selection": "lowest non-sentinel mean fold primary_loss",
+  "winner_family": "ml_nn",
+  "winner_metrics": {
+    "mean_timing_sigma68_ns": 10.083230229453216,
+    "mean_charge_sigma68_log": 0.3685018969625995,
+    "mean_primary_loss": 13.76824919907921,
+    "holdout_sample_i": {
+      "timing_sigma68_ns": 16.660152334919584,
+      "timing_sigma68_ns_ci95": [11.732615693845151, 21.500471299450012],
+      "charge_sigma68_log": 0.5268057240013017,
+      "charge_sigma68_log_ci95": [0.47753063102203075, 0.5716524776686258],
+      "primary_loss": 21.928209574932602
+    },
+    "holdout_sample_ii": {
+      "timing_sigma68_ns": 3.5063081239868468,
+      "timing_sigma68_ns_ci95": [3.212288337426408, 3.765738595949956],
+      "charge_sigma68_log": 0.21019806992389728,
+      "charge_sigma68_log_ci95": [0.19993167483289587, 0.22202672892871728],
+      "primary_loss": 5.60828882322582
+    }
+  },
+  "overall_method_ranking": [
+    {"method": "mlp", "timing_sigma68_ns": 10.083230229453216, "charge_sigma68_log": 0.3685018969625995, "primary_loss": 13.76824919907921},
+    {"method": "gradient_boosted_trees", "timing_sigma68_ns": 11.539135804949554, "charge_sigma68_log": 0.267043835129756, "primary_loss": 14.209574156247113},
+    {"method": "cnn_1d", "timing_sigma68_ns": 9.885905595285548, "charge_sigma68_log": 0.5247203796821179, "primary_loss": 15.133109392106727},
+    {"method": "phase_gated_cnn_new", "timing_sigma68_ns": 10.28630437725927, "charge_sigma68_log": 0.5223370591771023, "primary_loss": 15.509674969030295},
+    {"method": "traditional_explicit_handles", "timing_sigma68_ns": 10.267693607400492, "charge_sigma68_log": 0.5325851782015923, "primary_loss": 15.593545389416416},
+    {"method": "ridge", "timing_sigma68_ns": 13.43790306081341, "charge_sigma68_log": 0.34848818101185974, "primary_loss": 16.922784870932006}
+  ],
+  "negative_control": {
+    "method": "shuffled_target_ridge_sentinel",
+    "timing_sigma68_ns": 10.228271050595655,
+    "charge_sigma68_log": 0.7657068445091061,
+    "primary_loss": 17.885339495686715,
+    "excluded_from_winner_selection": true
+  },
+  "artifacts": {
+    "report": "reports/2404_p10_conditional_template_bakeoff/REPORT.md",
+    "manifest": "reports/2404_p10_conditional_template_bakeoff/manifest.json",
+    "fold_summary": "reports/2404_p10_conditional_template_bakeoff/fold_summary.csv",
+    "fold_run_metrics": "reports/2404_p10_conditional_template_bakeoff/fold_run_metrics.csv",
+    "input_sha256": "reports/2404_p10_conditional_template_bakeoff/input_sha256.csv",
+    "figure": "reports/2404_p10_conditional_template_bakeoff/fig_consumer_summary.png"
+  },
+  "elapsed_sec": 46.02
+}

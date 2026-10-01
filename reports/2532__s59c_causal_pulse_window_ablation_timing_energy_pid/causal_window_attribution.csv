@@ -1,0 +1,29 @@
+method,window,causal_for_timing,window_loss_score,fraction_of_joint_loss,terms,rank_within_window
+cnn_1d,late_tail_samples_12_17,False,0.0671706990367052,0.0454688630336667,0.58*pileup_detection_proxy_sigma68_delta; 0.22*pid_confusion_proxy_sigma68_spread; 0.2*saturation_mask_sigma68_spread,1.0
+phase_conditioned_residual_fusion,late_tail_samples_12_17,False,0.07755952766626448,0.057501375869560285,0.58*pileup_detection_proxy_sigma68_delta; 0.22*pid_confusion_proxy_sigma68_spread; 0.2*saturation_mask_sigma68_spread,2.0
+compact_waveform_transformer,late_tail_samples_12_17,False,0.09925227235920075,0.07257480693056922,0.58*pileup_detection_proxy_sigma68_delta; 0.22*pid_confusion_proxy_sigma68_spread; 0.2*saturation_mask_sigma68_spread,3.0
+gradient_boosted_trees,late_tail_samples_12_17,False,0.11599406038001697,0.08070126848256548,0.58*pileup_detection_proxy_sigma68_delta; 0.22*pid_confusion_proxy_sigma68_spread; 0.2*saturation_mask_sigma68_spread,4.0
+mlp,late_tail_samples_12_17,False,0.21033843660035834,0.14738707112228,0.58*pileup_detection_proxy_sigma68_delta; 0.22*pid_confusion_proxy_sigma68_spread; 0.2*saturation_mask_sigma68_spread,5.0
+ridge,late_tail_samples_12_17,False,0.27825113929208245,0.1691506088232412,0.58*pileup_detection_proxy_sigma68_delta; 0.22*pid_confusion_proxy_sigma68_spread; 0.2*saturation_mask_sigma68_spread,6.0
+trapezoid_template,late_tail_samples_12_17,False,0.2983944875689853,0.12380394220803347,0.58*pileup_detection_proxy_sigma68_delta; 0.22*pid_confusion_proxy_sigma68_spread; 0.2*saturation_mask_sigma68_spread,7.0
+phase_conditioned_residual_fusion,leading_edge_samples_4_7,True,0.9799749890707133,0.7265375626292454,0.72*timing_sigma68_ns; 0.18*pileup_detection_proxy_sigma68_delta; 0.1*pid_confusion_proxy_sigma68_spread,1.0
+compact_waveform_transformer,leading_edge_samples_4_7,True,0.9954982696278485,0.7279238348970596,0.72*timing_sigma68_ns; 0.18*pileup_detection_proxy_sigma68_delta; 0.1*pid_confusion_proxy_sigma68_spread,2.0
+gradient_boosted_trees,leading_edge_samples_4_7,True,1.0504006692014145,0.730801785382568,0.72*timing_sigma68_ns; 0.18*pileup_detection_proxy_sigma68_delta; 0.1*pid_confusion_proxy_sigma68_spread,3.0
+mlp,leading_edge_samples_4_7,True,1.0647817900245446,0.7461074255022242,0.72*timing_sigma68_ns; 0.18*pileup_detection_proxy_sigma68_delta; 0.1*pid_confusion_proxy_sigma68_spread,4.0
+cnn_1d,leading_edge_samples_4_7,True,1.0714425403038,0.725275675438423,0.72*timing_sigma68_ns; 0.18*pileup_detection_proxy_sigma68_delta; 0.1*pid_confusion_proxy_sigma68_spread,5.0
+ridge,leading_edge_samples_4_7,True,1.2335070169665168,0.7498566346878691,0.72*timing_sigma68_ns; 0.18*pileup_detection_proxy_sigma68_delta; 0.1*pid_confusion_proxy_sigma68_spread,6.0
+trapezoid_template,leading_edge_samples_4_7,True,1.7830714414680673,0.7397967552643627,0.72*timing_sigma68_ns; 0.18*pileup_detection_proxy_sigma68_delta; 0.1*pid_confusion_proxy_sigma68_spread,7.0
+mlp,peak_charge_samples_8_11,True,0.023427377804377668,0.016415889812962756,0.55*energy_resolution_area_norm_proxy; 0.25*pid_confusion_proxy_sigma68_spread; 0.2*saturation_mask_sigma68_spread,1.0
+ridge,peak_charge_samples_8_11,True,0.047302301896146794,0.02875536533230525,0.55*energy_resolution_area_norm_proxy; 0.25*pid_confusion_proxy_sigma68_spread; 0.2*saturation_mask_sigma68_spread,2.0
+cnn_1d,peak_charge_samples_8_11,True,0.06077327878606982,0.04113835241941817,0.55*energy_resolution_area_norm_proxy; 0.25*pid_confusion_proxy_sigma68_spread; 0.2*saturation_mask_sigma68_spread,3.0
+phase_conditioned_residual_fusion,peak_charge_samples_8_11,True,0.08594280533924512,0.06371660196747045,0.55*energy_resolution_area_norm_proxy; 0.25*pid_confusion_proxy_sigma68_spread; 0.2*saturation_mask_sigma68_spread,4.0
+gradient_boosted_trees,peak_charge_samples_8_11,True,0.09852744773866767,0.06854911352193667,0.55*energy_resolution_area_norm_proxy; 0.25*pid_confusion_proxy_sigma68_spread; 0.2*saturation_mask_sigma68_spread,5.0
+trapezoid_template,peak_charge_samples_8_11,True,0.09916582045795123,0.04114392194376611,0.55*energy_resolution_area_norm_proxy; 0.25*pid_confusion_proxy_sigma68_spread; 0.2*saturation_mask_sigma68_spread,6.0
+compact_waveform_transformer,peak_charge_samples_8_11,True,0.10033543763440153,0.07336683424493737,0.55*energy_resolution_area_norm_proxy; 0.25*pid_confusion_proxy_sigma68_spread; 0.2*saturation_mask_sigma68_spread,7.0
+ridge,pretrigger_pedestal_samples_0_3,True,0.000858060928218416,0.0005216206078611032,0.78*pedestal_transfer_robustness_sigma68_spread; 0.22*saturation_mask_sigma68_spread,1.0
+mlp,pretrigger_pedestal_samples_0_3,True,0.0024255774586161485,0.0016996358971941147,0.78*pedestal_transfer_robustness_sigma68_spread; 0.22*saturation_mask_sigma68_spread,2.0
+gradient_boosted_trees,pretrigger_pedestal_samples_0_3,True,0.003371146436889072,0.0023454286607963054,0.78*pedestal_transfer_robustness_sigma68_spread; 0.22*saturation_mask_sigma68_spread,3.0
+phase_conditioned_residual_fusion,pretrigger_pedestal_samples_0_3,True,0.0040833563805091535,0.0030273341923297034,0.78*pedestal_transfer_robustness_sigma68_spread; 0.22*saturation_mask_sigma68_spread,4.0
+cnn_1d,pretrigger_pedestal_samples_0_3,True,0.005466379899663383,0.003700275306230828,0.78*pedestal_transfer_robustness_sigma68_spread; 0.22*saturation_mask_sigma68_spread,5.0
+compact_waveform_transformer,pretrigger_pedestal_samples_0_3,True,0.008543049802584224,0.006246811032969888,0.78*pedestal_transfer_robustness_sigma68_spread; 0.22*saturation_mask_sigma68_spread,6.0
+trapezoid_template,pretrigger_pedestal_samples_0_3,True,0.009468068948229318,0.003928304006009037,0.78*pedestal_transfer_robustness_sigma68_spread; 0.22*saturation_mask_sigma68_spread,7.0

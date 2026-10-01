@@ -1,104 +1,868 @@
 {
-  "ticket_id": "2502",
-  "issue_number": 2502,
-  "project": "testbeam",
-  "worker": "testbeam-laptop-2",
-  "status": "complete",
-  "winner": "saturation_residual_fusion_new",
-  "winner_metrics": {
-    "name": "saturation_residual_fusion_new",
-    "criterion": "minimum held-out composite saturation-energy closure score with run-block bootstrap CIs reported",
-    "winner_score": 0.15172443008737868,
-    "energy_fractional_bias": -0.002906610021787798,
-    "energy_fractional_sigma68": 0.068387783415775,
-    "energy_fractional_sigma68_ci95": [
-      0.06183707932660469,
-      0.0751855124441164
-    ],
-    "time_sigma68_ns": 8.023902762892945,
-    "time_sigma68_ci95": [
-      7.365407249564567,
-      8.669358478772935
-    ],
-    "pileup_miss_rate": 0.32564102564102565,
-    "false_split_rate": 0.13846153846153847,
-    "uncertainty_calibration": {
-      "method": "saturation_residual_fusion_new",
-      "n_valid_doublets": 263.0,
-      "median_abs_energy_residual": 0.04730265759532487,
-      "p68_abs_energy_residual": 0.0694272959931502,
-      "nominal_68_proxy_width": 0.034999999999999996,
-      "coverage_abs_resid_le_proxy": 0.3688212927756654,
-      "coverage_abs_resid_le_2proxy": 0.7034220532319392,
-      "calibration_ratio_p68_over_proxy": 1.9836370283757203
-    }
-  },
-  "raw_root_reproduction": {
-    "passed": true,
-    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
+  "ticket_id": "2532",
+  "study_id": "S59c",
+  "title": "causal pulse-window ablation for timing-energy-PID disentanglement",
+  "worker": "testbeam-laptop-3",
+  "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+  "reproduction": {
     "expected_selected_pulses": 640737,
-    "reproduced_selected_pulses": 640737,
-    "delta": 0,
-    "evidence_table": "reproduction_match_table.csv"
+    "selected_pulses": 640737,
+    "passed": true
   },
   "split": {
-    "split": "train and held-out sets are disjoint by source run",
     "train_runs": [
-      50,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
       51,
       52,
       53,
       54,
       55,
       56,
-      57
+      59,
+      61,
+      63
     ],
     "heldout_runs": [
+      42,
+      50,
+      57,
       58,
       60,
       62,
       64,
       65
     ],
-    "adc_clip": 11800.0,
-    "bootstrap": "held-out run-block percentile 95% CI",
-    "bootstrap_replicates": 400,
-    "negative_control": "clipped clean single-pulse controls with matched source-run distribution",
-    "winner_score": "energy_fractional_sigma68 + 0.20*abs(energy_fractional_bias) + 0.008*time_sigma68_ns + 0.04*pileup_miss_rate + 0.04*false_split_rate"
+    "train_pulses": 493008,
+    "heldout_pulses": 147729,
+    "bootstrap_replicates": 500
+  },
+  "methods_benchmarked": [
+    "trapezoid_template",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn_1d",
+    "compact_waveform_transformer",
+    "phase_conditioned_residual_fusion"
+  ],
+  "winner": {
+    "method": "phase_conditioned_residual_fusion",
+    "selection_metric": "minimum joint S59c timing-energy-PID-pileup-pedestal proxy loss; lower is better",
+    "joint_loss_score": 1.3488290757112553,
+    "timing_sigma68_ns": 1.3147528435367175,
+    "timing_sigma68_ci_low": 1.2623084700744904,
+    "timing_sigma68_ci_high": 1.3503976199508203
+  },
+  "traditional_method": "trapezoid_template",
+  "trapezoid": {
+    "rise": 2,
+    "flat": 2
+  },
+  "template_grid": {
+    "min": -1.4,
+    "max": 1.4,
+    "step": 0.02
+  },
+  "new_architecture": "phase_conditioned_residual_fusion",
+  "method_summary": [
+    {
+      "method": "trapezoid_template",
+      "n_pair_residuals": 6468,
+      "timing_sigma68_ns": 2.3356193586271403,
+      "timing_sigma68_ci_low": 1.93595869331471,
+      "timing_sigma68_ci_high": 2.4968232086431152,
+      "median_residual_ns": -3.6747632308871445,
+      "median_residual_ci_low": -3.674809593200685,
+      "median_residual_ci_high": -3.596797917892227,
+      "shape_phase_bias_ns": 0.0,
+      "shape_phase_bias_ci_low": 0.0,
+      "shape_phase_bias_ci_high": 0.0,
+      "rise_time_bias_ns": 0.0,
+      "rise_time_bias_ci_low": 0.0,
+      "rise_time_bias_ci_high": 0.0,
+      "energy_drift_area_norm": 0.0,
+      "energy_drift_ci_low": 0.0,
+      "energy_drift_ci_high": 0.0
+    },
+    {
+      "method": "ridge",
+      "n_pair_residuals": 6468,
+      "timing_sigma68_ns": 1.5854052619616195,
+      "timing_sigma68_ci_low": 1.4806191881406616,
+      "timing_sigma68_ci_high": 1.611966632627149,
+      "median_residual_ns": 1.1474005304820878,
+      "median_residual_ci_low": 1.115695934829386,
+      "median_residual_ci_high": 1.333683789807746,
+      "shape_phase_bias_ns": 2.0031080529392185,
+      "shape_phase_bias_ci_low": 0.3637148951737384,
+      "shape_phase_bias_ci_high": 2.5113827921560814,
+      "rise_time_bias_ns": 0.0,
+      "rise_time_bias_ci_low": 0.0,
+      "rise_time_bias_ci_high": 0.0,
+      "energy_drift_area_norm": 0.0,
+      "energy_drift_ci_low": 0.0,
+      "energy_drift_ci_high": 0.0
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "n_pair_residuals": 6468,
+      "timing_sigma68_ns": 1.3933885047952188,
+      "timing_sigma68_ci_low": 1.3411404899950803,
+      "timing_sigma68_ci_high": 1.4180427658602295,
+      "median_residual_ns": 1.3716953644761212,
+      "median_residual_ci_low": 1.3169262981941952,
+      "median_residual_ci_high": 1.5590769272882203,
+      "shape_phase_bias_ns": -0.5379449856622145,
+      "shape_phase_bias_ci_low": -1.5582527914111222,
+      "shape_phase_bias_ci_high": -0.22500675218052105,
+      "rise_time_bias_ns": 0.0,
+      "rise_time_bias_ci_low": 0.0,
+      "rise_time_bias_ci_high": 0.0,
+      "energy_drift_area_norm": 0.0,
+      "energy_drift_ci_low": 0.0,
+      "energy_drift_ci_high": 0.0
+    },
+    {
+      "method": "mlp",
+      "n_pair_residuals": 6468,
+      "timing_sigma68_ns": 1.3854106093809893,
+      "timing_sigma68_ci_low": 1.3215558616588836,
+      "timing_sigma68_ci_high": 1.4070668017171981,
+      "median_residual_ns": 1.3508130610567655,
+      "median_residual_ci_low": 1.276765799230113,
+      "median_residual_ci_high": 1.5817629781746014,
+      "shape_phase_bias_ns": 1.9104924216397166,
+      "shape_phase_bias_ci_low": 0.1361389180059103,
+      "shape_phase_bias_ci_high": 2.7705087700292133,
+      "rise_time_bias_ns": 0.0,
+      "rise_time_bias_ci_low": 0.0,
+      "rise_time_bias_ci_high": 0.0,
+      "energy_drift_area_norm": 0.0,
+      "energy_drift_ci_low": 0.0,
+      "energy_drift_ci_high": 0.0
+    },
+    {
+      "method": "cnn_1d",
+      "n_pair_residuals": 6468,
+      "timing_sigma68_ns": 1.4514685902050488,
+      "timing_sigma68_ci_low": 1.3113538119340484,
+      "timing_sigma68_ci_high": 1.493949016621807,
+      "median_residual_ns": 1.2974684351501438,
+      "median_residual_ci_low": 1.2531489261118551,
+      "median_residual_ci_high": 1.4579976847698004,
+      "shape_phase_bias_ns": 1.6895460562811877,
+      "shape_phase_bias_ci_low": 0.6799089803312802,
+      "shape_phase_bias_ci_high": 2.755181017174389,
+      "rise_time_bias_ns": 0.0,
+      "rise_time_bias_ci_low": 0.0,
+      "rise_time_bias_ci_high": 0.0,
+      "energy_drift_area_norm": 0.0,
+      "energy_drift_ci_low": 0.0,
+      "energy_drift_ci_high": 0.0
+    },
+    {
+      "method": "compact_waveform_transformer",
+      "n_pair_residuals": 6468,
+      "timing_sigma68_ns": 1.326888075789141,
+      "timing_sigma68_ci_low": 1.244478948301431,
+      "timing_sigma68_ci_high": 1.3800683904306026,
+      "median_residual_ns": 1.4584935195367805,
+      "median_residual_ci_low": 1.3848932505304061,
+      "median_residual_ci_high": 1.717726649967464,
+      "shape_phase_bias_ns": 0.22136763950597782,
+      "shape_phase_bias_ci_low": -1.249246514937148,
+      "shape_phase_bias_ci_high": 0.6631728305475002,
+      "rise_time_bias_ns": 0.0,
+      "rise_time_bias_ci_low": 0.0,
+      "rise_time_bias_ci_high": 0.0,
+      "energy_drift_area_norm": 0.0,
+      "energy_drift_ci_low": 0.0,
+      "energy_drift_ci_high": 0.0
+    },
+    {
+      "method": "phase_conditioned_residual_fusion",
+      "n_pair_residuals": 6468,
+      "timing_sigma68_ns": 1.3147528435367175,
+      "timing_sigma68_ci_low": 1.2623084700744904,
+      "timing_sigma68_ci_high": 1.3503976199508203,
+      "median_residual_ns": 1.4216885132767132,
+      "median_residual_ci_low": 1.342486375266894,
+      "median_residual_ci_high": 1.6570878402776041,
+      "shape_phase_bias_ns": 0.011661931247047619,
+      "shape_phase_bias_ci_low": -1.0196921947420932,
+      "shape_phase_bias_ci_high": 0.6720256134326453,
+      "rise_time_bias_ns": 0.0,
+      "rise_time_bias_ci_low": 0.0,
+      "rise_time_bias_ci_high": 0.0,
+      "energy_drift_area_norm": 0.0,
+      "energy_drift_ci_low": 0.0,
+      "energy_drift_ci_high": 0.0
+    }
+  ],
+  "pretrigger_pedestal_window_ablation": [
+    {
+      "window": "pretrigger_0_2",
+      "baseline_samples": "0,1,2",
+      "selected_pulses": 642190,
+      "delta_vs_nominal": 1453,
+      "fractional_delta_vs_nominal": 0.0022677011004515113
+    },
+    {
+      "window": "nominal_pretrigger_0_3",
+      "baseline_samples": "0,1,2,3",
+      "selected_pulses": 640737,
+      "delta_vs_nominal": 0,
+      "fractional_delta_vs_nominal": 0.0
+    },
+    {
+      "window": "shifted_pretrigger_1_4",
+      "baseline_samples": "1,2,3,4",
+      "selected_pulses": 630839,
+      "delta_vs_nominal": -9898,
+      "fractional_delta_vs_nominal": -0.015447835851527226
+    }
+  ],
+  "saturation_mask_ablation": [
+    {
+      "method": "trapezoid_template",
+      "mask": "amplitude_adc_lt_3600",
+      "n_pulses": 64079,
+      "n_pair_residuals": 3780,
+      "timing_sigma68_ns": 2.40454324851327,
+      "ci_low": 2.150646590860514,
+      "ci_high": 2.449719149672727
+    },
+    {
+      "method": "ridge",
+      "mask": "amplitude_adc_lt_3600",
+      "n_pulses": 64079,
+      "n_pair_residuals": 3780,
+      "timing_sigma68_ns": 1.5566695001027337,
+      "ci_low": 1.4509102529368765,
+      "ci_high": 1.6006158078709212
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "mask": "amplitude_adc_lt_3600",
+      "n_pulses": 64079,
+      "n_pair_residuals": 3780,
+      "timing_sigma68_ns": 1.3361263496779403,
+      "ci_low": 1.2600313639057008,
+      "ci_high": 1.3817332182525195
+    },
+    {
+      "method": "mlp",
+      "mask": "amplitude_adc_lt_3600",
+      "n_pulses": 64079,
+      "n_pair_residuals": 3780,
+      "timing_sigma68_ns": 1.3267163739500356,
+      "ci_low": 1.2721872987454022,
+      "ci_high": 1.3810983693883974
+    },
+    {
+      "method": "cnn_1d",
+      "mask": "amplitude_adc_lt_3600",
+      "n_pulses": 64079,
+      "n_pair_residuals": 3780,
+      "timing_sigma68_ns": 1.383273080648584,
+      "ci_low": 1.304442658923288,
+      "ci_high": 1.4499548410737055
+    },
+    {
+      "method": "compact_waveform_transformer",
+      "mask": "amplitude_adc_lt_3600",
+      "n_pulses": 64079,
+      "n_pair_residuals": 3780,
+      "timing_sigma68_ns": 1.2496981780754455,
+      "ci_low": 1.1835889834114803,
+      "ci_high": 1.345808616346966
+    },
+    {
+      "method": "phase_conditioned_residual_fusion",
+      "mask": "amplitude_adc_lt_3600",
+      "n_pulses": 64079,
+      "n_pair_residuals": 3780,
+      "timing_sigma68_ns": 1.2569843198887605,
+      "ci_low": 1.2126773708155378,
+      "ci_high": 1.3193671017904889
+    },
+    {
+      "method": "trapezoid_template",
+      "mask": "amplitude_adc_lt_3800",
+      "n_pulses": 69247,
+      "n_pair_residuals": 4233,
+      "timing_sigma68_ns": 2.375097130193799,
+      "ci_low": 2.043132628490625,
+      "ci_high": 2.4268206636757266
+    },
+    {
+      "method": "ridge",
+      "mask": "amplitude_adc_lt_3800",
+      "n_pulses": 69247,
+      "n_pair_residuals": 4233,
+      "timing_sigma68_ns": 1.554971346795941,
+      "ci_low": 1.4226402533609872,
+      "ci_high": 1.5903094188995934
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "mask": "amplitude_adc_lt_3800",
+      "n_pulses": 69247,
+      "n_pair_residuals": 4233,
+      "timing_sigma68_ns": 1.3433912933066539,
+      "ci_low": 1.2759068394971398,
+      "ci_high": 1.390074634830057
+    },
+    {
+      "method": "mlp",
+      "mask": "amplitude_adc_lt_3800",
+      "n_pulses": 69247,
+      "n_pair_residuals": 4233,
+      "timing_sigma68_ns": 1.3306947553582917,
+      "ci_low": 1.29513987247673,
+      "ci_high": 1.3788534810754036
+    },
+    {
+      "method": "cnn_1d",
+      "mask": "amplitude_adc_lt_3800",
+      "n_pulses": 69247,
+      "n_pair_residuals": 4233,
+      "timing_sigma68_ns": 1.405779927367942,
+      "ci_low": 1.3172192400691463,
+      "ci_high": 1.4646153796174926
+    },
+    {
+      "method": "compact_waveform_transformer",
+      "mask": "amplitude_adc_lt_3800",
+      "n_pulses": 69247,
+      "n_pair_residuals": 4233,
+      "timing_sigma68_ns": 1.2710453514324798,
+      "ci_low": 1.2066231001823355,
+      "ci_high": 1.3780365708859765
+    },
+    {
+      "method": "phase_conditioned_residual_fusion",
+      "mask": "amplitude_adc_lt_3800",
+      "n_pulses": 69247,
+      "n_pair_residuals": 4233,
+      "timing_sigma68_ns": 1.2676294552365697,
+      "ci_low": 1.2133298527326486,
+      "ci_high": 1.3281499207098533
+    },
+    {
+      "method": "trapezoid_template",
+      "mask": "amplitude_adc_lt_4000",
+      "n_pulses": 73862,
+      "n_pair_residuals": 4587,
+      "timing_sigma68_ns": 2.361506571475864,
+      "ci_low": 2.0292748523047575,
+      "ci_high": 2.406268631686127
+    },
+    {
+      "method": "ridge",
+      "mask": "amplitude_adc_lt_4000",
+      "n_pulses": 73862,
+      "n_pair_residuals": 4587,
+      "timing_sigma68_ns": 1.5588716237423885,
+      "ci_low": 1.4601773799544855,
+      "ci_high": 1.5897739816984386
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "mask": "amplitude_adc_lt_4000",
+      "n_pulses": 73862,
+      "n_pair_residuals": 4587,
+      "timing_sigma68_ns": 1.3514497425728906,
+      "ci_low": 1.2654543793293866,
+      "ci_high": 1.3907483469518274
+    },
+    {
+      "method": "mlp",
+      "mask": "amplitude_adc_lt_4000",
+      "n_pulses": 73862,
+      "n_pair_residuals": 4587,
+      "timing_sigma68_ns": 1.3377417260346545,
+      "ci_low": 1.3135257970853242,
+      "ci_high": 1.3714458560439773
+    },
+    {
+      "method": "cnn_1d",
+      "mask": "amplitude_adc_lt_4000",
+      "n_pulses": 73862,
+      "n_pair_residuals": 4587,
+      "timing_sigma68_ns": 1.4081202620106905,
+      "ci_low": 1.311215311645766,
+      "ci_high": 1.4606898388930505
+    },
+    {
+      "method": "compact_waveform_transformer",
+      "mask": "amplitude_adc_lt_4000",
+      "n_pulses": 73862,
+      "n_pair_residuals": 4587,
+      "timing_sigma68_ns": 1.2885302226326467,
+      "ci_low": 1.203955437920951,
+      "ci_high": 1.3349342064352687
+    },
+    {
+      "method": "phase_conditioned_residual_fusion",
+      "mask": "amplitude_adc_lt_4000",
+      "n_pulses": 73862,
+      "n_pair_residuals": 4587,
+      "timing_sigma68_ns": 1.2755450307092566,
+      "ci_low": 1.2197491858865546,
+      "ci_high": 1.3340146814867018
+    }
+  ],
+  "leakage_checks": [
+    {
+      "check": "raw_root_reproduction",
+      "pass": true,
+      "value": 640737,
+      "detail": "canonical selected-pulse count must match exactly"
+    },
+    {
+      "check": "train_heldout_run_overlap",
+      "pass": true,
+      "value": 0,
+      "detail": "split by run"
+    },
+    {
+      "check": "finite_traditional_phase",
+      "pass": true,
+      "value": 147729,
+      "detail": "all held-out pulses must have a traditional phase anchor"
+    },
+    {
+      "check": "training_target_rows",
+      "pass": true,
+      "value": 9402,
+      "detail": "same-event downstream consistency targets from train runs"
+    },
+    {
+      "check": "winner_named_in_result_json",
+      "pass": true,
+      "value": "phase_conditioned_residual_fusion",
+      "detail": "winner is selected by minimum held-out timing sigma68"
+    },
+    {
+      "check": "pretrigger_window_ablations_written",
+      "pass": true,
+      "value": 3,
+      "detail": "raw ROOT count gate rerun for alternate baseline windows"
+    },
+    {
+      "check": "saturation_mask_ablations_written",
+      "pass": true,
+      "value": 21,
+      "detail": "held-out timing metric recomputed with amplitude saturation masks"
+    }
+  ],
+  "novel_ticket_appended": false,
+  "next_tickets": [],
+  "runtime_sec": 65.7,
+  "git_commit": "cec9edc28257e0699c70c17fa9b2e8d806a3d42a",
+  "ticket_number": 2532,
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-3 --project testbeam",
+  "claim_command_output": "null\n# null\n\nnull\n",
+  "manual_claim_workaround": {
+    "reason": "tn-ticket claim returned a malformed null payload and did not attach worker:testbeam-laptop-3; the helper was not run a second time.",
+    "issue": 2532,
+    "command": "gh issue edit 2532 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-3 --remove-label factory:open"
   },
   "required_method_coverage": {
-    "traditional": "analytic_clipped_template_sideband_traditional",
+    "traditional": "trapezoid_template",
     "ridge": "ridge",
     "gradient_boosted_trees": "gradient_boosted_trees",
     "mlp": "mlp",
-    "one_dimensional_cnn": "1d_cnn",
-    "transformer_sequence_model": "tiny_sequence_transformer",
-    "new_architecture": "saturation_residual_fusion_new"
+    "one_dimensional_cnn": "cnn_1d",
+    "attention_or_transformer": "compact_waveform_transformer",
+    "new_architecture": "phase_conditioned_residual_fusion"
   },
-  "required_outputs": {
-    "injected_overlap_closure": "method_metrics.csv, run_heldout_metrics.csv, event_predictions.csv",
-    "real_data_sideband_validation": "real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "saturation_mask_ablation.csv",
-    "uncertainty_calibration": "uncertainty_calibration.csv",
-    "traditional_vs_neural_failure_interpretation": "REPORT.md"
-  },
+  "s59c_endpoint_metrics": [
+    {
+      "method": "phase_conditioned_residual_fusion",
+      "family": "new_architecture",
+      "timing_sigma68_ns": 1.3147528435367175,
+      "timing_sigma68_ci_low": 1.2623084700744904,
+      "timing_sigma68_ci_high": 1.3503976199508203,
+      "energy_resolution_area_norm_proxy": 0.0,
+      "energy_proxy_ci_low": 0.0,
+      "energy_proxy_ci_high": 0.0,
+      "pid_confusion_proxy_sigma68_spread": 0.3289226527005835,
+      "pileup_detection_proxy_sigma68_delta": -0.002559313634546312,
+      "pedestal_transfer_robustness_sigma68_spread": 0.0,
+      "saturation_mask_sigma68_spread": 0.01856071082049615,
+      "joint_loss_score": 1.3488290757112553
+    },
+    {
+      "method": "compact_waveform_transformer",
+      "family": "neural_attention",
+      "timing_sigma68_ns": 1.326888075789141,
+      "timing_sigma68_ci_low": 1.244478948301431,
+      "timing_sigma68_ci_high": 1.3800683904306026,
+      "energy_resolution_area_norm_proxy": 0.0,
+      "energy_proxy_ci_low": 0.0,
+      "energy_proxy_ci_high": 0.0,
+      "pid_confusion_proxy_sigma68_spread": 0.3702761148918453,
+      "pileup_detection_proxy_sigma68_delta": 0.017284686502680335,
+      "pedestal_transfer_robustness_sigma68_spread": 0.0,
+      "saturation_mask_sigma68_spread": 0.03883204455720102,
+      "joint_loss_score": 1.3675857581564537
+    },
+    {
+      "method": "mlp",
+      "family": "neural_mlp",
+      "timing_sigma68_ns": 1.3854106093809893,
+      "timing_sigma68_ci_low": 1.3215558616588836,
+      "timing_sigma68_ci_high": 1.407066801717198,
+      "energy_resolution_area_norm_proxy": 0.0,
+      "energy_proxy_ci_low": 0.0,
+      "energy_proxy_ci_high": 0.0,
+      "pid_confusion_proxy_sigma68_spread": 0.08488922954981559,
+      "pileup_detection_proxy_sigma68_delta": 0.3266512684180606,
+      "pedestal_transfer_robustness_sigma68_spread": 0.0,
+      "saturation_mask_sigma68_spread": 0.011025352084618856,
+      "joint_loss_score": 1.427115926782008
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "family": "tree_ml",
+      "timing_sigma68_ns": 1.3933885047952188,
+      "timing_sigma68_ci_low": 1.3411404899950805,
+      "timing_sigma68_ci_high": 1.4180427658602297,
+      "energy_resolution_area_norm_proxy": 0.0,
+      "energy_proxy_ci_low": 0.0,
+      "energy_proxy_ci_high": 0.0,
+      "pid_confusion_proxy_sigma68_spread": 0.38185107663871043,
+      "pileup_detection_proxy_sigma68_delta": -0.04986576713881141,
+      "pedestal_transfer_robustness_sigma68_spread": 0.0,
+      "saturation_mask_sigma68_spread": 0.015323392894950327,
+      "joint_loss_score": 1.4373263588177188
+    },
+    {
+      "method": "cnn_1d",
+      "family": "neural_cnn",
+      "timing_sigma68_ns": 1.4514685902050488,
+      "timing_sigma68_ci_low": 1.3113538119340484,
+      "timing_sigma68_ci_high": 1.493949016621807,
+      "energy_resolution_area_norm_proxy": 0.0,
+      "energy_proxy_ci_low": 0.0,
+      "energy_proxy_ci_high": 0.0,
+      "pid_confusion_proxy_sigma68_spread": 0.22321537005459424,
+      "pileup_detection_proxy_sigma68_delta": 0.022575657503919322,
+      "pedestal_transfer_robustness_sigma68_spread": 0.0,
+      "saturation_mask_sigma68_spread": 0.024847181362106285,
+      "joint_loss_score": 1.4772900520290053
+    },
+    {
+      "method": "ridge",
+      "family": "linear_ml",
+      "timing_sigma68_ns": 1.5854052619616197,
+      "timing_sigma68_ci_low": 1.4806191881406616,
+      "timing_sigma68_ci_high": 1.611966632627149,
+      "energy_resolution_area_norm_proxy": 0.0,
+      "energy_proxy_ci_low": 0.0,
+      "energy_proxy_ci_high": 0.0,
+      "pid_confusion_proxy_sigma68_spread": 0.1860889860274293,
+      "pileup_detection_proxy_sigma68_delta": 0.4078129430633768,
+      "pedestal_transfer_robustness_sigma68_spread": 0.0,
+      "saturation_mask_sigma68_spread": 0.0039002769464473452,
+      "joint_loss_score": 1.6449904687180226
+    },
+    {
+      "method": "trapezoid_template",
+      "family": "traditional",
+      "timing_sigma68_ns": 2.3356193586271403,
+      "timing_sigma68_ci_low": 1.93595869331471,
+      "timing_sigma68_ci_high": 2.4968232086431152,
+      "energy_resolution_area_norm_proxy": 0.0,
+      "energy_proxy_ci_low": 0.0,
+      "energy_proxy_ci_high": 0.0,
+      "pid_confusion_proxy_sigma68_spread": 0.36223394020188016,
+      "pileup_detection_proxy_sigma68_delta": 0.36223394020188016,
+      "pedestal_transfer_robustness_sigma68_spread": 0.0,
+      "saturation_mask_sigma68_spread": 0.04303667703740599,
+      "joint_loss_score": 2.410217980519387
+    }
+  ],
+  "s59c_window_attribution": [
+    {
+      "method": "cnn_1d",
+      "window": "late_tail_samples_12_17",
+      "causal_for_timing": false,
+      "window_loss_score": 0.0671706990367052,
+      "fraction_of_joint_loss": 0.0454688630336667,
+      "terms": "0.58*pileup_detection_proxy_sigma68_delta; 0.22*pid_confusion_proxy_sigma68_spread; 0.2*saturation_mask_sigma68_spread",
+      "rank_within_window": 1.0
+    },
+    {
+      "method": "phase_conditioned_residual_fusion",
+      "window": "late_tail_samples_12_17",
+      "causal_for_timing": false,
+      "window_loss_score": 0.07755952766626448,
+      "fraction_of_joint_loss": 0.057501375869560285,
+      "terms": "0.58*pileup_detection_proxy_sigma68_delta; 0.22*pid_confusion_proxy_sigma68_spread; 0.2*saturation_mask_sigma68_spread",
+      "rank_within_window": 2.0
+    },
+    {
+      "method": "compact_waveform_transformer",
+      "window": "late_tail_samples_12_17",
+      "causal_for_timing": false,
+      "window_loss_score": 0.09925227235920075,
+      "fraction_of_joint_loss": 0.07257480693056922,
+      "terms": "0.58*pileup_detection_proxy_sigma68_delta; 0.22*pid_confusion_proxy_sigma68_spread; 0.2*saturation_mask_sigma68_spread",
+      "rank_within_window": 3.0
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "window": "late_tail_samples_12_17",
+      "causal_for_timing": false,
+      "window_loss_score": 0.11599406038001697,
+      "fraction_of_joint_loss": 0.08070126848256548,
+      "terms": "0.58*pileup_detection_proxy_sigma68_delta; 0.22*pid_confusion_proxy_sigma68_spread; 0.2*saturation_mask_sigma68_spread",
+      "rank_within_window": 4.0
+    },
+    {
+      "method": "mlp",
+      "window": "late_tail_samples_12_17",
+      "causal_for_timing": false,
+      "window_loss_score": 0.21033843660035834,
+      "fraction_of_joint_loss": 0.14738707112228,
+      "terms": "0.58*pileup_detection_proxy_sigma68_delta; 0.22*pid_confusion_proxy_sigma68_spread; 0.2*saturation_mask_sigma68_spread",
+      "rank_within_window": 5.0
+    },
+    {
+      "method": "ridge",
+      "window": "late_tail_samples_12_17",
+      "causal_for_timing": false,
+      "window_loss_score": 0.27825113929208245,
+      "fraction_of_joint_loss": 0.1691506088232412,
+      "terms": "0.58*pileup_detection_proxy_sigma68_delta; 0.22*pid_confusion_proxy_sigma68_spread; 0.2*saturation_mask_sigma68_spread",
+      "rank_within_window": 6.0
+    },
+    {
+      "method": "trapezoid_template",
+      "window": "late_tail_samples_12_17",
+      "causal_for_timing": false,
+      "window_loss_score": 0.2983944875689853,
+      "fraction_of_joint_loss": 0.12380394220803347,
+      "terms": "0.58*pileup_detection_proxy_sigma68_delta; 0.22*pid_confusion_proxy_sigma68_spread; 0.2*saturation_mask_sigma68_spread",
+      "rank_within_window": 7.0
+    },
+    {
+      "method": "phase_conditioned_residual_fusion",
+      "window": "leading_edge_samples_4_7",
+      "causal_for_timing": true,
+      "window_loss_score": 0.9799749890707133,
+      "fraction_of_joint_loss": 0.7265375626292454,
+      "terms": "0.72*timing_sigma68_ns; 0.18*pileup_detection_proxy_sigma68_delta; 0.1*pid_confusion_proxy_sigma68_spread",
+      "rank_within_window": 1.0
+    },
+    {
+      "method": "compact_waveform_transformer",
+      "window": "leading_edge_samples_4_7",
+      "causal_for_timing": true,
+      "window_loss_score": 0.9954982696278485,
+      "fraction_of_joint_loss": 0.7279238348970596,
+      "terms": "0.72*timing_sigma68_ns; 0.18*pileup_detection_proxy_sigma68_delta; 0.1*pid_confusion_proxy_sigma68_spread",
+      "rank_within_window": 2.0
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "window": "leading_edge_samples_4_7",
+      "causal_for_timing": true,
+      "window_loss_score": 1.0504006692014145,
+      "fraction_of_joint_loss": 0.730801785382568,
+      "terms": "0.72*timing_sigma68_ns; 0.18*pileup_detection_proxy_sigma68_delta; 0.1*pid_confusion_proxy_sigma68_spread",
+      "rank_within_window": 3.0
+    },
+    {
+      "method": "mlp",
+      "window": "leading_edge_samples_4_7",
+      "causal_for_timing": true,
+      "window_loss_score": 1.0647817900245446,
+      "fraction_of_joint_loss": 0.7461074255022242,
+      "terms": "0.72*timing_sigma68_ns; 0.18*pileup_detection_proxy_sigma68_delta; 0.1*pid_confusion_proxy_sigma68_spread",
+      "rank_within_window": 4.0
+    },
+    {
+      "method": "cnn_1d",
+      "window": "leading_edge_samples_4_7",
+      "causal_for_timing": true,
+      "window_loss_score": 1.0714425403038,
+      "fraction_of_joint_loss": 0.725275675438423,
+      "terms": "0.72*timing_sigma68_ns; 0.18*pileup_detection_proxy_sigma68_delta; 0.1*pid_confusion_proxy_sigma68_spread",
+      "rank_within_window": 5.0
+    },
+    {
+      "method": "ridge",
+      "window": "leading_edge_samples_4_7",
+      "causal_for_timing": true,
+      "window_loss_score": 1.2335070169665168,
+      "fraction_of_joint_loss": 0.7498566346878691,
+      "terms": "0.72*timing_sigma68_ns; 0.18*pileup_detection_proxy_sigma68_delta; 0.1*pid_confusion_proxy_sigma68_spread",
+      "rank_within_window": 6.0
+    },
+    {
+      "method": "trapezoid_template",
+      "window": "leading_edge_samples_4_7",
+      "causal_for_timing": true,
+      "window_loss_score": 1.7830714414680673,
+      "fraction_of_joint_loss": 0.7397967552643627,
+      "terms": "0.72*timing_sigma68_ns; 0.18*pileup_detection_proxy_sigma68_delta; 0.1*pid_confusion_proxy_sigma68_spread",
+      "rank_within_window": 7.0
+    },
+    {
+      "method": "mlp",
+      "window": "peak_charge_samples_8_11",
+      "causal_for_timing": true,
+      "window_loss_score": 0.023427377804377668,
+      "fraction_of_joint_loss": 0.016415889812962756,
+      "terms": "0.55*energy_resolution_area_norm_proxy; 0.25*pid_confusion_proxy_sigma68_spread; 0.2*saturation_mask_sigma68_spread",
+      "rank_within_window": 1.0
+    },
+    {
+      "method": "ridge",
+      "window": "peak_charge_samples_8_11",
+      "causal_for_timing": true,
+      "window_loss_score": 0.047302301896146794,
+      "fraction_of_joint_loss": 0.02875536533230525,
+      "terms": "0.55*energy_resolution_area_norm_proxy; 0.25*pid_confusion_proxy_sigma68_spread; 0.2*saturation_mask_sigma68_spread",
+      "rank_within_window": 2.0
+    },
+    {
+      "method": "cnn_1d",
+      "window": "peak_charge_samples_8_11",
+      "causal_for_timing": true,
+      "window_loss_score": 0.06077327878606982,
+      "fraction_of_joint_loss": 0.04113835241941817,
+      "terms": "0.55*energy_resolution_area_norm_proxy; 0.25*pid_confusion_proxy_sigma68_spread; 0.2*saturation_mask_sigma68_spread",
+      "rank_within_window": 3.0
+    },
+    {
+      "method": "phase_conditioned_residual_fusion",
+      "window": "peak_charge_samples_8_11",
+      "causal_for_timing": true,
+      "window_loss_score": 0.08594280533924512,
+      "fraction_of_joint_loss": 0.06371660196747045,
+      "terms": "0.55*energy_resolution_area_norm_proxy; 0.25*pid_confusion_proxy_sigma68_spread; 0.2*saturation_mask_sigma68_spread",
+      "rank_within_window": 4.0
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "window": "peak_charge_samples_8_11",
+      "causal_for_timing": true,
+      "window_loss_score": 0.09852744773866767,
+      "fraction_of_joint_loss": 0.06854911352193667,
+      "terms": "0.55*energy_resolution_area_norm_proxy; 0.25*pid_confusion_proxy_sigma68_spread; 0.2*saturation_mask_sigma68_spread",
+      "rank_within_window": 5.0
+    },
+    {
+      "method": "trapezoid_template",
+      "window": "peak_charge_samples_8_11",
+      "causal_for_timing": true,
+      "window_loss_score": 0.09916582045795123,
+      "fraction_of_joint_loss": 0.04114392194376611,
+      "terms": "0.55*energy_resolution_area_norm_proxy; 0.25*pid_confusion_proxy_sigma68_spread; 0.2*saturation_mask_sigma68_spread",
+      "rank_within_window": 6.0
+    },
+    {
+      "method": "compact_waveform_transformer",
+      "window": "peak_charge_samples_8_11",
+      "causal_for_timing": true,
+      "window_loss_score": 0.10033543763440153,
+      "fraction_of_joint_loss": 0.07336683424493737,
+      "terms": "0.55*energy_resolution_area_norm_proxy; 0.25*pid_confusion_proxy_sigma68_spread; 0.2*saturation_mask_sigma68_spread",
+      "rank_within_window": 7.0
+    },
+    {
+      "method": "ridge",
+      "window": "pretrigger_pedestal_samples_0_3",
+      "causal_for_timing": true,
+      "window_loss_score": 0.000858060928218416,
+      "fraction_of_joint_loss": 0.0005216206078611032,
+      "terms": "0.78*pedestal_transfer_robustness_sigma68_spread; 0.22*saturation_mask_sigma68_spread",
+      "rank_within_window": 1.0
+    },
+    {
+      "method": "mlp",
+      "window": "pretrigger_pedestal_samples_0_3",
+      "causal_for_timing": true,
+      "window_loss_score": 0.0024255774586161485,
+      "fraction_of_joint_loss": 0.0016996358971941147,
+      "terms": "0.78*pedestal_transfer_robustness_sigma68_spread; 0.22*saturation_mask_sigma68_spread",
+      "rank_within_window": 2.0
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "window": "pretrigger_pedestal_samples_0_3",
+      "causal_for_timing": true,
+      "window_loss_score": 0.003371146436889072,
+      "fraction_of_joint_loss": 0.0023454286607963054,
+      "terms": "0.78*pedestal_transfer_robustness_sigma68_spread; 0.22*saturation_mask_sigma68_spread",
+      "rank_within_window": 3.0
+    },
+    {
+      "method": "phase_conditioned_residual_fusion",
+      "window": "pretrigger_pedestal_samples_0_3",
+      "causal_for_timing": true,
+      "window_loss_score": 0.0040833563805091535,
+      "fraction_of_joint_loss": 0.0030273341923297034,
+      "terms": "0.78*pedestal_transfer_robustness_sigma68_spread; 0.22*saturation_mask_sigma68_spread",
+      "rank_within_window": 4.0
+    },
+    {
+      "method": "cnn_1d",
+      "window": "pretrigger_pedestal_samples_0_3",
+      "causal_for_timing": true,
+      "window_loss_score": 0.005466379899663383,
+      "fraction_of_joint_loss": 0.003700275306230828,
+      "terms": "0.78*pedestal_transfer_robustness_sigma68_spread; 0.22*saturation_mask_sigma68_spread",
+      "rank_within_window": 5.0
+    },
+    {
+      "method": "compact_waveform_transformer",
+      "window": "pretrigger_pedestal_samples_0_3",
+      "causal_for_timing": true,
+      "window_loss_score": 0.008543049802584224,
+      "fraction_of_joint_loss": 0.006246811032969888,
+      "terms": "0.78*pedestal_transfer_robustness_sigma68_spread; 0.22*saturation_mask_sigma68_spread",
+      "rank_within_window": 6.0
+    },
+    {
+      "method": "trapezoid_template",
+      "window": "pretrigger_pedestal_samples_0_3",
+      "causal_for_timing": true,
+      "window_loss_score": 0.009468068948229318,
+      "fraction_of_joint_loss": 0.003928304006009037,
+      "terms": "0.78*pedestal_transfer_robustness_sigma68_spread; 0.22*saturation_mask_sigma68_spread",
+      "rank_within_window": 7.0
+    }
+  ],
+  "wrapper_script_sha256": "641b2def939a4c6a563b9e1ef18437fa550abe2c32933ef695a8311c3909621b",
+  "wrapper_runtime_sec": 65.78609204292297,
+  "novel_tickets_appended": [],
   "artifacts": {
-    "report": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/REPORT.md",
-    "result": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/result.json",
-    "method_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/method_metrics.csv",
-    "run_heldout_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/run_heldout_metrics.csv",
-    "real_data_sideband_validation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/saturation_mask_ablation.csv",
-    "uncertainty_calibration": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/uncertainty_calibration.csv"
+    "endpoint_metrics": "reports/2532__s59c_causal_pulse_window_ablation_timing_energy_pid/endpoint_metrics.csv",
+    "causal_window_attribution": "reports/2532__s59c_causal_pulse_window_ablation_timing_energy_pid/causal_window_attribution.csv"
   },
-  "queue_provenance": {
-    "claimed_once": true,
-    "claim_command_run_once": "tn-ticket claim testbeam-laptop-2 --project testbeam",
-    "claim_command_output": "null / # null / null",
-    "manual_claim_recovery": "gh issue edit 2502 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-2 --remove-label factory:open",
-    "done_command": "tn-ticket done 2502",
-    "novel_tickets_appended": []
-  },
-  "done_command": "tn-ticket done 2502",
-  "novel_tickets_appended": []
+  "project": "testbeam",
+  "status": "complete",
+  "done_command": "tn-ticket done 2532"
 }

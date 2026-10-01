@@ -1,0 +1,6 @@
+2532
+# S59c causal pulse-window ablation for timing-energy-PID disentanglement
+
+Academic-grade study. Map which pretrigger, leading-edge, peak, and tail windows carry independent information for pulse shape, timing, pile-up, saturation, pedestal, energy, and PID.
+
+Compare a traditional spline timewalk correction plus matched-filter/template charge estimator against ridge, gradient-boosted trees, MLP, 1D-CNN, and an attention/transformer ablation model. Use blocked/run-held-out evaluation with bootstrap CIs on timing residuals, energy resolution, PID confusion, pile-up detection, and pedestal-transfer robustness.

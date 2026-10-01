@@ -1,0 +1,76 @@
+{
+  "adaptive": {
+    "negative_tolerance_floor_adc": 25.0,
+    "negative_tolerance_fraction_of_amplitude": 0.015
+  },
+  "amplitude_cut_adc": 1000.0,
+  "analysis_runs": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+  "baseline_samples": [0, 1, 2, 3],
+  "bootstrap_replicates": 400,
+  "cfd_fraction": 0.2,
+  "downstream_staves": ["B4", "B6", "B8"],
+  "expected_counts": {
+    "sample_i_analysis": {
+      "B2": 241422,
+      "B4": 6451,
+      "B6": 3094,
+      "B8": 1299,
+      "selected_pulses": 252266
+    },
+    "total_selected_pulses": 640737
+  },
+  "heldout_runs": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+  "models": {
+    "hgb_learning_rate": 0.045,
+    "hgb_max_iter": 160,
+    "hgb_max_leaf_nodes": 31,
+    "max_train_pair_rows": 36000,
+    "mlp_alpha": 0.0005,
+    "mlp_hidden_layer_sizes": [80, 40],
+    "mlp_max_iter": 140,
+    "random_seed": 2439,
+    "ridge_alpha": 10.0,
+    "torch_batch_size": 1024,
+    "torch_epochs": 4,
+    "torch_learning_rate": 0.0015,
+    "torch_weight_decay": 0.0001
+  },
+  "next_tickets": [
+    {
+      "body": "Use an external electronics-current ledger to stratify the S16u sorted-baseline timing-tail proxy by current state and test whether the Sample-I/Sample-II coefficient sign transfer survives within-current matching.",
+      "title": "S16v: current-stratified sorted-baseline timing-tail transfer"
+    }
+  ],
+  "output_dir": "reports/2439__s16u_sample_i_sorted_baseline_timing_tail_transfer",
+  "pre_registered": {
+    "controls": "pair identity, amplitude ratio/sum, peak samples, pretrigger dispersion, and S02 CFD20 raw residual",
+    "nuisance_proxy": "absolute and signed raw-pretrigger residual of sorted hrd.baseline, with trapezoid sidebands as recoverability covariates",
+    "reproduction": "exact S00 selected B-stave pulse count from raw h101/HRDv ROOT",
+    "split": "leave one Sample-I analysis run out; train corrections on all other Sample-I analysis runs; compare sorted-proxy coefficient signs with the frozen Sample-II S16t companion",
+    "win_rule": "lowest held-out paired-bootstrap sigma68_ns among correction methods; the causal question is the paired delta between proxy-augmented and control-only fits"
+  },
+  "pretrigger_samples": [0, 1, 2, 3],
+  "primary_metric": "sigma68_ns",
+  "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+  "run_groups": {
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65],
+    "sample_ii_calib": [64]
+  },
+  "sample_period_ns": 10.0,
+  "samples_per_channel": 18,
+  "sorted_root_dir": "/home/billy/ccb-data/data/extracted/sorted-b",
+  "spacing_cm": 2.0,
+  "staves": {
+    "B2": 0,
+    "B4": 2,
+    "B6": 4,
+    "B8": 6
+  },
+  "study": "S16u",
+  "ticket": "2439",
+  "title": "Sample-I transfer of sorted-baseline timing-tail nuisance",
+  "tof_per_cm_ns": 0.078,
+  "worker": "testbeam-laptop-3"
+}

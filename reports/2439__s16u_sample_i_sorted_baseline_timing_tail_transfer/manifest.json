@@ -1,0 +1,28 @@
+{
+  "command": "python scripts/s16u_2439_sample_i_sorted_baseline_timing_tail_transfer.py --config configs/s16u_2439_sample_i_sorted_baseline_timing_tail_transfer.json",
+  "created_utc": "2026-08-16T13:40:31Z",
+  "files": {
+    "REPORT.md": "756d553937a2d4fecfde07e6e35848a2a43298795fe3ebab7c58bcdf70fc640d",
+    "bootstrap_metrics.csv": "03382bf00d7ff6431060dde4ae0ddcabc60a62f04d06de937ad1ce5105f9542f",
+    "claimed_ticket.txt": "395e71203bc99484299651bcfcf2371b87dc425fd09900a83e2dad06a503813b",
+    "claimed_ticket_body.txt": "88e1bc994dc0c96d8f9a288736af9be929bcfe0fb8389da4ae5bf9142146f1ec",
+    "coefficient_sign_transfer.csv": "e215646d8106b0d34b37765adedad037f3068b106088246a8d957554af7ff8fc",
+    "config.json": "0f57f3b7caf9a27a111b50ee457bb1e2066d019b71b098dd5e29f6c61a22f958",
+    "input_sha256.csv": "02d93529768bbc10ab14f4609df885f1436ca6dcf3de81ace1297dbf4d85a9e1",
+    "method_metrics.csv": "738425e31530aa202e8a85d2b0fe096606171874f5b7fa4a2ae87504532c0cba",
+    "method_predictions.csv.gz": "ccfad21e86d2824201e914f1d3a2f94583cd4bee334799b9786149bcb4fdb841",
+    "metric_summary.png": "564cc4fe3f40674e526595d8a66b839bfde8cdafc38e4b808b65614336fc4783",
+    "pair_rows.csv.gz": "999a0af79b9df019ca6d674064f14c27a6fd7f17d38c536a55ca7e0a9c9dd7d5",
+    "paired_ablation_deltas.csv": "979ac4e8630fa84794b51c6660551d088caadabb50d5b8d6f3398b3a3dd57bb9",
+    "per_run_metrics.csv": "e4a1fc5bc63134acd76442f3f6a11209924ba4bcaae8c6e257a5abe0b6e4fabe",
+    "proxy_summary.csv": "cf7534fa3cd0e396be26e755d965d9ed6a66ce697fbe088ad738e7665d227bf8",
+    "reproduction_counts.csv": "786b2784f68db2df6c10a14b5c89ea94c10cd87031303fc26c682d4d0433a32e",
+    "residual_distributions.png": "c04d64cae1585beebde22d2785bd424cbdcb132688bced718be4b1b917bf6b56",
+    "result.json": "32d9a385c47d698768870394b41b1507d871410bef68103699d87b9aa4f8cb43",
+    "sorted_recoverability_features.csv.gz": "1a52ab774cb223d4901d7dd4a7f2ad4f17b4f51a52da53558d8927e38b57c133"
+  },
+  "git_commit": "1cb0c39d33717dc7ce8a94cdcdf8fc576cba95b8",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.29",
+  "python": "3.8.10",
+  "updated_utc": "2026-08-16T13:41:16Z"
+}

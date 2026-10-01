@@ -1,0 +1,227 @@
+{
+  "bootstrap": {
+    "paired": true,
+    "replicates": 400,
+    "unit": "held-out run"
+  },
+  "coefficient_sign_transfer": [
+    {
+      "feature": "nuisance_abs_max_adc",
+      "n_pairs_Sample-I": 3430,
+      "n_pairs_Sample-II": 18098,
+      "sign_Sample-I": "negative",
+      "sign_Sample-II": "negative",
+      "sign_transfers": true,
+      "standardized_ridge_coef_ns_Sample-I": -5.1531427591412795,
+      "standardized_ridge_coef_ns_Sample-II": -6.596797062729978
+    },
+    {
+      "feature": "nuisance_abs_mean_adc",
+      "n_pairs_Sample-I": 3430,
+      "n_pairs_Sample-II": 18098,
+      "sign_Sample-I": "positive",
+      "sign_Sample-II": "positive",
+      "sign_transfers": true,
+      "standardized_ridge_coef_ns_Sample-I": 1.213055455316917,
+      "standardized_ridge_coef_ns_Sample-II": 1.546648599483981
+    },
+    {
+      "feature": "nuisance_signed_diff_adc",
+      "n_pairs_Sample-I": 3430,
+      "n_pairs_Sample-II": 18098,
+      "sign_Sample-I": "positive",
+      "sign_Sample-II": "positive",
+      "sign_transfers": true,
+      "standardized_ridge_coef_ns_Sample-I": 0.5621093598404928,
+      "standardized_ridge_coef_ns_Sample-II": 0.9876160558969196
+    },
+    {
+      "feature": "sorted_baseline_abs_residual_adc_a",
+      "n_pairs_Sample-I": 3430,
+      "n_pairs_Sample-II": 18098,
+      "sign_Sample-I": "positive",
+      "sign_Sample-II": "positive",
+      "sign_transfers": true,
+      "standardized_ridge_coef_ns_Sample-I": 0.9407930903710875,
+      "standardized_ridge_coef_ns_Sample-II": 1.1452170159628294
+    },
+    {
+      "feature": "sorted_baseline_abs_residual_adc_b",
+      "n_pairs_Sample-I": 3430,
+      "n_pairs_Sample-II": 18098,
+      "sign_Sample-I": "positive",
+      "sign_Sample-II": "positive",
+      "sign_transfers": true,
+      "standardized_ridge_coef_ns_Sample-I": 1.381594289939271,
+      "standardized_ridge_coef_ns_Sample-II": 1.7573917498033662
+    },
+    {
+      "feature": "sorted_baseline_residual_adc_a",
+      "n_pairs_Sample-I": 3430,
+      "n_pairs_Sample-II": 18098,
+      "sign_Sample-I": "negative",
+      "sign_Sample-II": "negative",
+      "sign_transfers": true,
+      "standardized_ridge_coef_ns_Sample-I": -0.9407930903710598,
+      "standardized_ridge_coef_ns_Sample-II": -1.1452170159634054
+    },
+    {
+      "feature": "sorted_baseline_residual_adc_b",
+      "n_pairs_Sample-I": 3430,
+      "n_pairs_Sample-II": 18098,
+      "sign_Sample-I": "negative",
+      "sign_Sample-II": "negative",
+      "sign_transfers": true,
+      "standardized_ridge_coef_ns_Sample-I": -1.3815942899393983,
+      "standardized_ridge_coef_ns_Sample-II": -1.7573917498029135
+    }
+  ],
+  "git_commit": "1cb0c39d33717dc7ce8a94cdcdf8fc576cba95b8",
+  "input_root_files": 66,
+  "methods": [
+    "gradient_boosted_trees",
+    "gradient_boosted_trees_controls_only",
+    "gradient_boosted_trees_plus_sorted_proxy",
+    "mlp",
+    "nuisance_gated_pair_cnn",
+    "one_dimensional_cnn",
+    "ridge",
+    "ridge_controls_only",
+    "ridge_plus_sorted_proxy",
+    "traditional_binned_median",
+    "uncorrected"
+  ],
+  "n_pairs": 3430,
+  "next_tickets": [
+    {
+      "body": "Use an external electronics-current ledger to stratify the S16u sorted-baseline timing-tail proxy by current state and test whether the Sample-I/Sample-II coefficient sign transfer survives within-current matching.",
+      "title": "S16v: current-stratified sorted-baseline timing-tail transfer"
+    }
+  ],
+  "outputs": [
+    "REPORT.md",
+    "result.json",
+    "reproduction_counts.csv",
+    "input_sha256.csv",
+    "sorted_recoverability_features.csv.gz",
+    "pair_rows.csv.gz",
+    "method_predictions.csv.gz",
+    "method_metrics.csv",
+    "per_run_metrics.csv",
+    "bootstrap_metrics.csv",
+    "paired_ablation_deltas.csv",
+    "coefficient_sign_transfer.csv",
+    "proxy_summary.csv",
+    "metric_summary.png",
+    "residual_distributions.png"
+  ],
+  "paired_ablation_deltas": [
+    {
+      "augmented_method": "ridge_plus_sorted_proxy",
+      "baseline_method": "ridge_controls_only",
+      "delta_sigma68_ns": 0.027932220622611137,
+      "delta_sigma68_ns_ci_high": 0.12288626852702553,
+      "delta_sigma68_ns_ci_low": -0.056828341218785404
+    },
+    {
+      "augmented_method": "gradient_boosted_trees_plus_sorted_proxy",
+      "baseline_method": "gradient_boosted_trees_controls_only",
+      "delta_sigma68_ns": 0.013204595633765415,
+      "delta_sigma68_ns_ci_high": 0.06624507297692074,
+      "delta_sigma68_ns_ci_low": -0.04107363552333491
+    },
+    {
+      "augmented_method": "traditional_binned_median",
+      "baseline_method": "uncorrected",
+      "delta_sigma68_ns": -1.2694426867802062,
+      "delta_sigma68_ns_ci_high": -1.197565444259768,
+      "delta_sigma68_ns_ci_low": -1.339692840968682
+    },
+    {
+      "augmented_method": "nuisance_gated_pair_cnn",
+      "baseline_method": "one_dimensional_cnn",
+      "delta_sigma68_ns": 0.08023879339955853,
+      "delta_sigma68_ns_ci_high": 0.13162858927219023,
+      "delta_sigma68_ns_ci_low": -0.003552222207863557
+    }
+  ],
+  "primary_metric": "sigma68_ns",
+  "raw_reproduction": {
+    "all_pass": true,
+    "rows": [
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "total selected B-stave pulses",
+        "report_value": 640737,
+        "reproduced": 640737,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_i_analysis B2",
+        "report_value": 241422,
+        "reproduced": 241422,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_i_analysis B4",
+        "report_value": 6451,
+        "reproduced": 6451,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_i_analysis B6",
+        "report_value": 3094,
+        "reproduced": 3094,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_i_analysis B8",
+        "report_value": 1299,
+        "reproduced": 1299,
+        "tolerance": 0
+      },
+      {
+        "delta": 0,
+        "pass": true,
+        "quantity": "sample_i_analysis selected_pulses",
+        "report_value": 252266,
+        "reproduced": 252266,
+        "tolerance": 0
+      }
+    ]
+  },
+  "runtime_seconds": 78.041,
+  "split": "leave-one-run-out over Sample-I analysis runs",
+  "status": "complete",
+  "study": "S16u",
+  "ticket": "2439",
+  "title": "Sample-I transfer of sorted-baseline timing-tail nuisance",
+  "winner": "gradient_boosted_trees_controls_only",
+  "winner_metrics": {
+    "bias_ns": -0.007960189780655602,
+    "bias_ns_ci_high": 0.2731373614723982,
+    "bias_ns_ci_low": -0.29600358083830425,
+    "delta_sigma68_vs_uncorrected_ns_ci_high": -1.2963456483540703,
+    "delta_sigma68_vs_uncorrected_ns_ci_low": -1.4835173572986586,
+    "method": "gradient_boosted_trees_controls_only",
+    "n_pairs": 3430,
+    "rms_ns": 6.460509117322671,
+    "sigma68_ns": 1.4542416107005223,
+    "sigma68_ns_ci_high": 1.5140642745227397,
+    "sigma68_ns_ci_low": 1.3867662065530635,
+    "tail_abs_gt_0p5_ns": 0.7250728862973761,
+    "tail_abs_gt_0p5_ns_ci_high": 0.7347964246498143,
+    "tail_abs_gt_0p5_ns_ci_low": 0.7158193455201076,
+    "tail_abs_gt_1p0_ns": 0.4924198250728863
+  },
+  "worker": "testbeam-laptop-3"
+}

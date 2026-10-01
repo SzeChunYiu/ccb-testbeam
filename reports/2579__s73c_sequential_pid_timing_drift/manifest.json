@@ -1,0 +1,25 @@
+{
+  "ticket_id": "2579",
+  "worker": "testbeam-laptop-1",
+  "command": "uv run --with uproot --with awkward --with numpy python scripts/ticket_2579_s73c_sequential_pid_timing_drift.py",
+  "result_winner": "causal_state_space_residual_stack_new",
+  "outputs_sha256": {
+    "REPORT.md": "7f8f97dd001a3f048ee97ff24aab702fa2456ec9bc784fd1b385f73df0ac9a15",
+    "boundary_displacement.csv": "168b6d58e0570d05a2b805f6b3fa735cccaa41f43f5014c7b5fbabec6311e7f5",
+    "claimed_ticket.txt": "755bbde809c1abd62e92fe74d2f5749131047a793c272ff439f108a8e4ee1992",
+    "claimed_ticket_body.txt": "fb143378347f6b274002f9ce3117f7c908d8eacca0b8d086b91d507a91d606b5",
+    "input_sha256.csv": "94e6ac0e516e6fbd91787a2e994321d3c59494e253516e3ebc13155cd009433c",
+    "method_metrics.csv": "6cc3b3f88fdb9f50269cb6800873f29e0b525aa4ea037a34a6292744c35fbacb",
+    "pedestal_history_ablation.csv": "011d13eb801ef9a6dc6ac847fa3d81555efa145d1bcb13875723e375778fe208",
+    "pid_confusion_by_stratum.csv": "6386dc028a6ff5fbb588c8c62b7a9c676596c36a04ba717c7aa2e92040104f92",
+    "pileup_spacing_ablation.csv": "ef954b11453682d7640c2a6a68b11a4d6297bc564ed7b3b067ebdbe6ce0d50bb",
+    "reproduction_counts_by_run.csv": "e86bf560d03b9b926616989c3107df127cf493fff3a65fa24e4ab6776d77813f",
+    "reproduction_match_table.csv": "4bf43be39a940b24e8d304c9fc1d6c5ac6c3631a41ee885b77d68da2c21397f8",
+    "result.json": "ccd0efff9bcd89755325da875d620d1f9f35867b9bda9b42068ff58c922541b9",
+    "run_heldout_metrics.csv": "b3561043b54b9ea9bf79866eb9b90d1aa24494a62edb3fb5b5e9963095dda060",
+    "s73c_method_metrics.csv": "5ab846d98b90ead1aad5f778baf07ded486ca747e488400e2717c0e176b0480e",
+    "sequence_drift_diagnostics.csv": "d18afe9db4782507df27ee173fb8bf62cb915928524dbdbef6a1b1f19dadf244",
+    "shortcut_diagnostics.csv": "66776f4f8062208bc55ec5ca39bc2ac94cdbf6a766816b6271a5f9f894d00e56",
+    "source_strata_metrics.csv": "df037764aa06a26bd05a3b29a68ac8234ce81a947142463c6a927bd9ac93b37c"
+  }
+}

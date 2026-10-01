@@ -1,0 +1,1 @@
+Academic study: map event-sequence pedestal memory, late pile-up tails, saturation recovery, pulse-shape drift, timing bias, energy residuals, and proton/deuteron PID boundary motion.

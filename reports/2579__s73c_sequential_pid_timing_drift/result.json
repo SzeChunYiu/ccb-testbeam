@@ -1,0 +1,83 @@
+{
+  "ticket_id": "2579",
+  "issue_number": 2579,
+  "issue_url": "https://github.com/SzeChunYiu/factory-tickets/issues/2579",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-1",
+  "status": "complete",
+  "title": "NEW S73c sequential PID-timing drift under pedestal memory and late pile-up",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-1 --project testbeam",
+  "claim_command_output": "null\n# null\n\nnull\n",
+  "manual_claim_recovery": {
+    "reason": "tn-ticket claim returned null despite open testbeam tickets",
+    "command": "gh issue edit 2579 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-1 --remove-label factory:open",
+    "reran_claim": false
+  },
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "split": {
+    "scheme": "held-out by source run with run-block bootstrap CIs",
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "bootstrap": "percentile run-block 95% confidence intervals"
+  },
+  "methods": {
+    "traditional": "deltaE_over_E_likelihood_template",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "cnn_1d": "1d_cnn",
+    "transformer": "joint_sequence_transformer",
+    "new_architecture": "causal_state_space_residual_stack_new"
+  },
+  "winner": {
+    "method": "causal_state_space_residual_stack_new",
+    "score": 0.22296518124014075,
+    "selection_rule": "minimum S73c composite loss with sequential drift penalty",
+    "pid_balanced_accuracy": 0.8550282397884219,
+    "pid_balanced_accuracy_ci": [
+      0.8167824722395589,
+      0.8799402771141901
+    ],
+    "energy_fractional_sigma68": 0.08085691557537107,
+    "energy_fractional_sigma68_ci": [
+      0.07090265081540481,
+      0.091484977078622
+    ],
+    "time_sigma68_ns": 7.731948438227868,
+    "time_sigma68_ns_ci": [
+      7.142248018154728,
+      8.617215370573321
+    ],
+    "pileup_miss_rate": 0.3143939393939394,
+    "false_split_rate": 0.23548484848484838
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "method_metrics": "s73c_method_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "sequence_drift_diagnostics": "sequence_drift_diagnostics.csv",
+    "pedestal_history_ablation": "pedestal_history_ablation.csv",
+    "pileup_spacing_ablation": "pileup_spacing_ablation.csv",
+    "reproduction_counts_by_run": "reproduction_counts_by_run.csv",
+    "reproduction_match_table": "reproduction_match_table.csv"
+  },
+  "source_artifact": "reports/2507__s56c_likelihood_pid_templates_vs_multitask_waveform_networks",
+  "git_commit": "cec9edc28257e0699c70c17fa9b2e8d806a3d42a",
+  "python": "3.13.12",
+  "elapsed_seconds": 5.015092134475708,
+  "done_command": "tn-ticket done 2579",
+  "novel_tickets_appended": []
+}

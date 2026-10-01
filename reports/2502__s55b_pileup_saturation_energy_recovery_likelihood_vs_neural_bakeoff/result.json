@@ -52,29 +52,29 @@
   "winner": {
     "name": "saturation_residual_fusion_new",
     "criterion": "minimum held-out composite saturation-energy closure score with run-block bootstrap CIs reported",
-    "winner_score": 0.15172443008737868,
-    "energy_fractional_bias": -0.002906610021787798,
-    "energy_fractional_sigma68": 0.068387783415775,
+    "winner_score": 0.1504710949064634,
+    "energy_fractional_bias": 0.0027157254744858425,
+    "energy_fractional_sigma68": 0.06515238671864262,
     "energy_fractional_sigma68_ci95": [
-      0.06183707932660469,
-      0.0751855124441164
+      0.06058887657529802,
+      0.06910475433329999
     ],
-    "time_sigma68_ns": 8.023902762892945,
+    "time_sigma68_ns": 8.212330002000067,
     "time_sigma68_ci95": [
-      7.365407249564567,
-      8.669358478772935
+      7.1951999584010595,
+      9.01467030773103
     ],
-    "pileup_miss_rate": 0.32564102564102565,
-    "false_split_rate": 0.13846153846153847,
+    "pileup_miss_rate": 0.27692307692307694,
+    "false_split_rate": 0.2,
     "uncertainty_calibration": {
       "method": "saturation_residual_fusion_new",
-      "n_valid_doublets": 263.0,
-      "median_abs_energy_residual": 0.04730265759532487,
-      "p68_abs_energy_residual": 0.0694272959931502,
-      "nominal_68_proxy_width": 0.034999999999999996,
-      "coverage_abs_resid_le_proxy": 0.3688212927756654,
-      "coverage_abs_resid_le_2proxy": 0.7034220532319392,
-      "calibration_ratio_p68_over_proxy": 1.9836370283757203
+      "n_valid_doublets": 282.0,
+      "median_abs_energy_residual": 0.04218627495163657,
+      "p68_abs_energy_residual": 0.0661471949069529,
+      "nominal_68_proxy_width": 0.034714578999714134,
+      "coverage_abs_resid_le_proxy": 0.42907801418439717,
+      "coverage_abs_resid_le_2proxy": 0.7127659574468085,
+      "calibration_ratio_p68_over_proxy": 1.9054586520406196
     }
   },
   "artifacts": {

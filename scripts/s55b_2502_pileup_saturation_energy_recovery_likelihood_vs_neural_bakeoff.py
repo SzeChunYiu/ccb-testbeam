@@ -38,6 +38,8 @@ MANUAL_RECOVERY = (
     "--remove-label factory:open"
 )
 DONE_COMMAND = "tn-ticket done 2502"
+CONFIG = ROOT / "configs" / "s55b_2502_pileup_saturation_energy_recovery_likelihood_vs_neural.json"
+_S32B_LOAD_CONFIG = s32b.load_config
 
 
 def fmt(x: object) -> str:
@@ -107,11 +109,12 @@ def uncertainty_calibration(joined: pd.DataFrame) -> pd.DataFrame:
         pred_e = group[["amp1_adc", "amp2_adc"]].sum(axis=1).to_numpy(float)
         resid = (pred_e - true_e) / np.maximum(true_e, 1.0)
         abs_resid = np.abs(resid)
+        pred_sep = np.abs(group["t2_sample"].to_numpy(float) - group["t1_sample"].to_numpy(float))
         proxy = (
             0.030
             + 0.006 * group["saturated_sample_count"].to_numpy(float)
             + 0.004 * np.maximum(group["plateau_width"].to_numpy(float) - 2.0, 0.0)
-            + 0.002 * np.maximum(4.0 - group["true_sep_sample"].to_numpy(float), 0.0)
+            + 0.002 * np.maximum(4.0 - pred_sep, 0.0)
         )
         rows.append(
             {
@@ -138,6 +141,11 @@ def patch_report(sideband: pd.DataFrame, ablation: pd.DataFrame, calibration: pd
     )
     text = text.replace("Ticket `2502` asks", "Ticket `#2502` asks", 1)
     text = text.replace("preferred S32b", "preferred S55b", 1)
+    text = text.replace(
+        "\nSystematic caveats are material.",
+        "\n## Caveats\n\nSystematic caveats are material.",
+        1,
+    )
     text += f"""
 
 ## Ticket-Specific Sideband Validation
@@ -161,9 +169,11 @@ tail-recovery region named in the ticket.
 ## Uncertainty Calibration
 
 The per-event uncertainty proxy is a transparent function of clipped samples,
-plateau width, and close-pulse spacing:
+plateau width, and reconstructed close-pulse spacing.  It uses
+`hat Delta_i = |hat t_2 - hat t_1|`; injected truth separation is excluded
+from the proxy and used only for residual scoring:
 
-`u_i = 0.030 + 0.006 n_clip + 0.004 max(W_plateau-2,0) + 0.002 max(4-Delta,0)`.
+`u_i = 0.030 + 0.006 n_clip + 0.004 max(W_plateau-2,0) + 0.002 max(4-hat Delta_i,0)`.
 
 Coverage is reported against the absolute fractional energy residual.
 
@@ -267,6 +277,8 @@ def patch_manifest() -> None:
             "ticket_id": TICKET,
             "issue_number": ISSUE_NUMBER,
             "worker": WORKER,
+            "command": f"{sys.executable} {Path(__file__).resolve().relative_to(ROOT)}",
+            "config": str(CONFIG.relative_to(ROOT)),
             "claim_command_run_once": CLAIM_COMMAND,
             "claim_command_output": CLAIM_OUTPUT,
             "manual_claim_recovery": MANUAL_RECOVERY,
@@ -281,6 +293,22 @@ def patch_manifest() -> None:
     manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
 
 
+def load_ticket_config() -> dict:
+    cfg = _S32B_LOAD_CONFIG()
+    ticket_cfg = json.loads(CONFIG.read_text(encoding="utf-8"))
+    cfg.update(
+        {
+            "ticket_id": TICKET,
+            "title": TITLE,
+            "worker": WORKER,
+            "raw_root_dir": str(RAW_ROOT_DIR),
+            "output_dir": str(OUT),
+            "random_seed": int(ticket_cfg["random_seed"]),
+        }
+    )
+    return cfg
+
+
 def main() -> None:
     s32b.TICKET = TICKET
     s32b.WORKER = WORKER
@@ -288,6 +316,7 @@ def main() -> None:
     s32b.TITLE = TITLE
     s32b.OUT = OUT
     s32b.RAW_ROOT_DIR = RAW_ROOT_DIR
+    s32b.load_config = load_ticket_config
     s32b.os.environ["MPLCONFIGDIR"] = "/tmp/matplotlib-s55b"
     s32b.main()
 

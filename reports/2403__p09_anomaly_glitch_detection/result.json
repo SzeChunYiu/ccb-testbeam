@@ -1,0 +1,89 @@
+{
+  "artifacts": {
+    "bootstrap_ci": "/home/billy/.tb-workers/testbeam-laptop-4/reports/2403__p09_anomaly_glitch_detection/bootstrap_ci.csv",
+    "gallery": "/home/billy/.tb-workers/testbeam-laptop-4/reports/2403__p09_anomaly_glitch_detection/flagged_gallery.csv",
+    "metrics": "/home/billy/.tb-workers/testbeam-laptop-4/reports/2403__p09_anomaly_glitch_detection/method_metrics.csv",
+    "report": "/home/billy/.tb-workers/testbeam-laptop-4/reports/2403__p09_anomaly_glitch_detection/REPORT.md",
+    "waveforms": "/home/billy/.tb-workers/testbeam-laptop-4/reports/2403__p09_anomaly_glitch_detection/flagged_gallery_waveforms.json"
+  },
+  "primary_metric": "heldout_topk_curated_precision",
+  "raw_reproduction_gate": {
+    "delta": 0,
+    "pass": true,
+    "quantity": "S00 selected B-stave pulses",
+    "report_value": 640737,
+    "reproduced": 640737,
+    "tolerance": 0
+  },
+  "required_methods": [
+    "traditional_robust_shape_cuts",
+    "autoencoder_isolation_forest",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "1d_cnn",
+    "morphology_gated_cnn_new"
+  ],
+  "split": {
+    "bootstrap_replicates": 1000,
+    "heldout_runs": [
+      42,
+      57,
+      64,
+      65
+    ],
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      41,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      56,
+      58,
+      59,
+      60,
+      61,
+      62
+    ],
+    "validation_runs": [
+      40,
+      55,
+      63
+    ]
+  },
+  "study_id": "P09",
+  "ticket_id": "2403",
+  "ticket_number": 2403,
+  "winner": "gradient_boosted_trees",
+  "winner_family": "ml",
+  "winner_metrics": {
+    "curated_enrichment": 11.767272009474931,
+    "curated_precision": 1.0,
+    "duplicate_event_rate": 0.020833333333333332,
+    "family": "ml",
+    "heldout_auc": 0.9999993685203266,
+    "heldout_average_precision": 0.9999931990522035,
+    "known_precision": 0.10416666666666667,
+    "max_run_stave_share": 0.0625,
+    "method": "gradient_boosted_trees",
+    "n_flagged": 192,
+    "novel_enrichment": 12.996668897541982,
+    "novel_precision": 0.8958333333333334,
+    "timing_tail_rate": 0.0
+  }
+}

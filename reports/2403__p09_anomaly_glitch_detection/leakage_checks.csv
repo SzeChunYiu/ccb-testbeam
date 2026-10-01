@@ -1,0 +1,5 @@
+check,value,pass,note
+train_validation_heldout_run_overlap,0.0,True,must be zero
+raw_root_reproduction_exact,1.0,True,640737 selected pulses
+model_feature_id_columns,0.0,True,run/event/stave ids excluded from model matrices
+winner_precision_minus_traditional,0.16666666666666663,True,primary adoption guard

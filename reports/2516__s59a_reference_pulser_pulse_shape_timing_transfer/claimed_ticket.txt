@@ -1,0 +1,16 @@
+2516
+# NEW S59a reference-pulser pulse-shape timing transfer benchmark
+
+Compare a traditional CFD plus parametric CR-RC/log-normal template fit against ridge, gradient-boosted trees, MLP, 1D-CNN, and a compact waveform transformer for pulse-shape and timing transfer across run/current blocks.
+
+Require leakage-proof run/source splits, pedestal-state stratification, pile-up and saturation flags, bootstrap 95% CIs for timing bias/resolution and shape residuals, and ablations for pedestal subtraction and censored samples. Deliver short tables identifying where ML deepens or falsifies pulse-shape/timing understanding rather than only improving score.
+
+claim_helper_command: tn-ticket claim testbeam-laptop-1 --project testbeam
+claim_helper_output:
+null
+# null
+
+null
+
+manual_claim_workaround:
+gh issue edit 2516 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-1 --remove-label factory:open

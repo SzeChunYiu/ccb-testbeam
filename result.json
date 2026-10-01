@@ -1,104 +1,249 @@
 {
-  "ticket_id": "2502",
-  "issue_number": 2502,
-  "project": "testbeam",
-  "worker": "testbeam-laptop-2",
-  "status": "complete",
-  "winner": "saturation_residual_fusion_new",
-  "winner_metrics": {
-    "name": "saturation_residual_fusion_new",
-    "criterion": "minimum held-out composite saturation-energy closure score with run-block bootstrap CIs reported",
-    "winner_score": 0.15172443008737868,
-    "energy_fractional_bias": -0.002906610021787798,
-    "energy_fractional_sigma68": 0.068387783415775,
-    "energy_fractional_sigma68_ci95": [
-      0.06183707932660469,
-      0.0751855124441164
-    ],
-    "time_sigma68_ns": 8.023902762892945,
-    "time_sigma68_ci95": [
-      7.365407249564567,
-      8.669358478772935
-    ],
-    "pileup_miss_rate": 0.32564102564102565,
-    "false_split_rate": 0.13846153846153847,
-    "uncertainty_calibration": {
-      "method": "saturation_residual_fusion_new",
-      "n_valid_doublets": 263.0,
-      "median_abs_energy_residual": 0.04730265759532487,
-      "p68_abs_energy_residual": 0.0694272959931502,
-      "nominal_68_proxy_width": 0.034999999999999996,
-      "coverage_abs_resid_le_proxy": 0.3688212927756654,
-      "coverage_abs_resid_le_2proxy": 0.7034220532319392,
-      "calibration_ratio_p68_over_proxy": 1.9836370283757203
-    }
-  },
-  "raw_root_reproduction": {
-    "passed": true,
-    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
+  "study": "S14",
+  "ticket_id": "2384",
+  "worker": "testbeam-laptop-4",
+  "raw_reproduction": {
     "expected_selected_pulses": 640737,
     "reproduced_selected_pulses": 640737,
     "delta": 0,
-    "evidence_table": "reproduction_match_table.csv"
+    "pass": true
   },
-  "split": {
-    "split": "train and held-out sets are disjoint by source run",
-    "train_runs": [
-      50,
-      51,
-      52,
-      53,
-      54,
-      55,
-      56,
-      57
+  "n_event_rows_after_valid_charge_cut": 584406,
+  "n_pulse_rows_after_valid_charge_cut": 640540,
+  "train_runs": [
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    39,
+    40,
+    41,
+    42,
+    64
+  ],
+  "heldout_runs": [
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65
+  ],
+  "geant4_anchor": {
+    "dedx_table": "data/reference/stopping_power/pstar_polystyrene.csv",
+    "dedx_second_column_units": "MeV cm2/g mass stopping power",
+    "dedx_to_mev_per_cm": 1.06,
+    "beam_energy_mev": 190.0,
+    "stave_thickness_cm": 1.0,
+    "nominal_geometry": "center_4cm",
+    "birks_fit": {
+      "kB_cm_per_MeV": 0.0575,
+      "alpha_adc_per_MeV": 12857.456776088262,
+      "median_abs_log_charge_error": 0.26028645691563845
+    }
+  },
+  "winner": {
+    "method": "geant4_birks_lookup",
+    "family": "traditional_geant4_birks",
+    "res68_frac": 0.04025337031633583,
+    "res68_ci95": [
+      0.03854864147735823,
+      0.041739706066625686
     ],
-    "heldout_runs": [
-      58,
-      60,
-      62,
-      64,
-      65
-    ],
-    "adc_clip": 11800.0,
-    "bootstrap": "held-out run-block percentile 95% CI",
-    "bootstrap_replicates": 400,
-    "negative_control": "clipped clean single-pulse controls with matched source-run distribution",
-    "winner_score": "energy_fractional_sigma68 + 0.20*abs(energy_fractional_bias) + 0.008*time_sigma68_ns + 0.04*pileup_miss_rate + 0.04*false_split_rate"
+    "bias_frac": -0.023113700812691026,
+    "mae_mev": 0.29118947394958444,
+    "mae_mev_ci95": [
+      0.2567505077035392,
+      0.3383863430051183
+    ]
   },
-  "required_method_coverage": {
-    "traditional": "analytic_clipped_template_sideband_traditional",
-    "ridge": "ridge",
-    "gradient_boosted_trees": "gradient_boosted_trees",
-    "mlp": "mlp",
-    "one_dimensional_cnn": "1d_cnn",
-    "transformer_sequence_model": "tiny_sequence_transformer",
-    "new_architecture": "saturation_residual_fusion_new"
-  },
-  "required_outputs": {
-    "injected_overlap_closure": "method_metrics.csv, run_heldout_metrics.csv, event_predictions.csv",
-    "real_data_sideband_validation": "real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "saturation_mask_ablation.csv",
-    "uncertainty_calibration": "uncertainty_calibration.csv",
-    "traditional_vs_neural_failure_interpretation": "REPORT.md"
-  },
-  "artifacts": {
-    "report": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/REPORT.md",
-    "result": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/result.json",
-    "method_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/method_metrics.csv",
-    "run_heldout_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/run_heldout_metrics.csv",
-    "real_data_sideband_validation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/saturation_mask_ablation.csv",
-    "uncertainty_calibration": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/uncertainty_calibration.csv"
-  },
-  "queue_provenance": {
-    "claimed_once": true,
-    "claim_command_run_once": "tn-ticket claim testbeam-laptop-2 --project testbeam",
-    "claim_command_output": "null / # null / null",
-    "manual_claim_recovery": "gh issue edit 2502 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-2 --remove-label factory:open",
-    "done_command": "tn-ticket done 2502",
-    "novel_tickets_appended": []
-  },
-  "done_command": "tn-ticket done 2502",
-  "novel_tickets_appended": []
+  "all_metrics": [
+    {
+      "method": "geant4_birks_lookup",
+      "family": "traditional_geant4_birks",
+      "n": 332852,
+      "bias_frac": -0.0231137008,
+      "res68_frac": 0.0402533703,
+      "mae_mev": 0.2911894739,
+      "res68_ci95": [
+        0.0385486415,
+        0.0417397061
+      ],
+      "bias_ci95": [
+        -0.0271881417,
+        -0.0184030285
+      ],
+      "mae_mev_ci95": [
+        0.2567505077,
+        0.338386343
+      ]
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "family": "ml_tree",
+      "n": 332852,
+      "bias_frac": -0.0173344178,
+      "res68_frac": 0.053996103,
+      "mae_mev": 0.270271407,
+      "res68_ci95": [
+        0.0445520075,
+        0.0705666997
+      ],
+      "bias_ci95": [
+        -0.0216116329,
+        -0.009229947
+      ],
+      "mae_mev_ci95": [
+        0.2333561435,
+        0.3221559
+      ]
+    },
+    {
+      "method": "physics_residual_mlp",
+      "family": "neural_physics_residual",
+      "n": 332852,
+      "bias_frac": -0.0010227998,
+      "res68_frac": 0.066282372,
+      "mae_mev": 0.2849643706,
+      "res68_ci95": [
+        0.0585688848,
+        0.0751400189
+      ],
+      "bias_ci95": [
+        -0.0097880053,
+        0.01254778
+      ],
+      "mae_mev_ci95": [
+        0.2570399744,
+        0.3182427273
+      ]
+    },
+    {
+      "method": "ridge",
+      "family": "ml_linear",
+      "n": 332852,
+      "bias_frac": -0.0173672286,
+      "res68_frac": 0.0901059085,
+      "mae_mev": 0.3741213457,
+      "res68_ci95": [
+        0.0764348503,
+        0.123573694
+      ],
+      "bias_ci95": [
+        -0.0270354537,
+        0.0017905552
+      ],
+      "mae_mev_ci95": [
+        0.3251996169,
+        0.4401523752
+      ]
+    },
+    {
+      "method": "1d_cnn",
+      "family": "neural_waveform",
+      "n": 332852,
+      "bias_frac": -0.0458388367,
+      "res68_frac": 0.1554541552,
+      "mae_mev": 0.5141980687,
+      "res68_ci95": [
+        0.1435070543,
+        0.1764484473
+      ],
+      "bias_ci95": [
+        -0.0558430209,
+        -0.0392614681
+      ],
+      "mae_mev_ci95": [
+        0.4737585059,
+        0.5675186352
+      ]
+    },
+    {
+      "method": "mlp",
+      "family": "neural_tabular",
+      "n": 332852,
+      "bias_frac": -0.0709589512,
+      "res68_frac": 0.2507415202,
+      "mae_mev": 0.8986047603,
+      "res68_ci95": [
+        0.2397526314,
+        0.2691045917
+      ],
+      "bias_ci95": [
+        -0.1180546082,
+        -0.0021819738
+      ],
+      "mae_mev_ci95": [
+        0.8648779328,
+        0.9328294458
+      ]
+    },
+    {
+      "method": "old_power_law",
+      "family": "traditional_empirical",
+      "n": 332852,
+      "bias_frac": -0.2976705732,
+      "res68_frac": 0.4623622026,
+      "mae_mev": 2.1116426272,
+      "res68_ci95": [
+        0.4457974628,
+        0.5335354552
+      ],
+      "bias_ci95": [
+        -0.3481537323,
+        -0.1524986895
+      ],
+      "mae_mev_ci95": [
+        1.9994166958,
+        2.2237969723
+      ]
+    }
+  ],
+  "leakage_checks": [
+    {
+      "check": "train_heldout_run_overlap",
+      "value": "[]",
+      "pass": true
+    },
+    {
+      "check": "raw_reproduction_exact",
+      "value": "640737 of 640737",
+      "pass": true
+    },
+    {
+      "check": "ml_features_exclude_odd_charge_run_event_id",
+      "value": "multiplicity,depth_idx,even_total_charge,even_max_amp,saturated_count,log_charge_stave_0,log_charge_stave_1,log_charge_stave_2,log_charge_stave_3,log_amp_stave_0,log_amp_stave_1,log_amp_stave_2,log_amp_stave_3,hit_stave_0,hit_stave_1,hit_stave_2,hit_stave_3,peak_stave_0,peak_stave_1,peak_stave_2,peak_stave_3,early_charge_fraction,late_charge_fraction",
+      "pass": true
+    },
+    {
+      "check": "cnn_status",
+      "value": "trained",
+      "pass": true
+    },
+    {
+      "check": "birks_kB_cm_per_MeV",
+      "value": "0.0575",
+      "pass": true
+    }
+  ],
+  "finding": "Raw ROOT reproduction passed exactly at 640,737 selected B-stave pulses. The GEANT4/Birks traditional lookup achieved res68=0.04025; the old empirical power law achieved res68=0.46236. Across the ML/NN panel, the held-out winner is geant4_birks_lookup with res68=0.04025. The MeV scale is GEANT4/dE/dx anchored but remains conditional on the assumed B-stave thickness, geometry centers, and duplicate-readout closure target rather than external truth.",
+  "runtime_sec": 38.5
 }

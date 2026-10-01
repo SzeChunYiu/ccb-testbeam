@@ -8,9 +8,9 @@ Generated from `docs/figures/paper/manifest.json`. Captions are external to the 
 
 ![Selected-pulse inventory](figures/paper/selected_pulse_inventory.png)
 
-**Status:** `GATED` · **Evidence:** `DATA_MEASUREMENT`
+**Status:** `VALIDATED` · **Evidence:** `DATA_MEASUREMENT`
 
-Exact S00 reproduction. Sample I is dominated by B2; Sample II reaches deeper staves more often. Counts are deterministic for the fixed raw inputs and selection; CL-001 remains GATED pending data-contract closure (#952/#953/#954), so this figure is not an authorising ledger row.
+Exact S00 reproduction. Sample I is dominated by B2; Sample II reaches deeper staves more often. Counts are deterministic for the fixed raw inputs and selection. CL-001 is VALIDATED: the corrected 144-word staging reproduces all 17 quantities at delta=0/tolerance=0 (total 640,737) and the cell-exact sorted-waveform identity gate (#952 desync detector) PASSes; data-contract gates #952/#953/#954 and lineage #993 are closed.
 
 [PDF](figures/paper/selected_pulse_inventory.pdf) · [SVG](figures/paper/selected_pulse_inventory.svg) · [source CSV](figures/paper/source_tables/selected_pulse_inventory_source.csv)
 

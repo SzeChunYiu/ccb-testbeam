@@ -40,8 +40,13 @@ for selection or downstream observables.
 
 The additional s00c "median-first-four" quality gate (laptop-side, on `data/sorted-b`, not
 staged) reduces the raw 706,373 → 640,737. The downstream physics below uses the canonical
-640,737 table as its fixed input, but **CL-001 remains GATED** under the canonical claim ledger
-pending #952/#953/#954, and the 16↔18 lineage itself remains unresolved under #993.
+640,737 table as its fixed input. **CL-001 is VALIDATED (2026-08-16)**: the corrected 144-word
+staging reproduces all 17 documented quantities at delta=0/tolerance=0 (total 640,737), and the
+new cell-exact `sorted_waveform_identity` gate verifies `baseline + polarity*sample == raw HRDv`
+word-for-word with EVT numbers aligned 1:1 on every configured run — the detector that would
+have caught the #952 truncation desync. The width/closure/polarity gates #952/#953/#954 and the
+lineage gate #993 are all CLOSED; the authorising manifest
+(`s00_rebuild/manifest.json`, `claim_status: canonical-authorising`) records all four gates PASS.
 
 **Provenance correction:** the tracked `provenance.json` currently reports
 `raw_input_sha256_count: 33` but serializes only three digest records because the historical
@@ -141,7 +146,7 @@ Figure: `VIS-PU-DATA_occupancy_rmax.png` is descriptive occupancy evidence only.
 
 | Claim | Status | Evidence |
 |---|---|---|
-| CL-001 (S00 pulses) | **GATED** | deterministic 640,737 fixed-input count; width/closure/polarity gates #952/#953/#954 and lineage #993 remain open |
+| CL-001 (S00 pulses) | **VALIDATED** (2026-08-16) | deterministic 640,737 reproduced at delta=0 on the corrected 144-word staging; cell-exact sorted-waveform identity gate PASS; gates #952/#953/#954/#993 closed; manifest `canonical-authorising` |
 | CL-002..004 (timing σ₆₈) | GATED / data-format-limited | sampling-limited raw-format residual; no detector resolution |
 | CL-005..006 (timing combination/covariance) | BLOCKED | source-bound covariance and uncertainty absent |
 | CL-010 (Rmax) | **BLOCKED** (`S-STAT-003`) | occupancy is descriptive; rate exposure and accepted quality criterion absent |
@@ -153,4 +158,5 @@ Figure: `VIS-PU-DATA_occupancy_rmax.png` is descriptive occupancy evidence only.
 Artifacts: `metrics.json`, `provenance.json`, `VIS-DE-001-DATA_deltaE_E_real.png`
 (two-channel B2–B4 correlation, NOT ΔE–E),
 `VIS-TIM-DATA_sampling_limited.png`, `VIS-PU-DATA_occupancy_rmax.png`,
-`s00_rebuild/` (rebuilt raw table, 709,003 rows, for audit).
+`s00_rebuild/` (corrected-staging rebuilt raw table, 640,737 rows, all gates PASS,
+`claim_status: canonical-authorising`).

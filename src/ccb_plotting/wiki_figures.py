@@ -110,7 +110,7 @@ def _new_figure(spec: FigureSpec) -> tuple[Figure, Any]:
 def _selected_pulse_inventory(root: Path) -> tuple[Figure, pd.DataFrame]:
     source = _load_csv(
         root,
-        "reports/S00_data_integrity_pipeline_reproduction/count_match_table.csv",
+        "reports/studies/data_side/s00_rebuild/count_match_table.csv",
         {"quantity", "report_value", "reproduced", "delta", "pass"},
     )
     wanted = source[
@@ -633,12 +633,12 @@ SPECS: tuple[FigureSpec, ...] = (
         "selected_pulse_inventory",
         "Selected-pulse inventory",
         "How are the exact S00 analysis pulses distributed across samples and staves?",
-        "Exact S00 reproduction. Sample I is dominated by B2; Sample II reaches deeper staves more often. Counts are deterministic for the fixed raw inputs and selection; CL-001 remains GATED pending data-contract closure (#952/#953/#954), so this figure is not an authorising ledger row.",  # noqa: E501
-        "GATED",
+        "Exact S00 reproduction. Sample I is dominated by B2; Sample II reaches deeper staves more often. Counts are deterministic for the fixed raw inputs and selection. CL-001 is VALIDATED: the corrected 144-word staging reproduces all 17 quantities at delta=0/tolerance=0 (total 640,737) and the cell-exact sorted-waveform identity gate (#952 desync detector) PASSes; data-contract gates #952/#953/#954 and lineage #993 are closed.",  # noqa: E501
+        "VALIDATED",
         "DATA_MEASUREMENT",
         "single",
         49.0,
-        ("reports/S00_data_integrity_pipeline_reproduction/count_match_table.csv",),
+        ("reports/studies/data_side/s00_rebuild/count_match_table.csv",),
         _selected_pulse_inventory,
     ),
     FigureSpec(

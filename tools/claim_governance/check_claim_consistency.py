@@ -69,7 +69,15 @@ def load_csv_table(path: Path, required_cols, lines: list, missing_is_scope: boo
     try:
         with path.open(newline="", encoding="utf-8") as fh:
             reader = csv.DictReader(fh)
-            rows = [r for r in reader if r.get("regex", "").strip()]
+            # '#' rows are comments (e.g. retired-pattern annotations); they may
+            # contain commas, so DictReader can hand back short rows whose
+            # `regex` is None -- skip them before touching the field.
+            rows = [
+                r
+                for r in reader
+                if (r.get("regex") or "").strip()
+                and not str(next(iter(r.values()), "")).lstrip().startswith("#")
+            ]
             missing = [c for c in required_cols if c not in (reader.fieldnames or [])]
             if missing:
                 scope("{}: missing column(s) {}".format(path, ",".join(missing)))

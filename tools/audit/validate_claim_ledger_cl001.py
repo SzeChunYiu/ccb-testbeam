@@ -14,7 +14,7 @@ from typing import Any
 
 import yaml
 
-VERSION = "1.0.0"
+VERSION = "1.1.0"
 POLICY = "SOURCE_BACKED_EXACT_COUNT_LEDGER_ROW"
 FIELDS = (
     "claim_id,chapter,section,claim_text,current_value,unit,stat_unc,syst_unc,"
@@ -84,10 +84,14 @@ def resolve(root: Path, relative: str) -> Path:
 
 def audit(root: Path) -> dict[str, Any]:
     ledger_path = root / "docs/claim_ledger.csv"
-    config_path = root / "configs/s00_reproduction.yaml"
-    report_path = root / "reports/S00_data_integrity_pipeline_reproduction/REPORT.md"
-    count_path = root / "reports/S00_data_integrity_pipeline_reproduction/count_match_table.csv"
-    manifest_path = root / "reports/S00_data_integrity_pipeline_reproduction/manifest.json"
+    # CL-001 authorising chain moved to the corrected 144-word staging rebuild
+    # (2026-08-16): configs/data_side_s00_rebuild.yaml + the s00_rebuild
+    # manifest whose four data-integrity gates (count_match, sorted_even_
+    # channel_crosscheck, sorted_waveform_identity, pulse_schema_v1) all PASS.
+    config_path = root / "configs/data_side_s00_rebuild.yaml"
+    report_path = root / "reports/studies/data_side/REPORT.md"
+    count_path = root / "reports/studies/data_side/s00_rebuild/count_match_table.csv"
+    manifest_path = root / "reports/studies/data_side/s00_rebuild/manifest.json"
     registry_path = root / "docs/figure_registry.csv"
 
     ledger_text, ledger_prov = snapshot(ledger_path)
@@ -141,11 +145,14 @@ def audit(root: Path) -> dict[str, Any]:
         "n_runs": str(len(runs)),
         "n_data": str(expected),
         "truth_type": "data_count",
-        # CL-001 is GATED (not VALIDATED) until data-contract gates #952/#953/#954
-        # prove channel/schema/raw-to-sorted closure. The exact count is
-        # reproducible, but claim status is governingly conservative (issue #955).
-        "status": "GATED",
-        "allowed_status_validated": "NO",
+        # CL-001 VALIDATED 2026-08-16 on the corrected 144-word staging: all 17
+        # quantities reproduced at delta=0/tolerance=0 and the authorising
+        # s00_rebuild manifest records every data-integrity gate PASS with
+        # claim_status canonical-authorising. Gates #952/#953/#954 and lineage
+        # #993 are closed (the cell-exact sorted_waveform_identity gate is the
+        # permanent #952 staging-desync detector).
+        "status": "VALIDATED",
+        "allowed_status_validated": "YES",
         "source_report": str(report_path.relative_to(root)),
         "source_script": "scripts/01_build_pulse_table_from_root.py",
         "source_data": str(config["pulse_table_path"]),
@@ -168,30 +175,43 @@ def audit(root: Path) -> dict[str, Any]:
         if count.get(field) != wanted:
             issues.append({"code": "COUNT_TABLE_GATE_MISMATCH", "field": field})
 
-    row_text = f"| total selected B-stave pulses | {expected} | {expected} | 0 | 0 | yes |"
-    if row_text not in report:
-        issues.append({"code": "REPORT_COUNT_ROW_MISSING"})
-    data_path_missing = str(config["pulse_table_path"]) not in report
-    untracked_scope_missing = "intentionally ignored by git" not in report
-    if data_path_missing or untracked_scope_missing:
-        issues.append({"code": "REPORT_DATA_SCOPE_MISSING"})
-    if not claim["source_commit"].startswith("dcde28d") or "`dcde28d`" not in report:
+    # The corrected-staging study report must state the closure verdict and
+    # point readers at the authorising manifest (it is the ledger source_report).
+    for marker in ("VALIDATED", "canonical-authorising",
+                   "s00_rebuild/manifest.json"):
+        if marker not in report:
+            issues.append({"code": "REPORT_CLOSURE_MARKER_MISSING", "marker": marker})
+    if str(expected) not in report.replace(",", ""):
+        issues.append({"code": "REPORT_COUNT_MISSING", "expected": str(expected)})
+    if not resolve(root, claim["source_data"]).exists():
+        issues.append({"code": "SOURCE_DATA_MISSING", "field": claim["source_data"]})
+    if not claim["source_commit"].startswith("dcde28d"):
         issues.append({"code": "SOURCE_COMMIT_MISMATCH"})
 
     manifest_expected = {
         "config": str(config_path.relative_to(root)),
         "count_match_passed": True,
+        # Final published path, never a staging path: the first corrected-
+        # staging run recorded `.s00_rebuild.staging-<pid>/...` here and this
+        # check now fails closed on any regression of that defect.
         "selected_pulse_table": str(config["pulse_table_path"]),
+        "claim_status": "canonical-authorising",
+        "authorising": True,
     }
     for field, wanted in manifest_expected.items():
         if manifest.get(field) != wanted:
             issues.append({"code": "MANIFEST_FIELD_MISMATCH", "field": field})
+    gate_states = manifest.get("gate_states") or {}
+    for gate in ("count_match", "sorted_even_channel_crosscheck",
+                 "sorted_waveform_identity", "pulse_schema_v1"):
+        if gate_states.get(gate) != "PASS":
+            issues.append({"code": "MANIFEST_GATE_NOT_PASS", "gate": gate})
 
     figure_expected = {
         "source_script": claim["source_script"],
         "source_csv_json": str(count_path.relative_to(root)),
         "output_png": (
-            "reports/S00_data_integrity_pipeline_reproduction/"
+            "reports/studies/data_side/s00_rebuild/"
             "fig_counts_by_group_stave.png"
         ),
         "status": "exists",
@@ -229,7 +249,7 @@ def result(ledger: dict[str, Any], inputs: dict[str, Any], issues: list[dict[str
         "expected_count": expected,
         "configured_runs": runs,
         "source_commit": claim.get("source_commit") if claim else None,
-        "source_data_tracking": "INTENTIONALLY_UNTRACKED_GENERATED_ARTIFACT",
+        "source_data_tracking": "TRACKED_AUTHORISING_ARTIFACT",
         "count_table_gate": ({key: count.get(key) for key in
                               ("report_value", "reproduced", "delta", "tolerance", "pass")}
                              if count else None),

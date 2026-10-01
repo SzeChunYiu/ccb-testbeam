@@ -1,0 +1,22 @@
+{
+  "ticket_id": "2402",
+  "git_commit": "3f71d0b1d84d9778aa0096cd3d24b9cd562e16a6",
+  "command": "/home/billy/.tb-workers/testbeam-laptop-3/.venv/bin/python3 scripts/t2402_p07_saturation_recovery_high_b2.py",
+  "runtime_seconds": 87.87597465515137,
+  "python": "3.13.12 (main, Feb  3 2026, 22:52:12) [Clang 21.1.4 ]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+  "outputs_sha256": {
+    "REPORT.md": "73ed203de4048da775974dd66d4ee3f1b137d1511462bcd365c98203ecdca00e",
+    "claimed_ticket.txt": "f8bda4432ac4b5a388c98659a18cc0d0717ccc7e702f2ce13c3bcf2406f7c8cc",
+    "endpoint_metrics_ci.csv": "73b955d66285e433d0f90ee49636232065dfb7350a0443ff7d9f2e107c43fe99",
+    "event_predictions.csv": "54680bef4c6396f79c260331d2eeb134003215fc16ab542b8885581a063a7555",
+    "input_sha256.csv": "8591a268097b83165f210e372a4556229631e43162586ebe227f9912dff62d60",
+    "method_metrics.csv": "9e1edcad814384059ff28afbe884bf70fc37faab88a81f96f9496e75bfbd2e38",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "16fe35a5ac45511b5ec5eae3979f6851b456541d865694b9b39173a2ae5a9a41",
+    "run_heldout_metrics.csv": "296519e0d27fdde8176697ae6be7133a4e82663c30e5ae572a4b02f4b2f9145b",
+    "strata_metrics.csv": "e9fe7211f428a659387dfa4639968c5d33f4579e8443091928c23d32022a2713",
+    "template_summary.csv": "eca9592b05cf73d43c290f57231745f4d3949abede50e928ded39b460577385c",
+    "winner_ranked_metrics.csv": "c482cff6b580bf16f7ced3701dcb782919d1aeb456790eaeed15e2c6563fa184"
+  }
+}

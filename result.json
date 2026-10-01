@@ -1,49 +1,32 @@
 {
-  "ticket_id": "2502",
-  "issue_number": 2502,
-  "project": "testbeam",
-  "worker": "testbeam-laptop-2",
-  "status": "complete",
-  "winner": "saturation_residual_fusion_new",
-  "winner_metrics": {
-    "name": "saturation_residual_fusion_new",
-    "criterion": "minimum held-out composite saturation-energy closure score with run-block bootstrap CIs reported",
-    "winner_score": 0.15172443008737868,
-    "energy_fractional_bias": -0.002906610021787798,
-    "energy_fractional_sigma68": 0.068387783415775,
-    "energy_fractional_sigma68_ci95": [
-      0.06183707932660469,
-      0.0751855124441164
-    ],
-    "time_sigma68_ns": 8.023902762892945,
-    "time_sigma68_ci95": [
-      7.365407249564567,
-      8.669358478772935
-    ],
-    "pileup_miss_rate": 0.32564102564102565,
-    "false_split_rate": 0.13846153846153847,
-    "uncertainty_calibration": {
-      "method": "saturation_residual_fusion_new",
-      "n_valid_doublets": 263.0,
-      "median_abs_energy_residual": 0.04730265759532487,
-      "p68_abs_energy_residual": 0.0694272959931502,
-      "nominal_68_proxy_width": 0.034999999999999996,
-      "coverage_abs_resid_le_proxy": 0.3688212927756654,
-      "coverage_abs_resid_le_2proxy": 0.7034220532319392,
-      "calibration_ratio_p68_over_proxy": 1.9836370283757203
-    }
-  },
-  "raw_root_reproduction": {
-    "passed": true,
-    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
+  "ticket_id": "2565",
+  "study_id": "S70a",
+  "title": "wavelet phase-space pulse-shape timing under pedestal and pile-up drift",
+  "worker": "testbeam-laptop-3",
+  "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+  "reproduction": {
     "expected_selected_pulses": 640737,
-    "reproduced_selected_pulses": 640737,
-    "delta": 0,
-    "evidence_table": "reproduction_match_table.csv"
+    "selected_pulses": 640737,
+    "passed": true
   },
   "split": {
-    "split": "train and held-out sets are disjoint by source run",
     "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
       50,
       51,
       52,
@@ -51,54 +34,475 @@
       54,
       55,
       56,
-      57
+      58,
+      59,
+      60,
+      61,
+      62,
+      63
     ],
     "heldout_runs": [
-      58,
-      60,
-      62,
+      42,
+      57,
       64,
       65
     ],
-    "adc_clip": 11800.0,
-    "bootstrap": "held-out run-block percentile 95% CI",
-    "bootstrap_replicates": 400,
-    "negative_control": "clipped clean single-pulse controls with matched source-run distribution",
-    "winner_score": "energy_fractional_sigma68 + 0.20*abs(energy_fractional_bias) + 0.008*time_sigma68_ns + 0.04*pileup_miss_rate + 0.04*false_split_rate"
+    "train_pulses": 581124,
+    "heldout_pulses": 59613,
+    "bootstrap_replicates": 500
+  },
+  "methods_benchmarked": [
+    "continuous_wavelet_cfd_template_atlas",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "cnn_1d",
+    "compact_waveform_transformer",
+    "wavelet_phase_space_residual_fusion"
+  ],
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "selection_metric": "minimum held-out downstream pair timing sigma68_ns",
+    "timing_sigma68_ns": 1.3235981460565414,
+    "ci_low": 1.225186172638833,
+    "ci_high": 1.390216837594289
+  },
+  "traditional_method": "continuous_wavelet_cfd_template_residual_atlas",
+  "trapezoid": {
+    "rise": 2,
+    "flat": 2
+  },
+  "template_grid": {
+    "min": -1.4,
+    "max": 1.4,
+    "step": 0.02
+  },
+  "new_architecture": "wavelet_phase_space_residual_fusion",
+  "method_summary": [
+    {
+      "method": "continuous_wavelet_cfd_template_atlas",
+      "n_pair_residuals": 1224,
+      "timing_sigma68_ns": 2.153698749520067,
+      "timing_sigma68_ci_low": 2.023217678070065,
+      "timing_sigma68_ci_high": 2.371520791979833,
+      "median_residual_ns": -3.7976503350354953,
+      "median_residual_ci_low": -3.9906971817016625,
+      "median_residual_ci_high": -3.568669051353748,
+      "shape_phase_bias_ns": 0.0,
+      "shape_phase_bias_ci_low": 0.0,
+      "shape_phase_bias_ci_high": 0.0,
+      "rise_time_bias_ns": 0.0,
+      "rise_time_bias_ci_low": 0.0,
+      "rise_time_bias_ci_high": 0.0,
+      "energy_drift_area_norm": 0.0,
+      "energy_drift_ci_low": 0.0,
+      "energy_drift_ci_high": 0.0
+    },
+    {
+      "method": "ridge",
+      "n_pair_residuals": 1224,
+      "timing_sigma68_ns": 1.5453598445921388,
+      "timing_sigma68_ci_low": 1.3293694307644686,
+      "timing_sigma68_ci_high": 1.6603433064994597,
+      "median_residual_ns": 1.3254814119752432,
+      "median_residual_ci_low": 1.1056767643144276,
+      "median_residual_ci_high": 1.4324469524826355,
+      "shape_phase_bias_ns": 0.9044518127249646,
+      "shape_phase_bias_ci_low": 0.05004298392951867,
+      "shape_phase_bias_ci_high": 1.894579983180428,
+      "rise_time_bias_ns": 0.0,
+      "rise_time_bias_ci_low": 0.0,
+      "rise_time_bias_ci_high": 0.0,
+      "energy_drift_area_norm": 0.0,
+      "energy_drift_ci_low": 0.0,
+      "energy_drift_ci_high": 0.0
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "n_pair_residuals": 1224,
+      "timing_sigma68_ns": 1.3235981460565414,
+      "timing_sigma68_ci_low": 1.225186172638833,
+      "timing_sigma68_ci_high": 1.390216837594289,
+      "median_residual_ns": 1.5336868701703459,
+      "median_residual_ci_low": 1.273458792799044,
+      "median_residual_ci_high": 1.8084217669069886,
+      "shape_phase_bias_ns": -1.69651115067618,
+      "shape_phase_bias_ci_low": -1.9974416682653455,
+      "shape_phase_bias_ci_high": -0.884429159749363,
+      "rise_time_bias_ns": 0.0,
+      "rise_time_bias_ci_low": 0.0,
+      "rise_time_bias_ci_high": 0.0,
+      "energy_drift_area_norm": 0.0,
+      "energy_drift_ci_low": 0.0,
+      "energy_drift_ci_high": 0.0
+    },
+    {
+      "method": "mlp",
+      "n_pair_residuals": 1224,
+      "timing_sigma68_ns": 1.4113184248871675,
+      "timing_sigma68_ci_low": 1.2421389126017317,
+      "timing_sigma68_ci_high": 1.5014641608780388,
+      "median_residual_ns": 1.620145628450775,
+      "median_residual_ci_low": 1.5213501660226534,
+      "median_residual_ci_high": 1.7936724016716674,
+      "shape_phase_bias_ns": 0.3785837080904244,
+      "shape_phase_bias_ci_low": -0.6275222830400402,
+      "shape_phase_bias_ci_high": 1.3318082960683881,
+      "rise_time_bias_ns": 0.0,
+      "rise_time_bias_ci_low": 0.0,
+      "rise_time_bias_ci_high": 0.0,
+      "energy_drift_area_norm": 0.0,
+      "energy_drift_ci_low": 0.0,
+      "energy_drift_ci_high": 0.0
+    },
+    {
+      "method": "cnn_1d",
+      "n_pair_residuals": 1224,
+      "timing_sigma68_ns": 1.7267044794320572,
+      "timing_sigma68_ci_low": 1.5282173743430483,
+      "timing_sigma68_ci_high": 1.8055273083472798,
+      "median_residual_ns": 1.0178335596093397,
+      "median_residual_ci_low": 0.8885612716487508,
+      "median_residual_ci_high": 1.1381445961115944,
+      "shape_phase_bias_ns": 7.912674773520081,
+      "shape_phase_bias_ci_low": 7.912674773520081,
+      "shape_phase_bias_ci_high": 7.912674773520081,
+      "rise_time_bias_ns": 0.0,
+      "rise_time_bias_ci_low": 0.0,
+      "rise_time_bias_ci_high": 0.0,
+      "energy_drift_area_norm": 0.0,
+      "energy_drift_ci_low": 0.0,
+      "energy_drift_ci_high": 0.0
+    },
+    {
+      "method": "compact_waveform_transformer",
+      "n_pair_residuals": 1224,
+      "timing_sigma68_ns": 1.6178236546286073,
+      "timing_sigma68_ci_low": 1.4012318555658538,
+      "timing_sigma68_ci_high": 1.7189394145011896,
+      "median_residual_ns": 1.2768853034973162,
+      "median_residual_ci_low": 1.070832535077745,
+      "median_residual_ci_high": 1.466925405979154,
+      "shape_phase_bias_ns": 7.912674773520081,
+      "shape_phase_bias_ci_low": 7.912674773520081,
+      "shape_phase_bias_ci_high": 7.912674773520081,
+      "rise_time_bias_ns": 0.0,
+      "rise_time_bias_ci_low": 0.0,
+      "rise_time_bias_ci_high": 0.0,
+      "energy_drift_area_norm": 0.0,
+      "energy_drift_ci_low": 0.0,
+      "energy_drift_ci_high": 0.0
+    },
+    {
+      "method": "wavelet_phase_space_residual_fusion",
+      "n_pair_residuals": 1224,
+      "timing_sigma68_ns": 1.3530909656626435,
+      "timing_sigma68_ci_low": 1.2125766608340456,
+      "timing_sigma68_ci_high": 1.4286875467583258,
+      "median_residual_ns": 1.4724178915623618,
+      "median_residual_ci_low": 1.3055546166742467,
+      "median_residual_ci_high": 1.6435040704497652,
+      "shape_phase_bias_ns": 2.323742726168277,
+      "shape_phase_bias_ci_low": 2.0314158381984004,
+      "shape_phase_bias_ci_high": 2.757530130824744,
+      "rise_time_bias_ns": 0.0,
+      "rise_time_bias_ci_low": 0.0,
+      "rise_time_bias_ci_high": 0.0,
+      "energy_drift_area_norm": 0.0,
+      "energy_drift_ci_low": 0.0,
+      "energy_drift_ci_high": 0.0
+    }
+  ],
+  "pretrigger_pedestal_window_ablation": [
+    {
+      "window": "samples_0_2",
+      "baseline_samples": "0,1,2",
+      "selected_pulses": 642190,
+      "delta_vs_nominal": 1453,
+      "fractional_delta_vs_nominal": 0.0022677011004515113
+    },
+    {
+      "window": "samples_0_3",
+      "baseline_samples": "0,1,2,3",
+      "selected_pulses": 640737,
+      "delta_vs_nominal": 0,
+      "fractional_delta_vs_nominal": 0.0
+    },
+    {
+      "window": "samples_1_4",
+      "baseline_samples": "1,2,3,4",
+      "selected_pulses": 630839,
+      "delta_vs_nominal": -9898,
+      "fractional_delta_vs_nominal": -0.015447835851527226
+    }
+  ],
+  "saturation_mask_ablation": [
+    {
+      "method": "continuous_wavelet_cfd_template_atlas",
+      "mask": "amplitude_adc_lt_3600",
+      "n_pulses": 29549,
+      "n_pair_residuals": 855,
+      "timing_sigma68_ns": 2.3135222472615515,
+      "ci_low": 2.023217678070065,
+      "ci_high": 2.544498862407419
+    },
+    {
+      "method": "ridge",
+      "mask": "amplitude_adc_lt_3600",
+      "n_pulses": 29549,
+      "n_pair_residuals": 855,
+      "timing_sigma68_ns": 1.5565854256502807,
+      "ci_low": 1.291639981144612,
+      "ci_high": 1.6914371027349366
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "mask": "amplitude_adc_lt_3600",
+      "n_pulses": 29549,
+      "n_pair_residuals": 855,
+      "timing_sigma68_ns": 1.3601579132452328,
+      "ci_low": 1.230770174350159,
+      "ci_high": 1.455834903459432
+    },
+    {
+      "method": "mlp",
+      "mask": "amplitude_adc_lt_3600",
+      "n_pulses": 29549,
+      "n_pair_residuals": 855,
+      "timing_sigma68_ns": 1.4408336340920624,
+      "ci_low": 1.2281624724611764,
+      "ci_high": 1.5060209694841724
+    },
+    {
+      "method": "cnn_1d",
+      "mask": "amplitude_adc_lt_3600",
+      "n_pulses": 29549,
+      "n_pair_residuals": 855,
+      "timing_sigma68_ns": 1.682896260058238,
+      "ci_low": 1.3295395879745477,
+      "ci_high": 1.794289457979442
+    },
+    {
+      "method": "compact_waveform_transformer",
+      "mask": "amplitude_adc_lt_3600",
+      "n_pulses": 29549,
+      "n_pair_residuals": 855,
+      "timing_sigma68_ns": 1.6296057990380213,
+      "ci_low": 1.2629895806312597,
+      "ci_high": 1.7647170325138966
+    },
+    {
+      "method": "wavelet_phase_space_residual_fusion",
+      "mask": "amplitude_adc_lt_3600",
+      "n_pulses": 29549,
+      "n_pair_residuals": 855,
+      "timing_sigma68_ns": 1.330793500160513,
+      "ci_low": 1.1167872533198206,
+      "ci_high": 1.44327647219934
+    },
+    {
+      "method": "continuous_wavelet_cfd_template_atlas",
+      "mask": "amplitude_adc_lt_3800",
+      "n_pulses": 31759,
+      "n_pair_residuals": 954,
+      "timing_sigma68_ns": 2.294209581529658,
+      "ci_low": 2.023217678070065,
+      "ci_high": 2.4901669066517402
+    },
+    {
+      "method": "ridge",
+      "mask": "amplitude_adc_lt_3800",
+      "n_pulses": 31759,
+      "n_pair_residuals": 954,
+      "timing_sigma68_ns": 1.545900279027375,
+      "ci_low": 1.3069072054911395,
+      "ci_high": 1.6534417824791596
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "mask": "amplitude_adc_lt_3800",
+      "n_pulses": 31759,
+      "n_pair_residuals": 954,
+      "timing_sigma68_ns": 1.3352642217350588,
+      "ci_low": 1.2204372988732572,
+      "ci_high": 1.4339705596800734
+    },
+    {
+      "method": "mlp",
+      "mask": "amplitude_adc_lt_3800",
+      "n_pulses": 31759,
+      "n_pair_residuals": 954,
+      "timing_sigma68_ns": 1.428885376633382,
+      "ci_low": 1.2428964958499054,
+      "ci_high": 1.4953512283376824
+    },
+    {
+      "method": "cnn_1d",
+      "mask": "amplitude_adc_lt_3800",
+      "n_pulses": 31759,
+      "n_pair_residuals": 954,
+      "timing_sigma68_ns": 1.703002140109672,
+      "ci_low": 1.390860557556156,
+      "ci_high": 1.7927448309160496
+    },
+    {
+      "method": "compact_waveform_transformer",
+      "mask": "amplitude_adc_lt_3800",
+      "n_pulses": 31759,
+      "n_pair_residuals": 954,
+      "timing_sigma68_ns": 1.598661571223529,
+      "ci_low": 1.288150403910553,
+      "ci_high": 1.7175195258373392
+    },
+    {
+      "method": "wavelet_phase_space_residual_fusion",
+      "mask": "amplitude_adc_lt_3800",
+      "n_pulses": 31759,
+      "n_pair_residuals": 954,
+      "timing_sigma68_ns": 1.3467133969903258,
+      "ci_low": 1.1625836995282803,
+      "ci_high": 1.433656910820389
+    },
+    {
+      "method": "continuous_wavelet_cfd_template_atlas",
+      "mask": "amplitude_adc_lt_4000",
+      "n_pulses": 33702,
+      "n_pair_residuals": 1008,
+      "timing_sigma68_ns": 2.2547759698539016,
+      "ci_low": 2.023217678070065,
+      "ci_high": 2.4714530615976753
+    },
+    {
+      "method": "ridge",
+      "mask": "amplitude_adc_lt_4000",
+      "n_pulses": 33702,
+      "n_pair_residuals": 1008,
+      "timing_sigma68_ns": 1.5452561358116725,
+      "ci_low": 1.3001015813606784,
+      "ci_high": 1.6683544009066686
+    },
+    {
+      "method": "gradient_boosted_trees",
+      "mask": "amplitude_adc_lt_4000",
+      "n_pulses": 33702,
+      "n_pair_residuals": 1008,
+      "timing_sigma68_ns": 1.3327824974427744,
+      "ci_low": 1.218770622522399,
+      "ci_high": 1.4332873572777722
+    },
+    {
+      "method": "mlp",
+      "mask": "amplitude_adc_lt_4000",
+      "n_pulses": 33702,
+      "n_pair_residuals": 1008,
+      "timing_sigma68_ns": 1.4104696852790342,
+      "ci_low": 1.255180675200144,
+      "ci_high": 1.492012723291927
+    },
+    {
+      "method": "cnn_1d",
+      "mask": "amplitude_adc_lt_4000",
+      "n_pulses": 33702,
+      "n_pair_residuals": 1008,
+      "timing_sigma68_ns": 1.7077642519100205,
+      "ci_low": 1.4090014696121216,
+      "ci_high": 1.7896177018021229
+    },
+    {
+      "method": "compact_waveform_transformer",
+      "mask": "amplitude_adc_lt_4000",
+      "n_pulses": 33702,
+      "n_pair_residuals": 1008,
+      "timing_sigma68_ns": 1.5998200771903466,
+      "ci_low": 1.3432915210723877,
+      "ci_high": 1.7094494649005736
+    },
+    {
+      "method": "wavelet_phase_space_residual_fusion",
+      "mask": "amplitude_adc_lt_4000",
+      "n_pulses": 33702,
+      "n_pair_residuals": 1008,
+      "timing_sigma68_ns": 1.3488612591396385,
+      "ci_low": 1.173089418500524,
+      "ci_high": 1.4347377378815032
+    }
+  ],
+  "leakage_checks": [
+    {
+      "check": "raw_root_reproduction",
+      "pass": true,
+      "value": 640737,
+      "detail": "canonical selected-pulse count must match exactly"
+    },
+    {
+      "check": "train_heldout_run_overlap",
+      "pass": true,
+      "value": 0,
+      "detail": "split by run"
+    },
+    {
+      "check": "finite_traditional_phase",
+      "pass": true,
+      "value": 59613,
+      "detail": "all held-out pulses must have a traditional phase anchor"
+    },
+    {
+      "check": "training_target_rows",
+      "pass": true,
+      "value": 14646,
+      "detail": "same-event downstream consistency targets from train runs"
+    },
+    {
+      "check": "winner_named_in_result_json",
+      "pass": true,
+      "value": "gradient_boosted_trees",
+      "detail": "winner is selected by minimum held-out timing sigma68"
+    },
+    {
+      "check": "pretrigger_window_ablations_written",
+      "pass": true,
+      "value": 3,
+      "detail": "raw ROOT count gate rerun for alternate baseline windows"
+    },
+    {
+      "check": "saturation_mask_ablations_written",
+      "pass": true,
+      "value": 21,
+      "detail": "held-out timing metric recomputed with amplitude saturation masks"
+    }
+  ],
+  "novel_ticket_appended": false,
+  "next_tickets": [],
+  "runtime_sec": 71.1,
+  "git_commit": "cec9edc28257e0699c70c17fa9b2e8d806a3d42a",
+  "ticket_number": 2565,
+  "claim_command": "tn-ticket claim testbeam-laptop-3 --project testbeam",
+  "claim_command_output": "null\n# null\n\nnull",
+  "manual_claim_workaround": {
+    "reason": "tn-ticket claim returned the malformed null payload while issue 2565 remained factory:open; the helper was not run a second time.",
+    "command": "gh issue edit 2565 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-3 --remove-label factory:open"
   },
   "required_method_coverage": {
-    "traditional": "analytic_clipped_template_sideband_traditional",
+    "traditional": "continuous_wavelet_cfd_template_residual_atlas",
     "ridge": "ridge",
     "gradient_boosted_trees": "gradient_boosted_trees",
     "mlp": "mlp",
-    "one_dimensional_cnn": "1d_cnn",
-    "transformer_sequence_model": "tiny_sequence_transformer",
-    "new_architecture": "saturation_residual_fusion_new"
+    "one_dimensional_cnn": "cnn_1d",
+    "waveform_transformer": "compact_waveform_transformer",
+    "new_architecture": "wavelet_phase_space_residual_fusion"
   },
-  "required_outputs": {
-    "injected_overlap_closure": "method_metrics.csv, run_heldout_metrics.csv, event_predictions.csv",
-    "real_data_sideband_validation": "real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "saturation_mask_ablation.csv",
-    "uncertainty_calibration": "uncertainty_calibration.csv",
-    "traditional_vs_neural_failure_interpretation": "REPORT.md"
+  "wavelet_phase_space_diagnostics": {
+    "pulse_feature_table": "wavelet_phase_space_pulse_features.csv",
+    "stratified_summary": "wavelet_phase_space_summary.csv",
+    "joint_failure_explanation": "failure_mode_joint_explanation.csv"
   },
   "artifacts": {
-    "report": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/REPORT.md",
-    "result": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/result.json",
-    "method_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/method_metrics.csv",
-    "run_heldout_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/run_heldout_metrics.csv",
-    "real_data_sideband_validation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/saturation_mask_ablation.csv",
-    "uncertainty_calibration": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/uncertainty_calibration.csv"
+    "report": "reports/2565__s70a_wavelet_phase_space_pulse_shape_timing/REPORT.md",
+    "result": "reports/2565__s70a_wavelet_phase_space_pulse_shape_timing/result.json",
+    "method_summary": "reports/2565__s70a_wavelet_phase_space_pulse_shape_timing/method_summary.csv",
+    "heldout_pair_residuals": "reports/2565__s70a_wavelet_phase_space_pulse_shape_timing/heldout_pair_residuals.csv",
+    "wavelet_phase_space_summary": "reports/2565__s70a_wavelet_phase_space_pulse_shape_timing/wavelet_phase_space_summary.csv",
+    "failure_mode_joint_explanation": "reports/2565__s70a_wavelet_phase_space_pulse_shape_timing/failure_mode_joint_explanation.csv"
   },
-  "queue_provenance": {
-    "claimed_once": true,
-    "claim_command_run_once": "tn-ticket claim testbeam-laptop-2 --project testbeam",
-    "claim_command_output": "null / # null / null",
-    "manual_claim_recovery": "gh issue edit 2502 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-2 --remove-label factory:open",
-    "done_command": "tn-ticket done 2502",
-    "novel_tickets_appended": []
-  },
-  "done_command": "tn-ticket done 2502",
-  "novel_tickets_appended": []
+  "wrapper_runtime_sec": 198.8
 }

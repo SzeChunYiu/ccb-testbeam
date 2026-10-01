@@ -1,0 +1,4 @@
+window,baseline_samples,selected_pulses,delta_vs_nominal,fractional_delta_vs_nominal
+samples_0_2,"0,1,2",642190,1453,0.0022677011004515113
+samples_0_3,"0,1,2,3",640737,0,0.0
+samples_1_4,"1,2,3,4",630839,-9898,-0.015447835851527226

@@ -1,0 +1,47 @@
+{
+  "ticket_id": "2565",
+  "study": "S70a",
+  "worker": "testbeam-laptop-3",
+  "command": "/home/billy/.cache/uv/builds-v0/.tmpNpliGX/bin/python scripts/ticket_2565_s70a_wavelet_phase_space_timing.py",
+  "script": "scripts/ticket_2501_s55a_phase_conditioned_timing.py",
+  "config": "/home/billy/.tb-workers/testbeam-laptop-3/configs/ticket_2565_s70a_wavelet_phase_space_timing.json",
+  "git_commit": "cec9edc28257e0699c70c17fa9b2e8d806a3d42a",
+  "python": "3.11.14",
+  "packages": {
+    "uproot": "5.6.9",
+    "numpy": "2.4.6",
+    "pandas": "3.0.5",
+    "torch": "2.13.0+cu130"
+  },
+  "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+  "input_file_count": 33,
+  "reproduction_passed": true,
+  "outputs": {
+    "REPORT.md": "b35931c6834d15bc9afea75846753fd8a5b95d1a77aa16d940b7d8704dfacc9d",
+    "claimed_ticket.txt": "f38ea889831938c70fae96ec02bfb4ed1bf97506922037dee2f0fc6e91184020",
+    "claimed_ticket_body.txt": "512c70cbfd397204857ba4b0fa0908cce694c512cca32461ae9b3a55728ede38",
+    "failure_mode_joint_explanation.csv": "2b8293345ee49e73f8a39f64a904a706eb5835b4cccb5ffc678d1c9f5b2fbfcb",
+    "heldout_pair_residuals.csv": "e8fddef6a44f007c22ae136179169d85890e354db58db50d2842dcd0ecaf1510",
+    "input_sha256.csv": "6e2e4a924403c2dc070c509f98323147b6f2d5cc6220076489925ae6270e93b3",
+    "leakage_checks.csv": "748ab22a6926280fb71e79a68c10957f19c33875d2441e6cb041816d8568fa5b",
+    "method_summary.csv": "02284d46dc5ce68e65229943cf0205bfe1843cb8a3b9f3f9e3c7e737c15bcd72",
+    "pretrigger_pedestal_window_ablation.csv": "a14e680d08e9ce85d3b04014e1db8b24eb9f9d376aaa5167a9428af6721407e6",
+    "pretrigger_pedestal_window_counts_by_run.csv": "06bf2bb5029bc412fd69ec1b69590564e1dc248f4289ef8ba8df4335a4ea4b9b",
+    "reproduction_counts_by_run.csv": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+    "reproduction_match_table.csv": "e70f583e1fd72a6ff544cbf9253ee1f265c694da1d93ee26ada9f644caef0755",
+    "result.json": "5e14985e85d55339b34b9b26640897f31230a088e1f67bd22ce5b0d3f3bae097",
+    "saturation_mask_ablation.csv": "2ebf450c4a5d304dfb4f287a3aefffb2ebbae986f9de2566ee425e80b3713c3b",
+    "stratified_errors.csv": "1c06ebcf29f42cad68e5a24f5dfa156555f6d776e82d8f246b89c66b170cd230",
+    "training_summary.csv": "81fd9971f4f9bc0434eef11404ac9040adba5488291df9dd3a7df3a5635db2b3",
+    "wavelet_phase_space_pulse_features.csv": "9823c5dfad60912c5642c001766369cdb3b1b0a6de800fd1d58ddfa5d6c06be4",
+    "wavelet_phase_space_summary.csv": "c095f1965cde6d1a0600d793f15936ab995787280d454e3f0f8b4d5faf54f182"
+  },
+  "postprocess_note": "S70a wavelet phase-space diagnostics and ticket metadata applied after the reusable S55a run-held-out timing benchmark engine.",
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "selection_metric": "minimum held-out downstream pair timing sigma68_ns",
+    "timing_sigma68_ns": 1.3235981460565414,
+    "ci_low": 1.225186172638833,
+    "ci_high": 1.390216837594289
+  }
+}

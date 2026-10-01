@@ -1,37 +1,23 @@
 {
-  "ticket_id": "2502",
-  "issue_number": 2502,
+  "ticket_id": "2526",
+  "issue_number": 2526,
   "project": "testbeam",
   "worker": "testbeam-laptop-2",
   "status": "complete",
-  "winner": "saturation_residual_fusion_new",
+  "winner": "traditional_cfd_template_derivative",
   "winner_metrics": {
-    "name": "saturation_residual_fusion_new",
-    "criterion": "minimum held-out composite saturation-energy closure score with run-block bootstrap CIs reported",
-    "winner_score": 0.15172443008737868,
-    "energy_fractional_bias": -0.002906610021787798,
-    "energy_fractional_sigma68": 0.068387783415775,
-    "energy_fractional_sigma68_ci95": [
-      0.06183707932660469,
-      0.0751855124441164
+    "name": "traditional_cfd_template_derivative",
+    "criterion": "held-out run-block bootstrap sigma68_ns of target_onset_residual_ns - prediction_ns; lower is better",
+    "sigma68_ns": 1.020185845761795,
+    "sigma68_ns_ci95": [
+      0.7354124389571143,
+      1.2288759424044036
     ],
-    "time_sigma68_ns": 8.023902762892945,
-    "time_sigma68_ci95": [
-      7.365407249564567,
-      8.669358478772935
-    ],
-    "pileup_miss_rate": 0.32564102564102565,
-    "false_split_rate": 0.13846153846153847,
-    "uncertainty_calibration": {
-      "method": "saturation_residual_fusion_new",
-      "n_valid_doublets": 263.0,
-      "median_abs_energy_residual": 0.04730265759532487,
-      "p68_abs_energy_residual": 0.0694272959931502,
-      "nominal_68_proxy_width": 0.034999999999999996,
-      "coverage_abs_resid_le_proxy": 0.3688212927756654,
-      "coverage_abs_resid_le_2proxy": 0.7034220532319392,
-      "calibration_ratio_p68_over_proxy": 1.9836370283757203
-    }
+    "bias_ns": 0.357073338840187,
+    "bias_ns_ci95": [
+      -0.1757998774417571,
+      0.6327559417566202
+    ]
   },
   "raw_root_reproduction": {
     "passed": true,
@@ -39,66 +25,62 @@
     "expected_selected_pulses": 640737,
     "reproduced_selected_pulses": 640737,
     "delta": 0,
-    "evidence_table": "reproduction_match_table.csv"
+    "evidence_table": "reproduction.csv"
   },
   "split": {
     "split": "train and held-out sets are disjoint by source run",
-    "train_runs": [
-      50,
-      51,
-      52,
-      53,
-      54,
-      55,
-      56,
-      57
-    ],
     "heldout_runs": [
+      42,
+      50,
+      57,
       58,
       60,
       62,
       64,
       65
     ],
-    "adc_clip": 11800.0,
+    "train_rows": 15137,
+    "heldout_rows": 5466,
     "bootstrap": "held-out run-block percentile 95% CI",
-    "bootstrap_replicates": 400,
-    "negative_control": "clipped clean single-pulse controls with matched source-run distribution",
-    "winner_score": "energy_fractional_sigma68 + 0.20*abs(energy_fractional_bias) + 0.008*time_sigma68_ns + 0.04*pileup_miss_rate + 0.04*false_split_rate"
+    "bootstrap_replicates": 500
   },
   "required_method_coverage": {
-    "traditional": "analytic_clipped_template_sideband_traditional",
+    "traditional": "traditional_cfd_template_derivative",
     "ridge": "ridge",
     "gradient_boosted_trees": "gradient_boosted_trees",
     "mlp": "mlp",
     "one_dimensional_cnn": "1d_cnn",
-    "transformer_sequence_model": "tiny_sequence_transformer",
-    "new_architecture": "saturation_residual_fusion_new"
+    "transformer_sequence_model": "compact_waveform_transformer",
+    "new_architecture": "derivative_gate_transformer_new"
   },
   "required_outputs": {
-    "injected_overlap_closure": "method_metrics.csv, run_heldout_metrics.csv, event_predictions.csv",
-    "real_data_sideband_validation": "real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "saturation_mask_ablation.csv",
-    "uncertainty_calibration": "uncertainty_calibration.csv",
-    "traditional_vs_neural_failure_interpretation": "REPORT.md"
+    "timing_residuals_with_ci": "metrics.csv and method_deltas.csv",
+    "run_split_bootstrap": "by_run.csv and trigger_jitter_run_diagnostics.csv",
+    "pulse_shape_curvature": "strata.csv and waveform_region_diagnostics.csv",
+    "pileup_saturation_pedestal_energy_pid_strata": "strata.csv, pedestal_timing_bias_curves.csv, pid_energy_boundary_diagnostics.csv",
+    "academic_report": "REPORT.md"
   },
   "artifacts": {
-    "report": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/REPORT.md",
-    "result": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/result.json",
-    "method_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/method_metrics.csv",
-    "run_heldout_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/run_heldout_metrics.csv",
-    "real_data_sideband_validation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/saturation_mask_ablation.csv",
-    "uncertainty_calibration": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/uncertainty_calibration.csv"
+    "report": "reports/2526__s62a_waveform_curvature_timing_trigger_jitter_pedestal_memory/REPORT.md",
+    "result": "reports/2526__s62a_waveform_curvature_timing_trigger_jitter_pedestal_memory/result.json",
+    "method_metrics": "reports/2526__s62a_waveform_curvature_timing_trigger_jitter_pedestal_memory/metrics.csv",
+    "method_deltas": "reports/2526__s62a_waveform_curvature_timing_trigger_jitter_pedestal_memory/method_deltas.csv",
+    "run_heldout_metrics": "reports/2526__s62a_waveform_curvature_timing_trigger_jitter_pedestal_memory/by_run.csv",
+    "strata_metrics": "reports/2526__s62a_waveform_curvature_timing_trigger_jitter_pedestal_memory/strata.csv",
+    "raw_reproduction": "reports/2526__s62a_waveform_curvature_timing_trigger_jitter_pedestal_memory/reproduction.csv",
+    "pedestal_timing_bias_curves": "reports/2526__s62a_waveform_curvature_timing_trigger_jitter_pedestal_memory/pedestal_timing_bias_curves.csv",
+    "waveform_region_diagnostics": "reports/2526__s62a_waveform_curvature_timing_trigger_jitter_pedestal_memory/waveform_region_diagnostics.csv",
+    "trigger_jitter_run_diagnostics": "reports/2526__s62a_waveform_curvature_timing_trigger_jitter_pedestal_memory/trigger_jitter_run_diagnostics.csv",
+    "pid_energy_boundary_diagnostics": "reports/2526__s62a_waveform_curvature_timing_trigger_jitter_pedestal_memory/pid_energy_boundary_diagnostics.csv"
   },
   "queue_provenance": {
     "claimed_once": true,
     "claim_command_run_once": "tn-ticket claim testbeam-laptop-2 --project testbeam",
     "claim_command_output": "null / # null / null",
-    "manual_claim_recovery": "gh issue edit 2502 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-2 --remove-label factory:open",
-    "done_command": "tn-ticket done 2502",
+    "manual_claim_recovery": "gh issue edit 2526 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-2 --remove-label factory:open",
+    "done_command": "tn-ticket done 2526",
     "novel_tickets_appended": []
   },
-  "done_command": "tn-ticket done 2502",
+  "done_command": "tn-ticket done 2526",
   "novel_tickets_appended": []
 }

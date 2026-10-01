@@ -1,0 +1,46 @@
+{
+  "ticket_id": "2526",
+  "ticket_number": 2526,
+  "study_id": "S62a",
+  "worker": "testbeam-laptop-2",
+  "title": "waveform-curvature timing under trigger jitter and pedestal memory",
+  "claimed_ticket_text": "2526\n# NEW S62a waveform-curvature timing under trigger jitter and pedestal memory\n\nAcademic-grade study: benchmark constant-fraction timing plus template cross-correlation against ridge, gradient-boosted trees, MLP, 1D-CNN, and lightweight transformer waveform encoders. Report run-held-out bootstrap CIs for timing residuals, pulse-shape curvature, pile-up strata, saturation flags, pedestal state, reconstructed energy, and PID boundary stability.\n",
+  "claim_command_output": "null\n# null\n\nnull\n",
+  "manual_claim_workaround": {
+    "reason": "The required one-time tn-ticket claim command returned the helper's malformed null|null|null empty-existing-claim payload and did not move any issue; the same single-ticket label transition was applied to the oldest open testbeam issue without running tn-ticket claim a second time.",
+    "issue": 2526,
+    "command": "gh issue edit 2526 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-2 --remove-label factory:open"
+  },
+  "output_dir": "reports/2526__s62a_waveform_curvature_timing_trigger_jitter_pedestal_memory",
+  "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+  "samples_per_channel": 18,
+  "baseline_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "duplicate_readout_channels": {"B2": 1, "B4": 3, "B6": 5, "B8": 7},
+  "expected_selected_pulses": 640737,
+  "expected_group_counts": {
+    "sample_i_calib": 248745,
+    "sample_i_analysis": 252266,
+    "sample_ii_calib": 14630,
+    "sample_ii_analysis": 125096
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "heldout_runs": [42, 50, 57, 58, 60, 62, 64, 65],
+  "max_per_run_stave": 180,
+  "bootstrap_replicates": 500,
+  "random_seed": 20620062,
+  "mlp_max_iter": 35,
+  "nn": {
+    "epochs": 6,
+    "transformer_epochs": 5,
+    "batch_size": 1024,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001
+  }
+}

@@ -1,0 +1,1 @@
+Question: does the S45c winner keep its fixed-FPR recall, recovered-energy stability, and PID-proxy boundary advantage on hand-scanned real high-current overlap candidates rather than controlled synthetic-over-real doublets? Expected information gain: validates or falsifies deployment of the overlap-aware waveform disentanglement benchmark on real pile-up-like data.

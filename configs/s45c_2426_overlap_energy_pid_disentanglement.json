@@ -1,0 +1,33 @@
+{
+  "study_id": "S45c",
+  "ticket_id": "2426",
+  "worker": "testbeam-laptop-3",
+  "title": "S45c overlap-aware waveform energy and PID disentanglement benchmark",
+  "base_runner": "scripts/s42b_1784181983_717_7f5e7d65_overlapping_pulse_deconvolution_timing_pid_frontier.py",
+  "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+  "benchmark_runs": {
+    "train": [50, 51, 52, 53, 54, 55, 56, 57],
+    "heldout": [58, 60, 62, 64, 65]
+  },
+  "selection": {
+    "bstack_channels": ["B2", "B4", "B6", "B8"],
+    "pedestal_samples": [0, 1, 2, 3],
+    "amplitude_threshold_adc": 1000
+  },
+  "methods_required": [
+    "two_pulse_template_likelihood_traditional",
+    "leading_edge_cfd_traditional",
+    "residual_tail_veto_traditional",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "1d_cnn",
+    "tiny_sequence_transformer",
+    "causal_window_transformer_new",
+    "template_residual_boosted_stack_new"
+  ],
+  "primary_metric": "registered composite endpoint score with run-block bootstrap CIs",
+  "bootstrap_unit": "held-out source run",
+  "bootstrap_replicates": 120,
+  "random_seed": 2026081626
+}

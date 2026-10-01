@@ -1,0 +1,5 @@
+quantity,rows,fraction_of_raw_b2
+raw_b2_selected_rows,579424,1.0
+weak_label_labeled_rows,289626,0.499851576738278
+balanced_head_to_head_rows,15694,0.02708551941238195
+evaluated_oof_rows,15694,0.02708551941238195

@@ -1,104 +1,163 @@
 {
-  "ticket_id": "2502",
-  "issue_number": 2502,
-  "project": "testbeam",
-  "worker": "testbeam-laptop-2",
-  "status": "complete",
-  "winner": "saturation_residual_fusion_new",
-  "winner_metrics": {
-    "name": "saturation_residual_fusion_new",
-    "criterion": "minimum held-out composite saturation-energy closure score with run-block bootstrap CIs reported",
-    "winner_score": 0.15172443008737868,
-    "energy_fractional_bias": -0.002906610021787798,
-    "energy_fractional_sigma68": 0.068387783415775,
-    "energy_fractional_sigma68_ci95": [
-      0.06183707932660469,
-      0.0751855124441164
-    ],
-    "time_sigma68_ns": 8.023902762892945,
-    "time_sigma68_ci95": [
-      7.365407249564567,
-      8.669358478772935
-    ],
-    "pileup_miss_rate": 0.32564102564102565,
-    "false_split_rate": 0.13846153846153847,
-    "uncertainty_calibration": {
-      "method": "saturation_residual_fusion_new",
-      "n_valid_doublets": 263.0,
-      "median_abs_energy_residual": 0.04730265759532487,
-      "p68_abs_energy_residual": 0.0694272959931502,
-      "nominal_68_proxy_width": 0.034999999999999996,
-      "coverage_abs_resid_le_proxy": 0.3688212927756654,
-      "coverage_abs_resid_le_2proxy": 0.7034220532319392,
-      "calibration_ratio_p68_over_proxy": 1.9836370283757203
-    }
-  },
-  "raw_root_reproduction": {
-    "passed": true,
-    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
+  "ticket_id": "2521",
+  "study_id": "S60c",
+  "worker": "testbeam-laptop-3",
+  "title": "S60c PID boundary robustness from pedestal-saturation pulse manifolds",
+  "raw_root_dir": "data/extracted/root/root",
+  "git_commit": "634b439de6c5daf1a79ec812d3beb969d82f136b",
+  "runtime_sec": 301.3109633922577,
+  "python": "3.7.6",
+  "claim_command": "tn-ticket claim testbeam-laptop-3 --project testbeam",
+  "claim_note": "The required claim command was run once and returned a null pseudo-ticket; issue 2521 was then claimed by direct label transition without rerunning claim.",
+  "claimed_ticket_number": 2521,
+  "reproduction": {
+    "selected_pulses": 640737,
     "expected_selected_pulses": 640737,
-    "reproduced_selected_pulses": 640737,
     "delta": 0,
-    "evidence_table": "reproduction_match_table.csv"
+    "passed": true,
+    "samples_per_channel": 18
   },
   "split": {
-    "split": "train and held-out sets are disjoint by source run",
-    "train_runs": [
-      50,
-      51,
-      52,
-      53,
-      54,
-      55,
-      56,
-      57
-    ],
     "heldout_runs": [
+      42,
+      50,
+      57,
       58,
       60,
       62,
       64,
       65
     ],
-    "adc_clip": 11800.0,
-    "bootstrap": "held-out run-block percentile 95% CI",
-    "bootstrap_replicates": 400,
-    "negative_control": "clipped clean single-pulse controls with matched source-run distribution",
-    "winner_score": "energy_fractional_sigma68 + 0.20*abs(energy_fractional_bias) + 0.008*time_sigma68_ns + 0.04*pileup_miss_rate + 0.04*false_split_rate"
+    "particle_holdout_family": "high_amplitude_tail_family",
+    "sampled_rows": 14609,
+    "bootstrap_replicates": 320,
+    "pedestal_holdout_state": "pedestal_memory",
+    "pedestal_state_heldout_rows": 64116,
+    "pedestal_state_heldout_definition": "post-fit stress split over held-out rows with run-block bootstrap CIs"
+  },
+  "primary_methods": [
+    "traditional_dE_E_tail_pedestal_likelihood",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "1d_cnn",
+    "spectral_transformer_new"
+  ],
+  "joint_score_weights": {
+    "pid_auc_loss": 0.32,
+    "energy_sigma68": 0.24,
+    "pileup_auc_loss": 0.12,
+    "saturation_auc_loss": 0.1,
+    "pedestal_auc_loss": 0.12,
+    "tail_harmonic_auc_loss": 0.1
+  },
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "name": "gradient_boosted_trees",
+    "mean_joint_loss": 0.0419536043281419,
+    "selection_rule": "minimum mean joint loss across run-heldout and proxy particle-heldout splits, with S60c boundary diagnostics used as systematic checks",
+    "run_heldout_pid_boundary": [
+      {
+        "split_name": "run_heldout",
+        "method": "gradient_boosted_trees",
+        "endpoint": "pid_separation",
+        "metric": "roc_auc",
+        "value": 0.9996184271176024,
+        "ci_low": 0.9994523592144848,
+        "ci_high": 0.9997920041938199,
+        "fixed_purity": null,
+        "n": 3816,
+        "runs": 8
+      },
+      {
+        "split_name": "run_heldout",
+        "method": "gradient_boosted_trees",
+        "endpoint": "pid_separation",
+        "metric": "average_precision",
+        "value": 0.9997253567329454,
+        "ci_low": 0.9995107891559429,
+        "ci_high": 0.9998716549899782,
+        "fixed_purity": null,
+        "n": 3816,
+        "runs": 8
+      },
+      {
+        "split_name": "run_heldout",
+        "method": "gradient_boosted_trees",
+        "endpoint": "pid_separation",
+        "metric": "efficiency_at_fixed_purity",
+        "value": 1.0,
+        "ci_low": 1.0,
+        "ci_high": 1.0,
+        "fixed_purity": 0.95,
+        "n": 3816,
+        "runs": 8
+      }
+    ]
+  },
+  "winner_details": {
+    "split_name": "particle_heldout",
+    "method": "gradient_boosted_trees",
+    "joint_loss": 0.058314220537847336,
+    "pid_separation": 0.9588006230529594,
+    "energy_scale": 0.10315984378479176,
+    "pileup_sideband": 0.9987963377094898,
+    "saturation_clipping": 0.9999267721148213,
+    "pedestal_noise_color": 0.8315686034492138,
+    "pulse_shape_harmonics": 0.9999147244302911,
+    "mean_joint_loss": 0.04195360432814193
+  },
+  "artifacts": {
+    "REPORT.md": "academic report",
+    "joint_scoreboard.csv": "winner table",
+    "endpoint_method_summary.csv": "bootstrap endpoint CIs",
+    "paired_bootstrap_deltas.csv": "paired bootstrap vs traditional",
+    "calibration_ece.csv": "PID/proxy calibration",
+    "strata_metrics.csv": "tail/pedestal/pulse/timing/pileup/saturation/energy strata",
+    "leakage_audit.csv": "cross-task leakage audit",
+    "claimed_ticket.txt": "claim provenance",
+    "pedestal_state_heldout_bootstrap.csv": "pedestal-state-held-out stress CIs",
+    "negative_control_pedestal_shuffles.csv": "run-preserving pedestal shuffle null",
+    "calibration_curves.csv": "ten-bin reliability curves",
+    "attribution_ablation_table.csv": "nuisance-axis attribution/ablation spans",
+    "heldout_predictions_with_strata.csv.gz": "prediction rows joined to nuisance strata",
+    "pid_boundary_metrics_ci.csv": "PID AUC/AP/fixed-purity efficiency with run-block bootstrap CIs",
+    "endpoint_tail_harm_energy_bias_ci.csv": "energy bias and endpoint tail harm with run-block bootstrap CIs",
+    "manifold_robustness_spans.csv": "stratum sensitivity spans across pedestal/saturation/pile-up/timing/shape axes",
+    "timing_shape_coupling.csv": "crossed timing residual and pulse-shape coupling diagnostics"
+  },
+  "next_tickets": [],
+  "novel_tickets_appended": [],
+  "status": "complete",
+  "ticket_number": 2521,
+  "ticket_scope": "PID boundary robustness under pedestal, saturation, and pile-up pulse-manifold shifts",
+  "wrapper_runtime_sec": 43.288411378860474,
+  "extra_s55c_outputs": {
+    "pedestal_state_heldout_split": "pedestal_state_heldout_bootstrap.csv",
+    "negative_control_pedestal_shuffles": "negative_control_pedestal_shuffles.csv",
+    "calibration_curves": "calibration_curves.csv",
+    "attribution_ablation_table": "attribution_ablation_table.csv"
+  },
+  "claim_helper_output": "null / # null / null",
+  "manual_claim_recovery": {
+    "issue": 2521,
+    "command": "gh issue edit 2521 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-3 --remove-label factory:open",
+    "reran_claim": false
+  },
+  "primary_boundary_metrics": {
+    "pid_auc_ap_efficiency_at_fixed_purity": "pid_boundary_metrics_ci.csv",
+    "endpoint_tail_harm_energy_bias": "endpoint_tail_harm_energy_bias_ci.csv",
+    "manifold_robustness_spans": "manifold_robustness_spans.csv",
+    "timing_shape_coupling": "timing_shape_coupling.csv"
   },
   "required_method_coverage": {
-    "traditional": "analytic_clipped_template_sideband_traditional",
+    "traditional": "traditional_dE_E_tail_pedestal_likelihood",
     "ridge": "ridge",
     "gradient_boosted_trees": "gradient_boosted_trees",
     "mlp": "mlp",
     "one_dimensional_cnn": "1d_cnn",
-    "transformer_sequence_model": "tiny_sequence_transformer",
-    "new_architecture": "saturation_residual_fusion_new"
+    "new_architecture": "spectral_transformer_new"
   },
-  "required_outputs": {
-    "injected_overlap_closure": "method_metrics.csv, run_heldout_metrics.csv, event_predictions.csv",
-    "real_data_sideband_validation": "real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "saturation_mask_ablation.csv",
-    "uncertainty_calibration": "uncertainty_calibration.csv",
-    "traditional_vs_neural_failure_interpretation": "REPORT.md"
-  },
-  "artifacts": {
-    "report": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/REPORT.md",
-    "result": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/result.json",
-    "method_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/method_metrics.csv",
-    "run_heldout_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/run_heldout_metrics.csv",
-    "real_data_sideband_validation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/saturation_mask_ablation.csv",
-    "uncertainty_calibration": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/uncertainty_calibration.csv"
-  },
-  "queue_provenance": {
-    "claimed_once": true,
-    "claim_command_run_once": "tn-ticket claim testbeam-laptop-2 --project testbeam",
-    "claim_command_output": "null / # null / null",
-    "manual_claim_recovery": "gh issue edit 2502 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-2 --remove-label factory:open",
-    "done_command": "tn-ticket done 2502",
-    "novel_tickets_appended": []
-  },
-  "done_command": "tn-ticket done 2502",
-  "novel_tickets_appended": []
+  "done_command": "tn-ticket done 2521",
+  "issue_url": "https://github.com/SzeChunYiu/factory-tickets/issues/2521"
 }

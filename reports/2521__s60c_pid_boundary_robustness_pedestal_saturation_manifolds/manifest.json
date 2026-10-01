@@ -1,0 +1,126 @@
+{
+  "ticket_id": "2521",
+  "study_id": "S60c",
+  "generated_at_unix": 1786907113.9584458,
+  "command": "/home/billy/anaconda3/bin/python scripts/ticket_2521_s60c_pid_boundary_robustness.py",
+  "source_output_dir": "reports/2503__s55c_pedestal_memory_energy_pid_disentanglement",
+  "git_commit": "cec9edc28257e0699c70c17fa9b2e8d806a3d42a",
+  "python": "3.7.6",
+  "artifacts": [
+    {
+      "path": "reports/2521__s60c_pid_boundary_robustness_pedestal_saturation_manifolds/REPORT.md",
+      "sha256": "02a778a56cdb18c073df0559f8255832661f8cfe0933248d51197bc5d0bd1568",
+      "bytes": 116350
+    },
+    {
+      "path": "reports/2521__s60c_pid_boundary_robustness_pedestal_saturation_manifolds/attribution_ablation_table.csv",
+      "sha256": "8aeacd8e8498d6b5857df1aa1c0af9c3fe0b25699b2bc90c33a0cc7f93415b8e",
+      "bytes": 85288
+    },
+    {
+      "path": "reports/2521__s60c_pid_boundary_robustness_pedestal_saturation_manifolds/calibration_curves.csv",
+      "sha256": "f28a23771f5e76580cdf2ed968cf3889a2d0e328d6d1001f2ff3a7817906c2c0",
+      "bytes": 49937
+    },
+    {
+      "path": "reports/2521__s60c_pid_boundary_robustness_pedestal_saturation_manifolds/calibration_ece.csv",
+      "sha256": "6dbcae1d8f8bd2aea96f6563ebb780ed8f5a7899796b371500a3c56e2ef8d029",
+      "bytes": 5972
+    },
+    {
+      "path": "reports/2521__s60c_pid_boundary_robustness_pedestal_saturation_manifolds/claimed_ticket.txt",
+      "sha256": "8e4881fb603791fce2ebdcbbd05d66532827c06f9816fee0b78ec5e8cfbf8355",
+      "bytes": 549
+    },
+    {
+      "path": "reports/2521__s60c_pid_boundary_robustness_pedestal_saturation_manifolds/endpoint_method_summary.csv",
+      "sha256": "0238d46fedf83be9fba9141881bbe0b795135889ab6683de4469cec79ea0e614",
+      "bytes": 10581
+    },
+    {
+      "path": "reports/2521__s60c_pid_boundary_robustness_pedestal_saturation_manifolds/endpoint_tail_harm_energy_bias_ci.csv",
+      "sha256": "86bb3f3618a6ec8f335999dec10b6c66b0b8260ac54a9f92ae30fc68326940cb",
+      "bytes": 19952
+    },
+    {
+      "path": "reports/2521__s60c_pid_boundary_robustness_pedestal_saturation_manifolds/feature_family_audit.csv",
+      "sha256": "c635a2d72a26444f81cf00e9d9beab6ec2de60cbf2dc8e79874ff9ef08fcefa7",
+      "bytes": 1425
+    },
+    {
+      "path": "reports/2521__s60c_pid_boundary_robustness_pedestal_saturation_manifolds/heldout_predictions.csv.gz",
+      "sha256": "72fa5e558d29ddce2bf19db7ee15e12d223206896bb3ae8537baad1be45a4964",
+      "bytes": 1965381
+    },
+    {
+      "path": "reports/2521__s60c_pid_boundary_robustness_pedestal_saturation_manifolds/heldout_predictions_with_strata.csv.gz",
+      "sha256": "9d0f09dfdd7522b189082961b07b59fd8158b5ec996b6b806fc941483b2601bf",
+      "bytes": 2513639
+    },
+    {
+      "path": "reports/2521__s60c_pid_boundary_robustness_pedestal_saturation_manifolds/heldout_strata_assignments.csv",
+      "sha256": "aa2895c7eae29455ed5e09b78c48d2ab347fc42eda1b9112fe5e08b41e7e96a1",
+      "bytes": 956138
+    },
+    {
+      "path": "reports/2521__s60c_pid_boundary_robustness_pedestal_saturation_manifolds/joint_scoreboard.csv",
+      "sha256": "567eb476f6720756857b0c1daf6df81bdc59167c43d040b73f783b5a4caea8e0",
+      "bytes": 2388
+    },
+    {
+      "path": "reports/2521__s60c_pid_boundary_robustness_pedestal_saturation_manifolds/leakage_audit.csv",
+      "sha256": "3c9aa924920b3ff2a513b7339c15d8f225ba60d1265ead8d58b4108538dfc893",
+      "bytes": 2920
+    },
+    {
+      "path": "reports/2521__s60c_pid_boundary_robustness_pedestal_saturation_manifolds/manifold_robustness_spans.csv",
+      "sha256": "a8bbfb52f59e2f020b34c0694eb30de1daef80a75782ab3e1d34d38cf1c83689",
+      "bytes": 68534
+    },
+    {
+      "path": "reports/2521__s60c_pid_boundary_robustness_pedestal_saturation_manifolds/negative_control_pedestal_shuffles.csv",
+      "sha256": "bb986acd85b1ec4b951a2255b9645beb52d74ea2a74842b8e461e5c1b39affb2",
+      "bytes": 1975
+    },
+    {
+      "path": "reports/2521__s60c_pid_boundary_robustness_pedestal_saturation_manifolds/paired_bootstrap_deltas.csv",
+      "sha256": "535d5660f5e605a16e9ba3d2ff947bb54edcfdfa63ef384beb3f2479d6adfc9b",
+      "bytes": 10256
+    },
+    {
+      "path": "reports/2521__s60c_pid_boundary_robustness_pedestal_saturation_manifolds/pedestal_state_heldout_bootstrap.csv",
+      "sha256": "5babff8a06f16fa8ca3179998e58c13e5ef945029b1ffbcd94e8b449d3dfcdbe",
+      "bytes": 23353
+    },
+    {
+      "path": "reports/2521__s60c_pid_boundary_robustness_pedestal_saturation_manifolds/pid_boundary_metrics_ci.csv",
+      "sha256": "560ced52d06f873815d599becd4cd8b05cf2ebc3307dd7ff4512552abf3b7081",
+      "bytes": 4585
+    },
+    {
+      "path": "reports/2521__s60c_pid_boundary_robustness_pedestal_saturation_manifolds/reproduction_counts_by_run.csv",
+      "sha256": "45d22929943e4d36093a2baef7e73de2d6081aeb348b149eb394044b914e4744",
+      "bytes": 1896
+    },
+    {
+      "path": "reports/2521__s60c_pid_boundary_robustness_pedestal_saturation_manifolds/reproduction_match_table.csv",
+      "sha256": "30c27e630bc2f37a7e26cf4f3fac0ad2db556913c9a3725097ba16731535f2cf",
+      "bytes": 135
+    },
+    {
+      "path": "reports/2521__s60c_pid_boundary_robustness_pedestal_saturation_manifolds/result.json",
+      "sha256": "6d614e800ec84902c6921bf1306b1aeaf348a30f384dae00978a3fc55cb387fa",
+      "bytes": 6305
+    },
+    {
+      "path": "reports/2521__s60c_pid_boundary_robustness_pedestal_saturation_manifolds/strata_metrics.csv",
+      "sha256": "11fe96013c551d3fd6ae907167284006fd03c3a4826a437b8f2d0dfea45b1708",
+      "bytes": 136953
+    },
+    {
+      "path": "reports/2521__s60c_pid_boundary_robustness_pedestal_saturation_manifolds/timing_shape_coupling.csv",
+      "sha256": "0371c6d65572574df5d3fe4ba68bca2462d0ef068104c42ff878c4c22a30a086",
+      "bytes": 6735
+    }
+  ]
+}

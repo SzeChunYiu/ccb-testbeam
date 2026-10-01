@@ -1,0 +1,6 @@
+quantity,value
+late_fraction_train_q58,0.0061720832199465715
+depth_mean_train_q58,0.06942677920580935
+deltae_over_e_train_q42,138.6259961064244
+train_positive_fraction,0.3491111111111111
+heldout_positive_fraction,0.23555555555555555

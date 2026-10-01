@@ -1,0 +1,23 @@
+{
+  "ticket_id": "2477",
+  "worker": "testbeam-laptop-2",
+  "command": "/home/billy/anaconda3/bin/python scripts/s54c_2477_bayesian_deltae_pid_boundary_stability.py",
+  "outputs_sha256": {
+    "REPORT.md": "6f4c3298176ba5814d78ecea18e9f50d4fd69953592e6202da1c8198ffee2135",
+    "benchmark_events.csv": "ec477ff8fbec73640ed9d61d212628f9e8617d73e71ac144be8e074317921244",
+    "benchmark_waveforms.npz": "fdc408e0a3e3ade073424d9dc95d0c7b18ff941202f5a401157c7cf7760d93e4",
+    "bootstrap_ci.csv": "c2079f596942d2a39a55247c8637e1a20d2dbcf5c4a467eaa0e09ed0e497151b",
+    "claimed_ticket.txt": "825009dcfc53be0e8195170632d1dfd6b446073d8ed8014abf9f1b8d3e9da500",
+    "event_predictions.csv": "85990533c61140443d17139134fe421bca9fccce9105a8bebb8ac5d69d9187fa",
+    "input_sha256.csv": "4f9fa341e94d5b1d5e3e72aab0fd2911aac2a96465282cc3d3ad1039b1144f15",
+    "method_summary.csv": "534bcd8e5a7bfd13f6a7f02da961ca4562ba93d240fde163aec9786aa55f6fb3",
+    "pid_boundary_definition.csv": "45c99d707fb967aa5eb3fa714fdd307db34a4b2556e2aee2870b342c9962fa22",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "bea1873cb3cc7ca7616f3b3829721d074b92692695cc6be50c27e248f3942995",
+    "run_heldout_metrics.csv": "54e24dc7fd8dc96d7115c1aed798c540c129d3dd3c3b52215dfbfec01fdc2c18",
+    "sideband_systematics.csv": "b0cf4fbf70aefb2818f776586516f8fade1aeab916919e9f2843f5350b6da8d3"
+  },
+  "git_commit": "aff63eae22303a09a488511c6fed4a54ae3c2fed",
+  "python": "3.7.6 (default, Jan  8 2020, 19:59:22) \n[GCC 7.3.0]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-debian-bullseye-sid"
+}

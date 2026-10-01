@@ -1,0 +1,20 @@
+{
+  "ticket_id": "2379",
+  "git_commit": "3f71d0b1d84d9778aa0096cd3d24b9cd562e16a6",
+  "command": "python scripts/s08_2379_waveform_cnn_timing_pileup_flags.py",
+  "runtime_seconds": 30.98482370376587,
+  "python": "3.11.14 (main, Feb  3 2026, 22:51:56) [Clang 21.1.4 ]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+  "outputs_sha256": {
+    "REPORT.md": "21fd8dff5810e5dc9ba56017ccbe915c2c065ec90367bb479d5a70067ea9875e",
+    "event_predictions.csv": "7b4cd6fe38c49552f078824733377576f75679e1a149041dae5d9ae072d49cbd",
+    "input_sha256.csv": "cc17da0dcd3e7e732b81a17f3c35833f026fdec912538d28d7d71b9af71a46f6",
+    "method_metrics.csv": "4c29e26256e8fdef81c184114fde2181f22fac2e53b9b183916ca1bbb9af72a3",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "032a439d8a44f639c7b595313600515e97d5bcd4d1b75eaaaf871c48666808e6",
+    "run_heldout_metrics.csv": "c60f3317e8acf8737cb044b5f48ad006b657680bb1d0e0a2a45806891a61b43c",
+    "strata_metrics.csv": "1f67a30da3c87ddf08935cdcfa3ac1338e2499573dbdd4b7f0ff9d0f972c524e",
+    "template_summary.csv": "2ef79f21f3ccced6bd82918b3cdb42a73409d733b0b07a4ef422f1892faf800a"
+  },
+  "github_issue": 2379
+}

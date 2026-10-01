@@ -1,0 +1,81 @@
+{
+  "ticket_id": "2379",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-1",
+  "title": "S08: Waveform 1-D CNN for timing + pileup flags",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-1 --project testbeam",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "bootstrap": "held-out run-block percentile 95% CI",
+    "bootstrap_replicates": 300,
+    "negative_control": "clean single-pulse controls with matched source-run distribution"
+  },
+  "required_method_coverage": {
+    "traditional": "two_pulse_template_cfd_baseline",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "new_architecture": "causal_transformer_new",
+    "dropout_flag_proxy": "false_split_rate on clean-pulse controls; no independent dropout truth"
+  },
+  "winner": {
+    "name": "gradient_boosted_trees",
+    "criterion": "minimum held-out constituent timing sigma68 with run-block bootstrap CI reported",
+    "time_sigma68_ns": 7.798067786845868,
+    "time_sigma68_ci95": [
+      7.473929395414437,
+      8.496666880119381
+    ],
+    "pileup_miss_rate": 0.31666666666666665,
+    "false_split_rate": 0.18333333333333332
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv"
+  },
+  "novel_tickets_appended": [],
+  "caveats": [
+    "Pile-up truth comes from controlled doublet injection into raw-ROOT-derived clean pulses.",
+    "Saturation is represented by an amplitude proxy rather than electronics saturation flags.",
+    "Dropout/jagged labels are not independently available in the raw ROOT files; S08 dropout handling is limited to waveform-control false-split diagnostics."
+  ],
+  "github_issue": 2379,
+  "manual_claim_repair": {
+    "reason": "tn-ticket claim returned the known null pseudo-ticket; #2379 was label-swapped once with gh issue edit",
+    "issue": 2379
+  }
+}

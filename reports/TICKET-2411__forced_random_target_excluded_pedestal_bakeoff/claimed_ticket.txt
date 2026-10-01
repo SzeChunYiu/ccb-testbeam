@@ -1,0 +1,5 @@
+# P11: forced-random pedestal closure for learned baseline estimators
+
+Issue: #2411
+
+Validate the target-excluded P11 pedestal bakeoff against independent forced/random or no-pulse B-stack pedestal records when a complete provenance mirror is available. Expected information gain: separates beam-triggered pretrigger closure from true electronics pedestal truth before adopting ML baseline replacement. Follow-up from ccb-testbeam PR #1389 / ticket #2405.

@@ -1,0 +1,6 @@
+quantity,expected,reproduced,delta,tolerance,pass
+total_selected_b_pulses,640737.0,640737.0,0.0,0.0,True
+sample_i_analysis_b_selected_pulses,252266.0,252266.0,0.0,0.0,True
+sample_ii_analysis_b_selected_pulses,125096.0,125096.0,0.0,0.0,True
+sample_iv_a1_a3_pairs,127.0,127.0,0.0,0.0,True
+sample_iv_a1_a3_robust_width_ns,1.7936257228944266,1.7936260637768346,3.4088240807861325e-07,0.001,True

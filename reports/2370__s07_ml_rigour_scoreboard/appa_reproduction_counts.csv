@@ -1,0 +1,6 @@
+quantity,report_value,reproduced,delta,pass
+raw_cfd20_labelled_events,9897.0,9897,0.0,True
+raw_cfd20_clean,,7583,,True
+raw_cfd20_violating,,2314,,True
+ambiguous_downstream_ge2_events,5457.0,5457,0.0,True
+raw_cfd20_base_downstream_ge2_events,,15354,,True

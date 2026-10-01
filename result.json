@@ -1,8 +1,8 @@
 {
-  "ticket_id": "2502",
-  "issue_number": 2502,
+  "ticket_id": "2531",
+  "issue_number": 2531,
   "project": "testbeam",
-  "worker": "testbeam-laptop-2",
+  "worker": "testbeam-laptop-1",
   "status": "complete",
   "winner": "saturation_residual_fusion_new",
   "winner_metrics": {
@@ -22,15 +22,25 @@
     ],
     "pileup_miss_rate": 0.32564102564102565,
     "false_split_rate": 0.13846153846153847,
-    "uncertainty_calibration": {
+    "pid": {
       "method": "saturation_residual_fusion_new",
-      "n_valid_doublets": 263.0,
-      "median_abs_energy_residual": 0.04730265759532487,
-      "p68_abs_energy_residual": 0.0694272959931502,
-      "nominal_68_proxy_width": 0.034999999999999996,
-      "coverage_abs_resid_le_proxy": 0.3688212927756654,
-      "coverage_abs_resid_le_2proxy": 0.7034220532319392,
-      "calibration_ratio_p68_over_proxy": 1.9836370283757203
+      "n_events": 780,
+      "pid_macro_f1": 0.39028083587758144,
+      "pid_auc": 0.9870944705162212,
+      "pid_boundary_threshold": 8.339391942654306,
+      "pid_positive_rate": 0.5230769230769231,
+      "pid_truth_rate": 0.03333333333333333,
+      "pid_macro_f1_ci_low": 0.370786875818664,
+      "pid_macro_f1_ci_high": 0.4063123710293969,
+      "pid_auc_ci_low": 0.982119329945417,
+      "pid_auc_ci_high": 0.9935554025081332
+    },
+    "pileup_separation": {
+      "method": "saturation_residual_fusion_new",
+      "n_events": 780,
+      "pileup_auc": 0.8377317554240631,
+      "pileup_miss_rate": 0.32564102564102565,
+      "false_split_rate": 0.13846153846153847
     }
   },
   "raw_root_reproduction": {
@@ -76,29 +86,31 @@
     "new_architecture": "saturation_residual_fusion_new"
   },
   "required_outputs": {
-    "injected_overlap_closure": "method_metrics.csv, run_heldout_metrics.csv, event_predictions.csv",
-    "real_data_sideband_validation": "real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "saturation_mask_ablation.csv",
-    "uncertainty_calibration": "uncertainty_calibration.csv",
-    "traditional_vs_neural_failure_interpretation": "REPORT.md"
+    "censored_tail_recovery": "censored_tail_recovery.csv",
+    "pid_macro_f1_auc": "pid_metrics.csv",
+    "pileup_separation": "pileup_separation.csv",
+    "pedestal_sensitivity": "pedestal_sensitivity.csv",
+    "saturation_stratified_calibration": "saturation_stratified_calibration.csv"
   },
   "artifacts": {
-    "report": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/REPORT.md",
-    "result": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/result.json",
-    "method_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/method_metrics.csv",
-    "run_heldout_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/run_heldout_metrics.csv",
-    "real_data_sideband_validation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/saturation_mask_ablation.csv",
-    "uncertainty_calibration": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/uncertainty_calibration.csv"
+    "report": "reports/2531__s59b_censored_tail_deconvolution_pid_recovery/REPORT.md",
+    "result": "reports/2531__s59b_censored_tail_deconvolution_pid_recovery/result.json",
+    "method_metrics": "reports/2531__s59b_censored_tail_deconvolution_pid_recovery/method_metrics.csv",
+    "run_heldout_metrics": "reports/2531__s59b_censored_tail_deconvolution_pid_recovery/run_heldout_metrics.csv",
+    "censored_tail_recovery": "reports/2531__s59b_censored_tail_deconvolution_pid_recovery/censored_tail_recovery.csv",
+    "pid_metrics": "reports/2531__s59b_censored_tail_deconvolution_pid_recovery/pid_metrics.csv",
+    "pileup_separation": "reports/2531__s59b_censored_tail_deconvolution_pid_recovery/pileup_separation.csv",
+    "pedestal_sensitivity": "reports/2531__s59b_censored_tail_deconvolution_pid_recovery/pedestal_sensitivity.csv",
+    "saturation_stratified_calibration": "reports/2531__s59b_censored_tail_deconvolution_pid_recovery/saturation_stratified_calibration.csv"
   },
   "queue_provenance": {
     "claimed_once": true,
-    "claim_command_run_once": "tn-ticket claim testbeam-laptop-2 --project testbeam",
+    "claim_command_run_once": "tn-ticket claim testbeam-laptop-1 --project testbeam",
     "claim_command_output": "null / # null / null",
-    "manual_claim_recovery": "gh issue edit 2502 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-2 --remove-label factory:open",
-    "done_command": "tn-ticket done 2502",
+    "manual_claim_recovery": "gh issue edit 2531 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-1 --remove-label factory:open",
+    "done_command": "tn-ticket done 2531",
     "novel_tickets_appended": []
   },
-  "done_command": "tn-ticket done 2502",
+  "done_command": "tn-ticket done 2531",
   "novel_tickets_appended": []
 }

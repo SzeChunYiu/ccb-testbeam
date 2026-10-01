@@ -1,5 +1,7 @@
 # S15c: external PID truth join feasibility gate
 
+Claimed queue ticket: GitHub issue `#2415`.
+
 ## Abstract
 
 This study tests whether the S15 real-data weak-label PID rows can be converted into an event-level proton/deuteron truth benchmark by joining beamline metadata, GEANT4 truth, or external detector products.  The answer is **no with the current repository/data mirror**.  The raw B-stack ROOT files reproduce the selected-pulse count exactly, but the real HRD trees expose only acquisition/event counters and waveform arrays, while available GEANT4/PID-truth products are simulation-side or summary tables without a real-data run-plus-event PID label join.

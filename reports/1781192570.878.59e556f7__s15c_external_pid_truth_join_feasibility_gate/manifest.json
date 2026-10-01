@@ -1,5 +1,7 @@
 {
   "ticket_id": "1781192570.878.59e556f7",
+  "github_issue_number": 2415,
+  "github_issue_url": "https://github.com/SzeChunYiu/factory-tickets/issues/2415",
   "script": "scripts/s15c_1781192570_878_59e556f7_external_pid_truth_join_feasibility_gate.py",
   "config": "configs/s15c_1781192570_878_59e556f7_external_pid_truth_join_feasibility_gate.json",
   "python": "3.7.6",
@@ -192,13 +194,18 @@
     },
     {
       "file": "reports/1781192570.878.59e556f7__s15c_external_pid_truth_join_feasibility_gate/candidate_truth_source_audit.csv",
-      "bytes": 22311,
-      "sha256": "e976026d472ae43e9934473b35a483a93a3617ebc119926f15e1576175748030"
+      "bytes": 32168,
+      "sha256": "de896a9884c140256081d471d45247a331031e4627cd125953a448ca5a7f7bb9"
     },
     {
       "file": "reports/1781192570.878.59e556f7__s15c_external_pid_truth_join_feasibility_gate/input_sha256.csv",
       "bytes": 3565,
       "sha256": "cd3f048457d7f847fe9caec1fcb36352b90c9e8595300b7193a3575afcfec2ce"
+    },
+    {
+      "file": "reports/1781192570.878.59e556f7__s15c_external_pid_truth_join_feasibility_gate/manifest.json",
+      "bytes": 8987,
+      "sha256": "1f59999815c88abc118ae710e734fd5db025e6fd04a243173da7ebc32aacfcb5"
     },
     {
       "file": "reports/1781192570.878.59e556f7__s15c_external_pid_truth_join_feasibility_gate/raw_root_schema_audit.csv",
@@ -217,8 +224,8 @@
     },
     {
       "file": "reports/1781192570.878.59e556f7__s15c_external_pid_truth_join_feasibility_gate/result.json",
-      "bytes": 54678,
-      "sha256": "69d14313344ecada3d6ff6cd8223688109a9829f598ee2b4d6ec547680704712"
+      "bytes": 68999,
+      "sha256": "23340bb89152dd9b186d5d73108032a263fb0d9e8d6f1fabe027ccc340a023c2"
     },
     {
       "file": "reports/1781192570.878.59e556f7__s15c_external_pid_truth_join_feasibility_gate/s15_event_key_sample.csv",

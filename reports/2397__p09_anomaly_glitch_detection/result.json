@@ -1,0 +1,58 @@
+{
+  "bootstrap": {
+    "interval": "percentile 95%",
+    "replicates": 2000,
+    "unit": "run"
+  },
+  "caveats": [
+    "Curated review labels are morphology triage labels, not particle truth.",
+    "The P09b gallery is selector-enriched and small; prevalence claims are not made.",
+    "Run-block bootstrap has only the review-gallery acquisition runs."
+  ],
+  "claim_recovery_note": "The required tn-ticket claim command was run once but hit the known null pseudo-ticket bug; issue #2397 was recovered by direct factory label swap without rerunning claim.",
+  "command": "scripts/ticket_2397_p09_anomaly_glitch_detection.py",
+  "git_commit": "1bea179d8e1aaf6679c3774c24256f780ed28675",
+  "methods": [
+    "ridge_logistic",
+    "mlp",
+    "gradient_boosted_trees",
+    "traditional_shape_outlier",
+    "hybrid_review_fusion_new",
+    "one_dimensional_cnn"
+  ],
+  "novel_tickets_appended": [],
+  "raw_root_reproduction": {
+    "expected_selected_pulses": 640737,
+    "passed": true,
+    "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+    "reproduced_selected_pulses": 640737
+  },
+  "split": "leave-one-acquisition-run-out over P09b curated review gallery",
+  "status": "complete",
+  "study_id": "P09",
+  "ticket_id": 2397,
+  "traditional_baseline": {
+    "average_precision": 0.99135303273887,
+    "average_precision_ci95": [
+      0.9856309380678354,
+      0.9959427611995744
+    ],
+    "name": "traditional_shape_outlier",
+    "roc_auc": 0.7686491935483872,
+    "top25_precision": 1.0
+  },
+  "winner": {
+    "average_precision": 0.9991852161025804,
+    "average_precision_ci95": [
+      0.99847405241968,
+      0.9997470316210474
+    ],
+    "brier": 0.05320945496639365,
+    "criterion": "maximum leave-one-run-out average precision for consensus_curated_any",
+    "name": "ridge_logistic",
+    "roc_auc": 0.9747983870967742,
+    "top25_precision": 1.0
+  },
+  "winner_minus_traditional_average_precision": 0.007832183363710388,
+  "worker": "testbeam-laptop-3"
+}

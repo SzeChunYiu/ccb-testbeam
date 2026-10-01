@@ -1,0 +1,26 @@
+{
+  "ticket_id": "2528",
+  "git_commit": "cec9edc28257e0699c70c17fa9b2e8d806a3d42a",
+  "command": "/home/billy/.cache/uv/builds-v0/.tmp05tASm/bin/python scripts/ticket_2528_s62c_pileup_onset_spacing_atlas.py",
+  "runtime_seconds": 104.54740524291992,
+  "python": "3.13.12 (main, Feb  3 2026, 22:52:12) [Clang 21.1.4 ]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+  "outputs_sha256": {
+    "REPORT.md": "432b1e3021dd0a8d20fe2e2c0f4e0dea6b307a5d89f426a076071481ab2629ad",
+    "atlas_endpoint_cis.csv": "194d260c4eb985298e839cd385fca52812bdcbbd7753b9d19238d31691f730c5",
+    "claimed_ticket.txt": "926d33c0e732a3c608859ccba4864b7e20ab651ca85bde48c1e01f79340f8436",
+    "endpoint_metrics_ci.csv": "06fa0d78ec51ab3d7ad2c55e9283dde85d41bcdf59462072fd201d0d9a8cf61b",
+    "event_predictions.csv": "92b79a130591ba7605b2786e41c30a96710b25f16554904ec8c1b6e3a164e798",
+    "input_sha256.csv": "36aa4e53600b8b94767015cda3c647b5e671062254fe3eec9febf9e515f01367",
+    "method_metrics.csv": "a110600a91d9db44f62bfd59abc8cfe7d3634f6f31db8b0f76fc0f34f7b18976",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "9e1d014534f53a09f139de80c226fa7f9221de3d2ac4cd6ff5c4f436c6fbaf10",
+    "run_heldout_metrics.csv": "9569a889f34a8b17e39146f2ae4e8b9c1d2cff605f26b283fa2841d641f824e1",
+    "strata_metrics.csv": "4d9595781bfc0b4a7191b50a1dec6e80add00e82093f1b1ca0507f4da23cad15",
+    "template_summary.csv": "eca9592b05cf73d43c290f57231745f4d3949abede50e928ded39b460577385c",
+    "winner_ranked_metrics.csv": "71a6659fefcaeae9cf8d2900a48d48882b41c9546b30e65a7a6d4949bae0962d",
+    "winner_spacing_onset_atlas.csv": "0bd59015dc01fd7b3991f64dbcc142a975b712fc8163533de177e6e9b3aa1341"
+  },
+  "issue_number": 2528,
+  "postprocess_note": "S62c ticket metadata, atlas endpoints, matched-filter residual wording, and claim provenance applied after the shared benchmark engine."
+}

@@ -1,0 +1,120 @@
+{
+  "ticket_id": "2528",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-4",
+  "title": "NEW S62c pile-up onset and spacing atlas with sparse deconvolution versus sequence models",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-4 --project testbeam",
+  "claimed_ticket_text": "NEW S62c pile-up onset and spacing atlas with sparse deconvolution versus sequence models",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "adc_clip": 11800.0,
+    "bootstrap": "held-out run-block percentile 95% CI",
+    "bootstrap_replicates": 400,
+    "negative_control": "clipped clean single-pulse controls with matched source-run distribution",
+    "winner_score": "energy_residual_sigma68 + 0.20*abs(energy_residual_bias) + 0.004*pileup_separation_sigma68_ns + 0.004*leading_timing_shift_sigma68_ns + 0.05*pileup_miss_rate + 0.05*false_split_rate + 0.08*pedestal_shift_false_split_span + 0.08*pid_energy_bias_span"
+  },
+  "required_method_coverage": {
+    "traditional": "analytic_clipped_template_sideband_traditional (sparse nonnegative template deconvolution plus matched-filter residual sidebands)",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "transformer_sequence_model": "tiny_sequence_transformer",
+    "new_architecture": "saturation_residual_fusion_new"
+  },
+  "winner": {
+    "name": "saturation_residual_fusion_new",
+    "criterion": "minimum registered S62c held-out atlas composite score with run-block bootstrap CIs",
+    "winner_score": 0.164078772979805,
+    "energy_residual_bias": -0.004503227700628727,
+    "energy_residual_sigma68": 0.06488119662152611,
+    "energy_residual_sigma68_ci95": [
+      0.059244196872578904,
+      0.07545739700097037
+    ],
+    "saturation_onset_energy_sigma68": 0.06301839708607376,
+    "pileup_separation_sigma68_ns": 10.851162560285577,
+    "pileup_separation_sigma68_ci95": [
+      9.43571777267487,
+      12.317531536019324
+    ],
+    "leading_timing_shift_sigma68_ns": 5.051975035163891,
+    "pedestal_shift_false_split_span": 0.050727387729285284,
+    "pid_energy_bias_span": 0.0550834652861315,
+    "pileup_miss_rate": 0.3121951219512195,
+    "false_split_rate": 0.2121951219512195
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "endpoint_metrics_ci": "endpoint_metrics_ci.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv",
+    "atlas_endpoint_cis": "atlas_endpoint_cis.csv",
+    "winner_spacing_onset_atlas": "winner_spacing_onset_atlas.csv"
+  },
+  "novel_tickets_appended": [],
+  "caveats": [
+    "Truth comes from controlled injections into raw-ROOT-derived clean pulses.",
+    "ADC clipping is a benchmark stressor, not decoded electronics metadata.",
+    "PID-dependent failure is represented by stave and charge-support proxies.",
+    "Bootstrap CIs resample held-out runs and quantify run-transfer uncertainty.",
+    "The matched-filter residual atlas is derived from controlled overlays into raw-ROOT clean pulses; it validates reconstruction behavior, not the real beam pile-up rate."
+  ],
+  "issue_number": 2528,
+  "issue_url": "https://github.com/SzeChunYiu/factory-tickets/issues/2528",
+  "done_command": "tn-ticket done 2528",
+  "manual_claim_recovery": {
+    "reason": "tn-ticket claim returned a null pseudo-ticket despite a non-empty testbeam queue",
+    "manual_recovery": "gh issue edit 2528 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-4 --remove-label factory:open",
+    "reran_claim": false
+  },
+  "claim_helper_output": {
+    "stderr": "null",
+    "stdout": "# null\n\nnull",
+    "note": "tn-ticket claim was invoked exactly once; the open issue was manually label-swapped after the helper null edge case without invoking claim again"
+  },
+  "atlas_endpoints": {
+    "pulse_shape": "atlas_endpoint_cis.csv",
+    "hit_timing": "atlas_endpoint_cis.csv",
+    "pileup_separation": "atlas_endpoint_cis.csv",
+    "saturation_recovery": "atlas_endpoint_cis.csv",
+    "pedestal_excursions": "atlas_endpoint_cis.csv",
+    "energy_transfer": "atlas_endpoint_cis.csv",
+    "pid_stability": "atlas_endpoint_cis.csv",
+    "winner_spacing_onset_atlas": "winner_spacing_onset_atlas.csv"
+  }
+}

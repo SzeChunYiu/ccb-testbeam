@@ -1,0 +1,5 @@
+check,value,passed,detail
+run_split_train_test_run_overlap,0,True,run IDs are the split unit for the primary benchmark
+run_split_event_stave_overlap,0,True,no identical run/event/stave row appears in both primary train and heldout sets
+stave_heldout_name,B8,True,stave-heldout diagnostic trains on the other B-stack staves and tests this stave
+required_method_count,7,True,"primary event predictions include traditional, ridge, GBT, MLP, 1D-CNN, transformer, and new architecture"

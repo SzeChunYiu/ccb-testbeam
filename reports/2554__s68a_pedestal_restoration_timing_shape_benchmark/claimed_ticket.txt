@@ -1,0 +1,18 @@
+2554
+# NEW S68a pedestal-restoration timing-shape benchmark with pile-up onset nuisance
+
+Academic-grade study: compare a traditional spline baseline-restored constant-fraction plus matched-template time estimator against ridge, gradient-boosted trees, MLP, 1D-CNN, and a compact waveform transformer.
+
+Require run-held-out and stave-held-out splits, bootstrap 95% CIs for timing bias, sigma68, tail rate, and calibration slope, plus ablations for pedestal window length, pulse shape residuals, pile-up onset, and saturation flags.
+
+Deliverables: concise REPORT.md, method_metrics.csv, strata_metrics.csv, event_predictions.csv.gz, leakage_checks.csv, and reproduction_match_table.csv. Interpret which pulse-shape features carry timing information after pedestal drift and early pile-up are controlled.
+
+claim_helper_command: tn-ticket claim testbeam-laptop-1 --project testbeam
+claim_helper_output:
+null
+# null
+
+null
+
+manual_claim_workaround:
+gh issue edit 2554 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-1 --remove-label factory:open

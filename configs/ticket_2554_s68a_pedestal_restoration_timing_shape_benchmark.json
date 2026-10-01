@@ -1,0 +1,48 @@
+{
+  "ticket_id": "2554",
+  "ticket_number": 2554,
+  "study_id": "S68a",
+  "worker": "testbeam-laptop-1",
+  "title": "pedestal-restoration timing-shape benchmark with pile-up onset nuisance",
+  "claimed_ticket_text": "2554\n# NEW S68a pedestal-restoration timing-shape benchmark with pile-up onset nuisance\n\nAcademic-grade study: compare a traditional spline baseline-restored constant-fraction plus matched-template time estimator against ridge, gradient-boosted trees, MLP, 1D-CNN, and a compact waveform transformer.\n\nRequire run-held-out and stave-held-out splits, bootstrap 95% CIs for timing bias, sigma68, tail rate, and calibration slope, plus ablations for pedestal window length, pulse shape residuals, pile-up onset, and saturation flags.\n\nDeliverables: concise REPORT.md, method_metrics.csv, strata_metrics.csv, event_predictions.csv.gz, leakage_checks.csv, and reproduction_match_table.csv. Interpret which pulse-shape features carry timing information after pedestal drift and early pile-up are controlled.\n",
+  "claim_command_output": "null\n# null\n\nnull\n",
+  "manual_claim_workaround": {
+    "reason": "tn-ticket claim returned malformed null output because the helper renders an empty existing-claim query as null|null|null; no issue was claimed by the helper.",
+    "issue": 2554,
+    "command": "gh issue edit 2554 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-1 --remove-label factory:open"
+  },
+  "output_dir": "reports/2554__s68a_pedestal_restoration_timing_shape_benchmark",
+  "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+  "samples_per_channel": 18,
+  "baseline_samples": [0, 1, 2, 3],
+  "amplitude_cut_adc": 1000.0,
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "duplicate_readout_channels": {"B2": 1, "B4": 3, "B6": 5, "B8": 7},
+  "expected_selected_pulses": 640737,
+  "expected_group_counts": {
+    "sample_i_calib": 248745,
+    "sample_i_analysis": 252266,
+    "sample_ii_calib": 14630,
+    "sample_ii_analysis": 125096
+  },
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_calib": [64],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65]
+  },
+  "heldout_runs": [42, 50, 57, 58, 60, 62, 64, 65],
+  "stave_heldout": "B8",
+  "max_per_run_stave": 180,
+  "bootstrap_replicates": 500,
+  "stave_bootstrap_replicates": 350,
+  "random_seed": 20680054,
+  "mlp_max_iter": 35,
+  "nn": {
+    "epochs": 6,
+    "transformer_epochs": 5,
+    "batch_size": 1024,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001
+  }
+}

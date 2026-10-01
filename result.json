@@ -1,104 +1,279 @@
 {
-  "ticket_id": "2502",
-  "issue_number": 2502,
-  "project": "testbeam",
-  "worker": "testbeam-laptop-2",
-  "status": "complete",
-  "winner": "saturation_residual_fusion_new",
-  "winner_metrics": {
-    "name": "saturation_residual_fusion_new",
-    "criterion": "minimum held-out composite saturation-energy closure score with run-block bootstrap CIs reported",
-    "winner_score": 0.15172443008737868,
-    "energy_fractional_bias": -0.002906610021787798,
-    "energy_fractional_sigma68": 0.068387783415775,
-    "energy_fractional_sigma68_ci95": [
-      0.06183707932660469,
-      0.0751855124441164
-    ],
-    "time_sigma68_ns": 8.023902762892945,
-    "time_sigma68_ci95": [
-      7.365407249564567,
-      8.669358478772935
-    ],
-    "pileup_miss_rate": 0.32564102564102565,
-    "false_split_rate": 0.13846153846153847,
-    "uncertainty_calibration": {
-      "method": "saturation_residual_fusion_new",
-      "n_valid_doublets": 263.0,
-      "median_abs_energy_residual": 0.04730265759532487,
-      "p68_abs_energy_residual": 0.0694272959931502,
-      "nominal_68_proxy_width": 0.034999999999999996,
-      "coverage_abs_resid_le_proxy": 0.3688212927756654,
-      "coverage_abs_resid_le_2proxy": 0.7034220532319392,
-      "calibration_ratio_p68_over_proxy": 1.9836370283757203
-    }
-  },
-  "raw_root_reproduction": {
-    "passed": true,
-    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
+  "ticket_id": "2493",
+  "study_id": "S55a",
+  "worker": "testbeam-laptop-4",
+  "title": "S55a: Late-tail afterpulse timing and pile-up attribution benchmark",
+  "raw_root_dir": "/home/billy/ccb-data/data/extracted/root/root",
+  "git_commit": "bcb7c94c53d027096c53fb0ef3d2c7a1f331b372",
+  "runtime_sec": 117.20540690422058,
+  "python": "3.13.12",
+  "reproduction": {
+    "selected_pulses": 640737,
     "expected_selected_pulses": 640737,
-    "reproduced_selected_pulses": 640737,
     "delta": 0,
-    "evidence_table": "reproduction_match_table.csv"
+    "passed": true
   },
   "split": {
-    "split": "train and held-out sets are disjoint by source run",
-    "train_runs": [
-      50,
-      51,
-      52,
-      53,
-      54,
-      55,
-      56,
-      57
-    ],
     "heldout_runs": [
+      42,
+      50,
+      57,
       58,
       60,
       62,
       64,
       65
     ],
-    "adc_clip": 11800.0,
-    "bootstrap": "held-out run-block percentile 95% CI",
-    "bootstrap_replicates": 400,
-    "negative_control": "clipped clean single-pulse controls with matched source-run distribution",
-    "winner_score": "energy_fractional_sigma68 + 0.20*abs(energy_fractional_bias) + 0.008*time_sigma68_ns + 0.04*pileup_miss_rate + 0.04*false_split_rate"
+    "train_rows": 30525,
+    "heldout_rows": 11845,
+    "bootstrap_replicates": 500
   },
+  "label": {
+    "name": "afterpulse_or_pileup",
+    "late_tail_memory_threshold": 0.33562036459844263,
+    "afterpulse_residual_threshold": 0.2549803853034973
+  },
+  "label_counts": [
+    {
+      "split": "train",
+      "rows": 30525,
+      "positives": 12232,
+      "positive_fraction": 0.40072072072072074
+    },
+    {
+      "split": "heldout",
+      "rows": 11845,
+      "positives": 5032,
+      "positive_fraction": 0.42482059940903333
+    },
+    {
+      "split": "all",
+      "rows": 42370,
+      "positives": 17264,
+      "positive_fraction": 0.4074581071512863
+    }
+  ],
+  "systematic_bootstrap_cis": [
+    {
+      "metric": "tail_shape_parameter_exp_slope",
+      "interpretation": "tail-shape exponential slope",
+      "heldout_rows": 11845,
+      "heldout_positive_rows": 5032,
+      "afterpulse_minus_memory_median_shift": 0.036799535155296326,
+      "ci_low": 0.012544922064989805,
+      "ci_high": 0.10197137002833186,
+      "bootstrap_replicates": 500
+    },
+    {
+      "metric": "tail_shape_parameter_ar_rms",
+      "interpretation": "tail-shape AR residual RMS",
+      "heldout_rows": 11845,
+      "heldout_positive_rows": 5032,
+      "afterpulse_minus_memory_median_shift": 0.02196965552866459,
+      "ci_low": 0.013607615046203137,
+      "ci_high": 0.05642427615821359,
+      "bootstrap_replicates": 500
+    },
+    {
+      "metric": "timing_shift_mean_time_sample",
+      "interpretation": "timing shift",
+      "heldout_rows": 11845,
+      "heldout_positive_rows": 5032,
+      "afterpulse_minus_memory_median_shift": 0.56343674659729,
+      "ci_low": 0.3083945095539093,
+      "ci_high": 1.355099081993103,
+      "bootstrap_replicates": 500
+    },
+    {
+      "metric": "pileup_confusion_event_multiplicity",
+      "interpretation": "pile-up confusion",
+      "heldout_rows": 11845,
+      "heldout_positive_rows": 5032,
+      "afterpulse_minus_memory_median_shift": 0.0,
+      "ci_low": 0.0,
+      "ci_high": 1.0,
+      "bootstrap_replicates": 500
+    },
+    {
+      "metric": "saturation_recovery_late_tail_fraction",
+      "interpretation": "saturation recovery",
+      "heldout_rows": 11845,
+      "heldout_positive_rows": 5032,
+      "afterpulse_minus_memory_median_shift": 0.06113924831151962,
+      "ci_low": 0.030221318639814854,
+      "ci_high": 0.17959202788770193,
+      "bootstrap_replicates": 500
+    },
+    {
+      "metric": "pedestal_drift_sensitivity_adc",
+      "interpretation": "pedestal drift sensitivity",
+      "heldout_rows": 11845,
+      "heldout_positive_rows": 5032,
+      "afterpulse_minus_memory_median_shift": -1.0,
+      "ci_low": -2.25,
+      "ci_high": -0.25,
+      "bootstrap_replicates": 500
+    },
+    {
+      "metric": "energy_bias_log10_amplitude",
+      "interpretation": "energy bias proxy",
+      "heldout_rows": 11845,
+      "heldout_positive_rows": 5032,
+      "afterpulse_minus_memory_median_shift": -0.023614585399627686,
+      "ci_low": -0.026648521423339844,
+      "ci_high": -0.019834509491920473,
+      "bootstrap_replicates": 500
+    },
+    {
+      "metric": "pid_confusion_duplicate_readout_adc",
+      "interpretation": "PID confusion proxy",
+      "heldout_rows": 11845,
+      "heldout_positive_rows": 5032,
+      "afterpulse_minus_memory_median_shift": -83.0,
+      "ci_low": -113.025,
+      "ci_high": -47.618750000000006,
+      "bootstrap_replicates": 500
+    }
+  ],
+  "perturbation_negative_controls": [
+    {
+      "perturbation_adc": -150.0,
+      "rows": 42370,
+      "shape_l2_median": 0.034135448440976685,
+      "shape_l2_p95": 0.12385049113633362,
+      "label_flip_fraction": 0.20540476752419165,
+      "afterpulse_flip_fraction": 0.4402224281742354,
+      "memory_flip_fraction": 0.04393372102286306
+    },
+    {
+      "perturbation_adc": 150.0,
+      "rows": 42370,
+      "shape_l2_median": 0.03110490404574425,
+      "shape_l2_p95": 0.09710111740729517,
+      "label_flip_fraction": 0.16983714892612697,
+      "afterpulse_flip_fraction": 0.40610518999073214,
+      "memory_flip_fraction": 0.007368756472556361
+    }
+  ],
+  "time_shuffle_negative_controls": [
+    {
+      "control": "time_reversal",
+      "description": "reverse the waveform sample order",
+      "rows": 42370,
+      "shape_l2_median": 0.3813871443271637,
+      "shape_l2_p95": 0.842529296875,
+      "original_afterpulse_fraction": 0.4074581071512863,
+      "control_afterpulse_fraction": 0.7723389190464952,
+      "label_flip_fraction": 0.5849421760679726,
+      "afterpulse_flip_fraction": 0.27004170528266913,
+      "memory_flip_fraction": 0.8014817175177249
+    },
+    {
+      "control": "circular_roll_plus3",
+      "description": "roll each waveform three samples later",
+      "rows": 42370,
+      "shape_l2_median": 0.41970860958099365,
+      "shape_l2_p95": 0.66518235206604,
+      "original_afterpulse_fraction": 0.4074581071512863,
+      "control_afterpulse_fraction": 0.6296672173707812,
+      "label_flip_fraction": 0.32105263157894737,
+      "afterpulse_flip_fraction": 0.12129286376274329,
+      "memory_flip_fraction": 0.4584163148251414
+    },
+    {
+      "control": "per_pulse_random_permutation",
+      "description": "shuffle sample order independently per pulse",
+      "rows": 42370,
+      "shape_l2_median": 0.511384129524231,
+      "shape_l2_p95": 0.7811757326126099,
+      "original_afterpulse_fraction": 0.4074581071512863,
+      "control_afterpulse_fraction": 0.6130988907245692,
+      "label_flip_fraction": 0.3341751239084258,
+      "afterpulse_flip_fraction": 0.15772706209453197,
+      "memory_flip_fraction": 0.4555086433521867
+    }
+  ],
+  "best_traditional": {
+    "method": "traditional_exponential_ar_fisher_all_features",
+    "n": 11845,
+    "positives": 5032,
+    "roc_auc": 0.9930733048690934,
+    "auc_ci_low": 0.988815384661445,
+    "auc_ci_high": 0.9970168997143165,
+    "average_precision": 0.9919211274056595,
+    "role": "traditional_multivariate",
+    "family": "exponential_tail_ar_fisher"
+  },
+  "winner": {
+    "method": "ML_gradient_boosted_trees",
+    "n": 11845,
+    "positives": 5032,
+    "roc_auc": 0.9999969955968868,
+    "auc_ci_low": 0.9999938165250557,
+    "auc_ci_high": 0.9999992074636065,
+    "average_precision": 0.9999959336307491,
+    "role": "ml_panel",
+    "family": null,
+    "architecture_note": "winner selected by held-out run-block ROC AUC among the required traditional, ridge, GBDT, MLP, 1D-CNN, and masked sequence panels"
+  },
+  "primary_methods": [
+    "traditional_exponential_ar_fisher_all_features",
+    "ML_ridge_classifier",
+    "ML_gradient_boosted_trees",
+    "ML_mlp",
+    "NN_1d_cnn",
+    "NN_transformer_sequence_encoder_new"
+  ],
+  "verdict": "ML/NN model beats the strongest traditional exponential-tail/AR baseline by held-out AUC",
+  "ticket_cli_append_audit": {
+    "intentional_testbeam_follow_up_appended": false,
+    "accidental_default_project_append_id": "1783807740.5591.289d7cf0",
+    "accidental_default_project": "grocery",
+    "note": "No novel follow-up ticket was appended for S55a/#2493."
+  },
+  "next_tickets": [
+    {
+      "appended_ticket_id": null,
+      "title": "Validate S28b afterpulse labels against random-trigger no-pulse windows",
+      "body": "Build an external negative-control label set from random-trigger/no-pulse windows and rerun the S28b late-tail afterpulse separator with identical run-block bootstrap CIs."
+    }
+  ],
+  "issue_number": 2493,
+  "issue_url": "https://github.com/SzeChunYiu/factory-tickets/issues/2493",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-4 --project testbeam",
+  "manual_claim_recovery": {
+    "reason": "tn-ticket claim returned the null pseudo-ticket even though project:testbeam had open issues",
+    "manual_recovery": "gh issue edit 2493 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-4 --remove-label factory:open",
+    "reran_claim": false
+  },
+  "claimed_ticket_text": "#2493 S55a: Late-tail afterpulse timing and pile-up attribution benchmark",
+  "done_command": "tn-ticket done 2493",
   "required_method_coverage": {
-    "traditional": "analytic_clipped_template_sideband_traditional",
-    "ridge": "ridge",
-    "gradient_boosted_trees": "gradient_boosted_trees",
-    "mlp": "mlp",
-    "one_dimensional_cnn": "1d_cnn",
-    "transformer_sequence_model": "tiny_sequence_transformer",
-    "new_architecture": "saturation_residual_fusion_new"
-  },
-  "required_outputs": {
-    "injected_overlap_closure": "method_metrics.csv, run_heldout_metrics.csv, event_predictions.csv",
-    "real_data_sideband_validation": "real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "saturation_mask_ablation.csv",
-    "uncertainty_calibration": "uncertainty_calibration.csv",
-    "traditional_vs_neural_failure_interpretation": "REPORT.md"
+    "traditional": "traditional_exponential_ar_fisher_all_features",
+    "ridge": "ML_ridge_classifier",
+    "gradient_boosted_trees": "ML_gradient_boosted_trees",
+    "mlp": "ML_mlp",
+    "one_dimensional_cnn": "NN_1d_cnn",
+    "masked_waveform_transformer_new": "NN_transformer_sequence_encoder_new"
   },
   "artifacts": {
-    "report": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/REPORT.md",
-    "result": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/result.json",
-    "method_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/method_metrics.csv",
-    "run_heldout_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/run_heldout_metrics.csv",
-    "real_data_sideband_validation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/saturation_mask_ablation.csv",
-    "uncertainty_calibration": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/uncertainty_calibration.csv"
+    "report": "REPORT.md",
+    "result": "result.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_summary": "primary_method_summary.csv",
+    "traditional_summary": "traditional_method_summary.csv",
+    "run_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "stratified_method_metrics.csv",
+    "ablation_metrics": "ablation_metrics.csv",
+    "predictions": "heldout_predictions.csv.gz"
   },
-  "queue_provenance": {
-    "claimed_once": true,
-    "claim_command_run_once": "tn-ticket claim testbeam-laptop-2 --project testbeam",
-    "claim_command_output": "null / # null / null",
-    "manual_claim_recovery": "gh issue edit 2502 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-2 --remove-label factory:open",
-    "done_command": "tn-ticket done 2502",
-    "novel_tickets_appended": []
-  },
-  "done_command": "tn-ticket done 2502",
-  "novel_tickets_appended": []
+  "novel_tickets_appended": [],
+  "execution_command": "MPLCONFIGDIR=/tmp/matplotlib-ticket2493 uv run --with uproot --with awkward --with numpy --with pandas --with scikit-learn --with matplotlib --with tabulate --with torch python scripts/ticket_2493_s55a_late_tail_afterpulse_attribution.py",
+  "runtime_environment": {
+    "python": "3.13.12",
+    "git_commit": "bcb7c94c53d027096c53fb0ef3d2c7a1f331b372"
+  }
 }

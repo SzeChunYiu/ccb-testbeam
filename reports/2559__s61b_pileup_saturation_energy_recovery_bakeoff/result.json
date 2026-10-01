@@ -1,0 +1,104 @@
+{
+  "ticket_id": "2559",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-1",
+  "title": "S61b pile-up saturation energy recovery bakeoff",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-1 --project testbeam",
+  "claimed_ticket_text": "S61b pile-up saturation energy recovery bakeoff",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "adc_clip": 11800.0,
+    "bootstrap": "held-out run-block percentile 95% CI",
+    "bootstrap_replicates": 400,
+    "negative_control": "clipped clean single-pulse controls with matched source-run distribution",
+    "winner_score": "energy_residual_sigma68 + 0.20*abs(energy_residual_bias) + 0.004*pileup_separation_sigma68_ns + 0.004*leading_timing_shift_sigma68_ns + 0.05*pileup_miss_rate + 0.05*false_split_rate + 0.08*pedestal_shift_false_split_span + 0.08*pid_energy_bias_span",
+    "required_ticket_addenda": [
+      "delay_ratio_recovery.csv",
+      "abstention_curves.csv",
+      "shuffled_overlay_controls.csv"
+    ]
+  },
+  "required_method_coverage": {
+    "traditional": "analytic_clipped_template_sideband_traditional (amplitude-binned two-pulse deconvolution plus saturation/recovery nuisance correction)",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "transformer_sequence_model": "tiny_sequence_transformer",
+    "new_architecture": "saturation_residual_fusion_new",
+    "temporal_transformer": "tiny_sequence_transformer"
+  },
+  "winner": {
+    "name": "saturation_residual_fusion_new",
+    "criterion": "minimum registered S61b held-out energy-plus-pileup composite score with run-block bootstrap CIs",
+    "winner_score": 0.1632395205493095,
+    "energy_residual_bias": -0.006656992530493892,
+    "energy_residual_sigma68": 0.06563534357869912,
+    "energy_residual_sigma68_ci95": [
+      0.05659020784346654,
+      0.07611305096525706
+    ],
+    "saturation_onset_energy_sigma68": 0.05421711578932977,
+    "pileup_separation_sigma68_ns": 10.628063159413484,
+    "pileup_separation_sigma68_ci95": [
+      9.474765589178652,
+      12.372423868180622
+    ],
+    "leading_timing_shift_sigma68_ns": 5.498511625719544,
+    "pedestal_shift_false_split_span": 0.03504111321948136,
+    "pid_energy_bias_span": 0.046491097842457675,
+    "pileup_miss_rate": 0.3024390243902439,
+    "false_split_rate": 0.20243902439024392
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "endpoint_metrics_ci": "endpoint_metrics_ci.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv",
+    "delay_ratio_recovery": "delay_ratio_recovery.csv",
+    "abstention_curves": "abstention_curves.csv",
+    "shuffled_overlay_controls": "shuffled_overlay_controls.csv"
+  },
+  "novel_tickets_appended": [],
+  "caveats": [
+    "Truth comes from controlled injections into raw-ROOT-derived clean pulses.",
+    "ADC clipping is a benchmark stressor, not decoded electronics metadata.",
+    "PID-dependent failure is represented by stave and charge-support proxies.",
+    "Bootstrap CIs resample held-out runs and quantify run-transfer uncertainty.",
+    "The required shuffled-overlay control is an event-level truth permutation within held-out source run; it tests leakage and score calibration, not a new detector acquisition mode."
+  ]
+}

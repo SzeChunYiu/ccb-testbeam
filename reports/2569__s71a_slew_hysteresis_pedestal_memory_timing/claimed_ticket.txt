@@ -1,0 +1,16 @@
+2569
+# NEW S71a slew-rate hysteresis pulse-shape timing under pedestal memory
+
+Academic-grade study: quantify whether pulse-shape slew-rate hysteresis explains residual timing bias under pedestal memory and mild pile-up.
+
+Compare traditional derivative-template fits and constant-fraction timing against ridge, gradient-boosted trees, MLP, 1D-CNN, and transformer waveform encoders where sequence length supports attention. Report paired bootstrap CIs for timing bias/resolution, shape-residual closure, pedestal strata, pile-up strata, and energy/PID transfer.
+
+claim_helper_command: tn-ticket claim testbeam-laptop-4 --project testbeam
+claim_helper_output:
+# null
+
+null
+null
+
+manual_claim_workaround:
+gh issue edit 2569 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-4 --remove-label factory:open

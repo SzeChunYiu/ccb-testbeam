@@ -1,0 +1,12 @@
+2517
+# NEW S59b pedestal-hysteresis saturation energy calibration frontier
+
+Benchmark a traditional robust pedestal model plus censored
+Landau-Gaussian/Birks energy fit against ridge, gradient-boosted trees, MLP,
+1D-CNN, and a saturation-aware transformer.
+
+Use held-out run blocks, saturation-knee and pile-up strata, bootstrap 95% CIs
+for energy closure, calibration slope, residual tails, and failure rates.
+Require interpretable diagnostics showing whether pedestal hysteresis or
+saturation censoring dominates energy bias and when neural models transfer
+outside the training current regime.

@@ -1,0 +1,109 @@
+{
+  "ticket_id": "2517",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-3",
+  "title": "S59b: Pedestal-hysteresis saturation energy calibration frontier",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-3 --project testbeam",
+  "claimed_ticket_text": "S59b: Pedestal-hysteresis saturation energy calibration frontier",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "adc_clip": 11800.0,
+    "bootstrap": "held-out run-block percentile 95% CI",
+    "bootstrap_replicates": 400,
+    "negative_control": "clipped clean single-pulse controls with matched source-run distribution",
+    "winner_score": "energy_residual_sigma68 + 0.20*abs(energy_residual_bias) + 0.008*time_sigma68_ns + 0.04*pileup_miss_rate + 0.04*false_split_rate; diagnostics additionally report calibration slope, residual tails, pedestal-vs-saturation bias dominance, and near/far held-out run transfer"
+  },
+  "required_method_coverage": {
+    "traditional": "analytic_clipped_template_sideband_traditional",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "transformer_sequence_model": "tiny_sequence_transformer",
+    "new_architecture": "saturation_residual_fusion_new"
+  },
+  "winner": {
+    "name": "saturation_residual_fusion_new",
+    "criterion": "minimum registered held-out energy-plus-pileup composite score with run-block bootstrap CIs",
+    "winner_score": 0.15399692015643066,
+    "energy_fractional_bias": -0.005489553200678442,
+    "energy_fractional_sigma68": 0.06687760559944919,
+    "energy_fractional_sigma68_ci95": [
+      0.06049694508622296,
+      0.07066574077417023
+    ],
+    "time_sigma68_ns": 8.368060104990338,
+    "time_sigma68_ci95": [
+      7.756472546236974,
+      8.74739059160854
+    ],
+    "pileup_miss_rate": 0.34102564102564104,
+    "false_split_rate": 0.1358974358974359
+  },
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv",
+    "endpoint_metrics_ci": "endpoint_metrics_ci.csv",
+    "bias_dominance_metrics": "bias_dominance_metrics.csv",
+    "saturation_knee_metrics": "saturation_knee_metrics.csv",
+    "current_regime_transfer": "current_regime_transfer.csv"
+  },
+  "novel_tickets_appended": [],
+  "caveats": [
+    "Truth comes from controlled injections into raw-ROOT-derived clean pulses.",
+    "ADC clipping is an explicit benchmark stressor rather than decoded electronics metadata.",
+    "Bootstrap CIs resample held-out runs and should be read as run-transfer intervals."
+  ],
+  "factory_issue": 2517,
+  "ticket_workflow": {
+    "claim_command": "tn-ticket claim testbeam-laptop-3 --project testbeam",
+    "claim_command_status": "returned_cli_null_no_issue; manually repaired without rerunning claim",
+    "claim_command_output": "null\\n# null\\n\\nnull",
+    "manual_claim_repair": "Applied factory:claimed and worker:testbeam-laptop-3 to issue 2517, removed factory:open, then verified labels.",
+    "claim_artifact": "reports/2517__s59b_pedestal_hysteresis_saturation_energy_calibration_frontier/claimed_ticket.txt",
+    "factory_issue_url": "https://github.com/SzeChunYiu/factory-tickets/issues/2517"
+  },
+  "diagnostics": {
+    "dominant_bias_source_majority": "saturation_censoring",
+    "largest_saturation_to_pedestal_ratio_method": "analytic_clipped_template_sideband_traditional",
+    "largest_saturation_to_pedestal_ratio": 10.755366433616949,
+    "best_calibration_slope_method": "1d_cnn",
+    "best_residual_tail_method": "ridge",
+    "current_regime_proxy": "held-out source runs 58/60 near training sequence; 62/64/65 far held-out current-regime stress"
+  }
+}

@@ -1,0 +1,24 @@
+claim_helper_command: tn-ticket claim testbeam-laptop-1 --project testbeam
+claim_helper_stderr:
+null
+claim_helper_stdout:
+# null
+
+null
+manual_claim_issue: 2547
+manual_claim_command: gh issue edit 2547 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-1 --remove-label factory:open
+manual_claim_evidence: issue #2547 labels include factory:claimed, project:testbeam, worker:testbeam-laptop-1
+done_command: tn-ticket done 2547
+# NEW S66c saturation-aware energy and PID calibration under censored waveform tails
+
+Academic-grade study: recover calibrated energy and PID boundaries when pulses
+have clipped peaks or censored tails, with explicit pedestal and pile-up
+nuisance parameters.
+
+Compare a traditional Birks/GEANT4-informed censored-likelihood template fit
+against ridge, gradient-boosted trees, MLP, 1D-CNN waveform
+regressors/classifiers, and a cross-attention transformer over waveform plus
+scalar context. Report bootstrap 95% CIs for energy bias/resolution, PID
+AUC/calibration, saturation recovery coverage, pile-up robustness, and transfer
+across runs. Include negative controls, monotonicity checks, and failure-slice
+tables.

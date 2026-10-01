@@ -1,0 +1,5 @@
+# NEW S66c saturation-aware energy and PID calibration under censored waveform tails
+
+Academic-grade study: recover calibrated energy and PID boundaries when pulses have clipped peaks or censored tails, with explicit pedestal and pile-up nuisance parameters.
+
+Compare a traditional Birks/GEANT4-informed censored-likelihood template fit against ridge, gradient-boosted trees, MLP, 1D-CNN waveform regressors/classifiers, and a cross-attention transformer over waveform plus scalar context. Report bootstrap 95% CIs for energy bias/resolution, PID AUC/calibration, saturation recovery coverage, pile-up robustness, and transfer across runs. Include negative controls, monotonicity checks, and failure-slice tables.

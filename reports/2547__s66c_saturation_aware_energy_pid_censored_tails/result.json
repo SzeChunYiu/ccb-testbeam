@@ -1,0 +1,134 @@
+{
+  "ticket_id": "2547",
+  "project": "testbeam",
+  "worker": "testbeam-laptop-1",
+  "title": "S66c saturation-aware energy and PID calibration under censored waveform tails",
+  "status": "complete",
+  "claimed_once": true,
+  "claim_command": "tn-ticket claim testbeam-laptop-1 --project testbeam",
+  "claimed_ticket_text": "#2547 S66c saturation-aware energy and PID calibration under censored waveform tails",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence_table": "reproduction_match_table.csv"
+  },
+  "evaluation_design": {
+    "split": "train and held-out sets are disjoint by source run",
+    "train_runs": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "heldout_runs": [
+      58,
+      60,
+      62,
+      64,
+      65
+    ],
+    "adc_clip": 11800.0,
+    "bootstrap": "held-out run-block percentile 95% CI",
+    "bootstrap_replicates": 400,
+    "negative_control": "clipped clean single-pulse controls with matched source-run distribution",
+    "winner_score": "energy_fractional_sigma68 + 0.20*abs(energy_fractional_bias) + 0.008*time_sigma68_ns + 0.04*pileup_miss_rate + 0.04*false_split_rate"
+  },
+  "required_method_coverage": {
+    "traditional": "analytic_clipped_template_sideband_traditional",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "one_dimensional_cnn": "1d_cnn",
+    "transformer_sequence_model": "tiny_sequence_transformer",
+    "new_architecture": "saturation_residual_fusion_new"
+  },
+  "winner": "saturation_residual_fusion_new",
+  "artifacts": {
+    "report": "REPORT.md",
+    "manifest": "manifest.json",
+    "claimed_ticket": "claimed_ticket.txt",
+    "raw_reproduction": "reproduction_match_table.csv",
+    "method_metrics": "method_metrics.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "strata_metrics": "strata_metrics.csv",
+    "event_predictions": "event_predictions.csv",
+    "input_sha256": "input_sha256.csv",
+    "pid_calibration_metrics": "pid_calibration_metrics.csv",
+    "pid_calibration_curve": "pid_calibration_curve.csv",
+    "saturation_recovery_coverage": "saturation_recovery_coverage.csv",
+    "energy_monotonicity_checks": "energy_monotonicity_checks.csv",
+    "failure_slices": "failure_slices.csv"
+  },
+  "novel_tickets_appended": [],
+  "caveats": [
+    "Truth comes from controlled injections into raw-ROOT-derived clean pulses.",
+    "ADC clipping is an explicit benchmark stressor rather than decoded electronics metadata.",
+    "Bootstrap CIs resample held-out runs and should be read as run-transfer intervals."
+  ],
+  "issue_number": 2547,
+  "issue_url": "https://github.com/SzeChunYiu/factory-tickets/issues/2547",
+  "claim_helper_output": {
+    "stderr": "null",
+    "stdout": "# null\n\nnull",
+    "note": "single permitted tn-ticket claim invocation returned null; issue #2547 was manually label-swapped without rerunning claim"
+  },
+  "manual_claim_recovery": {
+    "reason": "tn-ticket claim returned a null pseudo-ticket despite a non-empty testbeam queue",
+    "manual_recovery": "gh issue edit 2547 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-1 --remove-label factory:open",
+    "reran_claim": false
+  },
+  "winner_metrics": {
+    "name": "saturation_residual_fusion_new",
+    "criterion": "minimum held-out composite saturation-energy closure score with run-block bootstrap CIs reported",
+    "winner_score": 0.15399692015643066,
+    "energy_fractional_bias": -0.005489553200678442,
+    "energy_fractional_sigma68": 0.06687760559944919,
+    "energy_fractional_sigma68_ci95": [
+      0.06049694508622296,
+      0.07066574077417023
+    ],
+    "time_sigma68_ns": 8.368060104990338,
+    "time_sigma68_ci95": [
+      7.756472546236974,
+      8.74739059160854
+    ],
+    "pileup_miss_rate": 0.34102564102564104,
+    "false_split_rate": 0.1358974358974359
+  },
+  "done_command": "tn-ticket done 2547",
+  "ticket_scope": {
+    "traditional_method": "Birks/GEANT4-informed censored template likelihood proxy with pedestal and pile-up nuisance parameters",
+    "ml_methods": [
+      "ridge",
+      "gradient_boosted_trees",
+      "mlp",
+      "1d_cnn",
+      "tiny_sequence_transformer"
+    ],
+    "new_architecture": "saturation_residual_fusion_new",
+    "primary_target": "energy closure, PID-proxy calibration, saturation coverage, pile-up robustness, and run transfer"
+  },
+  "pid_boundary_proxy": {
+    "external_pid_labels_available": false,
+    "proxy": "overlap/censored-tail probability plus inner high-charge B-stack support strata",
+    "metrics_table": "pid_calibration_metrics.csv",
+    "calibration_curve": "pid_calibration_curve.csv",
+    "caveat": "PID conclusions are boundary-proxy conclusions, not externally labeled particle-species truth."
+  },
+  "additional_artifacts": {
+    "pid_calibration_metrics": "pid_calibration_metrics.csv",
+    "pid_calibration_curve": "pid_calibration_curve.csv",
+    "saturation_recovery_coverage": "saturation_recovery_coverage.csv",
+    "energy_monotonicity_checks": "energy_monotonicity_checks.csv",
+    "failure_slices": "failure_slices.csv"
+  },
+  "execution_command": "MPLCONFIGDIR=/tmp/matplotlib-ticket2547 UV_PROJECT_ENVIRONMENT=/tmp/ticket2547-uv-venv uv run --index-strategy unsafe-best-match --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple --with uproot --with awkward --with numpy --with pandas --with scikit-learn --with tabulate --with 'torch==2.5.1+cpu' python scripts/ticket_2547_s66c_saturation_aware_energy_pid_censored_tails.py"
+}

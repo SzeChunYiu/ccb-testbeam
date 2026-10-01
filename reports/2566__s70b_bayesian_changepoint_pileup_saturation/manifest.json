@@ -1,0 +1,24 @@
+{
+  "ticket_id": "2566",
+  "git_commit": "cec9edc28257e0699c70c17fa9b2e8d806a3d42a",
+  "command": "/home/billy/.cache/uv/builds-v0/.tmpynufJ6/bin/python scripts/ticket_2566_s70b_bayesian_changepoint_pileup_saturation.py",
+  "runtime_seconds": 81.28486752510071,
+  "python": "3.13.12 (main, Feb  3 2026, 22:52:12) [Clang 21.1.4 ]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+  "outputs_sha256": {
+    "REPORT.md": "654460b36d10220db0eae99f83485f9179902a4e65045fd02624e0c75f5d92cb",
+    "claimed_ticket.txt": "b4fd9f56fb57906bc954b4a2eb7b77a9989abae215c0bfff75cd2cb5c534d287",
+    "endpoint_metrics_ci.csv": "06fa0d78ec51ab3d7ad2c55e9283dde85d41bcdf59462072fd201d0d9a8cf61b",
+    "event_predictions.csv": "92b79a130591ba7605b2786e41c30a96710b25f16554904ec8c1b6e3a164e798",
+    "input_sha256.csv": "cc17da0dcd3e7e732b81a17f3c35833f026fdec912538d28d7d71b9af71a46f6",
+    "method_metrics.csv": "a110600a91d9db44f62bfd59abc8cfe7d3634f6f31db8b0f76fc0f34f7b18976",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "4b90ed97cb2abc6a9f5786950e1d4e7d75e4efe55ab9e011772387a51c1d4eee",
+    "run_heldout_metrics.csv": "9569a889f34a8b17e39146f2ae4e8b9c1d2cff605f26b283fa2841d641f824e1",
+    "strata_metrics.csv": "4d9595781bfc0b4a7191b50a1dec6e80add00e82093f1b1ca0507f4da23cad15",
+    "template_summary.csv": "eca9592b05cf73d43c290f57231745f4d3949abede50e928ded39b460577385c",
+    "winner_ranked_metrics.csv": "71a6659fefcaeae9cf8d2900a48d48882b41c9546b30e65a7a6d4949bae0962d"
+  },
+  "issue_number": 2566,
+  "postprocess_note": "S70b ticket metadata and Bayesian change-point overlap-regime wording applied after reused S35b benchmark engine."
+}

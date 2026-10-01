@@ -1,49 +1,49 @@
 {
-  "ticket_id": "2502",
-  "issue_number": 2502,
-  "project": "testbeam",
-  "worker": "testbeam-laptop-2",
+  "study": "S61a",
+  "ticket_id": "2522",
+  "issue_number": 2522,
+  "worker": "testbeam-laptop-4",
   "status": "complete",
-  "winner": "saturation_residual_fusion_new",
-  "winner_metrics": {
-    "name": "saturation_residual_fusion_new",
-    "criterion": "minimum held-out composite saturation-energy closure score with run-block bootstrap CIs reported",
-    "winner_score": 0.15172443008737868,
-    "energy_fractional_bias": -0.002906610021787798,
-    "energy_fractional_sigma68": 0.068387783415775,
-    "energy_fractional_sigma68_ci95": [
-      0.06183707932660469,
-      0.0751855124441164
+  "winner": {
+    "method": "gradient_boosted_trees",
+    "family": "ml_tree",
+    "energy_res68_frac": 0.029870867702461484,
+    "energy_res68_ci95": [
+      0.024789876925105956,
+      0.03821286913147435
     ],
-    "time_sigma68_ns": 8.023902762892945,
-    "time_sigma68_ci95": [
-      7.365407249564567,
-      8.669358478772935
-    ],
-    "pileup_miss_rate": 0.32564102564102565,
-    "false_split_rate": 0.13846153846153847,
-    "uncertainty_calibration": {
-      "method": "saturation_residual_fusion_new",
-      "n_valid_doublets": 263.0,
-      "median_abs_energy_residual": 0.04730265759532487,
-      "p68_abs_energy_residual": 0.0694272959931502,
-      "nominal_68_proxy_width": 0.034999999999999996,
-      "coverage_abs_resid_le_proxy": 0.3688212927756654,
-      "coverage_abs_resid_le_2proxy": 0.7034220532319392,
-      "calibration_ratio_p68_over_proxy": 1.9836370283757203
-    }
+    "timing_sigma68_samples": 0.005445528485781605,
+    "pid_auc": 0.9957469201091387
   },
   "raw_root_reproduction": {
-    "passed": true,
-    "raw_root_glob": "/home/billy/ccb-data/data/extracted/root/root/hrdb_run_*.root",
     "expected_selected_pulses": 640737,
     "reproduced_selected_pulses": 640737,
     "delta": 0,
-    "evidence_table": "reproduction_match_table.csv"
+    "pass": true,
+    "raw_root_dir": "/home/billy/.tb-workers/testbeam-laptop-4/data/root/root"
   },
   "split": {
-    "split": "train and held-out sets are disjoint by source run",
     "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      64
+    ],
+    "heldout_runs": [
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
       50,
       51,
       52,
@@ -51,54 +51,246 @@
       54,
       55,
       56,
-      57
-    ],
-    "heldout_runs": [
+      57,
       58,
+      59,
       60,
+      61,
       62,
-      64,
+      63,
       65
     ],
-    "adc_clip": 11800.0,
     "bootstrap": "held-out run-block percentile 95% CI",
-    "bootstrap_replicates": 400,
-    "negative_control": "clipped clean single-pulse controls with matched source-run distribution",
-    "winner_score": "energy_fractional_sigma68 + 0.20*abs(energy_fractional_bias) + 0.008*time_sigma68_ns + 0.04*pileup_miss_rate + 0.04*false_split_rate"
+    "bootstrap_replicates": 200
   },
   "required_method_coverage": {
-    "traditional": "analytic_clipped_template_sideband_traditional",
+    "coupled_template_gls_traditional": "coupled_template_gls_traditional",
     "ridge": "ridge",
     "gradient_boosted_trees": "gradient_boosted_trees",
     "mlp": "mlp",
-    "one_dimensional_cnn": "1d_cnn",
-    "transformer_sequence_model": "tiny_sequence_transformer",
-    "new_architecture": "saturation_residual_fusion_new"
+    "1d_cnn": "1d_cnn",
+    "compact_transformer": "compact_transformer",
+    "cross_talk_residual_fusion_new": "cross_talk_residual_fusion_new"
   },
-  "required_outputs": {
-    "injected_overlap_closure": "method_metrics.csv, run_heldout_metrics.csv, event_predictions.csv",
-    "real_data_sideband_validation": "real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "saturation_mask_ablation.csv",
-    "uncertainty_calibration": "uncertainty_calibration.csv",
-    "traditional_vs_neural_failure_interpretation": "REPORT.md"
+  "negative_control": {
+    "control": "stave_labels_shuffled_within_run",
+    "energy_res68_frac": 0.03960605595858111,
+    "energy_res68_ci95": [
+      0.03683344514859904,
+      0.04627005608030595
+    ]
   },
-  "artifacts": {
-    "report": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/REPORT.md",
-    "result": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/result.json",
-    "method_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/method_metrics.csv",
-    "run_heldout_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/run_heldout_metrics.csv",
-    "real_data_sideband_validation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/saturation_mask_ablation.csv",
-    "uncertainty_calibration": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/uncertainty_calibration.csv"
-  },
+  "all_metrics": [
+    {
+      "method": "gradient_boosted_trees",
+      "family": "ml_tree",
+      "n": 332852,
+      "energy_bias_frac": -0.0057418575,
+      "energy_res68_frac": 0.0298708677,
+      "energy_mae_adc": 1602.7371077565,
+      "timing_sigma68_samples": 0.0054455285,
+      "pid_auc": 0.9957469201,
+      "pid_average_precision": 0.9944685539,
+      "energy_res68_ci95": [
+        0.0247898769,
+        0.0382128691
+      ],
+      "timing_sigma68_ci95": [
+        0.0042176903,
+        0.0069807582
+      ],
+      "pid_auc_ci95": [
+        0.9947118702,
+        0.9965048823
+      ],
+      "pid_average_precision_ci95": [
+        0.9885140917,
+        0.9968424606
+      ]
+    },
+    {
+      "method": "coupled_template_gls_traditional",
+      "family": "traditional_coupled_template_gls",
+      "n": 332852,
+      "energy_bias_frac": -0.024182123,
+      "energy_res68_frac": 0.0482141175,
+      "energy_mae_adc": 2748.1177685434,
+      "timing_sigma68_samples": 0.0079152897,
+      "pid_auc": 0.9866398625,
+      "pid_average_precision": 0.9742194347,
+      "energy_res68_ci95": [
+        0.0350834134,
+        0.0704125872
+      ],
+      "timing_sigma68_ci95": [
+        0.0055575862,
+        0.0101649964
+      ],
+      "pid_auc_ci95": [
+        0.982698111,
+        0.9899653195
+      ],
+      "pid_average_precision_ci95": [
+        0.9568469044,
+        0.9854389244
+      ]
+    },
+    {
+      "method": "ridge",
+      "family": "ml_linear",
+      "n": 332852,
+      "energy_bias_frac": -0.0263405544,
+      "energy_res68_frac": 0.0980715068,
+      "energy_mae_adc": 4112.2140089359,
+      "timing_sigma68_samples": 0.0162126518,
+      "pid_auc": 0.9695741934,
+      "pid_average_precision": 0.9464574429,
+      "energy_res68_ci95": [
+        0.0818080527,
+        0.1337261632
+      ],
+      "timing_sigma68_ci95": [
+        0.0127628489,
+        0.0225582257
+      ],
+      "pid_auc_ci95": [
+        0.9644161308,
+        0.9740466446
+      ],
+      "pid_average_precision_ci95": [
+        0.9129345485,
+        0.9648100975
+      ]
+    },
+    {
+      "method": "cross_talk_residual_fusion_new",
+      "family": "new_residual_fusion",
+      "n": 332852,
+      "energy_bias_frac": -0.0276285687,
+      "energy_res68_frac": 0.1281476854,
+      "energy_mae_adc": 5020.2249916147,
+      "timing_sigma68_samples": 0.0215749644,
+      "pid_auc": 0.9877968287,
+      "pid_average_precision": 0.9832531735,
+      "energy_res68_ci95": [
+        0.1084103123,
+        0.1612228338
+      ],
+      "timing_sigma68_ci95": [
+        0.0196414815,
+        0.0257096855
+      ],
+      "pid_auc_ci95": [
+        0.9860542707,
+        0.9896355721
+      ],
+      "pid_average_precision_ci95": [
+        0.9690298841,
+        0.9898797701
+      ]
+    },
+    {
+      "method": "compact_transformer",
+      "family": "neural_sequence",
+      "n": 332852,
+      "energy_bias_frac": -0.0507805517,
+      "energy_res68_frac": 0.1468744006,
+      "energy_mae_adc": 6354.7713119578,
+      "timing_sigma68_samples": 0.0230240045,
+      "pid_auc": 0.9833662389,
+      "pid_average_precision": 0.9698190768,
+      "energy_res68_ci95": [
+        0.12965983,
+        0.2428545311
+      ],
+      "timing_sigma68_ci95": [
+        0.0147637782,
+        0.0448301146
+      ],
+      "pid_auc_ci95": [
+        0.9791047506,
+        0.9880846317
+      ],
+      "pid_average_precision_ci95": [
+        0.9501422429,
+        0.9819649535
+      ]
+    },
+    {
+      "method": "1d_cnn",
+      "family": "neural_waveform",
+      "n": 332852,
+      "energy_bias_frac": -0.1188837961,
+      "energy_res68_frac": 0.2088401943,
+      "energy_mae_adc": 10474.0651772285,
+      "timing_sigma68_samples": 0.0363999815,
+      "pid_auc": 0.9606910013,
+      "pid_average_precision": 0.9161290887,
+      "energy_res68_ci95": [
+        0.1953164616,
+        0.3497590164
+      ],
+      "timing_sigma68_ci95": [
+        0.0184680851,
+        0.0608558524
+      ],
+      "pid_auc_ci95": [
+        0.9478648181,
+        0.971471269
+      ],
+      "pid_average_precision_ci95": [
+        0.8764231648,
+        0.9519435836
+      ]
+    },
+    {
+      "method": "mlp",
+      "family": "neural_tabular",
+      "n": 332852,
+      "energy_bias_frac": -0.2632799056,
+      "energy_res68_frac": 0.346295575,
+      "energy_mae_adc": 15181.6790064775,
+      "timing_sigma68_samples": 0.0387043681,
+      "pid_auc": 0.9699257576,
+      "pid_average_precision": 0.9363116215,
+      "energy_res68_ci95": [
+        0.3389678823,
+        0.3683221348
+      ],
+      "timing_sigma68_ci95": [
+        0.0173629284,
+        0.0655121147
+      ],
+      "pid_auc_ci95": [
+        0.9591685297,
+        0.9789879358
+      ],
+      "pid_average_precision_ci95": [
+        0.8989008936,
+        0.9624525282
+      ]
+    }
+  ],
+  "finding": "The held-out primary winner is gradient_boosted_trees with energy res68=0.02987; the traditional coupled-template GLS comparator has res68=0.04821. Cross-talk/nuisance terms are useful only where ablation deltas are positive and their run-block intervals exclude zero; PID and timing are duplicate-readout closure diagnostics, not external particle truth.",
   "queue_provenance": {
-    "claimed_once": true,
-    "claim_command_run_once": "tn-ticket claim testbeam-laptop-2 --project testbeam",
+    "claim_command_run_once": "tn-ticket claim testbeam-laptop-4 --project testbeam",
     "claim_command_output": "null / # null / null",
-    "manual_claim_recovery": "gh issue edit 2502 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-2 --remove-label factory:open",
-    "done_command": "tn-ticket done 2502",
+    "manual_claim_recovery": "gh issue edit 2522 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-4 --remove-label factory:open",
+    "done_command": "tn-ticket done 2522",
     "novel_tickets_appended": []
   },
-  "done_command": "tn-ticket done 2502",
-  "novel_tickets_appended": []
+  "artifacts": {
+    "REPORT.md": "reports/2522__s61a_cross_talk_aware_pulse_shape_timing_pid_calibration/REPORT.md",
+    "result.json": "reports/2522__s61a_cross_talk_aware_pulse_shape_timing_pid_calibration/result.json",
+    "method_metrics.csv": "reports/2522__s61a_cross_talk_aware_pulse_shape_timing_pid_calibration/method_metrics.csv",
+    "cross_talk_coefficients.csv": "reports/2522__s61a_cross_talk_aware_pulse_shape_timing_pid_calibration/cross_talk_coefficients.csv",
+    "nuisance_ablation.csv": "reports/2522__s61a_cross_talk_aware_pulse_shape_timing_pid_calibration/nuisance_ablation.csv",
+    "negative_control.csv": "reports/2522__s61a_cross_talk_aware_pulse_shape_timing_pid_calibration/negative_control.csv",
+    "run_heldout_metrics.csv": "reports/2522__s61a_cross_talk_aware_pulse_shape_timing_pid_calibration/run_heldout_metrics.csv",
+    "reproduction_match_table.csv": "reports/2522__s61a_cross_talk_aware_pulse_shape_timing_pid_calibration/reproduction_match_table.csv",
+    "counts_by_run.csv": "reports/2522__s61a_cross_talk_aware_pulse_shape_timing_pid_calibration/counts_by_run.csv",
+    "input_sha256.csv": "reports/2522__s61a_cross_talk_aware_pulse_shape_timing_pid_calibration/input_sha256.csv",
+    "claimed_ticket.txt": "reports/2522__s61a_cross_talk_aware_pulse_shape_timing_pid_calibration/claimed_ticket.txt"
+  },
+  "runtime_sec": 221.2
 }

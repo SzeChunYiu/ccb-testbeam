@@ -1,0 +1,3 @@
+#2522 NEW S61a cross-talk-aware pulse-shape timing and PID calibration benchmark
+
+Claim note: `tn-ticket claim testbeam-laptop-4 --project testbeam` was run exactly once. It exited 0 but printed null fields and did not leave a claimed issue. Issue #2522 was then manually label-swapped to `factory:claimed` and `worker:testbeam-laptop-4` without rerunning `tn-ticket claim`.

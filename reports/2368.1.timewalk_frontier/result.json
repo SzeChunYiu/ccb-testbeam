@@ -1,0 +1,68 @@
+{
+  "study_id": "S03-2368",
+  "ticket_id": "2368",
+  "worker": "testbeam-laptop-1",
+  "primary_metric": "heldout_pairwise_sigma68_ns",
+  "raw_reproduction_gate": {
+    "pass": true,
+    "quantity": "total selected B-stave pulses",
+    "report_value": 640737,
+    "reproduced": 640737,
+    "delta": 0,
+    "tolerance": 0
+  },
+  "split": {
+    "train_runs": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63
+    ],
+    "heldout_runs": [
+      65
+    ],
+    "cv_group": "run",
+    "bootstrap_samples": 500
+  },
+  "traditional_baseline": {
+    "method": "analytic_polynomial_timewalk",
+    "base_pickoff": "template_phase",
+    "candidate": "amp_only",
+    "alpha": 100.0,
+    "sigma68_ns": 1.494640076269676,
+    "ci95": [
+      1.2973266261688483,
+      1.668425735696352
+    ]
+  },
+  "winner": "cnn_waveform",
+  "winner_family": "ml_nn",
+  "winner_metrics": {
+    "sigma68_ns": 1.073261990624686,
+    "sigma68_ns_ci95": [
+      0.8347363180425076,
+      1.319553703675268
+    ],
+    "delta_vs_traditional_ns": -0.42137808564499,
+    "delta_vs_traditional_ci95": [
+      -0.6209832327605664,
+      -0.16884612706409913
+    ],
+    "bias_ns": 0.30245123489790504,
+    "full_rms_ns": 1.3349940301407832,
+    "tail_frac_abs_gt5ns": 0.005050505050505051,
+    "n_pair_residuals": 198
+  },
+  "input_sha256": "b5547ac7f2452361c1fc85b20ae7107c8fb6df54af22b152c2ef8e983fe38ee4",
+  "git_commit": "d3b2beb217c7157693da45e3e8824489c7a8f036",
+  "artifacts": {
+    "report": "reports/2368.1.timewalk_frontier/REPORT.md",
+    "metrics": "reports/2368.1.timewalk_frontier/method_metrics.csv",
+    "cv": "reports/2368.1.timewalk_frontier/method_cv_scan.csv",
+    "result": "reports/2368.1.timewalk_frontier/result.json"
+  },
+  "novel_ticket": "S03 follow-up: cross-sample physics-residual timewalk adoption gate",
+  "summary": "The best held-out point estimate is cnn_waveform, improving over the analytic baseline by 0.421378 ns. Adoption should depend on the paired event-bootstrap delta CI and the cross-sample follow-up because the gain is evaluated on one held-out run."
+}

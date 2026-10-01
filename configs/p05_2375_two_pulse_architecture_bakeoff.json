@@ -1,0 +1,59 @@
+{
+  "amplitude_cut_adc": 1000.0,
+  "baseline_bounds_adc": [-250.0, 250.0],
+  "baseline_samples": [0, 1, 2, 3],
+  "benchmark_runs": {
+    "train": [58, 59, 60, 61, 62],
+    "heldout": [63, 65]
+  },
+  "clean_max_amp_adc": 12000.0,
+  "clean_min_amp_adc": 1500.0,
+  "clean_per_heldout_run": 300,
+  "clean_per_train_run": 260,
+  "expected_counts": {
+    "total_selected_pulses": 640737,
+    "sample_ii_analysis": {
+      "selected_pulses": 125096,
+      "B2": 88213,
+      "B4": 21229,
+      "B6": 11148,
+      "B8": 4506
+    }
+  },
+  "fit_ratio_bounds": [0.15, 1.8],
+  "fit_separation_grid_samples": [0.5, 0.75, 1.0, 1.5, 2.0, 3.0, 4.0, 5.0, 6.0],
+  "injected_per_heldout_run": 300,
+  "injected_per_train_run": 260,
+  "injection_ratio_grid": [0.25, 0.5, 0.75, 1.0],
+  "injection_separation_grid_samples": [0.5, 0.75, 1.0, 1.5, 2.0, 3.0, 4.0, 5.0, 6.0],
+  "max_clean_pulses_per_run_stave": 220,
+  "ml": {
+    "bootstrap_samples": 400,
+    "cnn_batch_size": 128,
+    "cnn_channels": 10,
+    "cnn_epochs": 220,
+    "cnn_learning_rate": 0.0015,
+    "cnn_weight_decay": 0.0001,
+    "max_iter": 500,
+    "classifier_hidden": [32],
+    "regressor_hidden": [48, 24]
+  },
+  "output_dir": "reports/2375_p05_two_pulse_architecture_bakeoff",
+  "random_seed": 202608162,
+  "raw_root_dir": "data/root/root",
+  "run_groups": {
+    "sample_i_calib": [31, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42],
+    "sample_i_analysis": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    "sample_ii_analysis": [58, 59, 60, 61, 62, 63, 65],
+    "sample_ii_calib": [64]
+  },
+  "sample_period_ns": 10.0,
+  "samples_per_channel": 18,
+  "staves": {"B2": 0, "B4": 2, "B6": 4, "B8": 6},
+  "study_id": "P05-2375",
+  "template_reference_cfd_sample": 5.0,
+  "template_shift_grid": {"min": -1.25, "max": 0.75, "step": 0.25},
+  "ticket_id": "2375",
+  "ticket_title": "P05: Pile-up detection & two-pulse decomposition (deep vs fit)",
+  "worker": "testbeam-laptop-2"
+}

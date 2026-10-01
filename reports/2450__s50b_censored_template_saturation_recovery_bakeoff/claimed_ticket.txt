@@ -1,0 +1,13 @@
+claim_helper_command: tn-ticket claim testbeam-laptop-4 --project testbeam
+claim_helper_output:
+null
+# null
+
+null
+manual_claim_issue: 2450
+manual_claim_command: gh issue edit 2450 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-4 --remove-label factory:open
+manual_claim_evidence: issue #2450 labels include factory:claimed, project:testbeam, worker:testbeam-laptop-4
+
+# S50b: Censored-template saturation recovery under overlapping pile-up
+
+NEW academic-grade study. Compare a traditional censored matched-filter/template-amplitude recovery and tail-extrapolation method against ridge, gradient-boosted trees, MLP, 1D-CNN, and transformer sequence models where waveform length supports attention. Stress-test clipped peaks, ADC saturation, overlapping pulses, late tails, and pedestal drift. Use injection and held-out data with paired bootstrap 95% CIs for recovered energy, timing, pile-up separation, saturation-onset classification, and uncertainty coverage.

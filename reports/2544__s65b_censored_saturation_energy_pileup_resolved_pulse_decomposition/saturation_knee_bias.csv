@@ -1,0 +1,8 @@
+method,saturation_knee_bin,n_valid_doublets,energy_fractional_bias,energy_fractional_sigma68,median_plateau_width
+1d_cnn,unsaturated,275,0.06299282944431692,0.10096235972288733,2.0
+analytic_clipped_template_sideband_traditional,unsaturated,157,0.0816320497812446,0.10147770905963596,2.0
+gradient_boosted_trees,unsaturated,243,-0.0016151027440502257,0.0731658450900055,2.0
+mlp,unsaturated,231,0.005945584715686102,0.15892786253839258,2.0
+ridge,unsaturated,262,0.008649330803921053,0.06716926128854817,2.0
+saturation_residual_fusion_new,unsaturated,248,-0.0005697949302383906,0.06707860395727867,2.0
+tiny_sequence_transformer,unsaturated,140,-0.004859054715694636,0.1020939040096345,2.0

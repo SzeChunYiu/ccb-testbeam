@@ -1,0 +1,112 @@
+{
+  "findings": [
+    {
+      "code": "RETRACTED_POLARITY_MAP",
+      "evidence": {
+        "status": "RETRACTED_20260816_TRUNCATED_STAGING_DESYNC"
+      },
+      "severity": "CRITICAL",
+      "summary": "The result consumes a channel map whose repository status is retracted."
+    },
+    {
+      "code": "STRONGLY_NON_GAUSSIAN_RESIDUAL",
+      "evidence": {
+        "max_rms_over_sigma68": 47.967445959255606,
+        "range_rms_over_sigma68": [
+          24.32868317071204,
+          47.967445959255606
+        ]
+      },
+      "severity": "CRITICAL",
+      "summary": "The full RMS is many times the central-68% width."
+    },
+    {
+      "code": "GAUSSIAN_CORE_FIT_REJECTED",
+      "evidence": {
+        "minimum_chi2_ndf": 766.5
+      },
+      "severity": "CRITICAL",
+      "summary": "The reported Gaussian-core fit has unacceptable chi2/ndf at every fraction."
+    },
+    {
+      "code": "CORE_TAIL_TRADEOFF",
+      "evidence": {
+        "rms_first_last_ns": [
+          3.9221,
+          4.6267
+        ],
+        "sigma68_first_last_ns": [
+          0.161213,
+          0.096455
+        ]
+      },
+      "severity": "HIGH",
+      "summary": "Increasing CFD fraction narrows the central core while widening the full distribution."
+    },
+    {
+      "code": "WAVEFORM_ROWS_LABELLED_AS_EVENTS",
+      "evidence": {
+        "complete_pair_events": 228834.0,
+        "ratio": 2.0,
+        "selected_total": 457668.0
+      },
+      "severity": "MEDIUM",
+      "summary": "The selected total is two waveform rows per complete B4-B6 event."
+    },
+    {
+      "code": "PAIR_ONLY_UNDERDETERMINED",
+      "evidence": {
+        "model": "Var(dt_B4B6)=sigma_B4^2+sigma_B6^2-2*Cov(B4,B6)",
+        "unknowns": [
+          "sigma_B4",
+          "sigma_B6",
+          "Cov(B4,B6)"
+        ]
+      },
+      "severity": "CRITICAL",
+      "summary": "One B4-B6 residual cannot identify B4 and B6 resolutions separately."
+    },
+    {
+      "code": "SIGMA68_NOT_QUADRATURE_ADDITIVE",
+      "evidence": {},
+      "severity": "HIGH",
+      "summary": "A robust interquantile width cannot generally be divided by sqrt(2)."
+    }
+  ],
+  "fraction_table_source": "parsed_from_result_json",
+  "pair_residual_authorized": false,
+  "polarity_map_status": "RETRACTED_20260816_TRUNCATED_STAGING_DESYNC",
+  "recommended_headline": "The published sub-nanosecond number is an analysis-level B4-B6 pair-core diagnostic from a retracted waveform interpretation; no intrinsic stave timing resolution is currently authorized.",
+  "single_stave_resolution_authorized": false,
+  "sqrt2_counterexamples": [
+    {
+      "case": "equal independent normal",
+      "naive_pair_over_sqrt2": 0.993348866570175,
+      "pair_sigma68": 1.4048074392714835,
+      "relative_error_percent": -0.06655634765321272,
+      "true_stave_A_sigma68": 0.9940104436167377
+    },
+    {
+      "case": "unequal independent normal",
+      "naive_pair_over_sqrt2": 1.574781565654086,
+      "pair_sigma68": 2.227077447923145,
+      "relative_error_percent": 58.67155609469861,
+      "true_stave_A_sigma68": 0.9924788061662561
+    },
+    {
+      "case": "equal with common jitter",
+      "naive_pair_over_sqrt2": 0.9944016441708134,
+      "pair_sigma68": 1.406296291632469,
+      "relative_error_percent": -29.143904142228394,
+      "true_stave_A_sigma68": 1.4034101542468007
+    },
+    {
+      "case": "equal independent Laplace",
+      "naive_pair_over_sqrt2": 1.2540214644461138,
+      "pair_sigma68": 1.7734541625266642,
+      "relative_error_percent": 9.743514398529939,
+      "true_stave_A_sigma68": 1.142683894641989
+    }
+  ],
+  "status": "GATED_NOT_PHYSICAL_RESOLUTION"
+}

@@ -1,0 +1,13 @@
+claim_helper_command: tn-ticket claim testbeam-laptop-1 --project testbeam
+claim_helper_stdout:
+# null
+
+null
+claim_helper_stderr:
+null
+manual_claim_issue: 2442
+manual_claim_command: gh issue edit 2442 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-1 --remove-label factory:open
+manual_claim_evidence: issue #2442 labels include factory:claimed, project:testbeam, worker:testbeam-laptop-1
+#2442 S48a: Charge-template versus waveform-ML pulse-shape timing disentanglement
+
+Academic-grade study: compare a traditional constant-fraction/template-fit timing and charge-integration baseline against ridge regression, gradient-boosted trees, MLP, 1D-CNN, and a compact waveform transformer for pulse-shape and timing inference. Use grouped run splits, leakage checks, paired bootstrap confidence intervals for timing residuals and shape metrics, and stratified diagnostics for pedestal excursions, early/late tails, and energy dependence. Deliver concise report tables suitable for scoreboard insertion.

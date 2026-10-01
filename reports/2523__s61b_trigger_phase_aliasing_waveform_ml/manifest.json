@@ -1,0 +1,101 @@
+{
+  "ticket_id": "2523",
+  "study_id": "S61b",
+  "worker": "testbeam-laptop-3",
+  "generated_at_unix": 1786910503.3359308,
+  "claim_command": "tn-ticket claim testbeam-laptop-3 --project testbeam",
+  "done_command": "tn-ticket done 2523",
+  "result_winner": "traditional_cfd_template_derivative",
+  "artifacts": [
+    {
+      "path": "REPORT.md",
+      "bytes": 51167,
+      "sha256": "bb921a7e44b26182b22bed50f214ac42d5c97708bd267b6e9b5c0daf5691260d"
+    },
+    {
+      "path": "ablations.csv",
+      "bytes": 8836,
+      "sha256": "19ac18e11c124eaa52b09ba41c626f9f54d82d16dec20811b1059aaf45c9bd4c"
+    },
+    {
+      "path": "by_run.csv",
+      "bytes": 6611,
+      "sha256": "c0c596d7ba4c4fde8f5f39743f9cdf10149c6c7fd08dcb5fbc151ef61fe5dd36"
+    },
+    {
+      "path": "claimed_ticket.txt",
+      "bytes": 950,
+      "sha256": "6aa2bedbf3ecf51edb622144640344cf75a27831678123427ebecf42fd5d2a5d"
+    },
+    {
+      "path": "claimed_ticket_body.txt",
+      "bytes": 663,
+      "sha256": "4706e24d55516baf735a6ed3136ce2b4cbf830b5303c835a2ad4ed689c463c2f"
+    },
+    {
+      "path": "frontier_axis_summary.csv",
+      "bytes": 7194,
+      "sha256": "00c02280ba6ce4b50855d6e84504a337d8b6257c38ac08d0a6747846781c64c7"
+    },
+    {
+      "path": "input_sha256.csv",
+      "bytes": 4993,
+      "sha256": "9d1630c332196186416292bc75bba0238b8007fd1975f90e78916995e3b486e1"
+    },
+    {
+      "path": "method_deltas.csv",
+      "bytes": 2458,
+      "sha256": "a065ab6642fe759877e273a8fc6fbacd17c752ed25f808e14061204408ba6762"
+    },
+    {
+      "path": "metrics.csv",
+      "bytes": 2394,
+      "sha256": "c95327c9e5bd6b064ff34bb9709905127d07c130a369bc0abdde1a6b12d96152"
+    },
+    {
+      "path": "phase_alias_stress_tests.csv",
+      "bytes": 8836,
+      "sha256": "19ac18e11c124eaa52b09ba41c626f9f54d82d16dec20811b1059aaf45c9bd4c"
+    },
+    {
+      "path": "phase_bin_by_run_metrics.csv",
+      "bytes": 29522,
+      "sha256": "58b027d683c46f260cf43e3fd93f1d6b75316439b21354c38bf8991843c577de"
+    },
+    {
+      "path": "phase_bin_summary.csv",
+      "bytes": 5199,
+      "sha256": "7b3a85f5f81ff4a7af9b02ce4fdaa120dbd2a6d76d0489f9dd9886d2acbd9adf"
+    },
+    {
+      "path": "phase_scrambled_nulls.csv",
+      "bytes": 1037,
+      "sha256": "e18b3b1d65072f842a8c12932ff2c01dc844d27f04f5ec10d966ccd87daf52a8"
+    },
+    {
+      "path": "reproduction.csv",
+      "bytes": 299,
+      "sha256": "962a281223ae2d6280d815498dfe7f7042b684acc1de55aa6fee4e305eb9fb24"
+    },
+    {
+      "path": "result.json",
+      "bytes": 69656,
+      "sha256": "a48e51feb17da09a70fc80733fc1dea26aea25ab42df6e3d129f48cb11ccabd9"
+    },
+    {
+      "path": "run_family_summary.csv",
+      "bytes": 3739,
+      "sha256": "2e334ae5e88e6c78e09037aa5459525493cafa07b6f1217ab902161724af622f"
+    },
+    {
+      "path": "strata.csv",
+      "bytes": 28732,
+      "sha256": "f8a5805352128c49977cd0f9536bb4fffb6945f2e01a3ca2a4ca463336f143ad"
+    },
+    {
+      "path": "trigger_alignment_summary.csv",
+      "bytes": 1417,
+      "sha256": "39d4a27c9e0284b34f2420237c4307ad3921d392ae35f89008e094b5a6256eb6"
+    }
+  ]
+}

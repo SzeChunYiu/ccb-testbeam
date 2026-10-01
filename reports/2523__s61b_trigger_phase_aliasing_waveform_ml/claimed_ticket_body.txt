@@ -1,0 +1,4 @@
+2523
+# NEW S61b trigger-phase aliasing study for pedestal timing and pile-up inference
+
+Benchmark a traditional phase-binned CFD/template residual model and harmonic regression against ridge, gradient-boosted trees, MLP, 1D-CNN, and transformer sequence models. Test whether ADC sampling phase and trigger alignment aliases create apparent pulse-shape classes, pedestal excursions, pile-up labels, saturation tails, energy shifts, or PID boundaries. Report bootstrap CIs by run and phase bin for timing bias, pile-up false-positive rate, pedestal residual, energy scale drift, and PID boundary movement; require held-out-run validation and phase-scrambled nulls.

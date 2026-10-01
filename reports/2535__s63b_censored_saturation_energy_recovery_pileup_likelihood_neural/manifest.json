@@ -1,0 +1,27 @@
+{
+  "ticket_id": "2535",
+  "git_commit": "cec9edc28257e0699c70c17fa9b2e8d806a3d42a",
+  "command": "/home/billy/.cache/uv/builds-v0/.tmpyTIZDW/bin/python scripts/ticket_2535_s63b_censored_saturation_energy_recovery.py",
+  "runtime_seconds": 59.75054860115051,
+  "python": "3.13.12 (main, Feb  3 2026, 22:52:12) [Clang 21.1.4 ]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+  "outputs_sha256": {
+    "REPORT.md": "52525288aeb524528de533757a594d9279be9693e9354bbab7a221d1550d4164",
+    "amplitude_stratified_validation.csv": "c48e2d3bd352bd871cda0cbba6ee518d07d0da84146c093e513e006e8835f71f",
+    "claimed_ticket.txt": "c63cf79cb1d7f023b56f62c919ae9fa8a6e3a6581785110712af03ee825a309f",
+    "event_predictions.csv": "0b1034457d2f71b36f904ad63c06cb5c40170e1bc6e986a14d7d53f86a0a0bd4",
+    "input_sha256.csv": "cc17da0dcd3e7e732b81a17f3c35833f026fdec912538d28d7d71b9af71a46f6",
+    "method_metrics.csv": "5240747a10e859f82b3c09a4465057d3466f78cd292576b7bdb2d8913a252137",
+    "pedestal_tail_systematics.csv": "dc6ea17aabc9bda73e7040c3b41e8de341ba49fe795fe26bbb6f6d23bfe69343",
+    "pid_proxy_confusion.csv": "4ad92bc64500cae0a506a82de8eafc8704e7638690ab96fd2b49d0249954832e",
+    "pileup_spacing_dependence.csv": "ccf64205844bd677c866d6d15374f086d6654a276f87bd0e07ef74adf72b7104",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "01def08da19dedf6b04a86c74616f7e0ac92e0ebdbc11a17a8e7aa222fefb93f",
+    "run_heldout_metrics.csv": "711e32f2b1e53606f27fb452b537ec1ba860bb5d37e3ee656852f4e2b05933f7",
+    "saturation_knee.csv": "32b85cdecdf4a28b7fec0df4af89e1782c494cf1899ebce88136e4619dd257f3",
+    "strata_metrics.csv": "ebc325dc4117b765a356046462b74f8f57ec678e9919e880e7fa984c9f64d7ed",
+    "template_summary.csv": "70811c144799226d495253dcf99ec44c6cea6b9a7de91249cd5ea72526581b13",
+    "winner_ranked_metrics.csv": "b738fdf2df81fe46bd3240fb46fbaa97a8b35adaf2a68993970d03c4e3596b84"
+  },
+  "factory_issue": 2535
+}

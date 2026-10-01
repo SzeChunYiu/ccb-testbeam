@@ -1,0 +1,18 @@
+claim_helper_command: tn-ticket claim testbeam-laptop-4 --project testbeam
+claim_helper_exit_code: 0
+claim_helper_stderr:
+null
+claim_helper_stdout:
+# null
+
+null
+manual_claim_issue: 2535
+manual_claim_command: gh issue edit 2535 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-4 --remove-label factory:open
+manual_claim_evidence: issue #2535 labels include factory:claimed, project:testbeam, worker:testbeam-laptop-4
+done_command: tn-ticket done 2535
+
+#2535 S63b: Censored saturation energy recovery with pile-up-aware likelihood and neural waveforms
+
+Academic-grade study: quantify energy recovery when pulse tops are clipped or censored and pile-up distorts tails. Compare traditional censored Landau-Gaussian/template likelihood, sparse deconvolution, and calibration-curve saturation correction against ridge, gradient-boosted trees, MLP, 1D-CNN, and transformer waveform models.
+
+Require bootstrap CIs for recovered energy bias/resolution, saturation knee location, pedestal-coupled tail bias, pile-up separation dependence, PID confusion, and timing side effects. Include run-heldout and amplitude-stratified validation so the study deepens saturation, pile-up, pedestal, energy, timing, pulse-shape, and PID understanding.

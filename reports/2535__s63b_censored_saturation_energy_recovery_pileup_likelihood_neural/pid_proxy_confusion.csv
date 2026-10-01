@@ -1,0 +1,9 @@
+method,truth_pid_proxy_class,pred_pid_proxy_class,count,accuracy,accuracy_ci_low,accuracy_ci_high
+analytic_clipped_template_sideband_traditional,inner_high_charge,inner_high_charge,11,0.9876543209876543,0.9751394548403687,1.0
+analytic_clipped_template_sideband_traditional,inner_high_charge,other,0,0.9876543209876543,0.9751394548403687,1.0
+analytic_clipped_template_sideband_traditional,other,inner_high_charge,2,0.9876543209876543,0.9751394548403687,1.0
+analytic_clipped_template_sideband_traditional,other,other,149,0.9876543209876543,0.9751394548403687,1.0
+saturation_residual_fusion_new,inner_high_charge,inner_high_charge,16,0.9695817490494296,0.9619771863117871,0.9837414831638195
+saturation_residual_fusion_new,inner_high_charge,other,4,0.9695817490494296,0.9619771863117871,0.9837414831638195
+saturation_residual_fusion_new,other,inner_high_charge,4,0.9695817490494296,0.9619771863117871,0.9837414831638195
+saturation_residual_fusion_new,other,other,239,0.9695817490494296,0.9619771863117871,0.9837414831638195

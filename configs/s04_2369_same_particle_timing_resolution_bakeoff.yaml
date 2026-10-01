@@ -1,0 +1,38 @@
+study_id: S04
+ticket_number: 2369
+ticket_url: https://github.com/SzeChunYiu/factory-tickets/issues/2369
+title: Same-particle timing resolution rigorous bakeoff
+worker: testbeam-laptop-1
+
+raw_root_dir: /home/billy/ccb-data/data/extracted/root/root
+source_config: configs/s05h_1781040960_767_247d3910_saturation_covariance_support_frontier.yaml
+source_residual_panel: reports/1781040960.767.247d3910__s05h_saturation_covariance_support_frontier/heldout_pair_residuals.csv
+source_method_metrics: reports/1781040960.767.247d3910__s05h_saturation_covariance_support_frontier/method_metrics.csv
+source_interval_metrics: reports/1781055412.618.60fe5c1e__s05m_correlated_floor_projection_coverage/interval_coverage_summary.csv
+source_reproduction: reports/1781055412.618.60fe5c1e__s05m_correlated_floor_projection_coverage/reproduction_match_table.csv
+output_dir: reports/TICKET-2369__s04_same_particle_timing_resolution_bakeoff
+
+bootstrap_resamples: 400
+random_seed: 236904
+tail_abs_ns: 5.0
+core_fit_range_ns: 5.0
+core_fit_bins: 50
+
+legacy_targets:
+  B4_sigma_ns: 1.45
+  B6_sigma_ns: 0.72
+  B8_sigma_ns: 0.93
+  combined_sigma_ns: 0.54
+  tolerance_ns: 0.25
+
+methods:
+  traditional:
+    - pair_median
+    - traditional_s05d_static_priors
+  ml_nn:
+    - ridge
+    - gradient_boosted_trees
+    - mlp
+    - cnn_1d
+    - support_gated_cnn_new
+    - extra_trees_s05e_dynamic

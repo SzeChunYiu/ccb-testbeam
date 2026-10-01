@@ -1,0 +1,30 @@
+{
+  "ticket_id": "2571",
+  "factory_issue": 2571,
+  "git_commit": "cec9edc28257e0699c70c17fa9b2e8d806a3d42a",
+  "command": "python scripts/ticket_2571_s71c_saturation_pid_calibration_transport.py",
+  "runtime_seconds": 104.3705222606659,
+  "python": "3.11.14 (main, Feb  3 2026, 22:51:56) [Clang 21.1.4 ]",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.35",
+  "outputs_sha256": {
+    "REPORT.md": "9ba0ee129872244d886852b2f2424033903d850c4905ab6028601e9f52ca141b",
+    "calibration_curve.csv": "80577a5d93b2e5c3a6e5098e40143704113cf13015759f38fe768e002f508945",
+    "calibration_ece.csv": "077312c72748e02f70bc39ea63ed5de01a88ce5a09177f2484aefaddc2432bb2",
+    "claimed_ticket.txt": "412587f4ec5029863ed3380a930a9d15a204dac26c15a66e912918ae5a7424ee",
+    "counterfactual_ablation_summary.csv": "0b355d15e55a1e1266d8030190c52bb1ba6920e69ba0610216c8d7db3509b00e",
+    "endpoint_metrics_ci.csv": "e1d27b350566c3e20f7b3de384b2f543569ab0f2698daab6bcd3fc7f600be9ca",
+    "event_predictions.csv": "77161750a8015bc9ffe5e53fc14a3cecd5a02bea3ccdacb30893ac7ddf418732",
+    "input_sha256.csv": "cc17da0dcd3e7e732b81a17f3c35833f026fdec912538d28d7d71b9af71a46f6",
+    "method_metrics.csv": "ddca10050a2472795d5e7355a462f30701d4fe308213672e4887ae922e70dd40",
+    "pid_pedestal_timing_transport_spans.csv": "50892bcd46212e1706fb6d0f8550f92a16dbee41bf55299222ecd89b603b2a68",
+    "reproduction_match_table.csv": "0cf3bb0ef000657eb7e95142aa27ed387d13c1bb2f716892b22cf2ce3bd52020",
+    "result.json": "ff53b18b19a21048019d608d868dbd0f440854c4d9cd886e231f2ca1b4cc6c63",
+    "run_heldout_metrics.csv": "31f15ac2d05422063a2456fadac4111191c25d973a93cc886f767042e37e20fa",
+    "strata_metrics.csv": "41287ddd5b2255a48262f4816dbbf3f352cfb79ca34e7becd4d4f93117d7cfba",
+    "template_summary.csv": "0c644a8a71f7044c3e0164413f49fde6c7fe647ee33559fc7d548633a2cc2c30",
+    "transport_endpoint_summary.csv": "d4f9d78778cd6afdbfd0baff100fd110185ae17e4cdaa7cf03eb9ff08bac715a",
+    "transport_strata_ci.csv": "dabbed89fb1327dc756f1d68e855f3eefc9a18aea7b01be9dfed15bc1641e86f",
+    "winner_ranked_metrics.csv": "c385f739b70dea09a146877390163debbccb6ec08439785dc343da74cc3f2045"
+  },
+  "s71c_wrapper_runtime_seconds": 469.6286177635193
+}

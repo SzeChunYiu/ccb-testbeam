@@ -1,0 +1,21 @@
+2571
+# NEW S71c saturation-to-PID calibration transport across pedestal regimes
+
+Academic-grade study: test whether saturation-corrected energy features
+transport PID boundaries across pedestal regimes and pulse-shape timing slices.
+
+Compare traditional deltaE-E likelihood templates and spline energy calibration
+against ridge, gradient-boosted trees, MLP, 1D-CNN, and transformer-family
+multitask waveform models where apt. Provide bootstrap CIs for energy
+scale/resolution, PID boundary drift, saturation recovery, timing slice
+dependence, pile-up robustness, and pedestal transfer.
+
+claim_helper_command: tn-ticket claim testbeam-laptop-1 --project testbeam
+claim_helper_output:
+null
+# null
+
+null
+manual_claim_command: gh issue edit 2571 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-1 --remove-label factory:open
+manual_claim_evidence: issue #2571 labels include factory:claimed, project:testbeam, worker:testbeam-laptop-1
+done_command: tn-ticket done 2571

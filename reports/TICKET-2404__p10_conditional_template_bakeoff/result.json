@@ -1,0 +1,97 @@
+{
+  "ticket_id": 2404,
+  "ticket_title": "P10: Conditional generative pulse templates",
+  "worker": "testbeam-laptop-3",
+  "claim_command": "tn-ticket claim testbeam-laptop-3 --project testbeam",
+  "claim_command_returned_null": true,
+  "claimed_issue_recovered_from_remote_labels": 2404,
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_dir": "data/extracted/root/root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence": "reproduction_match_table.csv"
+  },
+  "split": {
+    "train_runs": [
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      40,
+      41,
+      42,
+      64
+    ],
+    "heldout_runs": [
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65
+    ],
+    "bootstrap": "800 run-block percentile resamples"
+  },
+  "methods": [
+    "traditional_empirical_ampbin",
+    "ridge",
+    "gradient_boosted_trees",
+    "mlp",
+    "1d_cnn",
+    "empirical_residual_boosted_fusion_new"
+  ],
+  "required_method_coverage": {
+    "strong_traditional": "traditional_empirical_ampbin",
+    "ridge": "ridge",
+    "gradient_boosted_trees": "gradient_boosted_trees",
+    "mlp": "mlp",
+    "1d_cnn": "1d_cnn",
+    "new_architecture": "empirical_residual_boosted_fusion_new"
+  },
+  "winner": {
+    "name": "gradient_boosted_trees",
+    "criterion": "minimum q_template_mse + 1e-4*timing_sigma68_ns + 5e-5*abs(timing_bias_ns)",
+    "winner_score": 0.006347202124646133,
+    "q_template_mse": 0.006333968111269185,
+    "q_template_mse_ci95": [
+      0.0053321511259153695,
+      0.00726212694974722
+    ],
+    "timing_sigma68_ns": 0.10921403098373371,
+    "timing_sigma68_ns_ci95": [
+      0.1049334946272772,
+      0.11386040411929628
+    ]
+  },
+  "artifacts": {
+    "REPORT.md": "REPORT.md",
+    "method_metrics": "method_metrics.csv",
+    "run_heldout_metrics": "run_heldout_metrics.csv",
+    "winner_ranked_metrics": "winner_ranked_metrics.csv",
+    "input_sha256": "input_sha256.csv"
+  },
+  "novel_tickets_appended": [],
+  "git_commit": "cfc84ffc12926fe2fca17b0a32418b9557a5054d",
+  "runtime_sec": 118.9
+}

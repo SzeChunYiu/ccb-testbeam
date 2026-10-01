@@ -1,0 +1,85 @@
+{
+  "ticket_id": 2404,
+  "ticket_title": "P10: Conditional generative pulse templates",
+  "worker": "testbeam-laptop-3",
+  "claim_command": "tn-ticket claim testbeam-laptop-3 --project testbeam",
+  "done_command": "tn-ticket done 2404",
+  "script": "scripts/ticket_2404_p10_conditional_template_bakeoff.py",
+  "command": "MPLCONFIGDIR=/tmp/mpl-ticket2404 uv run --with uproot --with awkward --with pyyaml python scripts/ticket_2404_p10_conditional_template_bakeoff.py",
+  "git_commit_at_run": "cfc84ffc12926fe2fca17b0a32418b9557a5054d",
+  "raw_root_reproduction": {
+    "passed": true,
+    "raw_root_dir": "data/extracted/root/root",
+    "expected_selected_pulses": 640737,
+    "reproduced_selected_pulses": 640737,
+    "delta": 0,
+    "evidence": "reproduction_match_table.csv"
+  },
+  "winner": {
+    "name": "gradient_boosted_trees",
+    "criterion": "minimum q_template_mse + 1e-4*timing_sigma68_ns + 5e-5*abs(timing_bias_ns)",
+    "winner_score": 0.006347202124646133,
+    "q_template_mse": 0.006333968111269185,
+    "q_template_mse_ci95": [
+      0.0053321511259153695,
+      0.00726212694974722
+    ],
+    "timing_sigma68_ns": 0.10921403098373371,
+    "timing_sigma68_ns_ci95": [
+      0.1049334946272772,
+      0.11386040411929628
+    ]
+  },
+  "outputs": [
+    {
+      "path": "reports/TICKET-2404__p10_conditional_template_bakeoff/REPORT.md",
+      "sha256": "1223819abd67fac9f906979315daa5a840f4d61e9917feb7025e797171dfa995",
+      "bytes": 15159
+    },
+    {
+      "path": "reports/TICKET-2404__p10_conditional_template_bakeoff/claim_command_output.txt",
+      "sha256": "7b7e84c99d17cfc985079f5166d629b7de5dec243c6334c135172a99ed02102c",
+      "bytes": 194
+    },
+    {
+      "path": "reports/TICKET-2404__p10_conditional_template_bakeoff/claimed_ticket.txt",
+      "sha256": "fbc88cb129db53f94978a7b6cb2900aeb9645b5c7aceec6171a0aa10a7ee0ec0",
+      "bytes": 183
+    },
+    {
+      "path": "reports/TICKET-2404__p10_conditional_template_bakeoff/input_sha256.csv",
+      "sha256": "8e616d2410813b6d9cafc940f8e9d8facf4562f08b1d7067d8d5491ef53aa3e1",
+      "bytes": 3643
+    },
+    {
+      "path": "reports/TICKET-2404__p10_conditional_template_bakeoff/method_metrics.csv",
+      "sha256": "b65efc8b8a72b19bac1448654826e5d0cf8e135994e8bd4410af4701471e3481",
+      "bytes": 2558
+    },
+    {
+      "path": "reports/TICKET-2404__p10_conditional_template_bakeoff/reproduction_match_table.csv",
+      "sha256": "66a2e0713c1964f22166aa075f41654ead97227d645de239db5e52a84b648740",
+      "bytes": 143
+    },
+    {
+      "path": "reports/TICKET-2404__p10_conditional_template_bakeoff/result.json",
+      "sha256": "395ab540b733a2e4449b4a4a4a6b20dcf6bda48235f1dcbfd099c34de13b032f",
+      "bytes": 2267
+    },
+    {
+      "path": "reports/TICKET-2404__p10_conditional_template_bakeoff/run_heldout_metrics.csv",
+      "sha256": "c3c75335e2e0c1b0e1647b69eaccccfca6811a64153a8465d2f9467f941070b0",
+      "bytes": 13613
+    },
+    {
+      "path": "reports/TICKET-2404__p10_conditional_template_bakeoff/template_bin_counts.csv",
+      "sha256": "cc85ba46341e39a6ac17c180ab7092e42e6aa8db7bde35100a5afc012a7dcd21",
+      "bytes": 1040
+    },
+    {
+      "path": "reports/TICKET-2404__p10_conditional_template_bakeoff/winner_ranked_metrics.csv",
+      "sha256": "13e7138b4136d6d89cdf74b6e7e7cc709d156559165133a41e3f126b2dc29325",
+      "bytes": 664
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+command: tn-ticket claim testbeam-laptop-3 --project testbeam
+stdout: # null\n\nnull\nstderr: null
+remote recovery: issue #2404 has labels factory:done,project:testbeam,worker:testbeam-laptop-3

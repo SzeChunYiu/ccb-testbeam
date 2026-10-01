@@ -1,0 +1,4 @@
+#2404
+P10: Conditional generative pulse templates
+
+cVAE/flow template family over (logA,stave) vs median-combine; q_template + timing residuals. See studies/STUDIES.md for full spec.

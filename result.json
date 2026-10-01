@@ -1,8 +1,8 @@
 {
-  "ticket_id": "2502",
-  "issue_number": 2502,
+  "ticket_id": "2539",
+  "issue_number": 2539,
   "project": "testbeam",
-  "worker": "testbeam-laptop-2",
+  "worker": "testbeam-laptop-3",
   "status": "complete",
   "winner": "saturation_residual_fusion_new",
   "winner_metrics": {
@@ -83,22 +83,22 @@
     "traditional_vs_neural_failure_interpretation": "REPORT.md"
   },
   "artifacts": {
-    "report": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/REPORT.md",
-    "result": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/result.json",
-    "method_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/method_metrics.csv",
-    "run_heldout_metrics": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/run_heldout_metrics.csv",
-    "real_data_sideband_validation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/real_data_sideband_validation.csv",
-    "saturation_mask_ablation": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/saturation_mask_ablation.csv",
-    "uncertainty_calibration": "reports/2502__s55b_pileup_saturation_energy_recovery_likelihood_vs_neural_bakeoff/uncertainty_calibration.csv"
+    "report": "reports/2539__s64b_censored_saturation_pileup_energy_pedestal_calibration/REPORT.md",
+    "result": "reports/2539__s64b_censored_saturation_pileup_energy_pedestal_calibration/result.json",
+    "method_metrics": "reports/2539__s64b_censored_saturation_pileup_energy_pedestal_calibration/method_metrics.csv",
+    "run_heldout_metrics": "reports/2539__s64b_censored_saturation_pileup_energy_pedestal_calibration/run_heldout_metrics.csv",
+    "real_data_sideband_validation": "reports/2539__s64b_censored_saturation_pileup_energy_pedestal_calibration/real_data_sideband_validation.csv",
+    "saturation_mask_ablation": "reports/2539__s64b_censored_saturation_pileup_energy_pedestal_calibration/saturation_mask_ablation.csv",
+    "uncertainty_calibration": "reports/2539__s64b_censored_saturation_pileup_energy_pedestal_calibration/uncertainty_calibration.csv"
   },
   "queue_provenance": {
     "claimed_once": true,
-    "claim_command_run_once": "tn-ticket claim testbeam-laptop-2 --project testbeam",
+    "claim_command_run_once": "tn-ticket claim testbeam-laptop-3 --project testbeam",
     "claim_command_output": "null / # null / null",
-    "manual_claim_recovery": "gh issue edit 2502 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-2 --remove-label factory:open",
-    "done_command": "tn-ticket done 2502",
+    "manual_claim_recovery": "gh issue edit 2539 --repo SzeChunYiu/factory-tickets --add-label factory:claimed --add-label worker:testbeam-laptop-3 --remove-label factory:open",
+    "done_command": "tn-ticket done 2539",
     "novel_tickets_appended": []
   },
-  "done_command": "tn-ticket done 2502",
+  "done_command": "tn-ticket done 2539",
   "novel_tickets_appended": []
 }

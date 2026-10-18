@@ -1,4 +1,4 @@
-issue,priority,review_lanes,focus,upstream_dependencies,independent_falsifier,evidence_required,external_input
+issue,priority,review_lanes,focus,related_issue_links_not_execution_DAG,independent_falsifier,evidence_required,external_input
 1603,P0,A+D,raw ROOT; 144 vs 128 words; polarity; event joins,1617,two independent 8x18 decoders reproduce run/stave selection and signed pulses,raw SHA manifest; tree/cardinality checks; independent polarity; hostile wrong-width fixture,YES
 1604,P0,A+B+C,DAQ; gain; SiPM; WLS; systematics,1603;1617,measured-vs-nominal detector response and nuisance perturbation produce physically bounded outputs,source-conditioned parameter ledger; fitted covariance; simulation sensitivity,YES
 1617,P0,A+D,external archive; hardware survey; timing; beam rate; untouched test set,NONE,byte identity and measured hardware/run metadata cross-check,immutable external witness and hash bound archive,YES

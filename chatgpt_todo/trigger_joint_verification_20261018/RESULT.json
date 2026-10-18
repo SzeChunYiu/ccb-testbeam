@@ -1,0 +1,264 @@
+{
+  "status": "REFERENCE_CONFORMANCE_PASS_LEGACY_DEFECTS_REMAIN",
+  "scientific_release": "NOT_AUTHORIZED",
+  "full_repository_verified": false,
+  "exhaustive": {
+    "max_n": 8,
+    "all_mask_pairs": 87381,
+    "joint_bitset_oracle_mismatches": 0,
+    "marginal_population_triples": 285,
+    "bounds_attainability_mismatches": 0,
+    "old_min_marginals_wrong_pairs": 68210,
+    "meaning": "finite software/accounting conformance; not independent detector observations"
+  },
+  "disjoint_fixture": {
+    "legacy": {
+      "both": 2,
+      "neither": 2,
+      "proxy_only": 0,
+      "hardware_only": 0
+    },
+    "correct_reference": {
+      "population_id": "disjoint-four",
+      "n_total": 4,
+      "counts": {
+        "both": 0,
+        "neither": 0,
+        "proxy_only": 2,
+        "hardware_only": 2
+      },
+      "rates": {
+        "proxy_acceptance": {
+          "numerator": 2,
+          "denominator": 4,
+          "estimate": 0.5,
+          "status": "ESTIMABLE"
+        },
+        "hardware_acceptance": {
+          "numerator": 2,
+          "denominator": 4,
+          "estimate": 0.5,
+          "status": "ESTIMABLE"
+        },
+        "hardware_given_proxy": {
+          "numerator": 0,
+          "denominator": 2,
+          "estimate": 0.0,
+          "status": "ESTIMABLE"
+        },
+        "proxy_given_hardware": {
+          "numerator": 0,
+          "denominator": 2,
+          "estimate": 0.0,
+          "status": "ESTIMABLE"
+        },
+        "proxy_loss": {
+          "numerator": 2,
+          "denominator": 2,
+          "estimate": 1.0,
+          "status": "ESTIMABLE"
+        }
+      },
+      "uncertainty": "NOT_EVALUATED",
+      "weighted": false,
+      "scientific_release": "NOT_AUTHORIZED"
+    },
+    "marginals_only": {
+      "population_id": "disjoint-four",
+      "n_total": 4,
+      "both_bounds": [
+        0,
+        2
+      ],
+      "proxy_only_bounds": [
+        0,
+        2
+      ],
+      "hardware_only_bounds": [
+        0,
+        2
+      ],
+      "neither_bounds": [
+        0,
+        2
+      ],
+      "proxy_loss_bounds": [
+        0.0,
+        1.0
+      ],
+      "joint_counts_identified": false,
+      "constraint": "one common integer J in both_bounds determines all four cells",
+      "uncertainty": "IDENTIFICATION_BOUNDS_NOT_CONFIDENCE_INTERVALS",
+      "scientific_release": "NOT_AUTHORIZED"
+    }
+  },
+  "source_species_counterexample": {
+    "permutations": [
+      {
+        "hit_order_pdg": [
+          2212,
+          1000010020,
+          11
+        ],
+        "legacy_primary_species_pdg": 2212
+      },
+      {
+        "hit_order_pdg": [
+          2212,
+          11,
+          1000010020
+        ],
+        "legacy_primary_species_pdg": 2212
+      },
+      {
+        "hit_order_pdg": [
+          1000010020,
+          2212,
+          11
+        ],
+        "legacy_primary_species_pdg": 1000010020
+      },
+      {
+        "hit_order_pdg": [
+          1000010020,
+          11,
+          2212
+        ],
+        "legacy_primary_species_pdg": 1000010020
+      },
+      {
+        "hit_order_pdg": [
+          11,
+          2212,
+          1000010020
+        ],
+        "legacy_primary_species_pdg": 11
+      },
+      {
+        "hit_order_pdg": [
+          11,
+          1000010020,
+          2212
+        ],
+        "legacy_primary_species_pdg": 11
+      }
+    ],
+    "distinct_labels_same_hits": 3,
+    "classification": "CONFIRMED_ORDER_DEPENDENT_FIRST_HIT_LABEL_NOT_PRIMARY_TRUTH",
+    "boundary": "No production species fractions recomputed; real writer ordering and track ancestry unverified."
+  },
+  "energy_partition_counterexample": {
+    "merged_deposit_MeV_each_counter": 1.2,
+    "split_deposits_MeV_each_counter": [
+      0.6,
+      0.6
+    ],
+    "threshold_MeV": 1,
+    "all_times_ns": 20,
+    "merged": {
+      "t1_above_threshold": true,
+      "t2_above_threshold": true,
+      "coincidence": true
+    },
+    "split": {
+      "t1_above_threshold": false,
+      "t2_above_threshold": false,
+      "coincidence": false
+    },
+    "classification": "CONDITIONAL_RESPONSE_MODEL_GAP",
+    "boundary": "Invariance required only if entries partition one unresolved counter signal. Actual T1/T2 writer/response semantics unbound. Not a measured efficiency bias."
+  },
+  "coincidence_policy_counterexample": {
+    "earliest_only_result": {
+      "t1_above_threshold": true,
+      "t2_above_threshold": true,
+      "coincidence": false
+    },
+    "any_pair_within_window_exists": true,
+    "boundary": "Earliest-only and any-pair policies differ. Neither is asserted to be real electronics without discriminator/deadtime evidence."
+  },
+  "threshold_monotonicity_counterexample": {
+    "cut_1_MeV": {
+      "t1_above_threshold": true,
+      "t2_above_threshold": true,
+      "coincidence": false
+    },
+    "cut_2_MeV": {
+      "t1_above_threshold": true,
+      "t2_above_threshold": true,
+      "coincidence": true
+    },
+    "boundary": "An unconditional nonincreasing coincidence-vs-threshold test would be invalid; selected timestamps can change."
+  },
+  "nan_energy_counterexample": {
+    "result": {
+      "t1_above_threshold": false,
+      "t2_above_threshold": true,
+      "coincidence": false
+    },
+    "exception_raised": false,
+    "classification": "INVALID_HIT_DATA_SILENTLY_COUNTS_AS_TRIGGER_FAILURE"
+  },
+  "scan_order_control": {
+    "legacy_forward": {
+      "1": {
+        "proton": 0.8
+      }
+    },
+    "legacy_reverse": {
+      "1": {
+        "proton": 0.2
+      }
+    },
+    "reference_surface": {
+      "population_id": "fixture",
+      "rows": [
+        {
+          "threshold_mev": 1.0,
+          "coinc_ns": 5.0,
+          "numerator": 2,
+          "denominator": 10,
+          "estimate": 0.2,
+          "status": "ESTIMABLE"
+        },
+        {
+          "threshold_mev": 1.0,
+          "coinc_ns": 15.0,
+          "numerator": 8,
+          "denominator": 10,
+          "estimate": 0.8,
+          "status": "ESTIMABLE"
+        },
+        {
+          "threshold_mev": 2.0,
+          "coinc_ns": 5.0,
+          "numerator": 1,
+          "denominator": 10,
+          "estimate": 0.1,
+          "status": "ESTIMABLE"
+        },
+        {
+          "threshold_mev": 2.0,
+          "coinc_ns": 15.0,
+          "numerator": 6,
+          "denominator": 10,
+          "estimate": 0.6,
+          "status": "ESTIMABLE"
+        }
+      ],
+      "scientific_release": "NOT_AUTHORIZED"
+    }
+  },
+  "zero_success_control": {
+    "554": {
+      "one-sided": 0.005392864988552534,
+      "two-sided-equal-tail": 0.0066365076380498125
+    },
+    "1000000": {
+      "one-sided": 2.9957277863525433e-06,
+      "two-sided-equal-tail": 3.688872650206488e-06
+    }
+  },
+  "code_scope": "reference code plus named Python function bodies; no full ROOT CLI, native hit writer or Geant4 transport",
+  "four_review_roles": "single-assistant perspectives, not independent human sign-off"
+}

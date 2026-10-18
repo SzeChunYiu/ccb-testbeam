@@ -1,0 +1,39 @@
+{
+  "schema": "ccb-trigger-joint-verification/1",
+  "date_utc": "2026-10-18",
+  "main_revision_inspected": "a61427813344e29047ca9eb9b764182eb29e4c83",
+  "review_branch_parent_inspected": "527e9097bcf586330f1363c30580a59310bfd213",
+  "legacy_pr1544_revision": "223280d03a86d74d1656b70528fc17eb4f87984e",
+  "normal_unittest_methods": 35,
+  "normal_exit": 0,
+  "optimized_unittest_methods": 35,
+  "optimized_exit": 0,
+  "optimized_tests_are_repeat_not_new_independent_cases": true,
+  "exhaustive_mask_pairs": 87381,
+  "population_marginal_triples": 285,
+  "new_reference_mismatches": 0,
+  "legacy_wrong_joint_pairs_in_finite_universe": 68210,
+  "bounded_test_universe_not_real_event_population": true,
+  "verification_exit": 1,
+  "second_execution_exit": 1,
+  "result_json_replay_byte_identical": true,
+  "scientific_release": "NOT_AUTHORIZED",
+  "source_semantic_scope": "named-function excerpts and independent reference, not full application; imports injected; full module bytes not locally acquired",
+  "source_retrieval": "GitHub connector read; attempted raw byte downloads failed DNS; no network bypass",
+  "environment": {
+    "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+    "platform": "Linux-6.18.55-x86_64-with-glibc2.41",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0"
+  },
+  "not_executed": [
+    "real beam ROOT",
+    "native T1/T2 Geant4 writer",
+    "full Geant4 transport",
+    "hardware discriminator/DAQ calibration",
+    "independent human review",
+    "full repository test suite",
+    "latest-head remote CI"
+  ],
+  "review_roles": "four specialist perspectives within one assistant; no invented independent panel"
+}

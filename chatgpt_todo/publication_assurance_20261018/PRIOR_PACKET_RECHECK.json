@@ -1,0 +1,109 @@
+{
+  "schema": "ccb-prior-packet-replay/1",
+  "input_zip_sha256": "4e0775ac5f109484c5f3866ae740131a3f874fbd6bdbe40baa9ff3f945126c68",
+  "manifest_entries_checked": 38,
+  "manifest_mismatches": 0,
+  "programs_completed": 7,
+  "replay_exit": 1,
+  "replay_status": "KNOWN_DEFECTS_REPRODUCED_NO_SCIENTIFIC_CLEARANCE",
+  "case_comparison": [
+    {
+      "file": "physics_kernel_cases.json",
+      "cases": 8,
+      "compared_fields": [
+        "case",
+        "evidence_kind",
+        "observed"
+      ],
+      "match_exactly": true,
+      "differing_cases": []
+    },
+    {
+      "file": "promotion_cases.json",
+      "cases": 6,
+      "compared_fields": [
+        "case",
+        "evidence_kind",
+        "returncode",
+        "scope"
+      ],
+      "match_exactly": true,
+      "differing_cases": []
+    },
+    {
+      "file": "rmax_main_cases.json",
+      "cases": 5,
+      "compared_fields": [
+        "case",
+        "contract_satisfied",
+        "expected_exit_zero",
+        "n_issues",
+        "returncode",
+        "scientific_acceptance",
+        "status"
+      ],
+      "match_exactly": true,
+      "differing_cases": []
+    },
+    {
+      "file": "rmax_pr1595_cases.json",
+      "cases": 5,
+      "compared_fields": [
+        "case",
+        "contract_satisfied",
+        "expected_exit_zero",
+        "n_issues",
+        "returncode",
+        "scientific_acceptance",
+        "status"
+      ],
+      "match_exactly": true,
+      "differing_cases": []
+    },
+    {
+      "file": "source_coordination_cases.json",
+      "cases": 6,
+      "compared_fields": [
+        "case",
+        "evidence_kind",
+        "observed"
+      ],
+      "match_exactly": true,
+      "differing_cases": []
+    },
+    {
+      "file": "trigger_hrd_cases.json",
+      "cases": 13,
+      "compared_fields": [
+        "case",
+        "evidence_kind",
+        "observed"
+      ],
+      "match_exactly": true,
+      "differing_cases": []
+    },
+    {
+      "file": "waveform_a09_cases.json",
+      "cases": 18,
+      "compared_fields": [
+        "case",
+        "evidence_kind",
+        "observed"
+      ],
+      "match_exactly": true,
+      "differing_cases": []
+    }
+  ],
+  "total_case_records": 61,
+  "environment": {
+    "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+    "platform": "Linux-6.18.55-x86_64-with-glibc2.41"
+  },
+  "limitations": [
+    "Same frozen test harness and inputs; not an independent experimental replication.",
+    "Three named Python excerpts and one copied C++ scalar adapter are not full application execution.",
+    "No original full-checkout AST comparison in this round.",
+    "No real beam ROOT or full Geant4 transport.",
+    "Existing 45-probe and 61-case audit packets overlap and must not be summed as independent validations."
+  ]
+}

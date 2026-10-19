@@ -1,0 +1,19 @@
+{
+  "schema": "ccb-a09-local-execution/1",
+  "date": "2026-10-19",
+  "source_revisions": [
+    "a61427813344e29047ca9eb9b764182eb29e4c83",
+    "b6838bc19c9a7bd2675c5de31114a5c9a6a3cad1"
+  ],
+  "local_projection_tests": 26,
+  "local_projection_tests_exit": 0,
+  "optimized_same_tests": 26,
+  "optimized_exit": 0,
+  "known_contradiction_audit_exit": 1,
+  "git_source_fields_rechecked": true,
+  "root_payload_bytes_not_opened": true,
+  "full_checkout_script_not_executed": true,
+  "remote_ci_not_run": true,
+  "humans_not_signed": true,
+  "release": "NOT_AUTHORIZED"
+}

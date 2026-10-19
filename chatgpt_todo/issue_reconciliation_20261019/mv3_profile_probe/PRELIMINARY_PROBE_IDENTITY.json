@@ -1,0 +1,5 @@
+{
+  "notice": "Original local probe before explicit import-origin guards and object label dtype. An attempted NONE label had been truncated to NO by a two-character NumPy string dtype. Both were excluded from Sample I, so numeric counterexample was unchanged, but final test preserves the declared label exactly. No production-source change.",
+  "bytes": 11157,
+  "sha256": "1e44800c800ad3b6b44afcaf690bed022915b41938ab3a2cc3db1dc0711e6404"
+}

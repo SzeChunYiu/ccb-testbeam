@@ -1,0 +1,216 @@
+{
+  "MP01_measurand": {
+    "matched_occupancy_score": 0.0,
+    "matching_occupancy_reference": {
+      "n_tracks": 1,
+      "normalized_stave_hit_profile": [
+        0.25,
+        0.25,
+        0.25,
+        0.25
+      ],
+      "per_track_occupancy": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "sample": "I",
+      "scientific_release": "NOT_AUTHORIZED",
+      "status": "ESTIMABLE",
+      "stave_hit_counts": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "stave_order": [
+        "B2",
+        "B4",
+        "B6",
+        "B8"
+      ]
+    },
+    "source_deepest_layer_counts": {
+      "B2": 0.0,
+      "B4": 0.0,
+      "B6": 0.0,
+      "B8": 1.0
+    },
+    "source_score": 1.5,
+    "source_status": "PRODUCTION"
+  },
+  "MP02_sample_pooling": {
+    "reference_I_after": {
+      "n_tracks": 1,
+      "normalized_stave_hit_profile": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "per_track_occupancy": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "sample": "I",
+      "scientific_release": "NOT_AUTHORIZED",
+      "status": "ESTIMABLE",
+      "stave_hit_counts": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "stave_order": [
+        "B2",
+        "B4",
+        "B6",
+        "B8"
+      ]
+    },
+    "reference_I_before": {
+      "n_tracks": 1,
+      "normalized_stave_hit_profile": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "per_track_occupancy": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "sample": "I",
+      "scientific_release": "NOT_AUTHORIZED",
+      "status": "ESTIMABLE",
+      "stave_hit_counts": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "stave_order": [
+        "B2",
+        "B4",
+        "B6",
+        "B8"
+      ]
+    },
+    "source_I_occupancy_after": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "source_I_occupancy_before": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "source_score_after_excluded_sample": 1.0,
+    "source_score_after_other_sample": 1.0,
+    "source_score_before": 0.0
+  },
+  "MP03_input_and_denominators": {
+    "empty_II_n": 0,
+    "empty_II_reference": {
+      "n_tracks": 0,
+      "normalized_stave_hit_profile": null,
+      "per_track_occupancy": null,
+      "sample": "II",
+      "scientific_release": "NOT_AUTHORIZED",
+      "status": "NOT_ESTIMABLE",
+      "stave_hit_counts": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "stave_order": [
+        "B2",
+        "B4",
+        "B6",
+        "B8"
+      ]
+    },
+    "empty_II_source": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "nan_and_negative_mask_occupancy": [
+      1.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "nan_and_negative_mask_status": "PRODUCTION",
+    "nan_edep_occupancy": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "nan_edep_status": "PRODUCTION",
+    "short_mask_reported_layers": 2,
+    "short_mask_status": "PRODUCTION"
+  },
+  "MP04_writer": {
+    "literal_NaN_in_written_JSON": true,
+    "mapping_score_is_nan": true,
+    "source_status": "PRODUCTION",
+    "writer_accepted": true
+  },
+  "positive_control_missing_mask": {
+    "boundary": "This protection prevents converter-shaped inputs with no per-layer mask from executing MV3 profiles. Do NOT attribute new numerical MV3 results to root_truth alone.",
+    "reason": "layer_hits (2D per-layer hit/edep mask) absent or mis-shaped; cannot compute occupancy via stop_layer proxy (MV3-002).",
+    "source_status": "BLOCKED"
+  },
+  "production_impact": "NOT_EVALUATED",
+  "review_perspectives": "detector measurands, transport hit vs endpoint, statistical population, source/serialization; one assistant, not independent human signoff",
+  "scientific_release": "NOT_AUTHORIZED",
+  "scope": "complete source-hash-matched MV3 module AND original common.py dependency; no stubs; synthetic in-memory records and actual JSON writer; not ROOT/CLI/Geant4",
+  "source_main": "a61427813344e29047ca9eb9b764182eb29e4c83",
+  "sources": [
+    {
+      "bytes": 4598,
+      "git_blob": "a6a3da4aa58c8346758c26ac64d23c4f827c90aa",
+      "path": "src/ccb_mc_validation/studies/common.py",
+      "sha256": "fa5b6bcf665388591cd3e1e90e1f3e80a585d6ed5f8d3f570d251e3db92eafc0"
+    },
+    {
+      "bytes": 7903,
+      "git_blob": "9b0dfeaa6e74401345bc78c7ab82b33d7868b665",
+      "path": "src/ccb_mc_validation/studies/mv3_stopping_depth.py",
+      "sha256": "6f5d206caed1b54d0b6e2d0a9ef558e8f0e298bcb2683ccedd6fe33ff8e7bc43"
+    }
+  ],
+  "status": "SOURCE_DEFECTS_REPRODUCED"
+}

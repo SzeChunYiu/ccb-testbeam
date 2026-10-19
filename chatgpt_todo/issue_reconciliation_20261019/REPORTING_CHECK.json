@@ -1,0 +1,26 @@
+{
+  "reporting_scope_rows": 55,
+  "source_aliases": 71,
+  "distinct_issue_owners": 15,
+  "issue_numbers": [
+    1045,
+    1592,
+    1598,
+    1603,
+    1607,
+    1608,
+    1611,
+    1616,
+    1630,
+    1631,
+    1632,
+    1633,
+    1634,
+    1635,
+    1636
+  ],
+  "unbound_rows": 0,
+  "scientific_release": "NOT_AUTHORIZED",
+  "live_issue_readback_performed_by_this_script": false,
+  "whole_repository_inventory_complete": false
+}

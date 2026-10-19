@@ -1,0 +1,22 @@
+{
+  "schema": "ccb-track-builder-review/1",
+  "publication_authorized": false,
+  "source_main": "a61427813344e29047ca9eb9b764182eb29e4c83",
+  "track_builder_blob": "7a664c25c38efb0610e577814baa50ecb9835d59",
+  "weight_adapter_blob": "861545b58f2bc9878f97b0b009f5243ed1f84c3b",
+  "local_scope": "TRANSCRIBED_SOURCE_EXPRESSIONS_NOT_FULL_SOURCE_IMPORT",
+  "new_unit_tests_passed": 17,
+  "optimized_repeat_passed": 17,
+  "weight_fixture_count": 9,
+  "invalid_or_ambiguous_reference_rejections": 7,
+  "invariant_reference_permutations": 24,
+  "legacy_same_hit_multiset_labels": [
+    "escape",
+    "stop"
+  ],
+  "scientific_release": "NOT_AUTHORIZED",
+  "full_source_probe_executed": false,
+  "real_root_rerun": false,
+  "true_production_bias": "NOT_EVALUATED",
+  "reviewers": "single assistant perspectives"
+}

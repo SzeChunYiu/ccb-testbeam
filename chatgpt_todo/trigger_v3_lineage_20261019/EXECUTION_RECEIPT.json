@@ -1,0 +1,23 @@
+{
+  "schema": "ccb-trigger-v3-execution/1",
+  "date_utc": "2026-10-19",
+  "scientific_release": "NOT_AUTHORIZED",
+  "main_revision": "a61427813344e29047ca9eb9b764182eb29e4c83",
+  "PR1542_revision": "d53cb7b813c1f84ddc46d3e30db67df7a41ea4c7",
+  "PR1544_revision": "223280d03a86d74d1656b70528fc17eb4f87984e",
+  "repo_projection_test_methods_passed": 8,
+  "repo_projection_tests_passed_with_optimization": 8,
+  "separate_extended_local_test_methods_passed": 29,
+  "optimized_is_repeat": true,
+  "grid_checked": 20,
+  "original_ROOT_processed": false,
+  "actual_geant4_executed": false,
+  "independent_hardware_measurement": false,
+  "independent_human_review": false,
+  "full_repository_CI_run": false,
+  "source_mode": "PINNED_GITHUB_CONNECTOR_FIELD_PROJECTION",
+  "v3_not_on_main": true,
+  "v2_zero_is_retracted_geometry": true,
+  "ray_prediction_executed_source_bound": false,
+  "paper_submission_clearance": false
+}

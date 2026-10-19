@@ -1,0 +1,20 @@
+{
+  "schema": "ccb-generator-domain-receipt/1",
+  "date_utc": "2026-10-19",
+  "status": "SCALAR_TESTS_PASS_PHYSICS_BLOCKED",
+  "scientific_release": "NOT_AUTHORIZED",
+  "source_main_revision": "a61427813344e29047ca9eb9b764182eb29e4c83",
+  "test_methods": 5,
+  "unit_test_exit": 0,
+  "scalar_compiler": "GCC 14.2.0 -std=c++17; O2 and O0 reproduce NaN",
+  "python": "3.13.5 -O",
+  "positive_algebra_points": 2688,
+  "zero_energy_produces_nonfinite_angles": true,
+  "normal_production_impact": "NOT_EVALUATED",
+  "full_geant4_executed": false,
+  "real_root_processed": false,
+  "real_cd2_stopping_table_processed": false,
+  "independent_human_review": false,
+  "exact_head_ci_ran": false,
+  "artifact_scope": "named C++ scalar expression transcription plus independently formulated Lorentz vector oracle"
+}

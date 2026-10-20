@@ -1,0 +1,28 @@
+{
+  "schema": "ccb-h3-stop-source-check/1",
+  "date": "2026-10-20",
+  "source_main": "a61427813344e29047ca9eb9b764182eb29e4c83",
+  "source_git_blob": "ca956eb7d07ea1e8044a61434d0c6bc273fb3736",
+  "recheck_blob": "0dc1d748e1b36265ad0e24d2d710ab12507c6431",
+  "local_full_source_test_methods": 16,
+  "local_review_only_guard_test_methods": 12,
+  "closed_world_valid_oracle_cases": 585,
+  "source_test_exit": 0,
+  "guard_test_exit": 0,
+  "optimized_modes_repeat": true,
+  "recheck_exit": 1,
+  "recheck_optimized_exit": 1,
+  "recheck_outputs_byte_identical": true,
+  "preliminary_harness_expectations_corrected": 2,
+  "preliminary_candidate_gate_overflow_handling_fixed": 1,
+  "issue_owner": 1606,
+  "issue_reporting": "NOT_POSTED_TOOL_SAFETY_BLOCK",
+  "scientific_release": "NOT_AUTHORIZED",
+  "full_test_package": "Available in prior conversation as ccb_stop_depth_h3_audit_20261020.zip",
+  "limitations": [
+    "no source-specific real ROOT",
+    "no native Geant4 writer/physical track termination validation",
+    "no full CLI/CI",
+    "no independent human peer signoff"
+  ]
+}

@@ -1,0 +1,23 @@
+# MV3 standalone ROOT-wrapper integration / process exit audit — 20 October 2026
+
+Scientific release: NOT_AUTHORIZED. Open owners #1634, #1630, #1611; master #1628/#1594; audit PR #1629. Source main a61427813344e29047ca9eb9b764182eb29e4c83; branch intake 9cd4d1a063a061e9cd2347cb68465e0b0300d623.
+
+**WB-01: The actual standalone MV3 script loads from src/ccb_mc_validation/truth/tracks.py, not the separately audited track_builder or io/root_truth.** Its records never supply layer_hits or edep_per_layer, and it appends the empty string as every sample_label. MV3 correctly BLOCKS missing masks; supplying a hit mask alone still BLOCKS missing Sample I/II identities. Therefore that precise wrapper/loader cannot produce its advertised same-sample profile unless an upstream physically justified source adapter is integrated. This is a verified integration blocker, not proof historical reported data were miscomputed or a reason to remove the correct protective gates.
+
+**WB-02: Standalone CLI exit and display fail open.** With an explicitly fake uproot reader returning synthetic Sci_bar hits, the original full scripts/mv3_stopping_depth.py executes, writes a StudyResult status BLOCKED with its reason, prints "[ok] wrote ...", and completes without raising SystemExit: the separate subprocess check exited 0. This is a process-status defect, not a demonstration that its StudyResult or the global publication system approved the science.
+
+**WB-03: Same physical GeV/c versus MeV/c unit error on another source path.** truth/tracks.py calculates sqrt(p^2+m^2)-m with raw momentum and MeV masses. Under the documented Krakow GeV/c convention, a 0.4 GeV/c proton yields 0.000085263 MeV instead of 81.705620 MeV; a 0.6 GeV/c deuteron yields 0.000095969 instead of 93.631557 MeV. This expands RT-01's affected source inventory; it is not a new mathematical failure mechanism or a measured historical ROOT bias.
+
+Run the committed exact-blob probe on a suitable complete checkout:
+    python chatgpt_todo/mv3_wrapper_gate_20261020/recheck.py
+Expected source-defect witness exit 1. Exit 2 means source drift or execution failure. Unlike the upstream CLI, the test never returns exit 0 to indicate source defects are repaired.
+
+Executed local evidence: 14 original-source kernel tests, 12 wrapper tests (partially overlapping), normal and optimized repeat, exact four Git blob identities, actual wrapper with a fake ROOT-read interface, and byte-identical result replay. A separate LOCAL-ONLY review candidate patch for original study/common/wrapper passed 22 tests normally/optimized and applied cleanly to a controlled source tree. It blocks uncalibrated DATA selected-pulse versus MC track-hit comparisons, keeps correct missing-mask/label blocks, validates finite schemas, persists strict finite JSON atomically and changes wrapper BLOCKED process exit to 2. Candidate is NOT applied to production or merged; assess effects on other consumers before any owner-integrated repair. Full local package: ccb_mv3_wrapper_gate_20261020.zip (conversation attachment).
+
+No real ROOT, native Krakow writer, Geant4, trigger/geometry/hardware calibration, LUNARC production job, exact-head repository CI, data/MC covariance or independent human reviewer was executed. The fake uproot supplies only test arrays; it is never passed as an authentic raw data source. Empty package initializers in local copied-source fixture are import scaffolding; four functional files are the exact pinned original bytes.
+
+Required: (1) owner-repair the wrapper exit status without suppressing BLOCKED JSON, (2) bind native per-track/layer hit units and true source Sample I/II/trigger membership rather than inventing labels, (3) keep selected-data pulse occupancy and MC track presence as separate measurands until transfer is justified, (4) rerun exact source-bound physics with uncertainty and full downstream figure/manuscript dependency propagation or prove non-impact. Existing historical MV3 CL-021 remains FLAWED.
+
+Four technical lenses within one assistant: DAQ population/trigger; Geant4 hits/track identity; statistical denominator and measure; provenance/process exit and review. Not an independent human panel.
+
+Primary method references: Geant4 Hits https://geant4.web.cern.ch/documentation/dev/bfad_html/ForApplicationDevelopers/Detector/hit.html ; BIPM/JCGM101 https://www.bipm.org/en/doi/10.59161/jcgm101-2008 ; SciPy exact binomial intervals https://docs.scipy.org/doc/scipy-1.16.1/reference/generated/scipy.stats._result_classes.BinomTestResult.proportion_ci.html . These are scope/method sources, not CCB calibration.

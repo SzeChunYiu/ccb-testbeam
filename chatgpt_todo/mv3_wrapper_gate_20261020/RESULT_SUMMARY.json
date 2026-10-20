@@ -1,0 +1,46 @@
+{
+  "schema": "ccb-mv3-standalone-bridge/1",
+  "date": "2026-10-20",
+  "main": "a61427813344e29047ca9eb9b764182eb29e4c83",
+  "input": "synthetic fake uproot",
+  "status": "SOURCE_WRAPPER_RETURNS_SUCCESS_WHILE_STUDY_BLOCKED",
+  "scientific_release": "NOT_AUTHORIZED",
+  "loader": {
+    "n_tracks": 2,
+    "sample_labels": [
+      "",
+      ""
+    ],
+    "has_layer_hits": false,
+    "has_edep_per_layer": false
+  },
+  "study_status": "BLOCKED",
+  "status_after_only_mask": "BLOCKED",
+  "wrapper_exit": 0,
+  "wrapper_stdout_contains_ok": true,
+  "wrapper_saved_status": "BLOCKED",
+  "energy_cases": [
+    {
+      "pdg": 2212,
+      "pGeV": 0.4,
+      "sourceEkinMeV": 0.00008526311819423427,
+      "oracleEkinMeV": 81.70562033487774
+    },
+    {
+      "pdg": 1000010020,
+      "pGeV": 0.6,
+      "sourceEkinMeV": 0.00009596862219041213,
+      "oracleEkinMeV": 93.63155712565066
+    }
+  ],
+  "local_reference_tests": 14,
+  "local_wrapper_tests": 12,
+  "local_candidate_tests": 22,
+  "optimizer_repeat": true,
+  "replay_byte_identical": true,
+  "root_executed": false,
+  "geant4_executed": false,
+  "hardware_calibrated": false,
+  "patch_integrated": false,
+  "limitations": "Original functional modules and CLI matched Git blobs; fake uproot input and test import scaffolding; no original ROOT/Geant4 or validated selection and unit provenance."
+}

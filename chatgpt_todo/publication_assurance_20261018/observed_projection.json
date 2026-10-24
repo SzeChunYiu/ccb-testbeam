@@ -1,0 +1,27 @@
+{
+  "schema": "ccb-publication-assurance-projection/1",
+  "scope": "FIELD_PROJECTIONS_FROM_CONNECTOR_READS_NOT_FULL_FILE_COPIES",
+  "repository": "SzeChunYiu/ccb-testbeam",
+  "revision": "a61427813344e29047ca9eb9b764182eb29e4c83",
+  "complete_repository_inventory": false,
+  "source_bindings": [
+    {"path": "configs/channel_polarity_v2.json", "git_blob": "955cd4581e915af326c9e37406adfc6574b5fb19", "lines": "1-end"},
+    {"path": "docs/claim_ledger.csv", "git_blob": "acfab45eb45bb79129a39905ceadf80a27237ea2", "lines": "1-2 and 28-40"},
+    {"path": "reports/paper_1303_optical_campaign_20260815T2209Z/result.json", "git_blob": "5b05d4963b8bb4d6db6c22a9687efff0e9868119", "lines": "1-160 and 252-358"}
+  ],
+  "nodes": [
+    {"id": "INPUT:channel_polarity_v2", "revision": "955cd4581e915af326c9e37406adfc6574b5fb19", "state": "RETRACTED", "source_state": "RETRACTED_20260816_TRUNCATED_STAGING_DESYNC", "requires": []},
+    {"id": "CL-954-001", "revision": "acfab45eb45bb79129a39905ceadf80a27237ea2", "state": "DONE_DATA_ONLY", "requires": [{"id": "INPUT:channel_polarity_v2", "revision": "955cd4581e915af326c9e37406adfc6574b5fb19"}]},
+    {"id": "CL-1318-002", "revision": "acfab45eb45bb79129a39905ceadf80a27237ea2", "state": "GATED", "requires": [{"id": "INPUT:channel_polarity_v2", "revision": "955cd4581e915af326c9e37406adfc6574b5fb19"}]},
+    {"id": "CL-1320-002", "revision": "acfab45eb45bb79129a39905ceadf80a27237ea2", "state": "GATED", "requires": [{"id": "INPUT:channel_polarity_v2", "revision": "955cd4581e915af326c9e37406adfc6574b5fb19"}]}
+  ],
+  "quantitative_checks": [
+    {"claim_id": "CL-029", "measurand": "heldout_sigma68_fraction", "evidence_class": "mc_model_dependent_optical", "ledger_status": "GATED", "ledger_n_events": 400, "artifact_n_heldout": 4000, "ledger_value": 0.06261039872036721, "artifact_value": 0.06261039872036721, "artifact_energy_target": "E_vis", "artifact_is_negative_control": false}
+  ],
+  "boundaries": [
+    "The three source_config-to-claim edges are explicit references in the canonical ledger, not a complete scientific dependency graph.",
+    "The ledger rows set allowed_status_validated=NO. This is an inconsistent status/interpretation, not evidence that production release succeeded.",
+    "A09 headline value matches. The sample count does not. This does not prove a numerical 6.26% error.",
+    "No real ROOT, Geant4 transport, hardware measurement or independent human sign-off was executed."
+  ]
+}

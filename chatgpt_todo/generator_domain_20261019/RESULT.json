@@ -1,0 +1,43 @@
+{
+  "schema": "ccb-generator-domain/1",
+  "scientific_release": "NOT_AUTHORIZED",
+  "source_main_revision": "a61427813344e29047ca9eb9b764182eb29e4c83",
+  "source_scattering_generator_blob": "a04da519551a7d505b4bce50b20d0b5424f0f40d",
+  "source_header_blob": "3492d2b61fcc7320070837cff241089f40e4882d",
+  "source_crosssection_blob": "7c0ed5a5b692f58d7b183f60805ee64630a74a76",
+  "source_configuration_accepts_zero_incident_energy": true,
+  "compiled_cpp_Ekin_zero_theta3_theta4": [
+    "NaN",
+    "NaN"
+  ],
+  "compiled_cpp_Ekin_zero_betas": [
+    0,
+    0
+  ],
+  "synthetic_positive_stopping_to_zero": {
+    "stopped": true,
+    "kinetic_MeV": 0,
+    "stopped_on_step": 83,
+    "toy_positive_stopping_MeV_per_mm": 100
+  },
+  "independent_vector_kinematics": {
+    "vector_grid_points": 2688,
+    "kinetic_energy_MeV": [
+      1,
+      10,
+      60,
+      100,
+      190,
+      250
+    ],
+    "source_node_angles_degrees": 28,
+    "azimuth_angles": 8,
+    "coplanarity_branches": 2,
+    "max_source_vs_invariant_momentum_component_MeV_per_c": 7.474909580196254e-12,
+    "max_source_vs_invariant_kinetic_energy_MeV": 9.237055564881302e-13,
+    "max_energy_or_momentum_balance_numerical_value": 6.764366844436154e-12,
+    "finite_domain_result": "CONDITIONAL_ALGEBRA_CONSISTENT_NOT_COMPILED_GEANT4"
+  },
+  "source_file_scope": "copied scalar expressions; no compiled Geant4 app/ROOT/hardware or runtime stopping table",
+  "real_190MeV_run_affected": "NOT_ESTABLISHED"
+}

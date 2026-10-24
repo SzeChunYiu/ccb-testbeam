@@ -1,0 +1,35 @@
+test_atomic_order_is_upstream_first (test_audit_claim_dependencies.GraphTests.test_atomic_order_is_upstream_first) ... ok
+test_blocked_is_not_claimed_flawed (test_audit_claim_dependencies.GraphTests.test_blocked_is_not_claimed_flawed) ... ok
+test_changed_revision_propagates (test_audit_claim_dependencies.GraphTests.test_changed_revision_propagates) ... ok
+test_cycle_rejected (test_audit_claim_dependencies.GraphTests.test_cycle_rejected) ... ok
+test_diamond_deduplicates_root_cause (test_audit_claim_dependencies.GraphTests.test_diamond_deduplicates_root_cause) ... ok
+test_duplicate_edge_rejected (test_audit_claim_dependencies.GraphTests.test_duplicate_edge_rejected) ... ok
+test_duplicate_node_rejected (test_audit_claim_dependencies.GraphTests.test_duplicate_node_rejected) ... ok
+test_empty_graph_rejected (test_audit_claim_dependencies.GraphTests.test_empty_graph_rejected) ... ok
+test_missing_edge_revision_rejected (test_audit_claim_dependencies.GraphTests.test_missing_edge_revision_rejected) ... ok
+test_missing_node_revision_rejected (test_audit_claim_dependencies.GraphTests.test_missing_node_revision_rejected) ... ok
+test_missing_requires_is_not_assumed_empty (test_audit_claim_dependencies.GraphTests.test_missing_requires_is_not_assumed_empty) ... ok
+test_multiple_roots_not_lost (test_audit_claim_dependencies.GraphTests.test_multiple_roots_not_lost) ... ok
+test_order_invariance (test_audit_claim_dependencies.GraphTests.test_order_invariance) ... ok
+test_retraction_reaches_grandchild (test_audit_claim_dependencies.GraphTests.test_retraction_reaches_grandchild) ... ok
+test_scoped_valid_is_not_global_certificate (test_audit_claim_dependencies.GraphTests.test_scoped_valid_is_not_global_certificate) ... ok
+test_self_loop_rejected (test_audit_claim_dependencies.GraphTests.test_self_loop_rejected) ... ok
+test_unknown_status_rejected (test_audit_claim_dependencies.GraphTests.test_unknown_status_rejected) ... ok
+test_unresolved_dependency_rejected (test_audit_claim_dependencies.GraphTests.test_unresolved_dependency_rejected) ... ok
+test_array_document_rejected (test_audit_claim_dependencies.InputTests.test_array_document_rejected) ... ok
+test_bad_counts_rejected (test_audit_claim_dependencies.InputTests.test_bad_counts_rejected) ... ok
+test_cli_returns_one_for_current_inconsistencies (test_audit_claim_dependencies.InputTests.test_cli_returns_one_for_current_inconsistencies) ... ok
+test_cli_returns_two_for_missing_source (test_audit_claim_dependencies.InputTests.test_cli_returns_two_for_missing_source) ... ok
+test_count_correction_does_not_clear_retracted_inputs (test_audit_claim_dependencies.InputTests.test_count_correction_does_not_clear_retracted_inputs) ... ok
+test_duplicate_json_keys_rejected (test_audit_claim_dependencies.InputTests.test_duplicate_json_keys_rejected) ... ok
+test_exact_zero_count_allowed (test_audit_claim_dependencies.InputTests.test_exact_zero_count_allowed) ... ok
+test_historical_node_not_promoted (test_audit_claim_dependencies.InputTests.test_historical_node_not_promoted) ... ok
+test_nonfinite_json_rejected (test_audit_claim_dependencies.InputTests.test_nonfinite_json_rejected) ... ok
+test_nonfinite_metrics_rejected (test_audit_claim_dependencies.InputTests.test_nonfinite_metrics_rejected) ... ok
+test_numerical_mismatch_detected (test_audit_claim_dependencies.InputTests.test_numerical_mismatch_detected) ... ok
+test_observed_projection_finds_three_descendants_and_count (test_audit_claim_dependencies.InputTests.test_observed_projection_finds_three_descendants_and_count) ... ok
+
+----------------------------------------------------------------------
+Ran 30 tests in 1.417s
+
+OK

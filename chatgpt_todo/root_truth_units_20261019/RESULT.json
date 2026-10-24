@@ -1,0 +1,33 @@
+{
+  "dependent_imports": "STUBBED_MASS_AND_TRIGGER_FOR_ISOLATION",
+  "deuteron_p0_6_GeV_c": {
+    "independent_reference_ekin_MeV": 93.63155712565066,
+    "source_ekin_MeV": 9.596862219041213e-05
+  },
+  "edep_length_mismatch": {
+    "exception_raised": false,
+    "n_deposits": 1,
+    "n_layers": 2,
+    "source_total_edep": 2.0
+  },
+  "full_trigger_executed": false,
+  "proton_p0_4_GeV_c": {
+    "independent_reference_ekin_MeV": 81.70562033487774,
+    "source_ekin_MeV": 8.526311819423427e-05
+  },
+  "real_ROOT_executed": false,
+  "reference_units": "GeV/c converted to MeV/c once",
+  "scientific_release": "NOT_AUTHORIZED",
+  "source_git_blob": "a9b3f8ad064db4031521110e78ac741d2a61a7c6",
+  "species_permutation": {
+    "both_edep_tot": 5.0,
+    "first_order": 2212,
+    "reversed_order": 1000010020
+  },
+  "status": "CONFIRMED_SOURCE_CONTRACT_FAILURES",
+  "unit_test_grid": {
+    "failed_unit_conversions": 202,
+    "momenta_per_species": 101,
+    "species": 2
+  }
+}

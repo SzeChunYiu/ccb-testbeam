@@ -1,0 +1,35 @@
+{
+  "schema": "ccb-publication-assurance-execution/1",
+  "date": "2026-10-18",
+  "scientific_release": "NOT_AUTHORIZED",
+  "source_main_revision": "a61427813344e29047ca9eb9b764182eb29e4c83",
+  "prior_pr_head_inspected": "4210a4dd19ac9d2ee0eb6aad62d1349e7ba0a6bd",
+  "new_unittest_methods": 30,
+  "unittest_exit": 0,
+  "scoped_projection_audit_exit": 1,
+  "observed_findings": 4,
+  "affected_retracted_input_claims": [
+    "CL-954-001",
+    "CL-1318-002",
+    "CL-1320-002"
+  ],
+  "sample_count_mismatch_claim": "CL-029",
+  "metadata_projection_not_full_source_bytes": true,
+  "full_checkout_mode_executed": false,
+  "global_inventory_complete": false,
+  "prior_packet_replay": "PRIOR_PACKET_RECHECK.json",
+  "not_executed": [
+    "real beam ROOT",
+    "full Geant4 transport",
+    "installed hardware calibration",
+    "untouched experimental validation",
+    "new remote CI",
+    "independent human sign-off",
+    "primary Table VI transcription check"
+  ],
+  "environment": {
+    "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+    "platform": "Linux-6.18.55-x86_64-with-glibc2.41"
+  },
+  "review_roles_are_one_assistant_perspectives": true
+}

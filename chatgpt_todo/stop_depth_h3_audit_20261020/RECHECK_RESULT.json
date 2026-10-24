@@ -1,0 +1,19 @@
+{
+  "SD01": {"mean_layer": 4.45, "unweighted_count_sum": 2, "weighted_probability_sum": 0.5},
+  "SD02": {"reported_layer": 8.0, "weighted_hist_mass": 0.0},
+  "SD03": {"weighted_termination_probability_sum": 0.0},
+  "SD04": {"mathematically_correct_stop_fraction": 0.5, "source_total_weight_is_finite": false, "source_weighted_termination_probability_sum": 0.0},
+  "checks": {
+    "SD01_fractional_histogram_disagrees": true,
+    "SD02_out_of_range_still_ok": true,
+    "SD03_zero_weight_probs_reported_as_zeros": true,
+    "SD04_finite_weights_overflow_to_zero_probabilities": true,
+    "positive_ordinary_H3_still_normalizes": true
+  },
+  "issue_reporting": "NOT_POSTED_TOOL_SAFETY_BLOCK",
+  "physical_population_impact": "NOT_EVALUATED",
+  "scientific_release": "NOT_AUTHORIZED",
+  "source_git_blob": "ca956eb7d07ea1e8044a61434d0c6bc273fb3736",
+  "source_main": "a61427813344e29047ca9eb9b764182eb29e4c83",
+  "status": "KNOWN_SOURCE_DEFECTS_REPRODUCED"
+}

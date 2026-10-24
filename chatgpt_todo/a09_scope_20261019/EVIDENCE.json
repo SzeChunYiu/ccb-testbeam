@@ -1,0 +1,19 @@
+{
+  "schema": "ccb-a09-source-projection/1",
+  "main": "a61427813344e29047ca9eb9b764182eb29e4c83",
+  "producer_blob": "92b199c5813dabc1b3bc35da2c6e4cfb5e5b0f05",
+  "nominal_result_blob": "5b05d4963b8bb4d6db6c22a9687efff0e9868119",
+  "chapter_blob": "f962e4ed94e9f1f6d86112598a39aa77e974dc49",
+  "root_settings": 5,
+  "root_event_records_declared": 10000,
+  "heldout_settings": 2,
+  "one_seed_per_setting": true,
+  "seed": 1,
+  "all_x_y_theta_phi_zero": true,
+  "model_signatures": 1,
+  "git_commits": 2,
+  "PE_path": "INDEPENDENT_DIAGNOSTIC_DRAW",
+  "ADC_path": "ccb-sipm-core",
+  "installed_DAQ_transfer": "BLOCKED",
+  "release": "NOT_AUTHORIZED"
+}

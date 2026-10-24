@@ -1,0 +1,32 @@
+{
+  "schema": "ccb-root-truth-source-bindings/1",
+  "origin": "SzeChunYiu/ccb-testbeam",
+  "main_commit": "a61427813344e29047ca9eb9b764182eb29e4c83",
+  "full_source": {
+    "path": "src/ccb_mc_validation/io/root_truth.py",
+    "git_blob": "a9b3f8ad064db4031521110e78ac741d2a61a7c6",
+    "sha256": "5e611906649bd6109dffe579c38435b7e8c1a3a9cde96a44258b507e11687217"
+  },
+  "relevant_components": [
+    {
+      "path": "src/ccb_mc_validation/truth/pdg.py",
+      "git_blob": "8c484b131ec07f3af2e2bd4726b83cd64601190c",
+      "scope": "declared GeV/c and MeV mass; not locally imported"
+    },
+    {
+      "path": "src/ccb_mc_validation/cli.py",
+      "git_blob": "63d48aa720d938299a83ab49bccb0e9ece234423",
+      "scope": "MV1-MV3 CLI caller; static inspection"
+    },
+    {
+      "path": "tests/test_root_truth_records.py",
+      "git_blob": "60114e741acd15b7179fea42e6bfc52822bd91a9",
+      "scope": "weak Ekin>0 fixture; static review"
+    }
+  ],
+  "mock_boundary": "only mass_of explicit p/d test double and inert process_chunk",
+  "external_primary_guidance": [
+    "https://geant4.web.cern.ch/documentation/dev/bfad_html/ForApplicationDevelopers/Fundamentals/unitSystem.html",
+    "https://geant4.web.cern.ch/documentation/dev/faq_html/FAQ/tracksAndSteps.html"
+  ]
+}

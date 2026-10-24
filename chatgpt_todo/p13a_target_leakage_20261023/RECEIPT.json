@@ -1,0 +1,46 @@
+{
+  "actual_detector_noise": "NOT_ESTIMATED",
+  "assembled_at_utc": "2026-10-23T21:34:35.007058+00:00",
+  "atom": "P13A-LK01",
+  "audit_exit": 1,
+  "comment_id": 6375156719,
+  "comment_url": "https://github.com/SzeChunYiu/ccb-testbeam/issues/1609#issuecomment-6375156719",
+  "execution_scope": "source-function excerpts only; not complete producer, raw ROOT, historical model, Geant4 or DAQ",
+  "formal_reviews_seen": {
+    "1595": 0,
+    "1629": 0
+  },
+  "full_heldout_csv": "NOT_ACQUIRED",
+  "historical_runtime_source": "NOT_INDEPENDENTLY_BOUND",
+  "independent_human_review": "NOT_OBTAINED",
+  "initial_harness_failure": "arbitrary-scale max roundoff 0.0215519 ADC exceeded unjustified 0.02 cap; original logs retained; conservative floating-point envelope now tested",
+  "issue_reporting": "POSTED_AND_READ_BACK",
+  "main": "a61427813344e29047ca9eb9b764182eb29e4c83",
+  "normal_unittest_exit": 0,
+  "normal_unittest_methods": 14,
+  "numpy": "2.3.5",
+  "optimized_audit_exit": 1,
+  "optimized_repeat_methods": 14,
+  "optimized_unittest_exit": 0,
+  "owner_issue": 1609,
+  "pandas": "2.2.3",
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.41",
+  "pr1595_head": "8a5344a0f8fd382e8e986430b23e4f67cb72a022",
+  "pr1629_parent": "adf8791bd267c735d4ba60e808b2b2533c84064f",
+  "production_repair": "NOT_INTEGRATED",
+  "protected_owner": "#977 / PR1294",
+  "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "random_seeds": {
+    "arbitrary_scale": 20261024,
+    "dyadic": 20261023
+  },
+  "runtime_tools": {
+    "g++": "/usr/bin/g++",
+    "geant4-config": null,
+    "root": null
+  },
+  "schema": "ccb-source-execution-receipt/1",
+  "scientific_release": "NOT_AUTHORIZED",
+  "source_excerpt_byte_convention": "retrieved function text; normalized final newline; not full source byte snapshot",
+  "strict_result_byte_identical": true
+}

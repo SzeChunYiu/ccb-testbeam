@@ -1,0 +1,83 @@
+{
+  "schema": "ccb-trigger-reference-source-bindings/1",
+  "repository": "SzeChunYiu/ccb-testbeam",
+  "sources": [
+    {
+      "local": "legacy_migration_excerpt.py",
+      "origin_path": "scripts/trigger_migration_matrix.py",
+      "revision": "223280d03a86d74d1656b70528fc17eb4f87984e",
+      "origin_git_blob": "04461b1326925efa5eaf231b36bb7029364b61da",
+      "kind": "NAMED_FUNCTION_EXCERPTS",
+      "names": [
+        "MigrationQuadrant",
+        "compute_migration_quadrant",
+        "extract_curve_data"
+      ],
+      "retrieval": "current connector read confirmed source; local excerpt reused from prior packet"
+    },
+    {
+      "local": "legacy_threshold_excerpt.py",
+      "origin_path": "scripts/trigger_threshold_scan.py",
+      "revision": "223280d03a86d74d1656b70528fc17eb4f87984e",
+      "origin_git_blob": "6edc498d53df882ddc17377b7453a953ef8ca67c",
+      "kind": "NAMED_FUNCTION_BODIES_TRANSCRIBED",
+      "names": [
+        "classify_event_hardware_response",
+        "get_primary_species"
+      ],
+      "retrieval": "current connector read; imports injected; docstrings/comments omitted; full local source AST/blob comparison not executed"
+    }
+  ],
+  "new_reference": "trigger_joint_reference.py is independently authored, not a patched full Geant4/ROOT application",
+  "external_research": [
+    {
+      "source": "Geant4 Hits developer guide",
+      "url": "https://geant4.web.cern.ch/documentation/dev/bfad_html/ForApplicationDevelopers/Detector/hit.html",
+      "access": "SEARCH_TEXT_READ",
+      "scope": "user-defined hit and step semantics, not project writer validation"
+    },
+    {
+      "source": "SciPy exact binomial proportion_ci",
+      "url": "https://docs.scipy.org/doc/scipy-1.16.1/reference/generated/scipy.stats._result_classes.BinomTestResult.proportion_ci.html",
+      "access": "SEARCH_TEXT_READ",
+      "scope": "exact interval method and conventions"
+    },
+    {
+      "source": "Ermisch 2005 publisher",
+      "url": "https://journals.aps.org/prc/abstract/10.1103/PhysRevC.71.064004",
+      "access": "ABSTRACT_READ_FULLTEXT_RESTRICTED",
+      "scope": "paper identity/energy/frame only; TableVI not verified"
+    },
+    {
+      "source": "author institutional PDF",
+      "url": "https://kyutech.repo.nii.ac.jp/record/444/files/064004.pdf",
+      "access": "HTTP_429_NO_PDF_READ"
+    },
+    {
+      "source": "Scite DOI search",
+      "doi": "10.1103/PhysRevC.71.064004",
+      "access": "ENTITLEMENT_DENIED_NO_FULLTEXT"
+    }
+  ],
+  "deduplicated_existing_work": [
+    "#1178",
+    "#1179",
+    "#1186",
+    "#1187",
+    "#1190"
+  ],
+  "raw_file_fetch_attempts": [
+    {
+      "path": "scripts/trigger_threshold_scan.py",
+      "revision": "223280d03a86d74d1656b70528fc17eb4f87984e",
+      "status": "FETCH_FAILED",
+      "error": "<urlopen error [Errno -3] Temporary failure in name resolution>"
+    },
+    {
+      "path": "scripts/trigger_migration_matrix.py",
+      "revision": "223280d03a86d74d1656b70528fc17eb4f87984e",
+      "status": "FETCH_FAILED",
+      "error": "<urlopen error [Errno -3] Temporary failure in name resolution>"
+    }
+  ]
+}

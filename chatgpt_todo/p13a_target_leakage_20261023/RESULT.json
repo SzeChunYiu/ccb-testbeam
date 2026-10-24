@@ -1,0 +1,33 @@
+{
+  "arbitrary_scale_masked_rows": 18432,
+  "arbitrary_scale_oracle_mae_adc": 0.004001340179857351,
+  "arbitrary_scale_oracle_max_abs_error_adc": 0.021551865473156795,
+  "atom": "P13A-LK01",
+  "complete_large_heldout_csv_acquired": false,
+  "context_target_zero_check_passes": true,
+  "detector_noise_or_metric_bias": "NOT_ESTIMATED",
+  "exact_dyadic_fixture_max_abs_error_adc": 0.0,
+  "executed_scope": "verbatim row_view function + phase helper, not full producer",
+  "feature_columns": 46,
+  "feature_only_oracle_mae_adc": 0.0,
+  "feature_only_oracle_max_abs_error_adc": 0.0,
+  "fixture_kind": "SYNTHETIC_NONPHYSICAL_INDEPENDENT_INTEGER_SAMPLES",
+  "full_area_feature_column_zero_based": 42,
+  "historical_models_retrained": false,
+  "human_review": "NOT_OBTAINED",
+  "n_masked_rows": 73728,
+  "n_synthetic_waveforms": 4096,
+  "nonpeak_changed_feature_columns": [
+    42
+  ],
+  "nonpeak_recovered_target_change_adc": 256.0,
+  "nonpeak_target_intervention_adc": 256.0,
+  "production_repair_integrated": false,
+  "raw_root_executed": false,
+  "removing_only_area_still_leaks_hidden_peak": true,
+  "scientific_release": "NOT_AUTHORIZED",
+  "seed": 20261023,
+  "source_git_blob": "05f2175ff3cc587a5f16f6f00b855fa1d77cc575",
+  "source_main": "a61427813344e29047ca9eb9b764182eb29e4c83",
+  "status": "TARGET_LEAKAGE_REPRODUCED"
+}

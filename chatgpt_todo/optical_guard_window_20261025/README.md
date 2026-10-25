@@ -1,0 +1,11 @@
+# OGUARD-WIN01 — optical step truncation vs SiPM window
+
+**Owning live comment POSTED_AND_READ_BACK:** https://github.com/SzeChunYiu/ccb-testbeam/issues/1608#issuecomment-6403512006
+
+Protected main `a61427813344e29047ca9eb9b764182eb29e4c83`, original `geant4/single_stave/src/SteppingAction.cc` blob `baf2ad6e0e5b4ce44ad059b70d47aca96b5ead20`. Verbatim 771-byte optical-guard excerpt in `optical_guard.inc` independently checked by FNV1a64 `8ceab00c92e781ed`, SHA-256 `e7f86a57a8750b961c1817dd3a829f05b9ee5cb032b5dee2b39863111c874d6b`.
+
+**New bounded result:** The 1000-ns time guard only affects photons outside the declared 250-ns SiPM response window; the independent 200000-step guard has no time predicate. The actual branch kills a constructed 100-ns/200001-step optical track before sensor crossing. The #1623 report's unconditional statement that none of the truncated photons could contribute is **not established** for the separate step guard. The latest *surviving* recorded arrival at 222 ns cannot bound unknown step-killed photons. This does NOT demonstrate a physically occurring early-step-killed photon or measured detector impact.
+
+Frozen #1623 JSON lists 597657 time kills, 3875 step kills, 44324598336 generated photons and 250000 events; no step-kill time or fate distribution. Review-only controls compiled the identical guard excerpt against fake Geant4 interfaces with g++ -O0/-O2 and passed 19 unittest methods normally and under Python -O (same tests twice). Full executable code/results/logs/receipt live **only** in local conversation packet `ccb_optical_guard_20261025.zip`, SHA256 `fdd688080f677a233b19e870b3f32af5053f391d3cfbfd5cb66c78d24bda480c`. No native Geant4, ROOT, DAQ, hardware or original archived event-level output was executed. Source-reported MC totals are not rerun.
+
+Owner should instrument time/position/volume/track/parent/process/weight/wavelength/seed per optical kill and perform matched native Geant4 step-cap-off/cap-ladder runs with sensor arrival, SiPM waveform/ADC, species/fate/tail controls and measured calibration before any response claim. Time guard is a distinct positive control. No production edits, no merge/review/human signoff, and PUBLICATION_NOT_AUTHORIZED.

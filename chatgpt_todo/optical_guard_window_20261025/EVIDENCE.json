@@ -1,0 +1,41 @@
+{
+  "schema": "ccb-review-only-optical-guard-window/1",
+  "atom": "OGUARD-WIN01",
+  "owner_comment": "https://github.com/SzeChunYiu/ccb-testbeam/issues/1608#issuecomment-6403512006",
+  "main": "a61427813344e29047ca9eb9b764182eb29e4c83",
+  "step_source_blob": "baf2ad6e0e5b4ce44ad059b70d47aca96b5ead20",
+  "campaign_report_blob": "2ffd67ee7b9eabcc3fa3382d69d3c4005c482446",
+  "campaign_json_blob": "2afbe7e6a960b088f035d214c7661c79637c01da",
+  "launcher_blob": "d74c8a20546c8ac7d5f6019d16ed1bb00c920dc8",
+  "source_excerpt": {
+    "bytes": 771,
+    "fnv1a64": "8ceab00c92e781ed",
+    "sha256": "e7f86a57a8750b961c1817dd3a829f05b9ee5cb032b5dee2b39863111c874d6b"
+  },
+  "archived": {
+    "time_limit_ns": 1000,
+    "step_limit": 200000,
+    "sipm_window_end_ns": 250,
+    "time_kills": 597657,
+    "step_kills": 3875,
+    "generated": 44324598336,
+    "events": 250000
+  },
+  "controlled": {
+    "time_ns": 100,
+    "step_number": 200001,
+    "production_branch_result": "STEP_KILL_BEFORE_SENSOR",
+    "observed_in_original_Geant4": false,
+    "executed_fake_g4_cpp_optimizations": [
+      "O0",
+      "O2"
+    ],
+    "python_unittest_methods": 19,
+    "python_modes": [
+      "normal",
+      "-O"
+    ]
+  },
+  "full_local_zip_sha256": "fdd688080f677a233b19e870b3f32af5053f391d3cfbfd5cb66c78d24bda480c",
+  "ceiling": "SOURCE_LOGICAL_COUNTEREXAMPLE_ONLY__NATIVE_G4_NOT_RUN__PHYSICAL_EFFECT_UNMEASURED__PUBLICATION_BLOCKED"
+}

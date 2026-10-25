@@ -1,0 +1,15 @@
+# MV1/MV2 standalone wrapper source-bound audit — 20 October 2026
+
+Scientific publication release: **NOT_AUTHORIZED**. Issue report status: **NOT_POSTED** (GitHub issue/comment creation safety-blocked). Parent #1628/#1594; owners #1609, #1611 and earlier analogous MV3 #1634. Do not extend the previous 55-entry issue index until a live report URL exists.
+
+Main a61427813344e29047ca9eb9b764182eb29e4c83, source full Git blobs: scripts/mv1_pid_validation.py f53e93a257369155006a39136d8945c1f9b6d427; scripts/mv2_energy_validation.py aff7767bb87dc07e37482d5ccba5ca77a5b369b3; actually executed shared studies/common.py a6a3da4aa58c8346758c26ac64d23c4f827c90aa.
+
+**WE-01**: Both complete original wrappers were executed in separate Python subprocesses with explicit **fake ROOT/model/split-registry imports**, but the genuine common writer. For each of MV1 and MV2, supplied BLOCKED and FAILED StudyResult status persisted correctly, while the standalone command printed '[ok] wrote' and exited **0**. Four independent process invocations, not actual ROOT or model training. This extends the already-known standalone MV3 WB-02 process-status flaw to two more entry points. It does *not* show the whole publication gate passed. Preserve the BLOCKED/FAILED JSON but fail CLI exit nonzero; test actual shell return codes.
+
+**WE-02**: Checked-in configs/mc_validation/mv1.yaml and mv2.yaml both set split: legacy_parity; both wrappers skip SplitRegistry.load for that name and pass split=None. The source-read run_mv1/run_mv2 default path then calls default_group_split instead, so the effective method is group holdout, not configured row parity. This is safer than executing parity on multi-track events; do not 'fix' by enabling leaking parity. Require matched requested/effective split identity and frozen grouping/source provenance; reject ambiguous legacy requests in authorizing mode.
+
+No historical AUC or energy error is proven. Group control: 8 groups with 2 rows each have 8 groups overlapping under row parity and 0 overlapping under GroupShuffleSplit. Twelve focused tests passed normally and optimized (same evidence), and normal/optimized observation outputs matched bytewise. Source snapshots and complete executable harness are in the user-conversation artifact ccb_mv12_wrapper_split_20261020.zip; those bytes were not uploaded to this repo. The committed slim summary cannot replace that harness or final-head CI.
+
+Method sources: https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GroupShuffleSplit.html ; Cawley & Talbot JMLR 2010 https://www.jmlr.org/beta/papers/v11/cawley10a.html . Neither establishes CCB measurement performance.
+
+Next: successfully post owner issue update with full source/fixture/caveat, resolve nonzero exit and effective-split provenance under owner review, check pipeline and standalone entry-point differences, and only then rerun source-bound actual ROOT and downstream claims. No merge, experiment or independent human sign-off is authorized by this packet.

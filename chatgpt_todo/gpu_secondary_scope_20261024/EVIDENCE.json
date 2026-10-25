@@ -1,0 +1,47 @@
+{
+  "atom": "GPU-STEP-01",
+  "status": "SOURCE_API_CONTRADICTION_EXECUTED_CPP_MOCK",
+  "date": "2026-10-24",
+  "scientific_authority": false,
+  "main": "a61427813344e29047ca9eb9b764182eb29e4c83",
+  "source_blob": "baf2ad6e0e5b4ce44ad059b70d47aca96b5ead20",
+  "geant4_reference": "Geant4 v11.2.2 source/track/include/G4Step.hh and src/G4Step.cc",
+  "source_excerpt_bytes": 1670,
+  "source_excerpt_sha256": "0ec8fecdc2b7442b979fa921c02525c509273dbd17032dbea7eded4752228874",
+  "tests": {
+    "number_of_methods": 12,
+    "normal": "PASS",
+    "python_O": "PASS",
+    "same_tests": true,
+    "cpp": [
+      "-O0",
+      "-O2"
+    ],
+    "mock_three_step_actual": [
+      101,
+      101,
+      101,
+      102
+    ],
+    "mock_three_step_current": [
+      101,
+      102
+    ],
+    "mock_n20_actual": 210,
+    "mock_n20_unique": 20
+  },
+  "post": {
+    "state": "POSTED_AND_READ_BACK",
+    "url": "https://github.com/SzeChunYiu/ccb-testbeam/issues/1608#issuecomment-6389388653"
+  },
+  "conversation_zip": {
+    "filename": "ccb_gpu_secondary_scope_20261024.zip",
+    "sha256": "b0101d700eefe2cb381e64a36c67b64e32546a1e2260f6b6e39b938645d7aa83"
+  },
+  "native_G4_executed": false,
+  "Opticks_executed": false,
+  "ROOT_executed": false,
+  "DAQ_executed": false,
+  "human_signoff": false,
+  "no_production_edits": true
+}

@@ -1,0 +1,67 @@
+{
+  "schema": "ccb-mv3-profile-execution/1",
+  "created_utc": "2026-10-19T21:36:34.075225+00:00",
+  "scientific_release": "NOT_AUTHORIZED",
+  "main_sha": "a61427813344e29047ca9eb9b764182eb29e4c83",
+  "review_head_at_start": "1d5445fae12559d52143320b6fcb080ac87d6e95",
+  "issue": 1634,
+  "unittest_methods": 18,
+  "optimized_is_repeat": true,
+  "runs": [
+    {
+      "argv": [
+        "/opt/pyvenv/bin/python",
+        "/mnt/data/issue_reconciliation_20261019/mv3_profile_probe/verify_mv3_profiles.py",
+        "--test"
+      ],
+      "exit": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "1957cd5158f52eb013461c5d2db7b7e7fed1ba55364ac3487509aed6ae3837c8"
+    },
+    {
+      "argv": [
+        "/opt/pyvenv/bin/python",
+        "/mnt/data/issue_reconciliation_20261019/mv3_profile_probe/verify_mv3_profiles.py"
+      ],
+      "exit": 1,
+      "stdout_sha256": "025cba4c7fff0e190adf0a677ad457562726eee3a4f5f0cd1e3dc29003ecb674",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "/opt/pyvenv/bin/python",
+        "-O",
+        "/mnt/data/issue_reconciliation_20261019/mv3_profile_probe/verify_mv3_profiles.py",
+        "--test"
+      ],
+      "exit": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "07ec4ff2daeeecd211cf9d736973f1a858e26d059645ab4d1b85d84cdd4dddf1"
+    },
+    {
+      "argv": [
+        "/opt/pyvenv/bin/python",
+        "-O",
+        "/mnt/data/issue_reconciliation_20261019/mv3_profile_probe/verify_mv3_profiles.py"
+      ],
+      "exit": 1,
+      "stdout_sha256": "025cba4c7fff0e190adf0a677ad457562726eee3a4f5f0cd1e3dc29003ecb674",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "observation_replay_byte_identical": true,
+  "test_scope": "Complete source-hash-verified MV3 and actual common.py imported directly with explicit module-origin checks; two empty package initializer files are import scaffolding. No functions/classes are stubbed. Synthetic in-memory records and actual temporary JSON writer.",
+  "environment": {
+    "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+    "numpy": "2.3.5",
+    "platform": "Linux-6.18.55-x86_64-with-glibc2.41"
+  },
+  "not_executed": [
+    "original beam ROOT",
+    "full CLI",
+    "Geant4 transport",
+    "installed hardware",
+    "complete repository CI",
+    "independent human sign-off"
+  ]
+}

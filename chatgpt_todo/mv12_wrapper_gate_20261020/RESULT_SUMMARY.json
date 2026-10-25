@@ -1,0 +1,42 @@
+{
+  "schema": "ccb-mv12-wrapper-summary/1",
+  "date": "2026-10-20",
+  "source_main": "a61427813344e29047ca9eb9b764182eb29e4c83",
+  "sources": {
+    "scripts/mv1_pid_validation.py": "f53e93a257369155006a39136d8945c1f9b6d427",
+    "scripts/mv2_energy_validation.py": "aff7767bb87dc07e37482d5ccba5ca77a5b369b3",
+    "src/ccb_mc_validation/studies/common.py": "a6a3da4aa58c8346758c26ac64d23c4f827c90aa"
+  },
+  "wrappers": [
+    "MV1",
+    "MV2"
+  ],
+  "statuses": [
+    "BLOCKED",
+    "FAILED"
+  ],
+  "subprocesses": 4,
+  "subprocess_exit_codes": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "writer_retained_status": true,
+  "printed_ok": true,
+  "configured_legacy_parity_passes_split_none": true,
+  "model_default_group_path_source_inspected_not_executed": true,
+  "unit_tests_passed": 12,
+  "optimized_tests_repeated": 12,
+  "original_rollback_safety": "unknown split rejects; real writer preserves _ml_error prohibition",
+  "stubs": [
+    "ROOT reader",
+    "MV1/MV2 engines",
+    "split registry"
+  ],
+  "real_root": false,
+  "geant4": false,
+  "publication": "NOT_AUTHORIZED",
+  "issue_reporting": "NOT_POSTED_GITHUB_WRITE_BLOCKED",
+  "full_test_harness": "user-conversation zip ccb_mv12_wrapper_split_20261020.zip"
+}

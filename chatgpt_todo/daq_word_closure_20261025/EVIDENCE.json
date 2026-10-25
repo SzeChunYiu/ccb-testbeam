@@ -1,0 +1,39 @@
+{
+  "atom": "DAQ-CLOSURE-AT01",
+  "schema": "ccb-daq-closure-atomic-evidence/1",
+  "main_sha": "a61427813344e29047ca9eb9b764182eb29e4c83",
+  "pr1629_parent": "fe4aa90a915bce08442aa5b18539194d5098fe9d",
+  "pr1595_sha": "8a5344a0f8fd382e8e986430b23e4f67cb72a022",
+  "source": "src/ccb_mc_validation/daq/raw_sorted_closure.py",
+  "source_git_blob": "5448390d1c19ddec0bad72e85e8709e83d4fbc3f",
+  "source_sha256": "5f7aed5949e2788c29f2b1d4430b834ddd0e4943ce1550a396dcb1dccd5b5509",
+  "owner_live_comment": "https://github.com/SzeChunYiu/ccb-testbeam/issues/1603#issuecomment-6396298797",
+  "tests_normal": 18,
+  "tests_optimized": 18,
+  "distinct_tests": 18,
+  "replay_cases": 9,
+  "constructed_conditionally_false_authorizations": 7,
+  "false_authorization_classes": [
+    "unmatched raw/sorted composite event keys",
+    "duplicate keys",
+    "fractional ADC cast collision",
+    "nonfinite ADC cast collision",
+    "empty event domain",
+    "empty channel domain",
+    "undeclared 8x16 versus 8x18 product"
+  ],
+  "positive_original_checks": [
+    "exact integer words PASS",
+    "different integer word FAIL",
+    "shape mismatch FAIL",
+    "scalar-only INCOMPLETE_SCALAR_PROXY/non-authorising"
+  ],
+  "artifact_zip_sha256": "d37b9a5b3709c798b1a26315960d8efeabc63c6ed93e74b4e57aec530b13fdcb",
+  "claim_ceiling": "SOURCE_BOUND_CONDITIONAL_COUNTEREXAMPLES_ONLY",
+  "raw_root_read": false,
+  "native_daq_run": false,
+  "geant4_run": false,
+  "real_detector_bias_measured": false,
+  "production_changed": false,
+  "publication_authorized": false
+}

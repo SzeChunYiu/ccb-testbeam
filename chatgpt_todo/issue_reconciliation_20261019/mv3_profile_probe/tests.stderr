@@ -1,0 +1,23 @@
+test_actual_writer_accepts_nonstandard_nan (__main__.Tests.test_actual_writer_accepts_nonstandard_nan) ... ok
+test_exact_source_identities (__main__.Tests.test_exact_source_identities) ... ok
+test_excluded_sample_alters_legacy_score (__main__.Tests.test_excluded_sample_alters_legacy_score) ... ok
+test_known_occupancy_not_endpoint (__main__.Tests.test_known_occupancy_not_endpoint) ... ok
+test_missing_layer_mask_remains_blocked (__main__.Tests.test_missing_layer_mask_remains_blocked) ... ok
+test_missing_sample_labels_remains_blocked (__main__.Tests.test_missing_sample_labels_remains_blocked) ... ok
+test_no_observed_hit_normalization_is_not_estimable (__main__.Tests.test_no_observed_hit_normalization_is_not_estimable) ... ok
+test_observations_are_strict_json (__main__.Tests.test_observations_are_strict_json) ... ok
+test_other_sample_alters_legacy_score (__main__.Tests.test_other_sample_alters_legacy_score) ... ok
+test_reference_all_permutations_preserve_event_membership (__main__.Tests.test_reference_all_permutations_preserve_event_membership) ... ok
+test_reference_no_double_count_of_same_stave (__main__.Tests.test_reference_no_double_count_of_same_stave) ... ok
+test_reference_rejects_nonbinary_and_nonfinite (__main__.Tests.test_reference_rejects_nonbinary_and_nonfinite) ... ok
+test_reference_rejects_unknown_population (__main__.Tests.test_reference_rejects_unknown_population) ... ok
+test_reference_requires_complete_geometry (__main__.Tests.test_reference_requires_complete_geometry) ... ok
+test_source_accepts_incomplete_layer_schema (__main__.Tests.test_source_accepts_incomplete_layer_schema) ... ok
+test_source_empty_group_fabricates_zeros (__main__.Tests.test_source_empty_group_fabricates_zeros) ... ok
+test_source_mask_nan_is_true (__main__.Tests.test_source_mask_nan_is_true) ... ok
+test_source_nan_edep_is_false (__main__.Tests.test_source_nan_edep_is_false) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.039s
+
+OK

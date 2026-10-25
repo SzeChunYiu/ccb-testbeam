@@ -1,0 +1,75 @@
+{
+  "finding_id": "G408-KEYLINEAGE-01",
+  "date_utc": "2026-10-25",
+  "main_sha": "a61427813344e29047ca9eb9b764182eb29e4c83",
+  "live_owner_issue": 1608,
+  "posted_comment": "https://github.com/SzeChunYiu/ccb-testbeam/issues/1608#issuecomment-6393062088",
+  "source_relative_path": "scripts/s29a_1783809265_5764_0f2a2dda_digitized_g4_multitask_truth_benchmark.py",
+  "historical_report_dir": "reports/1783883140.39222.3c4045b1__g4_08_keyed_digitized_geant4_native_join",
+  "historical_committed_runtime_ref": "9ff7f2b61e437cff0e95acb7ee2ac1665fe8d0dd",
+  "historical_ref_source_git_blob": "d256c35dc058572ebb90b070f91e35b485a46d65",
+  "historical_ref_source_chars": 24899,
+  "historical_ref_has_keyed_writer_functions": false,
+  "later_keyed_source_commit": "6a88ae79dadca97a943df4ec54f53150bfff0ffd",
+  "keyed_source_git_blob": "dfb35f03faaf104cc0a706ccbbf07eda2a536911",
+  "keyed_source_chars": 34367,
+  "archived_table_git_blob": "9d2c8dba5ba529cf33dcf6100e6c05ab35d04ee2",
+  "table_rows": 1056,
+  "table_cols": 43,
+  "source_runs": {
+    "train": {
+      "50": 72,
+      "51": 72,
+      "52": 72,
+      "53": 72,
+      "54": 72,
+      "55": 72,
+      "56": 72,
+      "57": 72
+    },
+    "heldout": {
+      "58": 96,
+      "60": 96,
+      "62": 96,
+      "64": 96,
+      "65": 96
+    }
+  },
+  "species_labels": {
+    "proton": 560,
+    "deuteron": 496
+  },
+  "generated_root_git_blob": "417650b63dfe08cd7e382ff93b9002c5b4750a0d",
+  "root_file_bytes": 112363,
+  "root_binary_header_verified": true,
+  "root_ttree_parsed": false,
+  "source_equation": "(2026071231 + daq_run*1000003 + EVENTNO*97 + EVT*17 + g4_entry) % (2**31 - 1)",
+  "controls": {
+    "positive": {
+      "rows": 1056,
+      "seed_mismatches": 0,
+      "duplicate_generated_six_keys": 0,
+      "native_row_roundtrip_mismatches": 0,
+      "gate_pass": true
+    },
+    "hostile": {
+      "method": "within-run cyclic permutation of all picked Geant4 truth attributes, then recompute derived digitizer seed and generated-output key image",
+      "reassigned_g4_entries": 1056,
+      "reassigned_g4_energies": 1056,
+      "changed_pid_labels": 542,
+      "duplicate_generated_six_keys": 0,
+      "native_row_roundtrip_mismatches": 0,
+      "gate_pass": true
+    },
+    "negative": {
+      "method": "reassign picked G4 records and seed but leave originally generated output-key image unchanged",
+      "key_component_mismatches": 2112,
+      "gate_pass": false
+    }
+  },
+  "execution_scope": "Full archived generated CSV read with authenticated GitHub tool; in-memory JavaScript replay of literal source key/row expressions, not production CLI, original ROOT/DAQ, independent Geant4 or native ROOT parser.",
+  "result": "SOURCE_PROVENANCE_AND_PAIRING_IDENTIFIABILITY_BLOCKED",
+  "physical_result_authorized": false,
+  "human_review": false,
+  "production_modified": false
+}

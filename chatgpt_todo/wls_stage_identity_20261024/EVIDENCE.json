@@ -1,0 +1,46 @@
+{
+  "atom": "WLS-ST01",
+  "status": "PUBLISHED_CAPTURE_IDENTITY_MISMATCH_REPRODUCED",
+  "scientific_release": "NOT_AUTHORIZED",
+  "main": "a61427813344e29047ca9eb9b764182eb29e4c83",
+  "publication_table_git_blob": "1545aad7ce82138b853bea2c916a50c87a740631",
+  "publication_table_sha256": "36af14331721b1eca890783c135dd8218a055d2dfc7dbad723ee4ee83bd8b749",
+  "publication_table_bytes": 4003,
+  "publication_rows": 20,
+  "ratio_cells_reconstructed": 60,
+  "max_absolute_ratio_reconstruction_error": 5.551115123125783e-17,
+  "reported_emission_per_scint_range": [
+    0.18658947557961963,
+    0.18668050203965575
+  ],
+  "actual_ratio": "n_wls_generated/n_scint_generated",
+  "manuscript_claimed_ratio": "n_wls_absorbed/n_scint_generated",
+  "requires_unique_first_capture_lineage": true,
+  "normal_unittest_methods": 14,
+  "optimized_repeat_unittest_methods": 14,
+  "both_unittest_exit": 0,
+  "normal_optimized_strict_json_same_bytes": true,
+  "audit_expected_exit": 1,
+  "initial_harness_failure": "two unqualified bitwise float-equality tests failed at ~5.55e-17; original logs preserved, final tests use 5e-15 tolerance",
+  "full_executable_archive": "ccb_wls_stage_identity_20261024.zip (conversation artifact, not GitHub)",
+  "source_blobs": {
+    "script": "d94ac3204b1052ed829226f2dfd3860b82770157",
+    "manuscript": "3165b59fe411cd38384c655912b5d6372078d87a",
+    "tracking": "6d4b9d72bbda4397a55456beac4280ab83d59c55",
+    "simdata": "fbff1d4e462a2c9075c3bd9783bc41a6a813d4b6"
+  },
+  "executed_scope": "Git-blob-bound original 20-row table and reconstructed formulas, hypothetical counterfactual process-count worlds; not full source script",
+  "not_executed": [
+    "native Geant4",
+    "ROOT events",
+    "DAQ",
+    "installed SiPM",
+    "independent human review",
+    "production repair"
+  ],
+  "measured_capture_fraction": null,
+  "numeric_bias_estimate": null,
+  "owner_comment": "https://github.com/SzeChunYiu/ccb-testbeam/issues/1604#issuecomment-6382161340",
+  "owner_comment_readback": true,
+  "original_publication_hold_preserved": true
+}

@@ -1,0 +1,16 @@
+{
+  "schema": "ccb-v3-frozen-grid-consistency/1",
+  "status": "PINNED_PROJECTION_CONSISTENT_NOT_EXPERIMENT_VALIDATED",
+  "scientific_release": "NOT_AUTHORIZED",
+  "grid_cells": 20,
+  "v3_joint": {
+    "both": 165,
+    "proxy_only": 389,
+    "hardware_only": 195,
+    "neither": 999251
+  },
+  "v3_proxy_retention": 0.29783393501805056,
+  "v3_hardware_outside_proxy": 0.5416666666666666,
+  "v2_geometry": "RETRACTED_ANTIPODAL_R30",
+  "limits": "manually copied fields from pinned unmerged PR1542 source; no original ROOT, full Geant4 or hardware"
+}

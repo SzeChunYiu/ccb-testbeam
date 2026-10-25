@@ -1,0 +1,94 @@
+{
+  "status": "SCOPED_INCONSISTENCIES_FOUND",
+  "scientific_release": "NOT_AUTHORIZED",
+  "complete_repository_inventory": false,
+  "input_scope": "FIELD_PROJECTIONS_FROM_CONNECTOR_READS_NOT_FULL_FILE_COPIES",
+  "graph": {
+    "topological_order": [
+      "INPUT:channel_polarity_v2",
+      "CL-1318-002",
+      "CL-1320-002",
+      "CL-954-001"
+    ],
+    "effective_states": {
+      "INPUT:channel_polarity_v2": "INVALIDATED",
+      "CL-1318-002": "INVALIDATED",
+      "CL-1320-002": "INVALIDATED",
+      "CL-954-001": "INVALIDATED"
+    },
+    "root_causes": {
+      "INPUT:channel_polarity_v2": {
+        "invalid": [
+          "INPUT:channel_polarity_v2"
+        ],
+        "pending": [],
+        "stale": []
+      },
+      "CL-1318-002": {
+        "invalid": [
+          "INPUT:channel_polarity_v2"
+        ],
+        "pending": [
+          "CL-1318-002"
+        ],
+        "stale": []
+      },
+      "CL-1320-002": {
+        "invalid": [
+          "INPUT:channel_polarity_v2"
+        ],
+        "pending": [
+          "CL-1320-002"
+        ],
+        "stale": []
+      },
+      "CL-954-001": {
+        "invalid": [
+          "INPUT:channel_polarity_v2"
+        ],
+        "pending": [],
+        "stale": []
+      }
+    },
+    "scope_clear": false,
+    "global_release_authorized": false,
+    "scope_notice": "Only declared edges checked. Identity, physics validity and exhaustive coverage are not certified."
+  },
+  "findings": [
+    {
+      "code": "RETRACTED_OR_FLAWED_ANCESTOR",
+      "claim_id": "CL-1318-002",
+      "ledger_state": "GATED",
+      "effective_state": "INVALIDATED",
+      "invalid_roots": [
+        "INPUT:channel_polarity_v2"
+      ]
+    },
+    {
+      "code": "RETRACTED_OR_FLAWED_ANCESTOR",
+      "claim_id": "CL-1320-002",
+      "ledger_state": "GATED",
+      "effective_state": "INVALIDATED",
+      "invalid_roots": [
+        "INPUT:channel_polarity_v2"
+      ]
+    },
+    {
+      "code": "RETRACTED_OR_FLAWED_ANCESTOR",
+      "claim_id": "CL-954-001",
+      "ledger_state": "DONE_DATA_ONLY",
+      "effective_state": "INVALIDATED",
+      "invalid_roots": [
+        "INPUT:channel_polarity_v2"
+      ]
+    },
+    {
+      "code": "SAMPLE_COUNT_MISMATCH",
+      "claim_id": "CL-029",
+      "ledger_n_events": 400,
+      "artifact_n_heldout": 4000
+    }
+  ],
+  "finding_count": 4,
+  "boundary": "Checks metadata/provenance consistency only; no raw-data reprocessing or physics revalidation."
+}

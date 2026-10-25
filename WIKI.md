@@ -2,9 +2,11 @@
 
 > **A self-contained guide to the CCB test-beam analysis, written for readers with and without prior knowledge of particle physics instrumentation.**
 >
-> Every study has a **descriptive name** and a **hyperlink** to its full report. Every claim is traceable to source. Uncertainty coverage is tracked in the canonical claim ledger; entries marked `CI_MISSING_BLOCKING` remain incomplete.
+> Studies have descriptive names and report links where available. **Global scientific traceability and physical validity are under independent audit, not yet established for every claim.** The canonical claim ledger tracks evidence status and uncertainty; `GATED`, `BLOCKED`, `FLAWED`, `CI_MISSING_BLOCKING`, truth-MC-only and method-closure entries are **not** authorizing beam-detector performance claims. See [global audit #1594](https://github.com/SzeChunYiu/ccb-testbeam/issues/1594) and [independent physics-verification/closure issue #1628](https://github.com/SzeChunYiu/ccb-testbeam/issues/1628).
 >
 > **Repository:** [SzeChunYiu/ccb-testbeam](https://github.com/SzeChunYiu/ccb-testbeam) | **Started:** 2026-06 | **Status:** Research synthesis (preliminary, not yet peer-reviewed)
+> **Physics acceptance gate (2026-10-18):** Exact 144-word/8×18 raw product identity, independent channel polarity and DAQ/trigger hardware characterization remain prerequisites for measured timing/energy/PID/rate claims (#1603, #1604, #1045, #1617). Monte Carlo closure alone does not validate the installed detector; cross-section support, geometry/materials, optical/SiPM/digitizer response and systematic uncertainty require separate tests (#1608, #1609). No unique measured detector Rmax or hardware-trigger species fraction is authorized while these dependencies remain open. This is an audit-state notice, not a claim that measurements have been reprocessed or simulations rerun.
+
 
 ---
 
